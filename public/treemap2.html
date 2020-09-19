@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gauge Chart with datalabels plugin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@0.2.3"></script>
+  <script src="/js/chartjs-plugin-colorschemes.js"></script>
+
+  <script src=""></script>
+  <style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="canvas-holder">
+    <canvas id="chart-area" width="800" height="400"></canvas>
+  </div>
+  <div class="canvas-holder">
+    <canvas id="chart-area1" width="800" height="400"></canvas>
+  </div>
+  <div class="canvas-holder">
+    <canvas id="chart-area2" width="800" height="400"></canvas>
+  </div>
+  <div class="canvas-holder">
+    <canvas id="chart-area3" width="800" height="400"></canvas>
+  </div>
+  <div class="controls">
+    <select id="data-key">
+      <option value="area" selected>Area (km<sup>2</sup>)</option>
+      <option value="population">Population</option>
+    </select>
+    <input type="checkbox" id="region" value="region" name="region">
+    <label for="region">Region</label>
+    <input type="checkbox" id="division" value="division" name="division">
+    <label for="division">Division</label>
+  </div>
+
+
+<script language="javascript">
+function colorFromValue(value, border) {
+  var alpha = (1 + Math.log(value)) / 5;
+  var color = "purple";
+  if (border) {
+    alpha += 0.01;
+  }
+  return Chart.helpers.color(color)
+    .alpha(alpha)
+    .rgbString();
+}
+
+var ctx = document.getElementById("chart-area").getContext("2d");
+window.chart1 = new Chart(ctx, {
+  type: "treemap",
+  data: {
+    datasets: [
+      {
+        label: "Sample",
+        data: [100, 20, 6, 6, 5, 4, 3, 2, 2, 1],
+        backgroundColor: function(ctx) {
+          return colorFromValue(ctx.dataset.data[ctx.dataIndex].v);
+        },
+        borderColor: function(ctx) {
+          return colorFromValue(ctx.dataset.data[ctx.dataIndex].v, true);
+        },
+        spacing: 0.1,
+        borderWidth: 2,
+        borderColor: "rgba(180,180,180, 0.15)"
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "Basic treemap sample"
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      callbacks: {
+        title: function(item, data) {
+          return '';
+        },
+        label: function(item, data) {
+          var dataset = data.datasets[item.datasetIndex];
+          var dataItem = dataset.data[item.index];
+          return dataItem.v;
+        }
+      }  
+    }    
+  }
+});
+
+ctx = document.getElementById("chart-area1").getContext("2d");
+window.chart1b = new Chart(ctx, {
+  type: "treemap",
+  data: {
+    datasets: [
+      {
+        label: "Sample with labels",
+        tree: [{value: 100, title: 'Alpha'}, {value: 20, title: 'Beta'}, {value: 5, title: 'Gamma'}],
+        key: 'value',
+        groups: ['title'],
+        fontColor: 'black',
+        fontFamily: 'Optima',
+        fontSize: 20,
+        backgroundColor: function(ctx) {
+          return colorFromValue(ctx.dataset.data[ctx.dataIndex]);
+        },
+        borderColor: function(ctx) {
+          return colorFromValue(ctx.dataset.data[ctx.dataIndex], true);
+        },
+        spacing: 0.1,
+        borderWidth: 2,
+        borderColor: "rgba(180,180,180, 0.15)"
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "Basic treemap sample"
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      callbacks: {
+        title: function(item, data) {
+          return data.datasets[item[0].datasetIndex].key;
+        },
+        label: function(item, data) {
+          var dataset = data.datasets[item.datasetIndex];
+          var dataItem = dataset.data[item.index];
+          return dataItem.v;
+        }
+      }  
+    }    
+  }
+});
+
+var statsByState = [
+  {
+    state: 'Alabama',
+    code: 'AL',
+    region: 'South',
+    division: 'East South Central',
+    income: 48123,
+    population: 4887871,
+    area: 135767
+  },
+  {
+    state: 'Alaska',
+    code: 'AK',
+    region: 'West',
+    division: 'Pacific',
+    income: 73181,
+    population: 737438,
+    area: 1723337
+  },
+  {
+    state: 'Arizona',
+    code: 'AZ',
+    region: 'West',
+    division: 'Mountain',
+    income: 56581,
+    population: 7171646,
+    area: 295234
+  },
+  {
+    state: 'Arkansas',
+    code: 'AR',
+    region: 'South',
+    division: 'West South Central',
+    income: 45869,
+    population: 3013825,
+    area: 137732
+  },
+  {
+    state: 'California',
+    code: 'CA',
+    region: 'West',
+    division: 'Pacific',
+    income: 71805,
+    population: 39557045,
+    area: 423972
+  },
+  {
+    state: 'Colorado',
+    code: 'CO',
+    region: 'West',
+    division: 'Mountain',
+    income: 69117,
+    population: 5695564,
+    area: 269601
+  },
+  {
+    state: 'Connecticut',
+    code: 'CT',
+    region: 'Northeast',
+    division: 'New England',
+    income: 74168,
+    population: 3572665,
+    area: 14357
+  },
+  {
+    state: 'Delaware',
+    code: 'DE',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 62852,
+    population: 967171,
+    area: 6446
+  },
+  {
+    state: 'District of Columbia',
+    code: 'DC',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 82372,
+    population: 702455,
+    area: 177
+  },
+  {
+    state: 'Florida',
+    code: 'FL',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 52594,
+    population: 21299325,
+    area: 170312
+  },
+  {
+    state: 'Georgia',
+    code: 'GA',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 56183,
+    population: 10519475,
+    area: 153910
+  },
+  {
+    state: 'Hawaii',
+    code: 'HI',
+    region: 'West',
+    division: 'Pacific',
+    income: 77765,
+    population: 1420491,
+    area: 28313
+  },
+  {
+    state: 'Idaho',
+    code: 'ID',
+    region: 'West',
+    division: 'Mountain',
+    income: 52225,
+    population: 1754208,
+    area: 216443
+  },
+  {
+    state: 'Illinois',
+    code: 'IL',
+    region: 'Midwest',
+    division: 'East North Central',
+    income: 62992,
+    population: 12741080,
+    area: 149995
+  },
+  {
+    state: 'Indiana',
+    code: 'IN',
+    region: 'Midwest',
+    division: 'East North Central',
+    income: 54181,
+    population: 6691878,
+    area: 94326
+  },
+  {
+    state: 'Iowa',
+    code: 'IA',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 5857,
+    population: 3156145,
+    area: 145746
+  },
+  {
+    state: 'Kansas',
+    code: 'KS',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 56422,
+    population: 2911505,
+    area: 213100
+  },
+  {
+    state: 'Kentucky',
+    code: 'KY',
+    region: 'South',
+    division: 'East South Central',
+    income: 45215,
+    population: 4468402,
+    area: 104656
+  },
+  {
+    state: 'Louisiana',
+    code: 'LA',
+    region: 'South',
+    division: 'West South Central',
+    income: 46145,
+    population: 4659978,
+    area: 135659
+  },
+  {
+    state: 'Maine',
+    code: 'ME',
+    region: 'Northeast',
+    division: 'New England',
+    income: 55277,
+    population: 1338404,
+    area: 91633
+  },
+  {
+    state: 'Maryland',
+    code: 'MD',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 80776,
+    population: 6042718,
+    area: 32131
+  },
+  {
+    state: 'Massachusetts',
+    code: 'MA',
+    region: 'Northeast',
+    division: 'New England',
+    income: 77385,
+    population: 6902149,
+    area: 27336
+  },
+  {
+    state: 'Michigan',
+    code: 'MI',
+    region: 'Midwest',
+    division: 'East North Central',
+    income: 54909,
+    population: 9995915,
+    area: 250487
+  },
+  {
+    state: 'Minnesota',
+    code: 'MN',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 68388,
+    population: 5611179,
+    area: 225163
+  },
+  {
+    state: 'Mississippi',
+    code: 'MS',
+    region: 'South',
+    division: 'East South Central',
+    income: 43529,
+    population: 2986530,
+    area: 125438
+  },
+  {
+    state: 'Missouri',
+    code: 'MO',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 53578,
+    population: 6126452,
+    area: 180540
+  },
+  {
+    state: 'Montana',
+    code: 'MT',
+    region: 'West',
+    division: 'Mountain',
+    income: 53386,
+    population: 1062305,
+    area: 380831
+  },
+  {
+    state: 'Nebraska',
+    code: 'NE',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 59970,
+    population: 1929268,
+    area: 200330
+  },
+  {
+    state: 'Nevada',
+    code: 'NV',
+    region: 'West',
+    division: 'Mountain',
+    income: 58003,
+    population: 3034392,
+    area: 286380
+  },
+  {
+    state: 'New Hampshire',
+    code: 'NH',
+    region: 'Northeast',
+    division: 'New England',
+    income: 73381,
+    population: 1356458,
+    area: 24214
+  },
+  {
+    state: 'New Jersey',
+    code: 'NJ',
+    region: 'Northeast',
+    division: 'Middle Atlantic',
+    income: 80088,
+    population: 8908520,
+    area: 22591
+  },
+  {
+    state: 'New Mexico',
+    code: 'NM',
+    region: 'West',
+    division: 'Mountain',
+    income: 46744,
+    population: 2095428,
+    area: 314917
+  },
+  {
+    state: 'New York',
+    code: 'NY',
+    region: 'Northeast',
+    division: 'Middle Atlantic',
+    income: 64894,
+    population: 19542209,
+    area: 141297
+  },
+  {
+    state: 'North Carolina',
+    code: 'NC',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 52752,
+    population: 10383620,
+    area: 139391
+  },
+  {
+    state: 'North Dakota',
+    code: 'ND',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 61843,
+    population: 760077,
+    area: 183108
+  },
+  {
+    state: 'Ohio',
+    code: 'OH',
+    region: 'Midwest',
+    division: 'East North Central',
+    income: 54021,
+    population: 11689442,
+    area: 116098
+  },
+  {
+    state: 'Oklahoma',
+    code: 'OK',
+    region: 'South',
+    division: 'West South Central',
+    income: 50051,
+    population: 3943079,
+    area: 181037
+  },
+  {
+    state: 'Oregon',
+    code: 'OR',
+    region: 'West',
+    division: 'Pacific',
+    income: 60212,
+    population: 4190713,
+    area: 254799
+  },
+  {
+    state: 'Pennsylvania',
+    code: 'PA',
+    region: 'Northeast',
+    division: 'Middle Atlantic',
+    income: 59105,
+    population: 12807060,
+    area: 119280
+  },
+  {
+    state: 'Rhode Island',
+    code: 'RI',
+    region: 'Northeast',
+    division: 'New England',
+    income: 63870,
+    population: 1057315,
+    area: 4001
+  },
+  {
+    state: 'South Carolina',
+    code: 'SC',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 50570,
+    population: 5084127,
+    area: 82933
+  },
+  {
+    state: 'South Dakota',
+    code: 'SD',
+    region: 'Midwest',
+    division: 'West North Central',
+    income: 56521,
+    population: 882235,
+    area: 199729
+  },
+  {
+    state: 'Tennessee',
+    code: 'TN',
+    region: 'South',
+    division: 'East South Central',
+    income: 51340,
+    population: 6770010,
+    area: 109153
+  },
+  {
+    state: 'Texas',
+    code: 'TX',
+    region: 'South',
+    division: 'West South Central',
+    income: 59206,
+    population: 28701845,
+    area: 695662
+  },
+  {
+    state: 'Utah',
+    code: 'UT',
+    region: 'West',
+    division: 'Mountain',
+    income: 65358,
+    population: 3161105,
+    area: 219882
+  },
+  {
+    state: 'Vermont',
+    code: 'VT',
+    region: 'Northeast',
+    division: 'New England',
+    income: 57513,
+    population: 626299,
+    area: 24906
+  },
+  {
+    state: 'Virginia',
+    code: 'VA',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 71535,
+    population: 8517685,
+    area: 110787
+  },
+  {
+    state: 'Washington',
+    code: 'WA',
+    region: 'West',
+    division: 'Pacific',
+    income: 70979,
+    population: 7535591,
+    area: 184661
+  },
+  {
+    state: 'West Virginia',
+    code: 'WV',
+    region: 'South',
+    division: 'South Atlantic',
+    income: 43469,
+    population: 1805832,
+    area: 62756
+  },
+  {
+    state: 'Wisconsin',
+    code: 'WI',
+    region: 'Midwest',
+    division: 'East North Central',
+    income: 59305,
+    population: 5813568,
+    area: 169635
+  },
+  {
+    state: 'Wyoming',
+    code: 'WY',
+    region: 'West',
+    division: 'Mountain',
+    income: 60434,
+    population: 577737,
+    area: 253335
+  }
+];
+
+var ctx = document.getElementById("chart-area2").getContext("2d");
+window.chart2 = new Chart(ctx, {
+  type: "treemap",
+  data: {
+    datasets: [
+      {
+        tree: statsByState,
+        key: "population",
+        groups: ["region", "division", "code"],
+        fontFamily: "Verdana",
+        fontColor: function(ctx) {
+          var item = ctx.dataset.data[ctx.dataIndex];
+          switch(item.l) {
+            case 0: return "#DDD";
+            case 1: return "#000";
+            case 2: return "#DD4";
+            default: return "#FFF";
+          }
+        },
+        fontSize: 20,
+        fontWeight: "bold",
+        backgroundColor: function(ctx) {
+          var item = ctx.dataset.data[ctx.dataIndex];
+          if (!item) {
+            return;
+          }
+          var a = item.v / (item.gs || item.s) / 2 + 0.5;
+          switch (item.l) {
+            case 0:
+              switch (item.g) {
+                case "Midwest":
+                  return "#4363d8";
+                case "Northeast":
+                  return "#469990";
+                case "South":
+                  return "#9A6324";
+                case "West":
+                  return "#f58231";
+                default:
+                  return "#e6beff";
+              }
+            case 1:
+              return Chart.helpers.color("white")
+                .alpha(0.3)
+                .rgbString();
+            default:
+              return Chart.helpers.color("green")
+                .alpha(a)
+                .rgbString();
+          }
+        },
+        spacing: 2,
+        borderWidth: 0.5,
+        borderColor: "rgba(160,160,160,0.5)"
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "US Population by region/division/state"
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      callbacks: {
+        title: function(item, data) {
+          return data.datasets[item[0].datasetIndex].key;
+        },
+        label: function(item, data) {
+          var dataset = data.datasets[item.datasetIndex];
+          var dataItem = dataset.data[item.index];
+          var obj = dataItem._data;
+          var label = obj.code || obj.division || obj.region;
+          return label + ': ' + dataItem.v;
+        }
+      }  
+    }
+  }
+});
+
+var ctx = document.getElementById("chart-area3").getContext("2d");
+var tm = window.chart3 = new Chart(ctx, {
+  type: "treemap",
+  data: {
+    datasets: [
+      {
+        tree: statsByState,
+        key: "area",
+        groups: ['state'],
+        spacing: -0.5,
+        borderWidth: 0.5,
+        fontColor: "black",
+        borderColor: "rgba(200,200,200,1)",
+        hoverBackgroundColor: "rgba(220,230,220,0.5)"
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "Switchable key and groups"
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      callbacks: {
+        title: function(item, data) {
+          return data.datasets[item[0].datasetIndex].key;
+        },
+        label: function(item, data) {
+          var dataset = data.datasets[item.datasetIndex];
+          var dataItem = dataset.data[item.index];
+          var obj = dataItem._data;
+          var label = obj.state || obj.division || obj.region;
+          return label + ': ' + dataItem.v;
+        }
+      }
+    }
+  }
+});
+
+var sel = document.getElementById("data-key");
+sel.addEventListener("change", function() {
+  tm.data.datasets[0].key = sel.value;
+  tm.update();
+});
+
+function updateGroups() {
+  var groups = (tm.data.datasets[0].groups = []);
+  document.querySelectorAll("input:checked").forEach(function(cb) {
+    groups.push(cb.value);
+  });
+  groups.push('state');
+  tm.update();
+}
+document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+  cb.addEventListener("change", function() {
+    updateGroups();
+  });
+});
+</script>  
+</body>
+</html>

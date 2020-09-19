@@ -1,0 +1,721 @@
+@extends('layouts.admin')
+@section('content')
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("panel.maturity_levels") }}
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td align="center">
+                              <a href="/admin/report/maturity1">
+                                <div style="width: 350px; height: 180px;">
+                                  <canvas id="gauge_chart1_div"></canvas>
+                                </div>
+                                {{ trans("panel.level_1") }}
+                              </a>
+                            </td>
+                            <td align="center">
+                              <a href="/admin/report/maturity2">
+                                <div style="width: 350px; height: 180px;">
+                                  <canvas id="gauge_chart2_div"></canvas>
+                                </div>
+                                {{ trans("panel.level_2") }}
+                              </a>
+                            <td align="center">
+                              <a href="/admin/report/maturity3">
+                                <div style="width: 350px; height: 180px;">
+                                  <canvas id="gauge_chart3_div"></canvas>
+                                </div>
+                                {{ trans("panel.level_3") }}
+                              </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  {{ trans("panel.repartition") }}
+                </div>
+                <div class="card-body">
+                    <div style="width: 1000px; height: 400px;">
+                      <canvas id="bar_chart_div"></canvas>
+                    </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  {{ trans("panel.cartography") }}
+                </div>
+                <div class="card-body">
+                    <div style="width: 1000px; height: 500px;">
+                      <canvas id="treemap_chart_div"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+
+  <script src="/js/Chart.bundle.js"></script>
+  <script src="/js/chartjs-gauge.js"></script>
+  <script src="/js/chartjs-plugin-colorschemes.js"></script>
+  <script src="/js/chartjs-chart-treemap.js"></script>
+  <script src="/js/chartjs-plugin-datalabels.js"></script>
+
+  <script type="text/javascript">
+
+  var maturity1 = {{
+            (
+            $entities+$relations+
+            $processes+$operations+$informations+
+            $applications+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            ) > 0 ?
+            number_format ( 
+            (
+            $entities_lvl1+$relations_lvl1+
+            $processes_lvl1+$operations_lvl1+$informations_lvl1+
+            $applications_lvl1+$databases_lvl1+$fluxes_lvl1+
+            $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
+            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1+
+            $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
+            ) * 100 /
+            (
+            $entities+$relations+
+            $processes+$operations+$informations+
+            $applications+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            )
+            ,0) : 0 }}; 
+
+  var maturity2 = {{
+            (
+            $entities+$relations+
+            $macroProcessuses+$processes+$operations+$actors+$informations+
+            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            ) > 0 ?
+            number_format ( 
+            (
+            $entities_lvl1+$relations_lvl2+
+            $macroProcessuses_lvl2+$processes_lvl1+$operations_lvl2+$actors_lvl2+$informations_lvl1+
+            $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
+            $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
+            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
+            $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
+            ) * 100 /
+            (
+            $entities+$relations+
+            $macroProcessuses+$processes+$operations+$actors+$informations+
+            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            )
+            ,0) : 0 }}; 
+
+  var maturity3 = {{
+            (
+            $entities+$relations+
+            $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
+            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            ) > 0 ?
+            number_format ( 
+            (
+            $entities_lvl1+$relations_lvl2+
+            $macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$tasks_lvl3+$operations_lvl2+$actors_lvl2+$informations_lvl1+
+            $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
+            $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
+            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
+            $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
+            ) * 100 /
+            (
+            $entities+$relations+
+            $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
+            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
+            $zones+$annuaires+$forests+$domaines+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
+            )
+            ,0) : 0 }};  
+
+</script>
+
+<script type="text/javascript">
+
+      var ctx1 = document.getElementById('gauge_chart1_div').getContext('2d');
+
+      var cnf1 = {
+        type: 'gauge',
+        data: {
+          datasets: [{
+            value: maturity1,
+            data: [40, 80,100],
+            backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+          }]
+        },
+        options: {
+          needle: {
+            radiusPercentage: 2,
+            widthPercentage: 3.2,
+            lengthPercentage: 80,
+            color: 'rgba(0, 0, 0, 1)'
+          },
+          valueLabel: {
+            display: true,
+            formatter: (value) => {
+              return  maturity1 + '%';
+            },
+            color: 'rgba(255, 255, 255, 1)',
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            borderRadius: 5,
+            padding: {
+              top: 10,
+              bottom: 10
+            }
+          },
+          plugins: {
+            datalabels: {
+              formatter: function(value, context) {
+                return null;
+              }
+            }
+          }          
+        }
+      };      
+
+      var ctx2 = document.getElementById('gauge_chart2_div').getContext('2d');
+
+      var cnf2 = {
+        type: 'gauge',
+        data: {
+          datasets: [{
+            value: maturity2,
+            data: [40, 80,100],
+            backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+          }]
+        },
+        options: {
+          needle: {
+            radiusPercentage: 2,
+            widthPercentage: 3.2,
+            lengthPercentage: 80,
+            color: 'rgba(0, 0, 0, 1)'
+          },
+          valueLabel: {
+            display: true,
+            formatter: (value) => {
+              return  maturity2 + '%';
+            },
+            color: 'rgba(255, 255, 255, 1)',
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            borderRadius: 5,
+            padding: {
+              top: 10,
+              bottom: 10
+            }
+          },
+          plugins: {
+            datalabels: {
+              formatter: function(value, context) {
+                return null;
+              }
+            }
+          }
+        }
+      };
+
+      var ctx3 = document.getElementById('gauge_chart3_div').getContext('2d');
+
+      var cnf3 = {
+        type: 'gauge',
+        data: {
+          datasets: [{
+            value: maturity3,
+            data: [40, 80,100],
+            backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+          }]
+        },
+        options: {
+          needle: {
+            radiusPercentage: 2,
+            widthPercentage: 3.2,
+            lengthPercentage: 80,
+            color: 'rgba(0, 0, 0, 1)'
+          },
+          valueLabel: {
+            display: true,
+            formatter: (value) => {
+              return  maturity3 + '%';
+            },
+            color: 'rgba(255, 255, 255, 1)',
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            borderRadius: 5,
+            padding: {
+              top: 10,
+              bottom: 10
+            }
+          },
+          plugins: {
+            datalabels: {
+              formatter: function(value, context) {
+                return null;
+              }
+            }
+          }          
+        }
+      };    
+
+    var ctx4 = document.getElementById('bar_chart_div').getContext('2d');
+
+    var cnf4 = {
+      type: 'bar',
+      plugins: [ChartDataLabels],
+      data: {
+        mode: 'single',
+        labels: [
+            "{{ trans('cruds.ecosystem.title_short') }}", 
+            "{{ trans('cruds.metier.title_short') }}", 
+            "{{ trans('cruds.application.title_short') }}", 
+            "{{ trans('cruds.administration.title_short') }}", 
+            "{{ trans('cruds.logical_infrastructure.title_short') }}", 
+            "{{ trans('cruds.physical_infrastructure.title_short') }}", 
+            ],
+        datasets: [{
+          label: "{{ trans('cruds.entity.title') }}",
+          data: [{{ $entities }}, 0, 0, 0, 0, 0],
+          value: {{ $entities }},
+          url: "/admin/entities"
+        }, {
+          label: "{{ trans('cruds.relation.title') }}",
+          data: [{{ $relations }}, 0, 0, 0, 0, 0],
+          value: {{ $relations }},
+          url: "/admin/relations"
+        }, {
+          label: "{{ trans('cruds.macroProcessus.title') }}",
+          data: [0, {{ $macroProcessuses }}, 0, 0, 0, 0],
+          value: {{ $macroProcessuses }},
+          url: "/admin/macro-processuses"
+        }, {
+          label: "{{ trans('cruds.process.title') }}",
+          data: [0, {{ $processes }}, 0, 0, 0, 0],
+          value: {{ $processes }},
+          url: "/admin/processes"
+        }, {
+          label: "{{ trans('cruds.activity.title') }}",
+          data: [0, {{ $activities }}, 0, 0, 0, 0],
+          value: {{ $activities }},
+          url: "/admin/activities"
+        }, {
+          label: "{{ trans('cruds.operation.title') }}",
+          data: [0, {{ $operations }}, 0, 0, 0, 0],
+          value: {{ $operations }},
+          url: "/admin/operations"
+        }, {
+          label: "{{ trans('cruds.task.title') }}",
+          data: [0, {{ $tasks }}, 0, 0, 0, 0],
+          value: {{ $tasks }},
+          url: "admin/tasks"
+        }, {
+          label: "{{ trans('cruds.actor.title') }}",
+          data: [0, {{ $actors }}, 0, 0, 0, 0],
+          value: {{ $actors }},
+          url: "/admin/actors"
+        }, {
+          label: "{{ trans('cruds.information.title') }}",
+          data: [0, {{ $informations }}, 0, 0, 0, 0],
+          value: {{ $informations }},
+          url: "/admin/informations"
+        }, {
+          label: "{{ trans('cruds.applicationBlock.title') }}",
+          data: [0, 0, {{ $applicationBlocks }}, 0, 0, 0],
+          value: {{ $applicationBlocks }},
+          url: "/admin/application-blocks"
+        }, {
+          label: "{{ trans('cruds.application.title') }}",
+          data: [0, 0, {{ $applications }}, 0, 0, 0],
+          value: {{ $applications }},
+          url: "/admin/applications"
+        }, {
+          label: "{{ trans('cruds.applicationService.title_short') }}",
+          data: [0, 0, {{ $applicationServices }}, 0, 0, 0],
+          value: {{ $applicationServices }},
+          url: "/admin/application-services"
+        }, {
+          label: "{{ trans('cruds.applicationModule.title_short') }}",
+          data: [0, 0, {{ $applicationModules }}, 0, 0, 0],
+          value: {{ $applicationModules }},
+          url: "/admin/application-modules"
+        }, {
+          label: "{{ trans('cruds.database.title') }}",
+          data: [0, 0, {{ $databases }}, 0, 0, 0],
+          value: {{ $databases }},
+          url: "/admin/databases"
+        }, {
+          label: "{{ trans('cruds.flux.title') }}",
+          data: [0, 0, {{ $fluxes }}, 0, 0, 0],
+          value: {{ $fluxes }},
+          url: "/admin/fluxes",
+        }, {
+          label: "{{ trans('cruds.zoneAdmin.title_short') }}",
+          data: [0, 0, 0, {{$zones}}, 0, 0],
+          value: {{$zones}},
+          url: "/admin/zone-admins"
+        }, {
+          label: "{{ trans('cruds.annuaire.title_short') }}",
+          data: [0, 0, 0, {{$annuaires}}, 0, 0],
+          value: {{$annuaires}},
+          url: "/admin/annuaires"
+        }, {
+          label: "{{ trans('cruds.forestAd.title_short') }}",
+          data: [0, 0, 0, {{$forests}}, 0, 0],
+          value: {{$forests}},
+          url: "/admin/forest-ads"
+        }, {
+          label: "{{ trans('cruds.domaineAd.title_short') }}",
+          data: [0, 0, 0, {{$domaines}}, 0, 0],
+          value:  {{$domaines}},
+          url: "/admin/domaine-ads"
+        }, {
+          label: "{{ trans('cruds.network.title_short') }}",
+          data: [0, 0, 0, 0, {{ $networks }}, 0],
+          value: {{ $networks }},
+          url: "/admin/networks"
+        }, {
+          label: "{{ trans('cruds.subnetwork.title_short') }}",
+          data: [0, 0, 0, 0, {{ $subnetworks }}, 0],
+          value: {{ $subnetworks }},
+          url: "/admin/subnetworks"
+        }, {
+          label: "{{ trans('cruds.gateway.title_short') }}",
+          data: [0, 0, 0, 0, {{ $gateways }}, 0],
+          value: {{ $gateways }},
+          url: "/admin/gateways"
+        }, {
+          label: "{{ trans('cruds.externalConnectedEntity.title_short') }}",
+          data: [0, 0, 0, 0, {{ $externalConnectedEntities }}, 0],
+          value: {{ $externalConnectedEntities }},
+          url: "/admin/entities"
+        }, {
+          label: "{{ trans('cruds.networkSwitch.title_short') }}",
+          data: [0, 0, 0, 0, {{ $switches }}, 0],
+          value: {{ $switches }},
+          url: "/admin/network-switches"
+        }, {
+          label: "{{ trans('cruds.router.title_short') }}",
+          data: [0, 0, 0, 0, {{ $routers }}, 0],
+          value: {{ $routers }},
+          url: "/admin/routers"
+        }, {
+          label: "{{ trans('cruds.securityDevice.title_short') }}",
+          data: [0, 0, 0, 0, {{ $securityDevices }}, 0],
+          value: {{ $securityDevices }},
+          url: "/admin/security-devices"
+        }, {
+          label: "{{ trans('cruds.logicalServer.title_short') }}",
+          data: [0, 0, 0, 0, {{ $logicalServers }}, 0],
+          value: {{ $logicalServers }},
+          url: "/admin/logical-servers"
+        }, {
+          label: "{{ trans('cruds.site.title') }}",
+          data: [0, 0, 0, 0, 0, {{ $sites }}],
+          value: {{ $sites }},
+          url: "/admin/sites"
+        }, {
+          label: "{{ trans('cruds.building.title') }}",
+          data: [0, 0, 0, 0, 0, {{ $buildings }}],
+          value: {{ $buildings }},
+          url: "/admin/buildings"
+        }, {
+          label: "{{ trans('cruds.bay.title') }}",
+          data: [0, 0, 0, 0, 0, {{ $bays }}],
+          value: {{ $bays }},
+          url: "/admin/bays"
+        }, {
+          label: "{{ trans('cruds.physicalServer.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $physicalServers }}],
+          value: {{ $physicalServers }},
+          url: "/admin/physical-servers"          
+        }, {
+          label: "{{ trans('cruds.workstation.title') }}",
+          data: [0, 0, 0, 0, 0, {{ $workstations }}],
+          value: {{ $workstations }},
+          url: "/admin/workstations"
+        }, {
+          label: "{{ trans('cruds.storageDevice.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $storageDevices }}],
+          value: {{ $storageDevices }},
+          url: "/admin/storage-devices"
+        }, {
+          label: "{{ trans('cruds.physicalSwitch.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $physicalSwitchs }}],
+          value: {{ $physicalSwitchs }},
+          url: "/admin/physical-switches"
+        }, {
+          label: "{{ trans('cruds.physicalRouter.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $physicalRouters }}],
+          value: {{ $physicalRouters }},
+          url: "/admin/physical-routers"
+        }, {
+          label: "{{ trans('cruds.wifiTerminal.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $wifiTerminals }}],
+          value: {{ $wifiTerminals }},
+          url: "/admin/wifi-terminals"
+        }, {
+          label: "{{ trans('cruds.physicalSecurityDevice.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $securityDevices }}],
+          value: {{ $securityDevices }},
+          url: "/admin/physical-security-devices"
+        }, {
+          label: "{{ trans('cruds.wan.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $wans }}],
+          value: {{ $wans }},
+          url: "/admin/wans"
+        }, {
+          label: "{{ trans('cruds.man.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $mans }}],
+          value: {{ $mans }},
+          url: "/admin/mans"
+        }, {
+          label: "{{ trans('cruds.lan.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $lans }}],
+          value: {{ $lans }},
+          url: "/admin/lans"
+        }, {
+          label: "{{ trans('cruds.vlan.title_short') }}",
+          data: [0, 0, 0, 0, 0, {{ $vlans }}],
+          value: {{ $vlans }},
+          url: "/admin/vlans"
+        }
+      ]},
+      options: {
+        hover: {
+            onHover: function(e, el) {
+              $("#bar_chart_div").css("cursor", el[0] ? "pointer" : "default");
+              }
+            },
+
+        tooltips: {
+          callbacks: {
+            title: function(tooltipItem, data) {
+               return null;
+            },
+            label: function(tooltipItem, data) {
+               var dataset = data['datasets'];
+                return dataset[tooltipItem['datasetIndex']]['label']+': '+dataset[tooltipItem['datasetIndex']]['value'];
+            },
+            // afterLabel: function(tooltipItem, data) {
+            //    var dataset = data['datasets'];
+            //    var percent = 
+            //    return '(' + percent + '%)';
+            //    return dataset[tooltipItem['datasetIndex']]['value'];              
+            // }
+          },
+        },            
+        scales: {
+            yAxes: [{ barPercentage: 1.0 }],
+          },
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 600,
+        },
+        plugins: {
+          colorschemes: {
+            scheme: 'tableau.Tableau20'            
+          },
+          datalabels: {
+            color: 'white',
+            font: {
+               weight: 'bold'
+            },
+            formatter: function(value, context) {
+              return value>1 ? context['dataset']['label']: '';
+            }
+          }    
+        },
+        legend : {
+          display : false,
+        },
+        scales: {
+          xAxes: [{
+            stacked: true,
+          }],
+          yAxes: [{
+            stacked: true,
+          }]
+        },
+        onClick: function (event, array){
+           var active = window.barchart.getElementAtEvent(event);
+           if (active[0]==null) return;
+           var elementIndex = active[0]._datasetIndex;
+           window.location=cnf4["data"]["datasets"][elementIndex]["url"];
+          },
+        onComplete: function () {
+          var ctx = this.chart.ctx;
+          ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'bottom';
+          }
+        }
+    };
+
+
+    // Normalize data (%)
+    for (let i = 0; i < 6; i++) {
+      var sum=0;
+      for (let j = 0; j < cnf4.data.datasets.length; j++) 
+        sum += cnf4.data.datasets[j].data[i];
+      if (sum>0)
+      for (let j = 0; j < cnf4.data.datasets.length; j++) 
+        cnf4.data.datasets[j].data[i] =
+          Math.floor(cnf4.data.datasets[j].data[i]*1000/sum)/10;
+        }
+
+
+    </script>
+
+    <script type="text/javascript">
+
+  var topTags = [
+     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.entity.title') }}", num:{{ $entities }} },
+     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.relation.title') }}", num:{{ $relations }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.macroProcessus.title') }}", num: {{ $macroProcessuses }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.process.title') }}", num:{{ $processes }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.activity.title') }}", num:{{ $activities }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.operation.title') }}", num:{{ $operations }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.task.title') }}", num:{{ $tasks }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.actor.title') }}", num:{{ $actors }} },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.information.title') }}", num:{{ $informations }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationBlock.title') }}" , num:{{ $applicationBlocks }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.application.title') }}", num:{{ $applications }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationService.title_short') }}" , num:{{ $applicationServices }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationModule.title_short') }}" , num:{{ $applicationModules }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.database.title') }}" , num:{{ $databases }} },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.flux.title') }}" , num:{{ $fluxes }} },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.zoneAdmin.title_short') }}" , num:{{$zones}} },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.annuaire.title_short') }}" , num:{{$annuaires}} },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.forestAd.title_short') }}" , num:{{$forests}} },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.domaineAd.title_short') }}" , num:{{$domaines}} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.network.title') }}" , num:{{ $networks }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.subnetwork.title_short') }}" , num:{{ $subnetworks }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.gateway.title_short') }}" , num:{{ $gateways }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.externalConnectedEntity.title_short') }}" , num:{{ $externalConnectedEntities }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.networkSwitch.title_short') }}" , num:{{ $switches }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.router.title_short') }}" , num:{{ $routers }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.securityDevice.title_short') }}" , num:{{ $securityDevices }} },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.logicalServer.title_short') }}" , num:{{ $logicalServers }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.site.title') }}" , num: {{ $sites }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.building.title') }}" , num:{{ $buildings }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.bay.title') }}" , num:{{ $bays }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalServer.title_short') }}", num:{{ $physicalServers }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.workstation.title') }}" , num:{{ $workstations }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.storageDevice.title_short') }}" , num:{{ $storageDevices }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalSwitch.title_short') }}" , num:{{ $physicalSwitchs }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalRouter.title_short') }}" , num:{{ $physicalRouters }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.wan.title_short') }}" , num:{{ $wans }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.man.title_short') }}" , num:{{ $mans }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.lan.title_short') }}" , num:{{ $lans }} },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.vlan.title_short') }}" , num:{{ $vlans }} },
+  ];
+
+var ctx5 = document.getElementById("treemap_chart_div").getContext("2d");
+
+var cnf5 = {
+  type: "treemap",
+  data: {
+    datasets: [{
+      //label: '',
+      tree: topTags,
+      key: "num",
+      groups: ['group','tag'],
+      spacing: 0.5,
+      borderWidth: 1.5,
+      // fontColor: "white",
+      fontColor: function (ctx) {
+        var item = ctx.dataset.data[ctx.dataIndex];
+        switch (item.l) {
+          case 0:return "#222";
+          case 1:return "#FFF";
+          default:return "#000";
+        }
+      },
+      // fontStyle: "Bold",
+      fontStyle: function (ctx) {
+        var item = ctx.dataset.data[ctx.dataIndex];
+        if (item.l==1)
+          return "bold";
+        else
+          return null;
+      },
+      borderColor: "grey",
+      // backgroundColor: function(ctx) {
+      //   return Chart.colorschemes.tableau.Tableau20[ctx.dataIndex%20];
+      //}
+      backgroundColor: function (ctx) {
+        var item = ctx.dataset.data[ctx.dataIndex];
+        if (!item) return;
+        switch (item.l) {
+          case 0: return "#FFF";
+          case 1: return Chart.colorschemes.tableau.Tableau20[ctx.dataIndex%20];
+          default: return "#000";
+          }
+        },
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    legend: { display: false },
+    tooltips: { enabled: false },
+    animation: { duration: 0 },
+    /*
+    onClick: function (event, array){
+       var active = window.barchart.getElementAtEvent(event);
+       if (active[0]==null) return;
+       // var elementIndex = ;
+       console.log(active);
+       // window.location=cnf4["data"]["datasets"][elementIndex]["url"];
+      },    
+    hover: {
+        onHover: function(e, el) {
+          $("#treemap_chart_div").css("cursor", el[0] ? "pointer" : "default");
+          }
+        }
+    */
+    }
+  };
+    window.onload = function() {
+      // unregister ChartDataLabels
+      Chart.plugins.unregister(ChartDataLabels);
+      // Gauges
+      new Chart(ctx1, cnf1);
+      new Chart(ctx2, cnf2);
+      new Chart(ctx3, cnf3);      
+      //
+      window.barchart=new Chart(ctx4, cnf4);      
+      window.treemap=new Chart(ctx5, cnf5);
+    };
+
+
+</script>
+@parent
+@endsection

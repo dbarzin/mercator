@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stacked barchart</title>
+  <script src="/js/Chart.min.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
+  <script src="/js/chartjs-plugin-colorschemes.js"></script>
+  <script src="/js/chartjs-plugin-datalabels.js"></script>
+  
+  <style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="canvas-holder" style="width:700px; height:300px">
+    <canvas id="chart"></canvas>
+  </div>
+  <script>
+
+    var config = {
+      type: 'bar',
+      data: {
+        mode: 'single',
+        labels: ["Ecosystème", "Informations", "Applications", "Administration", "Logique", "Physique"],
+        datasets: [{
+          label: "Entités",
+          data: [40, 0, 0, 0, 0, 0],
+        }, {
+          label: "Relations",
+          data: [60, 0, 0, 0, 0, 0]
+        }, {
+          label: "Dataset 3",
+          data: [0, 70, 0, 0, 0, 0]
+        }, {
+          label: "Dataset 4",
+          data: [0, 30, 0, 0, 0, 0]
+        }, {
+          label: "Dataset 5",
+          data: [0, 0, 33.33, 0, 0, 0]
+        }, {
+          label: "Dataset 6",
+          data: [0, 0, 33.33, 0, 0, 0]
+        }, {
+          label: "Dataset 7",
+          data: [0, 0, 33.33, 0, 0, 0]
+        }, {
+          label: "Dataset 8",
+          data: [0, 0, 0, 3, 0, 0]
+        }, {
+          label: "Dataset 9",
+          data: [0, 0, 0, 7, 0, 0]
+        }, {
+          label: "Dataset 10",
+          data: [0, 0, 0, 10, 0, 0]
+        }, {
+          label: "Dataset 11",
+          data: [0, 0, 0, 80, 0, 0]
+        }, {
+          label: "Dataset 12",
+          data: [0, 0, 0, 0, 60, 0]
+        }, {
+          label: "Dataset 13",
+          data: [0, 0, 0, 0, 8, 0]
+        }, {
+          label: "Dataset 14",
+          data: [0, 0, 0, 0, 10, 0]
+        }, {
+          label: "Dataset 15",
+          data: [0, 0, 0, 0, 12, 0]
+        }, {
+          label: "Dataset 16",
+          data: [0, 0, 0, 0, 10, 0]
+        }        
+        ]
+      },
+      options: {
+        onClick: (evt, item) => {
+            if ( item.length == 0 ) return; //Clicked outside any bar.
+            console.log(lastHoveredIndex);            
+          },
+
+        scales: {
+                 yAxes: [{ barPercentage: 1.0 }],
+          },
+          tooltips: {
+            callbacks: {                            
+                label: function(tooltipItem, chart) {
+                var index = tooltipItem.datasetIndex;
+                var value  = chart.datasets[index].data[0];
+                var label  = chart.datasets[index].label;
+
+                lastHoveredIndex = index;
+                return null;
+              } 
+            }
+          },
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          onComplete: function(animation) {
+                    }
+        },
+        plugins: {
+          colorschemes: {
+            scheme: 'tableau.Tableau20'
+          },
+          datalabels: {
+                  color: 'white',
+                  font: {
+                    weight: 'bold'
+                  },
+                  formatter: function(value, context) {
+                    return value>0 ? Math.round(value) + '%' : '';
+                  }
+                }    
+        },
+        legend : {
+          display : false,
+        },
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('chart').getContext('2d');
+      window.myGauge = new Chart(ctx, config);
+    };
+
+
+
+  </script>
+</body>
+</html>

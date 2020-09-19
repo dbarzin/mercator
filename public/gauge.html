@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gauge Chart with datalabels plugin</title>
+  <script src="/js/Chart.min.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+  <style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="canvas-holder" style="width:100%">
+  <canvas id="chart"></canvas>
+  </div>
+  <button id="randomizeData">Randomize Data</button>
+  <script>
+    var randomScalingFactor = function() {
+      return Math.round(Math.random() * 100);
+    };
+
+    var randomData = function () {
+      return [
+        randomScalingFactor(),
+        randomScalingFactor(),
+        randomScalingFactor(),
+        randomScalingFactor()
+      ];
+    };
+
+    var randomValue = function (data) {
+      return Math.max.apply(null, data) * Math.random();
+    };
+
+    var data = randomData();
+    var value = randomValue(data);
+
+    var config = {
+      type: 'gauge',
+      data: {
+        //labels: ['Success', 'Warning', 'Warning', 'Error'],
+        datasets: [{
+          data: data,
+          value: value,
+          backgroundColor: ['green', 'yellow', 'orange', 'red'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Gauge chart with datalabels plugin'
+        },
+        layout: {
+          padding: {
+            bottom: 30
+          }
+        },
+        needle: {
+          // Needle circle radius as the percentage of the chart area width
+          radiusPercentage: 2,
+          // Needle width as the percentage of the chart area width
+          widthPercentage: 3.2,
+          // Needle length as the percentage of the interval between inner radius (0%) and outer radius (100%) of the arc
+          lengthPercentage: 80,
+          // The color of the needle
+          color: 'rgba(0, 0, 0, 1)'
+        },
+        valueLabel: {
+          formatter: Math.round
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            formatter: function (value, context) {
+              return '< ' + Math.round(value);
+            },
+            color: function (context) {
+              return context.dataset.backgroundColor;
+            },
+            //color: 'rgba(255, 255, 255, 1.0)',
+            backgroundColor: 'rgba(0, 0, 0, 1.0)',
+            borderWidth: 0,
+            borderRadius: 5,
+            font: {
+              weight: 'bold'
+            }
+          }
+        }
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('chart').getContext('2d');
+      window.myGauge = new Chart(ctx, config);
+    };
+
+    document.getElementById('randomizeData').addEventListener('click', function() {
+      config.data.datasets.forEach(function(dataset) {
+        dataset.data = randomData();
+        dataset.value = randomValue(dataset.data);
+      });
+
+      window.myGauge.update();
+    });
+  </script>
+</body>
+</html>
