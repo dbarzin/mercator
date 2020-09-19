@@ -11,3 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.editorconfig
+mercator.sublime-project
+mercator.sublime-workspace
+
