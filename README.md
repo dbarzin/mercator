@@ -33,7 +33,12 @@ Mercator est une application Web permettant de gérer la cartographie d’un sys
 
 ## Installation
 
-git clone
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
+
+## License
+
+Mercator est un logiciel open source distribué sous [GPL](https://www.gnu.org/licenses/licenses.fr.html).
+
 
 
 
