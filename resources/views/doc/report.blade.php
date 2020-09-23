@@ -9,7 +9,21 @@
                     Reporting
                 </div>
                 <div class="card-body">
-                  UNDER COSTRUCTION
+                  <ul>
+                    <li>
+                      Applications par groupe applicatif<br><br>
+                    </li>
+                    <li>
+                      Applications par serveur<br><br>
+                    </li>
+                    <li>
+                      Configuration des serveurs<br><br>
+                    </li>
+                    <li>
+                      Inventaire des commutateurs<br><br>
+                    </li>
+                  </ul>
+
                 </div>
               </div>
           </div>
