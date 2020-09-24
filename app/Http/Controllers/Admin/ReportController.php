@@ -58,6 +58,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+// Excel
+// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class ReportController extends Controller
 {
     public function ecosystem(Request $request)
@@ -701,7 +705,60 @@ class ReportController extends Controller
             ->with("domains",$domains);
         }
 
+    public function applicationsByBlocks(Request $request) {
 
+        $path=storage_path('app/' . "applications.xlsx");
+
+        $applicationBlocks = ApplicationBlock::All()->sortBy("name");
+        $applicationBlocks->load('applications');
+
+        $header = array(
+                "Applicaiton Block", 
+                "Application",
+                "Description",
+                "Entity responsible",
+                "Entities",
+                "Responsible SSI",
+                "Technology",
+                "Type",
+                "Users",
+                "External",
+                "Security Need",
+                "Documentation",
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($applicationBlocks as $applicationBlock) {
+            foreach ($applicationBlock->applications as $application) {
+
+                $sheet->setCellValue("A{$row}", $applicationBlock->name);
+                $sheet->setCellValue("B{$row}", $application->name);
+                $sheet->setCellValue("C{$row}", $application->description);
+                $sheet->setCellValue("D{$row}", $application->entity_resp ? $application->entity_resp->name : "");
+                $sheet->setCellValue("E{$row}", $application->entities->implode('name', ', '));
+                $sheet->setCellValue("F{$row}", $application->responsible);
+                $sheet->setCellValue("G{$row}", $application->technology);
+                $sheet->setCellValue("H{$row}", $application->type);
+                $sheet->setCellValue("I{$row}", $application->users);
+                $sheet->setCellValue("J{$row}", $application->external);
+                $sheet->setCellValue("K{$row}", $application->security_need);
+                $sheet->setCellValue("L{$row}", $application->documentation);
+
+                $row++;
+            }
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+
+    }
 
 }
 

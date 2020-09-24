@@ -11,7 +11,7 @@
                 <div class="card-body">
                   <ul>
                     <li>
-                      Applications par groupe applicatif<br><br>
+                      <a href="/admin/report/applicationsByBlocks" target="_new">Applications par groupe applicatif</a><br><br>
                     </li>
                     <li>
                       Applications par serveur<br><br>

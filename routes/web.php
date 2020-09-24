@@ -234,6 +234,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('report/maturity2', 'HomeController@maturity2');
     Route::get('report/maturity3', 'HomeController@maturity3');
 
+    // Excel
+    Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
+
     // Reporting
     Route::get('doc/report', function () {
         return view('doc/report');
