@@ -553,6 +553,7 @@
         },
         {
             "name": "doctrine/dbal",
+<<<<<<< HEAD
             "version": "2.11.0",
             "source": {
                 "type": "git",
@@ -563,6 +564,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/0d4e1a8b29dd987704842f0465aded378f441dca",
                 "reference": "0d4e1a8b29dd987704842f0465aded378f441dca",
+=======
+            "version": "2.10.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "47433196b6390d14409a33885ee42b6208160643"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/47433196b6390d14409a33885ee42b6208160643",
+                "reference": "47433196b6390d14409a33885ee42b6208160643",
+>>>>>>> refs/remotes/origin/master
                 "shasum": ""
             },
             "require": {
@@ -657,7 +670,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2020-09-20T23:24:53+00:00"
+=======
+            "time": "2020-09-12T21:20:41+00:00"
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "doctrine/event-manager",
@@ -1490,6 +1507,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v8.6.0",
             "source": {
                 "type": "git",
@@ -1500,6 +1518,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/a71952a6dba55de0bb11b5fbbd84874eda2a755c",
                 "reference": "a71952a6dba55de0bb11b5fbbd84874eda2a755c",
+=======
+            "version": "v8.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1c57ab5e375d0a897c22b29e8352453be514131e",
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e",
+>>>>>>> refs/remotes/origin/master
                 "shasum": ""
             },
             "require": {
@@ -1649,7 +1679,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2020-09-22T13:42:02+00:00"
+=======
+            "time": "2020-09-16T16:13:13+00:00"
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "laravel/passport",
@@ -7003,6 +7037,7 @@
         },
         {
             "name": "phpunit/php-code-coverage",
+<<<<<<< HEAD
             "version": "9.1.11",
             "source": {
                 "type": "git",
@@ -7013,6 +7048,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c9394cb9d07ecfa9351b96f2e296bad473195f4d",
                 "reference": "c9394cb9d07ecfa9351b96f2e296bad473195f4d",
+=======
+            "version": "9.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "5134e2a65ec48e2f7126d12f1503a9889c660bdf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/5134e2a65ec48e2f7126d12f1503a9889c660bdf",
+                "reference": "5134e2a65ec48e2f7126d12f1503a9889c660bdf",
+>>>>>>> refs/remotes/origin/master
                 "shasum": ""
             },
             "require": {
@@ -7072,7 +7119,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2020-09-19T05:29:17+00:00"
+=======
+            "time": "2020-09-18T05:25:29+00:00"
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "phpunit/php-file-iterator",
