@@ -79,9 +79,7 @@ Generate Keys
 
 Cache
 
-Rebuild the cache
-
-    php artisan config:cache
+    php artisan config:clear
 
 ## Test
 

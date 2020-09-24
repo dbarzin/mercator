@@ -13,4 +13,5 @@ yarn-error.log
 .editorconfig
 mercator.sublime-project
 mercator.sublime-workspace
+composer.lock
 
