@@ -719,7 +719,7 @@ return [
             "id_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
-            "responsible" => "Responsible",
+            "responsible" => "Responsable",
             "responsible_helper" => "",
             "site" => "Site",
             "site_helper" => "",
