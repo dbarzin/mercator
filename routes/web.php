@@ -236,6 +236,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Excel
     Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
+    Route::get('report/logicalServerConfigs', 'ReportController@logicalServerConfigs');
 
     // Reporting
     Route::get('doc/report', function () {

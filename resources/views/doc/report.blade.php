@@ -17,7 +17,7 @@
                       Applications par serveur<br><br>
                     </li>
                     <li>
-                      Configuration des serveurs<br><br>
+                      <a href="/admin/report/logicalServerConfigs" target="_new">Configuration des serveurs</a><br><br>
                     </li>
                     <li>
                       Inventaire des commutateurs<br><br>

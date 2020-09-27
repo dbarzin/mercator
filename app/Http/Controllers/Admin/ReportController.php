@@ -731,6 +731,9 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
 
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
         // Populate the Timesheet
         $row = 2;
         foreach ($applicationBlocks as $applicationBlock) {
@@ -738,7 +741,7 @@ class ReportController extends Controller
 
                 $sheet->setCellValue("A{$row}", $applicationBlock->name);
                 $sheet->setCellValue("B{$row}", $application->name);
-                $sheet->setCellValue("C{$row}", $application->description);
+                $sheet->setCellValue("C{$row}", $html->toRichTextObject($application->description));
                 $sheet->setCellValue("D{$row}", $application->entity_resp ? $application->entity_resp->name : "");
                 $sheet->setCellValue("E{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("F{$row}", $application->responsible);
@@ -757,7 +760,62 @@ class ReportController extends Controller
         $writer->save($path);
 
         return response()->download($path);
+    }
 
+
+
+    public function logicalServerConfigs(Request $request) {
+
+        $path=storage_path('app/' . "logicalServers.xlsx");
+
+        $logicalServers = LogicalServer::All()->sortBy("name");
+        // $logicalServers->load('applications');
+
+        $header = array(
+            'name',
+            'description',
+            'operating_system',
+            'address_ip',
+            'cpu',
+            'memory',
+            'environment',
+            'net_services',
+            'configuration',
+            'applications',
+            'physical_servers'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($logicalServers as $logicalServer) {
+
+                $sheet->setCellValue("A{$row}", $logicalServer->name);
+                $sheet->setCellValue("B{$row}", $html->toRichTextObject($logicalServer->description));
+                $sheet->setCellValue("C{$row}", $logicalServer->operating_system);
+                $sheet->setCellValue("D{$row}", $logicalServer->address_ip);
+                $sheet->setCellValue("E{$row}", $logicalServer->cpu);
+                $sheet->setCellValue("F{$row}", $logicalServer->memory);
+                $sheet->setCellValue("G{$row}", $logicalServer->environment);
+                $sheet->setCellValue("H{$row}", $logicalServer->net_services);
+                $sheet->setCellValue("I{$row}", $html->toRichTextObject($logicalServer->configuration));
+                $sheet->setCellValue("J{$row}", $logicalServer->applications->implode('name', ', '));
+                $sheet->setCellValue("K{$row}", $logicalServer->servers->implode('name', ', '));
+
+                $row++;
+            
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
     }
 
 }
