@@ -52,7 +52,7 @@
                             Applications
                         </th>
                         <td>
-                            @foreach($applicationBlock->applicationBlockMApplications as $key => $application)
+                            @foreach($applicationBlock->applications as $key => $application)
                                 <span class="label label-info">{{ $application->name }}</span>
                             @endforeach
                         </td>
