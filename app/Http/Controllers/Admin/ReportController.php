@@ -719,12 +719,15 @@ class ReportController extends Controller
                 "Entity responsible",
                 "Entities",
                 "Responsible SSI",
+                "Process supported",
                 "Technology",
                 "Type",
                 "Users",
                 "External",
                 "Security Need",
                 "Documentation",
+                "Logical servers",
+                "Databases",
             );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -745,12 +748,15 @@ class ReportController extends Controller
                 $sheet->setCellValue("D{$row}", $application->entity_resp ? $application->entity_resp->name : "");
                 $sheet->setCellValue("E{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("F{$row}", $application->responsible);
-                $sheet->setCellValue("G{$row}", $application->technology);
-                $sheet->setCellValue("H{$row}", $application->type);
-                $sheet->setCellValue("I{$row}", $application->users);
-                $sheet->setCellValue("J{$row}", $application->external);
-                $sheet->setCellValue("K{$row}", $application->security_need);
-                $sheet->setCellValue("L{$row}", $application->documentation);
+                $sheet->setCellValue("G{$row}", $application->processes->implode('name', ', '));
+                $sheet->setCellValue("H{$row}", $application->technology);
+                $sheet->setCellValue("I{$row}", $application->type);
+                $sheet->setCellValue("J{$row}", $application->users);
+                $sheet->setCellValue("K{$row}", $application->external);
+                $sheet->setCellValue("L{$row}", $application->security_need);
+                $sheet->setCellValue("M{$row}", $application->documentation);
+                $sheet->setCellValue("N{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue("O{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
@@ -817,6 +823,208 @@ class ReportController extends Controller
 
         return response()->download($path);
     }
+
+
+    private function addToInventory(array &$inventory, Site $site, Building $building = NULL, Bay $bay = NULL) {
+        
+        // PhysicalServer
+        if ($bay!=NULL) 
+            $physicalServers = PhysicalServer::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $physicalServers = PhysicalServer::All()->sortBy("name");
+
+        foreach ($physicalServers as $physicalServer) {
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "type" => "Server",
+                    "name" => $physicalServer->name,
+                    "description" => $physicalServer->descrition,
+                ));
+        }
+        
+        // Workstation;
+        if ($building!=NULL)
+            $workstations = Workstation::All()->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $workstations = Workstation::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $workstations = Workstation::All()->sortBy("name");
+
+        foreach ($workstations as $workstation) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => "",
+                    "type" => "Workstation",
+                    "name" => $workstation->name,
+                    "description" => $workstation->descrition,
+                ));
+        }
+        
+        // Peripheral
+        if ($bay!=NULL) 
+            $peripherals = Peripheral::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $peripherals = Peripheral::All()->sortBy("name");
+
+        foreach ($peripherals as $peripheral) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "type" => "Peripheral",
+                    "name" => $peripheral->name,
+                    "description" => $peripheral->descrition,
+                ));
+        }
+
+        // Phone;
+        if ($building!=NULL)
+            $phones = Phone::All()->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $phones = Phone::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $phones = Phone::All()->sortBy("name");
+
+        foreach ($phones as $phone) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => "",
+                    "type" => "Phone",
+                    "name" => $phone->name,
+                    "description" => $phone->descrition,
+                ));
+        }
+    
+        // PhysicalSwitch;
+        if ($bay!=NULL) 
+            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
+
+        foreach ($physicalSwitches as $physicalSwitch) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "type" => "Switch",
+                    "name" => $physicalSwitch->name,
+                    "description" => $physicalSwitch->descrition,
+                ));
+        }
+
+        // PhysicalRouter
+        if ($bay!=NULL) 
+            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $physicalRouters = PhysicalRouter::All()->sortBy("name");
+
+        foreach ($physicalRouters as $physicalRouter) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "type" => "Router",
+                    "name" => $physicalRouter->name,
+                    "description" => $physicalRouter->descrition,
+                ));
+        }
+    }
+
+    public function physicalInventory(Request $request) {
+
+        $path=storage_path('app/' . "physicalInventory.xlsx");
+
+        $inventory = array();
+
+        // for all sites
+        $sites = Site::All()->sortBy("name");
+        foreach ($sites as $site) {
+
+            $this->addToInventory($inventory, $site);
+
+            // for all buildings
+            $buildings = Building::All()->where("site_id","=",$site->id)->sortBy("name");
+            foreach ($buildings as $building) {
+
+                $this->addToInventory($inventory, $site, $building);
+
+                // for all bays
+                $bays = Bay::All()->where("room_id","=",$building->id)->sortBy("name");
+                foreach ($bays as $bay) {
+
+                    $this->addToInventory($inventory, $site, $building, $bay);
+                }
+            }
+            
+        }
+
+        $header = array(
+            'Site',
+            'Room',
+            'Bay',
+            'Yype',
+            'Name',
+            'Description',
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+
+        // create the sheet
+        foreach ($inventory as $item) {
+
+                $sheet->setCellValue("A{$row}", $item["site"]);
+                $sheet->setCellValue("B{$row}", $item["room"]);
+                $sheet->setCellValue("C{$row}", $item["bay"]);
+                $sheet->setCellValue("D{$row}", $item["type"]);
+                $sheet->setCellValue("E{$row}", $item["name"]);
+                $sheet->setCellValue("F{$row}", $html->toRichTextObject($item["description"]));
+
+                $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
+
+
+
+
 
 }
 

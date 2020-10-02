@@ -14,13 +14,10 @@
                       <a href="/admin/report/applicationsByBlocks" target="_new">Applications par groupe applicatif</a><br><br>
                     </li>
                     <li>
-                      Applications par serveur<br><br>
-                    </li>
-                    <li>
                       <a href="/admin/report/logicalServerConfigs" target="_new">Configuration des serveurs</a><br><br>
                     </li>
                     <li>
-                      Inventaire des commutateurs<br><br>
+                      <a href="/admin/report/physicalInventory" target="_new">Inventaire de l'infrastructure physique</a><br><br>
                     </li>
                   </ul>
 
