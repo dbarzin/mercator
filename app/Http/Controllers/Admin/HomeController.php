@@ -511,7 +511,8 @@ class HomeController extends Controller
                     ->where('type', '<>', null)
                     ->where('site_id', '<>', null)
                     ->where('building_id', '<>', null)
-                    ->where('bay_id', '<>', null)
+                    // not always in a bay
+                    // ->where('bay_id', '<>', null)
                     ->count())
 
             ->with("wans", Wan::All()->count())

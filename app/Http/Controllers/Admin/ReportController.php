@@ -748,7 +748,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("D{$row}", $application->entity_resp ? $application->entity_resp->name : "");
                 $sheet->setCellValue("E{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("F{$row}", $application->responsible);
-                $sheet->setCellValue("G{$row}", $application->processes->implode('name', ', '));
+                $sheet->setCellValue("G{$row}", $application->processes->implode('identifiant', ', '));
                 $sheet->setCellValue("H{$row}", $application->technology);
                 $sheet->setCellValue("I{$row}", $application->type);
                 $sheet->setCellValue("J{$row}", $application->users);
@@ -869,6 +869,28 @@ class ReportController extends Controller
                 ));
         }
         
+        // StorageDevice;
+        if ($bay!=NULL) 
+            $storageDevices = StorageDevice::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $storageDevices = StorageDevice::All()->sortBy("name");
+
+        foreach ($storageDevices as $storageDevice) {            
+            array_push($inventory,
+                array(
+                    "site" => $storageDevice->name ?? "",
+                    "room" => $storageDevice->name ?? "",
+                    "bay" => "",
+                    "type" => "Storage",
+                    "name" => $storageDevice->name,
+                    "description" => $storageDevice->descrition,
+                ));
+        }
+
         // Peripheral
         if ($bay!=NULL) 
             $peripherals = Peripheral::All()->where("bay_id","=",$bay->id)->sortBy("name");        
@@ -988,7 +1010,7 @@ class ReportController extends Controller
             'Site',
             'Room',
             'Bay',
-            'Yype',
+            'Type',
             'Name',
             'Description',
             );

@@ -47,7 +47,19 @@
                 </thead>
                 <tbody>
                     @foreach($physicalServers as $key => $physicalServer)
-                        <tr data-entry-id="{{ $physicalServer->id }}">
+                        <tr data-entry-id="{{ $physicalServer->id }}"
+
+
+                        @if (($physicalServer->descrition==null)||
+                            ($physicalServer->configuration==null)||
+                            ($physicalServer->site_id==null)||
+                            ($physicalServer->building_id==null)||
+                            ($physicalServer->responsible==null)
+                            )
+                                class="table-warning"
+                        @endif
+
+                            >
                             <td>
 
                             </td>
