@@ -882,9 +882,9 @@ class ReportController extends Controller
         foreach ($storageDevices as $storageDevice) {            
             array_push($inventory,
                 array(
-                    "site" => $storageDevice->name ?? "",
-                    "room" => $storageDevice->name ?? "",
-                    "bay" => "",
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
                     "type" => "Storage",
                     "name" => $storageDevice->name,
                     "description" => $storageDevice->descrition,
