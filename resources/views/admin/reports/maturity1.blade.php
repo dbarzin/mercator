@@ -231,8 +231,8 @@
                              $phones + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 + 
                              $physicalSecurityDevices_lvl1 +
                             $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1) * 100 /
-                            ($sites + $buildings + $bays + $physicalServers + $workstations + $storageDevices +
-                            $peripherals + $phones + $physicalRouters + $physicalSwitchs + 
+                            ($sites + $buildings + $bays + $physicalServers +
+                             $phones + $physicalRouters + $physicalSwitchs + 
                             $wifiTerminals + $physicalSecurityDevices +
                             $wans + $mans + $lans + $vlans) 
                             ,0):0
