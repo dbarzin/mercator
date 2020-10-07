@@ -115,7 +115,7 @@ d3.select("#graph").graphviz()
                   WORKSTATION [label=\"Poste de travail\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/workstation.png\" href=\"/admin/workstations\"]\
                   PERIPHERAL [label=\"Périphérique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"/admin/peripherals\"]\
                   WIFI [label=\"Borne Wifi\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"/admin/wifi-terminals\"]\
-                  PHONE [label=\"Téléphne\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"/admin/phones\"]\
+                  PHONE [label=\"Téléphone\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"/admin/phones\"]\
                   SWITCH [label=\"Switch\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/physical-switches\"]\
                   STORAGE [label=\"Stockage\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"/admin/storage-devices\"]\
                   ROUTER [label=\"Router\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/physical-routers\"]\
