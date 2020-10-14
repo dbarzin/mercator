@@ -44,7 +44,17 @@
                 </thead>
                 <tbody>
                     @foreach($relations as $key => $relation)
-                        <tr data-entry-id="{{ $relation->id }}">
+                        <tr data-entry-id="{{ $relation->id }}"
+
+                        @if (($relation->description==null)||
+                            ($relation->importance==null)||
+                            ($application->type==null)
+                            )
+                                class="table-warning"
+                        @endif
+
+
+                          >
                             <td>
 
                             </td>

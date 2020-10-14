@@ -27,6 +27,44 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.name_helper') }}</span>
             </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
+                        <select class="form-control select2 {{ $errors->has('source') ? 'is-invalid' : '' }}" name="source_id" id="source_id" required>
+                            @foreach($sources as $id => $source)
+                                <option value="{{ $id }}" {{ ($relation->source ? $relation->source->id : old('source_id')) == $id ? 'selected' : '' }}>{{ $source }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('source'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('source') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.relation.fields.source_helper') }}</span>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="required" for="destination_id">{{ trans('cruds.relation.fields.destination') }}</label>
+                        <select class="form-control select2 {{ $errors->has('destination') ? 'is-invalid' : '' }}" name="destination_id" id="destination_id" required>
+                            @foreach($destinations as $id => $destination)
+                                <option value="{{ $id }}" {{ ($relation->destination ? $relation->destination->id : old('destination_id')) == $id ? 'selected' : '' }}>{{ $destination }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('destination'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('destination') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.relation.fields.destination_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="form-group">
                 <label for="type">{{ trans('cruds.relation.fields.type') }}</label>
                 <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -54,6 +92,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.description_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="inportance">{{ trans('cruds.relation.fields.inportance') }}</label>
                 <select class="form-control select2 {{ $errors->has('inportance') ? 'is-invalid' : '' }}" name="inportance" id="inportance">
@@ -70,34 +109,6 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.inportance_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
-                <select class="form-control select2 {{ $errors->has('source') ? 'is-invalid' : '' }}" name="source_id" id="source_id" required>
-                    @foreach($sources as $id => $source)
-                        <option value="{{ $id }}" {{ ($relation->source ? $relation->source->id : old('source_id')) == $id ? 'selected' : '' }}>{{ $source }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('source'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('source') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.relation.fields.source_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="destination_id">{{ trans('cruds.relation.fields.destination') }}</label>
-                <select class="form-control select2 {{ $errors->has('destination') ? 'is-invalid' : '' }}" name="destination_id" id="destination_id" required>
-                    @foreach($destinations as $id => $destination)
-                        <option value="{{ $id }}" {{ ($relation->destination ? $relation->destination->id : old('destination_id')) == $id ? 'selected' : '' }}>{{ $destination }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('destination'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('destination') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.relation.fields.destination_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
