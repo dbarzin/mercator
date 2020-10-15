@@ -66,7 +66,7 @@
 
 
             <div class="form-group">
-                <label for="type">{{ trans('cruds.relation.fields.type') }}</label>
+                <label class="recommended" for="type">{{ trans('cruds.relation.fields.type') }}</label>
                 <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                     @if (!$type_list->contains(old('type')))
                         <option> {{ old('type') }}</option>'
@@ -83,7 +83,7 @@
                 <span class="help-block">{{ trans('cruds.relation.fields.type_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.relation.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.relation.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $relation->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -94,7 +94,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inportance">{{ trans('cruds.relation.fields.inportance') }}</label>
+                <label class="recommended" for="inportance">{{ trans('cruds.relation.fields.inportance') }}</label>
                 <select class="form-control select2 {{ $errors->has('inportance') ? 'is-invalid' : '' }}" name="inportance" id="inportance">
                     <option value="0" {{ ($relation->inportance ? $relation->inportance : old('inportance')) == 0 ? 'selected' : '' }}></option>
                     <option value="1" {{ ($relation->inportance ? $relation->inportance : old('inportance')) == 1 ? 'selected' : '' }}>Faible</option>
