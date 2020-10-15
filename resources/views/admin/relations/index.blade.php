@@ -47,8 +47,8 @@
                         <tr data-entry-id="{{ $relation->id }}"
 
                         @if (($relation->description==null)||
-                            ($relation->importance==null)||
-                            ($application->type==null)
+                            ($relation->inportance==null)||
+                            ($relation->type==null)
                             )
                                 class="table-warning"
                         @endif
