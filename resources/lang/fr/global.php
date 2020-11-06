@@ -1,5 +1,7 @@
 <?php
 return [
+    "yes" => "oui",
+    "no" => "non",
     "action" => "Action",
     "action_id" => "ID de l'action",
     "action_model" => "Modèle de l'action",

@@ -19,6 +19,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.building.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="description">{{ trans('cruds.building.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
@@ -29,6 +30,23 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.building.fields.description_helper') }}</span>
             </div>
+
+            <div class="form-group">
+              <div>
+                <input type="checkbox" value="{{ old('camera', '') }}" id="camera" name="camera">
+                <label for="name">{{ trans('cruds.building.fields.camera') }}</label>
+              </div>
+              <span class="help-block">{{ trans('cruds.building.fields.camera_helper') }}</span>              
+            </div>
+
+            <div class="form-group">
+              <div>
+                <input type="checkbox" value="{{ old('badge', '') }}" id="badge" name="badge">
+                <label for="name">{{ trans('cruds.building.fields.badge') }}</label>
+              </div>
+              <span class="help-block">{{ trans('cruds.building.fields.badge_helper') }}</span>              
+            </div>
+
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.building.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">

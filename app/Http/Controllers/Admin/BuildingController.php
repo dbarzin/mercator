@@ -37,6 +37,9 @@ class BuildingController extends Controller
     public function store(StoreBuildingRequest $request)
     {
         $building = Building::create($request->all());
+        $building->camera = $request->has("camera");
+        $building->badge = $request->has("badge");
+        $building-> save();
 
         return redirect()->route('admin.buildings.index');
     }
@@ -54,6 +57,8 @@ class BuildingController extends Controller
 
     public function update(UpdateBuildingRequest $request, Building $building)
     {
+        $building->camera = $request->has("camera");
+        $building->badge = $request->has("badge");
         $building->update($request->all());
 
         return redirect()->route('admin.buildings.index');

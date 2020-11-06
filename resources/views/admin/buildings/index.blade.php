@@ -29,6 +29,12 @@
                             {{ trans('cruds.building.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.building.fields.camera') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.building.fields.badge') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.building.fields.site') }}
                         </th>
                         <th>
@@ -47,6 +53,12 @@
                             </td>
                             <td>
                                 {!! $building->description ?? '' !!}
+                            </td>
+                            <td>
+                                {{ $building->camera ? trans('global.yes') : trans('global.no') }} 
+                            </td>
+                            <td>
+                                {{ $building->badge ? trans('global.yes') : trans('global.no') }} 
                             </td>
                             <td>
                                 {{ $building->site->name ?? '' }}
