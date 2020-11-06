@@ -23,7 +23,7 @@ class UpdateSubnetwordRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:subnetwords,name,' . request()->route('subnetword')->id,
+                'unique:subnetworks,name,' . request()->route('subnetword')->id,
             ],
         ];
     }
