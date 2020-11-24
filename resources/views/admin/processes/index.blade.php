@@ -50,7 +50,18 @@
                 </thead>
                 <tbody>
                     @foreach($processes as $key => $process)
-                        <tr data-entry-id="{{ $process->id }}">
+                        <tr data-entry-id="{{ $process->id }}"
+@if(($process->identifiant==null)||
+    ($process->description==null)||
+    ($process->in_out==null)||
+    ($process->security_need==null)||
+    ($process->owner==null)||
+    ($process->macroprocess_id==null)
+    )
+                          class="table-warning"
+@endif
+
+                            >
                             <td>
 
                             </td>

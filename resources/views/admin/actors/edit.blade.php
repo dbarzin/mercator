@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.actor.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="contact">{{ trans('cruds.actor.fields.contact') }}</label>
+                <label class="recommended" for="contact">{{ trans('cruds.actor.fields.contact') }}</label>
                 <input class="form-control {{ $errors->has('contact') ? 'is-invalid' : '' }}" type="text" name="contact" id="contact" value="{{ old('contact', $actor->contact) }}">
                 @if($errors->has('contact'))
                     <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.actor.fields.contact_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="nature">{{ trans('cruds.actor.fields.nature') }}</label>
+                <label class="recommended" for="nature">{{ trans('cruds.actor.fields.nature') }}</label>
                 <input class="form-control {{ $errors->has('nature') ? 'is-invalid' : '' }}" type="text" name="nature" id="nature" value="{{ old('nature', $actor->nature) }}">
                 @if($errors->has('nature'))
                     <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                 <span class="help-block">{{ trans('cruds.actor.fields.nature_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="type">{{ trans('cruds.actor.fields.type') }}</label>
+                <label class="recommended" for="type">{{ trans('cruds.actor.fields.type') }}</label>
                 <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', $actor->type) }}">
                 @if($errors->has('type'))
                     <div class="invalid-feedback">

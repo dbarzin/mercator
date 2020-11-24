@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.database.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.database.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.database.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $database->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -53,7 +53,7 @@
                     <span class="help-block">{{ trans('cruds.database.fields.entities_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="entity_resp_id">{{ trans('cruds.database.fields.entity_resp') }}</label>
+                    <label class="recommended" for="entity_resp_id">{{ trans('cruds.database.fields.entity_resp') }}</label>
                     <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}" name="entity_resp_id" id="entity_resp_id">
                         @foreach($entity_resps as $id => $entity_resp)
                             <option value="{{ $id }}" {{ ($database->entity_resp ? $database->entity_resp->id : old('entity_resp_id')) == $id ? 'selected' : '' }}>{{ $entity_resp }}</option>
@@ -90,7 +90,7 @@
 
 
                 <div class="form-group">
-                    <label for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
+                    <label class="recommended" for="responsible">{{ trans('cruds.database.fields.responsible') }}</label>
                     <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
                         @if (!$external_list->contains(old('responsible')))
                             <option> {{ old('responsible') }}</option>'
@@ -129,7 +129,7 @@
                     <span class="help-block">{{ trans('cruds.database.fields.informations_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="type">{{ trans('cruds.database.fields.type') }}</label>
+                    <label class="recommended" for="type">{{ trans('cruds.database.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                         @if (!$type_list->contains(old('type')))
                             <option> {{ old('type') }}</option>'

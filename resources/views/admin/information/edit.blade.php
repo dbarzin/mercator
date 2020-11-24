@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="descrition">{{ trans('cruds.information.fields.descrition') }}</label>
+                <label class="recommended" for="descrition">{{ trans('cruds.information.fields.descrition') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('descrition') ? 'is-invalid' : '' }}" name="descrition" id="descrition">{!! old('descrition', $information->descrition) !!}</textarea>
                 @if($errors->has('descrition'))
                     <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.descrition_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="owner">{{ trans('cruds.information.fields.owner') }}</label>
+                <label class="recommended" for="owner">{{ trans('cruds.information.fields.owner') }}</label>
                 <input class="form-control {{ $errors->has('owner') ? 'is-invalid' : '' }}" type="text" name="owner" id="owner" value="{{ old('owner', $information->owner) }}">
                 @if($errors->has('owner'))
                     <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.owner_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
+                <label class="recommended" for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
                 <input class="form-control {{ $errors->has('administrator') ? 'is-invalid' : '' }}" type="text" name="administrator" id="administrator" value="{{ old('administrator', $information->administrator) }}">
                 @if($errors->has('administrator'))
                     <div class="invalid-feedback">
@@ -51,7 +51,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.administrator_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="storage">{{ trans('cruds.information.fields.storage') }}</label>
+                <label class="recommended" for="storage">{{ trans('cruds.information.fields.storage') }}</label>
                 <input class="form-control {{ $errors->has('storage') ? 'is-invalid' : '' }}" type="text" name="storage" id="storage" value="{{ old('storage', $information->storage) }}">
                 @if($errors->has('storage'))
                     <div class="invalid-feedback">
@@ -79,7 +79,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.process_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
+                <label class="recommended" for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
                 <select class="form-control select2 {{ $errors->has('security_need') ? 'is-invalid' : '' }}" name="security_need" id="security_need">
                     <option value="0" {{ ($information->security_need ? $information->security_need : old('security_need')) == 0 ? 'selected' : '' }}></option>
                     <option value="1" {{ ($information->security_need ? $information->security_need : old('security_need')) == 1 ? 'selected' : '' }}>Public</option>
@@ -90,7 +90,7 @@
                 <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
+                <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
                 <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
                 @if($errors->has('sensitivity'))
                     <div class="invalid-feedback">

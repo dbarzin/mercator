@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.process.fields.identifiant_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.process.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.process.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $process->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.process.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
+                <label class="recommended" for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('in_out') ? 'is-invalid' : '' }}" name="in_out" id="in_out">{!! old('in_out', $process->in_out) !!}</textarea>
                 @if($errors->has('in_out'))
                     <div class="invalid-feedback">
@@ -43,7 +43,6 @@
 
           <div class="row">
             <div class="col-sm">
-
 
                 <div class="form-group">
                     <label for="activities">{{ trans('cruds.process.fields.activities') }}</label>
@@ -83,7 +82,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="activities">{{ trans('cruds.process.fields.informations') }}</label>
+                    <label for="informations">{{ trans('cruds.process.fields.informations') }}</label>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -106,7 +105,7 @@
 
 
                 <div class="form-group">
-                    <label for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
+                    <label class="recommended" for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
                     <select class="form-control select2 {{ $errors->has('security_need') ? 'is-invalid' : '' }}" name="security_need" id="security_need">
                         <option value="0" {{ ($process->security_need ? $process->security_need : old('security_need')) == 0 ? 'selected' : '' }}></option>
                         <option value="1" {{ ($process->security_need ? $process->security_need : old('security_need')) == 1 ? 'selected' : '' }}>Public</option>
@@ -123,7 +122,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="macroprocessus">{{ trans('cruds.process.fields.macroprocessus') }}</label>
+                    <label class="recommended" for="macroprocessus">{{ trans('cruds.process.fields.macroprocessus') }}</label>
                     <select class="form-control select2 {{ $errors->has('macroProcessues') ? 'is-invalid' : '' }}" name="macroprocess_id" id="macroprocess_id">
                         <option></option>
                         @foreach($macroProcessuses as $id => $macroprocess)
@@ -140,7 +139,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="owner">{{ trans('cruds.process.fields.owner') }}</label>
+                    <label class="recommended" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
                     <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}" name="owner" id="owner">
                         @if (!$owner_list->contains(old('owner')))
                             <option> {{ old('owner') }}</option>'

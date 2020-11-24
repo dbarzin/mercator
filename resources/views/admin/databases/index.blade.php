@@ -41,7 +41,16 @@
                 </thead>
                 <tbody>
                     @foreach($databases as $key => $database)
-                        <tr data-entry-id="{{ $database->id }}">
+                        <tr data-entry-id="{{ $database->id }}"
+@if(($database->description==null)||
+    ($database->entity_resp_id==null)||
+    ($database->responsible==null)||
+    ($database->type==null)
+    )
+                          class="table-warning"
+@endif
+
+                          >
                             <td>
 
                             </td>

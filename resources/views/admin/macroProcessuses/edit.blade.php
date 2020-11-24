@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.macroProcessus.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.macroProcessus.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $macroProcessus->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="io_elements">{{ trans('cruds.macroProcessus.fields.io_elements') }}</label>
+                <label class="recommended" for="io_elements">{{ trans('cruds.macroProcessus.fields.io_elements') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('io_elements') ? 'is-invalid' : '' }}" name="io_elements" id="io_elements">{!! old('io_elements', $macroProcessus->io_elements) !!}</textarea>
                 @if($errors->has('io_elements'))
                     <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.io_elements_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
+                <label class="recommended" for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                 <select class="form-control select2 {{ $errors->has('security_need') ? 'is-invalid' : '' }}" name="security_need" id="security_need">
                     <option value="0" {{ ($macroProcessus->security_need ? $macroProcessus->security_need : old('security_need')) == 0 ? 'selected' : '' }}></option>
                     <option value="1" {{ ($macroProcessus->security_need ? $macroProcessus->security_need : old('security_need')) == 1 ? 'selected' : '' }}>Public</option>
@@ -58,7 +58,7 @@
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.security_need_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="owner">{{ trans('cruds.macroProcessus.fields.owner') }}</label>
+                <label class="recommended" for="owner">{{ trans('cruds.macroProcessus.fields.owner') }}</label>
                 <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}" name="owner" id="owner">
                     @if (!$owner_list->contains(old('owner')))
                         <option> {{ old('owner') }}</option>'

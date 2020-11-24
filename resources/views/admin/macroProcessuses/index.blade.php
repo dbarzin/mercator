@@ -40,7 +40,18 @@
                 </thead>
                 <tbody>
                     @foreach($macroProcessuses as $key => $macroProcessus)
-                        <tr data-entry-id="{{ $macroProcessus->id }}">
+                        <tr data-entry-id="{{ $macroProcessus->id }}"
+@if(($macroProcessus->description==null)||
+    ($macroProcessus->io_elements==null)||
+    ($macroProcessus->security_need==null)||
+        (
+        (auth()->user()->granularity>=2) && 
+        ($macroProcessus->owner==null)
+        )
+    )
+                          class="table-warning"
+@endif
+                            >
                             <td>
 
                             </td>

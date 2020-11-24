@@ -44,7 +44,19 @@
                 </thead>
                 <tbody>
                     @foreach($information as $key => $information)
-                        <tr data-entry-id="{{ $information->id }}">
+                        <tr data-entry-id="{{ $information->id }}"
+
+@if(($information->descrition==null)||
+    ($information->owner==null)||
+    ($information->administrator==null)||
+    ($information->storage==null)||
+    ($information->security_need==null)||
+    ($information->sensitivity==null)
+    )
+                          class="table-warning"
+@endif
+
+                            >
                             <td>
 
                             </td>

@@ -41,7 +41,12 @@
                 </thead>
                 <tbody>
                     @foreach($activities as $key => $activity)
-                        <tr data-entry-id="{{ $activity->id }}">
+                        <tr data-entry-id="{{ $activity->id }}"
+@if(($activity->description==null))
+                          class="table-warning"
+@endif
+
+                          >
                             <td>
 
                             </td>

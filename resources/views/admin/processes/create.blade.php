@@ -20,7 +20,7 @@
                 <span class="help-block">{{ trans('cruds.process.fields.identifiant_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.process.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.process.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -30,7 +30,7 @@
                 <span class="help-block">{{ trans('cruds.process.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
+                <label class="recommended" for="in_out">{{ trans('cruds.process.fields.in_out') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('in_out') ? 'is-invalid' : '' }}" name="in_out" id="in_out">{!! old('in_out') !!}</textarea>
                 @if($errors->has('in_out'))
                     <div class="invalid-feedback">
@@ -105,7 +105,7 @@
             <div class="col-sm">
 
                 <div class="form-group">
-                    <label for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
+                    <label class="recommended" for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
                     <select class="form-control select2 {{ $errors->has('security_need') ? 'is-invalid' : '' }}" name="security_need" id="security_need">
                         <option value="0"></option>
                         <option value="1" {{ old('security_need') == 1 ? 'selected' : '' }}>Public</option>
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="macroprocessus_id">{{ trans('cruds.process.fields.macroprocessus') }}</label>
+                    <label class="recommended" for="macroprocessus_id">{{ trans('cruds.process.fields.macroprocessus') }}</label>
                     <select class="form-control select2 {{ $errors->has('macroprocessus') ? 'is-invalid' : '' }}" name="macroprocess_id" id="macroprocess_id">
                         <option></option>
                         @foreach($macroProcessuses as $id => $macroprocessus)
@@ -140,7 +140,7 @@
 
 
                 <div class="form-group">
-                    <label for="owner">{{ trans('cruds.process.fields.owner') }}</label>
+                    <label class="recommended" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
                     <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}" name="owner" id="owner">
                         @if (!$owner_list->contains(old('owner')))
                             <option> {{ old('owner') }}</option>'

@@ -120,6 +120,7 @@ class HomeController extends Controller
                     ->where('security_need', '<>', null)
                     ->where('owner', '<>', null)
                     ->where('macroprocess_id', '<>', null)                    
+                    /*
                     // process must have one activity
                     ->whereExists(function ($query) {
                         $query->select("activity_process.process_id")
@@ -138,6 +139,7 @@ class HomeController extends Controller
                             ->from("m_application_process")
                             ->whereRaw("m_application_process.process_id = processes.id");
                     })
+                    */
                     ->count())
 
             ->with("activities", Activity::All()->count())
