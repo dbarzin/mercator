@@ -29,10 +29,10 @@
                             {{ trans('cruds.flux.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.flux.fields.application_source') }}
+                            {{ trans('cruds.flux.fields.source') }}
                         </th>
                         <th>
-                            {{ trans('cruds.flux.fields.application_dest') }}
+                            {{ trans('cruds.flux.fields.destination') }}
                         </th>
                         <th>
                             {{ trans('cruds.flux.fields.crypted') }}
@@ -44,7 +44,31 @@
                 </thead>
                 <tbody>
                     @foreach($fluxes as $key => $flux)
-                        <tr data-entry-id="{{ $flux->id }}">
+                        <tr data-entry-id="{{ $flux->id }}"
+
+@if(
+    // no description
+    ($flux->description==null)||
+    // no source
+    (
+      ($flux->application_source==null)&&
+      ($flux->service_source==null)&&
+      ($flux->module_source==null)&&
+      ($flux->database_source==null)
+    )||
+    // no destination
+    (
+      ($flux->application_dest==null)&&
+      ($flux->service_dest==null)&&
+      ($flux->module_dest==null)&&
+      ($flux->database_dest==null)
+    )
+  )
+                          class="table-warning"
+@endif
+
+
+                          >
                             <td>
 
                             </td>
@@ -55,10 +79,16 @@
                                 {{ $flux->description ?? '' }}
                             </td>
                             <td>
-                              {{ $flux->application_source->name ?? '' }}
+                              {{ $flux->application_source ? $flux->application_source->name : '' }}
+                              {{ $flux->service_source ? $flux->service_source->name : '' }}
+                              {{ $flux->module_source ? $flux->module_source->name : '' }}
+                              {{ $flux->database_source ? $flux->database_source->name : '' }}
                             </td>
                             <td>
-                              {{ $flux->application_dest->name ?? '' }}
+                              {{ $flux->application_dest ? $flux->application_dest->name : '' }}
+                              {{ $flux->service_dest ? $flux->service_dest->name : '' }}
+                              {{ $flux->module_dest ? $flux->module_dest->name : '' }}
+                              {{ $flux->database_dest ? $flux->database_dest->name : '' }}
                             </td>
                             <td>
                               @if ($flux->crypted==0)

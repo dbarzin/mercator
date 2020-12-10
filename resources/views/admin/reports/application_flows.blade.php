@@ -549,26 +549,29 @@ d3.select("#graph").graphviz()
                 DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
             @endforeach\
             @foreach($flows as $flow) \
-                @if ($flow->application_source_id!=null) \
-                A{{ $flow->application_source_id }} \
-                @elseif ($flow->service_source_id!=null) \
-                S{{ $flow->service_source_id }} \
-                @elseif ($flow->module_source_id!=null) \
-                M{{ $flow->module_source_id }} \
-                @elseif ($flow->database_source_id!=null) \
-                DB{{ $flow->database_source_id }} \
-                @endif\
-                -> \
-                @if ($flow->application_dest_id!=null) \
-                A{{ $flow->application_dest_id }} \
-                @elseif ($flow->service_dest_id!=null) \
-                S{{ $flow->service_dest_id }} \
-                @elseif ($flow->module_dest_id!=null) \
-                M{{ $flow->module_dest_id }} \
-                @elseif ($flow->database_dest_id!=null) \
-                DB{{ $flow->database_dest_id }} \
-                @endif\
+            \
+                @if ((($flow->database_source_id!=null)||($flow->module_source_id!=null)||($flow->service_source_id!=null)||($flow->application_source_id!=null))&&(($flow->database_dest_id!=null)||($flow->module_dest_id!=null)||($flow->service_dest_id!=null)||($flow->application_dest_id!=null)))\
+                        @if ($flow->database_source_id!=null) \
+                        DB{{ $flow->database_source_id }} \
+                        @elseif ($flow->module_source_id!=null) \
+                        M{{ $flow->module_source_id }} \
+                        @elseif ($flow->service_source_id!=null) \
+                        S{{ $flow->service_source_id }} \
+                        @elseif ($flow->application_source_id!=null) \
+                        A{{ $flow->application_source_id }} \
+                        @endif\
+                        -> \
+                        @if ($flow->database_dest_id!=null) \
+                        DB{{ $flow->database_dest_id }} \
+                        @elseif ($flow->module_dest_id!=null) \
+                        M{{ $flow->module_dest_id }} \
+                        @elseif ($flow->service_dest_id!=null) \
+                        S{{ $flow->service_dest_id }} \
+                        @elseif ($flow->application_dest_id!=null) \
+                        A{{ $flow->application_dest_id }} \
+                        @endif\
                 [ label=\"{{ $flow->name }}\" href=\"#FLOW{{$flow->id}}\"]\
+                @endif\
             @endforEach\
         }");
 </script>

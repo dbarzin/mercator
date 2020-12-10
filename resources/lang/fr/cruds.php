@@ -437,7 +437,9 @@ return [
             "service_source" => "Service Source",
             "service_source_helper" => "",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "source" => "Source",
+            "destination" => "Destination",
         ],
         "title" => "Flux",
         "title_singular" => "Flux"
