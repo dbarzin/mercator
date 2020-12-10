@@ -68,7 +68,7 @@
 
 
                 <div class="form-group">
-                    <label for="address_ip">{{ trans('cruds.logicalServer.fields.cpu') }}</label>
+                    <label for="cpu">{{ trans('cruds.logicalServer.fields.cpu') }}</label>
                     <input class="form-control {{ $errors->has('cpu') ? 'is-invalid' : '' }}" type="text" name="cpu" id="cpu" value="{{ old('cpu', '') }}">
                     @if($errors->has('cpu'))
                         <div class="invalid-feedback">
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address_ip">{{ trans('cruds.logicalServer.fields.memory') }}</label>
+                    <label for="memory">{{ trans('cruds.logicalServer.fields.memory') }}</label>
                     <input class="form-control {{ $errors->has('memory') ? 'is-invalid' : '' }}" type="text" name="memory" id="memory" value="{{ old('memory', '') }}">
                     @if($errors->has('memory'))
                         <div class="invalid-feedback">
@@ -87,6 +87,17 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.memory_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="disk">{{ trans('cruds.logicalServer.fields.disk') }}</label>
+                    <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', '') }}">
+                    @if($errors->has('disk'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('disk') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.disk_helper') }}</span>
                 </div>
 
             </div>

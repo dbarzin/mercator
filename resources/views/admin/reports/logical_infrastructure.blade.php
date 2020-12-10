@@ -175,6 +175,10 @@
                                             <td>{{ $logicalServer->memory }}</td>
                                         </tr>
                                         <tr>
+                                            <th>{{ trans('cruds.logicalServer.fields.disk') }}</th>
+                                            <td>{{ $logicalServer->disk }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>{{ trans('cruds.logicalServer.fields.environment') }}</th>
                                             <td>{{ $logicalServer->environment }}</td>
                                         </tr>

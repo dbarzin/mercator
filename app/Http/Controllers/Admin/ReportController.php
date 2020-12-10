@@ -784,6 +784,7 @@ class ReportController extends Controller
             'address_ip',
             'cpu',
             'memory',
+            'disk',
             'environment',
             'net_services',
             'configuration',
@@ -808,11 +809,12 @@ class ReportController extends Controller
                 $sheet->setCellValue("D{$row}", $logicalServer->address_ip);
                 $sheet->setCellValue("E{$row}", $logicalServer->cpu);
                 $sheet->setCellValue("F{$row}", $logicalServer->memory);
-                $sheet->setCellValue("G{$row}", $logicalServer->environment);
-                $sheet->setCellValue("H{$row}", $logicalServer->net_services);
-                $sheet->setCellValue("I{$row}", $html->toRichTextObject($logicalServer->configuration));
-                $sheet->setCellValue("J{$row}", $logicalServer->applications->implode('name', ', '));
-                $sheet->setCellValue("K{$row}", $logicalServer->servers->implode('name', ', '));
+                $sheet->setCellValue("G{$row}", $logicalServer->disk);
+                $sheet->setCellValue("H{$row}", $logicalServer->environment);
+                $sheet->setCellValue("I{$row}", $logicalServer->net_services);
+                $sheet->setCellValue("J{$row}", $html->toRichTextObject($logicalServer->configuration));
+                $sheet->setCellValue("K{$row}", $logicalServer->applications->implode('name', ', '));
+                $sheet->setCellValue("L{$row}", $logicalServer->servers->implode('name', ', '));
 
                 $row++;
             

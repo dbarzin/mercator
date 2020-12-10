@@ -33,6 +33,7 @@ class LogicalServer extends Model
         'address_ip',
         'cpu',
         'memory',
+        'disk',
         'environment',
         'net_services',
         'configuration',

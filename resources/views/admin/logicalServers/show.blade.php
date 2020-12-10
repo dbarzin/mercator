@@ -41,6 +41,54 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.logicalServer.fields.cpu') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->cpu !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.operating_system') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->operating_system !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.address_ip') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->address_ip !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.memory') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->memory !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.disk') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->disk !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.environment') }}
+                        </th>
+                        <td>
+                            {!! $logicalServer->environment !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.logicalServer.fields.configuration') }}
                         </th>
                         <td>

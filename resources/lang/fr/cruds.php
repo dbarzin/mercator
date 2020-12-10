@@ -551,6 +551,8 @@ return [
             "configuration_helper" => "Autres caractéritiques techniques",
             "cpu" => "CPU",
             "cpu_helper" => "Nombre de CPU",
+            "disk" => "Disque",
+            "disk_helper" => "Espace disque alloué (GB)",
             "created_at" => "Créé à",
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",

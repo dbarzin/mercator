@@ -88,6 +88,17 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.memory_helper') }}</span>
                 </div>
 
+                <div class="form-group">
+                    <label for="disk">{{ trans('cruds.logicalServer.fields.disk') }}</label>
+                    <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', $logicalServer->disk) }}">
+                    @if($errors->has('memory'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('disk') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.disk_helper') }}</span>
+                </div>
+
             </div>
             <div class="col-sm">
 
