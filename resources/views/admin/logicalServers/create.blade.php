@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label for="operating_system">{{ trans('cruds.logicalServer.fields.operating_system') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}" name="environment" id="environment">
+                    <select class="form-control select2-free {{ $errors->has('operating_system') ? 'is-invalid' : '' }}" name="operating_system" id="operating_system">
                         @if (!$operating_system_list->contains(old('operating_system')))
                             <option> {{ old('operating_system') }}</option>'
                         @endif
@@ -145,6 +145,26 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.configuration_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label class="recommended" for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    @foreach($applications as $id => $applications)
+                        <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $applications }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('servers'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('servers') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.logicalServer.fields.applications_helper') }}</span>
+            </div>
+
 
             <div class="form-group">
                 <label for="servers">{{ trans('cruds.logicalServer.fields.servers') }}</label>

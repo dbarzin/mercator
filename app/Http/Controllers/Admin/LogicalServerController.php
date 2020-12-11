@@ -47,7 +47,8 @@ class LogicalServerController extends Controller
     {
         $logicalServer = LogicalServer::create($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
-
+        $logicalServer->applications()->sync($request->input('applications', []));
+        
         return redirect()->route('admin.logical-servers.index');
     }
 
