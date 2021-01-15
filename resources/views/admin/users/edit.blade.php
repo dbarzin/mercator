@@ -30,6 +30,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
             </div>
+            @if (Config::get('app.ldap_domain')==null)            
             <div class="form-group">
                 <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
                 <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
@@ -40,6 +41,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
             </div>
+            @else
+                <input type="hidden" name="password" value="nopassword"/>
+            @endif
             <div class="form-group">
                 <label class="required" for="title">{{ trans("cruds.user.fields.language") }}</label>
                 <select class="form-control select2 {{ $errors->has('language') ? 'is-invalid' : '' }}" name="language" id="language">
