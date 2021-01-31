@@ -22,7 +22,7 @@
             </div>
             
             <div class="form-group">
-                <label for="description">{{ trans('cruds.applicationBlock.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.applicationBlock.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $applicationBlock->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-                <label for="responsible">{{ trans('cruds.applicationBlock.fields.responsible') }}</label>
+                <label class="recommended" for="responsible">{{ trans('cruds.applicationBlock.fields.responsible') }}</label>
                 <input class="form-control {{ $errors->has('responsible') ? 'is-invalid' : '' }}" type="text" name="responsible" id="responsible" value="{{ old('responsible', $applicationBlock->responsible) }}">
                 @if($errors->has('responsible'))
                     <div class="invalid-feedback">
@@ -42,7 +42,6 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationBlock.fields.responsible_helper') }}</span>
             </div>
-
 
             <div class="form-group">
                 <label for="applications">{{ trans('cruds.applicationBlock.fields.applications') }}</label>
