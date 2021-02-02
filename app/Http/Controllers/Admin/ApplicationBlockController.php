@@ -31,12 +31,17 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.applicationBlocks.create');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.applicationBlocks.create', compact('applications'));
     }
 
     public function store(StoreApplicationBlockRequest $request)
     {
         $applicationBlock = ApplicationBlock::create($request->all());
+
+        Mapplication::whereIn('id', $request->input('linkToApplications', []))
+              ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');
     }

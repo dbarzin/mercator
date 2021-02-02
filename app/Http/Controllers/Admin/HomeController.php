@@ -217,6 +217,12 @@ class HomeController extends Controller
             ->with("applicationBlocks_lvl2", ApplicationBlock
                     ::where('description', '<>', null)
                     ->where('responsible', '<>', null)
+                    // applicationBlock must have one application
+                    ->whereExists(function ($query) {
+                        $query->select("m_applications.id")
+                            ->from("m_applications")
+                            ->whereRaw("m_applications.application_block_id = application_blocks.id");
+                    })
                     ->count())
 
             ->with("applications", MApplication::All()->count())

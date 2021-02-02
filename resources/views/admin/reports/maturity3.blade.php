@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.maturity_level_2") }}
+                    {{ trans("panel.maturity_level_3") }}
                 </div>
                 <div class="card-body">
                     <div style="width: 350px; height: 180px;">

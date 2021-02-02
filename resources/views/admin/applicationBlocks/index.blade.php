@@ -41,7 +41,14 @@
                 </thead>
                 <tbody>
                     @foreach($applicationBlocks as $key => $applicationBlock)
-                        <tr data-entry-id="{{ $applicationBlock->id }}">
+                        <tr data-entry-id="{{ $applicationBlock->id }}"
+                        @if (($applicationBlock->description==null)||
+                            ($applicationBlock->responsible==null)||
+                            ($applicationBlock->applications->count()==0)
+                            )
+                           class="table-warning"
+                        @endif
+                          >
                             <td>
 
                             </td>
