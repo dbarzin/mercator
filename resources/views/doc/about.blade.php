@@ -38,7 +38,9 @@ Une carte de Mercator ne peut ainsi couvrir les pôles : ils seraient infiniment
 Cela a par exemple pour conséquence la vision d'une égalité de surface entre le Groenland 
 et l'Afrique alors que cette dernière est 14 fois plus grande. 
 </p>  
-
+<p>
+  src: <a href="https://fr.wikipedia.org/wiki/G%C3%A9rard_Mercator">Wikipedia</a>
+</p>
                     </div>
                   </div>
               </div>
