@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    About
+                    Guide
                 </div>
                 <div class="card-body">
 
