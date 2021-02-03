@@ -82,7 +82,7 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="/admin/doc/report">{{ trans('panel.menu.reports') }}</a>
                       <a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a>
-                      <a class="dropdown-item" href="https://www.ssi.gouv.fr/entreprise/guide/cartographie-du-systeme-dinformation/" target="new">{{ trans('panel.menu.guide') }}</a>
+                      <a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a>
                       <a class="dropdown-item" href="/admin/doc/about">{{ trans('panel.menu.about') }}</a>
                     </div>
                 </li>

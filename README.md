@@ -1,7 +1,22 @@
 # Mercator
 
+Mercator est une application Web permettant de gérer la cartographie d’un système d’information 
+comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
+
 ## Introduction
-Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
+
+Les attaques informatiques interviennent dans un environnement en constante évolution. 
+Pour répondre à ces enjeux, il est nécessaire de mettre en place une approche globale de 
+gestion des risques au sein de son organisation. 
+
+La cartographie du Système d’Information permet d’avoir une vue globale de l’ensemble 
+des éléments qui constituent le système d’information pour d’obtenir une meilleure lisibilité, 
+et donc un meilleur contrôle. 
+
+L’élaboration d’une cartographie participe à la protection, à la défense et à la résilience 
+du système d’information. C’est un outil indispensable à la maitrise de son système d’information 
+(SI) et est une obligation pour les Opérateurs d’importance vitale (OIV) et qui s’intègre dans une 
+démarche globale de gestion des risques.
 
 ## Fonctions majeures
 - Gestion des vues (écosystème, système d’information, administration, logique, applications, et physique)

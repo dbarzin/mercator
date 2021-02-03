@@ -251,6 +251,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('doc/maturity', function () {
         return view('doc/maturity');
         });
+    Route::get('doc/guide', function () {
+        return view('doc/guide');
+        });
+
     Route::get('doc/about', function () {
         return view('doc/about');
         });
