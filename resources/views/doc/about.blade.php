@@ -17,6 +17,11 @@
                     <div class="col-6">
 
 <p>
+Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit 
+dans le <a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">Guide pour la cartographie du Système d’information</a> 
+de l’<a href="https://www.ssi.gouv.fr/">ANSSI</a>.
+</p>
+<p>
 Gérard Mercator, né le 5 mars 1512 à Rupelmonde et mort le 2 décembre 1594 à Duisbourg, 
 est un mathématicien, géographe et cartographe flamand, inventeur de la projection
 cartographique qui porte son nom. 

@@ -11,12 +11,15 @@
                 <div class="card-body">
                   <ul>
                     <li>
+                      Liste de toutes les applications par groupe applicatif<br>
                       <a href="/admin/report/applicationsByBlocks" target="_new">Applications par groupe applicatif</a><br><br>
                     </li>
                     <li>
+                      Liste de la configuration des serveurs logiques<br>
                       <a href="/admin/report/logicalServerConfigs" target="_new">Configuration des serveurs</a><br><br>
                     </li>
                     <li>
+                      Liste des équipements par site/local<br>
                       <a href="/admin/report/physicalInventory" target="_new">Inventaire de l'infrastructure physique</a><br><br>
                     </li>
                   </ul>
