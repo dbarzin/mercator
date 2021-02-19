@@ -1098,6 +1098,7 @@ class ReportController extends Controller
         // ====================
         // ==== Ecosystème ====
         // ====================
+        /*
         if ($vues==null || in_array("1",$vues)) {
             // schema
             $section->addTitle("Ecosystème", 1);
@@ -1110,96 +1111,6 @@ class ReportController extends Controller
             $entities = Entity::All()->sortBy("name");
             $relations = Relation::All()->sortBy("name");
 
-            // generate schema
-            $dotFile=storage_path('app/models/carto.docx')
-            foreach ($entities as $entity) {
-                # code...
-            }
-
-            foreach ($relations as $relation) {
-                # code...
-            }
-
-
-    .renderDot("digraph  {\
-            <?php  $i=0; ?>\
-            @foreach($entities as $entity) \
-                E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]\
-            @endforEach\
-            @foreach($relations as $relation) \
-                E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]\
-            @endforEach\
-        }");
-
-
-            /* 
-            // create table
-            $table =new Table(array('borderSize' => 3, 'borderColor' => 'black', 'width' => 9800 , 'unit' => TblWidth::TWIP));
-            // create header
-            $table->addRow();
-            $table->addCell(2000, ['bgColor'=>'#FFD5CA'])
-                ->addText('#', ['bold' => true, ], ['align'=>'center']);
-            $table->addCell(12500, ['bgColor'=>'#FFD5CA'])
-                ->addText('Domaine', ['bold' => true]);
-            $table->addCell(2500, ['bgColor'=>'#FFD5CA'])
-                ->addText('KPI', ['bold' => true], ['align'=>'center']);
-            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
-                ->addText('0', ['bold' => true, 'color' => '#FF0000' ], ['align'=>'center']);
-            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
-                ->addText('1', ['bold' => true, 'color' => '#FF8000'], ['align'=>'center']);
-            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
-                ->addText('2', ['bold' => true, 'color' => '#00CC00'], ['align'=>'center']);
-
-
-        $d=0;
-        foreach($domains as $domain) {
-            $table->addRow();
-            $table->addCell(2000)->addText(
-                $domain->title, null,
-                ['spaceBefore'=>0,'spaceAfter'=>0,'align'=>'center']
-            );
-            $table->addCell(12500)->addText(
-                $domain->description, null,
-                ['spaceBefore'=>0,'spaceAfter'=>0]
-            );
-
-            // PKI
-            $v=$values[0][$d]+$values[1][$d]+$values[2][$d];
-            if ($v!=0)
-                $v=intdiv($values[0][$d]*100, $v);
-
-            $table->addCell(2500)
-                ->addText(
-                    $v .'%',
-                    ($v>=90 ? ['bold' => true, 'color' => '#00CC00'] :
-                    ($v>=80 ? ['bold' => true, 'color' => '#FF8000'] :
-                    ['bold' => true,'color' => '#FF0000'])),
-                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0]
-                );
-            // values
-            $table->addCell(1000)
-                ->addText(
-                    $values[2][$d],
-                    ['bold' => true, 'color' => '#FF0000'  ], 
-                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
-                );
-            $table->addCell(1000)
-                ->addText(
-                    $values[1][$d],
-                    ['bold' => true, 'color' => '#FF8000'],
-                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
-                );
-            $table->addCell(1000)
-                ->addText(
-                    $values[0][$d],
-                    ['bold' => true, 'color' => '#00CC00'],
-                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
-                );
-
-            // next
-            $d++;
-        }
-        */
             $section->addTextBreak(2);
             $section->addTitle('Relations', 2);
             $section->addText("Inventaire des entités du SI");
@@ -1244,7 +1155,8 @@ class ReportController extends Controller
 
         // if (file_exists($filepath)) unlink($filepath);
         // $templateProcessor->saveAs();
-
+        */
+        
         // return
         return response()->download($filepath);       
     }
