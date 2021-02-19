@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+Use \Carbon\Carbon;
+
 // ecosystem
 use App\Entity;
 use App\Relation;
@@ -58,9 +60,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-// Excel
-// use PhpOffice\PhpSpreadsheet\Spreadsheet;
-// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// PhpOffice
+use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\SimpleType\TblWidth;
+use PhpOffice\PhpWord\Shared\Converter;
+use PhpOffice\PhpWord\Element\TextRun;
+use PhpOffice\PhpWord\Element\Section;
+use PhpOffice\PhpWord\Element\Chart;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\PhpWord;
+
+
+use PhpOffice\PhpWord\Element\Line;
+// use PhpOffice\PhpWord\Element\Section;
+
 
 class ReportController extends Controller
 {
@@ -1047,8 +1060,194 @@ class ReportController extends Controller
     }
 
 
+    public function cartography(Request $request) {
+        // get parameters
+        $granularity = $request->granularity;
+        $vues = $request->input('vues', []);
+
+        // get template
+        // $templateProcessor = new TemplateProcessor(storage_path('app/models/carto.docx'));
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+
+        // Numbering Style
+        $phpWord->addNumberingStyle(
+            'hNum',
+            array('type' => 'multilevel', 'levels' => array(
+                array('pStyle' => 'Heading1', 'format' => 'decimal', 'text' => '%1.'),
+                array('pStyle' => 'Heading2', 'format' => 'decimal', 'text' => '%1.%2.'),
+                array('pStyle' => 'Heading3', 'format' => 'decimal', 'text' => '%1.%2.%3.'),
+                )
+            )
+        );
+        $phpWord->addTitleStyle(0, array('size' => 28), array('align'=>'center'));
+        $phpWord->addTitleStyle(1, array('size' => 16), array('numStyle' => 'hNum', 'numLevel' => 0));
+        $phpWord->addTitleStyle(2, array('size' => 14), array('numStyle' => 'hNum', 'numLevel' => 1));
+        $phpWord->addTitleStyle(3, array('size' => 12), array('numStyle' => 'hNum', 'numLevel' => 2));
+
+        // Title
+        $section->addTitle("Cartographie du Système d'information",0);        
+        $section->addTextBreak(2);
+
+        // TOC
+        $toc = $section->addTOC(array('spaceAfter' => 60, 'size' => 12));
+        $toc->setMinDepth(1);
+        $toc->setMaxDepth(3);
+        $section->addTextBreak(1);
+
+        // ====================
+        // ==== Ecosystème ====
+        // ====================
+        if ($vues==null || in_array("1",$vues)) {
+            // schema
+            $section->addTitle("Ecosystème", 1);
+
+            $section->addTitle('Entités', 2);
+
+            $section->addText("Vue des entités du Système d'Information");
+
+            // get all entities
+            $entities = Entity::All()->sortBy("name");
+            $relations = Relation::All()->sortBy("name");
+
+            // generate schema
+            $dotFile=storage_path('app/models/carto.docx')
+            foreach ($entities as $entity) {
+                # code...
+            }
+
+            foreach ($relations as $relation) {
+                # code...
+            }
 
 
+    .renderDot("digraph  {\
+            <?php  $i=0; ?>\
+            @foreach($entities as $entity) \
+                E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]\
+            @endforEach\
+            @foreach($relations as $relation) \
+                E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]\
+            @endforEach\
+        }");
+
+
+            /* 
+            // create table
+            $table =new Table(array('borderSize' => 3, 'borderColor' => 'black', 'width' => 9800 , 'unit' => TblWidth::TWIP));
+            // create header
+            $table->addRow();
+            $table->addCell(2000, ['bgColor'=>'#FFD5CA'])
+                ->addText('#', ['bold' => true, ], ['align'=>'center']);
+            $table->addCell(12500, ['bgColor'=>'#FFD5CA'])
+                ->addText('Domaine', ['bold' => true]);
+            $table->addCell(2500, ['bgColor'=>'#FFD5CA'])
+                ->addText('KPI', ['bold' => true], ['align'=>'center']);
+            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
+                ->addText('0', ['bold' => true, 'color' => '#FF0000' ], ['align'=>'center']);
+            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
+                ->addText('1', ['bold' => true, 'color' => '#FF8000'], ['align'=>'center']);
+            $table->addCell(1000, ['bgColor'=>'#FFD5CA'])
+                ->addText('2', ['bold' => true, 'color' => '#00CC00'], ['align'=>'center']);
+
+
+        $d=0;
+        foreach($domains as $domain) {
+            $table->addRow();
+            $table->addCell(2000)->addText(
+                $domain->title, null,
+                ['spaceBefore'=>0,'spaceAfter'=>0,'align'=>'center']
+            );
+            $table->addCell(12500)->addText(
+                $domain->description, null,
+                ['spaceBefore'=>0,'spaceAfter'=>0]
+            );
+
+            // PKI
+            $v=$values[0][$d]+$values[1][$d]+$values[2][$d];
+            if ($v!=0)
+                $v=intdiv($values[0][$d]*100, $v);
+
+            $table->addCell(2500)
+                ->addText(
+                    $v .'%',
+                    ($v>=90 ? ['bold' => true, 'color' => '#00CC00'] :
+                    ($v>=80 ? ['bold' => true, 'color' => '#FF8000'] :
+                    ['bold' => true,'color' => '#FF0000'])),
+                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0]
+                );
+            // values
+            $table->addCell(1000)
+                ->addText(
+                    $values[2][$d],
+                    ['bold' => true, 'color' => '#FF0000'  ], 
+                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
+                );
+            $table->addCell(1000)
+                ->addText(
+                    $values[1][$d],
+                    ['bold' => true, 'color' => '#FF8000'],
+                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
+                );
+            $table->addCell(1000)
+                ->addText(
+                    $values[0][$d],
+                    ['bold' => true, 'color' => '#00CC00'],
+                    ['align'=>'center','spaceBefore'=>0,'spaceAfter'=>0 ]
+                );
+
+            // next
+            $d++;
+        }
+        */
+            $section->addTextBreak(2);
+            $section->addTitle('Relations', 2);
+            $section->addText("Inventaire des entités du SI");
+        }
+
+        // <option value="2">Système d'information</option>
+        if ($vues==null || in_array("2",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Système d'information", 1);
+        }
+
+        // <option value="3">Applications</option>
+        if ($vues==null || in_array("3",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Applications", 1);
+        }
+
+        // <option value="4">Administration</option>
+        if ($vues==null || in_array("4",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Administration", 1);
+        }
+
+        // <option value="5">Infrastructure physique</option>
+        if ($vues==null || in_array("5",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Infrastructure physique", 1);
+        }
+
+        // <option value="6">Infrastructure logique</option>
+        if ($vues==null || in_array("6",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Infrastructure logique", 1);
+        }
+
+        // save a copy
+        $filepath=storage_path('app/reports/cartographie-'. Carbon::today()->format("Ymd") .'.docx');
+
+        // Saving the document as OOXML file...
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($filepath);
+
+        // if (file_exists($filepath)) unlink($filepath);
+        // $templateProcessor->saveAs();
+
+        // return
+        return response()->download($filepath);       
+    }
 
 }
 

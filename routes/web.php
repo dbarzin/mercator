@@ -234,10 +234,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('report/maturity2', 'HomeController@maturity2');
     Route::get('report/maturity3', 'HomeController@maturity3');
 
-    // Excel
+    // Reporting
     Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
     Route::get('report/logicalServerConfigs', 'ReportController@logicalServerConfigs');
     Route::get('report/physicalInventory', 'ReportController@physicalInventory');
+    Route::put('report/cartography', 'ReportController@cartography');
 
     // Reporting
     Route::get('doc/report', function () {
