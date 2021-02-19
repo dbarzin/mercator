@@ -1156,9 +1156,10 @@ class ReportController extends Controller
         // if (file_exists($filepath)) unlink($filepath);
         // $templateProcessor->saveAs();
         */
-        
+
         // return
-        return response()->download($filepath);       
+        // return response()->download($filepath);       
+        return null;
     }
 
 }
