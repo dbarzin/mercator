@@ -24,7 +24,7 @@ class SubnetwordController extends Controller
 
         $subnetwords = Subnetword::all()->sortBy('name');
 
-        return view('admin.subnetwords.index', compact('subnetwords'));
+        return view('admin.subnetworks.index', compact('subnetwords'));
     }
 
     public function create()
@@ -35,17 +35,17 @@ class SubnetwordController extends Controller
 
         $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.subnetwords.create', compact('connected_subnets', 'gateways'));
+        return view('admin.subnetworks.create', compact('connected_subnets', 'gateways'));
     }
 
     public function store(StoreSubnetwordRequest $request)
     {
         $subnetword = Subnetword::create($request->all());
 
-        return redirect()->route('admin.subnetwords.index');
+        return redirect()->route('admin.subnetworks.index');
     }
 
-    public function edit(Subnetword $subnetword)
+    public function edit(Subnetword $subnetwork)
     {
         abort_if(Gate::denies('subnetword_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -53,32 +53,32 @@ class SubnetwordController extends Controller
 
         $gateways = Gateway::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $subnetword->load('connected_subnets', 'gateway');
+        $subnetwork->load('connected_subnets', 'gateway');
 
-        return view('admin.subnetwords.edit', compact('connected_subnets', 'gateways', 'subnetword'));
+        return view('admin.subnetworks.edit', compact('connected_subnets', 'gateways', 'subnetwork'));
     }
 
-    public function update(UpdateSubnetwordRequest $request, Subnetword $subnetword)
+    public function update(UpdateSubnetwordRequest $request, Subnetword $subnetwork)
     {
-        $subnetword->update($request->all());
+        $subnetwork->update($request->all());
 
-        return redirect()->route('admin.subnetwords.index');
+        return redirect()->route('admin.subnetworks.index');
     }
 
-    public function show(Subnetword $subnetword)
+    public function show(Subnetword $subnetwork)
     {
         abort_if(Gate::denies('subnetword_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetword->load('connected_subnets', 'gateway', 'connectedSubnetsSubnetwords', 'subnetworksNetworks');
+        $subnetwork->load('connected_subnets', 'gateway', 'connectedSubnetsSubnetwords', 'subnetworksNetworks');
 
-        return view('admin.subnetwords.show', compact('subnetword'));
+        return view('admin.subnetworks.show', compact('subnetwork'));
     }
 
-    public function destroy(Subnetword $subnetword)
+    public function destroy(Subnetword $subnetwork)
     {
         abort_if(Gate::denies('subnetword_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetword->delete();
+        $subnetwork->delete();
 
         return back();
     }

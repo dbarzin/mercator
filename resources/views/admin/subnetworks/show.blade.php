@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subnetwords.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.subnetworks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -20,7 +20,7 @@
                             {{ trans('cruds.subnetwork.fields.id') }}
                         </th>
                         <td>
-                            {{ $subnetword->id }}
+                            {{ $subnetwork->id }}
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             {{ trans('cruds.subnetwork.fields.name') }}
                         </th>
                         <td>
-                            {{ $subnetword->name }}
+                            {{ $subnetwork->name }}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{ trans('cruds.subnetwork.fields.description') }}
                         </th>
                         <td>
-                            {!! $subnetword->description !!}
+                            {!! $subnetwork->description !!}
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             {{ trans('cruds.subnetwork.fields.address') }}
                         </th>
                         <td>
-                            {{ $subnetword->address }}
+                            {{ $subnetwork->address }}
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +52,7 @@
                             {{ trans('cruds.subnetwork.fields.ip_range') }}
                         </th>
                         <td>
-                            {{ $subnetword->ip_range }}
+                            {{ $subnetwork->ip_range }}
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                             {{ trans('cruds.subnetwork.fields.ip_allocation_type') }}
                         </th>
                         <td>
-                            {{ $subnetword->ip_allocation_type }}
+                            {{ $subnetwork->ip_allocation_type }}
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@
                             {{ trans('cruds.subnetwork.fields.responsible_exp') }}
                         </th>
                         <td>
-                            {{ $subnetword->responsible_exp }}
+                            {{ $subnetwork->responsible_exp }}
                         </td>
                     </tr>
                     <tr>
@@ -76,7 +76,7 @@
                             {{ trans('cruds.subnetwork.fields.dmz') }}
                         </th>
                         <td>
-                            {{ $subnetword->dmz }}
+                            {{ $subnetwork->dmz }}
                         </td>
                     </tr>
                     <tr>
@@ -84,7 +84,7 @@
                             {{ trans('cruds.subnetwork.fields.wifi') }}
                         </th>
                         <td>
-                            {{ $subnetword->wifi }}
+                            {{ $subnetwork->wifi }}
                         </td>
                     </tr>
                     <tr>
@@ -92,7 +92,7 @@
                             {{ trans('cruds.subnetwork.fields.connected_subnets') }}
                         </th>
                         <td>
-                            {{ $subnetword->connected_subnets->name ?? '' }}
+                            {{ $subnetwork->connected_subnets->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -100,13 +100,13 @@
                             {{ trans('cruds.subnetwork.fields.gateway') }}
                         </th>
                         <td>
-                            {{ $subnetword->gateway->name ?? '' }}
+                            {{ $subnetwork->gateway->name ?? '' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subnetwords.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.subnetworks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -132,10 +132,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="connected_subnets_subnetwords">
-            @includeIf('admin.subnetwords.relationships.connectedSubnetsSubnetwords', ['subnetwords' => $subnetword->connectedSubnetsSubnetwords])
+            @includeIf('admin.subnetwords.relationships.connectedSubnetsSubnetwords', ['subnetwords' => $subnetwork->connectedSubnetsSubnetwords])
         </div>
         <div class="tab-pane" role="tabpanel" id="subnetworks_networks">
-            @includeIf('admin.subnetwords.relationships.subnetworksNetworks', ['networks' => $subnetword->subnetworksNetworks])
+            @includeIf('admin.subnetwords.relationships.subnetworksNetworks', ['networks' => $subnetwork->subnetworksNetworks])
         </div>
     </div>
 </div>

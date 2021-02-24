@@ -3,7 +3,7 @@
 @can('subnetword_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.subnetwords.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.subnetworks.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.subnetwork.title_singular') }}
             </a>
         </div>
@@ -47,19 +47,19 @@
                             </td>
                             <td>
                                 @can('subnetword_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.subnetwords.show', $subnetword->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.subnetworks.show', $subnetword->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('subnetword_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.subnetwords.edit', $subnetword->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.subnetworks.edit', $subnetword->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('subnetword_delete')
-                                    <form action="{{ route('admin.subnetwords.destroy', $subnetword->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.subnetworks.destroy', $subnetword->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -88,7 +88,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.subnetwords.massDestroy') }}",
+    url: "{{ route('admin.subnetworks.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
