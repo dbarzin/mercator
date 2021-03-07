@@ -1103,12 +1103,14 @@ class ReportController extends Controller
 
 
     public function cartography(Request $request) {
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
         // get parameters
         $granularity = $request->granularity;
         $vues = $request->input('vues', []);
 
         // get template
-        // $templateProcessor = new TemplateProcessor(storage_path('app/models/carto.docx'));
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
 
@@ -1122,40 +1124,126 @@ class ReportController extends Controller
                 )
             )
         );
-        $phpWord->addTitleStyle(0, array('size' => 28), array('align'=>'center'));
-        $phpWord->addTitleStyle(1, array('size' => 16), array('numStyle' => 'hNum', 'numLevel' => 0));
-        $phpWord->addTitleStyle(2, array('size' => 14), array('numStyle' => 'hNum', 'numLevel' => 1));
-        $phpWord->addTitleStyle(3, array('size' => 12), array('numStyle' => 'hNum', 'numLevel' => 2));
+        $phpWord->addTitleStyle(0, 
+                array('size' => 28, 'bold' => true), 
+                array('align'=>'center'));
+        $phpWord->addTitleStyle(1, 
+                array('size' => 16, 'bold' => true), 
+                array('numStyle' => 'hNum', 'numLevel' => 0));
+        $phpWord->addTitleStyle(2, 
+                array('size' => 14, 'bold' => true), 
+                array('numStyle' => 'hNum', 'numLevel' => 1));
+        $phpWord->addTitleStyle(3, 
+                array('size' => 12, 'bold' => true), 
+                array('numStyle' => 'hNum', 'numLevel' => 2));
+
+        // cell style
+        $fancyTableTitleStyle=array("bold"=>true, 'color' => '006699');
+        $fancyTableCellStyle=array("bold"=>true, 'color' => '000000');
 
         // Title
         $section->addTitle("Cartographie du Système d'information",0);        
         $section->addTextBreak(2);
 
         // TOC
-        $toc = $section->addTOC(array('spaceAfter' => 60, 'size' => 12));
+        $toc = $section->addTOC(array('spaceAfter' => 60, 'size' => 10));
         $toc->setMinDepth(1);
         $toc->setMaxDepth(3);
         $section->addTextBreak(1);
 
+        // Add footer
+        $footer = $section->addFooter();
+        $footer->addPreserveText('Page {PAGE} of {NUMPAGES}.', array('size' => 8) , array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
+        // $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');        
+
         // ====================
         // ==== Ecosystème ====
-        // ====================
-        /*
+        // ====================        
         if ($vues==null || in_array("1",$vues)) {
             // schema
             $section->addTitle("Ecosystème", 1);
 
+            // ENTITIES
             $section->addTitle('Entités', 2);
-
-            $section->addText("Vue des entités du Système d'Information");
+            $section->addText("Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.");
+            $section->addTextBreak(1);
 
             // get all entities
             $entities = Entity::All()->sortBy("name");
-            $relations = Relation::All()->sortBy("name");
+            foreach ($entities as $entity) {
+                $section->addBookmark("ENTITY".$entity->id);
+                $table = $section->addTable(
+                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                $table->addRow();
+                $table->addCell(7500,array('gridSpan' => 2,'bold'=>true))
+                    ->addText($entity->name,$fancyTableTitleStyle);
+                $table->addRow();
+                $table->addCell(1500)->addText("Description", $fancyTableCellStyle);
+                $table->addCell(6000)->addText(
+                    htmlspecialchars($html->toRichTextObject($entity->description))
+                    );
+                $table->addRow();
+                $table->addCell(1500)->addText("Niveau de sécurité",$fancyTableCellStyle);
+                $table->addCell(6000)->addText(htmlspecialchars($html->toRichTextObject($entity->security_level)));
+                $table->addRow();
+                $table->addCell(1500)->addText("Point de contact",$fancyTableCellStyle);
+                $table->addCell(6000)->addText($entity->contact_point);
+                $table->addRow();
+                $table->addCell(1500)->addText("Relations",$fancyTableCellStyle);
+                $cell=$table->addCell(6000);
+                foreach ($entity->sourceRelations as $relation) {
+                    $cell->addLink('RELATION'.$relation->id, $relation->name, null, null, true);
+                    $cell->addText('->');
+                    $cell->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);                    
+                    $cell->addText(",");
+                }
+                $table->addRow();
+                $table->addCell(1500)->addText("Processus soutenus",$fancyTableCellStyle);
+                $table->addCell(6000)->addText("");
+                $section->addTextBreak(1);
+            }
 
+            // RELATIONS
             $section->addTextBreak(2);
             $section->addTitle('Relations', 2);
-            $section->addText("Inventaire des entités du SI");
+            $section->addText("Lien entre deux entités ou systèmes.");
+            $section->addTextBreak(1);
+
+            // get all relations
+            $relations = Relation::All()->sortBy("name");
+            foreach ($relations as $relation) {
+                $section->addBookmark("RELATION".$relation->id);
+                $table = $section->addTable(
+                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                $table->addRow();
+                $table->addCell(7500,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
+                $table->addRow();
+                $table->addCell(1500)->addText("Description",$fancyTableCellStyle);
+                $table->addCell(6000)->addText(htmlspecialchars($html->toRichTextObject($relation->description)));
+                $table->addRow();
+                $table->addCell(1500)->addText("Type",$fancyTableCellStyle);
+                $table->addCell(6000)->addText($relation->type);
+                $table->addRow();
+                $table->addCell(1500)->addText("Importance",$fancyTableCellStyle);
+                if ($relation->inportance==1) 
+                    $table->addCell(6000)->addText('Faible');
+                elseif ($relation->inportance==2)
+                    $table->addCell(6000)->addText('Moyen');
+                elseif ($relation->inportance==3)
+                    $table->addCell(6000)->addText('Fort');
+                elseif ($relation->inportance==4)
+                    $table->addCell(6000)->addText('Critique');
+                else
+                    $table->addCell(6000)->addText("");
+                $table->addRow();
+                $table->addCell(1500)->addText("Lien",$fancyTableCellStyle);
+                $cell=$table->addCell(6000);
+                $cell->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, null, null, true);
+                $cell->addText(" -> ");
+                $cell->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);
+                $section->addTextBreak(1);
+            }
+
         }
 
         // <option value="2">Système d'information</option>
@@ -1197,11 +1285,10 @@ class ReportController extends Controller
 
         // if (file_exists($filepath)) unlink($filepath);
         // $templateProcessor->saveAs();
-        */
 
         // return
-        // return response()->download($filepath);       
-        return null;
+        return response()->download($filepath);       
+        // return null;
     }
 
 }

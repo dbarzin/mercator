@@ -47,6 +47,19 @@
                                     <td>{!! $entity->contact_point !!}</td>
                                 </tr>
                                 <tr>
+                                    <td><b>Relations</b></td>
+                                    <td>
+                                        @foreach ($entity->sourceRelations as $relation)
+                                            <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
+                                            ->
+                                            <a href="#ENTITY{{ $relation->destination_id }}">{{ $entities->find($relation->destination_id)->name }}s</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><b>Processus soutenus</b></td>
                                     <td>
                                         @foreach ($entity->entitiesProcesses as $process)
@@ -93,7 +106,7 @@
                                     <td>{{ $relation->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Inportance</b></td>
+                                    <td><b>Importance</b></td>
                                     <td>
                                     @if ($relation->inportance==1) 
                                         Faible
@@ -108,9 +121,14 @@
                                 </tr>
                                 <tr>
                                     <td><b>Lien</b></td>
-                                    <td>{{ $entities->find($relation->source_id)->name }} 
-                                    ->
-                                    {{ $entities->find($relation->destination_id)->name }} 
+                                    <td>
+                                        <a href="#ENTITY{{ $relation->source_id }}">
+                                            {{ $entities->find($relation->source_id)->name }}
+                                        </a>
+                                        ->
+                                        <a href="#ENTITY{{ $relation->destination_id }}">
+                                            {{ $entities->find($relation->destination_id)->name }} 
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
