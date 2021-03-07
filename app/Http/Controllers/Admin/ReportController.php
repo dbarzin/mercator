@@ -781,6 +781,48 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+    // xxx
+    public function logicalServerResp(Request $request) {
+        $path=storage_path('app/' . "logicalServersResp.xlsx");
+
+        $logicalServers = LogicalServer::All()->sortBy("name");
+        $logicalServers->load('applications');
+
+        $header = array(
+            'Serveur',
+            'Application',
+            'Bloc applicatif',
+            'Responsable'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($logicalServers as $logicalServer) {
+
+            foreach ($logicalServer->applications as $application) {
+
+                $sheet->setCellValue("A{$row}", $logicalServer->name);
+                $sheet->setCellValue("B{$row}", $application->name);
+                $sheet->setCellValue("C{$row}", $application->application_block->name);
+                $sheet->setCellValue("D{$row}", $application->application_block->responsible);
+
+                $row++;
+            }
+            
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
 
 
     public function logicalServerConfigs(Request $request) {

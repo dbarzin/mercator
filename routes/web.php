@@ -228,7 +228,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('report/application_flows', 'ReportController@applicationFlows');
     Route::get('report/logical_infrastructure', 'ReportController@logicalInfrastructure');
     Route::get('report/physical_infrastructure', 'ReportController@physicalInfrastructure');
-
+    Route::get('report/logicalServerResp', 'ReportController@logicalServerResp');
+    
     // Maturity levels
     Route::get('report/maturity1', 'HomeController@maturity1');
     Route::get('report/maturity2', 'HomeController@maturity2');
