@@ -59,6 +59,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 // PhpOffice
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -73,7 +74,6 @@ use PhpOffice\PhpWord\PhpWord;
 
 use PhpOffice\PhpWord\Element\Line;
 // use PhpOffice\PhpWord\Element\Section;
-
 
 class ReportController extends Controller
 {
@@ -1103,6 +1103,7 @@ class ReportController extends Controller
 
 
     public function cartography(Request $request) {
+
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
@@ -1151,9 +1152,12 @@ class ReportController extends Controller
         $toc->setMaxDepth(3);
         $section->addTextBreak(1);
 
+        // page break
+        $section->addPageBreak();
+
         // Add footer
         $footer = $section->addFooter();
-        $footer->addPreserveText('Page {PAGE} of {NUMPAGES}.', array('size' => 8) , array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
+        $footer->addPreserveText('Page {PAGE} of {NUMPAGES}', array('size' => 8) , array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER));
         // $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');        
 
         // ====================
@@ -1168,6 +1172,18 @@ class ReportController extends Controller
             $section->addText("Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.");
             $section->addTextBreak(1);
 
+            // IMAGE
+            $textRun=$section->addTextRun();
+            $imageStyle = array(
+                'width' => 40,
+                'height' => 40,
+                'wrappingStyle' => 'inline',
+                'positioning' => 'absolute',
+                'posHorizontalRel' => 'margin',
+                'posVerticalRel' => 'line',
+            );            
+            $textRun->addImage(public_path('images/cloud.png'), $imageStyle);
+
             // get all entities
             $entities = Entity::All()->sortBy("name");
             foreach ($entities as $entity) {
@@ -1175,30 +1191,43 @@ class ReportController extends Controller
                 $table = $section->addTable(
                         array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
                 $table->addRow();
-                $table->addCell(7500,array('gridSpan' => 2,'bold'=>true))
+                $table->addCell(8000,array('gridSpan' => 2,'bold'=>true))
                     ->addText($entity->name,$fancyTableTitleStyle);
                 $table->addRow();
-                $table->addCell(1500)->addText("Description", $fancyTableCellStyle);
+                $table->addCell(2000)->addText("Description", $fancyTableCellStyle);
                 $table->addCell(6000)->addText(
                     htmlspecialchars($html->toRichTextObject($entity->description))
                     );
                 $table->addRow();
-                $table->addCell(1500)->addText("Niveau de sécurité",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Niveau de sécurité",$fancyTableCellStyle);
                 $table->addCell(6000)->addText(htmlspecialchars($html->toRichTextObject($entity->security_level)));
                 $table->addRow();
-                $table->addCell(1500)->addText("Point de contact",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Point de contact",$fancyTableCellStyle);
                 $table->addCell(6000)->addText($entity->contact_point);
                 $table->addRow();
-                $table->addCell(1500)->addText("Relations",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Relations",$fancyTableCellStyle);
                 $cell=$table->addCell(6000);
+                $textRun=$cell->addTextRun();
                 foreach ($entity->sourceRelations as $relation) {
-                    $cell->addLink('RELATION'.$relation->id, $relation->name, null, null, true);
-                    $cell->addText('->');
-                    $cell->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);                    
-                    $cell->addText(",");
+                    if ($relation->id!=null)
+                        $textRun->addLink('RELATION'.$relation->id, $relation->name, null, null, true);
+                    $textRun->addText(' -> ');
+                    if ($relation->destination_id!=null)
+                        $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);
+                    if ($entity->sourceRelations->last() != $relation) 
+                        $textRun->addText(", ");                    
+                }
+                if ((count($entity->sourceRelations)>0)&&(count($entity->destinationRelations)>0))
+                    $textRun->addText(", ");
+                foreach ($entity->destinationRelations as $relation) {                    
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, null, null, true);
+                    $textRun->addText(htmlspecialchars(' <- '));
+                    $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, null, null, true);
+                    if ($entity->destinationRelations->last() != $relation)  
+                        $textRun->addText(", ");                    
                 }
                 $table->addRow();
-                $table->addCell(1500)->addText("Processus soutenus",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Processus soutenus",$fancyTableCellStyle);
                 $table->addCell(6000)->addText("");
                 $section->addTextBreak(1);
             }
@@ -1212,16 +1241,17 @@ class ReportController extends Controller
             // get all relations
             $relations = Relation::All()->sortBy("name");
             foreach ($relations as $relation) {
+                Log::debug('RELATION'.$relation->id);
                 $section->addBookmark("RELATION".$relation->id);
                 $table = $section->addTable(
                         array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
                 $table->addRow();
-                $table->addCell(7500,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
+                $table->addCell(8000,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
                 $table->addRow();
-                $table->addCell(1500)->addText("Description",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Description",$fancyTableCellStyle);
                 $table->addCell(6000)->addText(htmlspecialchars($html->toRichTextObject($relation->description)));
                 $table->addRow();
-                $table->addCell(1500)->addText("Type",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Type",$fancyTableCellStyle);
                 $table->addCell(6000)->addText($relation->type);
                 $table->addRow();
                 $table->addCell(1500)->addText("Importance",$fancyTableCellStyle);
@@ -1236,11 +1266,12 @@ class ReportController extends Controller
                 else
                     $table->addCell(6000)->addText("");
                 $table->addRow();
-                $table->addCell(1500)->addText("Lien",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Lien",$fancyTableCellStyle);
                 $cell=$table->addCell(6000);
-                $cell->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, null, null, true);
-                $cell->addText(" -> ");
-                $cell->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);
+                $textRun=$cell->addTextRun();
+                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, null, null, true);
+                $textRun->addText(" -> ");
+                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, null, null, true);
                 $section->addTextBreak(1);
             }
 

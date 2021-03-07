@@ -57,6 +57,17 @@
                                             ,
                                             @endif
                                         @endforeach
+                                        @if ($entity->sourceRelations->count()>0)
+                                        , <br>
+                                        @endif
+                                        @foreach ($entity->destinationRelations as $relation)
+                                            <a href="#ENTITY{{ $relation->source_id }}">{{ $entities->find($relation->source_id)->name }}s</a>
+                                            <-
+                                            <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>
