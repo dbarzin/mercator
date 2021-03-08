@@ -76,11 +76,9 @@ Generate Keys
  
     php artisan key:generate
 
-Cache
+Vider la cache
 
     php artisan config:clear
-
-## Test
 
 start the application
 
@@ -90,12 +88,13 @@ Open your browser with the URL [http://127.0.0.1:8000]
     user : admin@admin.com
     password : password
 
-# Procédure de mise à jour
+## Procédure de mise à jour
 
 Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
 
 Get the new sources
 
+    cd /var/www/mercator
     git pull
 
 Migrer la base de données
@@ -112,6 +111,6 @@ Vider la cache
     
 Redémarre l'application
 
-   php artisan serve
+    php artisan serve
    
   
