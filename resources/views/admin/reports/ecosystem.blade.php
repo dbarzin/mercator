@@ -57,7 +57,7 @@
                                             ,
                                             @endif
                                         @endforeach
-                                        @if ($entity->sourceRelations->count()>0)
+				        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0))	
                                         , <br>
                                         @endif
                                         @foreach ($entity->destinationRelations as $relation)
