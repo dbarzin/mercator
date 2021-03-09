@@ -65,6 +65,7 @@ use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\Shared\Converter;
+use \PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Chart;
@@ -115,7 +116,7 @@ class CartographyController extends Controller
         $fancyTableCellStyle=array("bold"=>true, 'color' => '000000');
 
         // Title
-        $section->addTitle("Cartographie du Système d'information",0);        
+        $section->addTitle("Cartographie du Système d'Information",0);        
         $section->addTextBreak(2);
 
         // TOC
@@ -138,27 +139,56 @@ class CartographyController extends Controller
         if ($vues==null || in_array("1",$vues)) {
             // schema
             $section->addTitle("Ecosystème", 1);
-
-            // IMAGE
-            //$section = $phpWord->addSection();
-            $textRun=$section->addTextRun();
-            $imageStyle = array(
-                'marginTop' => -1,
-                'marginLeft' => -1,
-                'width' => 100,
-                'height' => 100,
-                'wrappingStyle' => 'square',
-            );            
-            $textRun->addImage(public_path('images/cloud.png'), $imageStyle);
-
-            // ENTITIES
-            $section->addTitle('Entités', 2);
-            $section->addText("Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.");
+            $section->addText("La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.");
             $section->addTextBreak(1);
 
             // get all entities
             // $section = $phpWord->addSection();
             $entities = Entity::All()->sortBy("name");
+
+            // get all relations
+            $relations = Relation::All()->sortBy("name");
+
+            // Generate Graph
+            // $graph="digraph D { A -> {B, C, D} -> {F} }";
+            // $graph="digraph D { A -> {B, C, D} -> {F} H -> I J-> A->J C->A K->L  B->Q B->R B->S}";
+
+            $graph = "digraph  {";
+            foreach($entities as $entity)
+                $graph .= "E". $entity->id . "[label=\"". $entity->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/entity.png")."\"]";
+            foreach($relations as $relation) 
+                $graph .= "E".$relation->source_id ." -> E". $relation->destination_id ."[label=\"". $relation ->name ."\"]";
+            $graph .= "}";
+
+            // IMAGE
+            // $testImage=public_path('images/cloud.png');
+            $image=$this->generateGraphImage($graph);            
+            list($width, $height, $type, $attr) = getimagesize($image); 
+
+            /*
+
+            $imageStyle = array(
+                'marginTop' => -1,
+                'marginLeft' => -1,
+                'width' => min($width,6000),
+                'height' => min($height,8000),
+                'wrappingStyle' => 'square'
+            );
+
+            $textRun=$section->addTextRun();
+            $textRun->addImage($image, $imageStyle);            
+            */
+
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image.'" width="600"/></td></tr></table>');
+            $section->addTextBreak(1);
+
+
+            // ===============================
+            $section->addTitle('Entités', 2);
+            $section->addText("Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.");
+            $section->addTextBreak(1);
+
+            // loop on entities
             foreach ($entities as $entity) {
                 $section->addBookmark("ENTITY".$entity->id);
                 $table = $section->addTable(
@@ -205,14 +235,13 @@ class CartographyController extends Controller
                 $section->addTextBreak(1);
             }
 
-            // RELATIONS
+            // ===============================
             $section->addTextBreak(2);
             $section->addTitle('Relations', 2);
             $section->addText("Lien entre deux entités ou systèmes.");
             $section->addTextBreak(1);
 
-            // get all relations
-            $relations = Relation::All()->sortBy("name");
+            // loop on relations
             foreach ($relations as $relation) {
                 Log::debug('RELATION'.$relation->id);
                 $section->addBookmark("RELATION".$relation->id);
@@ -254,12 +283,33 @@ class CartographyController extends Controller
         if ($vues==null || in_array("2",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Système d'information", 1);
+            $section->addText("La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.");
+            $section->addTextBreak(1);
+
+            // =====================================
+            $section->addTitle('Macro-processus', 2);
+            $section->addText("Ensemble de processus.");
+            $section->addTextBreak(1);
+
+            // =====================================
+            $section->addTitle('Macro-processus', 2);
+            $section->addText("Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.");
+            $section->addTextBreak(1);
+
+            // =====================================
+            $section->addTitle('Opérations', 2);
+            $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
+            $section->addTextBreak(1);
         }
 
         // <option value="3">Applications</option>
         if ($vues==null || in_array("3",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Applications", 1);
+            $section->addText("La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.");
+            $section->addTextBreak(1);
+
+
         }
 
         // <option value="4">Administration</option>
@@ -280,19 +330,40 @@ class CartographyController extends Controller
             $section->addTitle("Infrastructure logique", 1);
         }
 
-        // save a copy
+        // Finename
         $filepath=storage_path('app/reports/cartographie-'. Carbon::today()->format("Ymd") .'.docx');
 
-        // Saving the document as OOXML file...
+        // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save($filepath);
 
-        // if (file_exists($filepath)) unlink($filepath);
-        // $templateProcessor->saveAs();
+        // unlink files
+        unlink($image); // ??
 
         // return
         return response()->download($filepath);       
-        // return null;
+    }
+
+    // Generate the image of the graph from a dot notation using GraphViz
+    private function generateGraphImage(String $graph) {
+
+        // Save it to a file
+        $dot_path = tempnam("/tmp","dot");
+        $dot_file = fopen($dot_path, 'w');
+        fwrite($dot_file, $graph);
+        fclose($dot_file);
+
+        // create image file
+        $png_path = tempnam("/tmp","png");
+
+        // dot -Tpng ./test.dot -otest.png
+        shell_exec ("/usr/bin/dot -Tpng ".$dot_path." -o".$png_path);
+
+        // delete graph file
+        unlink($dot_path);
+
+        // return file path (do not forget to delete after...)
+        return $png_path;
     }
 
 }
