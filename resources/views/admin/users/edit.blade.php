@@ -47,9 +47,9 @@
             <div class="form-group">
                 <label class="required" for="title">{{ trans("cruds.user.fields.language") }}</label>
                 <select class="form-control select2 {{ $errors->has('language') ? 'is-invalid' : '' }}" name="language" id="language">
-                    <option value="en" {{ auth()->user()->language == 'en' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_en") }}</option>
-                    <option value="fr" {{ auth()->user()->language == 'fr' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_fr") }}</option>
-                    <option value="de" {{ auth()->user()->language == 'de' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_de") }}</option>
+                    <option value="en" {{ $user->language == 'en' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_en") }}</option>
+                    <option value="fr" {{ $user->language == 'fr' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_fr") }}</option>
+                    <option value="de" {{ $user->language == 'de' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_de") }}</option>
                 </select>
                 @if($errors->has('language'))
                     <div class="invalid-feedback">
@@ -79,9 +79,9 @@
             <div class="form-group">
                 <label class="required" for="title">{{ trans("cruds.user.fields.granularity") }}</label>
                 <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}" name="granularity" id="granularity">
-                    <option value="1" {{ auth()->user()->granularity == 1 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_1") }}</option>
-                    <option value="2" {{ auth()->user()->granularity == 2 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_2") }}</option>
-                    <option value="3" {{ auth()->user()->granularity == 3 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_3") }}</option>
+                    <option value="1" {{ $user->granularity == 1 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_1") }}</option>
+                    <option value="2" {{ $user->granularity == 2 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_2") }}</option>
+                    <option value="3" {{ $user->granularity == 3 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_3") }}</option>
                 </select>
                 @if($errors->has('granularity'))
                     <div class="invalid-feedback">
