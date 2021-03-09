@@ -13,7 +13,7 @@ Install PHP and other packages
 
 Create your Laravel project in user directory.
 
-    cd /var/lib
+    cd /var/www
     git clone https://www.github.com/dbarzin/mercator
 
 ## Composer
@@ -24,7 +24,7 @@ Create your Laravel project in user directory.
 
 Install the packages
 
-    cd /var/lib/mercator
+    cd /var/www/mercator
     composer install
 
 ## MySQL
@@ -49,7 +49,7 @@ Create a MySQL (or SQLite) database to use with your Laravel project.
 
 Update the .env file in the root directory of your project with the appropriate parameter values to match your new database:
 
-    cd /var/lib/mercator
+    cd /var/www/mercator
 
     cp .env.example .env
 
@@ -73,15 +73,12 @@ Run migration
 Notice: seed is important, because it will create the first admin user for you. 
 
 Generate Keys
-
-    cd /var/lib/mercator 
+ 
     php artisan key:generate
 
-Cache
+Vider la cache
 
     php artisan config:clear
-
-## Test
 
 start the application
 
@@ -91,6 +88,29 @@ Open your browser with the URL [http://127.0.0.1:8000]
     user : admin@admin.com
     password : password
 
+## Procédure de mise à jour
 
+Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
 
+Get the new sources
 
+    cd /var/www/mercator
+    git pull
+
+Migrer la base de données
+
+    php artisan migrate
+
+Mettre à jour les librairies
+
+    composer update
+
+Vider la cache
+
+    php artisan config:clear
+    
+Redémarre l'application
+
+    php artisan serve
+   
+  
