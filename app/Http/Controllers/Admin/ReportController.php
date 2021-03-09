@@ -69,7 +69,6 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Chart;
 use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\PhpWord;
 
 
 use PhpOffice\PhpWord\Element\Line;

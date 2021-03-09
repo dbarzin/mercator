@@ -62,18 +62,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 // PhpOffice
-use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Chart;
 use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\PhpWord;
-
-
 use PhpOffice\PhpWord\Element\Line;
-// use PhpOffice\PhpWord\Element\Section;
 
 class CartographyController extends Controller
 {
@@ -143,24 +139,25 @@ class CartographyController extends Controller
             // schema
             $section->addTitle("Ecosystème", 1);
 
+            // IMAGE
+            //$section = $phpWord->addSection();
+            $textRun=$section->addTextRun();
+            $imageStyle = array(
+                'marginTop' => -1,
+                'marginLeft' => -1,
+                'width' => 100,
+                'height' => 100,
+                'wrappingStyle' => 'square',
+            );            
+            $textRun->addImage(public_path('images/cloud.png'), $imageStyle);
+
             // ENTITIES
             $section->addTitle('Entités', 2);
             $section->addText("Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.");
             $section->addTextBreak(1);
 
-            // IMAGE
-            $textRun=$section->addTextRun();
-            $imageStyle = array(
-                'width' => 40,
-                'height' => 40,
-                'wrappingStyle' => 'inline',
-                'positioning' => 'absolute',
-                'posHorizontalRel' => 'margin',
-                'posVerticalRel' => 'line',
-            );            
-            $textRun->addImage(public_path('images/cloud.png'), $imageStyle);
-
             // get all entities
+            // $section = $phpWord->addSection();
             $entities = Entity::All()->sortBy("name");
             foreach ($entities as $entity) {
                 $section->addBookmark("ENTITY".$entity->id);
