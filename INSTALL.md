@@ -5,13 +5,21 @@ Update and upgrade distribution
     sudo apt update
     sudo apt upgrade
 
-Install PHP and other packages
+Install PHP and some PHP libraries
 
-    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql
+    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql 
 
-## GIT
+Install Graphviz
 
-Create your Laravel project in user directory.
+    sudo apt install graphviz
+
+Install GIT
+
+    sudo apt install git
+
+## Project
+
+Install the projet in the Apache Web directory.
 
     cd /var/www
     git clone https://www.github.com/dbarzin/mercator
@@ -113,4 +121,3 @@ Redémarre l'application
 
     php artisan serve
    
-  
