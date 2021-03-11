@@ -339,10 +339,10 @@ class CartographyController extends Controller
                 $table->addCell(8000,array('gridSpan' => 2))->addText($macroProcess->name,$fancyTableTitleStyle);
                 $table->addRow();
                 $table->addCell(2000)->addText("Description",$fancyTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $macroProcess->description));
+		Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $macroProcess->description));
                 $table->addRow();
                 $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyTableCellStyle);
-                Html::addHtml($table->addCell(6000),$macroProcess->io_elements);
+                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $macroProcess->io_elements));
                 $table->addRow();
                 $table->addCell(2000)->addText("Besoin de sécurité",$fancyTableCellStyle);
                 $table->addCell(6000)->addText(htmlspecialchars($macroProcess->security_need));
@@ -377,7 +377,7 @@ class CartographyController extends Controller
                 Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $process->description));
                 $table->addRow();
                 $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyTableCellStyle);
-                Html::addHtml($table->addCell(6000),$process->in_out);
+                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $process->in_out));
                 $table->addRow();
                 $table->addCell(2000)->addText("Activités",$fancyTableCellStyle);
                 $cell=$table->addCell(6000);
