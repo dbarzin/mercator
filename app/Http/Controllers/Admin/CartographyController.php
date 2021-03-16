@@ -75,6 +75,8 @@ use PhpOffice\PhpWord\Element\Line;
 class CartographyController extends Controller
 {
 
+    private function addTable(Section $section, String $title, Array $values) {        
+    }
 
     public function cartography(Request $request) {
 
@@ -90,6 +92,7 @@ class CartographyController extends Controller
 
         // get template
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $section = $phpWord->addSection();
 
         // Numbering Style
@@ -117,11 +120,12 @@ class CartographyController extends Controller
 
         // Cell style
         $fancyTableTitleStyle=array("bold"=>true, 'color' => '000000');
-        $fancyTableCellStyle=array("bold"=>true, 'color' => '000000');
+        $fancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
+        $fancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
         $fancyLinkStyle=array('color' => '006699');
 
         // Title
-        $section->addTitle("Cartographie du Système d'Information",0);        
+        $section->addTitle("Cartographie du Système d'Information",0);
         $section->addTextBreak(2);
 
         // TOC
@@ -174,23 +178,25 @@ class CartographyController extends Controller
             foreach ($entities as $entity) {
                 $section->addBookmark("ENTITY".$entity->id);
                 $table = $section->addTable(
-                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
+                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
+                        );
                 $table->addRow();
-                $table->addCell(8000,array('gridSpan' => 2,'bold'=>true))
-                    ->addText($entity->name,$fancyTableTitleStyle);
+                $table->addCell(8000,array('gridSpan' => 2))
+                    ->addText($entity->name,$fancyTableTitleStyle,array('spaceAfter' => 0));
                 $table->addRow();
-                $table->addCell(2000)->addText("Description", $fancyTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $entity->description));
+                $table->addCell(2000)->addText("Description", $fancyLeftTableCellStyle);
+                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->description));
                 $table->addRow();
-                $table->addCell(2000)->addText("Niveau de sécurité",$fancyTableCellStyle);
-                $table->addCell(6000)->addText(htmlspecialchars($html->toRichTextObject($entity->security_level)));
+                $table->addCell(2000)->addText("Niveau de sécurité",$fancyLeftTableCellStyle,array('spaceAfter' => 1));
+                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->security_level));
                 $table->addRow();
-                $table->addCell(2000)->addText("Point de contact",$fancyTableCellStyle);
-                $table->addCell(6000)->addText($entity->contact_point);
+                $table->addCell(2000)->addText("Point de contact",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
+                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->contact_point));                                
                 $table->addRow();
-                $table->addCell(2000)->addText("Relations",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Relations",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
                 $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                $textRun=$cell->addTextRun($fancyRightTableCellStyle,array('spaceAfter' => 0));
                 foreach ($entity->sourceRelations as $relation) {
                     if ($relation->id!=null)
                         $textRun->addLink('RELATION'.$relation->id, $relation->name, $fancyLinkStyle, null, true);
@@ -204,13 +210,13 @@ class CartographyController extends Controller
                     $textRun->addText(", ");
                 foreach ($entity->destinationRelations as $relation) {                    
                     $textRun->addLink('RELATION'.$relation->id, $relation->name, $fancyLinkStyle, null, true);
-                    $textRun->addText(htmlspecialchars(' <- '));
+                    $textRun->addText(' <- ');
                     $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, $fancyLinkStyle, null, true);
                     if ($entity->destinationRelations->last() != $relation)  
                         $textRun->addText(", ");                    
                 }
                 $table->addRow();
-                $table->addCell(2000)->addText("Processus soutenus",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Processus soutenus",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 foreach($entity->entitiesProcesses as $process) {
@@ -218,9 +224,10 @@ class CartographyController extends Controller
                     if ($entity->entitiesProcesses->last() != $process)  
                         $textRun->addText(", ");
                     }
+
                 $section->addTextBreak(1);
             }
-
+            
             // ===============================
             $section->addTextBreak(2);
             $section->addTitle('Relations', 2);
@@ -235,13 +242,13 @@ class CartographyController extends Controller
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
                 $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Description",$fancyRightTableCellStyle);
                 Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $relation->description));
                 $table->addRow();
-                $table->addCell(2000)->addText("Type",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Type",$fancyRightTableCellStyle);
                 $table->addCell(6000)->addText($relation->type);
                 $table->addRow();
-                $table->addCell(1500)->addText("Importance",$fancyTableCellStyle);
+                $table->addCell(1500)->addText("Importance",$fancyRightTableCellStyle);
                 if ($relation->inportance==1) 
                     $table->addCell(6000)->addText('Faible');
                 elseif ($relation->inportance==2)
@@ -253,7 +260,7 @@ class CartographyController extends Controller
                 else
                     $table->addCell(6000)->addText("");
                 $table->addRow();
-                $table->addCell(2000)->addText("Lien",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Lien",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, $fancyLinkStyle, null, true);
@@ -338,19 +345,19 @@ class CartographyController extends Controller
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($macroProcess->name,$fancyTableTitleStyle);
                 $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Description",$fancyLeftTableCellStyle);
                 Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $macroProcess->description));
                 $table->addRow();
-                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
                 Html::addHtml($table->addCell(6000),$macroProcess->io_elements);
                 $table->addRow();
-                $table->addCell(2000)->addText("Besoin de sécurité",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Besoin de sécurité",$fancyLeftTableCellStyle);
                 $table->addCell(6000)->addText(htmlspecialchars($macroProcess->security_need));
                 $table->addRow();
-                $table->addCell(2000)->addText("Propritétaire",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Propritétaire",$fancyLeftTableCellStyle);
                 $table->addCell(6000)->addText(htmlspecialchars($macroProcess->owner));
                 $table->addRow();
-                $table->addCell(2000)->addText("Processus",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Processus",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 foreach($macroProcess->processes as $process) {
@@ -373,13 +380,13 @@ class CartographyController extends Controller
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($process->identifiant,$fancyTableTitleStyle);
                 $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Description",$fancyLeftTableCellStyle);
                 Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $process->description));
                 $table->addRow();
-                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
                 Html::addHtml($table->addCell(6000),$process->in_out);
                 $table->addRow();
-                $table->addCell(2000)->addText("Activités",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Activités",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 foreach($process->activities as $activity) {
@@ -388,7 +395,7 @@ class CartographyController extends Controller
                         $textRun->addText(", ");
                     }
                 $table->addRow();
-                $table->addCell(2000)->addText("Entités associées",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Entités associées",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 foreach($process->entities as $entity) {
@@ -397,7 +404,7 @@ class CartographyController extends Controller
                         $textRun->addText(", ");
                     }
                 $table->addRow();
-                $table->addCell(2000)->addText("Applications qui le soutiennent",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Applications qui le soutiennent",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
                 $textRun=$cell->addTextRun();
                 foreach($process->processesMApplications as $application) {
@@ -406,10 +413,10 @@ class CartographyController extends Controller
                         $textRun->addText(", ");
                     }
                 $table->addRow();
-                $table->addCell(2000)->addText("Besoin de scurité",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Besoin de scurité",$fancyLeftTableCellStyle);
                 $table->addCell(6000)->addText($process->security_need);
                 $table->addRow();
-                $table->addCell(2000)->addText("Propriétaire",$fancyTableCellStyle);
+                $table->addCell(2000)->addText("Propriétaire",$fancyLeftTableCellStyle);
                 $table->addCell(6000)->addText($process->owner);
                 $section->addTextBreak(1);
                 }
