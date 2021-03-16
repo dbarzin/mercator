@@ -93,6 +93,8 @@ class CartographyController extends Controller
         // get template
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        $phpWord->getSettings()->setHideGrammaticalErrors(true);
+        $phpWord->getSettings()->setHideSpellingErrors(true);
         $section = $phpWord->addSection();
 
         // Numbering Style
@@ -149,7 +151,6 @@ class CartographyController extends Controller
             // schema
             $section->addTitle("Ecosystème", 1);
             $section->addText("La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.");
-            $section->addTextBreak(1);
 
             // Get data
             $entities = Entity::All()->sortBy("name");
@@ -229,16 +230,17 @@ class CartographyController extends Controller
             }
             
             // ===============================
-            $section->addTextBreak(2);
-            $section->addTitle('Relations', 2);
+            // $section->addTextBreak(2);
+            $section->addTitle("Relations", 2);
             $section->addText("Lien entre deux entités ou systèmes.");
-            $section->addTextBreak(1);
 
             // Loop on relations
             foreach ($relations as $relation) {
                 $section->addBookmark("RELATION".$relation->id);
                 $table = $section->addTable(
-                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
+                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
+                        );
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
                 $table->addRow();
@@ -275,10 +277,8 @@ class CartographyController extends Controller
         // SYSTEME D'INFORMATION
         // =====================
         if ($vues==null || in_array("2",$vues)) {
-            $section->addTextBreak(2);
             $section->addTitle("Système d'information", 1);
             $section->addText("La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.");
-            $section->addTextBreak(1);
 
             // Get data
             $macroProcessuses = MacroProcessus::All()->sortBy("name");
@@ -335,13 +335,15 @@ class CartographyController extends Controller
             // =====================================
             $section->addTitle('Macro-processus', 2);
             $section->addText("Les maro-processus représentent des ensembles de processus.");
-            $section->addTextBreak(1);
+            //$section->addTextBreak(1);
 
             // Loop on relations
             foreach($macroProcessuses as $macroProcess) {
                 $section->addBookmark("MACROPROCESS".$macroProcess->id);
                 $table = $section->addTable(
-                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
+                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
+                        );
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($macroProcess->name,$fancyTableTitleStyle);
                 $table->addRow();
@@ -371,12 +373,14 @@ class CartographyController extends Controller
             // =====================================
             $section->addTitle('Processus', 2);
             $section->addText("Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.");
-            $section->addTextBreak(1);
+            //$section->addTextBreak(1);
 
             foreach($processes as $process) {
                 $section->addBookmark("PROCESS".$process->id);
                 $table = $section->addTable(
-                        array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::START, 'cellSpacing' => 50));
+                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
+                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
+                        );
                 $table->addRow();
                 $table->addCell(8000,array('gridSpan' => 2))->addText($process->identifiant,$fancyTableTitleStyle);
                 $table->addRow();
@@ -384,7 +388,7 @@ class CartographyController extends Controller
                 Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $process->description));
                 $table->addRow();
                 $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),$process->in_out);
+                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $process->in_out));
                 $table->addRow();
                 $table->addCell(2000)->addText("Activités",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
