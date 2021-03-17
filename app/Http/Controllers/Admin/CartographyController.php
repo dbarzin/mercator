@@ -348,16 +348,16 @@ class CartographyController extends Controller
                 $table->addCell(8000,array('gridSpan' => 2))->addText($macroProcess->name,$fancyTableTitleStyle);
                 $table->addRow();
                 $table->addCell(2000)->addText("Description",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $macroProcess->description));
+                Html::addHtml($table->addCell(6000),str_replace('<br>','<br/>', $macroProcess->description));
                 $table->addRow();
                 $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),$macroProcess->io_elements);
+                Html::addHtml($table->addCell(6000),str_replace('<br>','<br/>',$macroProcess->io_elements));
                 $table->addRow();
                 $table->addCell(2000)->addText("Besoin de sécurité",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText(htmlspecialchars($macroProcess->security_need));
+                $table->addCell(6000)->addText($macroProcess->security_need);
                 $table->addRow();
                 $table->addCell(2000)->addText("Propritétaire",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText(htmlspecialchars($macroProcess->owner));
+                $table->addCell(6000)->addText($macroProcess->owner);
                 $table->addRow();
                 $table->addCell(2000)->addText("Processus",$fancyLeftTableCellStyle);
                 $cell=$table->addCell(6000);
@@ -417,7 +417,7 @@ class CartographyController extends Controller
                         $textRun->addText(", ");
                     }
                 $table->addRow();
-                $table->addCell(2000)->addText("Besoin de scurité",$fancyLeftTableCellStyle);
+                $table->addCell(2000)->addText("Besoin de sécurité",$fancyLeftTableCellStyle);
                 $table->addCell(6000)->addText($process->security_need);
                 $table->addRow();
                 $table->addCell(2000)->addText("Propriétaire",$fancyLeftTableCellStyle);
