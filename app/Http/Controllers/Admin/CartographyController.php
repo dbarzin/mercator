@@ -286,7 +286,7 @@ class CartographyController extends Controller
             $processes = Process::All()->sortBy("name");
             $activities = Activity::All()->sortBy("name");
             $operations = Operation::All()->sortBy("name");
-            $tasks = Task::All()->sortBy("name");
+            $tasks = Task::All()->sortBy("nom");
             $actors = Actor::All()->sortBy("name");
             $informations = Information::All()->sortBy("name");
 
@@ -391,6 +391,56 @@ class CartographyController extends Controller
             $section->addTitle('Opérations', 2);
             $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
             $section->addTextBreak(1); 
+
+            foreach($operations as $operation) {
+                $section->addBookmark("OPERATION".$operation->id);                
+                $table=$this->addTable($section, $operation->name);
+                $this->addHTMLRow($table,"Description",$operation->description);
+                // 
+                $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
+                foreach($operation->tasks as $task) {
+                    $textRun->addLink("TASK".$task->id, $task->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($operation->tasks != $task)
+                        $textRun->addText(", ");
+                    }
+                // Liste des acteurs qui interviennent
+                $textRun=$this->addTextRunRow($table,"Liste des acteurs qui interviennent");
+                foreach($operation->actors as $actor) {
+                    $textRun->addLink("ACTOR".$actor->id, $actor->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($operation->actors->last() != $actor)
+                        $textRun->addText(", ");
+                    }
+
+                $section->addTextBreak(1);
+                }                
+
+            // =====================================
+            $section->addTitle('Tâches', 2);
+            $section->addText("Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus");
+            $section->addTextBreak(1);
+
+            foreach($tasks as $task) {
+                $section->addBookmark("TASK".$task->id);                
+                $table=$this->addTable($section, $task->nom);
+                $this->addHTMLRow($table,"Description",$task->description);
+
+                $section->addTextBreak(1);
+                }
+
+            // =====================================
+            $section->addTitle('Acteurs', 2);
+            $section->addText("Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.");
+            $section->addTextBreak(1); 
+
+            foreach($actors as $actor) {
+                $section->addBookmark("ACTOR".$actor->id);                
+                $table=$this->addTable($section, $actor->name);
+                $this->addHTMLRow($table,"Nature",$actor->nature);
+                $this->addHTMLRow($table,"Type",$actor->type);
+
+                $section->addTextBreak(1);
+                }                
+
         }
         
         // =====================

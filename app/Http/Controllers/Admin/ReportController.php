@@ -165,7 +165,7 @@ class ReportController extends Controller
                     return false;
                 });
 
-            $tasks = Task::All()->sortBy("name")
+            $tasks = Task::All()->sortBy("nom")
                 ->filter(function($item) use($operations) {
                     foreach($operations as $operation)
                         foreach($operation->tasks as $task)
