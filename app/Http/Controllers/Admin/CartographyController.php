@@ -74,8 +74,40 @@ use PhpOffice\PhpWord\Element\Line;
 
 class CartographyController extends Controller
 {
+    // Cell style
+    const FancyTableTitleStyle=array("bold"=>true, 'color' => '000000');
+    const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
+    const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
+    const FancyLinkStyle=array('color' => '006699');
 
-    private function addTable(Section $section, String $title, Array $values) {        
+    private static function addTable(Section $section, String $title=null) {
+        $table = $section->addTable(
+                array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
+                );
+        $table->addRow();
+        $table->addCell(8000,array('gridSpan' => 2))
+            ->addText($title,CartographyController::FancyTableTitleStyle,array('spaceAfter' => 0));
+        return $table;
+    }
+
+    private static function addTextRow(Table $table, String $title, String $value=null) {
+        $table->addRow();
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle);
+        $table->addCell(6000)->addText($value);
+    }
+
+    private static function addHTMLRow(Table $table, String $title, String $value=null) { 
+        $table->addRow();
+        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace("<br>", "<br/>", $value));
+    }
+
+    private static function addTextRunRow(Table $table, String $title) { 
+        $table->addRow();
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle,array('spaceAfter' => 0));
+        $cell=$table->addCell(6000);
+        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle,array('spaceAfter' => 0));
     }
 
     public function cartography(Request $request) {
@@ -120,11 +152,6 @@ class CartographyController extends Controller
                 array('size' => 12, 'bold' => true), 
                 array('numStyle' => 'hNum', 'numLevel' => 2));
 
-        // Cell style
-        $fancyTableTitleStyle=array("bold"=>true, 'color' => '000000');
-        $fancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
-        $fancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
-        $fancyLinkStyle=array('color' => '006699');
 
         // Title
         $section->addTitle("Cartographie du Système d'Information",0);
@@ -166,7 +193,6 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            // list($width, $height, $type, $attr) = getimagesize($image_path); 
             Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
             $section->addTextBreak(1);
 
@@ -178,79 +204,56 @@ class CartographyController extends Controller
             // loop on entities
             foreach ($entities as $entity) {
                 $section->addBookmark("ENTITY".$entity->id);
-                $table = $section->addTable(
-                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
-                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
-                        );
-                $table->addRow();
-                $table->addCell(8000,array('gridSpan' => 2))
-                    ->addText($entity->name,$fancyTableTitleStyle,array('spaceAfter' => 0));
-                $table->addRow();
-                $table->addCell(2000)->addText("Description", $fancyLeftTableCellStyle);
-                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->description));
-                $table->addRow();
-                $table->addCell(2000)->addText("Niveau de sécurité",$fancyLeftTableCellStyle,array('spaceAfter' => 1));
-                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->security_level));
-                $table->addRow();
-                $table->addCell(2000)->addText("Point de contact",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
-                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), str_replace("<br>", "<br/>", $entity->contact_point));                                
-                $table->addRow();
-                $table->addCell(2000)->addText("Relations",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun($fancyRightTableCellStyle,array('spaceAfter' => 0));
+                $table = $this->addTable($section,$entity->name);
+                $this->addHTMLRow($table,"Description",$entity->description);
+                $this->addHTMLRow($table,"Niveau de sécurité",$entity->security_level);
+                $this->addHTMLRow($table,"Point de contacl",$entity->contact_point);
+                
+                // Relations
+                $textRun=$this->addTextRunRow($table,"Relations");
                 foreach ($entity->sourceRelations as $relation) {
                     if ($relation->id!=null)
-                        $textRun->addLink('RELATION'.$relation->id, $relation->name, $fancyLinkStyle, null, true);
+                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
                     $textRun->addText(' -> ');
                     if ($relation->destination_id!=null)
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, $fancyLinkStyle, null, true);
+                        $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->sourceRelations->last() != $relation) 
                         $textRun->addText(", ");                    
                 }
                 if ((count($entity->sourceRelations)>0)&&(count($entity->destinationRelations)>0))
                     $textRun->addText(", ");
                 foreach ($entity->destinationRelations as $relation) {                    
-                    $textRun->addLink('RELATION'.$relation->id, $relation->name, $fancyLinkStyle, null, true);
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
                     $textRun->addText(' <- ');
-                    $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, $fancyLinkStyle, null, true);
+                    $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->destinationRelations->last() != $relation)  
-                        $textRun->addText(", ");                    
+                        $textRun->addText(", ");
                 }
-                $table->addRow();
-                $table->addCell(2000)->addText("Processus soutenus",$fancyLeftTableCellStyle,array('spaceAfter' => 0));
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                // Porcessus soutenus
+                $textRun=$this->addTextRunRow($table,"Processus soutenus");
                 foreach($entity->entitiesProcesses as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, $fancyLinkStyle, null, true);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->entitiesProcesses->last() != $process)  
                         $textRun->addText(", ");
                     }
-
                 $section->addTextBreak(1);
             }
-            
+                      
             // ===============================
             // $section->addTextBreak(2);
             $section->addTitle("Relations", 2);
             $section->addText("Lien entre deux entités ou systèmes.");
+            $section->addTextBreak(1);
 
             // Loop on relations
             foreach ($relations as $relation) {
                 $section->addBookmark("RELATION".$relation->id);
-                $table = $section->addTable(
-                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
-                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
-                        );
+                $table = $this->addTable($section,$relation->name);
+                $this->addHTMLRow($table,"Description",$relation->description);
+                $this->addTextRow($table,"Type",$relation->type);
+
                 $table->addRow();
-                $table->addCell(8000,array('gridSpan' => 2))->addText($relation->name,$fancyTableTitleStyle);
-                $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyRightTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $relation->description));
-                $table->addRow();
-                $table->addCell(2000)->addText("Type",$fancyRightTableCellStyle);
-                $table->addCell(6000)->addText($relation->type);
-                $table->addRow();
-                $table->addCell(1500)->addText("Importance",$fancyRightTableCellStyle);
+                $table->addCell(2000)->addText("Importance",CartographyController::FancyRightTableCellStyle);
                 if ($relation->inportance==1) 
                     $table->addCell(6000)->addText('Faible');
                 elseif ($relation->inportance==2)
@@ -261,24 +264,22 @@ class CartographyController extends Controller
                     $table->addCell(6000)->addText('Critique');
                 else
                     $table->addCell(6000)->addText("");
-                $table->addRow();
-                $table->addCell(2000)->addText("Lien",$fancyLeftTableCellStyle);
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
-                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, $fancyLinkStyle, null, true);
+
+                $textRun=$this->addTextRunRow($table,"Lien");
+                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, null, true);
                 $textRun->addText(" -> ");
-                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, $fancyLinkStyle, null, true);
+                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, null, true);
                 $section->addTextBreak(1);
             }
-
         }
-
+        
         // =====================
         // SYSTEME D'INFORMATION
         // =====================
         if ($vues==null || in_array("2",$vues)) {
             $section->addTitle("Système d'information", 1);
             $section->addText("La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.");
+            $section->addTextBreak(1);
 
             // Get data
             $macroProcessuses = MacroProcessus::All()->sortBy("name");
@@ -328,42 +329,25 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            // list($width, $height, $type, $attr) = getimagesize($image_path); 
             Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
             $section->addTextBreak(1);
 
             // =====================================
             $section->addTitle('Macro-processus', 2);
             $section->addText("Les maro-processus représentent des ensembles de processus.");
-            //$section->addTextBreak(1);
+            $section->addTextBreak(1);
 
             // Loop on relations
             foreach($macroProcessuses as $macroProcess) {
                 $section->addBookmark("MACROPROCESS".$macroProcess->id);
-                $table = $section->addTable(
-                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
-                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
-                        );
-                $table->addRow();
-                $table->addCell(8000,array('gridSpan' => 2))->addText($macroProcess->name,$fancyTableTitleStyle);
-                $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace('<br>','<br/>', $macroProcess->description));
-                $table->addRow();
-                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace('<br>','<br/>',$macroProcess->io_elements));
-                $table->addRow();
-                $table->addCell(2000)->addText("Besoin de sécurité",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText($macroProcess->security_need);
-                $table->addRow();
-                $table->addCell(2000)->addText("Propritétaire",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText($macroProcess->owner);
-                $table->addRow();
-                $table->addCell(2000)->addText("Processus",$fancyLeftTableCellStyle);
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                $table = $this->addTable($section, $macroProcess->name);
+                $this->addHTMLRow($table, "Description", $macroProcess->description);
+                $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
+                $this->addTextRow($table, "Besoin de sécurité",$macroProcess->security_need);
+                $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
+                $textRun=$this->addTextRunRow($table, "Processus");
                 foreach($macroProcess->processes as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, $fancyLinkStyle, null, true);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($macroProcess->processes->last() != $process)  
                         $textRun->addText(", ");
                     }
@@ -373,64 +357,42 @@ class CartographyController extends Controller
             // =====================================
             $section->addTitle('Processus', 2);
             $section->addText("Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.");
-            //$section->addTextBreak(1);
+            $section->addTextBreak(1);
 
             foreach($processes as $process) {
-                $section->addBookmark("PROCESS".$process->id);
-                $table = $section->addTable(
-                        array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
-                        'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
-                        );
-                $table->addRow();
-                $table->addCell(8000,array('gridSpan' => 2))->addText($process->identifiant,$fancyTableTitleStyle);
-                $table->addRow();
-                $table->addCell(2000)->addText("Description",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace(array('<br>'), array('<br/>'), $process->description));
-                $table->addRow();
-                $table->addCell(2000)->addText("Éléments entrants et sortants",$fancyLeftTableCellStyle);
-                Html::addHtml($table->addCell(6000),str_replace('<br>', '<br/>', $process->in_out));
-                $table->addRow();
-                $table->addCell(2000)->addText("Activités",$fancyLeftTableCellStyle);
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                $section->addBookmark("PROCESS".$process->id);                
+                $table=$this->addTable($section, $process->identifiant);
+                $this->addHTMLRow($table,"Description",$process->description);
+                $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
+                $textRun=$this->addTextRunRow($table,"Activités");
                 foreach($process->activities as $activity) {
-                    $textRun->addLink("ACTIVITY".$activity->id, $activity->name, $fancyLinkStyle, null, true);
+                    $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, null, true);
                     if ($process->activities->last() != $activity)  
                         $textRun->addText(", ");
                     }
-                $table->addRow();
-                $table->addCell(2000)->addText("Entités associées",$fancyLeftTableCellStyle);
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                $textRun=$this->addTextRunRow($table,"Entités associées");
                 foreach($process->entities as $entity) {
-                    $textRun->addLink("ENTITY".$entity->id, $entity->name, $fancyLinkStyle, null, true);
+                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                     if ($process->entities->last() != $entity)  
                         $textRun->addText(", ");
                     }
-                $table->addRow();
-                $table->addCell(2000)->addText("Applications qui le soutiennent",$fancyLeftTableCellStyle);
-                $cell=$table->addCell(6000);
-                $textRun=$cell->addTextRun();
+                $textRun=$this->addTextRunRow($table,"Applications qui le soutiennent");
                 foreach($process->processesMApplications as $application) {
-                    $textRun->addLink("APPLICATION".$application->id, $application->name, $fancyLinkStyle, null, true);
+                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                     if ($process->processesMApplications->last() != $application)  
                         $textRun->addText(", ");
                     }
-                $table->addRow();
-                $table->addCell(2000)->addText("Besoin de sécurité",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText($process->security_need);
-                $table->addRow();
-                $table->addCell(2000)->addText("Propriétaire",$fancyLeftTableCellStyle);
-                $table->addCell(6000)->addText($process->owner);
+                $this->addTextRow($table,"Besoin de scurité",$process->security_need);
+                $this->addTextRow($table,"Propriétaire",$process->owner);
                 $section->addTextBreak(1);
                 }
 
             // =====================================
             $section->addTitle('Opérations', 2);
             $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
-            $section->addTextBreak(1);
+            $section->addTextBreak(1); 
         }
-
+        
         // =====================
         // APPLICATIONS
         // =====================
