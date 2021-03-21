@@ -388,6 +388,25 @@ class CartographyController extends Controller
                 }
 
             // =====================================
+            $section->addTitle('Activités', 2);
+            $section->addText("Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.");
+            $section->addTextBreak(1);
+
+            foreach($activities as $activity) {
+                $section->addBookmark("ACTIVITY".$activity->id);
+                $table=$this->addTable($section, $activity->name);
+                $this->addHTMLRow($table,"Description",$activity->description);
+
+                $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                foreach($activity->operations as $operation) {
+                    $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($activity->operations->last() != $operation)  
+                        $textRun->addText(", ");
+                    }
+                $section->addTextBreak(1);
+                }
+
+            // =====================================
             $section->addTitle('Opérations', 2);
             $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
             $section->addTextBreak(1); 
@@ -400,7 +419,7 @@ class CartographyController extends Controller
                 $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
                 foreach($operation->tasks as $task) {
                     $textRun->addLink("TASK".$task->id, $task->name, CartographyController::FancyLinkStyle, null, true);
-                    if ($operation->tasks != $task)
+                    if ($operation->tasks->last() != $task)
                         $textRun->addText(", ");
                     }
                 // Liste des acteurs qui interviennent
@@ -441,6 +460,31 @@ class CartographyController extends Controller
                 $section->addTextBreak(1);
                 }                
 
+            // =====================================
+            $section->addTitle('Informations', 2);
+            $section->addText("Donnée faisant l’objet d’un traitement informatique.");
+            $section->addTextBreak(1); 
+
+            foreach($informations as $information) {
+                $section->addBookmark("INFORMATION".$information->id);
+                $table=$this->addTable($section, $information->name);
+                $this->addHTMLRow($table,"Description",$information->description);
+                $this->addTextRow($table,"Propriétaire",$information->owner);
+                $this->addTextRow($table,"Administrateur",$information->administrator);
+                $this->addTextRow($table,"Stockage",$information->storage);
+                // processus liés
+                $textRun=$this->addTextRunRow($table,"Processus liés");
+                foreach($information->processes as $process) {
+                    $textRun->addLink("PROCESS".$process->id, $process->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($information->processes->last() != $process)
+                        $textRun->addText(", ");
+                    }
+                $this->addTextRow($table,"Besoins de sécurité",$information->security_need);
+                $this->addTextRow($table,"Sensibilité",$information->sensibility);
+                $this->addHTMLRow($table,"Contraintes règlementaires et normatives",$information->constraints);
+
+                $section->addTextBreak(1);
+                }
         }
         
         // =====================
