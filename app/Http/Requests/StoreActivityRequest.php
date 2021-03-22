@@ -23,7 +23,9 @@ class StoreActivityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:activities',
+                // 'unique:activities',
+                'unique:activities,name,NULL,id,deleted_at,NULL',
+
             ],
             'operations.*' => [
                 'integer',
