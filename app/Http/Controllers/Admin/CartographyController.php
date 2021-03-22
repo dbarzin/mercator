@@ -283,7 +283,7 @@ class CartographyController extends Controller
 
             // Get data
             $macroProcessuses = MacroProcessus::All()->sortBy("name");
-            $processes = Process::All()->sortBy("name");
+            $processes = Process::All()->sortBy("identifiant");
             $activities = Activity::All()->sortBy("name");
             $operations = Operation::All()->sortBy("name");
             $tasks = Task::All()->sortBy("nom");
@@ -418,7 +418,7 @@ class CartographyController extends Controller
                 // 
                 $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
                 foreach($operation->tasks as $task) {
-                    $textRun->addLink("TASK".$task->id, $task->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("TASK".$task->id, $task->nom, CartographyController::FancyLinkStyle, null, true);
                     if ($operation->tasks->last() != $task)
                         $textRun->addText(", ");
                     }
@@ -475,7 +475,7 @@ class CartographyController extends Controller
                 // processus liés
                 $textRun=$this->addTextRunRow($table,"Processus liés");
                 foreach($information->processes as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($information->processes->last() != $process)
                         $textRun->addText(", ");
                     }
@@ -498,19 +498,25 @@ class CartographyController extends Controller
 
         }
 
-        // <option value="4">Administration</option>
+        // =====================
+        // Administration
+        // =====================
         if ($vues==null || in_array("4",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Administration", 1);
         }
 
-        // <option value="5">Infrastructure physique</option>
+        // =====================
+        // Infrastructure physique
+        // =====================
         if ($vues==null || in_array("5",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Infrastructure physique", 1);
         }
 
-        // <option value="6">Infrastructure logique</option>
+        // =====================
+        // Infrastructure logique
+        // =====================
         if ($vues==null || in_array("6",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Infrastructure logique", 1);

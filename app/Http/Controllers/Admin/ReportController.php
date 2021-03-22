@@ -126,7 +126,7 @@ class ReportController extends Controller
                     return $item->id == $macroprocess;
                 });
 
-            $processes = Process::All()->sortBy("name")
+            $processes = Process::All()->sortBy("identifiant")
                 ->filter(function($item) use($macroProcessuses, $process) {
                     if($process!=null)
                         return $item->id==$process;
@@ -137,7 +137,7 @@ class ReportController extends Controller
                     return false;
                 });
 
-            $all_process = Process::All()->sortBy("name")
+            $all_process = Process::All()->sortBy("identifiant")
                 ->filter(function($item) use($macroProcessuses, $process) {
                     foreach($macroProcessuses as $macroprocess) 
                         foreach($macroprocess->processes as $process) 
@@ -195,7 +195,7 @@ class ReportController extends Controller
         else 
         {
             $macroProcessuses = MacroProcessus::All()->sortBy("name");
-            $processes = Process::All()->sortBy("name");
+            $processes = Process::All()->sortBy("identifiant");
             $activities = Activity::All()->sortBy("name");
             $operations = Operation::All()->sortBy("name");
             $tasks = Task::All()->sortBy("name");
