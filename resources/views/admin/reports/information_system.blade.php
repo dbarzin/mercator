@@ -260,7 +260,7 @@
                     Tâche
                 </div>
                 <div class="card-body">
-                    <p>Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus</p>                    
+                    <p>Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus</p>
                         @foreach($tasks as $task)
                           <div class="row">
                             <div class="col-sm-6">                        
