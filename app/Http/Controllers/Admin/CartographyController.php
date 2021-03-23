@@ -525,6 +525,70 @@ class CartographyController extends Controller
             $section->addText("La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.");
             $section->addTextBreak(1);
 
+            // get all data
+            $applicationBlocks = ApplicationBlock::All()->sortBy("name");
+            $applications = MApplication::All()->sortBy("name");
+            $applicationServices = ApplicationService::All()->sortBy("name");
+            $applicationModules = ApplicationModule::All()->sortBy("name");
+            $databases = Database::All()->sortBy("name");
+            $fluxes = Flux::All()->sortBy("name");            
+            $all_applications=null;
+
+            // Generate Graph
+            $graph = "digraph  {";
+
+            foreach($applicationBlocks as $ab)
+                $graph .= " AB" . $ab->id . " [label=\"".$ab->name."\" shape=none labelloc=b  width=1 height=1.8 image=\"" . public_path("/images/applicationblock.png")."\" ]";
+            
+            foreach($applications as $application) {
+                $graph .= " A" . $application->id . "[label=\"" . $application->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/application.png") . "\"]";
+                foreach($application->services as $service)
+                    $graph .= " A" . $application->id ."->AS" . $service->id;
+                foreach($application->databases as $database) 
+                    $graph .= " A" . $application->id ."->DB" . $database->id;                
+                if ($application->application_block_id!=null)
+                    $graph .= " AB" . $application->application_block_id . "->A" .  $application->id;
+                }
+            foreach($applicationServices as $service) { 
+                $graph .= " AS" . $service->id . "[label=\"" . $service->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/applicationservice.png") . "\"]";
+                foreach($service->modules as $module) {
+                    $graph .= " AS" . $service->id . "->M" . $module->id;
+                }
+            }
+    
+            foreach($applicationModules as $module) 
+                $graph .= " M" . $module->id . "[label=\"" . $module->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/applicationmodule.png") ."\"]";
+
+            foreach($databases as $database)
+                $graph .= " DB" . $database->id . "[label=\"". $database->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/database.png") . "\"]";
+
+            $graph .= "}";
+
+            // IMAGE
+            $image_paths[] = $image_path=$this->generateGraphImage($graph);
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            $section->addTextBreak(1);
+
+            // =====================================
+            $section->addTitle('Blocs Applicatif', 2);
+            $section->addText("Représente des ensembles d'applications.");
+            $section->addTextBreak(1); 
+
+            foreach($applicationBlocks as $ab) {
+                $section->addBookmark("APPLICATIONBLOCK".$ab->id);                
+                $table=$this->addTable($section, $actor->name);
+                $this->addHTMLRow($table,"Description",$ab->description);
+                $this->addTextRow($table,"Responsable",$ab->responsible);
+
+                $textRun=$this->addTextRunRow($table,"Applications");
+                foreach($ab->applications as $application) { 
+                    $textRun->addLink("APPLICAITON".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($ab->applications->last() != $application)
+                        $textRun->addText(", ");
+                    }
+                $section->addTextBreak(1); 
+                }
+
         }
 
         // =====================
