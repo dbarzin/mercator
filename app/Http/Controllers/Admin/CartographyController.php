@@ -576,19 +576,153 @@ class CartographyController extends Controller
 
             foreach($applicationBlocks as $ab) {
                 $section->addBookmark("APPLICATIONBLOCK".$ab->id);                
-                $table=$this->addTable($section, $actor->name);
+                $table=$this->addTable($section, $ab->name);
                 $this->addHTMLRow($table,"Description",$ab->description);
                 $this->addTextRow($table,"Responsable",$ab->responsible);
 
                 $textRun=$this->addTextRunRow($table,"Applications");
                 foreach($ab->applications as $application) { 
-                    $textRun->addLink("APPLICAITON".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                     if ($ab->applications->last() != $application)
                         $textRun->addText(", ");
                     }
                 $section->addTextBreak(1); 
                 }
 
+            // =====================================
+            $section->addTitle('Applications', 2);
+            $section->addText("Ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.");
+            $section->addTextBreak(1); 
+
+            foreach($applications as $application) {
+                $section->addBookmark("APPLICATION".$application->id);                
+                $table=$this->addTable($section, $application->name);
+                $this->addHTMLRow($table,"Description",$application->description);
+                //
+                $textRun=$this->addTextRunRow($table,"Liste de la (des) entité(s) utilisatrice(s)");
+                foreach($application->entities as $entity) { 
+                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->entities->last() != $entity)
+                        $textRun->addText(", ");
+                    }
+                //
+                $textRun=$this->addTextRunRow($table,"Entité responsable de l'exploitation");
+                if ($application->entity_resp!=null) 
+                    $textRun->addLink("ENTITY".$application->entity_resp->id, $application->entity_resp->name, CartographyController::FancyLinkStyle, null, true);
+                $this->addTextRow($table,"Type de technologie",$application->technology);
+                $this->addTextRow($table,"Type d’application",$application->type);
+                $this->addTextRow($table,"Volume d’utilisateurs et profils",$application->users);
+                $this->addTextRow($table,"Documentation",$application->documentation);
+                //
+                $textRun=$this->addTextRunRow($table,"Flux associés");
+                $textRun->addText("Source : " );
+                foreach($application->applicationSourceFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->applicationSourceFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+                $textRun->addTextBreak(1); 
+                $textRun->addText("Destination : " );
+                foreach($application->applicationDestFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->applicationDestFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+
+                $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
+                if ($application->security_need==1)
+                    $textRun->addText("Public");
+                elseif ($application->security_need==2) 
+                    $textRun->addText("Interne");
+                elseif ($application->security_need==3) 
+                    $textRun->addText("Confidentiel");
+                elseif ($application->security_need==4) 
+                    $textRun->addText("Secret");
+                else
+                    $textRun->addText("-");
+
+                $this->addTextRow($table,"Exposition à l’externe",$application->external);
+
+                $textRun=$this->addTextRunRow($table,"Processus utilisant l’application");
+                foreach($application->processes as $process) {
+                    $textRun->addLink("PROCESS".$process->id, $process->identificant, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->processes->last()!=$process)
+                        $textRun->addText(", ");
+                }
+
+                $textRun=$this->addTextRunRow($table,"Services applicatifs délivrés par l’application");
+                foreach($application->services as $service) {
+                    $textRun->addLink("SERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->services->last()!=$service)
+                        $textRun->addText(", ");
+                }
+
+                $textRun=$this->addTextRunRow($table,"Bases de données utilisées");
+                foreach($application->databases as $database) {
+                    $textRun->addLink("DATABASE".$database->id, $database->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->databases->last()!=$database)
+                        $textRun->addText(", ");
+                }
+
+                $textRun=$this->addTextRunRow($table,"Bloc applicatif");
+                if ($application->application_block!=null)
+                    $textRun->addLink("APPLICATIONBLOCK".$application->application_block_id, $application->application_block->name, CartographyController::FancyLinkStyle, null, true);
+
+                $textRun=$this->addTextRunRow($table,"Liste des serveurs logiques soutenant l’application");
+                foreach($application->logical_servers as $logical_server) {
+                    $textRun->addLink("LOGICAL_SERVER".$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($application->logical_servers->last()!=$logical_server)
+                        $textRun->addText(", ");
+                }
+                
+                $section->addTextBreak(1); 
+            } 
+
+            // =====================================
+            $section->addTitle('Services applicatif', 2);
+            $section->addText("Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud)");
+            $section->addTextBreak(1); 
+
+            foreach($applicationServices as $applicationService) { 
+                $section->addBookmark("APPLICATIONSERVICE".$applicationService->id);                
+                $table=$this->addTable($section, $applicationService->name);
+                $this->addHTMLRow($table,"Description",$applicationService->description);
+
+                // Modules
+                $textRun=$this->addTextRunRow($table,"Liste des modules qui le composent");
+                foreach($applicationService->modules as $module) {
+                    $textRun->addLink("MODULE".$module->id, $module->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationService->modules->last()!=$module)
+                        $textRun->addText(", ");
+                }
+
+                // Flux
+                $textRun=$this->addTextRunRow($table,"Flux associés");
+                $textRun->addText("Source : ");
+                foreach($applicationService->serviceSourceFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationService->serviceSourceFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+                $textRun->addTextBreak(1); 
+                $textRun->addText("Destination : ");
+                foreach($applicationService->serviceDestFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationService->serviceDestFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+
+                $this->addTextRow($table,"Exposition à l’externe",$applicationService->external);
+
+                // Applications
+                $textRun=$this->addTextRunRow($table,"Applications qui utilisent ce service");
+                foreach($applicationService->servicesMApplications as $application) {
+                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationService->servicesMApplications->last()!=$application)
+                        $textRun->addText(", ");
+                }
+                $section->addTextBreak(1); 
+             }
         }
 
         // =====================

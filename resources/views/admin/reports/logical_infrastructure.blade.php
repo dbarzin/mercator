@@ -148,7 +148,7 @@
                           <div class="row">
                             <div class="col-sm-6">                        
                                 <table class="table table-bordered table-striped table-hover">
-                                    <thead id="LOGICALERVER{{ $logicalServer->id }}">
+                                    <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
                                         <th colspan="2">
                                         <a href="/admin/logical-servers/{{ $logicalServer->id }}/edit">{{ $logicalServer->name }}</a><br>
                                         </th>

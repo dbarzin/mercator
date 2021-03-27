@@ -233,7 +233,7 @@
                                         <th>Liste des serveurs logiques soutenant l’application</th>
                                         <td>
                                             @foreach($application->logical_servers as $logical_server)
-                                                <a href="/admin/report/logical_infrastructure#LOGICALERVER{{$logical_server->id}}">{{ $logical_server->name }}</a>
+                                                <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{$logical_server->id}}">{{ $logical_server->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif
