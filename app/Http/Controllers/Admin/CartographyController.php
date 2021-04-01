@@ -645,7 +645,7 @@ class CartographyController extends Controller
 
                 $textRun=$this->addTextRunRow($table,"Processus utilisant l’application");
                 foreach($application->processes as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identificant, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($application->processes->last()!=$process)
                         $textRun->addText(", ");
                 }
