@@ -652,7 +652,7 @@ class CartographyController extends Controller
 
                 $textRun=$this->addTextRunRow($table,"Services applicatifs délivrés par l’application");
                 foreach($application->services as $service) {
-                    $textRun->addLink("SERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("APPLICATIONSERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
                     if ($application->services->last()!=$service)
                         $textRun->addText(", ");
                 }
@@ -691,7 +691,7 @@ class CartographyController extends Controller
                 // Modules
                 $textRun=$this->addTextRunRow($table,"Liste des modules qui le composent");
                 foreach($applicationService->modules as $module) {
-                    $textRun->addLink("MODULE".$module->id, $module->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("APPLICATIONMODULE".$module->id, $module->name, CartographyController::FancyLinkStyle, null, true);
                     if ($applicationService->modules->last()!=$module)
                         $textRun->addText(", ");
                 }
@@ -723,6 +723,43 @@ class CartographyController extends Controller
                 }
                 $section->addTextBreak(1); 
              }
+
+            // =====================================
+            $section->addTitle('Modules applicatif', 2);
+            $section->addText("Composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.");
+            $section->addTextBreak(1); 
+
+            foreach($applicationModules as $applicationModule) { 
+                $section->addBookmark("APPLICATIONMODULE".$applicationModule->id);                
+                $table=$this->addTable($section, $applicationModule->name);
+                $this->addHTMLRow($table,"Description",$applicationModule->description);
+
+                // Services
+                $textRun=$this->addTextRunRow($table,"Services qui utilisent ce module");
+                foreach($applicationModule->modulesApplicationServices as $service) {
+                    $textRun->addLink("APPLICATIONSERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationModule->modulesApplicationServices->last()!=$service)
+                        $textRun->addText(", ");
+                }
+
+                // Flows
+                $textRun=$this->addTextRunRow($table,"Flux associés");
+                $textRun->addText("Source : ");
+                foreach($applicationModule->moduleSourceFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationModule->moduleSourceFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+                $textRun->addTextBreak(1); 
+                $textRun->addText("Destination : ");
+                foreach($applicationModule->moduleDestFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($applicationModule->moduleDestFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+                $section->addTextBreak(1); 
+             }
+
         }
 
         // =====================

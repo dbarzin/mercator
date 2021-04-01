@@ -253,7 +253,7 @@
                 </div>
 
                 <div class="card-body">
-                    <p>Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud) </p>
+                    <p>Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud)</p>
                       @foreach($applicationServices as $applicationService)
                       <div class="row">
                         <div class="col-sm-6">                        
@@ -364,7 +364,7 @@
                                                     @endif
                                                 @endforeach                 
                                                 <br>Destinataire :
-                                                @foreach($applicationModule->moduleSourceFluxes as $flux)
+                                                @foreach($applicationModule->moduleDestFluxes as $flux)
                                                     <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
