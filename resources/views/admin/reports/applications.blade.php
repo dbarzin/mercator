@@ -460,7 +460,17 @@
                                     <tr>
                                         <th>Besoins de sécurité (DICT)</th>
                                         <td>
-                                            {{ $database->security_need }}
+                                            @if ($database->security_need==1)
+                                                Public                                            
+                                            @elseif ($database->security_need==2)
+                                                Interne
+                                            @elseif ($database->security_need==3) 
+                                                Confidentiel
+                                            @elseif ($database->security_need==4) 
+                                                Secret
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
