@@ -79,35 +79,39 @@ class CartographyController extends Controller
     const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
     const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
     const FancyLinkStyle=array('color' => '006699');
+    const NoSpace=array('spaceAfter' => 0);
 
     private static function addTable(Section $section, String $title=null) {
         $table = $section->addTable(
-                array('borderSize' => 2, 'borderColor' => '006699', 'cellMargin' => 80,
-                'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'cellSpacing' => 1)
-                );
+                array(
+                    'borderSize' => 2, 
+                    'borderColor' => '006699', 
+                    'cellMargin' => 80,
+                    'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER), 
+                CartographyController::NoSpace);
         $table->addRow();
         $table->addCell(8000,array('gridSpan' => 2))
-            ->addText($title,CartographyController::FancyTableTitleStyle,array('spaceAfter' => 0));
+            ->addText($title,CartographyController::FancyTableTitleStyle, CartographyController::NoSpace);
         return $table;
     }
 
     private static function addTextRow(Table $table, String $title, String $value=null) {
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle);
-        $table->addCell(6000)->addText($value);
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
+        $table->addCell(6000)->addText($value, CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
     }
 
     private static function addHTMLRow(Table $table, String $title, String $value=null) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle);
+        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
         \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace("<br>", "<br/>", $value));
     }
 
     private static function addTextRunRow(Table $table, String $title) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle,array('spaceAfter' => 0));
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
         $cell=$table->addCell(6000);
-        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle,array('spaceAfter' => 0));
+        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
     }
 
     public function cartography(Request $request) {
@@ -759,6 +763,73 @@ class CartographyController extends Controller
                 }
                 $section->addTextBreak(1); 
              }
+
+            // =====================================
+            $section->addTitle('Bases de données', 2);
+            $section->addText("Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.");
+            $section->addTextBreak(1); 
+
+            foreach($databases as $database) { 
+                $section->addBookmark("DATABASE".$database->id);                
+                $table=$this->addTable($section, $database->name);
+                $this->addHTMLRow($table,"Description",$database->description);
+
+                // Services
+                $textRun=$this->addTextRunRow($table,"Entité(s) utilisatrice(s)");
+                foreach($database->entities as $entity) {
+                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($database->entities->last()!=$entity)
+                        $textRun->addText(", ");
+                }
+
+                // entity_resp
+                $textRun=$this->addTextRunRow($table,"Entité resposanble de l'exploitation");
+                if ($database->entity_resp->id!=null)
+                    $textRun->addLink("ENTITY".$database->entity_resp->id, $database->entity_resp->name, CartographyController::FancyLinkStyle, null, true);
+
+                $this->addTextRow($table,"Responsable SSI",$database->responsible);
+                $this->addTextRow($table,"Type de technologie",$database->type);
+
+                // flows
+                $textRun=$this->addTextRunRow($table,"Flux associés");
+                $textRun->addText("Source : ");
+                foreach($database->databaseSourceFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($database->databaseSourceFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+                $textRun->addTextBreak(1); 
+                $textRun->addText("Destination : ");
+                foreach($database->databaseDestFluxes as $flux) {
+                    $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($database->databaseDestFluxes->last()!=$flux)
+                        $textRun->addText(", ");
+                }
+
+                // Informations
+                $textRun=$this->addTextRunRow($table,"Informations contenues");
+                foreach($database->informations as $information) {
+                    $textRun->addLink("INFORMATION".$information->id, $information->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($database->informations->last()!=$information)
+                        $textRun->addText(", ");
+                }
+
+                $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
+                if ($database->security_need==1)
+                    $textRun->addText("Public");
+                elseif ($database->security_need==2) 
+                    $textRun->addText("Interne");
+                elseif ($database->security_need==3) 
+                    $textRun->addText("Confidentiel");
+                elseif ($database->security_need==4) 
+                    $textRun->addText("Secret");
+                else
+                    $textRun->addText("-");
+
+                $this->addTextRow($table,"Exposition à l’externe",$database->external);
+   
+                $section->addTextBreak(1); 
+                }
 
         }
 
