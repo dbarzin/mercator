@@ -75,7 +75,7 @@ use PhpOffice\PhpWord\Element\Line;
 class CartographyController extends Controller
 {
     // Cell style
-    const FancyTableTitleStyle=array("bold"=>true, 'color' => '000000');
+    const FancyTableTitleStyle=array("bold"=>true, 'color' => '006699');
     const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
     const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
     const FancyLinkStyle=array('color' => '006699');
@@ -256,22 +256,14 @@ class CartographyController extends Controller
                 $this->addHTMLRow($table,"Description",$relation->description);
                 $this->addTextRow($table,"Type",$relation->type);
 
-                $textRun=$this->addTextRunRow($table,"Importance");
-                if ($relation->inportance==1) 
-                    $textRun->addText('Faible');
-                elseif ($relation->inportance==2)
-                    $textRun->addText('Moyen');
-                elseif ($relation->inportance==3)
-                    $textRun->addText('Fort');
-                elseif ($relation->inportance==4)
-                    $textRun->addText('Critique');
-                else
-                    $textRun->addText("-");
-
+                $textRun=$this->addTextRow($table,"Importance",
+                    $relation->inportance==null ? 
+                        "-" : 
+                        array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->inportance]);
                 $textRun=$this->addTextRunRow($table,"Lien");
-                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, null, true);
+                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $textRun->addText(" -> ");
-                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, null, true);
+                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $section->addTextBreak(1);
             }
         }
@@ -346,17 +338,9 @@ class CartographyController extends Controller
                 $table = $this->addTable($section, $macroProcess->name);
                 $this->addHTMLRow($table, "Description", $macroProcess->description);
                 $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
-                $textRun= $this->addTextRunRow($table, "Besoin de sécurité");
-                if ($macroProcess->security_need==1)
-                    $textRun->addText("Public");
-                elseif ($macroProcess->security_need==2) 
-                    $textRun->addText("Interne");
-                elseif ($macroProcess->security_need==3) 
-                    $textRun->addText("Confidentiel");
-                elseif ($macroProcess->security_need==4) 
-                    $textRun->addText("Secret");
-                else
-                    $textRun->addText("-");
+                $textRun= $this->addTextRow($table, "Besoin de sécurité",
+                    $macroProcess->security_need==null ? "-" : 
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need]);
                 $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
                 $textRun=$this->addTextRunRow($table, "Processus");
                 foreach($macroProcess->processes as $process) {
@@ -379,33 +363,27 @@ class CartographyController extends Controller
                 $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
                 $textRun=$this->addTextRunRow($table,"Activités");
                 foreach($process->activities as $activity) {
-                    $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     if ($process->activities->last() != $activity)  
                         $textRun->addText(", ");
                     }
                 $textRun=$this->addTextRunRow($table,"Entités associées");
                 foreach($process->entities as $entity) {
-                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     if ($process->entities->last() != $entity)  
-                        $textRun->addText(", ");
+                        $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                     }
                 $textRun=$this->addTextRunRow($table,"Applications qui le soutiennent");
                 foreach($process->processesMApplications as $application) {
-                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     if ($process->processesMApplications->last() != $application)  
-                        $textRun->addText(", ");
+                        $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                     }
-                $textRun= $this->addTextRunRow($table, "Besoin de sécurité");
-                if ($process->security_need==1)
-                    $textRun->addText("Public");
-                elseif ($process->security_need==2) 
-                    $textRun->addText("Interne");
-                elseif ($process->security_need==3) 
-                    $textRun->addText("Confidentiel");
-                elseif ($process->security_need==4) 
-                    $textRun->addText("Secret");
-                else
-                    $textRun->addText("-");
+                $textRun= $this->addTextRow($table, "Besoin de sécurité",
+                    $process->security_need==null ? 
+                        "-" : 
+                        array(null=>"-",1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$process->security_need]);
+
                 $this->addTextRow($table,"Propriétaire",$process->owner);
                 $section->addTextBreak(1);
                 }
@@ -535,7 +513,7 @@ class CartographyController extends Controller
             $applicationServices = ApplicationService::All()->sortBy("name");
             $applicationModules = ApplicationModule::All()->sortBy("name");
             $databases = Database::All()->sortBy("name");
-            $fluxes = Flux::All()->sortBy("name");            
+            $fluxes = Flux::All()->sortBy("name");
             $all_applications=null;
 
             // Generate Graph
@@ -830,6 +808,61 @@ class CartographyController extends Controller
    
                 $section->addTextBreak(1); 
                 }
+
+            // =====================================
+            $section->addTitle('Flux', 2);
+            $section->addText("Echange d’informations entre un émetteur ou un récepteur (service applicatif, application ou acteur).");
+            $section->addTextBreak(1); 
+
+            foreach($fluxes as $flux) {
+                $section->addBookmark("FLUX".$flux->id);
+                $table=$this->addTable($section, $flux->name);
+                $this->addHTMLRow($table,"Description",$flux->description);
+
+                // source
+                if ($flux->application_source!=null) {
+                    $textRun=$this->addTextRunRow($table,"Application Source");
+                    $textRun->addLink("APPLICATION".$flux->application_source->id, $flux->application_source->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->service_source!=null) {
+                    $textRun=$this->addTextRunRow($table,"Service Source");
+                    $textRun->addLink("APPLICATIONSERVICE".$flux->service_source->id, $flux->service_source->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->module_source!=null) {
+                    $textRun=$this->addTextRunRow($table,"Module Source");
+                    $textRun->addLink("APPLICATIONMODULE".$flux->module_source->id, $flux->module_source->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->database_source!=null) {
+                    $textRun=$this->addTextRunRow($table,"Database Source");
+                    $textRun->addLink("DATABASE".$flux->database_source->id, $flux->database_source->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                // Dest
+                if ($flux->application_dest!=null) {
+                    $textRun=$this->addTextRunRow($table,"Application Destinataire");
+                    $textRun->addLink("APPLICATION".$flux->application_dest->id, $flux->application_dest->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->service_dest!=null) {
+                    $textRun=$this->addTextRunRow($table,"Service Destinataire");
+                    $textRun->addLink("APPLICATIONSERVICE".$flux->service_dest->id, $flux->service_dest->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->module_dest!=null) {
+                    $textRun=$this->addTextRunRow($table,"Module Destinataire");
+                    $textRun->addLink("APPLICATIONMODULE".$flux->module_dest->id, $flux->module_dest->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                if ($flux->database_source!=null) {
+                    $textRun=$this->addTextRunRow($table,"Database Destinataire");
+                    $textRun->addLink("DATABASE".$flux->database_dest->id, $flux->database_dest->name, CartographyController::FancyLinkStyle, null, true);
+                }
+
+                $section->addTextBreak(1); 
+            } 
 
         }
 
