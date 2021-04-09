@@ -32,8 +32,8 @@
                                 <option value="2">Système d'information</option>
                                 <option value="3">Applications</option>
                                 <option value="4">Administration</option>
-                                <option value="5">Infrastructure physique</option>
-                                <option value="6">Infrastructure logique</option>
+                                <option value="5">Infrastructure logique</option>
+                                <option value="6">Infrastructure physique</option>
                         </select>
                         @if($errors->has('processes'))
                             <div class="invalid-feedback">

@@ -514,7 +514,6 @@ class CartographyController extends Controller
             $applicationModules = ApplicationModule::All()->sortBy("name");
             $databases = Database::All()->sortBy("name");
             $fluxes = Flux::All()->sortBy("name");
-            $all_applications=null;
 
             // Generate Graph
             $graph = "digraph  {";
@@ -872,23 +871,58 @@ class CartographyController extends Controller
         if ($vues==null || in_array("4",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Administration", 1);
-        }
+            $section->addText("La vue de l’administration est un cas particulier de la vue des applications. Elle répertorie les périmètres et les niveaux de privilèges des administrateurs.");
+            $section->addTextBreak(1);
 
-        // =====================
-        // Infrastructure physique
-        // =====================
-        if ($vues==null || in_array("5",$vues)) {
-            $section->addTextBreak(2);
-            $section->addTitle("Infrastructure physique", 1);
+            // get all data
+            $zones = ZoneAdmin::All();
+            $annuaires = Annuaire::All();
+            $forests = ForestAd::All();
+            $domains = DomaineAd::All();
+
+            // Generate Graph
+            $graph = "digraph  {";
+            foreach($zones as $zone) {
+                $graph .= " Z". $zone->id . "[label=\"". $zone->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/zoneadmin.png"). "\"]";
+                foreach($zone->zoneAdminAnnuaires as $annuaire) 
+                    $graph .= " Z". $zone->id . "->A" . $annuaire->id;
+                foreach($zone->zoneAdminForestAds as $forest) 
+                    $graph .= " Z" . $zone->id . "->F" . $forest->id;
+                }
+            foreach($annuaires as $annuaire) 
+                $graph .= " A". $annuaire->id . "[label=\"" .$annuaire->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/annuaire.png") ."\"]";
+            foreach($forests as $forest) { 
+                $graph .= " F" . $forest->id . "[label=\"" . $forest->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/ldap.png") ."\"]";
+                foreach($forest->domaines as $domain)  
+                  $graph .= " F" . $forest->id . "->D" . $domain->id;
+                }
+            foreach($domains as $domain)
+                $graph .= " D" . $domain->id . "[label=\"" . $domain->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/domain.png") . "\"]";
+            $graph .= "}";
+
+            // IMAGE
+            $image_paths[] = $image_path=$this->generateGraphImage($graph);
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            $section->addTextBreak(1);
+
         }
 
         // =====================
         // Infrastructure logique
         // =====================
-        if ($vues==null || in_array("6",$vues)) {
+        if ($vues==null || in_array("5",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Infrastructure logique", 1);
         }
+
+        // =====================
+        // Infrastructure physique
+        // =====================
+        if ($vues==null || in_array("6",$vues)) {
+            $section->addTextBreak(2);
+            $section->addTitle("Infrastructure physique", 1);
+        }
+
 
         // Finename
         $filepath=storage_path('app/reports/cartographie-'. Carbon::today()->format("Ymd") .'.docx');
