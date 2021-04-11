@@ -905,6 +905,105 @@ class CartographyController extends Controller
             Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
             $section->addTextBreak(1);
 
+            // =====================================
+            $section->addTitle('Zones', 2);
+            $section->addText("Ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).");
+            $section->addTextBreak(1); 
+
+            foreach($zones as $zone) {
+                $section->addBookmark("ZONE".$zone->id);
+                $table=$this->addTable($section, $zone->name);
+                $this->addHTMLRow($table,"Description",$zone->description);
+
+                // Annuaires
+                $textRun=$this->addTextRunRow($table,"Annuaires");
+                foreach($zone->zoneAdminAnnuaires as $annuaire) {
+                    $textRun->addLink("ANNUAIRE".$annuaire->id, $annuaire->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($zone->zoneAdminAnnuaires->last()!=$annuaire)
+                        $textRun->addText(", ");
+                }
+
+                // Forets
+                $textRun=$this->addTextRunRow($table,"Forêt Active Directory / Arborescence LDAP");
+                foreach($zone->zoneAdminForestAds as $forest) {
+                    $textRun->addLink("FOREST".$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($zone->zoneAdminForestAds->last()!=$forest)
+                        $textRun->addText(", ");
+                }
+                $section->addTextBreak(1); 
+             }
+
+            // =====================================
+            $section->addTitle('Service d’annuaire d’administration', 2);
+            $section->addText("Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration.");
+            $section->addTextBreak(1); 
+
+            foreach($annuaires as $annuaire) {
+                $section->addBookmark("ANNUAIRE".$annuaire->id);
+                $table=$this->addTable($section, $annuaire->name);
+                $this->addHTMLRow($table,"Description",$annuaire->description);
+
+                $this->addTextRow($table,"Solution",$annuaire->solution);
+
+                // Zone d'administration
+                $textRun=$this->addTextRunRow($table,"Zone d'administration");
+                if ($annuaire->zone_admin!=null) 
+                    $textRun->addLink("ZONE".$annuaire->zone_admin->id, $annuaire->zone_admin->name, CartographyController::FancyLinkStyle, null, true);
+                   
+                $section->addTextBreak(1); 
+                }
+
+            // =====================================
+            $section->addTitle('Forêt Active Directory / Arborescence LDAP', 2);
+            $section->addText("Regroupement organisé de domaines Active Directory/LDAP.");
+            $section->addTextBreak(1); 
+
+            foreach($forests as $forest) {
+                $section->addBookmark("FOREST".$forest->id);
+                $table=$this->addTable($section, $forest->name);
+                $this->addHTMLRow($table,"Description",$forest->description);
+
+                // Zone d'administration
+                $textRun=$this->addTextRunRow($table,"Zone d'administration");
+                if ($forest->zone_admin!=null) 
+                    $textRun->addLink("ZONE".$forest->zone_admin->id, $forest->zone_admin->name, CartographyController::FancyLinkStyle, null, true);
+
+                // Domaines
+                $textRun=$this->addTextRunRow($table,"Domaines");
+                foreach($forest->domaines as $domain) {
+                    $textRun->addLink("DOMAIN".$domain->id, $domain->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($forest->domaines->last()!=$domain)
+                        $textRun->addText(", ");
+                    }
+                $section->addTextBreak(1); 
+                }
+
+            // =====================================
+            $section->addTitle('Domaines', 2);
+            $section->addText("Ensemble d’éléments (membres, ressources) régis par une même politique de sécurité.");
+            $section->addTextBreak(1); 
+
+            foreach($domains as $domain) { 
+                $section->addBookmark("DOMAIN".$domain->id);
+                $table=$this->addTable($section, $domain->name);
+                $this->addHTMLRow($table,"Description",$domain->description);
+
+                $this->addTextRow($table,"Nombre de controleurs de domaine",$domain->domain_ctrl_cnt);
+                $this->addTextRow($table,"Nombre de comptes utilisateurs rattachés",$domain->user_count);
+                $this->addTextRow($table,"Nombre de machines rattachées",$domain->machine_count);
+                $this->addTextRow($table,"Relations inter-domaines",$domain->relation_inter_domaine);
+
+                $this->addTextRow($table,"Forêt Active Directory / Arborescence LDAP",$domain->relation_inter_domaine);
+
+                // FOREST
+                $textRun=$this->addTextRunRow($table,"Domaines");
+                foreach($domain->domainesForestAds as $forest) {
+                    $textRun->addLink("FOREST".$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($domain->domainesForestAds->last()!=$forest)
+                        $textRun->addText(", ");
+                    }
+                $section->addTextBreak(1); 
+                }
         }
 
         // =====================

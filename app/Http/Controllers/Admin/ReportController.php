@@ -705,13 +705,13 @@ class ReportController extends Controller
     }
 
     public function administration(Request $request) {
-        $zoneAdmins = ZoneAdmin::All();
+        $zones = ZoneAdmin::All();
         $annuaires = Annuaire::All();
         $forests = ForestAd::All();
         $domains = DomaineAd::All();
 
         return view('admin/reports/administration')
-            ->with("zones",$zoneAdmins)
+            ->with("zones",$zones)
             ->with("annuaires",$annuaires)
             ->with("forests",$forests)
             ->with("domains",$domains);

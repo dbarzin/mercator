@@ -82,9 +82,10 @@
                                 <a href="/admin/forest-ads/{{ $forest->id }}/edit">{{ $forest->name }}</a><br>
                                 <b>Description</b> : <br>
                                 {!! $forest->description !!}
+                                
                                 <b>Zone d'administration</b> : 
-                                @if ($annuaire->zone_admin!=null)
-                                    <a href="#ZONE{{$annuaire->zone_admin->id}}">{{$annuaire->zone_admin->name}}</a>
+                                @if ($forest->zone_admin!=null)
+                                    <a href="#ZONE{{$forest->zone_admin->id}}">{{$forest->zone_admin->name}}</a>
                                 @endif
                                 <br>
                                 <b>Domaines</b> : 
