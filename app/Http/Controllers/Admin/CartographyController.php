@@ -197,7 +197,7 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
             $section->addTextBreak(1);
 
             // ===============================
@@ -324,7 +324,7 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
             $section->addTextBreak(1);
 
             // =====================================
@@ -547,7 +547,7 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
             $section->addTextBreak(1);
 
             // =====================================
@@ -902,7 +902,7 @@ class CartographyController extends Controller
 
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="600"/></td></tr></table>');
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
             $section->addTextBreak(1);
 
             // =====================================
