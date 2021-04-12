@@ -23,7 +23,8 @@ class StoreApplicationModuleRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_modules',
+                //'unique:application_modules',
+                'unique:application_modules,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

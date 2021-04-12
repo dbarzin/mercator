@@ -23,7 +23,8 @@ class UpdateProcessRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:processes,identifiant,' . request()->route('process')->id,
+                //'unique:processes,identifiant,' . request()->route('process')->id,
+                'unique:processes,name,'.request()->route('process')->id.',id,deleted_at,NULL',
             ],
             'activities.*'  => [
                 'integer',

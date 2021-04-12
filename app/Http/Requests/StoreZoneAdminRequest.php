@@ -23,7 +23,8 @@ class StoreZoneAdminRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:zone_admins',
+                //'unique:zone_admins',
+                'unique:zone_admins,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

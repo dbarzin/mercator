@@ -23,7 +23,8 @@ class UpdateGatewayRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:gateways,name,' . request()->route('gateway')->id,
+                //'unique:gateways,name,' . request()->route('gateway')->id,
+                'unique:gateways,name,'.request()->route('gateway')->id.',id,deleted_at,NULL',
             ],
         ];
     }

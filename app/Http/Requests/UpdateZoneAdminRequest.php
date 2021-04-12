@@ -23,7 +23,8 @@ class UpdateZoneAdminRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:zone_admins,name,' . request()->route('zone_admin')->id,
+                //'unique:zone_admins,name,' . request()->route('zone_admin')->id,
+                'unique:zone_admins,name,'.request()->route('zone_admin')->id.',id,deleted_at,NULL',
             ],
         ];
     }

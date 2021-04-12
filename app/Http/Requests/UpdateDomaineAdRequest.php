@@ -23,7 +23,8 @@ class UpdateDomaineAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:domaine_ads,name,' . request()->route('domaine_ad')->id,
+                // 'unique:domaine_ads,name,' . request()->route('domaine_ad')->id,
+                'unique:domaine_ads,name,'.request()->route('domaine_ad')->id.',id,deleted_at,NULL',
             ],
             'domain_ctrl_cnt' => [
                 'nullable',

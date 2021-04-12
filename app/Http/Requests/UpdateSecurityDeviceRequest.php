@@ -23,7 +23,8 @@ class UpdateSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:security_devices,name,' . request()->route('security_device')->id,
+                //'unique:security_devices,name,' . request()->route('security_device')->id,
+                'unique:security_devices,name,'.request()->route('security_device')->id.',id,deleted_at,NULL',
             ],
         ];
     }

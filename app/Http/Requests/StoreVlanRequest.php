@@ -23,7 +23,8 @@ class StoreVlanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:vlans',
+                //'unique:vlans',
+                'unique:vlans,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

@@ -23,7 +23,8 @@ class UpdateDatabaseRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:databases,name,' . request()->route('database')->id,
+                //'unique:databases,name,' . request()->route('database')->id,
+                'unique:databases,name,'.request()->route('database')->id.',id,deleted_at,NULL',
             ],
             'entities.*'     => [
                 'integer',

@@ -23,7 +23,8 @@ class StoreDatabaseRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:databases',
+                //'unique:databases',
+                'unique:databases,name,NULL,id,deleted_at,NULL',
             ],
             'entities.*'     => [
                 'integer',

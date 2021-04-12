@@ -23,7 +23,8 @@ class StorePeripheralRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:peripherals',
+                //'unique:peripherals',
+                'unique:peripherals,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

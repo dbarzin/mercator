@@ -23,7 +23,8 @@ class StoreInformationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:information',
+                //'unique:information',
+                'unique:information,name,NULL,id,deleted_at,NULL',
             ],
             'processes.*'   => [
                 'integer',

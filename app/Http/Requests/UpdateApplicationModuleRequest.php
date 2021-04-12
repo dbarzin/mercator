@@ -23,7 +23,8 @@ class UpdateApplicationModuleRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_modules,name,' . request()->route('application_module')->id,
+                // 'unique:application_modules,name,' . request()->route('application_module')->id,
+                'unique:application_modules,name,'.request()->route('application_module')->id.',id,deleted_at,NULL',
             ],
         ];
     }

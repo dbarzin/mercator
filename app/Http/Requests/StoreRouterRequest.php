@@ -23,7 +23,8 @@ class StoreRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:routers',
+                //'unique:routers',
+                'unique:routers,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

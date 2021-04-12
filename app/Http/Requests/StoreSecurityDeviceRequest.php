@@ -23,7 +23,8 @@ class StoreSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:security_devices',
+                //'unique:security_devices',
+                'unique:security_devices,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

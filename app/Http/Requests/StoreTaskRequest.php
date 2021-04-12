@@ -23,7 +23,8 @@ class StoreTaskRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:tasks',
+                //'unique:tasks',
+                'unique:tasks,nom,NULL,id,deleted_at,NULL',
             ],
         ];
     }

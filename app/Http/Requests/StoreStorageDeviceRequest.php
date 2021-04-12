@@ -23,7 +23,8 @@ class StoreStorageDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:storage_devices',
+                //'unique:storage_devices',
+                'unique:storage_devices,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

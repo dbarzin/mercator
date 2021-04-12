@@ -23,7 +23,8 @@ class StorePhoneRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:phones',
+                //'unique:phones',
+                'unique:phones,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

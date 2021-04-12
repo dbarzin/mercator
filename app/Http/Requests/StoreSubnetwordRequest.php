@@ -23,7 +23,8 @@ class StoreSubnetwordRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:subnetworks',
+                //'unique:subnetworks',
+                'unique:subnetworks,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

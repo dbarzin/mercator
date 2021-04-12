@@ -23,7 +23,8 @@ class StoreActorRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:actors',
+                //'unique:actors',
+                'unique:actors,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

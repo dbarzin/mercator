@@ -23,7 +23,8 @@ class UpdateBayRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:bays,name,' . request()->route('bay')->id,
+                //'unique:bays,name,' . request()->route('bay')->id,
+                'unique:bays,name,'.request()->route('bay')->id.',id,deleted_at,NULL',
             ],
         ];
     }

@@ -23,7 +23,8 @@ class StoreAnnuaireRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:annuaires',
+                //'unique:annuaires',
+                'unique:annuaires,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

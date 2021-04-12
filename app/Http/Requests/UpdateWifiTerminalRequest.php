@@ -23,7 +23,8 @@ class UpdateWifiTerminalRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:wifi_terminals,name,' . request()->route('wifi_terminal')->id,
+                //'unique:wifi_terminals,name,' . request()->route('wifi_terminal')->id,
+                'unique:wifi_terminals,name,'.request()->route('wifi_terminal')->id.',id,deleted_at,NULL',
             ],
             'bays.*' => [
                 'integer',

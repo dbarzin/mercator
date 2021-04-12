@@ -23,7 +23,8 @@ class UpdateRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:routers,name,' . request()->route('router')->id,
+                //'unique:routers,name,' . request()->route('router')->id,
+                'unique:routers,name,'.request()->route('router')->id.',id,deleted_at,NULL',
             ],
         ];
     }

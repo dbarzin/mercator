@@ -23,7 +23,8 @@ class StoreOperationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:operations',
+                //'unique:operations',
+                'unique:operations,name,NULL,id,deleted_at,NULL',
             ],
             'actors.*' => [
                 'integer',

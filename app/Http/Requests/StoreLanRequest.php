@@ -23,7 +23,8 @@ class StoreLanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:lans',
+                //'unique:lans',
+                'unique:lans,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

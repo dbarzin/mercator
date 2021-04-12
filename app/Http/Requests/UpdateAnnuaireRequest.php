@@ -23,7 +23,8 @@ class UpdateAnnuaireRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:annuaires,name,' . request()->route('annuaire')->id,
+                //'unique:annuaires,name,' . request()->route('annuaire')->id,
+                'unique:annuaires,name,'.request()->route('annuaire')->id.',id,deleted_at,NULL',
             ],
         ];
     }

@@ -23,7 +23,8 @@ class UpdatePhysicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:physical_servers,name,' . request()->route('physical_server')->id,
+                //'unique:physical_servers,name,' . request()->route('physical_server')->id,
+                'unique:physical_servers,name,'.request()->route('physical_server')->id.',id,deleted_at,NULL',
             ],
         ];
     }

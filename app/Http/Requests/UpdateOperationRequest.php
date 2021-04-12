@@ -23,7 +23,8 @@ class UpdateOperationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:operations,name,' . request()->route('operation')->id,
+                //'unique:operations,name,' . request()->route('operation')->id,
+                'unique:operations,name,'.request()->route('operation')->id.',id,deleted_at,NULL',
             ],
             'actors.*' => [
                 'integer',

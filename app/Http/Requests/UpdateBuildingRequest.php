@@ -23,7 +23,8 @@ class UpdateBuildingRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                'unique:buildings,name,' . request()->route('building')->id,
+                //'unique:buildings,name,' . request()->route('building')->id,
+                'unique:buildings,name,'.request()->route('building')->id.',id,deleted_at,NULL',
             ],
         ];
     }

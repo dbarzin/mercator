@@ -23,7 +23,8 @@ class StoreNetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:networks',
+                //'unique:networks',
+                'unique:networks,name,NULL,id,deleted_at,NULL',
             ],
             'security_need' => [
                 'nullable',

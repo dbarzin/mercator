@@ -23,7 +23,8 @@ class UpdateApplicationServiceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_services,name,' . request()->route('application_service')->id,
+                //'unique:application_services,name,' . request()->route('application_service')->id,
+                'unique:application_services,name,'.request()->route('application_service')->id.',id,deleted_at,NULL',
             ],
             'modules.*' => [
                 'integer',

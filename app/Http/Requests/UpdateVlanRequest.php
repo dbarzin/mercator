@@ -23,7 +23,8 @@ class UpdateVlanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:vlans,name,' . request()->route('vlan')->id,
+                //'unique:vlans,name,' . request()->route('vlan')->id,
+                'unique:vlans,name,'.request()->route('vlan')->id.',id,deleted_at,NULL',
             ],
         ];
     }

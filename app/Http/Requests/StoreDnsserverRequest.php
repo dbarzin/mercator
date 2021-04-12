@@ -23,7 +23,8 @@ class StoreDnsserverRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:dnsservers',
+                //'unique:dnsservers',
+                'unique:dnsservers,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

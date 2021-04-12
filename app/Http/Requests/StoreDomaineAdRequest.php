@@ -23,7 +23,8 @@ class StoreDomaineAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:domaine_ads',
+                //'unique:domaine_ads',
+                'unique:domain_ads,name,NULL,id,deleted_at,NULL',
             ],
             'domain_ctrl_cnt' => [
                 'nullable',

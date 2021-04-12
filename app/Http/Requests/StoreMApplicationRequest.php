@@ -23,7 +23,8 @@ class StoreMApplicationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:m_applications',
+                //'unique:m_applications',
+                'unique:m_applications,name,NULL,id,deleted_at,NULL',
             ],
             'entities.*'        => [
                 'integer',

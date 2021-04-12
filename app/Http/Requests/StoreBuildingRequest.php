@@ -23,7 +23,8 @@ class StoreBuildingRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                'unique:buildings',
+                //'unique:buildings',
+                'unique:buildings,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

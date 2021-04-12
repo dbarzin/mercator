@@ -23,7 +23,8 @@ class StoreForestAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:forest_ads',
+                //'unique:forest_ads',
+                'unique:forest_ads,name,NULL,id,deleted_at,NULL',
             ],
             'domaines.*' => [
                 'integer',

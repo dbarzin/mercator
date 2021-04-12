@@ -23,7 +23,8 @@ class StoreDhcpServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:dhcp_servers',
+                //'unique:dhcp_servers',
+                'unique:dhcp_servers,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

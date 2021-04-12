@@ -23,7 +23,8 @@ class UpdateStorageDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:storage_devices,name,' . request()->route('storage_device')->id,
+                //'unique:storage_devices,name,' . request()->route('storage_device')->id,
+                'unique:storage_devices,name,'.request()->route('storage_device')->id.',id,deleted_at,NULL',
             ],
         ];
     }

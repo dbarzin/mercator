@@ -23,7 +23,8 @@ class StoreApplicationBlockRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_blocks',
+                //'unique:application_blocks',
+                'unique:application_blocks,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

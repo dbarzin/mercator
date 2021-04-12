@@ -23,7 +23,8 @@ class StoreNetworkSwitchRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                'unique:network_switches',
+                //'unique:network_switches',
+                'unique:network_switches,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

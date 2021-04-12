@@ -23,7 +23,8 @@ class UpdateLanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:lans,name,' . request()->route('lan')->id,
+                //'unique:lans,name,' . request()->route('lan')->id,
+                'unique:lans,name,'.request()->route('lan')->id.',id,deleted_at,NULL',
             ],
         ];
     }

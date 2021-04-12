@@ -23,7 +23,8 @@ class StoreSiteRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:sites',
+                //'unique:sites',
+                'unique:sites,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

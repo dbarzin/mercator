@@ -23,7 +23,8 @@ class UpdateDhcpServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:dhcp_servers,name,' . request()->route('dhcp_server')->id,
+                //'unique:dhcp_servers,name,' . request()->route('dhcp_server')->id,
+                'unique:dhcp_servers,name,'.request()->route('dhcp_server')->id.',id,deleted_at,NULL',
             ],
         ];
     }

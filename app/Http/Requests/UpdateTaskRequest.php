@@ -23,7 +23,8 @@ class UpdateTaskRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:tasks,nom,' . request()->route('task')->id,
+                //'unique:tasks,nom,' . request()->route('task')->id,
+                'unique:tasks,nom,'.request()->route('task')->id.',id,deleted_at,NULL',
             ],
         ];
     }

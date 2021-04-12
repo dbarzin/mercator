@@ -23,7 +23,8 @@ class UpdateMacroProcessusRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:macro_processuses,name,' . request()->route('macro_processus')->id,
+                //'unique:macro_processuses,name,' . request()->route('macro_processus')->id,
+                'unique:macro_processuses,name,'.request()->route('macro_processus')->id.',id,deleted_at,NULL',
             ],
             'security_need' => [
                 'nullable',

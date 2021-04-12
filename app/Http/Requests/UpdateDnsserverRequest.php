@@ -23,7 +23,8 @@ class UpdateDnsserverRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:dnsservers,name,' . request()->route('dnsserver')->id,
+                //'unique:dnsservers,name,' . request()->route('dnsserver')->id,
+                'unique:dnsservers,name,'.request()->route('dnsserver')->id.',id,deleted_at,NULL',
             ],
         ];
     }

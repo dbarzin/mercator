@@ -23,7 +23,8 @@ class UpdatePhoneRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:phones,name,' . request()->route('phone')->id,
+                //'unique:phones,name,' . request()->route('phone')->id,
+                'unique:phones,name,'.request()->route('phone')->id.',id,deleted_at,NULL',
             ],
         ];
     }

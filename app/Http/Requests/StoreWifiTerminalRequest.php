@@ -23,7 +23,8 @@ class StoreWifiTerminalRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:wifi_terminals',
+                //'unique:wifi_terminals',
+                'unique:wifi_terminals,name,NULL,id,deleted_at,NULL',
             ],
             'bays.*' => [
                 'integer',

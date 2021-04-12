@@ -23,7 +23,8 @@ class UpdateForestAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:forest_ads,name,' . request()->route('forest_ad')->id,
+                //'unique:forest_ads,name,' . request()->route('forest_ad')->id,
+                'unique:forest_ads,name,'.request()->route('forest_ad')->id.',id,deleted_at,NULL',
             ],
             'domaines.*' => [
                 'integer',

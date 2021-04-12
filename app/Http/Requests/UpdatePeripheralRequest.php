@@ -23,7 +23,8 @@ class UpdatePeripheralRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:peripherals,name,' . request()->route('peripheral')->id,
+                //'unique:peripherals,name,' . request()->route('peripheral')->id,
+                'unique:peripherals,name,'.request()->route('peripheral')->id.',id,deleted_at,NULL',
             ],
         ];
     }

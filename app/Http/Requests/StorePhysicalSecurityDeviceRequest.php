@@ -23,7 +23,8 @@ class StorePhysicalSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:physical_security_devices',
+                //'unique:physical_security_devices',
+                'unique:physical_security_devices,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

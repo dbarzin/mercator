@@ -23,7 +23,8 @@ class UpdateWorkstationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:workstations,name,' . request()->route('workstation')->id,
+                //'unique:workstations,name,' . request()->route('workstation')->id,
+                'unique:workstations,name,'.request()->route('workstation')->id.',id,deleted_at,NULL',
             ],
         ];
     }

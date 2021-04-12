@@ -23,7 +23,8 @@ class StoreProcessRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:processes',
+                //'unique:processes',
+                'unique:processes,identifiant,NULL,id,deleted_at,NULL',
             ],
             'activities.*'  => [
                 'integer',

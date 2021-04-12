@@ -23,7 +23,8 @@ class StoreLogicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:logical_servers',
+                //'unique:logical_servers',
+                'unique:logical_servers,name,NULL,id,deleted_at,NULL',
             ],
             'servers.*' => [
                 'integer',

@@ -23,7 +23,8 @@ class StoreEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:entities',
+                //'unique:entities',
+                'unique:entities,name,NULL,id,deleted_at,NULL',
             ],
             'seurity_level' => [
                 'nullable',

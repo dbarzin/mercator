@@ -23,7 +23,8 @@ class StoreManRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:mans',
+                //'unique:mans',
+                'unique:mans,name,NULL,id,deleted_at,NULL',
             ],
             'lans.*' => [
                 'integer',

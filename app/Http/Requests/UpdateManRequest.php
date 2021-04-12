@@ -23,7 +23,8 @@ class UpdateManRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:men,name,' . request()->route('man')->id,
+                //'unique:mans,name,' . request()->route('man')->id,
+                'unique:mans,name,'.request()->route('man')->id.',id,deleted_at,NULL',
             ],
             'lans.*' => [
                 'integer',
