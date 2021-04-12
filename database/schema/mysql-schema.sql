@@ -62,7 +62,7 @@ CREATE TABLE `actors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `actors_name_unique` (`name`)
+  UNIQUE KEY `actors_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -93,7 +93,7 @@ CREATE TABLE `application_blocks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `application_blocks_name_unique` (`name`)
+  UNIQUE KEY `application_blocks_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -117,7 +117,7 @@ CREATE TABLE `application_modules` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `application_modules_name_unique` (`name`)
+  UNIQUE KEY `application_modules_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -142,7 +142,7 @@ CREATE TABLE `application_services` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `application_services_name_unique` (`name`)
+  UNIQUE KEY `application_services_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -182,7 +182,7 @@ CREATE TABLE `bays` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `room_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `bays_name_unique` (`name`),
+  UNIQUE KEY `bays_name_unique` (`name`,`deleted_at`),
   KEY `room_fk_1483441` (`room_id`),
   CONSTRAINT `room_fk_1483441` FOREIGN KEY (`room_id`) REFERENCES `buildings` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -198,7 +198,7 @@ CREATE TABLE `buildings` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `site_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `buildings_name_unique` (`name`),
+  UNIQUE KEY `buildings_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1483431` (`site_id`),
   CONSTRAINT `site_fk_1483431` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -251,7 +251,7 @@ CREATE TABLE `databases` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `entity_resp_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `databases_name_unique` (`name`),
+  UNIQUE KEY `databases_name_unique` (`name`,`deleted_at`),
   KEY `entity_resp_fk_1485569` (`entity_resp_id`),
   CONSTRAINT `entity_resp_fk_1485569` FOREIGN KEY (`entity_resp_id`) REFERENCES `entities` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -266,7 +266,7 @@ CREATE TABLE `dhcp_servers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `dhcp_servers_name_unique` (`name`)
+  UNIQUE KEY `dhcp_servers_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -279,7 +279,7 @@ CREATE TABLE `dnsservers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `dnsservers_name_unique` (`name`)
+  UNIQUE KEY `dnsservers_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -307,7 +307,7 @@ CREATE TABLE `domaine_ads` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `domaine_ads_name_unique` (`name`)
+  UNIQUE KEY `domaine_ads_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -322,7 +322,7 @@ CREATE TABLE `entities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `entities_name_unique` (`name`)
+  UNIQUE KEY `entities_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -358,7 +358,7 @@ CREATE TABLE `external_connected_entities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `external_connected_entities_name_unique` (`name`)
+  UNIQUE KEY `external_connected_entities_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -420,7 +420,7 @@ CREATE TABLE `forest_ads` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `zone_admin_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `forest_ads_name_unique` (`name`),
+  UNIQUE KEY `forest_ads_name_unique` (`name`,`deleted_at`),
   KEY `zone_admin_fk_1482667` (`zone_admin_id`),
   CONSTRAINT `zone_admin_fk_1482667` FOREIGN KEY (`zone_admin_id`) REFERENCES `zone_admins` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -437,7 +437,7 @@ CREATE TABLE `gateways` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `gateways_name_unique` (`name`)
+  UNIQUE KEY `gateways_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -456,7 +456,7 @@ CREATE TABLE `information` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `information_name_unique` (`name`)
+  UNIQUE KEY `information_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -502,7 +502,7 @@ CREATE TABLE `lans` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `lans_name_unique` (`name`)
+  UNIQUE KEY `lans_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -544,7 +544,7 @@ CREATE TABLE `logical_servers` (
   `memory` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `environment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `logical_servers_name_unique` (`name`)
+  UNIQUE KEY `logical_servers_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -577,7 +577,7 @@ CREATE TABLE `m_applications` (
   `application_block_id` int unsigned DEFAULT NULL,
   `documentation` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `m_applications_name_unique` (`name`),
+  UNIQUE KEY `m_applications_name_unique` (`name`,`deleted_at`),
   KEY `entity_resp_fk_1488612` (`entity_resp_id`),
   KEY `application_block_fk_1644592` (`application_block_id`),
   CONSTRAINT `application_block_fk_1644592` FOREIGN KEY (`application_block_id`) REFERENCES `application_blocks` (`id`),
@@ -597,7 +597,7 @@ CREATE TABLE `macro_processuses` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `macro_processuses_name_unique` (`name`)
+  UNIQUE KEY `macro_processuses_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -620,7 +620,7 @@ CREATE TABLE `mans` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `men_name_unique` (`name`)
+  UNIQUE KEY `men_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -676,7 +676,7 @@ CREATE TABLE `network_switches` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `network_switches_name_unique` (`name`)
+  UNIQUE KEY `network_switches_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -693,7 +693,7 @@ CREATE TABLE `networks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `networks_name_unique` (`name`)
+  UNIQUE KEY `networks_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -717,7 +717,7 @@ CREATE TABLE `operations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `operations_name_unique` (`name`)
+  UNIQUE KEY `operations_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -744,7 +744,7 @@ CREATE TABLE `peripherals` (
   `building_id` int unsigned DEFAULT NULL,
   `bay_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `peripherals_name_unique` (`name`),
+  UNIQUE KEY `peripherals_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485449` (`site_id`),
   KEY `building_fk_1485450` (`building_id`),
   KEY `bay_fk_1485451` (`bay_id`),
@@ -789,7 +789,7 @@ CREATE TABLE `phones` (
   `building_id` int unsigned DEFAULT NULL,
   `physical_switch_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `phones_name_unique` (`name`),
+  UNIQUE KEY `phones_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485479` (`site_id`),
   KEY `building_fk_1485480` (`building_id`),
   KEY `physical_switch_fk_5738332` (`physical_switch_id`),
@@ -823,7 +823,7 @@ CREATE TABLE `physical_routers` (
   `bay_id` int unsigned DEFAULT NULL,
   `name` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `name` (`name`,`deleted_at`),
   KEY `site_fk_1485497` (`site_id`),
   KEY `building_fk_1485498` (`building_id`),
   KEY `bay_fk_1485499` (`bay_id`),
@@ -846,7 +846,7 @@ CREATE TABLE `physical_security_devices` (
   `building_id` int unsigned DEFAULT NULL,
   `bay_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_security_devices_name_unique` (`name`),
+  UNIQUE KEY `physical_security_devices_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485517` (`site_id`),
   KEY `building_fk_1485518` (`building_id`),
   KEY `bay_fk_1485519` (`bay_id`),
@@ -871,7 +871,7 @@ CREATE TABLE `physical_servers` (
   `bay_id` int unsigned DEFAULT NULL,
   `physical_switch_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_servers_name_unique` (`name`),
+  UNIQUE KEY `physical_servers_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485322` (`site_id`),
   KEY `building_fk_1485323` (`building_id`),
   KEY `bay_fk_1485324` (`bay_id`),
@@ -896,7 +896,7 @@ CREATE TABLE `physical_switches` (
   `building_id` int unsigned DEFAULT NULL,
   `bay_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_switches_name_unique` (`name`),
+  UNIQUE KEY `physical_switches_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485488` (`site_id`),
   KEY `building_fk_1485489` (`building_id`),
   KEY `bay_fk_1485493` (`bay_id`),
@@ -920,7 +920,7 @@ CREATE TABLE `processes` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `macroprocess_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `processes_identifiant_unique` (`identifiant`),
+  UNIQUE KEY `processes_identifiant_unique` (`identifiant`,`deleted_at`),
   KEY `process_fk_4342342` (`macroprocess_id`),
   CONSTRAINT `processes_ibfk_1` FOREIGN KEY (`macroprocess_id`) REFERENCES `macro_processuses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -978,7 +978,7 @@ CREATE TABLE `routers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `routers_name_unique` (`name`)
+  UNIQUE KEY `routers_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -991,7 +991,7 @@ CREATE TABLE `security_devices` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `security_devices_name_unique` (`name`)
+  UNIQUE KEY `security_devices_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1004,7 +1004,7 @@ CREATE TABLE `sites` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `sites_name_unique` (`name`)
+  UNIQUE KEY `sites_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1021,7 +1021,7 @@ CREATE TABLE `storage_devices` (
   `bay_id` int unsigned DEFAULT NULL,
   `physical_switch_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `storage_devices_name_unique` (`name`),
+  UNIQUE KEY `storage_devices_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485361` (`site_id`),
   KEY `building_fk_1485362` (`building_id`),
   KEY `bay_fk_1485363` (`bay_id`),
@@ -1050,7 +1050,7 @@ CREATE TABLE `subnetworks` (
   `connected_subnets_id` int unsigned DEFAULT NULL,
   `gateway_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `subnetwords_name_unique` (`name`),
+  UNIQUE KEY `subnetwords_name_unique` (`name`,`deleted_at`),
   KEY `connected_subnets_fk_1483256` (`connected_subnets_id`),
   KEY `gateway_fk_1492376` (`gateway_id`),
   CONSTRAINT `connected_subnets_fk_1483256` FOREIGN KEY (`connected_subnets_id`) REFERENCES `subnetworks` (`id`),
@@ -1067,7 +1067,7 @@ CREATE TABLE `tasks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `tasks_nom_unique` (`nom`)
+  UNIQUE KEY `tasks_nom_unique` (`nom`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1085,7 +1085,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
+  UNIQUE KEY `users_email_unique` (`email`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1102,7 +1102,7 @@ CREATE TABLE `vlans` (
   `zone` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gateway` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `vlans_name_unique` (`name`)
+  UNIQUE KEY `vlans_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1130,7 +1130,7 @@ CREATE TABLE `wifi_terminals` (
   `building_id` int unsigned DEFAULT NULL,
   `physical_switch_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `wifi_terminals_name_unique` (`name`),
+  UNIQUE KEY `wifi_terminals_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485507` (`site_id`),
   KEY `building_fk_1485508` (`building_id`),
   KEY `physical_switch_fk_593584` (`physical_switch_id`),
@@ -1152,7 +1152,7 @@ CREATE TABLE `workstations` (
   `building_id` int unsigned DEFAULT NULL,
   `physical_switch_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `workstations_name_unique` (`name`),
+  UNIQUE KEY `workstations_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485332` (`site_id`),
   KEY `building_fk_1485333` (`building_id`),
   KEY `physical_switch_fk_0938434` (`physical_switch_id`),
@@ -1171,7 +1171,7 @@ CREATE TABLE `zone_admins` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `zone_admins_name_unique` (`name`)
+  UNIQUE KEY `zone_admins_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
