@@ -23,7 +23,8 @@ class StoreMacroProcessusRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:macro_processuses',
+                //'unique:macro_processuses',
+                'unique:macro_processuses,name,NULL,id,deleted_at,NULL',
             ],
             'security_need' => [
                 'nullable',

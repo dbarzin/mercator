@@ -23,7 +23,9 @@ class StoreApplicationServiceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_services',
+                //'unique:application_services',
+                'unique:application_services,name,NULL,id,deleted_at,NULL',
+                
             ],
             'modules.*' => [
                 'integer',
