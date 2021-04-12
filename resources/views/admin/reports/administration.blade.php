@@ -14,7 +14,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div id="graph" style="text-align: center;"></div>
+                    <div id="graph"></div>
                 </div>
             </div>
             <div class="card">
@@ -26,24 +26,45 @@
                     <p>Ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).</p>
                     <ul>
                         @foreach($zones as $zone)
-                            <li id="ZONE{{ $zone->id }}">
-                                <a href="/admin/zone-admins/{{ $zone->id }}/edit">{{ $zone->name }}</a><br>
-                                <b>Description</b> : <br>
-                                {!! $zone->description !!}
-                                <b>Annuaires</b> : 
-                                @foreach($zone->zoneAdminAnnuaires as $annuaire) 
-                                    <a href="#ANNUAIRE{{$annuaire->id}}">{{ $annuaire->name }}</a>
-                                @endforeach
-                                <br>
-                                <b>Forêt Active Directory / Arborescence LDAP</b> :                            
-                                @foreach($zone->zoneAdminForestAds as $forest) 
-                                    <a href="#FOREST{{$forest->id}}">{{ $forest->name }}</a>
-                                @endforeach
-                            </li>
-                        @endforeach
-                    </ul>
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="ZONE{{ $zone->id }}">
+                                        <th colspan="2">
+                                            <a href="/admin/zone-admins/{{ $zone->id }}/edit">{{ $zone->name }}</a>
+                                        </th>
+                                    </thead>                                    
+                                <tbody>
+                                    <tr>
+                                        <th width="20%">Description</th>
+                                        <td>{!! $zone->description !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Annuaires</th>
+                                        <td>
+                                            @foreach($zone->zoneAdminAnnuaires as $annuaire) 
+                                                <a href="#ANNUAIRE{{$annuaire->id}}">{{ $annuaire->name }}</a>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Forêt Active Directory / Arborescence LDAP</th>
+                                        <td>
+                                            @foreach($zone->zoneAdminForestAds as $forest) 
+                                                <a href="#FOREST{{$forest->id}}">{{ $forest->name }}</a>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </tr>
+                        </table>
+                        <br>
+                        </div>
+                    </div>
+                @endforeach
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-header">
                     Service d’annuaire d’administration
@@ -53,22 +74,41 @@
                     <p>Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration.</p>
                     <ul>
                         @foreach($annuaires as $annuaire)
-                            <li id="ANNUAIRE{{ $annuaire->id }}">
-                                <a href="/admin/annuaires/{{ $annuaire->id }}/edit">{{ $annuaire->name }}</a><br>
-                                <b>Description</b> : <br>
-                                {!! $annuaire->description !!}
-                                <b>Solution</b> : {{ $annuaire->solution }} <br>
-                                <b>Zone d'administration</b> : 
-                                @if ($annuaire->zone_admin!=null)
-                                    <a href="#ZONE{{$annuaire->zone_admin->id}}">{{$annuaire->zone_admin->name}}</a>
-                                @endif
-                                <br><br>
-                            </li>
-                        @endforeach
-                    </ul>
-
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="ANNUAIRE{{ $annuaire->id }}">
+                                        <th colspan="2">
+                                            <a href="/admin/annuaires/{{ $annuaire->id }}/edit">{{ $annuaire->name }}</a>
+                                        </th>
+                                    </thead>                                    
+                                <tbody>
+                                    <tr>
+                                        <th width="20%">Description</th>
+                                        <td>{!! $annuaire->description !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Solution</th>
+                                        <td>{{ $annuaire->solution }}</td>
+                                    </tr>
+                                    <tr>                                        
+                                        <th>Zone d'administration</th>
+                                        <td>
+                                           @if ($annuaire->zone_admin!=null)
+                                                <a href="#ZONE{{$annuaire->zone_admin->id}}">{{$annuaire->zone_admin->name}}</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </tr>
+                        </table>
+                        <br>
+                        </div>
+                    </div>
+                @endforeach
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-header">
                     Forêt Active Directory / Arborescence LDAP
@@ -78,53 +118,95 @@
                     <p>Regroupement organisé de domaines Active Directory/LDAP.</p>
                     <ul>
                         @foreach($forests as $forest)
-                            <li id="FOREST{{ $forest->id }}">
-                                <a href="/admin/forest-ads/{{ $forest->id }}/edit">{{ $forest->name }}</a><br>
-                                <b>Description</b> : <br>
-                                {!! $forest->description !!}
-                                
-                                <b>Zone d'administration</b> : 
-                                @if ($forest->zone_admin!=null)
-                                    <a href="#ZONE{{$forest->zone_admin->id}}">{{$forest->zone_admin->name}}</a>
-                                @endif
-                                <br>
-                                <b>Domaines</b> : 
-                                @foreach($forest->domaines as $domain) 
-                                    <a href="#DOMAIN{{$domain->id}}">{{$domain->name}}</a>
-                                @endforeach
-                                <br><br>
-                            </li>
-                        @endforeach
-                    </ul>
-
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="FOREST{{ $forest->id }}">
+                                        <th colspan="2">
+                                            <a href="/admin/forest-ads/{{ $forest->id }}/edit">{{ $forest->name }}</a>
+                                        </th>
+                                    </thead>                                    
+                                <tbody>
+                                    <tr>
+                                        <th width="20%">Description</th>
+                                        <td>{!! $forest->description !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Zone d'administration</th>
+                                        <td>
+                                            @if ($forest->zone_admin!=null)
+                                                <a href="#ZONE{{$forest->zone_admin->id}}">{{$forest->zone_admin->name}}</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Domaines</th>
+                                        <td>
+                                            @foreach($forest->domaines as $domain) 
+                                                <a href="#DOMAIN{{$domain->id}}">{{$domain->name}}</a>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+                @endforeach
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-header">
                     Domaines
                 </div>
-
                 <div class="card-body">
                     <p>Ensemble d’éléments (membres, ressources) régis par une même politique de sécurité.</p>
                     <ul>
                         @foreach($domains as $domain)
-                            <li id="DOMAIN{{ $domain->id }}">
-                                <a href="/admin/domaine-ads/{{ $domain->id }}/edit">{{ $domain->name }}</a><br>
-                                <b>Description</b> : <br>
-                                {!! $domain->description !!}
-                                <b>Nombre de controleurs de domaine</b> : {{ $domain->domain_ctrl_cnt }}<br>
-                                <b>Nombre de comptes utilisateurs rattachés</b> : {{ $domain->user_count }}<br>
-                                <b>Nombre de machines rattachées</b> : {{ $domain->machine_count }}<br>
-                                <b>Relations inter-domaines</b> : {{ $domain->relation_inter_domaine }}<br>
-                                <b>Forêt Active Directory / Arborescence LDAP</b> : 
-                                @foreach($domain->domainesForestAds as $forest)
-                                    <a href="#FOREST{{$forest->id}}">{{ $forest->name}}</a>
-                                @endforeach
-                                <br><br>
-                            </li>
-                        @endforeach
-                    </ul>
-
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="DOMAIN{{ $domain->id }}">
+                                        <th colspan="2">
+                                            <a href="/admin/domaine-ads/{{ $domain->id }}/edit">{{ $domain->name }}</a>
+                                        </th>
+                                    </thead>                                    
+                                <tbody>
+                                    <tr>
+                                        <th width="20%">Description</th>
+                                        <td>{!! $domain->description !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nombre de controleurs de domaine</th>
+                                        <td>{{ $domain->domain_ctrl_cnt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nombre de comptes utilisateurs rattachés</th>
+                                        <td>{{ $domain->user_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nombre de machines rattachées</th>
+                                        <td>{{ $domain->machine_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Relations inter-domaines</th>
+                                        <td>{{ $domain->relation_inter_domaine }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Forêt Active Directory / Arborescence LDAP</th>
+                                        <td>
+                                            @foreach($domain->domainesForestAds as $forest)
+                                                <a href="#FOREST{{$forest->id}}">{{ $forest->name}}</a>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+                @endforeach
                 </div>
             </div>
         </div>

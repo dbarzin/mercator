@@ -45,15 +45,10 @@
                             </form>
                         </div>
 
-
-
-
-
-                    <div id="graph" style="text-align: center;"></div>
+                    <div id="graph"></div>
 
                 </div>
             </div>
-
 
             <div class="card">
                 <div class="card-header">
