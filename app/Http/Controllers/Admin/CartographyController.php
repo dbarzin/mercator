@@ -855,7 +855,7 @@ class CartographyController extends Controller
                     $textRun->addLink("APPLICATIONMODULE".$flux->module_dest->id, $flux->module_dest->name, CartographyController::FancyLinkStyle, null, true);
                 }
 
-                if ($flux->database_source!=null) {
+                if ($flux->database_dest!=null) {
                     $textRun=$this->addTextRunRow($table,"Database Destinataire");
                     $textRun->addLink("DATABASE".$flux->database_dest->id, $flux->database_dest->name, CartographyController::FancyLinkStyle, null, true);
                 }

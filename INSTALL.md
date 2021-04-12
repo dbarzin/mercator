@@ -7,7 +7,7 @@ Update and upgrade distribution
 
 Install PHP and some PHP libraries
 
-    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql 
+    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
 Install Graphviz
 
