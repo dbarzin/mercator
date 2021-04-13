@@ -60,11 +60,11 @@
                 <div class="card-body">
                   <ul>
                     <li>
-                      Liste de toutes les applications par groupe applicatif<br>
+                      Liste des applications par groupe applicatif<br>
                       <a href="/admin/report/applicationsByBlocks" target="_new">Applications par groupe applicatif</a><br><br>
                     </li>
                     <li>
-                      Liste serveurs logiques par applications et responsables<br>
+                      Liste des serveurs logiques par applications et responsables<br>
                       <a href="/admin/report/logicalServerResp" target="_new">Liste des serveurs logiques</a><br><br>
                     </li>
                     <li>

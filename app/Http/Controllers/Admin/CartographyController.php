@@ -1012,6 +1012,127 @@ class CartographyController extends Controller
         if ($vues==null || in_array("5",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Infrastructure logique", 1);
+            $section->addText("La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.");
+            $section->addTextBreak(1);
+
+            // Get all data
+            $networks = Network::All()->sortBy("name");
+            $subnetworks = Subnetword::All()->sortBy("name");
+            $gateways = Gateway::All()->sortBy("name");
+            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
+            $networkSwitches = NetworkSwitch::All()->sortBy("name");
+            $routers = Router::All()->sortBy("name");
+            $securityDevices = SecurityDevice::All()->sortBy("name");
+            $dhcpServers = DhcpServer::All()->sortBy("name");
+            $dnsservers = Dnsserver::All()->sortBy("name");
+            $logicalServers = LogicalServer::All()->sortBy("name");
+
+            // Generate Graph
+            $graph = "digraph  {";
+            // TODO :
+            /*
+            d3.select("#graph").graphviz()
+                        @foreach($networks as $network) \
+                            NET{{ $network->id }} [label=\"{{ $network->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"#NETWORK{{$network->id}}\"]\
+                            @foreach($network->subnetworks as $subnetwork) \
+                                NET{{ $network->id }} -> SUBNET{{ $subnetwork->id }}\
+                            @endforeach\
+                        @endforeach\
+                        @foreach($subnetworks as $subnetwork) \
+                            SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNETWORK{{$subnetwork->id}}\"]\
+                        @endforeach\
+                    }");
+            */
+            // =====================================
+            $section->addTitle('Réseaux', 2);
+            $section->addText("Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.");
+            $section->addTextBreak(1); 
+
+            foreach($networks as $network) {
+                $section->addBookmark("NETWORK".$zone->id);
+                $table=$this->addTable($section, $network->name);
+                $this->addHTMLRow($table,"Description",$network->description);
+
+                $this->addTextRow($table,"Type de protocol",$network->protocol_type);
+                $this->addTextRow($table,"Responsable d'exploitation",$network->responsible);
+                $this->addTextRow($table,"Responsable SSI",$network->responsible_sec);
+
+                // subnetworks
+                $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");
+                foreach($network->subnetworks as $subnetwork) {
+                    $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($network->subnetworks->last()!=$subnetwork)
+                        $textRun->addText(", ");
+                    }
+                $section->addTextBreak(1); 
+                }
+
+            // =====================================
+            $section->addTitle('Sous-Réseaux', 2);
+            $section->addText("Subdivision logique d’un réseau de taille plus importante.");
+            $section->addTextBreak(1); 
+
+            foreach($subnetworks as $subnetwork) {
+                $section->addBookmark("SUBNET".$subnetwork->id);
+                $table=$this->addTable($section, $subnetwork->name);
+                $this->addHTMLRow($table,"Description",$subnetwork->description);
+
+                $this->addTextRow($table,"Adresse/Masque",$subnetwork->address);
+                $this->addTextRow($table,"Passerelle",$subnetwork->gateway);
+                $this->addTextRow($table,"Plage d’adresses IP",$subnetwork->ip_range);
+                $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
+                $this->addTextRow($table,"Responsable d’exploitation",$subnetwork->responsible_exp);
+                $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
+
+                // subnetworks
+                $textRun=$this->addTextRunRow($table,"Sous-réseaux connectés");
+                if ($subnetwork->connected_subnets!=null) {
+                    $textRun->addLink("SUBNET".$subnetwork->connected_subnets->id, $subnetwork->connected_subnets->name, CartographyController::FancyLinkStyle, null, true);
+                    }
+
+                $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
+
+                $section->addTextBreak(1); 
+            }
+
+            // =====================================
+            $section->addTitle('Serveurs logiques', 2);
+            $section->addText("Découpage logique d’un serveur physique.");
+            $section->addTextBreak(1); 
+
+            foreach($logicalServers as $logicalServer) {
+                $section->addBookmark("LOGICAL_SERVER".$logicalServer->id);
+                $table=$this->addTable($section, $logicalServer->name);
+                $this->addHTMLRow($table,"Description",$logicalServer->description);
+
+                $this->addTextRow($table,"Operating System",$logicalServer->operating_system);
+                $this->addTextRow($table,"Adresse IP",$logicalServer->address_ip);
+                $this->addTextRow($table,"CPU",$logicalServer->cpu);
+                $this->addTextRow($table,"Mémoire",$logicalServer->memory);
+                $this->addTextRow($table,"Disque",$logicalServer->disk);
+                $this->addTextRow($table,"Services réseau",$logicalServer->net_services);
+
+                $this->addHTMLRow($table,"Configuration",$logicalServer->configuration);
+
+                // APPLICATIONS
+                $textRun=$this->addTextRunRow($table,"Applications");
+                foreach($logicalServer->applications as $application) {
+                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($logicalServer->applications->last()!=$application)
+                        $textRun->addText(", ");
+                    }
+
+                // Physical server
+                $textRun=$this->addTextRunRow($table,"Serveurs physiques");
+                foreach($logicalServer->servers as $server) {
+                    $textRun->addLink("PSERVER".$server->id, $server->name, CartographyController::FancyLinkStyle, null, true);
+                    if ($logicalServer->servers->last()!=$server)
+                        $textRun->addText(", ");
+                    }
+
+                $section->addTextBreak(1); 
+            }
+
         }
 
         // =====================
@@ -1020,8 +1141,104 @@ class CartographyController extends Controller
         if ($vues==null || in_array("6",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Infrastructure physique", 1);
-        }
+            $section->addText("La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.");
+            $section->addTextBreak(1);
 
+            // Get all data
+            $sites=Site::All()->sortBy("name");
+            $buildings = Building::All()->sortBy("name");            
+            $bays = Bay::All()->sortBy("name");
+            $physicalServers = PhysicalServer::All()->sortBy("name");
+            $workstations = Workstation::All()->sortBy("name");
+            $storageDevices = StorageDevice::All()->sortBy("name");
+            $peripherals = Peripheral::All()->sortBy("name");
+            $phones = Phone::All()->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
+            $physicalRouters = PhysicalRouter::All()->sortBy("name");
+
+            // Generate Graph
+            $graph = "digraph  {";
+            foreach($sites as $site) {
+                $graph .= " S" . $site->id . "[label=\"". $site->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/site.png") ."\"]";
+            }            
+            foreach($buildings as $building) {
+                $graph .= " B". $building->id . "[label=\"" . $building->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/building.png") . "\"]";
+                $graph .= " S". $building->site_id . "->B" . $building->id;
+                foreach($building->roomBays as $bay) {
+                    $graph .= " B". $building->id . "->BAY" . $bay->id;
+                }
+            }                
+            foreach($bays as $bay) {
+                $graph .= " BAY" . $bay->id . "[label=\"" . $bay->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/bay.png") . "\"]";
+            }
+            foreach($physicalServers as $pServer) {
+                $graph .= " PSERVER" . $pServer->id . "[label=\"" . $pServer->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/server.png") . "\"]";
+                if ($pServer->bay!=null) 
+                     $graph .= " BAY" . $pServer->bay->id . "->PSERVER" . $pServer->id;
+                elseif ($pServer->building!=null) 
+                     $graph .= " B" . $pServer->building->id . "->PSERVER" . $pServer->id;
+                elseif ($pServer->site!=null)
+                     $graph .= " S" . $pServer->site->id ."->PSERVER" . $pServer->id;                
+            }
+            foreach($workstations as $workstation) {
+                $graph .= " W" . $workstation->id . "[label=\"" .$workstation->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/workstation.png") ."\"]";
+                if ($workstation->building!=null)
+                     $graph .= " B" . $workstation->building->id . "->W" . $workstation->id;
+                elseif ($workstation->site!=null)
+                     $graph .= " S" . $workstation->building->id . "->W" . $workstation->id;
+                }            
+            foreach($storageDevices as $storageDevice) {
+                $graph .= " SD" . $storageDevice->id ."[label=\"" . $storageDevice->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/storage.png") . "\"]";
+                if ($storageDevice->bay!=null)
+                     $graph .= " BAY" . $storageDevice->bay->id . "->SD" . $storageDevice->id;
+                elseif ($storageDevice->building!=null)
+                     $graph .= " B" . $storageDevice->building->id . "->SD" . $storageDevice->id;
+                elseif ($storageDevice->site!=null)
+                     $graph .= " S" . $storageDevice->site->id . "->SD" . $storageDevice->id;
+                }
+            foreach($peripherals as $peripheral) {
+                $graph .= " PER" . $peripheral->id . "[label=\"" . $peripheral->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/peripheral.png") ."\"]";
+                if ($peripheral->bay!=null)
+                     $graph .= " BAY" . $peripheral->bay->id ."->PER" . $peripheral->id;
+                elseif ($peripheral->building!=null)
+                     $graph .= " B". $peripheral->building->id . "->PER" . $peripheral->id;
+                elseif ($peripheral->site!=null)
+                     $graph .= " S" . $peripheral->site->id . "->PER" . $peripheral->id;
+                }
+            foreach($phones as $phone) {
+                $graph .= " PHONE" . $phone->id . "[label=\"" . $phone->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/phone.png") ."\"]";
+                if ($phone->building!=null)
+                     $graph .= " B" . $phone->building->id ."->PHONE" . $phone->id;
+                elseif ($phone->site!=null)
+                     $graph .= " S" . $phone->site->id . "->PHONE" . $phone->id;                
+                }
+            foreach($physicalSwitches as $switch) {
+                $graph .= " SWITCH" . $switch->id . "[label=\"" . $switch->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/switch.png") ."\"]";
+                if ($switch->bay!=null)
+                     $graph .= " BAY" . $switch->bay->id . "->SWITCH" . $switch->id;
+                elseif ($switch->building!=null)
+                     $graph .= " B" . $switch->building->id . "->SWITCH". $switch->id;
+                elseif ($switch->site!=null)
+                     $graph .= " S" . $switch->site->id . "->SWITCH" . $switch->id;
+                }
+            foreach($physicalRouters as $router) { 
+                $graph .= " ROUTER" . $router->id . "[label=\"" . $router->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/router.png") . "\"]";
+                if ($router->bay!=null)
+                     $graph .= " BAY" . $router->bay->id . "->ROUTER" . $router->id;
+                elseif ($router->building!=null)
+                     $graph .= " B" . $router->building->id . "->ROUTER" . $router->id;
+                elseif ($router->site!=null)
+                     $graph .= " S" . $router->site->id . "->ROUTER" . $router->id;
+                }
+            $graph .= "}";
+
+            // IMAGE
+            $image_paths[] = $image_path=$this->generateGraphImage($graph);
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
+            $section->addTextBreak(1);
+
+
+            }
 
         // Finename
         $filepath=storage_path('app/reports/cartographie-'. Carbon::today()->format("Ymd") .'.docx');

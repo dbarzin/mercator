@@ -118,7 +118,7 @@
                                         <td>{{ $subnetwork->dmz }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Sous-réseaux connecté</th>
+                                        <th>Sous-réseau connecté</th>
                                         <td>
                                             @if ($subnetwork->connected_subnets!=null)
                                                 <a href="#SUBNET{{$subnetwork->connected_subnets->id }}">{{$subnetwork->connected_subnets->name }}</a>
