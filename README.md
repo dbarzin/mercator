@@ -20,9 +20,10 @@ démarche globale de gestion des risques.
 
 ## Fonctions majeures
 - Gestion des vues (écosystème, système d’information, administration, logique, applications, et physique)
-- Dessin du schéma de la cartographie avec GraphViz
-- Calcul du niveau de conformité
-- Extraction en Excel, CSV,… de toutes les listes
+- Génération du plan d'Architecture du Système d'Informtion
+- Dessin des schémas de cartographie
+- Calcul des niveaux de conformité
+- Extraction en Excel, CSV, PDF … de toutes les listes
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
 
@@ -40,9 +41,7 @@ démarche globale de gestion des risques.
 - ChartJS
 
 ## TODO
-- générer un rapport d’architecture
-- Export Excel de toutes des vues
-- vérifier la cohérence des informations utilisées entre les bases de données et les applications
+- vérifier la cohérence des informations fournies
 - calcul des chemins critiques
 - développer de REST API pour peupler la base de données
 
@@ -53,10 +52,5 @@ démarche globale de gestion des risques.
 ## License
 
 Mercator est un logiciel open source distribué sous [GPL](https://www.gnu.org/licenses/licenses.fr.html).
-
-
-
-
-
 
 
