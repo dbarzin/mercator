@@ -64,6 +64,17 @@
                                             @endforeach
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Entités externes connectées</th>
+                                        <td>
+                                            @foreach($network->connectedNetworksExternalConnectedEntities as $entity) 
+                                                <a href="#EXTENTITY{{$entity->id}}">{{$entity->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>                                    
                                 </tbody>
                             </table>
                         </div>
@@ -99,7 +110,11 @@
                                     </tr>
                                     <tr>
                                         <th>Passerelle</th>
-                                        <td> {{ $subnetwork->gateway }}</td>
+                                        <td>
+                                        @if ($subnetwork->gateway!=null) 
+                                            <a href="#GATEWAY{{$subnetwork->gateway->id}}">{{ $subnetwork->gateway->name }}</a>
+                                        @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Plage d’adresses IP</th>
@@ -137,6 +152,93 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    Passerelle d’entrée depuis l’extérieur
+                </div>
+                <div class="card-body">
+                    <p>Composants permettant de relier un réseau local avec l’extérieur.</p>
+                        @foreach($gateways as $gateway)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="GATEWAY{{ $gateway->id }}">
+                                        <th colspan="2">
+                                        <a href="/admin/gateways/{{ $gateway->id }}/edit">{{ $gateway->name }}</a><br>
+                                        </th>
+                                    </thead>
+                                    <tr>
+                                        <th width="20%">Caractéristiques techniques</th>
+                                        <td>{!! $gateway->description !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Type d'authentification</th>
+                                        <td>{{ $gateway->authentification }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>IP publique et privée</th>
+                                        <td>{{ $gateway->ip }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Réseaux ratachés</th>
+                                        <td>
+                                            @foreach($gateway->gatewaySubnetwords as $subnetwork) 
+                                                <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @endforeach                    
+                </div>
+            </div>                                
+
+            <div class="card">
+                <div class="card-header">
+                    Entités extérieurs connectées
+                </div>
+                <div class="card-body">
+                    <p>Entités externes connectées au réseau</p>
+                        @foreach($externalConnectedEntities as $entity)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="EXTENTITY{{ $entity->id }}">
+                                        <th colspan="2">
+                                        <a href="/admin/external-connected-entities/{{ $entity->id }}/edit">{{ $entity->name }}</a><br>
+                                        </th>
+                                    </thead>
+                                    <tr>
+                                        <th width="20%">Responsable SSI</th>
+                                        <td>{{ $entity->responsible_sec }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Contacts SI</th>
+                                        <td>{{ $entity->contacts }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Réseaux connectés</th>
+                                        <td>
+                                            @foreach($entity->connected_networks as $subnetwork) 
+                                                <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @endforeach                    
+                </div>
+            </div>                                
 
             <div class="card">
                 <div class="card-header">
@@ -245,6 +347,8 @@
 d3.select("#graph").graphviz()
     .addImage("/images/cloud.png", "64px", "64px")
     .addImage("/images/network.png", "64px", "64px")
+    .addImage("/images/gateway.png", "64px", "64px")
+    .addImage("/images/entity.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
             @foreach($networks as $network) \
@@ -253,8 +357,20 @@ d3.select("#graph").graphviz()
                     NET{{ $network->id }} -> SUBNET{{ $subnetwork->id }}\
                 @endforeach\
             @endforeach\
+            @foreach($gateways as $gateway) \
+                GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
+                @foreach($gateway->gatewaySubnetwords as $subnetwork) \
+                    NET{{ $subnetwork->id }} -> GATEWAY{{ $gateway->id }}\
+                @endforeach\
+            @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNETWORK{{$subnetwork->id}}\"]\
+            @endforeach\
+            @foreach($externalConnectedEntities as $entity) \
+                E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
+                @foreach($entity->connected_networks as $network)\
+                    NET{{ $network->id }} -> E{{ $entity->id }}\
+                @endforeach\
             @endforeach\
         }");
 

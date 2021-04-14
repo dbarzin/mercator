@@ -20,7 +20,7 @@ démarche globale de gestion des risques.
 
 ## Fonctions majeures
 - Gestion des vues (écosystème, système d’information, administration, logique, applications, et physique)
-- Génération du plan d'Architecture du Système d'Informtion
+- Génération du rapport d'Architecture du Système d'Informtion
 - Dessin des schémas de cartographie
 - Calcul des niveaux de conformité
 - Extraction en Excel, CSV, PDF … de toutes les listes

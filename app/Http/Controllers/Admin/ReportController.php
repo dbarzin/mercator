@@ -496,7 +496,6 @@ class ReportController extends Controller
             ->with("subnetworks",$subnetworks)
             ->with("gateways",$gateways)
             ->with("externalConnectedEntities",$externalConnectedEntities)
-
             ->with("networkSwitches",$networkSwitches)
             ->with("routers",$routers)
             ->with("securityDevices",$securityDevices)

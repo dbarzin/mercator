@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Rapport d'architecture
+                    Rapport d'Architecture du Système d'Information
                 </div>
                 <div class="card-body">
                   <form method="POST" action="/admin/report/cartography" enctype="multipart/form-data" target="_new">
@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <button class="btn btn-danger" type="submit">
-                            Generate
+                            Générer
                         </button>
                     </div>
                   </form>

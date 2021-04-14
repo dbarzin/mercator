@@ -36,4 +36,9 @@ class Task extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function operations()
+    {
+        return $this->belongsToMany(Operation::class);
+    }
 }

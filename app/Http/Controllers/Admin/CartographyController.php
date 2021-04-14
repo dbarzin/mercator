@@ -244,7 +244,6 @@ class CartographyController extends Controller
             }
                       
             // ===============================
-            // $section->addTextBreak(2);
             $section->addTitle("Relations", 2);
             $section->addText("Lien entre deux entités ou systèmes.");
             $section->addTextBreak(1);
@@ -254,12 +253,14 @@ class CartographyController extends Controller
                 $section->addBookmark("RELATION".$relation->id);
                 $table = $this->addTable($section,$relation->name);
                 $this->addHTMLRow($table,"Description",$relation->description);
-                $this->addTextRow($table,"Type",$relation->type);
 
-                $textRun=$this->addTextRow($table,"Importance",
-                    $relation->inportance==null ? 
-                        "-" : 
-                        array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->inportance]);
+                if ($granularity>1) {
+                    $this->addTextRow($table,"Type",$relation->type);
+                    $textRun=$this->addTextRow($table,"Importance",
+                        $relation->inportance==null ? 
+                            "-" : 
+                            array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->inportance]);
+                    }   
                 $textRun=$this->addTextRunRow($table,"Lien");
                 $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $textRun->addText(" -> ");
@@ -287,36 +288,43 @@ class CartographyController extends Controller
 
             // Generate Graph
             $graph = "digraph  {";
-
-            foreach($macroProcessuses as $macroProcess) 
-                $graph .= " MP" . $macroProcess->id . " [label=\"". $macroProcess->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/macroprocess.png")."\"]";
+            if ($granularity>=2)
+                foreach($macroProcessuses as $macroProcess) 
+                    $graph .= " MP" . $macroProcess->id . " [label=\"". $macroProcess->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/macroprocess.png")."\"]";
             
             foreach($processes as $process) {
                 $graph .= " P".$process->id . " [label=\"" . $process->identifiant . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/process.png")."\"]";
-                foreach($process->activities as $activity)
-                    $graph .= " P".$process->id . "->A". $activity->id;
+                if ($granularity==3)
+                    foreach($process->activities as $activity)
+                        $graph .= " P".$process->id . "->A". $activity->id;
                 foreach($process->processInformation as $information) {
                     $graph .= " P". $process->id ."->I". $information->id;
-                    if ($process->macroprocess_id!=null)
-                        $graph.=" MP" . $process->macroprocess_id ."-> P".$process->id;
+                    if ($granularity>=2)
+                        if ($process->macroprocess_id!=null)
+                            $graph.=" MP" . $process->macroprocess_id ."-> P".$process->id;
                     }    
             }
-            foreach($activities as $activity) {
-                $graph .= " A" . $activity->id ." [label=\"". $activity->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/activity.png")."\"]";
-                foreach($activity->operations as $operation)
-                    $graph .= " A". $activity->id ."->O".$operation->id;
-                }
+            if ($granularity==3)
+                foreach($activities as $activity) {
+                    $graph .= " A" . $activity->id ." [label=\"". $activity->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/activity.png")."\"]";
+                    foreach($activity->operations as $operation)
+                        $graph .= " A". $activity->id ."->O".$operation->id;
+                    }
             foreach($operations as $operation) {
                 $graph .= " O". $operation->id ." [label=\"". $operation->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/operation.png")."\"]";
-                foreach($operation->tasks as $task)
-                    $graph .= " O" . $operation->id . "->T". $task->id;                
-                foreach($operation->actors as $actor)
-                    $graph .= " O". $operation->id . "->ACT". $actor->id;
+                if ($granularity==3)
+                    foreach($operation->tasks as $task)
+                        $graph .= " O" . $operation->id . "->T". $task->id;
+                if ($granularity>=2)
+                    foreach($operation->actors as $actor)
+                        $graph .= " O". $operation->id . "->ACT". $actor->id;
                 }
-            foreach($tasks as $task)
-                $graph .= " T". $task->id . " [label=\"". $task->nom . "\" shape=none labelloc=b width=1 height=1.8 image=\"". public_path("/images/task.png")."\"]";
-            foreach($actors as $actor)
-                $graph .= " ACT". $actor->id . " [label=\"". $actor->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/actor.png")."\"]";
+            if ($granularity==3)
+                foreach($tasks as $task)
+                    $graph .= " T". $task->id . " [label=\"". $task->nom . "\" shape=none labelloc=b width=1 height=1.8 image=\"". public_path("/images/task.png")."\"]";
+            if ($granularity>=2)
+                foreach($actors as $actor)
+                    $graph .= " ACT". $actor->id . " [label=\"". $actor->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/actor.png")."\"]";
             foreach($informations as $information)
                 $graph .= " I". $information->id . " [label=\"" . $information->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/information.png")."\"]";
             $graph .= "}";
@@ -328,180 +336,214 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // =====================================
-            $section->addTitle('Macro-processus', 2);
-            $section->addText("Les maro-processus représentent des ensembles de processus.");
-            $section->addTextBreak(1);
-
-            // Loop on relations
-            foreach($macroProcessuses as $macroProcess) {
-                $section->addBookmark("MACROPROCESS".$macroProcess->id);
-                $table = $this->addTable($section, $macroProcess->name);
-                $this->addHTMLRow($table, "Description", $macroProcess->description);
-                $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
-                $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                    $macroProcess->security_need==null ? "-" : 
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need]);
-                $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
-                $textRun=$this->addTextRunRow($table, "Processus");
-                foreach($macroProcess->processes as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
-                    if ($macroProcess->processes->last() != $process)  
-                        $textRun->addText(", ");
-                    }
+            if (($granularity>=2)&&($macroProcessuses->count()>0)) {
+                $section->addTitle('Macro-processus', 2);
+                $section->addText("Les maro-processus représentent des ensembles de processus.");
                 $section->addTextBreak(1);
+
+                // Loop on relations
+                foreach($macroProcessuses as $macroProcess) {
+                    $section->addBookmark("MACROPROCESS".$macroProcess->id);
+                    $table = $this->addTable($section, $macroProcess->name);
+                    $this->addHTMLRow($table, "Description", $macroProcess->description);
+                    $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
+                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
+                        $macroProcess->security_need==null ? "-" : 
+                            array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need]);
+                    if ($granularity>=3)
+                        $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
+                    $textRun=$this->addTextRunRow($table, "Processus");
+                    foreach($macroProcess->processes as $process) {
+                        $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
+                        if ($macroProcess->processes->last() != $process)  
+                            $textRun->addText(", ");
+                        }
+                    $section->addTextBreak(1);
+                    }
                 }
 
             // =====================================
-            $section->addTitle('Processus', 2);
-            $section->addText("Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.");
-            $section->addTextBreak(1);
-
-            foreach($processes as $process) {
-                $section->addBookmark("PROCESS".$process->id);                
-                $table=$this->addTable($section, $process->identifiant);
-                $this->addHTMLRow($table,"Description",$process->description);
-                $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
-                $textRun=$this->addTextRunRow($table,"Activités");
-                foreach($process->activities as $activity) {
-                    $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
-                    if ($process->activities->last() != $activity)  
-                        $textRun->addText(", ");
-                    }
-                $textRun=$this->addTextRunRow($table,"Entités associées");
-                foreach($process->entities as $entity) {
-                    $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
-                    if ($process->entities->last() != $entity)  
-                        $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
-                    }
-                $textRun=$this->addTextRunRow($table,"Applications qui le soutiennent");
-                foreach($process->processesMApplications as $application) {
-                    $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
-                    if ($process->processesMApplications->last() != $application)  
-                        $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
-                    }
-                $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                    $process->security_need==null ? 
-                        "-" : 
-                        array(null=>"-",1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$process->security_need]);
-
-                $this->addTextRow($table,"Propriétaire",$process->owner);
+            if ($processes->count()>0) {
+                $section->addTitle('Processus', 2);
+                $section->addText("Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.");
                 $section->addTextBreak(1);
+
+                foreach($processes as $process) {
+                    $section->addBookmark("PROCESS".$process->id);                
+                    $table=$this->addTable($section, $process->identifiant);
+                    $this->addHTMLRow($table,"Description",$process->description);
+                    $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
+                    $textRun=$this->addTextRunRow($table,"Activités");
+                    foreach($process->activities as $activity) {
+                        $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
+                        if ($process->activities->last() != $activity)  
+                            $textRun->addText(", ");
+                        }
+                    $textRun=$this->addTextRunRow($table,"Entités associées");
+                    foreach($process->entities as $entity) {
+                        $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
+                        if ($process->entities->last() != $entity)  
+                            $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
+                        }
+                    $textRun=$this->addTextRunRow($table,"Applications qui le soutiennent");
+                    foreach($process->processesMApplications as $application) {
+                        $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
+                        if ($process->processesMApplications->last() != $application)  
+                            $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
+                        }
+                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
+                        $process->security_need==null ? 
+                            "-" : 
+                            array(null=>"-",1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$process->security_need]);
+
+                    $this->addTextRow($table,"Propriétaire",$process->owner);
+                    $section->addTextBreak(1);
+                    }
                 }
 
             // =====================================
-            $section->addTitle('Activités', 2);
-            $section->addText("Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.");
-            $section->addTextBreak(1);
-
-            foreach($activities as $activity) {
-                $section->addBookmark("ACTIVITY".$activity->id);
-                $table=$this->addTable($section, $activity->name);
-                $this->addHTMLRow($table,"Description",$activity->description);
-
-                $textRun=$this->addTextRunRow($table,"Liste des opérations");
-                foreach($activity->operations as $operation) {
-                    $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
-                    if ($activity->operations->last() != $operation)  
-                        $textRun->addText(", ");
-                    }
+            if (($activities->count()>0)&&($granularity==3)) {
+                $section->addTitle('Activités', 2);
+                $section->addText("Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.");
                 $section->addTextBreak(1);
+
+                foreach($activities as $activity) {
+                    $section->addBookmark("ACTIVITY".$activity->id);
+                    $table=$this->addTable($section, $activity->name);
+                    $this->addHTMLRow($table,"Description",$activity->description);
+
+                    $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    foreach($activity->operations as $operation) {
+                        $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($activity->operations->last() != $operation)  
+                            $textRun->addText(", ");
+                        }
+                    $section->addTextBreak(1);
+                    }
                 }
 
             // =====================================
-            $section->addTitle('Opérations', 2);
-            $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
-            $section->addTextBreak(1); 
+            if ($operations->count()>0) {
+                $section->addTitle('Opérations', 2);
+                $section->addText("Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.");
+                $section->addTextBreak(1); 
 
-            foreach($operations as $operation) {
-                $section->addBookmark("OPERATION".$operation->id);                
-                $table=$this->addTable($section, $operation->name);
-                $this->addHTMLRow($table,"Description",$operation->description);
-                // 
-                $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
-                foreach($operation->tasks as $task) {
-                    $textRun->addLink("TASK".$task->id, $task->nom, CartographyController::FancyLinkStyle, null, true);
-                    if ($operation->tasks->last() != $task)
-                        $textRun->addText(", ");
+                foreach($operations as $operation) {
+                    $section->addBookmark("OPERATION".$operation->id);                
+                    $table=$this->addTable($section, $operation->name);
+                    $this->addHTMLRow($table,"Description",$operation->description);
+                    // Tâches
+                    if ($granularity==3) { 
+                        $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
+                        foreach($operation->tasks as $task) {
+                            $textRun->addLink("TASK".$task->id, $task->nom, CartographyController::FancyLinkStyle, null, true);
+                            if ($operation->tasks->last() != $task)
+                                $textRun->addText(", ");
+                            }
+                        }
+                    // Liste des acteurs qui interviennent
+                    if ($granularity>=2) { 
+                        $textRun=$this->addTextRunRow($table,"Liste des acteurs qui interviennent");
+                        foreach($operation->actors as $actor) {
+                            $textRun->addLink("ACTOR".$actor->id, $actor->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($operation->actors->last() != $actor)
+                                $textRun->addText(", ");
+                            }
+                        }
+                    $section->addTextBreak(1);
                     }
-                // Liste des acteurs qui interviennent
-                $textRun=$this->addTextRunRow($table,"Liste des acteurs qui interviennent");
-                foreach($operation->actors as $actor) {
-                    $textRun->addLink("ACTOR".$actor->id, $actor->name, CartographyController::FancyLinkStyle, null, true);
-                    if ($operation->actors->last() != $actor)
-                        $textRun->addText(", ");
-                    }
+                }
 
+            // =====================================
+            if (($tasks->count()>0)&&($granularity==3)) {
+                $section->addTitle('Tâches', 2);
+                $section->addText("Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus");
                 $section->addTextBreak(1);
+
+                foreach($tasks as $task) {
+                    $section->addBookmark("TASK".$task->id);                
+                    $table=$this->addTable($section, $task->nom);
+                    $this->addHTMLRow($table,"Description",$task->description);
+
+                    // Operations
+                    $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    foreach($task->operations as $operation) {
+                        $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($task->operations->last() != $operation)
+                            $textRun->addText(", ");
+                        }
+                    $section->addTextBreak(1);
+                    }
                 }                
 
             // =====================================
-            $section->addTitle('Tâches', 2);
-            $section->addText("Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus");
-            $section->addTextBreak(1);
+            if (($actors->count()>0)&&($granularity>=2)) { 
+                $section->addTitle('Acteurs', 2);
+                $section->addText("Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.");
+                $section->addTextBreak(1); 
 
-            foreach($tasks as $task) {
-                $section->addBookmark("TASK".$task->id);                
-                $table=$this->addTable($section, $task->nom);
-                $this->addHTMLRow($table,"Description",$task->description);
+                foreach($actors as $actor) {
+                    $section->addBookmark("ACTOR".$actor->id);                
+                    $table=$this->addTable($section, $actor->name);
+                    $this->addHTMLRow($table,"Nature",$actor->nature);
+                    $this->addHTMLRow($table,"Type",$actor->type);
 
-                $section->addTextBreak(1);
+                    // Operations
+                    $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    foreach($actor->operations as $operation) {
+                        $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($actor->operations->last() != $operation)
+                            $textRun->addText(", ");
+                        }
+                    $section->addTextBreak(1);
+                    }                
                 }
 
             // =====================================
-            $section->addTitle('Acteurs', 2);
-            $section->addText("Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.");
-            $section->addTextBreak(1); 
+            if ($informations->count()>0) { 
+                $section->addTitle('Informations', 2);
+                $section->addText("Donnée faisant l’objet d’un traitement informatique.");
+                $section->addTextBreak(1); 
 
-            foreach($actors as $actor) {
-                $section->addBookmark("ACTOR".$actor->id);                
-                $table=$this->addTable($section, $actor->name);
-                $this->addHTMLRow($table,"Nature",$actor->nature);
-                $this->addHTMLRow($table,"Type",$actor->type);
+                foreach($informations as $information) {
+                    $section->addBookmark("INFORMATION".$information->id);
+                    $table=$this->addTable($section, $information->name);
+                    $this->addHTMLRow($table,"Description",$information->description);
+                    $this->addTextRow($table,"Propriétaire",$information->owner);
+                    $this->addTextRow($table,"Administrateur",$information->administrator);
+                    $this->addTextRow($table,"Stockage",$information->storage);
+                    // processus liés
+                    $textRun=$this->addTextRunRow($table,"Processus liés");
+                    foreach($information->processes as $process) {
+                        $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
+                        if ($information->processes->last() != $process)
+                            $textRun->addText(", ");
+                        }
+                    $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
+                    if ($information->security_need==1)
+                        $textRun->addText("Public");
+                    elseif ($information->security_need==2) 
+                        $textRun->addText("Interne");
+                    elseif ($information->security_need==3) 
+                        $textRun->addText("Confidentiel");
+                    elseif ($information->security_need==4) 
+                        $textRun->addText("Secret");
+                    else
+                        $textRun->addText("-");
+                    $this->addTextRow($table,"Sensibilité",$information->sensibility);
 
-                $section->addTextBreak(1);
-                }                
+                    if ($granularity==3)
+                        $this->addHTMLRow($table,"Contraintes règlementaires et normatives",$information->constraints);
 
-            // =====================================
-            $section->addTitle('Informations', 2);
-            $section->addText("Donnée faisant l’objet d’un traitement informatique.");
-            $section->addTextBreak(1); 
-
-            foreach($informations as $information) {
-                $section->addBookmark("INFORMATION".$information->id);
-                $table=$this->addTable($section, $information->name);
-                $this->addHTMLRow($table,"Description",$information->description);
-                $this->addTextRow($table,"Propriétaire",$information->owner);
-                $this->addTextRow($table,"Administrateur",$information->administrator);
-                $this->addTextRow($table,"Stockage",$information->storage);
-                // processus liés
-                $textRun=$this->addTextRunRow($table,"Processus liés");
-                foreach($information->processes as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
-                    if ($information->processes->last() != $process)
-                        $textRun->addText(", ");
+                    $section->addTextBreak(1);
                     }
-                $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
-                if ($information->security_need==1)
-                    $textRun->addText("Public");
-                elseif ($information->security_need==2) 
-                    $textRun->addText("Interne");
-                elseif ($information->security_need==3) 
-                    $textRun->addText("Confidentiel");
-                elseif ($information->security_need==4) 
-                    $textRun->addText("Secret");
-                else
-                    $textRun->addText("-");
-                $this->addTextRow($table,"Sensibilité",$information->sensibility);
-                $this->addHTMLRow($table,"Contraintes règlementaires et normatives",$information->constraints);
-
-                $section->addTextBreak(1);
                 }
-        }
+            }
         
         // =====================
         // APPLICATIONS
         // =====================
-        if ($vues==null || in_array("3",$vues)) {
+        if (($vues==null) || in_array("3",$vues)) {
             $section->addTextBreak(2);
             $section->addTitle("Applications", 1);
             $section->addText("La vue des applications décrit une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.");
@@ -1049,20 +1091,30 @@ class CartographyController extends Controller
 
             // Generate Graph
             $graph = "digraph  {";
-            // TODO :
-            /*
-            d3.select("#graph").graphviz()
-                        @foreach($networks as $network) \
-                            NET{{ $network->id }} [label=\"{{ $network->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"#NETWORK{{$network->id}}\"]\
-                            @foreach($network->subnetworks as $subnetwork) \
-                                NET{{ $network->id }} -> SUBNET{{ $subnetwork->id }}\
-                            @endforeach\
-                        @endforeach\
-                        @foreach($subnetworks as $subnetwork) \
-                            SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNETWORK{{$subnetwork->id}}\"]\
-                        @endforeach\
-                    }");
-            */
+            foreach($networks as $network) { 
+                $graph .= " NET" . $network->id . "[label=\"" . $network->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/cloud.png") . "\"]";
+                foreach($network->subnetworks as $subnetwork) 
+                    $graph .= " NET" . $network->id . "->SUBNET" . $subnetwork->id;
+                }
+            foreach($gateways as $gateway) {
+                $graph .= " GATEWAY" . $gateway->id . "[label=\"" . $gateway->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/gateway.png") . "\"]";
+                foreach($gateway->gatewaySubnetwords as $subnetwork) 
+                    $graph .= " NET" . $subnetwork->id . "->GATEWAY" . $gateway->id;                
+                }
+            foreach($subnetworks as $subnetwork) 
+                $graph .= " SUBNET" . $subnetwork->id . "[label=\"" . $subnetwork->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/network.png") . "\"]";
+            foreach($externalConnectedEntities as $entity) {
+                $graph .= " E" . $entity->id . "[label=\"" . $entity->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/entity.png") . "\"]";
+                foreach($entity->connected_networks as $network)
+                    $graph .= " NET" . $network->id . "->E" . $entity->id;                
+                }
+            $graph .= "}";
+            
+            // IMAGE
+            $image_paths[] = $image_path=$this->generateGraphImage($graph);
+            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
+            $section->addTextBreak(1);
+
             // =====================================
             if ($networks->count()>0) { 
                 $section->addTitle('Réseaux', 2);
@@ -1085,9 +1137,18 @@ class CartographyController extends Controller
                         if ($network->subnetworks->last()!=$subnetwork)
                             $textRun->addText(", ");
                         }
+
+                    // entités externes connectées
+                    $textRun=$this->addTextRunRow($table,"Entités externes connectées");
+                    foreach($network->connectedNetworksExternalConnectedEntities as $entity) {
+                        $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($network->connectedNetworksExternalConnectedEntities->last()!=$entity)
+                            $textRun->addText(", ");
+                        }
                     $section->addTextBreak(1); 
                     }
                 }
+                
 
             // =====================================
             if ($subnetworks->count()>0) { 
@@ -1101,7 +1162,10 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
 
                     $this->addTextRow($table,"Adresse/Masque",$subnetwork->address);
-                    $this->addTextRow($table,"Passerelle",$subnetwork->gateway);
+                    // gateway
+                    $textRun=$this->addTextRunRow($table,"Passerelle");
+                    if ($subnetwork->gateway!=null) 
+                        $textRun->addLink("GATEWAY".$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FancyLinkStyle, null, true);
                     $this->addTextRow($table,"Plage d’adresses IP",$subnetwork->ip_range);
                     $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
                     $this->addTextRow($table,"Responsable d’exploitation",$subnetwork->responsible_exp);
@@ -1115,6 +1179,55 @@ class CartographyController extends Controller
 
                     $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
 
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+            // =====================================
+            if ($gateways->count()>0) { 
+                $section->addTitle('Passerelle d’entrée depuis l’extérieur', 2);
+                $section->addText("Composants permettant de relier un réseau local avec l’extérieur");
+                $section->addTextBreak(1); 
+
+                foreach($gateways as $gateway) {
+                    $section->addBookmark("GATEWAY".$gateway->id);
+                    $table=$this->addTable($section, $gateway->name);
+                    $this->addHTMLRow($table,"Caractéristiques techniques",$gateway->description);
+
+                    $this->addTextRow($table,"Type d'authentification",$gateway->authentication);
+                    $this->addTextRow($table,"IP publique et privée",$gateway->ip);
+
+                    // Réseau ratachés
+                    $textRun=$this->addTextRunRow($table,"Réseaux ratachés");
+                    foreach($gateway->gatewaySubnetwords as $subnetwork) {
+                        $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($gateway->gatewaySubnetwords->last()!=$subnetwork)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+            // =====================================
+            if ($externalConnectedEntities->count()>0) { 
+                $section->addTitle('Entités extérieurs connectées', 2);
+                $section->addText("Entités externes connectées au réseau.");
+                $section->addTextBreak(1); 
+
+                foreach($externalConnectedEntities as $entity) {
+                    $section->addBookmark("EXTENTITY".$entity->id);
+                    $table=$this->addTable($section, $entity->name);
+
+                    $this->addTextRow($table,"Responsable SSI",$entity->responsible_sec);
+                    $this->addTextRow($table,"Contacts SI",$entity->contacts);
+
+                    $textRun=$this->addTextRunRow($table,"Réseaux connectés");
+                    foreach($entity->connected_networks as $network) {
+                        $textRun->addLink("NETWORK".$network->id, $network->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($entity->connected_networks->last()!=$network)
+                            $textRun->addText(", ");
+                        }
                     $section->addTextBreak(1); 
                     }
                 }
