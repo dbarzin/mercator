@@ -112,26 +112,23 @@
                                     <tr>
                                         <th width="20%">Description</th>
                                         <td>{!! $building->description !!}</td>
-                            </tr>
-                            <tr>
-                                <th>Baies</th>
-                            <td>                                
-                                @foreach($building->roomBays as $bay) 
-                                    <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
-                                    @if (!$loop->last)
-                                    ,
-                                    @endif
-                                @endforeach
-                            </td>
-                        </tr>                        
-                        </tbody>
-
-                    </table>                        
-
+                                    </tr>
+                                    <tr>
+                                        <th>Baies</th>
+                                    <td>                                
+                                        @foreach($building->roomBays as $bay) 
+                                            <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>                        
+                                </tbody>
+                        </table>                        
                     </div>
                 </div>
-                        @endforeach                    
-
+                @endforeach                    
                 </div>
             </div>
 
@@ -227,7 +224,7 @@
                                     <td>{{ $pserver->responsible }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Serveurs Loggiques</th>
+                                    <th>Serveurs Logiques</th>
                                     <td>
                                         @foreach($physicalServer->serversLogicalServers as $logicalServer)
                                             <a href="/admin/report/logical_infrastructure#LOGICALERVER{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
@@ -565,7 +562,7 @@
                 </div>
             </div>
 
-
+            
         </div>
     </div>
 </div>
