@@ -94,11 +94,8 @@
                     Relations
                 </div>
                 <div class="card-body">
-
                     <p>Lien entre deux entités ou systèmes.</p>
-
-                        @foreach($relations as $relation)                    
-
+                        @foreach($relations as $relation)
                       <div class="row">
                         <div class="col-sm-6">                        
                         <table class="table table-bordered table-striped table-hover">

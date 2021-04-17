@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <td><b>Besoin de sécurité</b></td>
-                                    <td>{{ $macroProcess->security_need }}</td>
+                                    <td>{{ $macroProcess->security_need==null ? "-" : array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] }}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Propritétaire</b></td>
@@ -86,6 +86,9 @@
                                     <td>
                                     @foreach($macroProcess->processes as $process)
                                         <a href="#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
                                     @endforeach
                                     </td>
                                 </tr>
@@ -127,6 +130,9 @@
                                         <td>
                                             @foreach($process->activities as $activity)
                                                 <a href="#ACTIVITY{{ $activity->id }}">{{ $activity->name }}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -135,6 +141,9 @@
                                         <td>
                                             @foreach($process->entities as $entity)
                                                 <a href="/admin/report/ecosystem#ENTITY{{$entity->id}}">{{$entity->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -143,6 +152,9 @@
                                         <td>
                                             @foreach($process->processesMApplications as $application)
                                                 <a href="/admin/report/applications#APPLICATION{{$application->id}}">{{$application->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>

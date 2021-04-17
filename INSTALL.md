@@ -96,7 +96,15 @@ Open your browser with the URL [http://127.0.0.1:8000]
     user : admin@admin.com
     password : password
 
-## Procédure de mise à jour
+## Issues
+
+### PHP Memory
+
+If you generate big reports you will have to upgrade memory allocated to PHP in /etc/php/7.4/apache2/php.ini
+
+    memory_limit = 512M
+
+## Update process
 
 Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
 

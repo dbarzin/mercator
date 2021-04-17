@@ -236,7 +236,7 @@ class CartographyController extends Controller
                 // Porcessus soutenus
                 $textRun=$this->addTextRunRow($table,"Processus soutenus");
                 foreach($entity->entitiesProcesses as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant);
                     if ($entity->entitiesProcesses->last() != $process)  
                         $textRun->addText(", ");
                     }
