@@ -477,6 +477,8 @@ return [
             "deleted_at_helper" => "",
             "description" => "Caractéristiques techniques",
             "description_helper" => "",
+            "subnetworks" => "Sous-réseaux connectés",
+            "subnetworks_helper" => "Sous-réseaux accessibles depuis la gateway",
             "id" => "ID",
             "id_helper" => "",
             "ip" => "IP publique et privée",

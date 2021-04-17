@@ -30,6 +30,25 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.gateway.fields.description_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label class="recommended" for="applications">{{ trans('cruds.gateway.fields.subnetworks') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('subnetworks') ? 'is-invalid' : '' }}" name="subnetworks[]" id="subnetworks" multiple>
+                    @foreach($subnetworks as $id => $name)
+                        <option value="{{ $id }}" {{ (in_array($id, old('subnetworks', [])) || $gateway->gatewaySubnetworks->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('subnetworks'))
+                    <span class="text-danger">{{ $errors->first('subnetworks') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.gateway.fields.subnetworks') }}</span>
+            </div>
+
+
             <div class="form-group">
                 <label for="authentification">{{ trans('cruds.gateway.fields.authentification') }}</label>
                 <input class="form-control {{ $errors->has('authentification') ? 'is-invalid' : '' }}" type="text" name="authentification" id="authentification" value="{{ old('authentification', $gateway->authentification) }}">

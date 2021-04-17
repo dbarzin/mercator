@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Gateway;
+use App\Subnetword;
+
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
+
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -28,12 +31,17 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.gateways.create');
+        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.gateways.create', compact('subnetworks'));
     }
 
     public function store(StoreGatewayRequest $request)
     {
         $gateway = Gateway::create($request->all());
+
+        Subnetword::whereIn('id', $request->input('subnetworks', []))
+              ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }
@@ -42,12 +50,20 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.gateways.edit', compact('gateway'));
+        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.gateways.edit', compact('gateway','subnetworks'));
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)
     {
         $gateway->update($request->all());
+
+        Subnetword::where('gateway_id', $gateway->id)
+              ->update(['gateway_id' => null]);
+
+        Subnetword::whereIn('id', $request->input('subnetworks', []))
+              ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }

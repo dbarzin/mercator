@@ -40,7 +40,7 @@ class Gateway extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function gatewaySubnetwords()
+    public function gatewaySubnetworks()
     {
         return $this->hasMany(Subnetword::class, 'gateway_id', 'id');
     }

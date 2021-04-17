@@ -63,6 +63,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.process.fields.activities_helper') }}</span>
                 </div>
+                
                 <div class="form-group">
                     <label for="entities">{{ trans('cruds.process.fields.entities') }}</label>
                     <div style="padding-bottom: 4px">
