@@ -61,7 +61,7 @@
                         @can('macro_processus_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.macro-processuses.index") }}" class="nav-link {{ request()->is('admin/macro-processuses') || request()->is('admin/macro-processuses/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.macroProcessus.title') }}
@@ -72,7 +72,7 @@
                         @can('process_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.processes.index") }}" class="nav-link {{ request()->is('admin/processes') || request()->is('admin/processes/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.process.title') }}
@@ -83,7 +83,7 @@
                         @can('activity_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.activities.index") }}" class="nav-link {{ request()->is('admin/activities') || request()->is('admin/activities/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.activity.title') }}
@@ -94,7 +94,7 @@
                         @can('operation_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.operations.index") }}" class="nav-link {{ request()->is('admin/operations') || request()->is('admin/operations/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.operation.title') }}
@@ -106,7 +106,7 @@
                         @can('task_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.tasks.index") }}" class="nav-link {{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.task.title') }}
@@ -119,7 +119,7 @@
                         @can('actor_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.actors.index") }}" class="nav-link {{ request()->is('admin/actors') || request()->is('admin/actors/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.actor.title') }}
@@ -130,7 +130,7 @@
                         @can('information_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.information.index") }}" class="nav-link {{ request()->is('admin/information') || request()->is('admin/information/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.information.title') }}
@@ -153,7 +153,7 @@
                         @can('application_block_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.application-blocks.index") }}" class="nav-link {{ request()->is('admin/application-blocks') || request()->is('admin/application-blocks/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.applicationBlock.title') }}
@@ -164,7 +164,7 @@
                         @can('m_application_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.applications.index") }}" class="nav-link {{ request()->is('admin/applications') || request()->is('admin/applications/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.application.title') }}
@@ -175,7 +175,7 @@
                         @can('application_service_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.application-services.index") }}" class="nav-link {{ request()->is('admin/application-services') || request()->is('admin/application-services/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.applicationService.title') }}
@@ -185,7 +185,7 @@
                         @can('application_module_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.application-modules.index") }}" class="nav-link {{ request()->is('admin/application-modules') || request()->is('admin/application-modules/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.applicationModule.title') }}
@@ -196,7 +196,7 @@
                         @can('database_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.databases.index") }}" class="nav-link {{ request()->is('admin/databases') || request()->is('admin/databases/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.database.title') }}
@@ -206,7 +206,7 @@
                         @can('flux_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.fluxes.index") }}" class="nav-link {{ request()->is('admin/fluxes') || request()->is('admin/fluxes/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.flux.title') }}
@@ -228,7 +228,7 @@
                         @can('zone_admin_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.zone-admins.index") }}" class="nav-link {{ request()->is('admin/zone-admins') || request()->is('admin/zone-admins/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.zoneAdmin.title') }}
@@ -238,7 +238,7 @@
                         @can('annuaire_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.annuaires.index") }}" class="nav-link {{ request()->is('admin/annuaires') || request()->is('admin/annuaires/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.annuaire.title') }}
@@ -248,7 +248,7 @@
                         @can('forest_ad_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.forest-ads.index") }}" class="nav-link {{ request()->is('admin/forest-ads') || request()->is('admin/forest-ads/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.forestAd.title') }}
@@ -258,7 +258,7 @@
                         @can('domaine_ad_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.domaine-ads.index") }}" class="nav-link {{ request()->is('admin/domaine-ads') || request()->is('admin/domaine-ads/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.domaineAd.title') }}
@@ -280,7 +280,7 @@
                         @can('network_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.networks.index") }}" class="nav-link {{ request()->is('admin/networks') || request()->is('admin/networks/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.network.title') }}
@@ -290,7 +290,7 @@
                         @can('subnetword_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetwords') || request()->is('admin/subnetwords/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.subnetwork.title') }}
@@ -300,7 +300,7 @@
                         @can('gateway_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.gateways.index") }}" class="nav-link {{ request()->is('admin/gateways') || request()->is('admin/gateways/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.gateway.title') }}
@@ -311,7 +311,7 @@
                         @can('external_connected_entity_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.external-connected-entities.index") }}" class="nav-link {{ request()->is('admin/external-connected-entities') || request()->is('admin/external-connected-entities/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.externalConnectedEntity.title') }}
@@ -322,7 +322,7 @@
                         @can('network_switch_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.network-switches.index") }}" class="nav-link {{ request()->is('admin/network-switches') || request()->is('admin/network-switches/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.networkSwitch.title') }}
@@ -332,7 +332,7 @@
                         @can('router_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.routers.index") }}" class="nav-link {{ request()->is('admin/routers') || request()->is('admin/routers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.router.title') }}
@@ -342,7 +342,7 @@
                         @can('security_device_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.security-devices.index") }}" class="nav-link {{ request()->is('admin/security-devices') || request()->is('admin/security-devices/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.securityDevice.title') }}
@@ -353,7 +353,7 @@
                         @can('dhcp_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.dhcp-servers.index") }}" class="nav-link {{ request()->is('admin/dhcp-servers') || request()->is('admin/dhcp-servers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.dhcpServer.title') }}
@@ -363,7 +363,7 @@
                         @can('dnsserver_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.dnsservers.index") }}" class="nav-link {{ request()->is('admin/dnsservers') || request()->is('admin/dnsservers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.dnsserver.title') }}
@@ -374,7 +374,7 @@
                         @can('logical_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.logical-servers.index") }}" class="nav-link {{ request()->is('admin/logical-servers') || request()->is('admin/logical-servers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.logicalServer.title') }}
@@ -396,7 +396,7 @@
                         @can('site_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.sites.index") }}" class="nav-link {{ request()->is('admin/sites') || request()->is('admin/sites/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.site.title') }}
@@ -406,7 +406,7 @@
                         @can('building_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.buildings.index") }}" class="nav-link {{ request()->is('admin/buildings') || request()->is('admin/buildings/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.building.title') }}
@@ -416,7 +416,7 @@
                         @can('bay_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.bays.index") }}" class="nav-link {{ request()->is('admin/bays') || request()->is('admin/bays/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.bay.title') }}
@@ -426,7 +426,7 @@
                         @can('physical_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.physical-servers.index") }}" class="nav-link {{ request()->is('admin/physical-servers') || request()->is('admin/physical-servers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.physicalServer.title') }}
@@ -437,7 +437,7 @@
                         @can('workstation_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.workstations.index") }}" class="nav-link {{ request()->is('admin/workstations') || request()->is('admin/workstations/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.workstation.title') }}
@@ -447,7 +447,7 @@
                         @can('storage_device_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.storage-devices.index") }}" class="nav-link {{ request()->is('admin/storage-devices') || request()->is('admin/storage-devices/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.storageDevice.title') }}
@@ -457,7 +457,7 @@
                         @can('peripheral_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.peripherals.index") }}" class="nav-link {{ request()->is('admin/peripherals') || request()->is('admin/peripherals/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.peripheral.title') }}
@@ -467,7 +467,7 @@
                         @can('phone_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.phones.index") }}" class="nav-link {{ request()->is('admin/phones') || request()->is('admin/phones/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.phone.title') }}
@@ -478,7 +478,7 @@
                         @can('physical_switch_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.physical-switches.index") }}" class="nav-link {{ request()->is('admin/physical-switches') || request()->is('admin/physical-switches/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.physicalSwitch.title') }}
@@ -488,7 +488,7 @@
                         @can('physical_router_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.physical-routers.index") }}" class="nav-link {{ request()->is('admin/physical-routers') || request()->is('admin/physical-routers/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.physicalRouter.title') }}
@@ -499,7 +499,7 @@
                         @can('wifi_terminal_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.wifi-terminals.index") }}" class="nav-link {{ request()->is('admin/wifi-terminals') || request()->is('admin/wifi-terminals/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.wifiTerminal.title') }}
@@ -510,7 +510,7 @@
                         @can('physical_security_device_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.physical-security-devices.index") }}" class="nav-link {{ request()->is('admin/physical-security-devices') || request()->is('admin/physical-security-devices/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.physicalSecurityDevice.title') }}
@@ -520,7 +520,7 @@
                         @can('wan_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.wans.index") }}" class="nav-link {{ request()->is('admin/wans') || request()->is('admin/wans/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.wan.title') }}
@@ -530,7 +530,7 @@
                         @can('man_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.men.index") }}" class="nav-link {{ request()->is('admin/men') || request()->is('admin/men/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.man.title') }}
@@ -540,7 +540,7 @@
                         @can('lan_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.lans.index") }}" class="nav-link {{ request()->is('admin/lans') || request()->is('admin/lans/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.lan.title') }}
@@ -550,7 +550,7 @@
                         @can('vlan_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans') || request()->is('admin/vlans/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-cogs nav-icon">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
                                     {{ trans('cruds.vlan.title') }}
