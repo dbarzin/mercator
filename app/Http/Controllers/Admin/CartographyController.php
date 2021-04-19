@@ -1201,7 +1201,7 @@ class CartographyController extends Controller
                     $textRun=$this->addTextRunRow($table,"Réseaux ratachés");
                     foreach($gateway->gatewaySubnetworks as $subnetwork) {
                         $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($gateway->gatewaySubnetwords->last()!=$subnetwork)
+                        if ($gateway->gatewaySubnetworks->last()!=$subnetwork)
                             $textRun->addText(", ");
                         }
 
