@@ -308,8 +308,17 @@ class HomeController extends Controller
 
             ->with("fluxes", Flux::All()->count())
             ->with("fluxes_lvl1", Flux
-                    ::where('application_dest_id', '<>', null)
-                    ->where('application_dest_id', '<>', null)
+	    ::where('description', '<>', null)
+            	->orWhere(function($query) {
+               		$query->where('application_source_id', '<>', null)
+               		->where('module_source_id', '<>', null)
+               		->where('database_source_id', '<>', null);
+            	})
+            	->orWhere(function($query) {
+               		$query->where('application_dest_id', '<>', null)
+               		->where('module_dest_id', '<>', null)
+               		->where('database_dest_id', '<>', null);
+            	})
                     ->where('crypted', '<>', null)
                     ->count())
 
