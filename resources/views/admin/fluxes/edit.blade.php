@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.flux.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.flux.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.flux.fields.description') }}</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description', $flux->description) }}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -32,9 +32,9 @@
             </div>
 
           <div class="row">
-            <div class="col-sm">
-            
+	    <div class="col-sm">
                 <div class="form-group">
+                    <label class="recommended">Source</label><br>
                     <label for="application_source_id">{{ trans('cruds.flux.fields.application_source') }}</label>
                     <select class="form-control select2 {{ $errors->has('application_source') ? 'is-invalid' : '' }}" name="application_source_id" id="application_source_id">
                         @foreach($application_sources as $id => $application_source)
@@ -92,13 +92,10 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.flux.fields.database_source_helper') }}</span>
                 </div>
-
-
             </div>
             <div class="col-sm">
-
-
-                <div class="form-group">
+		<div class="form-group">
+                    <label class="recommended">Destination</label><br>
                     <label for="application_dest_id">{{ trans('cruds.flux.fields.application_dest') }}</label>
                     <select class="form-control select2 {{ $errors->has('application_dest') ? 'is-invalid' : '' }}" name="application_dest_id" id="application_dest_id">
                         @foreach($application_dests as $id => $application_dest)
