@@ -92,7 +92,7 @@
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
                     {{ ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes)>0 ?
-                       number_format(($applicationBlocks_lvl2+$applications_lvl1+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl1+$fluxes_lvl1) *100 / ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes),0) : 0 }}%
+                       number_format(($applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl1+$fluxes_lvl1) *100 / ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes),0) : 0 }}%
                 </center></th>
             </thead>
 
@@ -106,8 +106,8 @@
                 <tr>
                     <td><a href="/admin/applications">{{ trans("cruds.application.title") }}</a></td>
                     <td><center>{{ $applications }}</center></td>
-                    <td><center>{{ $applications_lvl1 }}</center></td>
-                    <td><center>{{ $applications>0 ? number_format($applications_lvl1*100/$applications,0):0 }}%</center></td>
+                    <td><center>{{ $applications_lvl2 }}</center></td>
+                    <td><center>{{ $applications>0 ? number_format($applications_lvl2*100/$applications,0):0 }}%</center></td>
                 </tr>            
                 <tr>
                     <td><a href="/admin/application-services">{{ trans("cruds.applicationService.title") }}</a></td>
