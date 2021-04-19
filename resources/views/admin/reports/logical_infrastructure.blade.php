@@ -182,7 +182,7 @@
                                     <tr>
                                         <th>Réseaux ratachés</th>
                                         <td>
-                                            @foreach($gateway->gatewaySubnetwords as $subnetwork) 
+                                            @foreach($gateway->gatewaySubnetworks as $subnetwork) 
                                                 <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -359,7 +359,7 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($gateways as $gateway) \
                 GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
-                @foreach($gateway->gatewaySubnetwords as $subnetwork) \
+                @foreach($gateway->gatewaySubnetworks as $subnetwork) \
                     NET{{ $subnetwork->id }} -> GATEWAY{{ $gateway->id }}\
                 @endforeach\
             @endforeach\

@@ -51,8 +51,8 @@
                                     <td>
                                         @foreach ($entity->sourceRelations as $relation)
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
-                                            ->
-                                            <a href="#ENTITY{{ $relation->destination_id }}">{{ $entities->find($relation->destination_id)->name }}</a>
+                                            -> 
+                                            <a href="#ENTITY{{ $relation->destination_id }}">{{ $relation->destination->name ?? '' }}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif
@@ -61,7 +61,7 @@
                                         , <br>
                                         @endif
                                         @foreach ($entity->destinationRelations as $relation)
-                                            <a href="#ENTITY{{ $relation->source_id }}">{{ $entities->find($relation->source_id)->name }}</a>
+                                            <a href="#ENTITY{{ $relation->source_id }}">{{ $relation->source->name ?? '' }}</a>
                                             <-
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
                                             @if (!$loop->last)
@@ -131,11 +131,11 @@
                                     <td><b>Lien</b></td>
                                     <td>
                                         <a href="#ENTITY{{ $relation->source_id }}">
-                                            {{ $entities->find($relation->source_id)->name }}
+                                            {{ $relation->source->name ?? ""}}
                                         </a>
                                         ->
                                         <a href="#ENTITY{{ $relation->destination_id }}">
-                                            {{ $entities->find($relation->destination_id)->name }} 
+                                            {{ $relation->destination->name ?? "" }} 
                                         </a>
                                     </td>
                                 </tr>

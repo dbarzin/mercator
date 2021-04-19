@@ -159,10 +159,10 @@ class CartographyController extends Controller
 
         // Title
         $section->addTitle("Cartographie du Système d'Information",0);
-        $section->addTextBreak(2);
+        $section->addTextBreak(1);
 
         // TOC
-        $toc = $section->addTOC(array('spaceAfter' => 60, 'size' => 10));
+        $toc = $section->addTOC(array('spaceAfter' => 50, 'size' => 10));
         $toc->setMinDepth(1);
         $toc->setMaxDepth(3);
         $section->addTextBreak(1);
@@ -211,7 +211,7 @@ class CartographyController extends Controller
                 $table = $this->addTable($section,$entity->name);
                 $this->addHTMLRow($table,"Description",$entity->description);
                 $this->addHTMLRow($table,"Niveau de sécurité",$entity->security_level);
-                $this->addHTMLRow($table,"Point de contacl",$entity->contact_point);
+                $this->addHTMLRow($table,"Point de contact",$entity->contact_point);
                 
                 // Relations
                 $textRun=$this->addTextRunRow($table,"Relations");
@@ -220,7 +220,7 @@ class CartographyController extends Controller
                         $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
                     $textRun->addText(' -> ');
                     if ($relation->destination_id!=null)
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? "", CartographyController::FancyLinkStyle, null, true);
                     if ($entity->sourceRelations->last() != $relation) 
                         $textRun->addText(", ");                    
                 }
@@ -229,7 +229,7 @@ class CartographyController extends Controller
                 foreach ($entity->destinationRelations as $relation) {                    
                     $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
                     $textRun->addText(' <- ');
-                    $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? "", CartographyController::FancyLinkStyle, null, true);
                     if ($entity->destinationRelations->last() != $relation)  
                         $textRun->addText(", ");
                 }
@@ -262,9 +262,9 @@ class CartographyController extends Controller
                             array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->inportance]);
                     }   
                 $textRun=$this->addTextRunRow($table,"Lien");
-                $textRun->addLink('ENTITY'.$relation->source_id, $entities->find($relation->source_id)->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
+                $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? "", CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $textRun->addText(" -> ");
-                $textRun->addLink('ENTITY'.$relation->destination_id, $entities->find($relation->destination_id)->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
+                $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? "", CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $section->addTextBreak(1);
             }
         }
