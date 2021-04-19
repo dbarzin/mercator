@@ -49,6 +49,7 @@
                         @if (($logicalServer->description==null)||
                             ($logicalServer->operating_system==null)||
                             ($logicalServer->environment==null)||
+                            ($logicalServer->address_ip==null)||
                             ($logicalServer->applications->count()==0)||
                             ($logicalServer->servers->count()==0)
                             )
