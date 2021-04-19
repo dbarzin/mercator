@@ -1098,7 +1098,7 @@ class CartographyController extends Controller
                 }
             foreach($gateways as $gateway) {
                 $graph .= " GATEWAY" . $gateway->id . "[label=\"" . $gateway->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/gateway.png") . "\"]";
-                foreach($gateway->gatewaySubnetwords as $subnetwork) 
+                foreach($gateway->gatewaySubnetworks as $subnetwork) 
                     $graph .= " NET" . $subnetwork->id . "->GATEWAY" . $gateway->id;                
                 }
             foreach($subnetworks as $subnetwork) 
@@ -1199,7 +1199,7 @@ class CartographyController extends Controller
 
                     // Réseau ratachés
                     $textRun=$this->addTextRunRow($table,"Réseaux ratachés");
-                    foreach($gateway->gatewaySubnetwords as $subnetwork) {
+                    foreach($gateway->gatewaySubnetworks as $subnetwork) {
                         $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($gateway->gatewaySubnetwords->last()!=$subnetwork)
                             $textRun->addText(", ");
@@ -1613,7 +1613,8 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $switch->name);
                     $this->addHTMLRow($table,"Description",$switch->description);
 
-                    $this->addTextRow($table,"Type",$phone->type);
+                    $this->addTextRow($table,"Type",$switch->type);
+
 
                     if ($switch->site!=null) {
                         $textRun=$this->addTextRunRow($table,"Site");
