@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <td><b>Besoin de sécurité</b></td>
-                                    <td>{{ $macroProcess->security_need==null ? "-" : array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] }}</td>
+                                    <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "" }}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Propritétaire</b></td>
@@ -160,7 +160,7 @@
                                     </tr>
                                     <tr>
                                         <td><b>Besoin de scurité</b></td>
-                                        <td>{{ $process->security_need }}</td>
+                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "" }}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Propriétaire</b></td>
@@ -373,17 +373,7 @@
                                     </tr>
                                     <tr>
                                         <td><b>Besoins de sécurité</b></td>
-                                        <td>
-                                            @if ($information->security_need==1) 
-                                                Public
-                                            @elseif ($information->security_need==2)
-                                                Internal
-                                            @elseif ($information->security_need==3)
-                                                Confidential
-                                            @elseif ($information->security_need==4)
-                                                Secret
-                                            @endif
-                                        </td>
+                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "" }}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Sensibilité</b></td>

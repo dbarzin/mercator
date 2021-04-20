@@ -348,8 +348,7 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, "Description", $macroProcess->description);
                     $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
                     $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        $macroProcess->security_need==null ? "-" : 
-                            array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need]);
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? ""
                     if ($granularity>=3)
                         $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
                     $textRun=$this->addTextRunRow($table, "Processus");
@@ -392,9 +391,7 @@ class CartographyController extends Controller
                             $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
                     $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        $process->security_need==null ? 
-                            "-" : 
-                            array(null=>"-",1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$process->security_need]);
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "");
 
                     $this->addTextRow($table,"Propriétaire",$process->owner);
                     $section->addTextBreak(1);
@@ -519,17 +516,9 @@ class CartographyController extends Controller
                         if ($information->processes->last() != $process)
                             $textRun->addText(", ");
                         }
-                    $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
-                    if ($information->security_need==1)
-                        $textRun->addText("Public");
-                    elseif ($information->security_need==2) 
-                        $textRun->addText("Interne");
-                    elseif ($information->security_need==3) 
-                        $textRun->addText("Confidentiel");
-                    elseif ($information->security_need==4) 
-                        $textRun->addText("Secret");
-                    else
-                        $textRun->addText("-");
+                    $this->addTextRow($table,"Besoin de sécurité",
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "");
+                    
                     $this->addTextRow($table,"Sensibilité",$information->sensibility);
 
                     if ($granularity==3)
@@ -655,17 +644,8 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
-                    if ($application->security_need==1)
-                        $textRun->addText("Public");
-                    elseif ($application->security_need==2) 
-                        $textRun->addText("Interne");
-                    elseif ($application->security_need==3) 
-                        $textRun->addText("Confidentiel");
-                    elseif ($application->security_need==4) 
-                        $textRun->addText("Secret");
-                    else
-                        $textRun->addText("-");
+                    $this->addTextRow($table,"Besoin de sécurité",
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$application->security_need] ?? "");
 
                     $this->addTextRow($table,"Exposition à l’externe",$application->external);
 
@@ -842,17 +822,8 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $textRun=$this->addTextRunRow($table, "Besoin de sécurité");
-                    if ($database->security_need==1)
-                        $textRun->addText("Public");
-                    elseif ($database->security_need==2) 
-                        $textRun->addText("Interne");
-                    elseif ($database->security_need==3) 
-                        $textRun->addText("Confidentiel");
-                    elseif ($database->security_need==4) 
-                        $textRun->addText("Secret");
-                    else
-                        $textRun->addText("-");
+                    $this->addTextRow($table,"Besoin de sécurité",
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$database->security_need] ?? "");
 
                     $this->addTextRow($table,"Exposition à l’externe",$database->external);
        
