@@ -17,6 +17,7 @@
                     <div id="graph"></div>
                 </div>
             </div>
+            @if ($zones->count()>0)
             <div class="card">
                 <div class="card-header">
                     Zones d'administration
@@ -64,7 +65,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($annuaires->count()>0)
             <div class="card">
                 <div class="card-header">
                     Service d’annuaire d’administration
@@ -108,7 +111,9 @@
                 @endforeach
                 </div>
             </div>
-
+            @endif
+            
+            @if ($forests->count()>0)
             <div class="card">
                 <div class="card-header">
                     Forêt Active Directory / Arborescence LDAP
@@ -155,7 +160,9 @@
                 @endforeach
                 </div>
             </div>
-
+            @endif
+            
+            @if ($domains->count()>0)
             <div class="card">
                 <div class="card-header">
                     Domaines
@@ -209,6 +216,7 @@
                 @endforeach
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

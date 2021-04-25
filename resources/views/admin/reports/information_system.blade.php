@@ -15,40 +15,41 @@
                         </div>
                     @endif
 
+                    @if (auth()->user()->granularity>=2)
                     <div class="col-sm-5">
                         <form action="/admin/report/information_system">
-                                <table class="table table-bordered table-striped">
-                                    <tr>
-                                        <td>
-                                            Macro-processus :
-                                            <select name="macroprocess" onchange="this.form.process.value=-1;this.form.submit()">
-                                                <option value="-1">-- All --</option>
-                                                @foreach ($all_macroprocess as $macroprocess)
-                                                    <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>
+                                        Macro-processus :
+                                        <select name="macroprocess" onchange="this.form.process.value=-1;this.form.submit()">
+                                            <option value="-1">-- All --</option>
+                                            @foreach ($all_macroprocess as $macroprocess)
+                                                <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Processus :
+                                        <select name="process" onchange="this.form.submit()">
+                                            <option value="-1">-- All --</option>
+                                            @if ($all_process!=null)
+                                                @foreach ($all_process as $process)
+                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>
                                                 @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            Processus :
-                                            <select name="process" onchange="this.form.submit()">
-                                                <option value="-1">-- All --</option>
-                                                @if ($all_process!=null)
-                                                    @foreach ($all_process as $process)
-                                                        <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </div>
-
-
+                                            @endif
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    @endif
                     <div id="graph"></div>
                 </div>
             </div>
 
+            @if ((auth()->user()->granularity>=2)&&($macroProcessuses->count()>0))
             <div class="card">
                 <div class="card-header">
                     Macro-processus
@@ -99,7 +100,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($processes->count()>0)
             <div class="card">
                 <div class="card-header">
                     Processus
@@ -173,7 +176,9 @@
                         @endforeach                    
                 </div>
             </div>
+            @endif
 
+            @if ($activities->count()>0)
             <div class="card">
                 <div class="card-header">
                     Activité
@@ -214,7 +219,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($operations->count()>0)
             <div class="card">
                 <div class="card-header">
                     Opérations
@@ -266,7 +273,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($tasks->count()>0)
             <div class="card">
                 <div class="card-header">
                     Tâche
@@ -294,7 +303,9 @@
                     @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($actors->count()>0)
             <div class="card">
                 <div class="card-header">
                     Acteurs
@@ -326,7 +337,9 @@
                     @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($informations->count()>0)
             <div class="card">
                 <div class="card-header">
                     Informations
@@ -390,6 +403,7 @@
                     @endforeach
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>
@@ -414,9 +428,11 @@ d3.select("#graph").graphviz()
     .addImage("/images/information.png", "64px", "64px")
         .renderDot("digraph  {\
             <?php  $i=0; ?>\
+            @if (auth()->user()->granularity>=2)\
             @foreach($macroProcessuses as $macroProcess) \
                 MP{{ $macroProcess->id }} [label=\"{{ $macroProcess->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/macroprocess.png\"  href=\"#MACROPROCESS{{ $macroProcess->id }}\"]\
             @endforeach\
+            @endif\
             @foreach($processes as $process)\
                 P{{ $process->id }} [label=\"{{ $process->identifiant }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/process.png\"  href=\"#PROCESS{{ $process->id }}\"]\
                 @foreach($process->activities as $activity)\
@@ -425,8 +441,10 @@ d3.select("#graph").graphviz()
                 @foreach($process->processInformation as $information)\
                     P{{ $process->id }} -> I{{ $information->id }}\
                 @endforeach\
+                @if (auth()->user()->granularity>=2)\
                 @if ($process->macroprocess_id!=null) \
                     MP{{ $process->macroprocess_id }} -> P{{$process->id}}\
+                @endif\
                 @endif\
             @endforeach\
             @foreach($activities as $activity)\

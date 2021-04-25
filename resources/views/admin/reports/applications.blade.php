@@ -49,6 +49,7 @@
                 </div>
             </div>
             <div class="card">
+                @if ($applicationBlocks->count()>0)
                 <div class="card-header">
                     Blocs Applicatif
                 </div>
@@ -88,10 +89,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        </div>
-                        @endforeach
+                    </div>
+                    @endforeach
                 </div>
             </div>
+            @endif
+
+            @if ($applications->count()>0)            
             <div class="card">
                 <div class="card-header">
                     Applications
@@ -247,6 +251,9 @@
                     @endforeach
                 </div>
             </div>
+            @endif
+
+            @if ($applicationServices->count()>0)
             <div class="card">
                 <div class="card-header">
                     Services applicatif
@@ -321,6 +328,9 @@
                     @endforeach
                 </div>
             </div>
+            @endif
+
+            @if ($applicationModules->count()>0)            
             <div class="card">
                 <div class="card-header">
                     Modules applicatif
@@ -379,6 +389,9 @@
                         @endforeach
                 </div>
             </div>
+            @endif
+
+            @if ($databases->count()>0)                        
             <div class="card">
                 <div class="card-header">
                     Bases de données
@@ -484,6 +497,9 @@
                     @endforeach
                 </div>
             </div>
+            @endif
+
+            @if ($fluxes->count()>0)                                    
             <div class="card">
                 <div class="card-header">
                     Flux
@@ -563,10 +579,9 @@
 
                         </li>
                         @endforeach
-
-
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>

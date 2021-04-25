@@ -19,6 +19,7 @@
                 </div>
             </div>
 
+            @if ($networks->count()>0)
             <div class="card">
                 <div class="card-header">
                     Réseaux
@@ -82,7 +83,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($subnetworks->count()>0)
             <div class="card">
                 <div class="card-header">
                     Sous-Réseaux
@@ -151,7 +154,9 @@
                     @endforeach                    
                 </div>
             </div>
+            @endif
 
+            @if ($gateways->count()>0)
             <div class="card">
                 <div class="card-header">
                     Passerelle d’entrée depuis l’extérieur
@@ -197,7 +202,9 @@
                     @endforeach                    
                 </div>
             </div>                                
+            @endif
 
+            @if ($externalConnectedEntities->count()>0)
             <div class="card">
                 <div class="card-header">
                     Entités extérieurs connectées
@@ -239,7 +246,9 @@
                     @endforeach                    
                 </div>
             </div>                                
+            @endif
 
+            @if ($logicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
                     Serveurs logiques
@@ -328,6 +337,7 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

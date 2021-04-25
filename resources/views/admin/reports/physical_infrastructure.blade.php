@@ -47,6 +47,7 @@
                 </div>
             </div>
 
+            @if ($sites->count()>0)
             <div class="card">
                 <div class="card-header">
                     Sites
@@ -92,7 +93,9 @@
 
                 </div>
             </div>
+            @endif
 
+            @if ($buildings->count()>0)
             <div class="card">
                 <div class="card-header">
                     Bâtiments / Salles
@@ -131,7 +134,9 @@
                 @endforeach                    
                 </div>
             </div>
+            @endif
 
+            @if ($bays->count()>0)
             <div class="card">
                 <div class="card-header">
                     Baies
@@ -152,6 +157,7 @@
                                     <th width="20%">Description</th>
                                     <td>{!! $bay->description !!}</td>
                                 </tr>
+                                @if ($bay->bayPhysicalServers->count()>0)
                                 <tr>
                                     <th>Serveurs physique</th>
                                     <td>
@@ -163,6 +169,49 @@
                                     @endforeach                                        
                                     </td>
                                 </tr>
+                                @endif
+                                @if ($bay->bayPhysicalRouters->count()>0)
+                                <tr>
+                                    <th>Routeurs</th>
+                                    <td>
+                                    @foreach($bay->bayPhysicalRouters as $physicalRouter) 
+                                        <a href="#ROUTER{{$physicalRouter->id}}">{{ $physicalRouter->name}}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach                                        
+                                    </td>
+                                </tr>
+                                @endif
+
+                                @if ($bay->bayPhysicalSwitches->count()>0)
+                                <tr>
+                                    <th>Routeurs</th>
+                                    <td>
+                                    @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch) 
+                                        <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach                                        
+                                    </td>
+                                </tr>
+                                @endif
+
+                                @if ($bay->bayStorageDevices->count()>0)
+                                <tr>
+                                    <th>Routeurs</th>
+                                    <td>
+                                    @foreach($bay->bayStorageDevices as $bayStorageDevice) 
+                                        <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach                                        
+                                    </td>
+                                </tr>
+                                @endif
+
                             </tbody>
                         </table>                                
                     </div>
@@ -170,7 +219,9 @@
                  @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($physicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
                     Serveurs physiques
@@ -241,7 +292,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($workstations->count()>0)
             <div class="card">
                 <div class="card-header">
                     Postes de travail
@@ -289,7 +342,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($storageDevices->count()>0)
             <div class="card">
                 <div class="card-header">
                     Infrastructure de stockage
@@ -341,7 +396,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($peripherals->count()>0)
             <div class="card">
                 <div class="card-header">
                     Périphériques
@@ -401,7 +458,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($phones->count()>0)
             <div class="card">
                 <div class="card-header">
                     Téléphones
@@ -449,7 +508,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($physicalSwitches->count()>0)
             <div class="card">
                 <div class="card-header">
                     Commutateur (switch)
@@ -505,7 +566,9 @@
                 @endforeach
                 </div>
             </div>
+            @endif
 
+            @if ($physicalRouters->count()>0)
             <div class="card">
                 <div class="card-header">
                     Routeur Physique
@@ -561,8 +624,7 @@
                 @endforeach
                 </div>
             </div>
-
-            
+            @endif
         </div>
     </div>
 </div>
