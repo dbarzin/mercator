@@ -45,10 +45,11 @@
 
                         @if (($application->description==null)||
                             ($application->responsible==null)||
-                            ($application->entity_resp_id==null)||
+                            ((auth()->user()->granularity>=2)&&($application->entity_resp_id==null))||
+                            ((auth()->user()->granularity>=2)&&($application->entities->count()>0))||
                             ($application->technology==null)||
                             ($application->type==null)||
-                            ($application->users==null)||
+                            ((auth()->user()->granularity>=2)&&($application->users==null))||
                             ($application->security_need==null)||
                             ($application->application_block==null)||
                             ($application->processes->count()==0)                            

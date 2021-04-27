@@ -15,7 +15,6 @@
                         </div>
                     @endif
 
-
                     <div class="col-sm-5">
                         <form action="/admin/report/application_flows">
                                 <table class="table table-bordered table-striped">

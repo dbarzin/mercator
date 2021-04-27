@@ -15,6 +15,7 @@
                         </div>
                     @endif
 
+                    @if (auth()->user()->granuarity>=2)
                     <div class="col-sm-5">
                         <form action="/admin/report/applications">
                                 <table class="table table-bordered table-striped">
@@ -43,13 +44,15 @@
                                 </table>
                             </form>
                         </div>
+                    @endif
 
                     <div id="graph"></div>
 
                 </div>
             </div>
+
+            @if ((auth()->user()->granuarity>=2)&&($applicationBlocks->count()>0))
             <div class="card">
-                @if ($applicationBlocks->count()>0)
                 <div class="card-header">
                     Blocs Applicatif
                 </div>
@@ -117,6 +120,7 @@
                                         <th width="30%">Description</th>
                                         <td>{!! $application->description !!}</td>
                                     </tr>
+                                    @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>Liste de la (des) entité(s) utilisatrice(s)</th>
                                         <td>
@@ -136,6 +140,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <th>Responsable SSI</th>
                                         <td>{{ $application->responsible}}</td>
@@ -148,10 +153,12 @@
                                         <th>Type d’application</th>
                                         <td> {{ $application->type}}</td>
                                     </tr>
+                                    @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>Volume d’utilisateurs et profils</th>
                                         <td> {{ $application->users}}</td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <th>Documentation</th>
                                         <td><a href="{{ $application->documentation}}">{{ $application->documentation}}</a></td>
@@ -204,6 +211,7 @@
                                             @endforeach
                                         </td>                                        
                                     </tr>
+                                    @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>Liste des services applicatifs délivrés par l’application</th>
                                         <td>
@@ -215,6 +223,7 @@
                                             @endforeach
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <th>Liste des bases de données utilisées par l’application</th>
                                         <td>
@@ -253,7 +262,7 @@
             </div>
             @endif
 
-            @if ($applicationServices->count()>0)
+            @if ((auth()->user()->granularity>=2)&&($applicationServices->count()>0))
             <div class="card">
                 <div class="card-header">
                     Services applicatif
@@ -330,7 +339,7 @@
             </div>
             @endif
 
-            @if ($applicationModules->count()>0)            
+            @if ((auth()->user()->granularity>=2)&&($applicationModules->count()>0))
             <div class="card">
                 <div class="card-header">
                     Modules applicatif
@@ -413,6 +422,7 @@
                                         <th width="30%">Description</th>
                                         <td>{!! $database->description !!}</td>
                                     </tr>
+                                    @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>Entité(s) utilisatrice(s)</th>
                                         <td>
@@ -432,6 +442,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <th>Responsable SSI</th>
                                         <td>{{ $database->responsible }}</td>
@@ -604,30 +615,38 @@ d3.select("#graph").graphviz()
     .addImage("/images/database.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
-            @foreach($applicationBlocks as $ab) \
-                AB{{ $ab->id }} [label=\"{{ $ab->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"#APPLICATIONBLOCK{{$ab->id}}\"]\
-            @endforEach\
+            @if (auth()->user()->granularity>=2)\
+                @foreach($applicationBlocks as $ab) \
+                    AB{{ $ab->id }} [label=\"{{ $ab->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"#APPLICATIONBLOCK{{$ab->id}}\"]\
+                @endforEach\
+            @endif\
             @foreach($applications as $application) \
                 A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"]\
-                @foreach($application->services as $service) \
-                    A{{ $application->id }} -> AS{{ $service->id}} \
-                @endforeach \
+                @if (auth()->user()->granularity>=2)\
+                    @foreach($application->services as $service) \
+                        A{{ $application->id }} -> AS{{ $service->id}} \
+                    @endforeach \
+                @endif\
                 @foreach($application->databases as $database) \
                     A{{ $application->id }} -> DB{{ $database->id}} \
                 @endforeach \
-                @if ($application->application_block_id!=null)\
-                AB{{ $application->application_block_id }} -> A{{ $application->id}}\
+                @if (auth()->user()->granularity>=2)\
+                    @if ($application->application_block_id!=null)\
+                        AB{{ $application->application_block_id }} -> A{{ $application->id}}\
+                    @endif\
                 @endif\
             @endforEach\
-            @foreach($applicationServices as $service) \
-                AS{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#APPLICATIONSERVICE{{$service->id}}\"]\
-                @foreach($service->modules as $module) \
-                    AS{{ $service->id }} -> M{{$module->id}}\
+            @if (auth()->user()->granularity>=2)\
+                @foreach($applicationServices as $service) \
+                    AS{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#APPLICATIONSERVICE{{$service->id}}\"]\
+                    @foreach($service->modules as $module) \
+                        AS{{ $service->id }} -> M{{$module->id}}\
+                    @endforeach\
                 @endforeach\
-            @endforeach\
-            @foreach($applicationModules as $module) \
-                M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#APPLICATIONMODULE{{$module->id}}\"]\
-            @endforeach\
+                @foreach($applicationModules as $module) \
+                    M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#APPLICATIONMODULE{{$module->id}}\"]\
+                @endforeach\
+            @endif\
             @foreach($databases as $database) \
                 DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
             @endforeach\
