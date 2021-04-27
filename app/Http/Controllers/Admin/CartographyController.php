@@ -348,7 +348,7 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, "Description", $macroProcess->description);
                     $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
                     $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? ""
+                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "");
                     if ($granularity>=3)
                         $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
                     $textRun=$this->addTextRunRow($table, "Processus");
