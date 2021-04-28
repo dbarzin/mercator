@@ -148,9 +148,9 @@
                         <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="BAY{{ $bay->id }}">
-                                <th colspan="2">
-                                <a href="/admin/bays/{{ $bay->id }}/edit">{{ $bay->name }}</a><br>
-                                </th>
+                                    <th colspan="2">
+                                    <a href="/admin/bays/{{ $bay->id }}/edit">{{ $bay->name }}</a><br>
+                                    </th>
                                 </thead>
                                 <tbody>
                                 <tr>
@@ -200,7 +200,7 @@
 
                                 @if ($bay->bayStorageDevices->count()>0)
                                 <tr>
-                                    <th>Routeurs</th>
+                                    <th>Dispositif de stockage</th>
                                     <td>
                                     @foreach($bay->bayStorageDevices as $bayStorageDevice) 
                                         <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
@@ -294,7 +294,7 @@
             </div>
             @endif
 
-            @if ($workstations->count()>0)
+            @if ((auth()->user()->granularity>=2)&&($workstations->count()>0))
             <div class="card">
                 <div class="card-header">
                     Postes de travail
@@ -344,7 +344,7 @@
             </div>
             @endif
 
-            @if ($storageDevices->count()>0)
+            @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0)))
             <div class="card">
                 <div class="card-header">
                     Infrastructure de stockage
@@ -398,7 +398,7 @@
             </div>
             @endif
 
-            @if ($peripherals->count()>0)
+            @if ((auth()->user()->granularity>=2)&&($peripherals->count()>0))
             <div class="card">
                 <div class="card-header">
                     Périphériques
@@ -460,7 +460,7 @@
             </div>
             @endif
 
-            @if ($phones->count()>0)
+            @if ((auth()->user()->granularity>=2)&&($phones->count()>0))
             <div class="card">
                 <div class="card-header">
                     Téléphones
@@ -625,8 +625,15 @@
                 </div>
             </div>
             @endif
+
+            <!-- Wifi Termonals -->
+
         </div>
     </div>
+
+
+
+
 </div>
 @endsection
 

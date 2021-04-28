@@ -54,6 +54,7 @@ use App\Peripheral;
 use App\Phone;
 use App\PhysicalSwitch;
 use App\PhysicalRouter;
+use App\WifiTerminal;
 
 use App\Http\Controllers\Controller;
 
