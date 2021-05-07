@@ -131,8 +131,16 @@ Redémarre l'application
    
 ## Testing
 
+Configure the environment
+
+    cp .env .env.dusk.local
+    vi .env.dusk.local
+
 Runs tests
 
     php artisan dusk
 
+Run a specific test
+
+    php artisan dusk --filter testMaturityLevels
 
