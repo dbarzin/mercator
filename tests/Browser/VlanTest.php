@@ -13,8 +13,8 @@ class VlanTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.vlan.index'));
-            $browser->assertRouteIs('admin.vlan.index');
+            $browser->visit(route('admin.vlans.index'));
+            $browser->assertRouteIs('admin.vlans.index');
         });
     }
 }

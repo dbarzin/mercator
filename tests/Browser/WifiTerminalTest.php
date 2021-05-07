@@ -13,8 +13,8 @@ class WifiTerminalTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.wifiterminal.index'));
-            $browser->assertRouteIs('admin.wifiterminal.index');
+            $browser->visit(route('admin.wifi-terminals.index'));
+            $browser->assertRouteIs('admin.wifi-terminals.index');
         });
     }
 }

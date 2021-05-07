@@ -13,8 +13,8 @@ class PeripheralTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.peripheral.index'));
-            $browser->assertRouteIs('admin.peripheral.index');
+            $browser->visit(route('admin.peripherals.index'));
+            $browser->assertRouteIs('admin.peripherals.index');
         });
     }
 }

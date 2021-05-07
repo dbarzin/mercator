@@ -13,8 +13,8 @@ class PhysicalRouterTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.physicalrouter.index'));
-            $browser->assertRouteIs('admin.physicalrouter.index');
+            $browser->visit(route('admin.physical-routers.index'));
+            $browser->assertRouteIs('admin.physical-routers.index');
         });
     }
 }

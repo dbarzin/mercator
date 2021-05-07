@@ -191,19 +191,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('physical-security-devices/destroy', 'PhysicalSecurityDeviceController@massDestroy')->name('physical-security-devices.massDestroy');
     Route::resource('physical-security-devices', 'PhysicalSecurityDeviceController');
 
-    // Wans
+    // WANs
     Route::delete('wans/destroy', 'WanController@massDestroy')->name('wans.massDestroy');
     Route::resource('wans', 'WanController');
 
-    // Men
-    Route::delete('men/destroy', 'ManController@massDestroy')->name('men.massDestroy');
-    Route::resource('men', 'ManController');
+    // MANs
+    Route::delete('mans/destroy', 'ManController@massDestroy')->name('mans.massDestroy');
+    Route::resource('mans', 'ManController');
 
-    // Lans
+    // LANs
     Route::delete('lans/destroy', 'LanController@massDestroy')->name('lans.massDestroy');
     Route::resource('lans', 'LanController');
 
-    // Vlans
+    // VLANs
     Route::delete('vlans/destroy', 'VlanController@massDestroy')->name('vlans.massDestroy');
     Route::resource('vlans', 'VlanController');
 

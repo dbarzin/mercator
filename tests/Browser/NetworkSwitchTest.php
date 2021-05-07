@@ -13,8 +13,8 @@ class NetworkSwitchTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.networkswitch.index'));
-            $browser->assertRouteIs('admin.networkswitch.index');
+            $browser->visit(route('admin.network-switches.index'));
+            $browser->assertRouteIs('admin.network-switches.index');
         });
     }
 }

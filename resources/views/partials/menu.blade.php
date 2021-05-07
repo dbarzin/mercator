@@ -529,7 +529,7 @@
                         @endcan
                         @can('man_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.men.index") }}" class="nav-link {{ request()->is('admin/men') || request()->is('admin/men/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.mans.index") }}" class="nav-link {{ request()->is('admin/mans') || request()->is('admin/mans/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>

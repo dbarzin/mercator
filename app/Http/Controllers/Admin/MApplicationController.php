@@ -27,7 +27,7 @@ class MApplicationController extends Controller
 
         $applications = MApplication::all()->sortBy('name');
 
-        return view('admin.mApplications.index', compact('applications'));
+        return view('admin.applications.index', compact('applications'));
     }
 
     public function create()
@@ -48,7 +48,7 @@ class MApplicationController extends Controller
         $external_list = MApplication::select('external')->where("external","<>",null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
 
-        return view('admin.mApplications.create', 
+        return view('admin.applications.create', 
             compact('entities', 'entity_resps', 'processes', 'services', 'databases', 'logical_servers', 'application_blocks',
                 'type_list','technology_list', 'users_list','external_list','responsible_list'
             ));
@@ -87,7 +87,7 @@ class MApplicationController extends Controller
 
         $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block');
 
-        return view('admin.mApplications.edit', 
+        return view('admin.applications.edit', 
             compact('entities', 'entity_resps', 'processes', 'services', 'databases', 'logical_servers', 'application_blocks', 'application',
                     'type_list','technology_list', 'users_list','external_list','responsible_list'
             ));
@@ -111,7 +111,7 @@ class MApplicationController extends Controller
 
         $Application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
 
-        return view('admin.mApplications.show', compact('Application'));
+        return view('admin.applications.show', compact('Application'));
     }
 
     public function destroy(MApplication $application)

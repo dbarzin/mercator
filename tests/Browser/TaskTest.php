@@ -13,8 +13,8 @@ class TaskTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.task.index'));
-            $browser->assertRouteIs('admin.task.index');
+            $browser->visit(route('admin.tasks.index'));
+            $browser->assertRouteIs('admin.tasks.index');
         });
     }
 }

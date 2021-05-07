@@ -13,8 +13,8 @@ class WanTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.wan.index'));
-            $browser->assertRouteIs('admin.wan.index');
+            $browser->visit(route('admin.wans.index'));
+            $browser->assertRouteIs('admin.wans.index');
         });
     }
 }

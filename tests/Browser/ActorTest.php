@@ -13,8 +13,8 @@ class ActorTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.actor.index'));
-            $browser->assertRouteIs('admin.actor.index');
+            $browser->visit(route('admin.actors.index'));
+            $browser->assertRouteIs('admin.actors.index');
         });
     }
 }

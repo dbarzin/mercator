@@ -13,8 +13,8 @@ class ApplicationBlockTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.applicationblock.index'));
-            $browser->assertRouteIs('admin.applicationblock.index');
+            $browser->visit(route('admin.application-blocks.index'));
+            $browser->assertRouteIs('admin.application-blocks.index');
         });
     }
 }

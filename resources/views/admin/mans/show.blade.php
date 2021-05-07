@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.men.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.mans.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -44,7 +44,7 @@
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.men.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.mans.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -65,7 +65,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="mans_wans">
-            @includeIf('admin.men.relationships.mansWans', ['wans' => $man->mansWans])
+            @includeIf('admin.mans.relationships.mansWans', ['wans' => $man->mansWans])
         </div>
     </div>
 </div>

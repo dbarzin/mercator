@@ -13,8 +13,8 @@ class DhcpServerTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.dhcpserver.index'));
-            $browser->assertRouteIs('admin.dhcpserver.index');
+            $browser->visit(route('admin.dhcp-servers.index'));
+            $browser->assertRouteIs('admin.dhcp-servers.index');
         });
     }
 }

@@ -13,8 +13,8 @@ class OperationTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.operation.index'));
-            $browser->assertRouteIs('admin.operation.index');
+            $browser->visit(route('admin.operations.index'));
+            $browser->assertRouteIs('admin.operations.index');
         });
     }
 }

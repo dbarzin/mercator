@@ -13,8 +13,8 @@ class SubnetwordTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.subnetword.index'));
-            $browser->assertRouteIs('admin.subnetword.index');
+            $browser->visit(route('admin.subnetworks.index'));
+            $browser->assertRouteIs('admin.subnetworks.index');
         });
     }
 }

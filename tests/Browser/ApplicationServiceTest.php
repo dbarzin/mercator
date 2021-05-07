@@ -13,8 +13,8 @@ class ApplicationServiceTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.applicationservice.index'));
-            $browser->assertRouteIs('admin.applicationservice.index');
+            $browser->visit(route('admin.application-services.index'));
+            $browser->assertRouteIs('admin.application-services.index');
         });
     }
 }

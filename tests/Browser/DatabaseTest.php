@@ -13,8 +13,8 @@ class DatabaseTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.database.index'));
-            $browser->assertRouteIs('admin.database.index');
+            $browser->visit(route('admin.databases.index'));
+            $browser->assertRouteIs('admin.databases.index');
         });
     }
 }

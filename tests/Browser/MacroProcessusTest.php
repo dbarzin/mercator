@@ -13,8 +13,8 @@ class MacroProcessusTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.macroprocessus.index'));
-            $browser->assertRouteIs('admin.macroprocessus.index');
+            $browser->visit(route('admin.macro-processuses.index'));
+            $browser->assertRouteIs('admin.macro-processuses.index');
         });
     }
 }

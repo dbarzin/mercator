@@ -13,8 +13,8 @@ class ForestAdTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.forestad.index'));
-            $browser->assertRouteIs('admin.forestad.index');
+            $browser->visit(route('admin.forest-ads.index'));
+            $browser->assertRouteIs('admin.forest-ads.index');
         });
     }
 }

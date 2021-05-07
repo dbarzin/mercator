@@ -13,8 +13,8 @@ class ExternalConnectedEntityTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.externalconnectedentity.index'));
-            $browser->assertRouteIs('admin.externalconnectedentity.index');
+            $browser->visit(route('admin.external-connected-entities.index'));
+            $browser->assertRouteIs('admin.external-connected-entities.index');
         });
     }
 }

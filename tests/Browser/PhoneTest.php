@@ -13,8 +13,8 @@ class PhoneTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.phone.index'));
-            $browser->assertRouteIs('admin.phone.index');
+            $browser->visit(route('admin.phones.index'));
+            $browser->assertRouteIs('admin.phones.index');
         });
     }
 }

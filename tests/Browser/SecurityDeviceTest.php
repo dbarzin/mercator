@@ -13,8 +13,8 @@ class SecurityDeviceTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.securitydevice.index'));
-            $browser->assertRouteIs('admin.securitydevice.index');
+            $browser->visit(route('admin.security-devices.index'));
+            $browser->assertRouteIs('admin.security-devices.index');
         });
     }
 }

@@ -13,8 +13,8 @@ class BuildingTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.building.index'));
-            $browser->assertRouteIs('admin.building.index');
+            $browser->visit(route('admin.buildings.index'));
+            $browser->assertRouteIs('admin.buildings.index');
         });
     }
 }

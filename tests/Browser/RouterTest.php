@@ -13,8 +13,8 @@ class RouterTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.router.index'));
-            $browser->assertRouteIs('admin.router.index');
+            $browser->visit(route('admin.routers.index'));
+            $browser->assertRouteIs('admin.routers.index');
         });
     }
 }

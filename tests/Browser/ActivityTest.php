@@ -13,8 +13,8 @@ class ActivityTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.activity.index'));
-            $browser->assertRouteIs('admin.activity.index');
+            $browser->visit(route('admin.activities.index'));
+            $browser->assertRouteIs('admin.activities.index');
         });
     }
 }

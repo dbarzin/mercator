@@ -20,7 +20,7 @@ class ManController extends Controller
 
         $mans = Man::all()->sortBy('name');
 
-        return view('admin.men.index', compact('mans'));
+        return view('admin.mans.index', compact('mans'));
     }
 
     public function create()
@@ -29,7 +29,7 @@ class ManController extends Controller
 
         $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.men.create', compact('lans'));
+        return view('admin.mans.create', compact('lans'));
     }
 
     public function store(StoreManRequest $request)
@@ -37,7 +37,7 @@ class ManController extends Controller
         $man = Man::create($request->all());
         $man->lans()->sync($request->input('lans', []));
 
-        return redirect()->route('admin.men.index');
+        return redirect()->route('admin.mans.index');
     }
 
     public function edit(Man $man)
@@ -48,7 +48,7 @@ class ManController extends Controller
 
         $man->load('lans');
 
-        return view('admin.men.edit', compact('lans', 'man'));
+        return view('admin.mans.edit', compact('lans', 'man'));
     }
 
     public function update(UpdateManRequest $request, Man $man)
@@ -56,7 +56,7 @@ class ManController extends Controller
         $man->update($request->all());
         $man->lans()->sync($request->input('lans', []));
 
-        return redirect()->route('admin.men.index');
+        return redirect()->route('admin.mans.index');
     }
 
     public function show(Man $man)
@@ -65,7 +65,7 @@ class ManController extends Controller
 
         $man->load('lans', 'mansWans');
 
-        return view('admin.men.show', compact('man'));
+        return view('admin.mans.show', compact('man'));
     }
 
     public function destroy(Man $man)

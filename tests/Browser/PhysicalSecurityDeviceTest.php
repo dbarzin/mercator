@@ -13,8 +13,8 @@ class PhysicalSecurityDeviceTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.physicalsecuritydevice.index'));
-            $browser->assertRouteIs('admin.physicalsecuritydevice.index');
+            $browser->visit(route('admin.physical-security-devices.index'));
+            $browser->assertRouteIs('admin.physical-security-devices.index');
         });
     }
 }

@@ -13,8 +13,8 @@ class DomaineAdTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.domainead.index'));
-            $browser->assertRouteIs('admin.domainead.index');
+            $browser->visit(route('admin.domaine-ads.index'));
+            $browser->assertRouteIs('admin.domaine-ads.index');
         });
     }
 }

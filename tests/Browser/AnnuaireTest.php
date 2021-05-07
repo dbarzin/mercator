@@ -13,8 +13,8 @@ class AnnuaireTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.annuaire.index'));
-            $browser->assertRouteIs('admin.annuaire.index');
+            $browser->visit(route('admin.annuaires.index'));
+            $browser->assertRouteIs('admin.annuaires.index');
         });
     }
 }

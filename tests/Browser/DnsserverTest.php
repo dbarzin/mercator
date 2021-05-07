@@ -13,8 +13,8 @@ class DnsserverTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.dnsserver.index'));
-            $browser->assertRouteIs('admin.dnsserver.index');
+            $browser->visit(route('admin.dnsservers.index'));
+            $browser->assertRouteIs('admin.dnsservers.index');
         });
     }
 }

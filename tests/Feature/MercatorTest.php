@@ -6,8 +6,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+
+
 class MercatorTest extends TestCase
 {
+
+    use WithoutMiddleware; 
+
     /**
      * A basic feature test example.
      *
@@ -15,6 +21,8 @@ class MercatorTest extends TestCase
      */
     public function testExample()
     {
+        $this->withoutMiddleware();
+        
         $response = $this->get('/');
         $response->assertStatus(302);
 
@@ -24,9 +32,17 @@ class MercatorTest extends TestCase
         $response = $this->get('/login');
         $response->assertStatus(200);
 
-        $response=$this->json('POST', '/login', 
+        // login test
+        $response = $this->post(config('app.url') . '/login', 
                 ['email' => 'admin@admin.com',
                  'password' => 'password']);
+        $response->assertStatus(200);
+        $response->assertCookieNotExpired($cookieName);
 
+        // Ecosystem
+        $user="admin";
+        $response = $this->actingAs($user)
+            ->get(config('app.url') . '/admin/report/ecosystem');        
+        $response->assertStatus(200);
     }
 }

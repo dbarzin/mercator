@@ -13,8 +13,8 @@ class SiteTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.site.index'));
-            $browser->assertRouteIs('admin.site.index');
+            $browser->visit(route('admin.sites.index'));
+            $browser->assertRouteIs('admin.sites.index');
         });
     }
 }

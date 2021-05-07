@@ -13,8 +13,8 @@ class ApplicationModuleTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.applicationmodule.index'));
-            $browser->assertRouteIs('admin.applicationmodule.index');
+            $browser->visit(route('admin.application-modules.index'));
+            $browser->assertRouteIs('admin.application-modules.index');
         });
     }
 }

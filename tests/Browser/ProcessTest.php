@@ -13,8 +13,8 @@ class ProcessTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.process.index'));
-            $browser->assertRouteIs('admin.process.index');
+            $browser->visit(route('admin.processes.index'));
+            $browser->assertRouteIs('admin.processes.index');
         });
     }
 }

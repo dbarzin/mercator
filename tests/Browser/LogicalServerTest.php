@@ -13,8 +13,8 @@ class LogicalServerTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.logicalserver.index'));
-            $browser->assertRouteIs('admin.logicalserver.index');
+            $browser->visit(route('admin.logical-servers.index'));
+            $browser->assertRouteIs('admin.logical-servers.index');
         });
     }
 }

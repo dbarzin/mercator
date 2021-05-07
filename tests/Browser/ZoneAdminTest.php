@@ -13,8 +13,8 @@ class ZoneAdminTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.zoneadmin.index'));
-            $browser->assertRouteIs('admin.zoneadmin.index');
+            $browser->visit(route('admin.zone-admins.index'));
+            $browser->assertRouteIs('admin.zone-admins.index');
         });
     }
 }

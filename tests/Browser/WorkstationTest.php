@@ -13,8 +13,8 @@ class WorkstationTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.workstation.index'));
-            $browser->assertRouteIs('admin.workstation.index');
+            $browser->visit(route('admin.workstations.index'));
+            $browser->assertRouteIs('admin.workstations.index');
         });
     }
 }

@@ -3,16 +3,15 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.man.title_singular') }}
+        {{ trans('global.create') }} {{ trans('cruds.man.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.men.update", [$man->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
+        <form method="POST" action="{{ route("admin.mans.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.man.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $man->name) }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
@@ -28,7 +27,7 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('lans') ? 'is-invalid' : '' }}" name="lans[]" id="lans" multiple>
                     @foreach($lans as $id => $lans)
-                        <option value="{{ $id }}" {{ (in_array($id, old('lans', [])) || $man->lans->contains($id)) ? 'selected' : '' }}>{{ $lans }}</option>
+                        <option value="{{ $id }}" {{ in_array($id, old('lans', [])) ? 'selected' : '' }}>{{ $lans }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('lans'))

@@ -13,8 +13,8 @@ class RelationTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.relation.index'));
-            $browser->assertRouteIs('admin.relation.index');
+            $browser->visit(route('admin.relations.index'));
+            $browser->assertRouteIs('admin.relations.index');
         });
     }
 }

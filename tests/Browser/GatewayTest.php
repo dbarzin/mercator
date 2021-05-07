@@ -13,8 +13,8 @@ class GatewayTest extends DuskTestCase
         $admin = \App\User::find(1);
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
-            $browser->visit(route('admin.gateway.index'));
-            $browser->assertRouteIs('admin.gateway.index');
+            $browser->visit(route('admin.gateways.index'));
+            $browser->assertRouteIs('admin.gateways.index');
         });
     }
 }
