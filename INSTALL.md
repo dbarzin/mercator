@@ -129,3 +129,10 @@ Redémarre l'application
 
     php artisan serve
    
+## Testing
+
+Runs tests
+
+    php artisan dusk
+
+

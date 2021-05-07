@@ -231,9 +231,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('report/logicalServerResp', 'ReportController@logicalServerResp');
     
     // Maturity levels
-    Route::get('report/maturity1', 'HomeController@maturity1');
-    Route::get('report/maturity2', 'HomeController@maturity2');
-    Route::get('report/maturity3', 'HomeController@maturity3');
+    Route::get('report/maturity1', 'HomeController@maturity1')->name("report.maturity1");
+    Route::get('report/maturity2', 'HomeController@maturity2')->name("report.maturity2");
+    Route::get('report/maturity3', 'HomeController@maturity3')->name("report.maturity3");
 
     // Reporting
     Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
