@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldsToBuilingsTable extends Migration
+class CreateMansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class AddFieldsToBuilingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('buildings', function (Blueprint $table) {
-            //
-            $table->boolean('camera')->nullable();            
-            $table->boolean('badge')->nullable();
+        Schema::create('mans', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+            $table->unique(['name', 'deleted_at'], 'men_name_unique');
         });
     }
 
@@ -27,8 +29,6 @@ class AddFieldsToBuilingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('buildings', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('mans');
     }
 }

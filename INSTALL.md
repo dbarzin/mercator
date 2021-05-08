@@ -144,3 +144,49 @@ Run a specific test
 
     php artisan dusk --filter testMaturityLevels
 
+## Fix migration issue
+
+First backup database data
+
+    mysqldump mercator \
+        --ignore-table=mercator.users \
+        --ignore-table=mercator.roles \
+        --ignore-table=mercator.permissions \
+        --ignore-table=mercator.permission_role \
+        --ignore-table=mercator.role_user \
+        --ignore-table=mercator.migrations \
+        --no-create-db \
+        --no-create-info \
+        > backup_mercator_data.sql
+
+Then backup database users
+
+    mysqldump mercator \
+        --tables users roles role_user \
+        --add-drop-table \
+        > backup_mercator_users.sql
+
+Drop the database
+
+    sudo mysql -e "drop database mercator;"
+
+Create the database
+
+    sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+Run migration
+
+    php artisan migrate --seed 
+
+Generate Keys
+ 
+    php artisan key:generate
+
+Restore data
+
+    mysql mercator < backup_mercator_data.sql
+
+Restore users
+
+    mysql mercator < backup_mercator_users.sql
+

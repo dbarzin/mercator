@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDiskToLogicalServersTable extends Migration
+class CreateMApplicationProcessTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddDiskToLogicalServersTable extends Migration
      */
     public function up()
     {
-        Schema::table('logical_servers', function (Blueprint $table) {
-            //
-            $table->integer('disk')->nullable();                        
+        Schema::create('m_application_process', function (Blueprint $table) {
+            $table->unsignedInteger('m_application_id')->index('m_application_id_fk_1482573');
+            $table->unsignedInteger('process_id')->index('process_id_fk_1482573');
         });
     }
 
@@ -26,8 +26,6 @@ class AddDiskToLogicalServersTable extends Migration
      */
     public function down()
     {
-        Schema::table('logical_servers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('m_application_process');
     }
 }
