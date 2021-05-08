@@ -136,13 +136,13 @@ Configure the environment
     cp .env .env.dusk.local
     vi .env.dusk.local
 
-Runs tests
+Start the application
+
+    php artisan serve
+
+With another process, runs tests
 
     php artisan dusk
-
-Run a specific test
-
-    php artisan dusk --filter testMaturityLevels
 
 ## Fix migration issue
 
@@ -166,7 +166,7 @@ Then backup database users
         --add-drop-table \
         > backup_mercator_users.sql
 
-Drop the database
+Drop the mercator database
 
     sudo mysql -e "drop database mercator;"
 
@@ -189,4 +189,6 @@ Restore data
 Restore users
 
     mysql mercator < backup_mercator_users.sql
+
+All migrations issues are the fixed
 
