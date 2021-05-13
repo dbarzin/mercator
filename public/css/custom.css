@@ -73,7 +73,7 @@ table.dataTable thead .sorting_desc {
 }
 
 .sidebar-minimizer {
- background-color: #FFFFFF;       
+    background-color: #FFFFFF;       
 }
 
 .sidebar .nav-item {
@@ -113,6 +113,9 @@ table.dataTable thead .sorting_desc {
     background-color: #FFFFFF;
 }
 
+.sidebar .nav-link.active:hover {
+    background-color: #20a8d8;
+}
 
 .btn-default {
     color: #23282c;
