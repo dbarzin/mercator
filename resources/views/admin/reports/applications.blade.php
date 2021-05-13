@@ -159,10 +159,12 @@
                                         <td> {{ $application->users}}</td>
                                     </tr>
                                     @endif
+                                    @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>Documentation</th>
                                         <td><a href="{{ $application->documentation}}">{{ $application->documentation}}</a></td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <th>Flux associés</th>
                                         <td>

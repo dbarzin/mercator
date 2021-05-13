@@ -34,7 +34,7 @@
 
           <div class="row">
             <div class="col-sm">
-
+                @if (auth()->user()->granuarity>=2)
                 <div class="form-group">
                     <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
                     <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}" name="entities[]" id="entities" multiple>
@@ -64,6 +64,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.entity_resp_helper') }}</span>
                 </div>
+                @endif
 
                 <div class="form-group">
                     <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
@@ -121,6 +122,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.type_helper') }}</span>
                 </div>
 
+                @if (auth()->user()->granuarity>=2)
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
                     <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
@@ -138,6 +140,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
                 </div>
+                @endif
 
             </div>
             <div class="col-sm">
@@ -176,9 +179,9 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.external_helper') }}</span>
                 </div>
-
+                @if (auth()->user()->granuarity>=2)
                 <div class="form-group">
-                    <label for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
+                    <label class="recommended" for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
                     <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', $application->documentation) }}">
                     @if($errors->has('documentation'))
                         <div class="invalid-feedback">
@@ -187,7 +190,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
-
+                @endif
 
             </div>
         </div>
@@ -216,6 +219,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.processes_helper') }}</span>
             </div>
 
+            @if (auth()->user()->granuarity>=2)
             <div class="form-group">
                 <label for="services">{{ trans('cruds.application.fields.services') }}</label>
                 <div style="padding-bottom: 4px">
@@ -234,6 +238,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
             </div>
+            @endif
         
         </div>
         <div class="col-sm">
@@ -275,9 +280,10 @@
                 <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
             </div>
 
-        </div>
+            </div>
         </div>            
-            <div class="form-group">
+        <div class="form-group">
+            @if (auth()->user()->granuarity>=2)
                 <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                 <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
                     @foreach($application_blocks as $id => $application_block)
@@ -291,6 +297,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.application_block_helper') }}</span>
             </div>
+            @endif
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

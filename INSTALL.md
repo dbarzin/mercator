@@ -146,6 +146,10 @@ With another process, runs tests
 
 ## Fix migration issue
 
+Update packages
+
+    composer update
+
 First backup database data
 
     mysqldump mercator \

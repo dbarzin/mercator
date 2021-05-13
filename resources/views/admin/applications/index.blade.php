@@ -51,7 +51,7 @@
                             ($application->type==null)||
                             ((auth()->user()->granularity>=2)&&($application->users==null))||
                             ($application->security_need==null)||
-                            ($application->application_block==null)||
+                            ((auth()->user()->granularity>=2)&&($application->application_block==null))||
                             ($application->processes->count()==0)                            
                             )
                                 class="table-warning"
