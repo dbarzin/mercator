@@ -45,17 +45,18 @@
                 <tbody>
                     @foreach($information as $key => $information)
                         <tr data-entry-id="{{ $information->id }}"
-
-@if(($information->descrition==null)||
-    ($information->owner==null)||
-    ($information->administrator==null)||
-    ($information->storage==null)||
-    ($information->security_need==null)||
-    ($information->sensitivity==null)
-    )
-                          class="table-warning"
-@endif
-
+                            @if(($information->descrition==null)||
+                                ($information->owner==null)||
+                                ($information->administrator==null)||
+                                ($information->storage==null)||
+                                ($information->security_need_c==null)||
+                                ($information->security_need_i==null)||
+                                ($information->security_need_a==null)||
+                                ($information->security_need_t==null)||
+                                ($information->sensitivity==null)
+                                )
+                                                      class="table-warning"
+                            @endif
                             >
                             <td>
 
@@ -70,15 +71,10 @@
                                 {!! $information->owner ?? '' !!}
                             </td>
                             <td>
-                                @if ($information->security_need==1) 
-                                    Public
-                                @elseif ($information->security_need==2)
-                                    Internal
-                                @elseif ($information->security_need==3)
-                                    Confidential
-                                @elseif ($information->security_need==4)
-                                    Secret
-                                @endif                              
+                                C : {{ $information->security_need_c }} &nbsp;
+                                I : {{ $information->security_need_i }} &nbsp;
+                                D : {{ $information->security_need_a }} &nbsp;
+                                T : {{ $information->security_need_t }}
                             </td>
                             <td>
                                 {{ $information->sensitivity ?? '' }}

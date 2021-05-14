@@ -41,16 +41,19 @@
                 <tbody>
                     @foreach($macroProcessuses as $key => $macroProcessus)
                         <tr data-entry-id="{{ $macroProcessus->id }}"
-@if(($macroProcessus->description==null)||
-    ($macroProcessus->io_elements==null)||
-    ($macroProcessus->security_need==null)||
-        (
-        (auth()->user()->granularity>=2) && 
-        ($macroProcessus->owner==null)
-        )
-    )
-                          class="table-warning"
-@endif
+                            @if(($macroProcessus->description==null)||
+                                ($macroProcessus->io_elements==null)||
+                                ($macroProcessus->security_need_c==null)||
+                                ($macroProcessus->security_need_i==null)||
+                                ($macroProcessus->security_need_a==null)||
+                                ($macroProcessus->security_need_t==null)||
+                                    (
+                                    (auth()->user()->granularity>=2) && 
+                                    ($macroProcessus->owner==null)
+                                    )
+                                )
+                                    class="table-warning"
+                            @endif
                             >
                             <td>
 
@@ -63,15 +66,10 @@
                             </td>
 
                             <td>
-                                @if ($macroProcessus->security_need==1) 
-                                    Public
-                                @elseif ($macroProcessus->security_need==2)
-                                    Internal
-                                @elseif ($macroProcessus->security_need==3)
-                                    Confidential
-                                @elseif ($macroProcessus->security_need==4)
-                                    Secret
-                                @endif
+                                C : {{ $macroProcessus->security_need_c }} &nbsp;
+                                I : {{ $macroProcessus->security_need_i }} &nbsp;
+                                A : {{ $macroProcessus->security_need_a }} &nbsp;
+                                T : {{ $macroProcessus->security_need_t }}
                             </td>
                             <td>
                                 {{ $macroProcessus->owner }}

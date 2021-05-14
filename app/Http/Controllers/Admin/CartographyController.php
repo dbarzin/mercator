@@ -347,8 +347,31 @@ class CartographyController extends Controller
                     $table = $this->addTable($section, $macroProcess->name);
                     $this->addHTMLRow($table, "Description", $macroProcess->description);
                     $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
-                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$macroProcess->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_t] ?? "") .
+                            '</p>'
+                        );
+                    //---
                     if ($granularity>=3)
                         $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
                     $textRun=$this->addTextRunRow($table, "Processus");
@@ -390,9 +413,31 @@ class CartographyController extends Controller
                         if ($process->processesMApplications->last() != $application)  
                             $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
-                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "");
-
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$process->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "") .
+                            '</p>'
+                        );
+                    //----
                     $this->addTextRow($table,"Propriétaire",$process->owner);
                     $section->addTextBreak(1);
                     }
@@ -516,8 +561,30 @@ class CartographyController extends Controller
                         if ($information->processes->last() != $process)
                             $textRun->addText(", ");
                         }
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$information->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_t] ?? "") .
+                            '</p>'
+                        );
                     
                     $this->addTextRow($table,"Sensibilité",$information->sensibility);
 
@@ -644,8 +711,30 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$application->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_t] ?? "") .
+                            '</p>'
+                        );
 
                     $this->addTextRow($table,"Exposition à l’externe",$application->external);
 
@@ -772,7 +861,7 @@ class CartographyController extends Controller
              }
 
             // =====================================
-            if ($applicationModules->count()>0) { 
+            if ($databases->count()>0) { 
                 $section->addTitle('Bases de données', 2);
                 $section->addText("Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.");
                 $section->addTextBreak(1); 
@@ -822,8 +911,30 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$database->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_t] ?? "") .
+                            '</p>'
+                        );
 
                     $this->addTextRow($table,"Exposition à l’externe",$database->external);
        

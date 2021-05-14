@@ -265,5 +265,15 @@ return [
     "yes" => "Yes",
     "youAreLoggedIn" => "You are connected !",
     "you_have_no_messages" => "You have no messages.",
-    "yourAccountNeedsAdminApproval" => "Your account must be approved by the administrator before you can log in"
+    "yourAccountNeedsAdminApproval" => "Your account must be approved by the administrator before you can log in",
+    //
+    "confidentiality" => "Confidentiality",
+    "integrity" => "Intégrity",
+    "availability" => "Availability",
+    "tracability" => "Tracability",
+    //
+    "low" => "Low", 
+    "medium" => "Medium", 
+    "strong" => "Strong", 
+    "very_strong" => "Very strong",
 ];

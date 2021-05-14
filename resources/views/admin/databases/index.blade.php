@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Database">
+            <table class="table table-bordered table-striped table-hover datatable datatable-Database">
                 <thead>
                     <tr>
                         <th width="10">
@@ -42,14 +42,13 @@
                 <tbody>
                     @foreach($databases as $key => $database)
                         <tr data-entry-id="{{ $database->id }}"
-@if(($database->description==null)||
-    ($database->entity_resp_id==null)||
-    ($database->responsible==null)||
-    ($database->type==null)
-    )
+                          @if(($database->description==null)||
+                              ($database->entity_resp_id==null)||
+                              ($database->responsible==null)||
+                              ($database->type==null)
+                              )
                           class="table-warning"
-@endif
-
+                          @endif
                           >
                             <td>
 
@@ -66,6 +65,9 @@
                             <td>
                                 @foreach($database->informations as $key => $informations)
                                     <span class="label label-info">{{ $informations->name }}</span>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                
                                 @endforeach
                             </td>
                             

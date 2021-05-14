@@ -765,7 +765,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("I{$row}", $application->type);
                 $sheet->setCellValue("J{$row}", $application->users);
                 $sheet->setCellValue("K{$row}", $application->external);
-                $sheet->setCellValue("L{$row}", $application->security_need);
+                $sheet->setCellValue("L{$row}", "C: " . $application->security_need_c . " I: " . $application->security_need_i . " A: " . $application->security_need_a . " T: " . $application->security_need_t);
                 $sheet->setCellValue("M{$row}", $application->documentation);
                 $sheet->setCellValue("N{$row}", $application->logical_servers->implode('name', ', '));
                 $sheet->setCellValue("O{$row}", $application->databases->implode('name', ', '));
