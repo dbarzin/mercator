@@ -10,7 +10,7 @@ ce dossier contient les éléments permettant de dockeriser l'application Mercat
 
 ```
 # copier le dépot source
-git clone git@github.com:mqu/mercator.git
+git clone https://github.com/dbarzin/mercator
 # recopier le fichier de configuration ../.env.example
 cp  ../.env.example .env
 ```
