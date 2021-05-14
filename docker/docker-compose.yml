@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ../
+    image: mercator
+    restart: unless-stopped
+    # working_dir: /var/www/
+    volumes:
+     - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
+     # ne peut pas être read-only (commande php artisan key:generate le modifie)
+     - ./.env:/var/www/mercator/.env
+    # entrypoint: /bin/sleep 3600 # pour debug
+    #   - ./:/var/www
+    ports:
+      - 8000:8000
+    networks:
+      - local
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    volumes:
+      - db:/var/lib/mysql
+      - ./data/backup:/backup
+      - ./bin/mysql:/app/
+    networks:
+      - local
+
+#   nginx:
+#     image: nginx:alpine
+#     container_name: travellist-nginx
+#     restart: unless-stopped
+#     ports:
+#       - 8000:80
+#     volumes:
+#       - ./:/var/www
+#       - ./docker-compose/nginx:/etc/nginx/conf.d/
+#     networks:
+#       - local
+
+networks:
+  local:
+
+volumes:
+ db:
