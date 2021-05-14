@@ -736,7 +736,10 @@ class ReportController extends Controller
                 "Type",
                 "Users",
                 "External",
-                "Security Need",
+                "Confidentiality",
+                "Integrity",
+                "Availability",
+                "Tracability",
                 "Documentation",
                 "Logical servers",
                 "Databases",
@@ -765,10 +768,15 @@ class ReportController extends Controller
                 $sheet->setCellValue("I{$row}", $application->type);
                 $sheet->setCellValue("J{$row}", $application->users);
                 $sheet->setCellValue("K{$row}", $application->external);
-                $sheet->setCellValue("L{$row}", "C: " . $application->security_need_c . " I: " . $application->security_need_i . " A: " . $application->security_need_a . " T: " . $application->security_need_t);
-                $sheet->setCellValue("M{$row}", $application->documentation);
-                $sheet->setCellValue("N{$row}", $application->logical_servers->implode('name', ', '));
-                $sheet->setCellValue("O{$row}", $application->databases->implode('name', ', '));
+
+                $sheet->setCellValue("L{$row}", $application->security_need_c);
+                $sheet->setCellValue("M{$row}", $application->security_need_i);
+                $sheet->setCellValue("N{$row}", $application->security_need_a);
+                $sheet->setCellValue("O{$row}", $application->security_need_t);
+
+                $sheet->setCellValue("P{$row}", $application->documentation);
+                $sheet->setCellValue("Q{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue("R{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
