@@ -15,4 +15,5 @@ yarn-error.log
 mercator.sublime-project
 mercator.sublime-workspace
 composer.lock
-
+docker/data/
+docker/.env

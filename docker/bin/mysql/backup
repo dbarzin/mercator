@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+# MQU.
+# avoid warning mysqldump: [Warning] Using a password on the command line interface can be insecure.
+# just pass password as environment variable ; may be insecure, but not so much in Docker environment.
+
+# --no-tablespaces remove warning about tablespace and FUNCTION.
+# -> https://dan.langille.org/2020/07/21/mysqldump-error-access-denied-you-need-at-least-one-of-the-process-privileges-for-this-operation-when-trying-to-dump-tablespaces/
+
+export MYSQL_PWD=${MYSQL_PASSWORD}
+
+mkdir -p /backup/sql
+
+opts="--no-tablespaces --hex-blob --routines --add-drop-database --add-drop-table --complete-insert --add-locks --flush-privileges --single-transaction --lock-tables --events"
+mysqldump $opts -u ${MYSQL_USER} ${MYSQL_DATABASE} | gzip --best > /backup/sql/mercator.sql.gz
+
+
