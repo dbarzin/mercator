@@ -278,7 +278,7 @@
                                     <th>Serveurs Logiques</th>
                                     <td>
                                         @foreach($physicalServer->serversLogicalServers as $logicalServer)
-                                            <a href="/admin/report/logical_infrastructure#LOGICALERVER{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
+                                            <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif
