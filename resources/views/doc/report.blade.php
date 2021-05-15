@@ -69,7 +69,7 @@
                     </li>
 
                     <li>
-                      Analyse des besoins de sécurité<br>
+                      Liste des besoins de sécurité entre macro-processus, processus, applications, base de données et informations.<br>
                       <a href="/admin/report/securityNeeds" target="_new">Analyse des besoins de sécurité</a><br><br>
                     </li>
 

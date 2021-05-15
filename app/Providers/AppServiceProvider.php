@@ -25,9 +25,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {        
         Paginator::useBootstrap();
-        /*
+
         if(env('APP_DEBUG')) {
-            DB::listen(function($query) {
+            // Log SQL queries
+            \DB::listen(function($query) {
                 \Log::info(
                     $query->sql,
                     $query->bindings,
@@ -35,6 +36,5 @@ class AppServiceProvider extends ServiceProvider
                 );
             });    
         }
-        */ 
     }
 }

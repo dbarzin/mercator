@@ -1088,7 +1088,8 @@ class ReportController extends Controller
         $row = 2;
 
         // loop
-        $macroprocesses = MacroProcessus::All();
+        // $macroprocesses = MacroProcessus::All();
+        $macroprocesses = MacroProcessus::with('processes')->get();
         foreach ($macroprocesses as $macroprocess) {
             if ($macroprocess->processes->count()==0) {
                 $this->addLine($sheet,$row,$macroprocess,null,null,null,null);
