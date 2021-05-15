@@ -186,7 +186,7 @@
 
                                 @if ($bay->bayPhysicalSwitches->count()>0)
                                 <tr>
-                                    <th>Routeurs</th>
+                                    <th>Switch</th>
                                     <td>
                                     @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch) 
                                         <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
