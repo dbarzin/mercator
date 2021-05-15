@@ -1,2 +1,3 @@
 data/*
 .env
+docker-compose.yml

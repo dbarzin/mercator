@@ -2,8 +2,6 @@
 
 ce dossier contient les éléments permettant de dockeriser l'application Mercator avec docker-compose.
 
-
-
 # utilisation
 
 ## initialisation
@@ -11,14 +9,25 @@ ce dossier contient les éléments permettant de dockeriser l'application Mercat
 ```
 # copier le dépot source
 git clone https://github.com/dbarzin/mercator
+
+# on se place dans le répertoire docker
+cd docker
+
 # recopier le fichier de configuration ../.env.example
 cp  ../.env.example .env
+
+# recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
+cp docker-compose.yml.tmpl docker-compose.yml
 ```
 
 toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
 
 ```
-APP_URL=http://app:8000/
+# URL du service d'un point de vue externe (en dehors du reverse-proxy)
+APP_URL=https://mercator.mydomain.com/
+ASSET_URL=https://mercator.mydomain.com/
+
+# base de données Mysql
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
@@ -29,6 +38,12 @@ DB_PASSWORD=mercator
 
 - la valeur pour `APP_URL` doit correspondre au nom du service dans le `docker-compose.yml`
 - de même, le nom du service est db dans ce même fichier (`DB_HOST`)
+
+## Reverse-proxy
+
+Deux modèles de configuration du reverse-proxy sont fournis dans le répertoires assets pour Apache et Nginx. D'autre part, la commande permettant de générer le certificat let's Encrypt sera de la forme:
+
+`certbot --nginx --non-interactive --agree-tos --email admin@mydomain.com --no-eff-email --domain mercator.mydomain.com`
 
 ## start
 
@@ -94,3 +109,5 @@ fixme.
 # FIXME
 
 - donner des indications concernant la procédure de MAJ applicative.
+- le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ; voir [ticket](https://github.com/mqu/mercator/issues/1) :
+  - bug résiduel concernant le formulaire d'authentification qui passe en HTTP(80) au lieu de HTTPS(443). Le reste du paramétrage semble OK.
