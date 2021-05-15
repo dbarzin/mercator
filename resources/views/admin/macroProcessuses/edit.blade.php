@@ -46,7 +46,11 @@
                 <table cellspacing="5" cellpadding="5" border="0" width='40%'>
                     <tr>
                         <td width='20%'>
-                            <label class="recommended" for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
+                            <label
+                            @if (auth()->user()->granularity>=2) 
+                                class="recommended" 
+                            @endif
+                                for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                         </td>
                         <td align="right" width="10">
                             <label for="security_need">C</label>

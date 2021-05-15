@@ -91,12 +91,18 @@
                 </div>
             </div>
         
+            <div class="row">
+                <div class="col-sm">
 
                     <div class="form-group">
-                        <table cellspacing="5" cellpadding="5" border="0" width='40%'>
+                        <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label class="recommended" for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
+                                    <label 
+                                        @if (auth()->user()->granularity>=2)                                    
+                                            class="recommended" 
+                                        @endif
+                                        for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
                                 </td>
                                 <td align="right" width="10">
                                     <label for="security_need">C</label>
@@ -156,6 +162,8 @@
                         <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
                     </div>
 
+                </div>
+                <div class="col-sm">
 
                     <div class="form-group">
                         <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
@@ -167,6 +175,8 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
                     </div>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="constraints">{{ trans('cruds.information.fields.constraints') }}</label>

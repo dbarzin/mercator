@@ -114,7 +114,7 @@
             number_format ( 
             (
             $entities_lvl1+$relations_lvl2+
-            $macroProcessuses_lvl2+$processes_lvl1+$operations_lvl2+$actors_lvl2+$informations_lvl1+
+            $macroProcessuses_lvl2+$processes_lvl2+$operations_lvl2+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
             $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
@@ -142,7 +142,7 @@
             number_format ( 
             (
             $entities_lvl1+$relations_lvl2+
-            $macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$tasks_lvl3+$operations_lvl2+$actors_lvl2+$informations_lvl1+
+            $macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$tasks_lvl3+$operations_lvl2+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
             $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+

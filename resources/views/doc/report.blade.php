@@ -67,6 +67,12 @@
                       Liste des serveurs logiques par applications et responsables<br>
                       <a href="/admin/report/logicalServerResp" target="_new">Liste des serveurs logiques</a><br><br>
                     </li>
+
+                    <li>
+                      Analyse des besoins de sécurité<br>
+                      <a href="/admin/report/securityNeeds" target="_new">Analyse des besoins de sécurité</a><br><br>
+                    </li>
+
                     <li>
                       Liste de la configuration des serveurs logiques<br>
                       <a href="/admin/report/logicalServerConfigs" target="_new">Configuration des serveurs logiques</a><br><br>
@@ -75,6 +81,7 @@
                       Liste des équipements par site/local<br>
                       <a href="/admin/report/physicalInventory" target="_new">Inventaire de l'infrastructure physique</a><br><br>
                     </li>
+
                   </ul>
                 </div>
               </div>

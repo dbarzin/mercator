@@ -67,7 +67,6 @@
                 </div>
 
                 <div class="col-sm">
-
                     <div class="form-group">
                         <label class="recommended" for="owner">{{ trans('cruds.information.fields.owner') }}</label>
                         <input class="form-control {{ $errors->has('owner') ? 'is-invalid' : '' }}" type="text" name="owner" id="owner" value="{{ old('owner', $information->owner) }}">
@@ -91,79 +90,88 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <table cellspacing="5" cellpadding="5" border="0" width='40%'>
-                    <tr>
-                        <td width='20%'>
-                            <label class="recommended" for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
-                        </td>
-                        <td align="right" width="10">
-                            <label for="security_need">C</label>
-                        </td>
-                        <td  width="120">
-                            <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
-                                <option class="" value="0" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
-                                <option class="white" value="1" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option class="yellow" value="2" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option class="orange" value="3" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option style="background-color: green;" value="4" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">I</label>
-                        </td>
-                        <td  width="120">
-                            <select class="form-control select2 {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
-                                <option value="0" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
-                                <option value="1" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">D</label>
-                        </td>
-                        <td  width="120">
-                            <select class="form-control select2 {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
-                                <option value="0" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
-                                <option value="1" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">T</label>
-                        </td>
-                        <td  width="120">
-                            <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
-                                <option value="0" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
-                                <option value="1" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                @if($errors->has('security_need'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('security_need') }}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <table cellspacing="5" cellpadding="5" border="0" width='100%'>
+                            <tr>
+                                <td width='20%'>
+                                    <label 
+                                    @if (auth()->user()->granularity>=2)                            
+                                        class="recommended" 
+                                    @endif
+                                    for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
+                                </td>
+                                <td align="right" width="10">
+                                    <label for="security_need">C</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
+                                        <option class="" value="0" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
+                                        <option class="white" value="1" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option class="yellow" value="2" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option class="orange" value="3" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option style="background-color: green;" value="4" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">I</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
+                                        <option value="0" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">D</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
+                                        <option value="0" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">T</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
+                                        <option value="0" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        @if($errors->has('security_need'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('security_need') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
-                <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
-                @if($errors->has('sensitivity'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('sensitivity') }}
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
+                        <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
+                        @if($errors->has('sensitivity'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('sensitivity') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
+                </div>
             </div>
             <div class="form-group">
                 <label for="constraints">{{ trans('cruds.information.fields.constraints') }}</label>

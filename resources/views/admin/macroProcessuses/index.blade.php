@@ -28,9 +28,6 @@
                             {{ trans('cruds.macroProcessus.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.macroProcessus.fields.security_need') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.macroProcessus.fields.owner') }}
                         </th>
                         <th>
@@ -43,10 +40,14 @@
                         <tr data-entry-id="{{ $macroProcessus->id }}"
                             @if(($macroProcessus->description==null)||
                                 ($macroProcessus->io_elements==null)||
-                                ($macroProcessus->security_need_c==null)||
-                                ($macroProcessus->security_need_i==null)||
-                                ($macroProcessus->security_need_a==null)||
-                                ($macroProcessus->security_need_t==null)||
+                                ((auth()->user()->granularity>=2)&&
+                                    (
+                                    ($macroProcessus->security_need_c==null)||
+                                    ($macroProcessus->security_need_i==null)||
+                                    ($macroProcessus->security_need_a==null)||
+                                    ($macroProcessus->security_need_t==null)
+                                    )
+                                )||
                                     (
                                     (auth()->user()->granularity>=2) && 
                                     ($macroProcessus->owner==null)
@@ -65,12 +66,6 @@
                                 {!! $macroProcessus->description ?? '' !!}
                             </td>
 
-                            <td>
-                                C : {{ $macroProcessus->security_need_c }} &nbsp;
-                                I : {{ $macroProcessus->security_need_i }} &nbsp;
-                                A : {{ $macroProcessus->security_need_a }} &nbsp;
-                                T : {{ $macroProcessus->security_need_t }}
-                            </td>
                             <td>
                                 {{ $macroProcessus->owner }}
                             </td>

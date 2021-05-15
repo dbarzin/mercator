@@ -239,6 +239,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
     Route::get('report/logicalServerConfigs', 'ReportController@logicalServerConfigs');
     Route::get('report/physicalInventory', 'ReportController@physicalInventory');
+    Route::get('report/securityNeeds', 'ReportController@securityNeeds');
     Route::put('report/cartography', 'CartographyController@cartography');
 
     // Reporting

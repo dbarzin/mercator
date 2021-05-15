@@ -49,22 +49,22 @@
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ ($macroProcessuses+$processes+$activities+$operations+$actors+$informations)>0 ?
-                        number_format(($macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl1)*100/
+                        number_format(($macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl2)*100/
                             ($macroProcessuses+$processes+$activities+$operations+$actors+$informations),0) : 0 }} %</center></th>
             </thead>
             <tbody>
                <tr>
                     <td><a href="/admin/macro-processuses">{{ trans("cruds.macroProcessus.title") }}</a></td>
                     <td><center>{{ $macroProcessuses }}</center></td>
-                    <td><center>{{ $macroProcessuses_lvl2 }}</center></td>
-                    <td><center>{{ $macroProcessuses>0 ? number_format($macroProcessuses_lvl2*100/$macroProcessuses,0):0 }}%</center></td>
+                    <td><center>{{ $macroProcessuses_lvl3 }}</center></td>
+                    <td><center>{{ $macroProcessuses>0 ? number_format($macroProcessuses_lvl3*100/$macroProcessuses,0):0 }}%</center></td>
                 </tr>
 
                 <tr>
                     <td><a href="/admin/processes">{{ trans("cruds.process.title") }}</a></td>
                     <td><center>{{ $processes }}</center></td>
-                    <td><center>{{ $processes_lvl1 }}</center></td>
-                    <td><center>{{ $processes>0 ? number_format($processes_lvl1*100/$processes,0):0 }}%</center></td>
+                    <td><center>{{ $processes_lvl2 }}</center></td>
+                    <td><center>{{ $processes>0 ? number_format($processes_lvl2*100/$processes,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/activities">{{ trans("cruds.activity.title") }}</a></td>
@@ -93,8 +93,8 @@
                 <tr>
                     <td><a href="/admin/information">{{ trans("cruds.information.title") }}</a></td>
                     <td><center>{{ $informations }}</center></td>
-                    <td><center>{{ $informations_lvl1 }}</center></td>
-                    <td><center>{{ $informations>0 ? number_format($informations_lvl1*100/$informations,0):0 }}%</center></td>
+                    <td><center>{{ $informations_lvl2 }}</center></td>
+                    <td><center>{{ $informations>0 ? number_format($informations_lvl2*100/$informations,0):0 }}%</center></td>
                 </tr>
             </tbody>
 
@@ -421,7 +421,7 @@
             number_format ( 
             (
             $entities_lvl1+$relations_lvl2+
-            $macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$tasks_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl1+
+            $macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$tasks_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
             $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+

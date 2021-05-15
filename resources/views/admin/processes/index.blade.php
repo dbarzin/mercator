@@ -35,9 +35,6 @@
                             {{ trans('cruds.process.fields.informations') }}
                         </th>
                         <th>
-                            {{ trans('cruds.process.fields.security_need') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.process.fields.macroprocessus') }}
                         </th>
                         <th>
@@ -54,10 +51,11 @@
                             @if(($process->identifiant==null)||
                                 ($process->description==null)||
                                 ($process->in_out==null)||
-                                ($process->security_need_c==null)||
-                                ($process->security_need_i==null)||
-                                ($process->security_need_a==null)||
-                                ($process->security_need_t==null)||
+                                ((auth()->user()->granularity>=2)&&
+                                    (($process->security_need_c==null)||
+                                    ($process->security_need_i==null)||
+                                    ($process->security_need_a==null)||
+                                    ($process->security_need_t==null)))||
                                 ($process->owner==null)||
                                 ($process->macroprocess_id==null)
                                 )
@@ -89,12 +87,6 @@
                                     ,
                                     @endif                                
                                 @endforeach
-                            </td>
-                            <td>
-                                C : {{ $process->security_need_c }} &nbsp;
-                                I : {{ $process->security_need_i }} &nbsp;
-                                D : {{ $process->security_need_a }} &nbsp;
-                                T : {{ $process->security_need_t }}
                             </td>
                             <td>
                                 {{ $process->macroProcess->name ?? '' }}

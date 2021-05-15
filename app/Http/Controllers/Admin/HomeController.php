@@ -123,10 +123,6 @@ class HomeController extends Controller
                     ::where('identifiant', '<>', null)
                     ->where('description', '<>', null)
                     ->where('in_out', '<>', null)
-                    ->where('security_need_c', '<>', null)                    
-                    ->where('security_need_i', '<>', null)                    
-                    ->where('security_need_a', '<>', null)                    
-                    ->where('security_need_t', '<>', null)                    
                     ->where('owner', '<>', null)
                     ->where('macroprocess_id', '<>', null)                    
                     /*
@@ -150,6 +146,19 @@ class HomeController extends Controller
                     })
                     */
                     ->count())
+
+            ->with("processes_lvl2", Process
+                    ::where('identifiant', '<>', null)
+                    ->where('description', '<>', null)
+                    ->where('in_out', '<>', null)
+                    ->where('owner', '<>', null)
+                    ->where('macroprocess_id', '<>', null)                    
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
+                    ->count())
+
 
             ->with("activities", Activity::All()->count())
             ->with("activities_lvl3", Activity
@@ -217,6 +226,13 @@ class HomeController extends Controller
                     ->where('owner', '<>', null)
                     ->where('administrator', '<>', null)
                     ->where('storage', '<>', null)
+                    ->count())
+
+            ->with("informations_lvl2", Information
+                    ::where('descrition', '<>', null)
+                    ->where('owner', '<>', null)
+                    ->where('administrator', '<>', null)
+                    ->where('storage', '<>', null)
                     ->where('security_need_c', '<>', null)                    
                     ->where('security_need_i', '<>', null)                    
                     ->where('security_need_a', '<>', null)                    
@@ -244,10 +260,6 @@ class HomeController extends Controller
                     ->where('technology', '<>', null)
                     ->where('type', '<>', null)
                     ->where('users', '<>', null)
-                    ->where('security_need_c', '<>', null)                    
-                    ->where('security_need_i', '<>', null)                    
-                    ->where('security_need_a', '<>', null)                    
-                    ->where('security_need_t', '<>', null)                    
                     // application must have one process
                     ->whereExists(function ($query) {
                         $query->select("m_application_process.m_application_id")

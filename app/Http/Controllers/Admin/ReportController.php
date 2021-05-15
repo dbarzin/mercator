@@ -64,6 +64,7 @@ use Illuminate\Support\Facades\Log;
 
 // PhpOffice
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Element\TextRun;
@@ -1058,6 +1059,171 @@ class ReportController extends Controller
                 ));
         }
     }
+
+    public function securityNeeds(Request $request) {
+        $path=storage_path('app/' . "securityNeeds.xlsx");
+
+        // macroprocess - process - application - base de données - information
+        $header = array(
+            'Macroprocess',
+            'C','I','A','T',
+            'Process',
+            'C','I','A','T',
+            'Application',
+            'C','I','A','T',
+            'Database',
+            'C','I','A','T',
+            'Information',
+            'C','I','A','T'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+
+        // loop
+        $macroprocesses = MacroProcessus::All();
+        foreach ($macroprocesses as $macroprocess) {
+            if ($macroprocess->processes->count()==0) {
+                $this->addLine($sheet,$row,$macroprocess,null,null,null,null);
+                $row++;
+            }
+            else
+            foreach ($macroprocess->processes as $process) {
+                if ($process->processesMApplications->count()==0){
+                    $this->addLine($sheet,$row,$macroprocess,$process,null,null,null);
+                    $row++;
+                }
+                else
+                foreach ($process->processesMApplications as $application) {
+                    if ($application->databases->count()==0) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,null,null);
+                            $row++;                       
+                    }
+                    else
+                    foreach ($application->databases as $database) {
+                        if ($database->informations->count()==0) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,$database,null);
+                            $row++;
+                        }
+                        else
+                        foreach ($database->informations as $information) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,$database,$information);
+                            $row++;
+                            }
+                        }                         
+                    }
+                }
+            }
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+
+    }
+
+    private function setRedCell(Worksheet $sheet, string $cell) {
+        $sheet->getStyle($cell)
+                ->getFill()
+                ->setFillType("solid")
+                ->getStartColor()
+                ->setRGB('FF0000');
+    }
+
+    private function addLine(Worksheet $sheet, int $row, 
+                MacroProcessus $macroprocess, Process $process = null, MApplication $application = null, 
+                Database $database = null, Information $information = null) {
+
+        // Macroprocessus
+        $sheet->setCellValue("A{$row}", $macroprocess->name);
+        $sheet->setCellValue("B{$row}", $macroprocess->security_need_c);
+        $sheet->setCellValue("C{$row}", $macroprocess->security_need_i);
+        $sheet->setCellValue("D{$row}", $macroprocess->security_need_a);
+        $sheet->setCellValue("E{$row}", $macroprocess->security_need_t);
+        if ($process!=null) {
+            // Processus
+            $sheet->setCellValue("F{$row}", $process->identifiant);
+            $sheet->setCellValue("G{$row}", $process->security_need_c);
+            $sheet->setCellValue("H{$row}", $process->security_need_i);
+            $sheet->setCellValue("I{$row}", $process->security_need_a);
+            $sheet->setCellValue("J{$row}", $process->security_need_t);
+            // Check 
+            if ($process->security_need_c>$macroprocess->security_need_c)
+                $this->setRedCell($sheet, "B{$row}");
+            if ($process->security_need_i>$macroprocess->security_need_i)
+                $this->setRedCell($sheet, "C{$row}");
+            if ($process->security_need_a>$macroprocess->security_need_a)
+                $this->setRedCell($sheet, "D{$row}");
+            if ($process->security_need_t>$macroprocess->security_need_t)
+                $this->setRedCell($sheet, "E{$row}");
+
+            if ($application!=null) {
+                // Application
+                $sheet->setCellValue("K{$row}", $application->name);
+                $sheet->setCellValue("L{$row}", $application->security_need_c);
+                $sheet->setCellValue("M{$row}", $application->security_need_i);
+                $sheet->setCellValue("N{$row}", $application->security_need_a);
+                $sheet->setCellValue("O{$row}", $application->security_need_t);
+
+                // Check 
+                if ($application->security_need_c>$process->security_need_c)
+                    $this->setRedCell($sheet, "G{$row}");
+                if ($application->security_need_i>$process->security_need_i)
+                    $this->setRedCell($sheet, "H{$row}");
+                if ($application->security_need_a>$process->security_need_a)
+                    $this->setRedCell($sheet, "I{$row}");
+                if ($application->security_need_t>$process->security_need_t)
+                    $this->setRedCell($sheet, "J{$row}");
+
+                
+                if ($database!=null) {
+                    // Database
+                    $sheet->setCellValue("P{$row}", $database->name);
+                    $sheet->setCellValue("Q{$row}", $database->security_need_c);
+                    $sheet->setCellValue("R{$row}", $database->security_need_i);
+                    $sheet->setCellValue("S{$row}", $database->security_need_a);
+                    $sheet->setCellValue("T{$row}", $database->security_need_t);
+
+                    // Check 
+                    if ($database->security_need_c>$application->security_need_c)
+                        $this->setRedCell($sheet, "L{$row}");
+                    if ($database->security_need_i>$application->security_need_i)
+                        $this->setRedCell($sheet, "M{$row}");
+                    if ($database->security_need_a>$application->security_need_a)
+                        $this->setRedCell($sheet, "N{$row}");
+                    if ($database->security_need_t>$application->security_need_t)
+                        $this->setRedCell($sheet, "O{$row}");
+
+                    if ($information!=null) {
+                        // Information
+                        $sheet->setCellValue("U{$row}", $information->name);
+                        $sheet->setCellValue("V{$row}", $information->security_need_c);
+                        $sheet->setCellValue("W{$row}", $information->security_need_i);
+                        $sheet->setCellValue("X{$row}", $information->security_need_a);
+                        $sheet->setCellValue("Y{$row}", $information->security_need_t);
+
+                        // Check 
+                        if ($information->security_need_c>$database->security_need_c)
+                            $this->setRedCell($sheet, "Q{$row}");
+                        if ($information->security_need_i>$database->security_need_i)
+                            $this->setRedCell($sheet, "R{$row}");
+                        if ($information->security_need_a>$database->security_need_a)
+                            $this->setRedCell($sheet, "S{$row}");
+                        if ($information->security_need_t>$database->security_need_t)
+                            $this->setRedCell($sheet, "T{$row}");
+
+                    }
+                }
+            }
+        }
+    }
+
 
     public function physicalInventory(Request $request) {
 

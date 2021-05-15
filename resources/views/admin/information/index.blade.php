@@ -32,9 +32,6 @@
                             {{ trans('cruds.information.fields.owner') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.security_need') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.information.fields.sensitivity') }}
                         </th>
                         <th>
@@ -48,11 +45,15 @@
                             @if(($information->descrition==null)||
                                 ($information->owner==null)||
                                 ($information->administrator==null)||
-                                ($information->storage==null)||
-                                ($information->security_need_c==null)||
-                                ($information->security_need_i==null)||
-                                ($information->security_need_a==null)||
-                                ($information->security_need_t==null)||
+                                ($information->storage==null)||                                
+                                ((auth()->user()->granularity>=2)&&                                
+                                    (
+                                    ($information->security_need_c==null)||
+                                    ($information->security_need_i==null)||
+                                    ($information->security_need_a==null)||
+                                    ($information->security_need_t==null)
+                                    )
+                                )||                                
                                 ($information->sensitivity==null)
                                 )
                                                       class="table-warning"
@@ -69,12 +70,6 @@
                             </td>
                             <td>
                                 {!! $information->owner ?? '' !!}
-                            </td>
-                            <td>
-                                C : {{ $information->security_need_c }} &nbsp;
-                                I : {{ $information->security_need_i }} &nbsp;
-                                D : {{ $information->security_need_a }} &nbsp;
-                                T : {{ $information->security_need_t }}
                             </td>
                             <td>
                                 {{ $information->sensitivity ?? '' }}
