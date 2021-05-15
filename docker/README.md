@@ -11,8 +11,15 @@ ce dossier contient les éléments permettant de dockeriser l'application Mercat
 ```
 # copier le dépot source
 git clone https://github.com/dbarzin/mercator
+
+# on se place dans le répertoire docker
+cd docker
+
 # recopier le fichier de configuration ../.env.example
 cp  ../.env.example .env
+
+# recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
+cp docker-compose.yml.tmpl docker-compose.yml
 ```
 
 toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
@@ -94,3 +101,4 @@ fixme.
 # FIXME
 
 - donner des indications concernant la procédure de MAJ applicative.
+- le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ; voir [ticket](https://github.com/mqu/mercator/issues/1).
