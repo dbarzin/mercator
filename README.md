@@ -41,13 +41,13 @@ démarche globale de gestion des risques.
 - ChartJS
 
 ## TODO
-- vérifier la cohérence des informations fournies
-- calcul des chemins critiques
-- développer de REST API pour peupler la base de données
+- documentation utilisateur
+- développer des REST API pour peupler la base de données
 
 ## Installation
 
-- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
+- Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.md)
 
 ## License
 
