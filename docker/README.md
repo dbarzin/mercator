@@ -12,11 +12,12 @@ copier le dépot source
 
 Aller dans le répertoire mercator
 
-    cd mercator
+    cd mercator/docker
 
-Recopier le fichier de configuration ../.env.example
+Recopier le fichier de configuration ../.env.example et docker-compose.yml.tmpl
 
     cp  ../.env.example .env
+    cp docker-compose.yml.tmpl docker-compose.yml
 
 Toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
 
