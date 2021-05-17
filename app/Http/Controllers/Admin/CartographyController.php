@@ -809,7 +809,7 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Exposition à l’externe",$applicationService->external);
+                    $this->addTextRow($table,"Exposition à l’externe",$applicationService->exposition);
 
                     // Applications
                     $textRun=$this->addTextRunRow($table,"Applications qui utilisent ce service");
