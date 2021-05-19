@@ -108,8 +108,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('networks', 'NetworkController');
 
     // Subnetworks
-    Route::delete('subnetworks/destroy', 'SubnetwordController@massDestroy')->name('subnetworks.massDestroy');
-    Route::resource('subnetworks', 'SubnetwordController');
+    Route::delete('subnetworks/destroy', 'SubnetworkController@massDestroy')->name('subnetworks.massDestroy');
+    Route::resource('subnetworks', 'SubnetworkController');
 
     // Gateways
     Route::delete('gateways/destroy', 'GatewayController@massDestroy')->name('gateways.massDestroy');

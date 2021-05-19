@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Gateway;
-use App\Subnetword;
+use App\Subnetwork;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -31,7 +31,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.gateways.create', compact('subnetworks'));
     }
@@ -40,7 +40,7 @@ class GatewayController extends Controller
     {
         $gateway = Gateway::create($request->all());
 
-        Subnetword::whereIn('id', $request->input('subnetworks', []))
+        Subnetwork::whereIn('id', $request->input('subnetworks', []))
               ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
@@ -50,7 +50,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.gateways.edit', compact('gateway','subnetworks'));
     }
@@ -59,10 +59,10 @@ class GatewayController extends Controller
     {
         $gateway->update($request->all());
 
-        Subnetword::where('gateway_id', $gateway->id)
+        Subnetwork::where('gateway_id', $gateway->id)
               ->update(['gateway_id' => null]);
 
-        Subnetword::whereIn('id', $request->input('subnetworks', []))
+        Subnetwork::whereIn('id', $request->input('subnetworks', []))
               ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
@@ -72,7 +72,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gateway->load('gatewaySubnetwords');
+        $gateway->load('gatewaySubnetworks');
 
         return view('admin.gateways.show', compact('gateway'));
     }

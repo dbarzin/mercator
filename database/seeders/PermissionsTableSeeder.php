@@ -476,23 +476,23 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => '117',
-                'title' => 'subnetword_create',
+                'title' => 'subnetwork_create',
             ],
             [
                 'id'    => '118',
-                'title' => 'subnetword_edit',
+                'title' => 'subnetwork_edit',
             ],
             [
                 'id'    => '119',
-                'title' => 'subnetword_show',
+                'title' => 'subnetwork_show',
             ],
             [
                 'id'    => '120',
-                'title' => 'subnetword_delete',
+                'title' => 'subnetwork_delete',
             ],
             [
                 'id'    => '121',
-                'title' => 'subnetword_access',
+                'title' => 'subnetwork_access',
             ],
             [
                 'id'    => '122',

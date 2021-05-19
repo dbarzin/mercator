@@ -51,6 +51,6 @@ class Network extends Model
 
     public function subnetworks()
     {
-        return $this->belongsToMany(Subnetword::class);
+        return $this->belongsToMany(Subnetwork::class);
     }
 }

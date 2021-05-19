@@ -33,7 +33,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\NetworkSwitch;
@@ -1161,7 +1161,7 @@ class CartographyController extends Controller
 
             // Get all data
             $networks = Network::All()->sortBy("name");
-            $subnetworks = Subnetword::All()->sortBy("name");
+            $subnetworks = Subnetwork::All()->sortBy("name");
             $gateways = Gateway::All()->sortBy("name");
             $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
             $networkSwitches = NetworkSwitch::All()->sortBy("name");

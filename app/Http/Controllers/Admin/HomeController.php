@@ -31,7 +31,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\DhcpServer;
@@ -61,7 +61,6 @@ use App\Vlan;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -392,8 +391,8 @@ class HomeController extends Controller
                     ->where('security_need', '<>', null)
                     ->count())
 
-            ->with("subnetworks", Subnetword::All()->count())
-            ->with("subnetworks_lvl1", Subnetword
+            ->with("subnetworks", Subnetwork::All()->count())
+            ->with("subnetworks_lvl1", Subnetwork
                     ::where('description', '<>', null)
                     ->where('address', '<>', null)
                     ->where('ip_range', '<>', null)

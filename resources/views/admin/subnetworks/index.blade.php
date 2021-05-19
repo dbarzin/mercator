@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('subnetword_create')
+@can('subnetwork_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.subnetworks.create') }}">
@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Subnetword">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Subnetwork">
                 <thead>
                     <tr>
                         <th width="10">
@@ -34,32 +34,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($subnetwords as $key => $subnetword)
-                        <tr data-entry-id="{{ $subnetword->id }}">
+                    @foreach($subnetworks as $key => $subnetwork)
+                        <tr data-entry-id="{{ $subnetwork->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $subnetword->name ?? '' }}
+                                {{ $subnetwork->name ?? '' }}
                             </td>
                             <td>
-                                {!! $subnetword->description ?? '' !!}
+                                {!! $subnetwork->description ?? '' !!}
                             </td>
                             <td>
-                                @can('subnetword_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.subnetworks.show', $subnetword->id) }}">
+                                @can('subnetwork_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('subnetword_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.subnetworks.edit', $subnetword->id) }}">
+                                @can('subnetwork_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.subnetworks.edit', $subnetwork->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('subnetword_delete')
-                                    <form action="{{ route('admin.subnetworks.destroy', $subnetword->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('subnetwork_delete')
+                                    <form action="{{ route('admin.subnetworks.destroy', $subnetwork->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -84,7 +84,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('subnetword_delete')
+@can('subnetwork_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
@@ -119,7 +119,7 @@
     order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-Subnetword:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Subnetwork:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

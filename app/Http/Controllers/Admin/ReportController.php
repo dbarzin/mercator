@@ -33,7 +33,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\NetworkSwitch;
@@ -59,7 +59,6 @@ use App\WifiTerminal;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 // PhpOffice
@@ -483,7 +482,7 @@ class ReportController extends Controller
 
     public function logicalInfrastructure(Request $request) {            
         $networks = Network::All()->sortBy("name");
-        $subnetworks = Subnetword::All()->sortBy("name");
+        $subnetworks = Subnetwork::All()->sortBy("name");
         $gateways = Gateway::All()->sortBy("name");
         $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
         $networkSwitches = NetworkSwitch::All()->sortBy("name");

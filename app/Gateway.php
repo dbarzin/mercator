@@ -42,6 +42,6 @@ class Gateway extends Model
 
     public function gatewaySubnetworks()
     {
-        return $this->hasMany(Subnetword::class, 'gateway_id', 'id');
+        return $this->hasMany(Subnetwork::class, 'gateway_id', 'id');
     }
 }

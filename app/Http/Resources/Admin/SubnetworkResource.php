@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubnetwordResource extends JsonResource
+class SubnetworkResource extends JsonResource
 {
     public function toArray($request)
     {

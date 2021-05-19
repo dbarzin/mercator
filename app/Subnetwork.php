@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Subnetword extends Model 
+class Subnetwork extends Model 
 {
     use SoftDeletes, Auditable;
 
@@ -47,9 +47,9 @@ class Subnetword extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function connectedSubnetsSubnetwords()
+    public function connectedSubnetsSubnetworks()
     {
-        return $this->hasMany(Subnetword::class, 'connected_subnets_id', 'id');
+        return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id');
     }
 
     public function subnetworksNetworks()
@@ -59,7 +59,7 @@ class Subnetword extends Model
 
     public function connected_subnets()
     {
-        return $this->belongsTo(Subnetword::class, 'connected_subnets_id');
+        return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
     public function gateway()

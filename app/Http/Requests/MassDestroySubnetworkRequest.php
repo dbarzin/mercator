@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Subnetword;
+use App\Subnetwork;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestroySubnetwordRequest extends FormRequest
+class MassDestroySubnetworkRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('subnetword_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subnetwork_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -20,7 +20,7 @@ class MassDestroySubnetwordRequest extends FormRequest
     {
         return [
             'ids'   => 'required|array',
-            'ids.*' => 'exists:subnetwords,id',
+            'ids.*' => 'exists:subnetworks,id',
         ];
     }
 }

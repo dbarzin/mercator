@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -29,7 +29,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.networks.create', compact('subnetworks'));
     }
@@ -46,7 +46,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         $network->load('subnetworks');
 
