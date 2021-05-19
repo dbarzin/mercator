@@ -287,7 +287,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('subnetword_access')
+                        @can('subnetwork_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetwords') || request()->is('admin/subnetwords/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">

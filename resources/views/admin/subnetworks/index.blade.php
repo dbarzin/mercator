@@ -22,7 +22,7 @@
                         <th width="10">
 
                         </th>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.subnetwork.fields.name') }}
                         </th>
                         <th>
