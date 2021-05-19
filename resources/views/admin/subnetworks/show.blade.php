@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.subnetwork.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $subnetwork->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.subnetwork.fields.name') }}
                         </th>
                         <td>

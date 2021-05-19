@@ -22,11 +22,17 @@
                         <th width="10">
 
                         </th>
-                        <th width="10%">
+                        <th>
                             {{ trans('cruds.subnetwork.fields.name') }}
                         </th>
                         <th>
                             {{ trans('cruds.subnetwork.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.address') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.ip_range') }}
                         </th>
                         <th>
                             &nbsp;
@@ -44,6 +50,12 @@
                             </td>
                             <td>
                                 {!! $subnetwork->description ?? '' !!}
+                            </td>
+                            <td>
+                                {{ $subnetwork->address ?? '' }}
+                            </td>
+                            <td>
+                                {{ $subnetwork->ip_range ?? '' }}
                             </td>
                             <td>
                                 @can('subnetwork_show')
