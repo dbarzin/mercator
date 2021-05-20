@@ -8,7 +8,7 @@ use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
 use App\Router;
-use App\NetworkSwitches;
+use App\NetworkSwitch;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -31,9 +31,9 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitches::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.create',compact('NetworkSwitches'));
+        return view('admin.routers.create',compact('network_switches'));
     }
 
     public function store(StoreRouterRequest $request)
@@ -48,7 +48,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitches::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.routers.edit', compact('router','network_switches'));
     }

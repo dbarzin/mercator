@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.applicationModule.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $applicationModule->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.applicationModule.fields.name') }}
                         </th>
                         <td>

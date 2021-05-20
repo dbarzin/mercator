@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.networkSwitch.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $networkSwitch->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.networkSwitch.fields.name') }}
                         </th>
                         <td>

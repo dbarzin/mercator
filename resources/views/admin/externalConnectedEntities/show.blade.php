@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.externalConnectedEntity.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $externalConnectedEntity->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.externalConnectedEntity.fields.name') }}
                         </th>
                         <td>
