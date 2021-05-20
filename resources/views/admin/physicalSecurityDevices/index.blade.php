@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.physicalSecurityDevice.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
                         </th>
                         <th>
@@ -50,9 +47,6 @@
                         <tr data-entry-id="{{ $physicalSecurityDevice->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $physicalSecurityDevice->id ?? '' }}
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->name ?? '' }}
