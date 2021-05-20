@@ -5,7 +5,7 @@ namespace Tests\Browser;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class PhysicalServerTest extends DuskTestCase
+class PhysicalSwitchTest extends DuskTestCase
 {
     public function testIndex()
     {
