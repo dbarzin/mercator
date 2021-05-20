@@ -22,12 +22,18 @@ class ReportingTest extends DuskTestCase
             // Maturity levels
             $browser->visit(route('admin.report.maturity1'));
             $browser->assertRouteIs('admin.report.maturity1');
+            $browser->assertSee('%');
+            $browser->assertSee('#');
 
             $browser->visit(route('admin.report.maturity2'));
             $browser->assertRouteIs('admin.report.maturity2');
+            $browser->assertSee('%');
+            $browser->assertSee('#');
 
             $browser->visit(route('admin.report.maturity3'));
             $browser->assertRouteIs('admin.report.maturity3');
+            $browser->assertSee('%');
+            $browser->assertSee('#');
         });
 
     }
