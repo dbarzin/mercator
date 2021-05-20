@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $logicalServer->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.logicalServer.fields.name') }}
                         </th>
                         <td>
