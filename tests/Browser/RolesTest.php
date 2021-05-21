@@ -32,7 +32,7 @@ class RolesTest extends DuskTestCase
                 $browser->visit("/admin/roles/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/roles/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->title);
             });
         });
     }

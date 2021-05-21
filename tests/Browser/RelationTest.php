@@ -32,7 +32,7 @@ class RelationTest extends DuskTestCase
                 $browser->visit("/admin/relations/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/relations/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->name);
             });
         });
     }

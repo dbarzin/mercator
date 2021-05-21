@@ -32,7 +32,7 @@ class PhysicalSecurityDeviceTest extends DuskTestCase
                 $browser->visit("/admin/physical-security-devices/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/physical-security-devices/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->name);
             });
         });
     }

@@ -32,7 +32,7 @@ class ProcessTest extends DuskTestCase
                 $browser->visit("/admin/processes/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/processes/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->identifiant);
             });
         });
     }

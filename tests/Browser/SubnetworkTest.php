@@ -5,7 +5,7 @@ namespace Tests\Browser;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class SecurityDeviceTest extends DuskTestCase
+class SubnetworkTest extends DuskTestCase
 {
     public function testIndex()
     {
@@ -14,9 +14,9 @@ class SecurityDeviceTest extends DuskTestCase
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
-                $browser->visit(route('admin.security-devices.index'));
+                $browser->visit(route('admin.subnetworks.index'));
                 $browser->waitForText("Mercator");
-                $browser->assertRouteIs('admin.security-devices.index');
+                $browser->assertRouteIs('admin.subnetworks.index');
             });
         });
     }
@@ -24,14 +24,14 @@ class SecurityDeviceTest extends DuskTestCase
     public function testView()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('security_devices')->first();
+		$data = \DB::table('subnetworks')->first();
 		if ($data!=null) 
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
-                $browser->visit("/admin/security-devices/" . $data->id);
+                $browser->visit("/admin/subnetworks/" . $data->id);
                 $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/security-devices/" . $data->id);
+                $browser->assertPathIs("/admin/subnetworks/" . $data->id);
                 $browser->assertSee($data->name);
             });
         });
@@ -40,14 +40,14 @@ class SecurityDeviceTest extends DuskTestCase
     public function testEdit()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('security_devices')->first();
+		$data = \DB::table('subnetworks')->first();
 		if ($data!=null) 
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
-                $browser->visit("/admin/security-devices/" . $data->id . "/edit");
+                $browser->visit("/admin/subnetworks/" . $data->id . "/edit");
                 $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/security-devices/" . $data->id . "/edit");
+                $browser->assertPathIs("/admin/subnetworks/" . $data->id . "/edit");
             });
         });
     }
@@ -58,12 +58,11 @@ class SecurityDeviceTest extends DuskTestCase
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
-                $browser->visit("/admin/security-devices/create");
+                $browser->visit("/admin/subnetworks/create");
                 $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/security-devices/create");
+                $browser->assertPathIs("/admin/subnetworks/create");
             });        
         });
     }
-
 }
 

@@ -32,7 +32,7 @@ class PhysicalServerTest extends DuskTestCase
                 $browser->visit("/admin/physical-servers/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/physical-servers/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->name);
             });
         });
     }

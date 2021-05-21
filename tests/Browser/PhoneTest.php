@@ -32,7 +32,7 @@ class PhoneTest extends DuskTestCase
                 $browser->visit("/admin/phones/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/phones/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->name);
             });
         });
     }

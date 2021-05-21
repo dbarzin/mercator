@@ -32,7 +32,7 @@ class PhysicalRouterTest extends DuskTestCase
                 $browser->visit("/admin/physical-routers/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/physical-routers/" . $data->id);
-                $browser->assertSee($data->id);
+                $browser->assertSee($data->name);
             });
         });
     }
