@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.vlan.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $vlan->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.vlan.fields.name') }}
                         </th>
                         <td>

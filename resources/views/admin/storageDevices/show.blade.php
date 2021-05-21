@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.storageDevice.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $storageDevice->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.storageDevice.fields.name') }}
                         </th>
                         <td>

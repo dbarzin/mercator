@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.wifiTerminal.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $wifiTerminal->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.wifiTerminal.fields.name') }}
                         </th>
                         <td>
