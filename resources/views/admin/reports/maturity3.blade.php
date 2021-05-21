@@ -406,7 +406,7 @@
 @section('scripts')
 
   <script src="/js/Chart.bundle.js"></script>
-  <script src="/js/chartjs-gauge.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
 
   <script type="text/javascript">
   var maturity3 = {{

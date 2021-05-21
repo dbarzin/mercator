@@ -67,7 +67,7 @@
 @section('scripts')
 
   <script src="/js/Chart.bundle.js"></script>
-  <script src="/js/chartjs-gauge.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
   <script src="/js/chartjs-plugin-colorschemes.js"></script>
   <script src="/js/chartjs-chart-treemap.js"></script>
   <script src="/js/chartjs-plugin-datalabels.js"></script>
@@ -687,14 +687,15 @@ var cnf5 = {
     legend: { display: false },
     tooltips: { enabled: false },
     animation: { duration: 0 },
-    /*
-    onClick: function (event, array){
-       var active = window.barchart.getElementAtEvent(event);
+    /* does not work -> no click on treemap
+    onClick: function (event, array){       
+       var active = window.treemap.getElementAtEvent(event);
        if (active[0]==null) return;
-       // var elementIndex = ;
-       console.log(active);
+       console.log(active[0]);
+       // var elementIndex = active[0]._datasetIndex;;       
        // window.location=cnf4["data"]["datasets"][elementIndex]["url"];
       },    
+    
     hover: {
         onHover: function(e, el) {
           $("#treemap_chart_div").css("cursor", el[0] ? "pointer" : "default");
