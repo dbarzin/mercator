@@ -2,6 +2,21 @@
 
 @section('styles')
 
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+background-color: red;
+color: #fff;
+}
+ 
+// Remove focus outline
+ 
+.select2-container *:focus {
+    outline: none;
+ }
+
+.yellow {
+    background-color: yellow !important;    
+}
+
 @endsection
 
 @section('content')
@@ -43,7 +58,7 @@
         <select class="form-control select2 myField" id="test">
             <option selected></option>
             <option>Papier</option>
-            <option>Breakfast</option>
+            <option class="yellow">Breakfast</option>
             <option>Brunch</option>
             <option>Serpent</option>
             <option>Spock</option>
@@ -65,23 +80,8 @@
 @parent
 
 <script>
-    console.log("ready.");
-$(document).ready(function () {
-        $('myField').select2();
-        $('.select2-container--default .select2-selection--multiple .select2-selection__choice').each(function () {
-            var title = $(this).attr('title');
-            console.log(title);
-            if (title === 'Breakfast') {                
-                $(this).parent().css({ 'background-color': "green" });
-            }
-            if (title === 'Brunch') {
-                $(this).parent().css({ 'background-color': "red" });
-            }
-            if (title === 'Lunch') {
-                $(this).parent().css({ 'background-color': "blue" });
-            }
-        });
-    });
+
+
 </script>
 
 @endsection

@@ -50,7 +50,7 @@
 
               <div class="card">
                 <div class="card-header">
-                  {{ trans("panel.cartography") }}
+                  {{ trans("panel.treemap") }}
                 </div>
                 <div class="card-body">
                     <div style="width: 1000px; height: 500px;">

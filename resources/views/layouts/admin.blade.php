@@ -32,8 +32,12 @@
     <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
     <!-- custom css -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    @yield('styles')
+    
 </head>
+
+<style>
+    @yield('styles')
+</style>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed pace-done sidebar-lg-show">
     <header class="app-header navbar">

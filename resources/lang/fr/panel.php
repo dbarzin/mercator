@@ -1,6 +1,5 @@
 <?php
 return [
-    "cartography" => "Cartographie",
     "level_1" => "Niveau 1",
     "level_2" => "Niveau 2",
     "level_3" => "Niveau 3",
@@ -25,7 +24,8 @@ return [
         "reports" => "Rapports",
         "schema" => "Schéma"
     ],
-    "repartition" => "Répartition",
+    "repartition" => "Répartition par domaine",
+    "treemap" => "Carte proportionnelle globale",
     "site_title" => "Mercator",
     "views" => "Vues"
 ];

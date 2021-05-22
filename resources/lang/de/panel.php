@@ -1,6 +1,7 @@
 <?php
 return [
-    "cartography" => "Kartographie",
+    "repartition" => "Globale proportionale Karte",
+    "treemap" => "Carte proportionnelle globale",
     "level_1" => "Level 1",
     "level_2" => "Level 2",
     "level_3" => "Stufe 3",
