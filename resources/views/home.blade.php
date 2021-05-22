@@ -414,7 +414,7 @@
           label: "{{ trans('cruds.externalConnectedEntity.title_short') }}",
           data: [0, 0, 0, 0, {{ $externalConnectedEntities }}, 0],
           value: {{ $externalConnectedEntities }},
-          url: "/admin/entities"
+          url: "/admin/external-connected-entities"
         }, {
           label: "{{ trans('cruds.networkSwitch.title_short') }}",
           data: [0, 0, 0, 0, {{ $switches }}, 0],
@@ -597,45 +597,45 @@
     <script type="text/javascript">
 
   var topTags = [
-     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.entity.title') }}", num:{{ $entities }} },
-     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.relation.title') }}", num:{{ $relations }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.macroProcessus.title') }}", num: {{ $macroProcessuses }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.process.title') }}", num:{{ $processes }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.activity.title') }}", num:{{ $activities }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.operation.title') }}", num:{{ $operations }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.task.title') }}", num:{{ $tasks }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.actor.title') }}", num:{{ $actors }} },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.information.title') }}", num:{{ $informations }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationBlock.title') }}" , num:{{ $applicationBlocks }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.application.title') }}", num:{{ $applications }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationService.title_short') }}" , num:{{ $applicationServices }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationModule.title_short') }}" , num:{{ $applicationModules }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.database.title') }}" , num:{{ $databases }} },
-     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.flux.title') }}" , num:{{ $fluxes }} },
-     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.zoneAdmin.title_short') }}" , num:{{$zones}} },
-     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.annuaire.title_short') }}" , num:{{$annuaires}} },
-     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.forestAd.title_short') }}" , num:{{$forests}} },
-     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.domaineAd.title_short') }}" , num:{{$domaines}} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.network.title') }}" , num:{{ $networks }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.subnetwork.title_short') }}" , num:{{ $subnetworks }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.gateway.title_short') }}" , num:{{ $gateways }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.externalConnectedEntity.title_short') }}" , num:{{ $externalConnectedEntities }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.networkSwitch.title_short') }}" , num:{{ $switches }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.router.title_short') }}" , num:{{ $routers }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.securityDevice.title_short') }}" , num:{{ $securityDevices }} },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.logicalServer.title_short') }}" , num:{{ $logicalServers }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.site.title') }}" , num: {{ $sites }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.building.title') }}" , num:{{ $buildings }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.bay.title') }}" , num:{{ $bays }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalServer.title_short') }}", num:{{ $physicalServers }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.workstation.title') }}" , num:{{ $workstations }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.storageDevice.title_short') }}" , num:{{ $storageDevices }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalSwitch.title_short') }}" , num:{{ $physicalSwitchs }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalRouter.title_short') }}" , num:{{ $physicalRouters }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.wan.title_short') }}" , num:{{ $wans }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.man.title_short') }}" , num:{{ $mans }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.lan.title_short') }}" , num:{{ $lans }} },
-     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.vlan.title_short') }}" , num:{{ $vlans }} },
+     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.entity.title') }}", num:{{ $entities }}, url: "/admin/entities" },
+     {group:"{{ trans('cruds.ecosystem.title_short') }}", tag:"{{ trans('cruds.relation.title') }}", num:{{ $relations }}, url: "/admin/relations" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.macroProcessus.title') }}", num: {{ $macroProcessuses }}, url: "/admin/macro-processuses" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.process.title') }}", num:{{ $processes }}, url: "/admin/processes" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.activity.title') }}", num:{{ $activities }}, url: "/admin/activities" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.operation.title') }}", num:{{ $operations }}, url: "/admin/operations" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.task.title') }}", num:{{ $tasks }}, url: "/admin/tasks" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.actor.title') }}", num:{{ $actors }}, url: "/admin/actors" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.information.title') }}", num:{{ $informations }}, url: "/admin/informations" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationBlock.title') }}" , num:{{ $applicationBlocks }}, url: "/admin/application-blocks" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.application.title') }}", num:{{ $applications }}, url: "/admin/applications" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationService.title_short') }}" , num:{{ $applicationServices }}, url: "/admin/application-services" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationModule.title_short') }}" , num:{{ $applicationModules }}, url: "/admin/application-modules" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.database.title') }}" , num:{{ $databases }}, url: "/admin/databases" },
+     {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.flux.title') }}" , num:{{ $fluxes }}, url: "/admin/fluxes" },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.zoneAdmin.title_short') }}" , num:{{$zones}}, url: "/admin/zones" },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.annuaire.title_short') }}" , num:{{$annuaires}}, url: "/admin/annuaires" },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.forestAd.title_short') }}" , num:{{$forests}}, url: "/admin/forest-ads" },
+     {group:"{{ trans('cruds.administration.title_short') }}", tag:"{{ trans('cruds.domaineAd.title_short') }}" , num:{{$domaines}}, url: "/admin/domaine-ads" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.network.title') }}" , num:{{ $networks }}, url: "/admin/networks" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.subnetwork.title_short') }}" , num:{{ $subnetworks }}, url: "/admin/subnetworks" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.gateway.title_short') }}" , num:{{ $gateways }}, url: "/admin/gateways" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.externalConnectedEntity.title_short') }}" , num:{{ $externalConnectedEntities }}, url: "/admin/external-connected-entities" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.networkSwitch.title_short') }}" , num:{{ $switches }}, url: "/admin/switches" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.router.title_short') }}" , num:{{ $routers }}, url: "/admin/routers" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.securityDevice.title_short') }}" , num:{{ $securityDevices }}, url: "/admin/security-devices" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.logicalServer.title_short') }}" , num:{{ $logicalServers }}, url: "/admin/logical-servers" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.site.title') }}" , num: {{ $sites }}, url: "/admin/sites" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.building.title') }}" , num:{{ $buildings }}, url: "/admin/buildings" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.bay.title') }}" , num:{{ $bays }}, url: "/admin/bays" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalServer.title_short') }}", num:{{ $physicalServers }}, url: "/admin/physical-servers" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.workstation.title') }}" , num:{{ $workstations }}, url: "/admin/workstations" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.storageDevice.title_short') }}" , num:{{ $storageDevices }}, url: "/admin/storage-devices" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalSwitch.title_short') }}" , num:{{ $physicalSwitchs }}, url: "/admin/physical-switches" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.physicalRouter.title_short') }}" , num:{{ $physicalRouters }}, url: "/admin/physical-routers" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.wan.title_short') }}" , num:{{ $wans }}, url: "/admin/wans" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.man.title_short') }}" , num:{{ $mans }}, url: "/admin/mans" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.lan.title_short') }}" , num:{{ $lans }}, url: "/admin/lans" },
+     {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.vlan.title_short') }}" , num:{{ $vlans }}, url: "/admin/vlans" },
   ];
 
 var ctx5 = document.getElementById("treemap_chart_div").getContext("2d");
@@ -686,24 +686,28 @@ var cnf5 = {
     maintainAspectRatio: false,
     legend: { display: false },
     tooltips: { enabled: false },
-    animation: { duration: 0 },
-    /* does not work -> no click on treemap
-    onClick: function (event, array){       
-       var active = window.treemap.getElementAtEvent(event);
-       if (active[0]==null) return;
-       console.log(active[0]);
-       // var elementIndex = active[0]._datasetIndex;;       
-       // window.location=cnf4["data"]["datasets"][elementIndex]["url"];
-      },    
+    animation: { duration: 600 },
     
+    onClick: function (event, active) {
+      var chart = this;
+      for (let i = 0; i < active.length; i++) {
+        const item = active[i];
+        var data = chart.data.datasets[item._datasetIndex].data[item._index];
+        console.log(data);
+        if (data._data.children.length === 1) {
+          window.location=data._data.children[0].url;
+        }
+      }
+    },
+
     hover: {
         onHover: function(e, el) {
           $("#treemap_chart_div").css("cursor", el[0] ? "pointer" : "default");
           }
-        }
-    */
+        }    
     }
   };
+
     window.onload = function() {
       // unregister ChartDataLabels
       Chart.plugins.unregister(ChartDataLabels);
