@@ -9,11 +9,11 @@ Install PHP and some PHP libraries
 
     sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
-Install Graphviz
+Installer Graphviz
 
     sudo apt install graphviz
 
-Install GIT
+Installer GIT
 
     sudo apt install git
 
@@ -88,15 +88,19 @@ Vider la cache
 
     php artisan config:clear
 
-start the application
+Pour importer la base de données de test (facultatif)
+
+    mysql mercator < mercator_data.sql
+
+Démarre l'application avec php
 
     php artisan serve
 
-Open your browser with the URL [http://127.0.0.1:8000]
-    user : admin@admin.com
-    password : password
+L'application est accessible à l'URL [http://127.0.0.1:8000]
+    utilisateur : admin@admin.com
+    mot de passe : password
 
-## Issues
+## Problèmes
 
 ### PHP Memory
 
@@ -104,11 +108,11 @@ If you generate big reports you will have to upgrade memory allocated to PHP in 
 
     memory_limit = 512M
 
-## Update process
+## Mise à jour
 
 Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
 
-Get the new sources
+Récupérer les sources de GIT
 
     cd /var/www/mercator
     git pull
@@ -129,28 +133,28 @@ Redémarre l'application
 
     php artisan serve
    
-## Testing
+## Tests de non-régression
 
 Configure the environment
 
     cp .env .env.dusk.local
     vi .env.dusk.local
 
-Start the application
+Lancer l'application
 
     php artisan serve
 
-With another process, runs tests
+Dans un autre terminal, lancer les tests
 
     php artisan dusk
 
-## Fix migration issue
+## Réparer les problèmes de migraton
 
-Update packages
+Mettre à jour les librairies
 
     composer update
 
-First backup database data
+Sauvegarder la base de données
 
     mysqldump mercator \
         --ignore-table=mercator.users \

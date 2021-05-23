@@ -99,7 +99,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SUBNET{{ $subnetwork->id }}">
                                     <th colspan="2">
-                                    <a href="/admin/subnetwords/{{ $subnetwork->id }}/edit">{{ $subnetwork->name }}</a><br>
+                                    <a href="/admin/subnetworks/{{ $subnetwork->id }}/edit">{{ $subnetwork->name }}</a><br>
                                     </th>
                                 </thead>
                                 <tbody>
@@ -370,11 +370,11 @@ d3.select("#graph").graphviz()
             @foreach($gateways as $gateway) \
                 GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
                 @foreach($gateway->gatewaySubnetworks as $subnetwork) \
-                    NET{{ $subnetwork->id }} -> GATEWAY{{ $gateway->id }}\
+                    SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $gateway->id }}\
                 @endforeach\
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
-                SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNETWORK{{$subnetwork->id}}\"]\
+                SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
