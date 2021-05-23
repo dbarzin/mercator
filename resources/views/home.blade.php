@@ -344,7 +344,7 @@
           label: "{{ trans('cruds.information.title') }}",
           data: [0, {{ $informations }}, 0, 0, 0, 0],
           value: {{ $informations }},
-          url: "/admin/informations"
+          url: "/admin/information"
         }, {
           label: "{{ trans('cruds.applicationBlock.title') }}",
           data: [0, 0, {{ $applicationBlocks }}, 0, 0, 0],
@@ -605,7 +605,7 @@
      {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.operation.title') }}", num:{{ $operations }}, url: "/admin/operations" },
      {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.task.title') }}", num:{{ $tasks }}, url: "/admin/tasks" },
      {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.actor.title') }}", num:{{ $actors }}, url: "/admin/actors" },
-     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.information.title') }}", num:{{ $informations }}, url: "/admin/informations" },
+     {group:"{{ trans('cruds.metier.title_short') }}", tag:"{{ trans('cruds.information.title') }}", num:{{ $informations }}, url: "/admin/information" },
      {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationBlock.title') }}" , num:{{ $applicationBlocks }}, url: "/admin/application-blocks" },
      {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.application.title') }}", num:{{ $applications }}, url: "/admin/applications" },
      {group:"{{ trans('cruds.application.title') }}", tag:"{{ trans('cruds.applicationService.title_short') }}" , num:{{ $applicationServices }}, url: "/admin/application-services" },
