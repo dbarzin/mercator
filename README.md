@@ -3,6 +3,11 @@
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information 
 comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
 
+[![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
+![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
+![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
+![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
+
 ## Introduction
 
 Les attaques informatiques interviennent dans un environnement en constante évolution. 
