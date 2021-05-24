@@ -1,11 +1,11 @@
 # Procédure d'installation de Mercator
 
-Update and upgrade distribution
+Mettre à jour l'OS
 
     sudo apt update
     sudo apt upgrade
 
-Install PHP and some PHP libraries
+Insatller PHP et quelques librairies
 
     sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
@@ -19,7 +19,7 @@ Installer GIT
 
 ## Project
 
-Install the projet in the Apache Web directory.
+Installer le projet dans le répertoire web d'Apache.
 
     cd /var/www
     git clone https://www.github.com/dbarzin/mercator
@@ -30,20 +30,22 @@ Install the projet in the Apache Web directory.
 
     sudo mv composer.phar /usr/local/bin/composer
 
-Install the packages
+Installer la packages
 
     cd /var/www/mercator
     composer install
 
 ## MySQL
 
-Install MySQL
+Installer MySQL
 
     sudo apt install mysql-server
 
-Create a MySQL (or SQLite) database to use with your Laravel project.
+Lancer MySQL avec les droits root
 
     sudo mysql
+
+Créer la base de données _mercator_ et l'utilisateur _mercator_user_
 
     CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;
     CREATE USER 'mercator_user'@'localhost' IDENTIFIED BY 's3cr3t';
@@ -74,13 +76,13 @@ Update the .env file in the root directory of your project with the appropriate 
 
 ## Create the database
 
-Run migration
+Exécuter les migrations
 
     php artisan migrate --seed 
 
 Notice: seed is important, because it will create the first admin user for you. 
 
-Generate Keys
+Généré la clé de l'application
  
     php artisan key:generate
 
