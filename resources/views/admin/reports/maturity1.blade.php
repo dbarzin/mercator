@@ -16,7 +16,7 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.cartography") }}
+                    {{ trans("panel.maturity_levels") }}
                 </div>
                 <div class="card-body">
 

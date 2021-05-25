@@ -379,7 +379,6 @@
                 <div class="card-body">
                     <p>Donnée faisant l’objet d’un traitement informatique.</p>
                         @foreach($informations as $information)
-
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
