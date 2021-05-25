@@ -1,6 +1,6 @@
 # Procédure d'installation de Mercator
 
-Mettre à jour l'OS
+Mettre à jour la distribution linux
 
     sudo apt update
     sudo apt upgrade
