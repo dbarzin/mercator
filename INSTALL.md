@@ -55,13 +55,15 @@ Créer la base de données _mercator_ et l'utilisateur _mercator_user_
     FLUSH PRIVILEGES;
     EXIT;
 
-## Configure
+## Configuration
 
-Update the .env file in the root directory of your project with the appropriate parameter values to match your new database:
+Créer un fichier .env dans le répertoire racine du projet :
 
     cd /var/www/mercator
 
     cp .env.example .env
+
+Mettre les paramètre de connexion à la base de données :
 
     vi .env
 
@@ -74,15 +76,15 @@ Update the .env file in the root directory of your project with the appropriate 
     DB_PASSWORD=s3cr3t
 
 
-## Create the database
+## Créer la base de données
 
 Exécuter les migrations
 
     php artisan migrate --seed 
 
-Notice: seed is important, because it will create the first admin user for you. 
+Remarque: la graine est importante (--seed), car elle créera le premier utilisateur administrateur pour vous.
 
-Généré la clé de l'application
+Générer la clé de l'application
  
     php artisan key:generate
 
@@ -94,7 +96,7 @@ Pour importer la base de données de test (facultatif)
 
     mysql mercator < mercator_data.sql
 
-Démarre l'application avec php
+Démarrer l'application avec php
 
     php artisan serve
 
@@ -106,13 +108,15 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
 
 ### PHP Memory
 
-If you generate big reports you will have to upgrade memory allocated to PHP in /etc/php/7.4/apache2/php.ini
+Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/7.4/apache2/php.ini
 
     memory_limit = 512M
 
 ## Mise à jour
 
 Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
+
+    mysqldump mercator > mercator_backup.sql
 
 Récupérer les sources de GIT
 
@@ -137,7 +141,7 @@ Redémarre l'application
    
 ## Tests de non-régression
 
-Configure the environment
+Configurer l'environement
 
     cp .env .env.dusk.local
     vi .env.dusk.local
@@ -146,7 +150,7 @@ Lancer l'application
 
     php artisan serve
 
-Dans un autre terminal, lancer les tests
+Dans un autre terminal, lancer les tests 
 
     php artisan dusk
 
@@ -176,29 +180,28 @@ Then backup database users
         --add-drop-table \
         > backup_mercator_users.sql
 
-Drop the mercator database
+Supprimer la base de données de Mercator
 
     sudo mysql -e "drop database mercator;"
 
-Create the database
+Créer une nouvelle base de données 
 
     sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-Run migration
+Exécuter les migrations 
 
     php artisan migrate --seed 
 
-Generate Keys
+Générer la clé
  
     php artisan key:generate
 
-Restore data
+Restaurer les données
 
     mysql mercator < backup_mercator_data.sql
 
-Restore users
+Restaurer les utilisateurs
 
     mysql mercator < backup_mercator_users.sql
 
-All migrations issues are the fixed
-
+Tous les problèmes de migration devraient être résolus.
