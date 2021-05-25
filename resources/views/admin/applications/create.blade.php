@@ -144,6 +144,37 @@
             </div>
             <div class="col-sm">
 
+                <div class="form-group">
+                    <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
+                        @if (!$external_list->contains(old('external')))
+                            <option> {{ old('external') }}</option>'
+                        @endif
+                        @foreach($external_list as $t)
+                            <option {{ old('external') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    <span class="help-block">{{ trans('cruds.application.fields.external_helper') }}</span>
+                </div>
+
+                @if (auth()->user()->granularity>=2)
+                <div class="form-group">
+                    <label for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
+                    <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', '') }}">
+                    @if($errors->has('documentation'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('documentation') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
+                </div>
+                @endif
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
                     <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
@@ -212,35 +243,10 @@
                         <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>
                     </div>
 
-
-                <div class="form-group">
-                    <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
-                        @if (!$external_list->contains(old('external')))
-                            <option> {{ old('external') }}</option>'
-                        @endif
-                        @foreach($external_list as $t)
-                            <option {{ old('external') == $t ? 'selected' : '' }}>{{$t}}</option>
-                        @endforeach
-                    </select>
-                    <span class="help-block">{{ trans('cruds.application.fields.external_helper') }}</span>
-                </div>
-
-                @if (auth()->user()->granularity>=2)
-                <div class="form-group">
-                    <label for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
-                    <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', '') }}">
-                    @if($errors->has('documentation'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('documentation') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
-                </div>
-                @endif
-
             </div>
-          </div>
+            <div class="col-sm">
+            </div>
+        </div>
 
           <div class="row">
             <div class="col-sm">

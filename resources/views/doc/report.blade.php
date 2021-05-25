@@ -60,12 +60,16 @@
                 <div class="card-body">
                   <ul>
                     <li>
+                      Liste des entités du système d'information et de leurs applications supportées<br>
+                      <a href="/admin/report/entities" target="_new">Entités et application supportées</a><br><br>
+                    </li>
+                    <li>
                       Liste des applications par groupe applicatif<br>
                       <a href="/admin/report/applicationsByBlocks" target="_new">Applications par groupe applicatif</a><br><br>
                     </li>
                     <li>
                       Liste des serveurs logiques par applications et responsables<br>
-                      <a href="/admin/report/logicalServerResp" target="_new">Liste des serveurs logiques</a><br><br>
+                      <a href="/admin/report/logicalServerResp" target="_new">Serveurs logiques</a><br><br>
                     </li>
 
                     <li>

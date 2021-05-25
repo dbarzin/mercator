@@ -717,6 +717,51 @@ class ReportController extends Controller
             ->with("domains",$domains);
         }
 
+    public function entities(Request $request) {
+        $path=storage_path('app/' . "entities.xlsx");
+
+        $entities = Entity::All()->sortBy("name"); 
+
+        $header = array(
+                'Nom',
+                'Description',
+                'Niveau de sécurité',
+                'Point de contact',
+                'Applications supportées'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($entities as $entity) {
+                $sheet->setCellValue("A{$row}", $entity->name);
+                $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
+                $sheet->setCellValue("C{$row}", $html->toRichTextObject($entity->security_level));
+                $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->contact_point));
+                $txt = "";
+                foreach ($entity->entityRespMApplications as $application) {
+                    $txt .= $application->name;
+                    if ($entity->entityRespMApplications->last() != $application)
+                        $txt .= ", ";
+                }
+                $sheet->setCellValue("E{$row}", $txt);
+
+                $row++;
+            }        
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
+    
+
     public function applicationsByBlocks(Request $request) {
 
         $path=storage_path('app/' . "applications.xlsx");
@@ -788,7 +833,6 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
-    // xxx
     public function logicalServerResp(Request $request) {
         $path=storage_path('app/' . "logicalServersResp.xlsx");
 
