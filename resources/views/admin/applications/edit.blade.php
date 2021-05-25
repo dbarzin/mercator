@@ -247,12 +247,11 @@
                                 {{ $errors->first('security_need') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>
-                    </div>
+                        <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>                    </div>
 
-            </div>
-            <div class="col-sm">
-            </div>
+                </div>
+                <div class="col-sm">
+                </div>
         </div>
 
 
