@@ -300,12 +300,15 @@ class HomeController extends Controller
                             ->whereRaw("logical_server_m_application.m_application_id = m_applications.id");
                     })
                     */
-                    // application must have one application service
+		    // application must have one application service
+		    // NO - services of external applications are not documented
+		    /*
                     ->whereExists(function ($query) {
-                        $query->select("application_service_m_application.m_application_id")
+                       $query->select("application_service_m_application.m_application_id")
                             ->from("application_service_m_application")
                             ->whereRaw("application_service_m_application.m_application_id = m_applications.id");
-                    })
+		    })
+		     */
                     ->count())
 
             ->with("applicationServices", ApplicationService::All()->count())
