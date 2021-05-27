@@ -33,11 +33,12 @@ démarche globale de gestion des risques.
 - Multilingue
 
 ## Ecrans
-- [Page principale](http://www.barzin.be/mercator/images/mercator1.png)
-- [Vue de l’architecture physique](http://www.barzin.be/mercator/images/mercator2.png)
-- [Niveau de conformité](http://www.barzin.be/mercator/images/mercator3.png)
-- [Liste des processus](http://www.barzin.be/mercator/images/mercator4.png)
-- [Ajouter une application](http://www.barzin.be/mercator/images/mercator5.png)
+[<img src="public/screenshot/mercator1.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator2.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator3.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator4.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator5.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator6.png" width="400">](Page principale)
 
 ## Technologies
 - PHP, Javascript, Laravel
