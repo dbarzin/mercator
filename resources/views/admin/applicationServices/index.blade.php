@@ -129,7 +129,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'asc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
   $('.datatable-ApplicationService:not(.ajaxTable)').DataTable({ buttons: dtButtons })

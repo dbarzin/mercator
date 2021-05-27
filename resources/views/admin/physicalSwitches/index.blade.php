@@ -140,7 +140,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'asc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 100,
     "lengthMenu": [ 10, 50, 100, 500 ]    
   });
