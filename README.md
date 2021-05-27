@@ -33,12 +33,12 @@ démarche globale de gestion des risques.
 - Multilingue
 
 ## Ecrans
-[<img src="public/screenshot/mercator1.png" width="400">](Page principale)
-[<img src="public/screenshot/mercator2.png" width="400">](Page principale)
-[<img src="public/screenshot/mercator3.png" width="400">](Page principale)
-[<img src="public/screenshot/mercator4.png" width="400">](Page principale)
-[<img src="public/screenshot/mercator5.png" width="400">](Page principale)
-[<img src="public/screenshot/mercator6.png" width="400">](Page principale)
+[<img src="public/screenshot/mercator1.png" width="400">](public/screenshot/mercator1.png)
+[<img src="public/screenshot/mercator2.png" width="400">](public/screenshot/mercator2.png)
+[<img src="public/screenshot/mercator3.png" width="400">](public/screenshot/mercator3.png)
+[<img src="public/screenshot/mercator4.png" width="400">](public/screenshot/mercator4.png)
+[<img src="public/screenshot/mercator5.png" width="400">](public/screenshot/mercator5.png)
+[<img src="public/screenshot/mercator6.png" width="400">](public/screenshot/mercator6.png)
 
 ## Technologies
 - PHP, Javascript, Laravel
