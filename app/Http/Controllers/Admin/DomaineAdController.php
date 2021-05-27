@@ -21,7 +21,7 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domaineAds = DomaineAd::all();
+        $domaineAds = DomaineAd::all()->sortBy('name');
 
         return view('admin.domaineAds.index', compact('domaineAds'));
     }
