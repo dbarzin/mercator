@@ -70,7 +70,7 @@
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   $('.datatable-AuditLog').DataTable(dtOverrideGlobals);
