@@ -1,6 +1,67 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController;
+
+use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\UsersController;
+
+use App\Http\Controllers\Admin\EntityController;
+use App\Http\Controllers\Admin\RelationController;
+use App\Http\Controllers\Admin\ProcessController;
+use App\Http\Controllers\Admin\OperationController;
+use App\Http\Controllers\Admin\ActorController;
+use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\InformationController;
+use App\Http\Controllers\Admin\ApplicationBlockController;
+use App\Http\Controllers\Admin\MApplicationController;
+use App\Http\Controllers\Admin\ApplicationServiceController;
+use App\Http\Controllers\Admin\DatabaseController;
+use App\Http\Controllers\Admin\FluxController;
+use App\Http\Controllers\Admin\ZoneAdminController;
+use App\Http\Controllers\Admin\AnnuaireController;
+use App\Http\Controllers\Admin\ForestAdController;
+use App\Http\Controllers\Admin\DomaineAdController;
+use App\Http\Controllers\Admin\NetworkController;
+use App\Http\Controllers\Admin\SubnetworkController;
+use App\Http\Controllers\Admin\GatewayController;
+use App\Http\Controllers\Admin\ExternalConnectedEntityController;
+use App\Http\Controllers\Admin\NetworkSwitchController;
+use App\Http\Controllers\Admin\RouterController;
+use App\Http\Controllers\Admin\SecurityDeviceController;
+use App\Http\Controllers\Admin\DhcpServerController;
+use App\Http\Controllers\Admin\DnsserverController;
+use App\Http\Controllers\Admin\LogicalServerController;
+use App\Http\Controllers\Admin\SiteController;
+use App\Http\Controllers\Admin\BuildingController;
+use App\Http\Controllers\Admin\BayController;
+use App\Http\Controllers\Admin\PhysicalServerController;
+use App\Http\Controllers\Admin\WorkstationController;
+use App\Http\Controllers\Admin\StorageDeviceController;
+use App\Http\Controllers\Admin\PeripheralController;
+use App\Http\Controllers\Admin\PhoneController;
+use App\Http\Controllers\Admin\PhysicalSwitchController;
+use App\Http\Controllers\Admin\PhysicalRouterController;
+use App\Http\Controllers\Admin\WifiTerminalController;
+use App\Http\Controllers\Admin\PhysicalSecurityDeviceController;
+use App\Http\Controllers\Admin\WanController;
+use App\Http\Controllers\Admin\ManController;
+use App\Http\Controllers\Admin\LanController;
+use App\Http\Controllers\Admin\VlanController;
+use App\Http\Controllers\Admin\ApplicationModuleController;
+
+use App\Http\Controllers\Admin\AuditLogsController;
+use App\Http\Controllers\Admin\MacroProcessusController;
+use App\Http\Controllers\Admin\GlobalSearchController;
+
+use App\Http\Controllers\Admin\ReportController;
+
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\ProfileController;
+
 Route::redirect('/', '/login');
+
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -18,230 +79,230 @@ Route::get('/test', function () {
 Auth::routes(['register' => false]);
 
 // Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
 
     // Dashboard
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', [HomeController::Class,'index'])->name('home');
 
     // Permissions
-    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
-    Route::resource('permissions', 'PermissionsController');
+    Route::resource('permissions', PermissionsController::Class);
+    Route::delete('permissions/destroy', [PermissionsController::Class,'massDestroy'])->name('permissions.massDestroy');
 
     // Roles
-    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', 'RolesController');
+    Route::resource('roles', RolesController::Class);
+    Route::delete('roles/destroy', [RolesController::Class,'massDestroy'])->name('roles.massDestroy');
 
     // Users
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::resource('users', 'UsersController');
+    Route::resource('users', UsersController::Class);
+    Route::delete('users/destroy', [UsersController::Class,'massDestroy'])->name('users.massDestroy');
 
     // Entities
-    Route::delete('entities/destroy', 'EntityController@massDestroy')->name('entities.massDestroy');
-    Route::resource('entities', 'EntityController');
+    Route::resource('entities', EntityController::Class);
+    Route::delete('entities/destroy', [EntityController::Class,'massDestroy'])->name('entities.massDestroy');
 
     // Relations
-    Route::delete('relations/destroy', 'RelationController@massDestroy')->name('relations.massDestroy');
-    Route::resource('relations', 'RelationController');
+    Route::resource('relations', RelationController::Class);
+    Route::delete('relations/destroy', [RelationController::Class,'massDestroy'])->name('relations.massDestroy');
 
     // Processes
-    Route::delete('processes/destroy', 'ProcessController@massDestroy')->name('processes.massDestroy');
-    Route::resource('processes', 'ProcessController');
+    Route::resource('processes', ProcessController::Class);
+    Route::delete('processes/destroy', [ProcessController::Class,'massDestroy'])->name('processes.massDestroy');
 
     // Operations
-    Route::delete('operations/destroy', 'OperationController@massDestroy')->name('operations.massDestroy');
-    Route::resource('operations', 'OperationController');
+    Route::resource('operations', OperationController::Class);
+    Route::delete('operations/destroy', [OperationController::Class,'massDestroy'])->name('operations.massDestroy');
 
     // Actors
-    Route::delete('actors/destroy', 'ActorController@massDestroy')->name('actors.massDestroy');
-    Route::resource('actors', 'ActorController');
+    Route::resource('actors', ActorController::Class);
+    Route::delete('actors/destroy', [ActorController::Class,'massDestroy'])->name('actors.massDestroy');
 
     // Activities
-    Route::delete('activities/destroy', 'ActivityController@massDestroy')->name('activities.massDestroy');
-    Route::resource('activities', 'ActivityController');
+    Route::resource('activities', ActivityController::Class);
+    Route::delete('activities/destroy', [ActivityController::Class,'massDestroy'])->name('activities.massDestroy');
 
     // Tasks
-    Route::delete('tasks/destroy', 'TaskController@massDestroy')->name('tasks.massDestroy');
-    Route::resource('tasks', 'TaskController');
+    Route::resource('tasks', TaskController::Class);
+    Route::delete('tasks/destroy', [TaskController::Class,'massDestroy'])->name('tasks.massDestroy');
 
     // Information
-    Route::delete('information/destroy', 'InformationController@massDestroy')->name('information.massDestroy');
-    Route::resource('information', 'InformationController');
+    Route::resource('information', InformationController::Class);
+    Route::delete('information/destroy', [InformationController::Class,'massDestroy'])->name('information.massDestroy');
 
     // Application Blocks
-    Route::delete('application-blocks/destroy', 'ApplicationBlockController@massDestroy')->name('application-blocks.massDestroy');
-    Route::resource('application-blocks', 'ApplicationBlockController');
+    Route::resource('application-blocks', ApplicationBlockController::Class);
+    Route::delete('application-blocks/destroy', [ApplicationBlockController::Class,'massDestroy'])->name('application-blocks.massDestroy');
 
     // Applications
-    Route::delete('applications/destroy', 'MApplicationController@massDestroy')->name('applications.massDestroy');
-    Route::resource('applications', 'MApplicationController');
+    Route::resource('applications', MApplicationController::Class);
+    Route::delete('applications/destroy', [MApplicationController::Class,'massDestroy'])->name('applications.massDestroy');
 
     // Application Services
-    Route::delete('application-services/destroy', 'ApplicationServiceController@massDestroy')->name('application-services.massDestroy');
-    Route::resource('application-services', 'ApplicationServiceController');
+    Route::resource('application-services', ApplicationServiceController::Class);
+    Route::delete('application-services/destroy', [ApplicationServiceController::Class,'massDestroy'])->name('application-services.massDestroy');
 
     // Databases
-    Route::delete('databases/destroy', 'DatabaseController@massDestroy')->name('databases.massDestroy');
-    Route::resource('databases', 'DatabaseController');
+    Route::resource('databases', DatabaseController::Class);
+    Route::delete('databases/destroy', [DatabaseController::Class,'massDestroy'])->name('databases.massDestroy');
 
     // Fluxes
-    Route::delete('fluxes/destroy', 'FluxController@massDestroy')->name('fluxes.massDestroy');
-    Route::resource('fluxes', 'FluxController');
+    Route::resource('fluxes', FluxController::Class);
+    Route::delete('fluxes/destroy', [FluxController::Class,'massDestroy'])->name('fluxes.massDestroy');
 
     // Zone Admins
-    Route::delete('zone-admins/destroy', 'ZoneAdminController@massDestroy')->name('zone-admins.massDestroy');
-    Route::resource('zone-admins', 'ZoneAdminController');
+    Route::resource('zone-admins', ZoneAdminController::Class);
+    Route::delete('zone-admins/destroy', [ZoneAdminController::Class,'massDestroy'])->name('zone-admins.massDestroy');
 
     // Annuaires
-    Route::delete('annuaires/destroy', 'AnnuaireController@massDestroy')->name('annuaires.massDestroy');
-    Route::resource('annuaires', 'AnnuaireController');
+    Route::resource('annuaires', AnnuaireController::Class);
+    Route::delete('annuaires/destroy', [AnnuaireController::Class,'massDestroy'])->name('annuaires.massDestroy');
 
     // Forest Ads
-    Route::delete('forest-ads/destroy', 'ForestAdController@massDestroy')->name('forest-ads.massDestroy');
-    Route::resource('forest-ads', 'ForestAdController');
+    Route::resource('forest-ads', ForestAdController::Class);
+    Route::delete('forest-ads/destroy', [ForestAdController::Class,'massDestroy'])->name('forest-ads.massDestroy');
 
     // Domaine Ads
-    Route::delete('domaine-ads/destroy', 'DomaineAdController@massDestroy')->name('domaine-ads.massDestroy');
-    Route::resource('domaine-ads', 'DomaineAdController');
+    Route::resource('domaine-ads', DomaineAdController::Class);
+    Route::delete('domaine-ads/destroy', [DomaineAdController::Class,'massDestroy'])->name('domaine-ads.massDestroy');
 
     // Networks
-    Route::delete('networks/destroy', 'NetworkController@massDestroy')->name('networks.massDestroy');
-    Route::resource('networks', 'NetworkController');
+    Route::resource('networks', NetworkController::Class);
+    Route::delete('networks/destroy', [NetworkController::Class,'massDestroy'])->name('networks.massDestroy');
 
     // Subnetworks
-    Route::delete('subnetworks/destroy', 'SubnetworkController@massDestroy')->name('subnetworks.massDestroy');
-    Route::resource('subnetworks', 'SubnetworkController');
+    Route::resource('subnetworks', SubnetworkController::Class);
+    Route::delete('subnetworks/destroy', [SubnetworkController::Class,'massDestroy'])->name('subnetworks.massDestroy');
 
     // Gateways
-    Route::delete('gateways/destroy', 'GatewayController@massDestroy')->name('gateways.massDestroy');
-    Route::resource('gateways', 'GatewayController');
+    Route::resource('gateways', GatewayController::Class);
+    Route::delete('gateways/destroy', [GatewayController::Class,'massDestroy'])->name('gateways.massDestroy');
 
     // External Connected Entities
-    Route::delete('external-connected-entities/destroy', 'ExternalConnectedEntityController@massDestroy')->name('external-connected-entities.massDestroy');
-    Route::resource('external-connected-entities', 'ExternalConnectedEntityController');
+    Route::resource('external-connected-entities', ExternalConnectedEntityController::Class);
+    Route::delete('external-connected-entities/destroy', [ExternalConnectedEntityController::Class,'massDestroy'])->name('external-connected-entities.massDestroy');
 
     // Network Switches
-    Route::delete('network-switches/destroy', 'NetworkSwitchController@massDestroy')->name('network-switches.massDestroy');
-    Route::resource('network-switches', 'NetworkSwitchController');
+    Route::resource('network-switches', NetworkSwitchController::Class);
+    Route::delete('network-switches/destroy', [NetworkSwitchController::Class,'massDestroy'])->name('network-switches.massDestroy');
 
     // Routers
-    Route::delete('routers/destroy', 'RouterController@massDestroy')->name('routers.massDestroy');
-    Route::resource('routers', 'RouterController');
+    Route::resource('routers', RouterController::Class);
+    Route::delete('routers/destroy', [RouterController::Class,'massDestroy'])->name('routers.massDestroy');
 
     // Security Devices
-    Route::delete('security-devices/destroy', 'SecurityDeviceController@massDestroy')->name('security-devices.massDestroy');
-    Route::resource('security-devices', 'SecurityDeviceController');
+    Route::resource('security-devices', SecurityDeviceController::Class);
+    Route::delete('security-devices/destroy', [SecurityDeviceController::Class,'massDestroy'])->name('security-devices.massDestroy');
 
     // Dhcp Servers
-    Route::delete('dhcp-servers/destroy', 'DhcpServerController@massDestroy')->name('dhcp-servers.massDestroy');
-    Route::resource('dhcp-servers', 'DhcpServerController');
+    Route::resource('dhcp-servers', DhcpServerController::Class);
+    Route::delete('dhcp-servers/destroy', [DhcpServerController::Class,'massDestroy'])->name('dhcp-servers.massDestroy');
 
     // Dnsservers
-    Route::delete('dnsservers/destroy', 'DnsserverController@massDestroy')->name('dnsservers.massDestroy');
-    Route::resource('dnsservers', 'DnsserverController');
+    Route::resource('dnsservers', DnsserverController::Class);
+    Route::delete('dnsservers/destroy', [DnsserverController::Class,'massDestroy'])->name('dnsservers.massDestroy');
 
     // Logical Servers
-    Route::delete('logical-servers/destroy', 'LogicalServerController@massDestroy')->name('logical-servers.massDestroy');
-    Route::resource('logical-servers', 'LogicalServerController');
+    Route::resource('logical-servers', LogicalServerController::Class);
+    Route::delete('logical-servers/destroy', [LogicalServerController::Class,'massDestroy'])->name('logical-servers.massDestroy');
 
     // Sites
-    Route::delete('sites/destroy', 'SiteController@massDestroy')->name('sites.massDestroy');
-    Route::resource('sites', 'SiteController');
+    Route::resource('sites', SiteController::Class);
+    Route::delete('sites/destroy', [SiteController::Class,'massDestroy'])->name('sites.massDestroy');
 
     // Buildings
-    Route::delete('buildings/destroy', 'BuildingController@massDestroy')->name('buildings.massDestroy');
-    Route::resource('buildings', 'BuildingController');
+    Route::resource('buildings', BuildingController::Class);
+    Route::delete('buildings/destroy', [BuildingController::Class,'massDestroy'])->name('buildings.massDestroy');
 
     // Bays
-    Route::delete('bays/destroy', 'BayController@massDestroy')->name('bays.massDestroy');
-    Route::resource('bays', 'BayController');
+    Route::resource('bays', BayController::Class);
+    Route::delete('bays/destroy', [BayController::Class,'massDestroy'])->name('bays.massDestroy');
 
     // Physical Servers
-    Route::delete('physical-servers/destroy', 'PhysicalServerController@massDestroy')->name('physical-servers.massDestroy');
-    Route::resource('physical-servers', 'PhysicalServerController');
+    Route::resource('physical-servers', PhysicalServerController::Class);
+    Route::delete('physical-servers/destroy', [PhysicalServerController::Class,'massDestroy'])->name('physical-servers.massDestroy');
 
     // Workstations
-    Route::delete('workstations/destroy', 'WorkstationController@massDestroy')->name('workstations.massDestroy');
-    Route::resource('workstations', 'WorkstationController');
+    Route::resource('workstations', WorkstationController::Class);
+    Route::delete('workstations/destroy', [WorkstationController::Class,'massDestroy'])->name('workstations.massDestroy');
 
     // Storage Devices
-    Route::delete('storage-devices/destroy', 'StorageDeviceController@massDestroy')->name('storage-devices.massDestroy');
-    Route::resource('storage-devices', 'StorageDeviceController');
+    Route::resource('storage-devices', StorageDeviceController::Class);
+    Route::delete('storage-devices/destroy', [StorageDeviceController::Class,'massDestroy'])->name('storage-devices.massDestroy');
 
     // Peripherals
-    Route::delete('peripherals/destroy', 'PeripheralController@massDestroy')->name('peripherals.massDestroy');
-    Route::resource('peripherals', 'PeripheralController');
+    Route::resource('peripherals', PeripheralController::Class);
+    Route::delete('peripherals/destroy', [PeripheralController::Class,'massDestroy'])->name('peripherals.massDestroy');
 
     // Phones
-    Route::delete('phones/destroy', 'PhoneController@massDestroy')->name('phones.massDestroy');
-    Route::resource('phones', 'PhoneController');
+    Route::resource('phones', PhoneController::Class);
+    Route::delete('phones/destroy', [PhoneController::Class,'massDestroy'])->name('phones.massDestroy');
 
     // Physical Switches
-    Route::delete('physical-switches/destroy', 'PhysicalSwitchController@massDestroy')->name('physical-switches.massDestroy');
-    Route::resource('physical-switches', 'PhysicalSwitchController');
+    Route::resource('physical-switches', PhysicalSwitchController::Class);
+    Route::delete('physical-switches/destroy', [PhysicalSwitchController::Class,'massDestroy'])->name('physical-switches.massDestroy');
 
     // Physical Routers
-    Route::delete('physical-routers/destroy', 'PhysicalRouterController@massDestroy')->name('physical-routers.massDestroy');
-    Route::resource('physical-routers', 'PhysicalRouterController');
+    Route::resource('physical-routers', PhysicalRouterController::Class);
+    Route::delete('physical-routers/destroy', [PhysicalRouterController::Class,'massDestroy'])->name('physical-routers.massDestroy');
 
     // Wifi Terminals
-    Route::delete('wifi-terminals/destroy', 'WifiTerminalController@massDestroy')->name('wifi-terminals.massDestroy');
-    Route::resource('wifi-terminals', 'WifiTerminalController');
+    Route::resource('wifi-terminals', WifiTerminalController::Class);
+    Route::delete('wifi-terminals/destroy', [WifiTerminalController::Class,'massDestroy'])->name('wifi-terminals.massDestroy');
 
     // Physical Security Devices
-    Route::delete('physical-security-devices/destroy', 'PhysicalSecurityDeviceController@massDestroy')->name('physical-security-devices.massDestroy');
-    Route::resource('physical-security-devices', 'PhysicalSecurityDeviceController');
+    Route::resource('physical-security-devices', PhysicalSecurityDeviceController::Class);
+    Route::delete('physical-security-devices/destroy', [PhysicalSecurityDeviceController::Class,'massDestroy'])->name('physical-security-devices.massDestroy');
 
     // WANs
-    Route::delete('wans/destroy', 'WanController@massDestroy')->name('wans.massDestroy');
-    Route::resource('wans', 'WanController');
+    Route::resource('wans', WanController::Class);
+    Route::delete('wans/destroy', [WanController::Class,'massDestroy'])->name('wans.massDestroy');
 
     // MANs
-    Route::delete('mans/destroy', 'ManController@massDestroy')->name('mans.massDestroy');
-    Route::resource('mans', 'ManController');
+    Route::resource('mans', ManController::Class);
+    Route::delete('mans/destroy', [ManController::Class,'massDestroy'])->name('mans.massDestroy');
 
     // LANs
-    Route::delete('lans/destroy', 'LanController@massDestroy')->name('lans.massDestroy');
-    Route::resource('lans', 'LanController');
+    Route::resource('lans', LanController::Class);
+    Route::delete('lans/destroy', [LanController::Class,'massDestroy'])->name('lans.massDestroy');
 
     // VLANs
-    Route::delete('vlans/destroy', 'VlanController@massDestroy')->name('vlans.massDestroy');
-    Route::resource('vlans', 'VlanController');
+    Route::resource('vlans', VlanController::Class);
+    Route::delete('vlans/destroy', [VlanController::Class,'massDestroy'])->name('vlans.massDestroy');
 
     // Application Modules
-    Route::delete('application-modules/destroy', 'ApplicationModuleController@massDestroy')->name('application-modules.massDestroy');
-    Route::resource('application-modules', 'ApplicationModuleController');
+    Route::resource('application-modules', ApplicationModuleController::Class);
+    Route::delete('application-modules/destroy', [ApplicationModuleController::Class,'massDestroy'])->name('application-modules.massDestroy');
 
     // Audit Logs
-    Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    Route::resource('audit-logs', AuditLogsController::Class, ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Macro Processuses
-    Route::delete('macro-processuses/destroy', 'MacroProcessusController@massDestroy')->name('macro-processuses.massDestroy');
-    Route::resource('macro-processuses', 'MacroProcessusController');
+    Route::resource('macro-processuses', MacroProcessusController::Class);
+    Route::delete('macro-processuses/destroy', [MacroProcessusController::Class,'massDestroy'])->name('macro-processuses.massDestroy');
 
-    Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+    Route::get('global-search', [GlobalSearchController::Class,'search'])->name('globalSearch');
 
     // Reports
-    Route::get('report/ecosystem', 'ReportController@ecosystem');
-    Route::get('report/information_system', 'ReportController@informationSystem');
-    Route::get('report/administration', 'ReportController@administration');
-    Route::get('report/applications', 'ReportController@applications');
-    Route::get('report/application_flows', 'ReportController@applicationFlows');
-    Route::get('report/logical_infrastructure', 'ReportController@logicalInfrastructure');
-    Route::get('report/physical_infrastructure', 'ReportController@physicalInfrastructure');
-    Route::get('report/logicalServerResp', 'ReportController@logicalServerResp');
+    Route::get('report/ecosystem', [ReportController::Class,'ecosystem']);
+    Route::get('report/information_system', [ReportController::Class,'informationSystem']);
+    Route::get('report/administration', [ReportController::Class,'administration']);
+    Route::get('report/applications', [ReportController::Class,'applications']);
+    Route::get('report/application_flows', [ReportController::Class,'applicationFlows']);
+    Route::get('report/logical_infrastructure', [ReportController::Class,'logicalInfrastructure']);
+    Route::get('report/physical_infrastructure', [ReportController::Class,'physicalInfrastructure']);
+    Route::get('report/logicalServerResp', [ReportController::Class,'logicalServerResp']);
     
     // Maturity levels
-    Route::get('report/maturity1', 'HomeController@maturity1')->name("report.maturity1");
-    Route::get('report/maturity2', 'HomeController@maturity2')->name("report.maturity2");
-    Route::get('report/maturity3', 'HomeController@maturity3')->name("report.maturity3");
+    Route::get('report/maturity1', [HomeController::Class,'maturity1'])->name("report.maturity1");
+    Route::get('report/maturity2', [HomeController::Class,'maturity2'])->name("report.maturity2");
+    Route::get('report/maturity3', [HomeController::Class,'maturity3'])->name("report.maturity3");
 
     // Reporting
-    Route::get('report/entities', 'ReportController@entities');
-    Route::get('report/applicationsByBlocks', 'ReportController@applicationsByBlocks');
-    Route::get('report/logicalServerConfigs', 'ReportController@logicalServerConfigs');
-    Route::get('report/physicalInventory', 'ReportController@physicalInventory');
-    Route::get('report/securityNeeds', 'ReportController@securityNeeds');
-    Route::put('report/cartography', 'CartographyController@cartography');
+    Route::get('report/entities', [ReportController::Class,'entities']);
+    Route::get('report/applicationsByBlocks', [ReportController::Class,'applicationsByBlocks']);
+    Route::get('report/logicalServerConfigs', [ReportController::Class, 'logicalServerConfigs']);
+    Route::get('report/physicalInventory', [ReportController::Class, 'physicalInventory']);
+    Route::get('report/securityNeeds', [ReportController::Class, 'securityNeeds']);
+    Route::put('report/cartography', [CartographyController::Class, 'cartography']);
 
     // Reporting
     Route::get('doc/report', function () {
@@ -264,12 +325,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         });
 });
 
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
-// Change password
-    if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
-        Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
-        Route::post('password', 'ChangePasswordController@update')->name('password.update');
-        Route::get('preferences', 'ProfileController@showProfile');
-        Route::post('preferences', 'ProfileController@saveProfile');
-    }
+// Profile
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
+    Route::get('password', [ChangePasswordController::Class, 'edit'])->name('password.edit');
+    Route::post('password', [ChangePasswordController::Class, 'update'])->name('password.update');
+    Route::get('preferences', [ProfileController::Class, 'showProfile']);
+    Route::post('preferences', [ProfileController::Class, 'saveProfile']);
 });
+
+    
