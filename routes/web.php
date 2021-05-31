@@ -56,6 +56,7 @@ use App\Http\Controllers\Admin\MacroProcessusController;
 use App\Http\Controllers\Admin\GlobalSearchController;
 
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\CartographyController;
 
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ProfileController;
