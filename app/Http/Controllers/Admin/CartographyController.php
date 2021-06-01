@@ -233,10 +233,11 @@ class CartographyController extends Controller
                     if ($entity->destinationRelations->last() != $relation)  
                         $textRun->addText(", ");
                 }
-                // Porcessus soutenus
+                // Processus soutenus
                 $textRun=$this->addTextRunRow($table,"Processus soutenus");
+                $entity->entitiesProcesses=$entity->entitiesProcesses->sortBy("identifiant");
                 foreach($entity->entitiesProcesses as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->entitiesProcesses->last() != $process)  
                         $textRun->addText(", ");
                     }
@@ -373,7 +374,7 @@ class CartographyController extends Controller
                         );
                     //---
                     if ($granularity>=3)
-                        $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
+                        $this->addTextRow($table, "Propritétaire",$macroProcess->owner);
                     $textRun=$this->addTextRunRow($table, "Processus");
                     foreach($macroProcess->processes as $process) {
                         $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
@@ -396,18 +397,21 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$process->description);
                     $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
                     $textRun=$this->addTextRunRow($table,"Activités");
+                    $process->activities=$process->activities->sortBy("name");
                     foreach($process->activities as $activity) {
                         $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->activities->last() != $activity)  
                             $textRun->addText(", ");
                         }
                     $textRun=$this->addTextRunRow($table,"Entités associées");
+                    $process->entities=$process->entities->sortBy("name");
                     foreach($process->entities as $entity) {
                         $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->entities->last() != $entity)  
                             $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
                     $textRun=$this->addTextRunRow($table,"Applications qui le soutiennent");
+                    $process->processesMApplications=$process->processesMApplications->sortBy("name");
                     foreach($process->processesMApplications as $application) {
                         $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->processesMApplications->last() != $application)  
@@ -455,6 +459,7 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$activity->description);
 
                     $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    $activity->operations=$activity->operations->sortBy("name");
                     foreach($activity->operations as $operation) {
                         $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($activity->operations->last() != $operation)  
@@ -477,6 +482,7 @@ class CartographyController extends Controller
                     // Tâches
                     if ($granularity==3) { 
                         $textRun=$this->addTextRunRow($table,"Liste des tâches qui la composent");
+                        $operation->tasks=$operation->tasks->sortBy("nom");
                         foreach($operation->tasks as $task) {
                             $textRun->addLink("TASK".$task->id, $task->nom, CartographyController::FancyLinkStyle, null, true);
                             if ($operation->tasks->last() != $task)
@@ -486,6 +492,7 @@ class CartographyController extends Controller
                     // Liste des acteurs qui interviennent
                     if ($granularity>=2) { 
                         $textRun=$this->addTextRunRow($table,"Liste des acteurs qui interviennent");
+                        $operation->actors=$operation->actors->sortBy("name");
                         foreach($operation->actors as $actor) {
                             $textRun->addLink("ACTOR".$actor->id, $actor->name, CartographyController::FancyLinkStyle, null, true);
                             if ($operation->actors->last() != $actor)
@@ -509,6 +516,7 @@ class CartographyController extends Controller
 
                     // Operations
                     $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    $task->operations=$task->operations->sortBy("name");
                     foreach($task->operations as $operation) {
                         $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($task->operations->last() != $operation)
@@ -532,6 +540,7 @@ class CartographyController extends Controller
 
                     // Operations
                     $textRun=$this->addTextRunRow($table,"Liste des opérations");
+                    $actor->operations=$actor->operations->sortBy("name");
                     foreach($actor->operations as $operation) {
                         $textRun->addLink("OPERATION".$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($actor->operations->last() != $operation)
@@ -556,6 +565,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Stockage",$information->storage);
                     // processus liés
                     $textRun=$this->addTextRunRow($table,"Processus liés");
+                    $information->processes=$information->processes->sortBy("identifiant");
                     foreach($information->processes as $process) {
                         $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                         if ($information->processes->last() != $process)
@@ -661,6 +671,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Responsable",$ab->responsible);
 
                     $textRun=$this->addTextRunRow($table,"Applications");
+                    $ab->applications=$ab->applications->sortBy("name");
                     foreach($ab->applications as $application) { 
                         $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($ab->applications->last() != $application)
@@ -682,6 +693,7 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$application->description);
                     //
                     $textRun=$this->addTextRunRow($table,"Liste de la (des) entité(s) utilisatrice(s)");
+                    $application->entities=$application->entities->sortBy("name");
                     foreach($application->entities as $entity) { 
                         $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->entities->last() != $entity)
@@ -698,6 +710,7 @@ class CartographyController extends Controller
                     //
                     $textRun=$this->addTextRunRow($table,"Flux associés");
                     $textRun->addText("Source : " );
+                    $application->applicationSourceFluxes=$application->applicationSourceFluxes->sortBy("name");
                     foreach($application->applicationSourceFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->applicationSourceFluxes->last()!=$flux)
@@ -705,6 +718,7 @@ class CartographyController extends Controller
                     }
                     $textRun->addTextBreak(1); 
                     $textRun->addText("Destination : " );
+                    $application->applicationDestFluxes=$application->applicationDestFluxes->sortBy("name");
                     foreach($application->applicationDestFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->applicationDestFluxes->last()!=$flux)
@@ -739,6 +753,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Exposition à l’externe",$application->external);
 
                     $textRun=$this->addTextRunRow($table,"Processus utilisant l’application");
+                    $application->processes=$application->processes->sortBy("identifiant");
                     foreach($application->processes as $process) {
                         $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                         if ($application->processes->last()!=$process)
@@ -746,6 +761,7 @@ class CartographyController extends Controller
                     }
 
                     $textRun=$this->addTextRunRow($table,"Services applicatifs délivrés par l’application");
+                    $application->services=$application->services->sortBy("name");
                     foreach($application->services as $service) {
                         $textRun->addLink("APPLICATIONSERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->services->last()!=$service)
@@ -753,6 +769,7 @@ class CartographyController extends Controller
                     }
 
                     $textRun=$this->addTextRunRow($table,"Bases de données utilisées");
+                    $application->databases=$application->databases->sortBy("name");
                     foreach($application->databases as $database) {
                         $textRun->addLink("DATABASE".$database->id, $database->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->databases->last()!=$database)
@@ -764,6 +781,7 @@ class CartographyController extends Controller
                         $textRun->addLink("APPLICATIONBLOCK".$application->application_block_id, $application->application_block->name, CartographyController::FancyLinkStyle, null, true);
 
                     $textRun=$this->addTextRunRow($table,"Liste des serveurs logiques soutenant l’application");
+                    $application->logical_servers=$application->logical_servers->sortBy("name");
                     foreach($application->logical_servers as $logical_server) {
                         $textRun->addLink("LOGICAL_SERVER".$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->logical_servers->last()!=$logical_server)
@@ -787,6 +805,7 @@ class CartographyController extends Controller
 
                     // Modules
                     $textRun=$this->addTextRunRow($table,"Liste des modules qui le composent");
+                    $applicationService->modules=$applicationService->modules->sortBy("name");
                     foreach($applicationService->modules as $module) {
                         $textRun->addLink("APPLICATIONMODULE".$module->id, $module->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->modules->last()!=$module)
@@ -796,6 +815,7 @@ class CartographyController extends Controller
                     // Flux
                     $textRun=$this->addTextRunRow($table,"Flux associés");
                     $textRun->addText("Source : ");
+                    $applicationService->serviceSourceFluxes=$applicationService->serviceSourceFluxes->sortBy("name");
                     foreach($applicationService->serviceSourceFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->serviceSourceFluxes->last()!=$flux)
@@ -803,6 +823,7 @@ class CartographyController extends Controller
                     }
                     $textRun->addTextBreak(1); 
                     $textRun->addText("Destination : ");
+                    $applicationService->serviceDestFluxes=$applicationService->serviceDestFluxes->sortBy("name");
                     foreach($applicationService->serviceDestFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->serviceDestFluxes->last()!=$flux)
@@ -813,6 +834,7 @@ class CartographyController extends Controller
 
                     // Applications
                     $textRun=$this->addTextRunRow($table,"Applications qui utilisent ce service");
+                    $applicationService->servicesMApplications=$applicationService->servicesMApplications->sortBy("name");
                     foreach($applicationService->servicesMApplications as $application) {
                         $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->servicesMApplications->last()!=$application)
@@ -835,6 +857,7 @@ class CartographyController extends Controller
 
                     // Services
                     $textRun=$this->addTextRunRow($table,"Services qui utilisent ce module");
+                    $applicationModule->modulesApplicationServices=$applicationModule->modulesApplicationServices->sortBy("name");
                     foreach($applicationModule->modulesApplicationServices as $service) {
                         $textRun->addLink("APPLICATIONSERVICE".$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationModule->modulesApplicationServices->last()!=$service)
@@ -844,6 +867,7 @@ class CartographyController extends Controller
                     // Flows
                     $textRun=$this->addTextRunRow($table,"Flux associés");
                     $textRun->addText("Source : ");
+                    $applicationModule->moduleSourceFluxes=$applicationModule->moduleSourceFluxes->sortBy("name");
                     foreach($applicationModule->moduleSourceFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationModule->moduleSourceFluxes->last()!=$flux)
@@ -851,6 +875,7 @@ class CartographyController extends Controller
                     }
                     $textRun->addTextBreak(1); 
                     $textRun->addText("Destination : ");
+                    $applicationModule->moduleDestFluxes=$applicationModule->moduleDestFluxes->sortBy("name");
                     foreach($applicationModule->moduleDestFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationModule->moduleDestFluxes->last()!=$flux)
@@ -873,6 +898,7 @@ class CartographyController extends Controller
 
                     // Services
                     $textRun=$this->addTextRunRow($table,"Entité(s) utilisatrice(s)");
+                    $database->entities=$database->entities->sortBy("name");
                     foreach($database->entities as $entity) {
                         $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                         if ($database->entities->last()!=$entity)
@@ -890,6 +916,7 @@ class CartographyController extends Controller
                     // flows
                     $textRun=$this->addTextRunRow($table,"Flux associés");
                     $textRun->addText("Source : ");
+                    $database->databaseSourceFluxes=$database->databaseSourceFluxes->sortBy("name");
                     foreach($database->databaseSourceFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($database->databaseSourceFluxes->last()!=$flux)
@@ -897,6 +924,7 @@ class CartographyController extends Controller
                     }
                     $textRun->addTextBreak(1); 
                     $textRun->addText("Destination : ");
+                    $database->databaseDestFluxes=$database->databaseDestFluxes->sortBy("name");
                     foreach($database->databaseDestFluxes as $flux) {
                         $textRun->addLink("FLUX".$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($database->databaseDestFluxes->last()!=$flux)
@@ -905,6 +933,7 @@ class CartographyController extends Controller
 
                     // Informations
                     $textRun=$this->addTextRunRow($table,"Informations contenues");
+                    $database->informations=$database->informations->sortBy("name");
                     foreach($database->informations as $information) {
                         $textRun->addLink("INFORMATION".$information->id, $information->name, CartographyController::FancyLinkStyle, null, true);
                         if ($database->informations->last()!=$information)
@@ -1054,6 +1083,7 @@ class CartographyController extends Controller
 
                     // Annuaires
                     $textRun=$this->addTextRunRow($table,"Annuaires");
+                    $zone->zoneAdminAnnuaires=$zone->zoneAdminAnnuaires->sortBy("name");
                     foreach($zone->zoneAdminAnnuaires as $annuaire) {
                         $textRun->addLink("ANNUAIRE".$annuaire->id, $annuaire->name, CartographyController::FancyLinkStyle, null, true);
                         if ($zone->zoneAdminAnnuaires->last()!=$annuaire)
@@ -1062,6 +1092,7 @@ class CartographyController extends Controller
 
                     // Forets
                     $textRun=$this->addTextRunRow($table,"Forêt Active Directory / Arborescence LDAP");
+                    $zone->zoneAdminForestAds=$zone->zoneAdminForestAds->sortBy("name");
                     foreach($zone->zoneAdminForestAds as $forest) {
                         $textRun->addLink("FOREST".$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
                         if ($zone->zoneAdminForestAds->last()!=$forest)
@@ -1111,6 +1142,7 @@ class CartographyController extends Controller
 
                     // Domaines
                     $textRun=$this->addTextRunRow($table,"Domaines");
+                    $forest->domaines=$forest->domaines->sortBy("name");
                     foreach($forest->domaines as $domain) {
                         $textRun->addLink("DOMAIN".$domain->id, $domain->name, CartographyController::FancyLinkStyle, null, true);
                         if ($forest->domaines->last()!=$domain)
@@ -1140,6 +1172,7 @@ class CartographyController extends Controller
 
                     // FOREST
                     $textRun=$this->addTextRunRow($table,"Domaines");
+                    $domain->domainesForestAds=$domain->domainesForestAds->sortBy("name");
                     foreach($domain->domainesForestAds as $forest) {
                         $textRun->addLink("FOREST".$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
                         if ($domain->domainesForestAds->last()!=$forest)
@@ -1214,6 +1247,7 @@ class CartographyController extends Controller
 
                     // subnetworks
                     $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");
+                    $network->subnetworks=$network->subnetworks->sortBy("name");
                     foreach($network->subnetworks as $subnetwork) {
                         $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($network->subnetworks->last()!=$subnetwork)
@@ -1222,6 +1256,7 @@ class CartographyController extends Controller
 
                     // entités externes connectées
                     $textRun=$this->addTextRunRow($table,"Entités externes connectées");
+                    $network->connectedNetworksExternalConnectedEntities=$network->connectedNetworksExternalConnectedEntities->sortBy("name");
                     foreach($network->connectedNetworksExternalConnectedEntities as $entity) {
                         $textRun->addLink("ENTITY".$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                         if ($network->connectedNetworksExternalConnectedEntities->last()!=$entity)
@@ -1281,6 +1316,7 @@ class CartographyController extends Controller
 
                     // Réseau ratachés
                     $textRun=$this->addTextRunRow($table,"Réseaux ratachés");
+                    $gateway->gatewaySubnetworks=$gateway->gatewaySubnetworks->sortBy("name");
                     foreach($gateway->gatewaySubnetworks as $subnetwork) {
                         $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($gateway->gatewaySubnetworks->last()!=$subnetwork)
@@ -1305,6 +1341,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Contacts SI",$entity->contacts);
 
                     $textRun=$this->addTextRunRow($table,"Réseaux connectés");
+                    $entity->connected_networks=$entity->connected_networks->sortBy("name");
                     foreach($entity->connected_networks as $network) {
                         $textRun->addLink("NETWORK".$network->id, $network->name, CartographyController::FancyLinkStyle, null, true);
                         if ($entity->connected_networks->last()!=$network)
@@ -1336,6 +1373,7 @@ class CartographyController extends Controller
 
                     // APPLICATIONS
                     $textRun=$this->addTextRunRow($table,"Applications");
+                    $logicalServer->applications=$logicalServer->applications->sortBy("name");
                     foreach($logicalServer->applications as $application) {
                         $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($logicalServer->applications->last()!=$application)
@@ -1344,6 +1382,7 @@ class CartographyController extends Controller
 
                     // Physical server
                     $textRun=$this->addTextRunRow($table,"Serveurs physiques");
+                    $logicalServer->servers=$logicalServer->servers->sortBy("name");
                     foreach($logicalServer->servers as $server) {
                         $textRun->addLink("PSERVER".$server->id, $server->name, CartographyController::FancyLinkStyle, null, true);
                         if ($logicalServer->servers->last()!=$server)
@@ -1470,6 +1509,7 @@ class CartographyController extends Controller
 
                     // Buildings
                     $textRun=$this->addTextRunRow($table,"Buildings");
+                    $site->siteBuildings=$site->siteBuildings->sortBy("name");
                     foreach($site->siteBuildings as $building) {
                         $textRun->addLink("BUILDING".$building->id, $building->name, CartographyController::FancyLinkStyle, null, true);
                         if ($site->siteBuildings->last()!=$building)
@@ -1493,6 +1533,7 @@ class CartographyController extends Controller
 
                     // Baies
                     $textRun=$this->addTextRunRow($table,"Baies");
+                    $building->roomBays=$building->roomBays->sortBy("name");
                     foreach($building->roomBays as $bay) {
                         $textRun->addLink("BAY".$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
                         if ($building->roomBays->last()!=$bay)
@@ -1516,6 +1557,7 @@ class CartographyController extends Controller
 
                     // Serveurs
                     $textRun=$this->addTextRunRow($table,"Serveurs physique");
+                    $bay->bayPhysicalServers=$bay->bayPhysicalServers->sortBy("name");
                     foreach($bay->bayPhysicalServers as $physicalServer) {
                         $textRun->addLink("PSERVER".$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
                         if ($bay->bayPhysicalServers->last()!=$physicalServer)
@@ -1557,6 +1599,7 @@ class CartographyController extends Controller
 
                     // Serveurs logiques
                     $textRun=$this->addTextRunRow($table,"Serveurs logiques");
+                    $server->serversLogicalServers=$server->serversLogicalServers->sortBy("name");
                     foreach($server->serversLogicalServers as $logicalServer) {
                         $textRun->addLink("PSERVER".$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
                         if ($server->serversLogicalServers->last()!=$logicalServer)
