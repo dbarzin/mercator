@@ -46,11 +46,12 @@ Niveaux de conformité
 Ecran de saisie
 
 [<img src="public/screenshots/mercator4.png" width="400">](public/screenshots/mercator4.png)
+[<img src="public/screenshots/mercator4.png" width="400">](public/screenshots/mercator5.png)
 
 Dessin de la cartographie
 
-[<img src="public/screenshots/mercator5.png" width="400">](public/screenshots/mercator5.png)
-[<img src="public/screenshots/mercator6.png" width="400">](public/screenshots/mercator6.png)
+[<img src="public/screenshots/mercator5.png" width="400">](public/screenshots/mercator6.png)
+[<img src="public/screenshots/mercator6.png" width="400">](public/screenshots/mercator7.png)
 
 ## Technologies
 - PHP, Javascript, Laravel
