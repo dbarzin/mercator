@@ -24,7 +24,7 @@ class UpdatePhysicalSwitchRequest extends FormRequest
                 'max:32',
                 'required',
                 //'unique:physical_switches,name,' . request()->route('physical_switch')->id,
-                'unique:physical_switches,name,'.request()->route('physical_switche')->id.',id,deleted_at,NULL',
+                'unique:physical_switches,name,'.request()->route('physical_switch')->id.',id,deleted_at,NULL',
             ],
         ];
     }
