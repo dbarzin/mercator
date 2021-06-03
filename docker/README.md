@@ -32,8 +32,8 @@ Base de données Mysql
     DB_HOST=db
     DB_PORT=3306
     DB_DATABASE=mercator
-    DB_USERNAME=mercator
-    DB_PASSWORD=mercator
+    DB_USERNAME=mercator_user
+    DB_PASSWORD=s3cr3t
 
 - la valeur pour `APP_URL` doit correspondre au nom du service dans le `docker-compose.yml`
 - de même, le nom du service est db dans ce même fichier (`DB_HOST`)
@@ -63,7 +63,8 @@ Build du container mercator en local
 Démarrage de l'application:
  - app : service docker lié à l'application mercator
  - db : base de données
-    docker-compose up -d
+
+     docker-compose up -d
 
 Pour observer les logs applicatifs
 
