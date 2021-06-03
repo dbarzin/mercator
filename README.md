@@ -53,6 +53,10 @@ Dessin de la cartographie
 [<img src="public/screenshots/mercator6.png" width="400">](public/screenshots/mercator6.png)
 [<img src="public/screenshots/mercator7.png" width="400">](public/screenshots/mercator7.png)
 
+Modèle de données
+
+[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
+
 ## Technologies
 - PHP, Javascript, Laravel
 - Base de données supportées : MySQL, Postgres, SQLite, SQL Server
