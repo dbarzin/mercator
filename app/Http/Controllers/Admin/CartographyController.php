@@ -1237,7 +1237,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1); 
 
                 foreach($networks as $network) {
-                    $section->addBookmark("NETWORK".$zone->id);
+                    $section->addBookmark("NETWORK".$network->id);
                     $table=$this->addTable($section, $network->name);
                     $this->addHTMLRow($table,"Description",$network->description);
 
