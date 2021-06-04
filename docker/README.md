@@ -60,11 +60,13 @@ Build du container mercator en local
 
     docker-compose build
 
-Démarrage de l'application:
- - app : service docker lié à l'application mercator
- - db : base de données
+Démarrage des 2 services app et db
 
-     docker-compose up -d
+    docker-compose up -d
+
+L'application répond sur le pour 8000
+
+    wget http://127.0.0.1:8000
 
 Pour observer les logs applicatifs
 
