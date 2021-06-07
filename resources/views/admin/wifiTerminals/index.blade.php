@@ -35,9 +35,6 @@
                             {{ trans('cruds.wifiTerminal.fields.building') }}
                         </th>
                         <th>
-                            {{ trans('cruds.wifiTerminal.fields.bay') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -59,11 +56,6 @@
                             </td>
                             <td>
                                 {{ $wifiTerminal->building->name ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($wifiTerminal->bays as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
                             </td>
                             <td>
                                 @can('wifi_terminal_show')

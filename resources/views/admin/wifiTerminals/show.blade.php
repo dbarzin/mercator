@@ -55,16 +55,6 @@
                             {{ $wifiTerminal->building->name ?? '' }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.wifiTerminal.fields.bay') }}
-                        </th>
-                        <td>
-                            @foreach($wifiTerminal->bays as $key => $bay)
-                                <span class="label label-info">{{ $bay->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

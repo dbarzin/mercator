@@ -50,8 +50,4 @@ class WifiTerminal extends Model
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function bays()
-    {
-        return $this->belongsToMany(Bay::class);
-    }
 }

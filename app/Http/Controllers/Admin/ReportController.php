@@ -671,6 +671,17 @@ class ReportController extends Controller
                      return false;
                 });
 
+            $wifiTerminals = WifiTerminal::All()->sortBy("name")
+                ->filter(function($item) use($site,$buildings) {
+                    if (($item->building_id==null)&&($item->site_id == $site))
+                            return true;
+                    foreach($buildings as $building) 
+                        if ($item->building_id == $building->id) 
+                            return true;
+                    return false;
+                });
+
+
         }
         else 
         {
@@ -685,6 +696,7 @@ class ReportController extends Controller
             $phones = Phone::All()->sortBy("name");
             $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $wifiTerminals = WifiTerminal::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
@@ -700,6 +712,7 @@ class ReportController extends Controller
             ->with("phones", $phones)
             ->with("physicalSwitches", $physicalSwitches)
             ->with("physicalRouters", $physicalRouters)
+            ->with("wifiTerminals", $wifiTerminals)
             ;
 
     }

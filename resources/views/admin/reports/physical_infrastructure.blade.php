@@ -626,7 +626,56 @@
             </div>
             @endif
 
-            <!-- Wifi Termonals -->
+            <!-- Wifi Terminals -->
+            @if ((auth()->user()->granularity>=2)&&($wifiTerminals->count()>0))
+            <div class="card">
+                <div class="card-header">
+                    Borne Wifi
+                </div>
+                <div class="card-body">
+                    <p>Matériel permettant l’accès au réseau sans fil wifi.</p>
+                      @foreach($wifiTerminals as $wifiTerminal)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="WIFI{{ $wifiTerminal->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}/edit">{{ $wifiTerminal->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">Description</th>
+                                    <td>{!! $wifiTerminal->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>{{ $wifiTerminal->type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Site</td>
+                                    <td>
+                                        @if ($wifiTerminal->site!=null)
+                                            <a href="#SITE{{ $wifiTerminal->site->id }}">{{ $wifiTerminal->site->name }}</a><br>
+                                        @endif                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Building</td>
+                                    <td>
+                                        @if ($phone->building!=null)
+                                            <a href="#BUILDING{{ $wifiTerminal->building->id }}">{{ $wifiTerminal->building->name }}</a><br>
+                                        @endif                                        
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
 
         </div>
     </div>
@@ -658,6 +707,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
+    .addImage("/images/wifi.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
             @foreach($sites as $site) \
@@ -737,6 +787,14 @@ d3.select("#graph").graphviz()
                      B{{ $router->building->id }}\ -> ROUTER{{ $router->id }}\
                 @elseif ($router->site!=null)\
                      S{{ $router->site->id }}\ -> ROUTER{{ $router->id }}\
+                @endif\
+            @endforeach\
+            @foreach($wifiTerminals as $wifiTerminal) \
+                WIFI{{ $wifiTerminal->id }} [label=\"{{ $wifiTerminal->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"#WIFI{{$wifiTerminal->id}}\"]\
+                @if ($wifiTerminal->building!=null)\
+                     B{{ $wifiTerminal->building->id }}\ -> WIFI{{ $wifiTerminal->id }}\
+                @elseif ($wifiTerminal->site!=null)\
+                     S{{ $wifiTerminal->site->id }}\ -> WIFI{{ $wifiTerminal->id }}\
                 @endif\
             @endforeach\
         }");
