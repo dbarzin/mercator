@@ -54,6 +54,8 @@ use App\Peripheral;
 use App\Phone;
 use App\PhysicalSwitch;
 use App\PhysicalRouter;
+use App\WifiTerminal;
+use App\PhysicalSecurityDevice;
 
 use App\Http\Controllers\Controller;
 
@@ -1414,6 +1416,8 @@ class CartographyController extends Controller
             $phones = Phone::All()->sortBy("name");
             $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $wifiTerminals = WifiTerminal::All()->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
 
             // Generate Graph
             $graph = "digraph  {";
@@ -1488,6 +1492,13 @@ class CartographyController extends Controller
                      $graph .= " B" . $router->building->id . "->ROUTER" . $router->id;
                 elseif ($router->site!=null)
                      $graph .= " S" . $router->site->id . "->ROUTER" . $router->id;
+                }
+            foreach($wifiTerminals as $wifiTerminal) { 
+                $graph .= " WIFI" . $router->id . "[label=\"" . $wifiTerminal->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/wifi.png") . "\"]";
+                if ($wifiTerminal->building!=null)
+                     $graph .= " B" . $wifiTerminal->building->id . "->WIFI" . $wifiTerminal->id;
+                elseif ($wifiTerminal->site!=null)
+                     $graph .= " S" . $wifiTerminal->site->id . "->WIFI" . $wifiTerminal->id;
                 }
             $graph .= "}";
 
@@ -1791,6 +1802,65 @@ class CartographyController extends Controller
                     $section->addTextBreak(1); 
                     }
                 }
+            // =====================================
+            if ($wifiTerminals->count()>0) { 
+                $section->addTitle('Borne wifi', 2);
+                $section->addText("Matériel permettant l’accès au réseau sans fil wifi.");
+                $section->addTextBreak(1); 
+
+                foreach($wifiTerminals as $wifiTerminal) {
+                    $section->addBookmark("WIFI".$wifiTerminal->id);
+                    $table=$this->addTable($section, $wifiTerminal->name);
+                    $this->addHTMLRow($table,"Description",$wifiTerminal->description);
+
+                    $this->addTextRow($table,"Type",$wifiTerminal->type);
+
+                    if ($wifiTerminal->site!=null) {
+                        $textRun=$this->addTextRunRow($table,"Site");
+                        $textRun->addLink("SITE".$wifiTerminal->site->id, $wifiTerminal->site->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($wifiTerminal->building!=null) {
+                        $textRun=$this->addTextRunRow($table,"Building / Salle");
+                        $textRun->addLink("BUILDING".$wifiTerminal->building->id, $wifiTerminal->building->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+            // =====================================
+            if ($physicalSecurityDevices->count()>0) { 
+                $section->addTitle('Equipement de sécurité', 2);
+                $section->addText("Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.");
+                $section->addTextBreak(1); 
+
+                foreach($physicalSecurityDevices as $physicalSecurityDevice) {
+                    $section->addBookmark("PSD".$physicalSecurityDevice->id);
+                    $table=$this->addTable($section, $physicalSecurityDevice->name);
+                    $this->addHTMLRow($table,"Description",$physicalSecurityDevice->description);
+
+                    $this->addTextRow($table,"Type",$physicalSecurityDevice->type);
+
+                    if ($physicalSecurityDevice->site!=null) {
+                        $textRun=$this->addTextRunRow($table,"Site");
+                        $textRun->addLink("SITE".$physicalSecurityDevice->site->id, $physicalSecurityDevice->site->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($physicalSecurityDevice->building!=null) {
+                        $textRun=$this->addTextRunRow($table,"Building / Salle");
+                        $textRun->addLink("BUILDING".$physicalSecurityDevice->building->id, $physicalSecurityDevice->building->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($physicalSecurityDevice->bay!=null) {
+                        $textRun=$this->addTextRunRow($table,"Baie");
+                        $textRun->addLink("BAY".$physicalSecurityDevice->bay->id, $physicalSecurityDevice->bay->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+
             }
 
         // Finename
