@@ -55,6 +55,7 @@ use App\Phone;
 use App\PhysicalSwitch;
 use App\PhysicalRouter;
 use App\WifiTerminal;
+use App\PhysicalSecurityDevice;
 
 use App\Http\Controllers\Controller;
 
@@ -681,6 +682,22 @@ class ReportController extends Controller
                     return false;
                 });
 
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name")
+                ->filter(function($item) use($site,$buildings,$bays) {       
+                    if (($item->bay_id==null)&&($item->building_id==null)&&($item->site_id == $site))
+                        return true;
+                    else 
+                        if ($item->bay_id==null) 
+                            foreach($buildings as $building) {
+                                if ($item->building_id == $building->id) 
+                                    return true;                                
+                            }
+                        else 
+                            foreach($bays as $bay) 
+                                if ($item->bay_id == $bay->id) 
+                                    return true;
+                     return false;
+                });
 
         }
         else 
@@ -697,6 +714,7 @@ class ReportController extends Controller
             $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
             $wifiTerminals = WifiTerminal::All()->sortBy("name");
+            $physicalSecurityDevices = physicalSecurityDevices::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
@@ -713,6 +731,7 @@ class ReportController extends Controller
             ->with("physicalSwitches", $physicalSwitches)
             ->with("physicalRouters", $physicalRouters)
             ->with("wifiTerminals", $wifiTerminals)
+            ->with("physicalSecurityDevices", $physicalSecurityDevices)
             ;
 
     }

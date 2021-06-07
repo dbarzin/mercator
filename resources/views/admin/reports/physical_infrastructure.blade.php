@@ -677,6 +677,66 @@
             </div>
             @endif
 
+
+            @if ($physicalSecurityDevices->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    Équipement de sécurité physique
+                </div>
+                <div class="card-body">
+                    <p>Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
+                      @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="PSD{{ $physicalSecurityDevice->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}/edit">{{ $physicalSecurityDevice->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">Description</th>
+                                    <td>{!! $physicalSecurityDevice->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>{{ $physicalSecurityDevice->type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Site</td>
+                                    <td>
+                                        @if ($physicalSecurityDevice->site!=null)
+                                            <a href="#SITE{{ $physicalSecurityDevice->site->id }}">{{ $physicalSecurityDevice->site->name }}</a><br>
+                                        @endif                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Building</td>
+                                    <td>
+                                        @if ($router->building!=null)
+                                            <a href="#BUILDING{{ $physicalSecurityDevice->building->id }}">{{ $physicalSecurityDevice->building->name }}</a><br>
+                                        @endif                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Baie</td>
+                                    <td>
+                                        @if ($physicalSecurityDevice->bay!=null)
+                                            <a href="#BAY{{ $physicalSecurityDevice->bay->id }}">{{ $physicalSecurityDevice->bay->name }}</a><br>
+                                        @endif                                        
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+
+
         </div>
     </div>
 
@@ -708,6 +768,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
+    .addImage("/images/security.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
             @foreach($sites as $site) \
@@ -795,6 +856,16 @@ d3.select("#graph").graphviz()
                      B{{ $wifiTerminal->building->id }}\ -> WIFI{{ $wifiTerminal->id }}\
                 @elseif ($wifiTerminal->site!=null)\
                      S{{ $wifiTerminal->site->id }}\ -> WIFI{{ $wifiTerminal->id }}\
+                @endif\
+            @endforeach\
+            @foreach($physicalSecurityDevices as $physicalSecurityDevice) \
+                PSD{{ $physicalSecurityDevice->id }} [label=\"{{ $physicalSecurityDevice->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/security.png\" href=\"#PSD{{$physicalSecurityDevice->id}}\"]\
+                @if ($physicalSecurityDevice->bay!=null)\
+                     BAY{{ $physicalSecurityDevice->bay->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
+                @elseif ($physicalSecurityDevice->building!=null)\
+                     B{{ $physicalSecurityDevice->building->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
+                @elseif ($physicalSecurityDevice->site!=null)\
+                     S{{ $physicalSecurityDevice->site->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
                 @endif\
             @endforeach\
         }");
