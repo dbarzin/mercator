@@ -1409,8 +1409,8 @@ class ReportController extends Controller
                 $sheet->setCellValue("C{$row}", $item["bay"]);
                 $sheet->setCellValue("D{$row}", $item["category"]);
                 $sheet->setCellValue("E{$row}", $item["name"]);
-                $sheet->setCellValue("D{$row}", $item["type"]);
-                $sheet->setCellValue("F{$row}", $html->toRichTextObject($item["description"]));
+                $sheet->setCellValue("F{$row}", $item["type"]);
+                $sheet->setCellValue("G{$row}", $html->toRichTextObject($item["description"]));
 
                 $row++;
         }
