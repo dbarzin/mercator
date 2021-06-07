@@ -1000,8 +1000,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Server",
+                    "category" => "Server",
                     "name" => $physicalServer->name,
+                    "type" => $physicalServer->type,
                     "description" => $physicalServer->descrition,
                 ));
         }
@@ -1020,8 +1021,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => "",
-                    "type" => "Workstation",
+                    "category" => "Workstation",
                     "name" => $workstation->name,
+                    "type" => $workstation->type,
                     "description" => $workstation->description,
                 ));
         }
@@ -1042,8 +1044,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Storage",
+                    "category" => "Storage",
                     "name" => $storageDevice->name,
+                    "type" => $storageDevice->name,
                     "description" => $storageDevice->description,
                 ));
         }
@@ -1064,8 +1067,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Peripheral",
+                    "category" => "Peripheral",
                     "name" => $peripheral->name,
+                    "type" => $peripheral->type,
                     "description" => $peripheral->description,
                 ));
         }
@@ -1084,8 +1088,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => "",
-                    "type" => "Phone",
+                    "category" => "Phone",
                     "name" => $phone->name,
+                    "type" => $phone->type,
                     "description" => $phone->description,
                 ));
         }
@@ -1106,8 +1111,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Switch",
+                    "category" => "Switch",
                     "name" => $physicalSwitch->name,
+                    "type" => $physicalSwitch->type,
                     "description" => $physicalSwitch->description,
                 ));
         }
@@ -1128,8 +1134,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Router",
+                    "category" => "Router",
                     "name" => $physicalRouter->name,
+                    "type" => $physicalRouter->type,
                     "description" => $physicalRouter->description,
                 ));
         }
@@ -1148,8 +1155,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => "",
-                    "type" => "Wifi",
+                    "category" => "Wifi",
                     "name" => $wifiTerminal->name,
+                    "type" => $wifiTerminal->type,
                     "description" => $wifiTerminal->description,
                 ));
         }
@@ -1170,8 +1178,9 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Sécurité",
+                    "category" => "Sécurité",
                     "name" => $physicalSecurityDevice->name,
+                    "type" => $physicalSecurityDevice->type,
                     "description" => $physicalSecurityDevice->description,
                 ));
         }
@@ -1376,8 +1385,9 @@ class ReportController extends Controller
             'Site',
             'Room',
             'Bay',
-            'Type',
+            'Category',
             'Name',
+            'Type',
             'Description',
             );
 
@@ -1397,8 +1407,9 @@ class ReportController extends Controller
                 $sheet->setCellValue("A{$row}", $item["site"]);
                 $sheet->setCellValue("B{$row}", $item["room"]);
                 $sheet->setCellValue("C{$row}", $item["bay"]);
-                $sheet->setCellValue("D{$row}", $item["type"]);
+                $sheet->setCellValue("D{$row}", $item["category"]);
                 $sheet->setCellValue("E{$row}", $item["name"]);
+                $sheet->setCellValue("D{$row}", $item["type"]);
                 $sheet->setCellValue("F{$row}", $html->toRichTextObject($item["description"]));
 
                 $row++;
