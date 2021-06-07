@@ -1588,7 +1588,7 @@ class CartographyController extends Controller
                 foreach($physicalServers as $server) {
                     $section->addBookmark("PSERVER".$server->id);
                     $table=$this->addTable($section, $server->name);
-                    $this->addHTMLRow($table,"Description",$server->description);
+                    $this->addHTMLRow($table,"Description",$server->descrition);
                     $this->addHTMLRow($table,"Configuration",$server->configuration);
 
                     if ($server->site!=null) {

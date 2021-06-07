@@ -1022,7 +1022,7 @@ class ReportController extends Controller
                     "bay" => "",
                     "type" => "Workstation",
                     "name" => $workstation->name,
-                    "description" => $workstation->descrition,
+                    "description" => $workstation->description,
                 ));
         }
         
@@ -1044,7 +1044,7 @@ class ReportController extends Controller
                     "bay" => $bay->name ?? "",
                     "type" => "Storage",
                     "name" => $storageDevice->name,
-                    "description" => $storageDevice->descrition,
+                    "description" => $storageDevice->description,
                 ));
         }
 
@@ -1066,7 +1066,7 @@ class ReportController extends Controller
                     "bay" => $bay->name ?? "",
                     "type" => "Peripheral",
                     "name" => $peripheral->name,
-                    "description" => $peripheral->descrition,
+                    "description" => $peripheral->description,
                 ));
         }
 
@@ -1086,7 +1086,7 @@ class ReportController extends Controller
                     "bay" => "",
                     "type" => "Phone",
                     "name" => $phone->name,
-                    "description" => $phone->descrition,
+                    "description" => $phone->description,
                 ));
         }
     
@@ -1108,7 +1108,7 @@ class ReportController extends Controller
                     "bay" => $bay->name ?? "",
                     "type" => "Switch",
                     "name" => $physicalSwitch->name,
-                    "description" => $physicalSwitch->descrition,
+                    "description" => $physicalSwitch->description,
                 ));
         }
 
@@ -1130,9 +1130,52 @@ class ReportController extends Controller
                     "bay" => $bay->name ?? "",
                     "type" => "Router",
                     "name" => $physicalRouter->name,
-                    "description" => $physicalRouter->descrition,
+                    "description" => $physicalRouter->description,
                 ));
         }
+
+        // WifiTerminal
+        if ($building!=NULL)
+            $wifiTerminals = WifiTerminal::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $wifiTerminals = WifiTerminal::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $wifiTerminals = WifiTerminal::All()->sortBy("name");
+
+        foreach ($wifiTerminals as $wifiTerminal) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => "",
+                    "type" => "Wifi",
+                    "name" => $wifiTerminal->name,
+                    "description" => $wifiTerminal->description,
+                ));
+        }
+
+        // Physical Security Devices
+        if ($bay!=NULL) 
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+        else if ($building!=NULL)
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+        else if ($site!=NULL)
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+        else
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
+
+        foreach ($physicalSecurityDevices as $physicalSecurityDevice) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "type" => "Sécurité",
+                    "name" => $physicalSecurityDevice->name,
+                    "description" => $physicalSecurityDevice->description,
+                ));
+        }
+
     }
 
     public function securityNeeds(Request $request) {
