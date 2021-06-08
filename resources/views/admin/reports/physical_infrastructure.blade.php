@@ -663,7 +663,7 @@
                                 <tr>
                                     <td>Building</td>
                                     <td>
-                                        @if ($phone->building!=null)
+                                        @if ($wifiTerminal->building!=null)
                                             <a href="#BUILDING{{ $wifiTerminal->building->id }}">{{ $wifiTerminal->building->name }}</a><br>
                                         @endif                                        
                                     </td>
