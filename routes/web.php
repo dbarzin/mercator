@@ -282,15 +282,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     Route::get('global-search', [GlobalSearchController::Class,'search'])->name('globalSearch');
 
-    // Reports
-    Route::get('report/ecosystem', [ReportController::Class,'ecosystem']);
-    Route::get('report/information_system', [ReportController::Class,'informationSystem']);
-    Route::get('report/administration', [ReportController::Class,'administration']);
-    Route::get('report/applications', [ReportController::Class,'applications']);
-    Route::get('report/application_flows', [ReportController::Class,'applicationFlows']);
-    Route::get('report/logical_infrastructure', [ReportController::Class,'logicalInfrastructure']);
-    Route::get('report/physical_infrastructure', [ReportController::Class,'physicalInfrastructure']);
-    Route::get('report/logicalServerResp', [ReportController::Class,'logicalServerResp']);
+    // Views
+    Route::get('report/ecosystem', [ReportController::Class,'ecosystem'])->name('report.view.ecosystem');
+    Route::get('report/information_system', [ReportController::Class,'informationSystem'])->name('report.view.informaton-system');
+    Route::get('report/administration', [ReportController::Class,'administration'])->name('report.view.administration');
+    Route::get('report/applications', [ReportController::Class,'applications'])->name('report.view.applications');
+    Route::get('report/application_flows', [ReportController::Class,'applicationFlows'])->name('report.view.application-flows');
+    Route::get('report/logical_infrastructure', [ReportController::Class,'logicalInfrastructure'])->name('report.view.logical-infrastructure');
+    Route::get('report/physical_infrastructure', [ReportController::Class,'physicalInfrastructure'])->name('report.view.physical-infrastructure');
     
     // Maturity levels
     Route::get('report/maturity1', [HomeController::Class,'maturity1'])->name("report.maturity1");
@@ -304,6 +303,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/physicalInventory', [ReportController::Class, 'physicalInventory']);
     Route::get('report/securityNeeds', [ReportController::Class, 'securityNeeds']);
     Route::put('report/cartography', [CartographyController::Class, 'cartography']);
+    Route::get('report/logicalServerResp', [ReportController::Class,'logicalServerResp'])->name('report.view.logical-server-responsible');
 
     // Reporting
     Route::get('doc/report', function () {
