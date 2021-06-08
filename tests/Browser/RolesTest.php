@@ -9,7 +9,6 @@ class RolesTest extends DuskTestCase
 {
     public function testIndex()
     {
-
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
