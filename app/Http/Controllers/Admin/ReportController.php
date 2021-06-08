@@ -57,6 +57,7 @@ use App\PhysicalRouter;
 use App\WifiTerminal;
 use App\PhysicalSecurityDevice;
 
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -714,7 +715,7 @@ class ReportController extends Controller
             $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
             $wifiTerminals = WifiTerminal::All()->sortBy("name");
-            $physicalSecurityDevices = physicalSecurityDevices::All()->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
