@@ -18,6 +18,9 @@ class VerifyCsrfToken extends Middleware
     ];
 
 /*
+=======
+
+>>>>>>> 67938b5237ca1d83f5e1c796c7b21827255316e2
     public function handle($request, Closure $next)
     {
         if(!Auth::check() && $request->route()->named('logout')) {
@@ -28,5 +31,6 @@ class VerifyCsrfToken extends Middleware
 
         return parent::handle($request, $next);
     }
+<<<<<<< HEAD
  */
 }
