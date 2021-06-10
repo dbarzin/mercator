@@ -344,7 +344,7 @@
             </div>
             @endif
 
-            @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0)))
+            @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0))
             <div class="card">
                 <div class="card-header">
                     Infrastructure de stockage
