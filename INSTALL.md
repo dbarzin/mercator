@@ -41,6 +41,10 @@ Installer MySQL
 
     sudo apt install mysql-server
 
+Vérifier que vous utilisez MySQL et pas MariaDB (Mercator ne fonctionne pas avec MariaDB).
+
+    sudo mysql --version
+
 Lancer MySQL avec les droits root
 
     sudo mysql
