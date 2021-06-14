@@ -19,9 +19,14 @@ Installer GIT
 
 ## Project
 
-Installer le projet dans le répertoire web d'Apache.
+Créer le répertoire du projet
 
-    cd /var/www
+    sudo cd /var/www
+    sudo mkdir mercator
+    sudo chmod 0777 mercator
+    
+Cloner le projet depuis Github
+
     git clone https://www.github.com/dbarzin/mercator
 
 ## Composer
@@ -98,7 +103,7 @@ Vider la cache
 
 Pour importer la base de données de test (facultatif)
 
-    mysql mercator < mercator_data.sql
+    sudo mysql mercator < mercator_data.sql
 
 Démarrer l'application avec php
 
