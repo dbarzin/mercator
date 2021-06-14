@@ -30,11 +30,11 @@ Cloner le projet depuis Github
 
 ## Composer
 
-[Install Composer globally](https://getcomposer.org/download/).
+Installer Composer : [Install Composer globally](https://getcomposer.org/download/).
 
     sudo mv composer.phar /usr/local/bin/composer
 
-Installer la packages
+Installer les packages avec composer :
 
     cd /var/www/mercator
     composer install
