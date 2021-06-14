@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers;
 use App\Http\Controllers\Admin;
-
 
 Route::redirect('/', '/login');
 
@@ -270,10 +270,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
 // Profile
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
-    Route::get('password', [Auth\ChangePasswordController::Class, 'edit'])->name('password.edit');
-    Route::post('password', [Auth\ChangePasswordController::Class, 'update'])->name('password.update');
-    Route::get('preferences', [Auth\ProfileController::Class, 'showProfile']);
-    Route::post('preferences', [Auth\ProfileController::Class, 'saveProfile']);
+    Route::get('password', [Controllers\Auth\ChangePasswordController::Class, 'edit'])->name('password.edit');
+    Route::post('password', [Controllers\Auth\ChangePasswordController::Class, 'update'])->name('password.update');
+    Route::get('preferences', [Controllers\Auth\ProfileController::Class, 'showProfile']);
+    Route::post('preferences', [Controllers\Auth\ProfileController::Class, 'saveProfile']);
 });
 
     
