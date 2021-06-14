@@ -2,8 +2,7 @@
 
 Mettre à jour la distribution linux
 
-    sudo apt update
-    sudo apt upgrade
+    sudo apt update && sudo apt upgrade
 
 Insatller PHP et quelques librairies
 
