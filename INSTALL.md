@@ -20,7 +20,7 @@ Installer GIT
 
 Créer le répertoire du projet
 
-    sudo cd /var/www
+    cd /var/www
     sudo mkdir mercator
     sudo chmod 0777 mercator
     
