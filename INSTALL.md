@@ -22,7 +22,7 @@ Créer le répertoire du projet
 
     cd /var/www
     sudo mkdir mercator
-    sudo chmod 0777 mercator
+    sudo chown $USER:$GROUP mercator
     
 Cloner le projet depuis Github
 
