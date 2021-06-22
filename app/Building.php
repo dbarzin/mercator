@@ -40,37 +40,37 @@ class Building extends Model
 
     public function roomBays()
     {
-        return $this->hasMany(Bay::class, 'room_id', 'id');
+        return $this->hasMany(Bay::class, 'room_id', 'id')->orderBy('name');
     }
 
     public function buildingPhysicalServers()
     {
-        return $this->hasMany(PhysicalServer::class, 'building_id', 'id');
+        return $this->hasMany(PhysicalServer::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function buildingWorkstations()
     {
-        return $this->hasMany(Workstation::class, 'building_id', 'id');
+        return $this->hasMany(Workstation::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function buildingStorageDevices()
     {
-        return $this->hasMany(StorageDevice::class, 'building_id', 'id');
+        return $this->hasMany(StorageDevice::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function buildingPeripherals()
     {
-        return $this->hasMany(Peripheral::class, 'building_id', 'id');
+        return $this->hasMany(Peripheral::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function buildingPhones()
     {
-        return $this->hasMany(Phone::class, 'building_id', 'id');
+        return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function buildingPhysicalSwitches()
     {
-        return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id');
+        return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
 
     public function site()

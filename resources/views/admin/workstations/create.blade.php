@@ -19,6 +19,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.workstation.fields.name_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="type">{{ trans('cruds.workstation.fields.type') }}</label>
+                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', '') }}">
+                @if($errors->has('type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('type') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.workstation.fields.name_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="description">{{ trans('cruds.workstation.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>

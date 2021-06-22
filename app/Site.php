@@ -39,36 +39,36 @@ class Site extends Model
 
     public function siteBuildings()
     {
-        return $this->hasMany(Building::class, 'site_id', 'id');
+        return $this->hasMany(Building::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function sitePhysicalServers()
     {
-        return $this->hasMany(PhysicalServer::class, 'site_id', 'id');
+        return $this->hasMany(PhysicalServer::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function siteWorkstations()
     {
-        return $this->hasMany(Workstation::class, 'site_id', 'id');
+        return $this->hasMany(Workstation::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function siteStorageDevices()
     {
-        return $this->hasMany(StorageDevice::class, 'site_id', 'id');
+        return $this->hasMany(StorageDevice::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function sitePeripherals()
     {
-        return $this->hasMany(Peripheral::class, 'site_id', 'id');
+        return $this->hasMany(Peripheral::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function sitePhones()
     {
-        return $this->hasMany(Phone::class, 'site_id', 'id');
+        return $this->hasMany(Phone::class, 'site_id', 'id')->orderBy('name');
     }
 
     public function sitePhysicalSwitches()
     {
-        return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id');
+        return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');
     }
 }

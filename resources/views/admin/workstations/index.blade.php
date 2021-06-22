@@ -26,7 +26,7 @@
                             {{ trans('cruds.workstation.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.workstation.fields.description') }}
+                            {{ trans('cruds.workstation.fields.type') }}
                         </th>
                         <th>
                             {{ trans('cruds.workstation.fields.site') }}
@@ -49,7 +49,7 @@
                                 {{ $workstation->name ?? '' }}
                             </td>
                             <td>
-                                {!! $workstation->description ?? '' !!}
+                                {!! $workstation->type ?? '' !!}
                             </td>
                             <td>
                                 {{ $workstation->site->name ?? '' }}

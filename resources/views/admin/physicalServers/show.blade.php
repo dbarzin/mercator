@@ -33,6 +33,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.physicalServer.fields.type') }}
+                        </th>
+                        <td>
+                            {{ $physicalServer->type }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.physicalServer.fields.configuration') }}
                         </th>
                         <td>

@@ -118,7 +118,7 @@
                                     </tr>
                                     <tr>
                                         <th>Baies</th>
-                                    <td>                                
+                                    <td>         
                                         @foreach($building->roomBays as $bay) 
                                             <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
                                             @if (!$loop->last)
@@ -239,7 +239,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">Type</th>
+                                    <td>{{ $pserver->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
                                     <td>{!! $pserver->description !!}</td>
                                 </tr>
                                 <tr>
@@ -312,7 +316,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">Type</th>
+                                    <td>{{ $workstation->description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
                                     <td>{!! $workstation->description !!}</td>
                                 </tr>
                                 <tr>

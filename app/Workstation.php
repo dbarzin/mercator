@@ -15,6 +15,7 @@ class Workstation extends Model
 
     public static $searchable = [
         'name',
+        'type',
         'description',
     ];
 
@@ -26,6 +27,7 @@ class Workstation extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'description',
         'site_id',
         'building_id',

@@ -21,6 +21,7 @@ class PhysicalServer extends Model
 
     public static $searchable = [
         'name',
+        'type',
         'descrition',
         'configuration',
         'responsible',
@@ -28,6 +29,7 @@ class PhysicalServer extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'descrition',
         'configuration',
         'site_id',

@@ -19,6 +19,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.name_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="type">{{ trans('cruds.physicalServer.fields.type') }}</label>
+                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', '') }}">
+                @if($errors->has('type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('type') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.physicalServer.fields.type_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="descrition">{{ trans('cruds.physicalServer.fields.descrition') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('descrition') ? 'is-invalid' : '' }}" name="descrition" id="descrition">{!! old('descrition') !!}</textarea>
@@ -29,6 +41,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.descrition_helper') }}</span>
             </div>
+
+
             <div class="form-group">
                 <label for="configuration">{{ trans('cruds.physicalServer.fields.configuration') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('configuration') ? 'is-invalid' : '' }}" name="configuration" id="configuration">{!! old('configuration') !!}</textarea>
@@ -39,6 +53,25 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.configuration_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="responsible">{{ trans('cruds.physicalServer.fields.responsible') }}</label>
+                <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
+                    @if (!$responsible_list->contains(old('responsible')))
+                        <option> {{ old('responsible') }}</option>'
+                    @endif
+                    @foreach($responsible_list as $t)
+                        <option {{ old('responsible') == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('responsible'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('responsible') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.physicalServer.fields.responsible_helper') }}</span>
+            </div>
+            
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
@@ -82,23 +115,6 @@
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.bay_helper') }}</span>
             </div>
 
-            <div class="form-group">
-                <label for="responsible">{{ trans('cruds.physicalServer.fields.responsible') }}</label>
-                <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
-                    @if (!$responsible_list->contains(old('responsible')))
-                        <option> {{ old('responsible') }}</option>'
-                    @endif
-                    @foreach($responsible_list as $t)
-                        <option {{ old('responsible') == $t ? 'selected' : '' }}>{{$t}}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('responsible'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsible') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.physicalServer.fields.responsible_helper') }}</span>
-            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

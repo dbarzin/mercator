@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.workstation.fields.type') }}
+                        </th>
+                        <td>
+                            {{ $workstation->type }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.workstation.fields.description') }}
                         </th>
                         <td>
