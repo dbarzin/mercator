@@ -39,10 +39,6 @@ class ApplicationServiceController extends Controller
         $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $applicationService->id]);
-        }
-
         return redirect()->route('admin.application-services.index');
     }
 

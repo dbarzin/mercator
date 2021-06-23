@@ -42,11 +42,6 @@ class Relation extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
-    }
-
     public function source()
     {
         return $this->belongsTo(Entity::class, 'source_id');
