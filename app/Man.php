@@ -37,11 +37,11 @@ class Man extends Model
 
     public function mansWans()
     {
-        return $this->belongsToMany(Wan::class);
+        return $this->belongsToMany(Wan::class)->orderBy("name");
     }
 
     public function lans()
     {
-        return $this->belongsToMany(Lan::class);
+        return $this->belongsToMany(Lan::class)->orderBy("name");
     }
 }

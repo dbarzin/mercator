@@ -384,7 +384,7 @@ class ReportController extends Controller
             }
         }
 
-        $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
+        $all_applicationBlocks = ApplicationBlock::orderBy("name")->get();
         if ($applicationBlock==null)
             $all_applications=null;
         else {
@@ -548,7 +548,7 @@ class ReportController extends Controller
                 });
 
             $all_buildings = Building::All()->sortBy("name")
-                ->filter(function($item) use($site, $building) {
+                ->filter(function($item) use($site) {
                     return $item->site_id == $site;
                 });
 
@@ -987,13 +987,13 @@ class ReportController extends Controller
         
         // PhysicalServer
         if ($bay!=NULL) 
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalServers = PhysicalServer::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalServers = PhysicalServer::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalServers = PhysicalServer::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalServers = PhysicalServer::All()->sortBy("name");
+            $physicalServers = PhysicalServer::orderBy("name")->get();
 
         foreach ($physicalServers as $physicalServer) {
             array_push($inventory,
@@ -1010,11 +1010,11 @@ class ReportController extends Controller
         
         // Workstation;
         if ($building!=NULL)
-            $workstations = Workstation::All()->where("building_id","=",$building->id)->sortBy("name");
+            $workstations = Workstation::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $workstations = Workstation::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $workstations = Workstation::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $workstations = Workstation::All()->sortBy("name");
+            $workstations = Workstation::orderBy("name")->get();
 
         foreach ($workstations as $workstation) {            
             array_push($inventory,
@@ -1031,13 +1031,13 @@ class ReportController extends Controller
         
         // StorageDevice;
         if ($bay!=NULL) 
-            $storageDevices = StorageDevice::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $storageDevices = StorageDevice::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $storageDevices = StorageDevice::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $storageDevices = StorageDevice::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $storageDevices = StorageDevice::All()->sortBy("name");
+            $storageDevices = StorageDevice::orderBy("name")->get();
 
         foreach ($storageDevices as $storageDevice) {            
             array_push($inventory,
@@ -1054,13 +1054,13 @@ class ReportController extends Controller
 
         // Peripheral
         if ($bay!=NULL) 
-            $peripherals = Peripheral::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $peripherals = Peripheral::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $peripherals = Peripheral::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $peripherals = Peripheral::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $peripherals = Peripheral::All()->sortBy("name");
+            $peripherals = Peripheral::orderBy("name")->get();
 
         foreach ($peripherals as $peripheral) {            
             array_push($inventory,
@@ -1077,11 +1077,11 @@ class ReportController extends Controller
 
         // Phone;
         if ($building!=NULL)
-            $phones = Phone::All()->where("building_id","=",$building->id)->sortBy("name");
+            $phones = Phone::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $phones = Phone::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $phones = Phone::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $phones = Phone::All()->sortBy("name");
+            $phones = Phone::orderBy("name")->get();
 
         foreach ($phones as $phone) {            
             array_push($inventory,
@@ -1098,13 +1098,13 @@ class ReportController extends Controller
     
         // PhysicalSwitch;
         if ($bay!=NULL) 
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::sortBy("name")->get();
 
         foreach ($physicalSwitches as $physicalSwitch) {            
             array_push($inventory,
@@ -1121,13 +1121,13 @@ class ReportController extends Controller
 
         // PhysicalRouter
         if ($bay!=NULL) 
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalRouters = PhysicalRouter::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalRouters = PhysicalRouter::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalRouters = PhysicalRouter::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $physicalRouters = PhysicalRouter::orderBy("name")->get();
 
         foreach ($physicalRouters as $physicalRouter) {            
             array_push($inventory,
@@ -1144,11 +1144,11 @@ class ReportController extends Controller
 
         // WifiTerminal
         if ($building!=NULL)
-            $wifiTerminals = WifiTerminal::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $wifiTerminals = WifiTerminal::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $wifiTerminals = WifiTerminal::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $wifiTerminals = WifiTerminal::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $wifiTerminals = WifiTerminal::All()->sortBy("name");
+            $wifiTerminals = WifiTerminal::orderBy("name")->get();
 
         foreach ($wifiTerminals as $wifiTerminal) {            
             array_push($inventory,
@@ -1165,13 +1165,13 @@ class ReportController extends Controller
 
         // Physical Security Devices
         if ($bay!=NULL) 
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::orderBy("name")->get();
 
         foreach ($physicalSecurityDevices as $physicalSecurityDevice) {            
             array_push($inventory,
@@ -1367,13 +1367,13 @@ class ReportController extends Controller
             $this->addToInventory($inventory, $site);
 
             // for all buildings
-            $buildings = Building::All()->where("site_id","=",$site->id)->sortBy("name");
+            $buildings = Building::where("site_id","=",$site->id)->orderBy("name")->get();
             foreach ($buildings as $building) {
 
                 $this->addToInventory($inventory, $site, $building);
 
                 // for all bays
-                $bays = Bay::All()->where("room_id","=",$building->id)->sortBy("name");
+                $bays = Bay::where("room_id","=",$building->id)->orderBy("name")->get();
                 foreach ($bays as $bay) {
 
                     $this->addToInventory($inventory, $site, $building, $bay);

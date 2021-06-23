@@ -27,7 +27,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
+        $lans = Lan::pluck('name', 'id')->sortBy('name');
 
         return view('admin.mans.create', compact('lans'));
     }
@@ -44,7 +44,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lans = Lan::all()->pluck('name', 'id');
+        $lans = Lan::pluck('name', 'id')->sortBy('name');
 
         $man->load('lans');
 
