@@ -41,11 +41,6 @@ class Entity extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
-    }
-
     public function entityRespDatabases()
     {
         return $this->hasMany(Database::class, 'entity_resp_id', 'id');
