@@ -114,6 +114,10 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
 
 ## Problèmes
 
+### Restaurer le mot de passe administrateur
+
+    mysql mercator -e "update users set password=$(php -r "echo password_hash('n3w-p4sSw0rD.', PASSWORD_BCRYPT, ['cost' => 10]);") where id=1;"
+
 ### PHP Memory
 
 Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/7.4/apache2/php.ini
