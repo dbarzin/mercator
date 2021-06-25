@@ -77,11 +77,14 @@ use PhpOffice\PhpWord\Element\Line;
 class CartographyController extends Controller
 {
     // Cell style
-    const FancyTableTitleStyle=array("bold"=>true, 'color' => '006699','spaceAfter' => 0);
-    const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000','spaceAfter' => 0);
-    const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000','spaceAfter' => 0);
+    const FancyTableTitleStyle=array("bold"=>true, 'color' => '006699');
+    const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
+    const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
     const FancyLinkStyle=array('color' => '006699');
-    const NoSpace=array('spaceAfter' => 0);
+    const NoSpace=array(
+                    'spaceBefore' => 30,
+                    'spaceAfter' => 30
+                );
 
     private static function addTable(Section $section, String $title=null) {
         $table = $section->addTable(
@@ -90,30 +93,33 @@ class CartographyController extends Controller
                     'borderColor' => '006699', 
                     'cellMargin' => 80,
                     'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER,
-                    'spaceAfter' => 0));
+                    ));
         $table->addRow();
         $table->addCell(8000,array('gridSpan' => 2))
-            ->addText($title,CartographyController::FancyTableTitleStyle);
+            ->addText($title,
+                CartographyController::FancyTableTitleStyle,
+                CartographyController::NoSpace
+                );
         return $table;
     }
 
     private static function addTextRow(Table $table, String $title, String $value=null) {
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle);
-        $table->addCell(6000)->addText($value, CartographyController::FancyRightTableCellStyle);
+        $table->addCell(2000,CartographyController::NoSpace)->addText($title,CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
+        $table->addCell(6000,CartographyController::NoSpace)->addText($value, CartographyController::FancyRightTableCellStyle,CartographyController::NoSpace);
     }
 
     private static function addHTMLRow(Table $table, String $title, String $value=null) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle);
+        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
         \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace("<br>", "<br/>", $value));
     }
 
     private static function addTextRunRow(Table $table, String $title) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle);
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
         $cell=$table->addCell(6000);
-        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle);
+        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle,CartographyController::NoSpace);
     }
 
     public function cartography(Request $request) {
@@ -158,6 +164,8 @@ class CartographyController extends Controller
                 array('size' => 12, 'bold' => true), 
                 array('numStyle' => 'hNum', 'numLevel' => 2));
 
+
+        // $phpWord->addParagraphStyle('P-Style', array('spaceAfter'=>0,'lineHeight'=>1.0))
 
         // Title
         $section->addTitle("Cartographie du Système d'Information",0);

@@ -20,13 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('name');
+        $processes = Process::orderBy('identifiant')->get();
 
         return view('admin.processes.index', compact('processes'));
     }
@@ -35,10 +33,10 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $informations = Information::all()->sortBy('name')->pluck('name', 'id');
-        $macroProcessuses = MacroProcessus::all()->sortBy('name')->pluck('name', 'id');
+        $activities = Activity::orderBy('name')->pluck('name', 'id');
+        $entities = Entity::orderBy('name')->pluck('name', 'id');
+        $informations = Information::orderBy('name')->pluck('name', 'id');
+        $macroProcessuses = MacroProcessus::orderBy('name')->pluck('name', 'id');
         $owner_list = Process::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
 
         return view('admin.processes.create', 
@@ -62,9 +60,9 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
-        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $informations = Information::all()->sortBy('name')->pluck('name', 'id');
+        $activities = Activity::orderBy('name')->pluck('name', 'id');
+        $entities = Entity::orderBy('name')->pluck('name', 'id');
+        $informations = Information::orderBy('name')->pluck('name', 'id');
         $macroProcessuses = MacroProcessus::all()->sortBy('name')->pluck('name', 'id');
         // lists
         $owner_list = Process::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');

@@ -20,7 +20,7 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroProcessuses = MacroProcessus::all()->sortBy('name');
+        $macroProcessuses = MacroProcessus::orderBy('name')->get();
 
         return view('admin.macroProcessuses.index', compact('macroProcessuses'));
     }
@@ -29,7 +29,7 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
         $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
 
@@ -53,7 +53,7 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('idenifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
         $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
 

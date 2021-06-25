@@ -22,7 +22,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $routers = Router::all()->sortBy('name');
+        $routers = Router::orderBy('name');
 
         return view('admin.routers.index', compact('routers'));
     }
@@ -31,7 +31,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
         return view('admin.routers.create',compact('network_switches'));
     }
@@ -48,7 +48,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
         return view('admin.routers.edit', compact('router','network_switches'));
     }
@@ -56,7 +56,6 @@ class RouterController extends Controller
     public function update(UpdateRouterRequest $request, Router $router)
     {
         $router->update($request->all());
-        //$router->networkSwitches()->sync($request->input('networkSwitches', []));
 
         return redirect()->route('admin.routers.index');
     }
