@@ -9,6 +9,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
+/**
+ * App\Router
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $rules
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Router newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Router newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Router onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Router query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereRules($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Router whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Router withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Router withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Router extends Model 
 {
     use SoftDeletes, Auditable;

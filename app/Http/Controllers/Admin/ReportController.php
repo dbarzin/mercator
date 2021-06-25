@@ -385,6 +385,7 @@ class ReportController extends Controller
         }
 
         $all_applicationBlocks = ApplicationBlock::orderBy("name")->get();
+        $all_application_ids = null;
         if ($applicationBlock==null)
             $all_applications=null;
         else {
@@ -1104,7 +1105,7 @@ class ReportController extends Controller
         else if ($site!=NULL)
             $physicalSwitches = PhysicalSwitch::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalSwitches = PhysicalSwitch::sortBy("name")->get();
+            $physicalSwitches = PhysicalSwitch::orderBy("name")->get();
 
         foreach ($physicalSwitches as $physicalSwitch) {            
             array_push($inventory,

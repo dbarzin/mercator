@@ -75,7 +75,7 @@
                                     <span class="label label-info">{{ $informations->name }}</span>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                
+                                    @endif
                                 @endforeach
                             </td>
                             

@@ -7,6 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
+/**
+ * App\Man
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Lan[] $lans
+ * @property-read int|null $lans_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wan[] $mansWans
+ * @property-read int|null $mans_wans_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Man newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Man newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Man onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Man query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Man whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Man whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Man whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Man whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Man whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Man withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Man withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Man extends Model
 {
     use SoftDeletes, Auditable;
