@@ -119,7 +119,7 @@ class CartographyController extends Controller
         $table->addRow();
         $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
         $cell=$table->addCell(6000);
-        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle,CartographyController::NoSpace);
+        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle);
     }
 
     public function cartography(Request $request) {
