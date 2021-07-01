@@ -1,5 +1,14 @@
 # Procédure d'installation de Mercator
 
+## Configuration recommandée
+
+- OS : Ubuntu 20.04 LTS
+- RAM : 2G
+- Disque : 50G
+- VCPU 2
+
+## Installation 
+
 Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
