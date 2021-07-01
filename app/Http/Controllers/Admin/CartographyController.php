@@ -1511,11 +1511,13 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$building->description);
 
                     // Baies
-                    $textRun=$this->addTextRunRow($table,"Baies");
-                    foreach($building->roomBays as $bay) {
-                        $textRun->addLink("BAY".$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($building->roomBays->last()!=$bay)
-                            $textRun->addText(", ");
+                    if ($building->roomBays->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Baies");
+                        foreach($building->roomBays as $bay) {
+                            $textRun->addLink("BAY".$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($building->roomBays->last()!=$bay)
+                                $textRun->addText(", ");
+                            }
                         }
 
                     $section->addTextBreak(1); 
@@ -1533,12 +1535,65 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $bay->name);
                     $this->addHTMLRow($table,"Description",$bay->description);
 
-                    // Serveurs
-                    $textRun=$this->addTextRunRow($table,"Serveurs physique");
-                    foreach($bay->bayPhysicalServers as $physicalServer) {
-                        $textRun->addLink("PSERVER".$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($bay->bayPhysicalServers->last()!=$physicalServer)
-                            $textRun->addText(", ");
+                    // Serveurs physiques
+                    if ($bay->bayPhysicalServers->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Serveurs physique");
+                        foreach($bay->bayPhysicalServers as $physicalServer) {
+                            $textRun->addLink("PSERVER".$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalServers->last()!=$physicalServer)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // PhysicalRouters
+                    if ($bay->bayPhysicalRouters->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Routeurs");
+                        foreach($bay->bayPhysicalRouters as $physicalRouter) {
+                            $textRun->addLink("ROUTER".$physicalRouter->id, $physicalRouter->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalRouters->last()!=$physicalRouter)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+
+                    // Physical Switches
+                    if ($bay->bayPhysicalSwitches->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Commutateurs");
+                        foreach($bay->bayPhysicalSwitches as $physicalSwitch) {
+                            $textRun->addLink("SWITCH".$physicalSwitch->id, $physicalSwitch->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalSwitches->last()!=$physicalSwitch)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // Storage Devices 
+                    if ($bay->bayStorageDevices->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Stockage");
+                        foreach($bay->bayStorageDevices as $storageDevice) {
+                            $textRun->addLink("STORAGEDEVICE".$storageDevice->id, $storageDevice->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayStorageDevices->last()!=$storageDevice)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // PhysicalSecurityDevices
+                    if ($bay->bayPhysicalSecurityDevices->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Equipement de sécurité");
+                        foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) {
+                            $textRun->addLink("PSD".$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalSecurityDevices->last()!=$physicalSecurityDevice)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // Peripherals
+                    if ($bay->bayPeripherals->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Périphériques");
+                        foreach($bay->bayPeripherals as $peripheral) {
+                            $textRun->addLink("PERIPHERAL".$peripheral->id, $peripheral->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPeripherals->last()!=$peripheral)
+                                $textRun->addText(", ");
+                            }
                         }
 
                     $section->addTextBreak(1); 
@@ -1577,7 +1632,7 @@ class CartographyController extends Controller
                     // Serveurs logiques
                     $textRun=$this->addTextRunRow($table,"Serveurs logiques");
                     foreach($server->serversLogicalServers as $logicalServer) {
-                        $textRun->addLink("PSERVER".$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink("LOGICAL_SERVER".$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
                         if ($server->serversLogicalServers->last()!=$logicalServer)
                             $textRun->addText(", ");
                         }
@@ -1587,7 +1642,7 @@ class CartographyController extends Controller
                 }            
 
             // =====================================
-            if ($physicalServers->count()>0) { 
+            if ($workstations->count()>0) { 
                 $section->addTitle('Postes de travail', 2);
                 $section->addText("Machine physique permettant à un utilisateur d’accéder au système d’information.");
                 $section->addTextBreak(1); 
