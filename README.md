@@ -36,8 +36,8 @@ démarche globale de gestion des risques.
 
 Page principale
 
-[<img src="public/screenshots/mercator1.png" width="400">](public/screenshots/mercator1.png)
-[<img src="public/screenshots/mercator2.png" width="400">](public/screenshots/mercator2.png)
+[<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png)
+[<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
 
 Niveaux de conformité
 
