@@ -16,6 +16,9 @@ cd docker
 # recopier le fichier de configuration ../.env.example
 cp  ../.env.example .env
 
+# modifier la variable DB_HOST=db ; la valeur doit correspondre au nom du container dans docker-compose.yml (db)
+sed -i -e 's/DB_HOST=127.0.0.1/DB_HOST=db/' .env
+
 # recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
 cp docker-compose.yml.tmpl docker-compose.yml
 ```
