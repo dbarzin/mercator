@@ -7,12 +7,15 @@ Ce dossier contient les éléments permettant de dockeriser l'application Mercat
 ## Initialisation
 
 copier le dépot source
+
     git clone https://github.com/dbarzin/mercator
 
 recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
+
     cp docker-compose.yml.tmpl docker-compose.yml
 
 Aller dans le répertoire mercator
+
     cd mercator/docker
 
 Recopier le fichier de configuration ../.env.example et docker-compose.yml.tmpl
@@ -21,6 +24,7 @@ Recopier le fichier de configuration ../.env.example et docker-compose.yml.tmpl
     cp docker-compose.yml.tmpl docker-compose.yml
 
 Modifier la variable DB_HOST=db ; la valeur doit correspondre au nom du container dans docker-compose.yml (db)
+
     sed -i -e 's/DB_HOST=127.0.0.1/DB_HOST=db/' .env
 
 Toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
