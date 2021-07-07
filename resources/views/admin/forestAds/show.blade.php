@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.forestAd.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $forestAd->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.forestAd.fields.name') }}
                         </th>
                         <td>

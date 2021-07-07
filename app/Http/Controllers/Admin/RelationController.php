@@ -31,8 +31,8 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $destinations = Entity::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sources = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
+        $destinations = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
         // lists
         $name_list = Relation::select('name')->where("name","<>",null)->distinct()->orderBy('name')->pluck('name');
         $type_list = Relation::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');

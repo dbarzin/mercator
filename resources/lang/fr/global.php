@@ -271,5 +271,15 @@ return [
     "yes" => "Oui",
     "youAreLoggedIn" => "Vous êtes connecté !",
     "you_have_no_messages" => "Vous n'avez pas de messages.",
-    "yourAccountNeedsAdminApproval" => "Votre compte doit être approuvé par l'administrateur avant de pouvoir vous connecter"
+    "yourAccountNeedsAdminApproval" => "Votre compte doit être approuvé par l'administrateur avant de pouvoir vous connecter",
+    //
+    "confidentiality" => "Confidentialité",
+    "integrity" => "Intégrité",
+    "availability" => "Disponibilité",
+    "tracability" => "Traçabilité",
+    //
+    "low" => "Faible", 
+    "medium" => "Moyen", 
+    "strong" => "Fort", 
+    "very_strong" => "Très fort",
 ];

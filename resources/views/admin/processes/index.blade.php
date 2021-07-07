@@ -35,9 +35,6 @@
                             {{ trans('cruds.process.fields.informations') }}
                         </th>
                         <th>
-                            {{ trans('cruds.process.fields.security_need') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.process.fields.macroprocessus') }}
                         </th>
                         <th>
@@ -51,15 +48,19 @@
                 <tbody>
                     @foreach($processes as $key => $process)
                         <tr data-entry-id="{{ $process->id }}"
-@if(($process->identifiant==null)||
-    ($process->description==null)||
-    ($process->in_out==null)||
-    ($process->security_need==null)||
-    ($process->owner==null)||
-    ($process->macroprocess_id==null)
-    )
-                          class="table-warning"
-@endif
+                            @if(($process->identifiant==null)||
+                                ($process->description==null)||
+                                ($process->in_out==null)||
+                                ((auth()->user()->granularity>=2)&&
+                                    (($process->security_need_c==null)||
+                                    ($process->security_need_i==null)||
+                                    ($process->security_need_a==null)||
+                                    ($process->security_need_t==null)))||
+                                ($process->owner==null)||
+                                ($process->macroprocess_id==null)
+                                )
+                                                      class="table-warning"
+                            @endif
 
                             >
                             <td>
@@ -74,23 +75,18 @@
                             <td>
                                 @foreach($process->activities as $key => $activities)
                                     <span class="label label-info">{{ $activities->name }}</span>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($process->processInformation as $key => $informations)
                                     <span class="label label-info">{{ $informations->name }}</span>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                
                                 @endforeach
-                            </td>
-                            <td>
-                                @if ($process->security_need==1) 
-                                    Public
-                                @elseif ($process->security_need==2)
-                                    Internal
-                                @elseif ($process->security_need==3)
-                                    Confidential
-                                @elseif ($process->security_need==4)
-                                    Secret
-                                @endif
                             </td>
                             <td>
                                 {{ $process->macroProcess->name ?? '' }}

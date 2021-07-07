@@ -16,11 +16,11 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.physicalRouter.fields.id') }}
+                        <th width="10%">
+                            {{ trans('cruds.physicalRouter.fields.name') }}
                         </th>
                         <td>
-                            {{ $physicalRouter->id }}
+                            {{ $physicalRouter->name }}
                         </td>
                     </tr>
                     <tr>

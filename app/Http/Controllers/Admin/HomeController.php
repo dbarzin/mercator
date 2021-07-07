@@ -31,7 +31,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\DhcpServer;
@@ -61,7 +61,6 @@ use App\Vlan;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -71,8 +70,8 @@ class HomeController extends Controller
 
         return $view
             // ecosystem
-            ->with("entities", Entity::All()->count())
-            ->with("relations",Relation::All()->count())
+            ->with("entities", Entity::count())
+            ->with("relations",Relation::count())
 
             ->with("entities_lvl1",Entity
             		::where('description', '<>', null)
@@ -98,26 +97,31 @@ class HomeController extends Controller
                     ->count())
 
             // information system            
-            ->with('macroProcessuses', MacroProcessus::All()->count())
+            ->with('macroProcessuses', MacroProcessus::count())
             ->with('macroProcessuses_lvl2', MacroProcessus
                     ::where('description', '<>', null)
                     ->where('io_elements', '<>', null)
-                    ->where('security_need', '<>', null)                    
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
                     ->count())
 
             ->with('macroProcessuses_lvl3', MacroProcessus
                     ::where('description', '<>', null)
                     ->where('io_elements', '<>', null)
-                    ->where('security_need', '<>', null)
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
                     ->where('owner', '<>', null)
                     ->count())
 
-            ->with("processes", Process::All()->count())
+            ->with("processes", Process::count())
             ->with("processes_lvl1", Process
                     ::where('identifiant', '<>', null)
                     ->where('description', '<>', null)
                     ->where('in_out', '<>', null)
-                    ->where('security_need', '<>', null)
                     ->where('owner', '<>', null)
                     ->where('macroprocess_id', '<>', null)                    
                     /*
@@ -142,7 +146,20 @@ class HomeController extends Controller
                     */
                     ->count())
 
-            ->with("activities", Activity::All()->count())
+            ->with("processes_lvl2", Process
+                    ::where('identifiant', '<>', null)
+                    ->where('description', '<>', null)
+                    ->where('in_out', '<>', null)
+                    ->where('owner', '<>', null)
+                    ->where('macroprocess_id', '<>', null)                    
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
+                    ->count())
+
+
+            ->with("activities", Activity::count())
             ->with("activities_lvl3", Activity
                     ::where('description', '<>', null)
                     // activity must have one operation
@@ -153,7 +170,7 @@ class HomeController extends Controller
                     })
                     ->count())
 
-            ->with("operations", Operation::All()->count())
+            ->with("operations", Operation::count())
             ->with("operations_lvl1", Operation                
                     ::where('description', '<>', null)
                     ->count())
@@ -184,7 +201,7 @@ class HomeController extends Controller
                     })
                     ->count())
 
-            ->with("tasks", Task::All()->count())
+            ->with("tasks", Task::count())
             ->with("tasks_lvl3", Task
                     ::where('description', '<>', null)
                     // task must have one operation
@@ -195,25 +212,35 @@ class HomeController extends Controller
                     })
                     ->count())
 
-            ->with("actors", Actor::All()->count())
+            ->with("actors", Actor::count())
             ->with("actors_lvl2", Actor
                     ::where('contact', '<>', null)
                     ->where('nature', '<>', null)
                     ->where('type', '<>', null)
                     ->count())
 
-            ->with("informations", Information::All()->count())
+            ->with("informations", Information::count())
             ->with("informations_lvl1", Information
                     ::where('descrition', '<>', null)
                     ->where('owner', '<>', null)
                     ->where('administrator', '<>', null)
                     ->where('storage', '<>', null)
-                    ->where('security_need', '<>', null)
+                    ->count())
+
+            ->with("informations_lvl2", Information
+                    ::where('descrition', '<>', null)
+                    ->where('owner', '<>', null)
+                    ->where('administrator', '<>', null)
+                    ->where('storage', '<>', null)
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
                     ->where('sensitivity', '<>', null)
                     ->count())
 
             // Application vue
-            ->with("applicationBlocks", ApplicationBlock::All()->count())
+            ->with("applicationBlocks", ApplicationBlock::count())
             ->with("applicationBlocks_lvl2", ApplicationBlock
                     ::where('description', '<>', null)
                     ->where('responsible', '<>', null)
@@ -225,14 +252,13 @@ class HomeController extends Controller
                     })
                     ->count())
 
-            ->with("applications", MApplication::All()->count())
+            ->with("applications", MApplication::count())
             ->with("applications_lvl1", MApplication                
                     ::where('description', '<>', null)
                     ->where('responsible', '<>', null)
                     ->where('technology', '<>', null)
                     ->where('type', '<>', null)
                     ->where('users', '<>', null)
-                    ->where('security_need', '<>', null)
                     // application must have one process
                     ->whereExists(function ($query) {
                         $query->select("m_application_process.m_application_id")
@@ -256,7 +282,10 @@ class HomeController extends Controller
                     ->where('technology', '<>', null)
                     ->where('type', '<>', null)
                     ->where('users', '<>', null)
-                    ->where('security_need', '<>', null)
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
                     // application must have one process
                     ->whereExists(function ($query) {
                         $query->select("m_application_process.m_application_id")
@@ -271,25 +300,28 @@ class HomeController extends Controller
                             ->whereRaw("logical_server_m_application.m_application_id = m_applications.id");
                     })
                     */
-                    // application must have one application service
+		    // application must have one application service
+		    // NO - services of external applications are not documented
+		    /*
                     ->whereExists(function ($query) {
-                        $query->select("application_service_m_application.m_application_id")
+                       $query->select("application_service_m_application.m_application_id")
                             ->from("application_service_m_application")
                             ->whereRaw("application_service_m_application.m_application_id = m_applications.id");
-                    })
+		    })
+		     */
                     ->count())
 
-            ->with("applicationServices", ApplicationService::All()->count())
+            ->with("applicationServices", ApplicationService::count())
             ->with("applicationServices_lvl2", ApplicationService
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("applicationModules", ApplicationModule::All()->count())
+            ->with("applicationModules", ApplicationModule::count())
             ->with("applicationModules_lvl2", ApplicationModule
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("databases", Database::All()->count())
+            ->with("databases", Database::count())
             ->with("databases_lvl1", Database
                     ::where('description', '<>', null)
                     ->where('entity_resp_id', '<>', null)
@@ -302,11 +334,14 @@ class HomeController extends Controller
                     ->where('entity_resp_id', '<>', null)
                     ->where('responsible', '<>', null)
                     ->where('type', '<>', null)
-                    // ->where('security_need', '<>', null) //lvl2
+                    ->where('security_need_c', '<>', null)                    
+                    ->where('security_need_i', '<>', null)                    
+                    ->where('security_need_a', '<>', null)                    
+                    ->where('security_need_t', '<>', null)                    
                     // ->where('external', '<>', null) //lvl2
                     ->count())
 
-            ->with("fluxes", Flux::All()->count())
+            ->with("fluxes", Flux::count())
             ->with("fluxes_lvl1", Flux
 	    ::where('description', '<>', null)
             	->orWhere(function($query) {
@@ -322,25 +357,25 @@ class HomeController extends Controller
                     ->where('crypted', '<>', null)
                     ->count())
 
-            ->with("zones", ZoneAdmin::All()->count())
+            ->with("zones", ZoneAdmin::count())
             ->with("zones_lvl1", ZoneAdmin
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("annuaires", Annuaire::All()->count())
+            ->with("annuaires", Annuaire::count())
             ->with("annuaires_lvl1", Annuaire
                     ::where('description', '<>', null)
                     ->where('solution', '<>', null)
                     ->where('zone_admin_id', '<>', null)
                     ->count())
 
-            ->with("forests", ForestAd::All()->count())
+            ->with("forests", ForestAd::count())
             ->with("forests_lvl1", ForestAd
                     ::where('description', '<>', null)
                     ->where('zone_admin_id', '<>', null)
                     ->count())
 
-            ->with("domaines", DomaineAd::All()->count())
+            ->with("domaines", DomaineAd::count())
             ->with("domaines_lvl1", DomaineAd
                     ::where('description', '<>', null)
                     ->where('domain_ctrl_cnt', '<>', null)
@@ -350,7 +385,7 @@ class HomeController extends Controller
                     ->count())
 
             // Logique
-            ->with("networks", Network::All()->count())
+            ->with("networks", Network::count())
             ->with("networks_lvl1", Network
                     ::where('description', '<>', null)
                     ->where('protocol_type', '<>', null)
@@ -359,8 +394,8 @@ class HomeController extends Controller
                     ->where('security_need', '<>', null)
                     ->count())
 
-            ->with("subnetworks", Subnetword::All()->count())
-            ->with("subnetworks_lvl1", Subnetword
+            ->with("subnetworks", Subnetwork::count())
+            ->with("subnetworks_lvl1", Subnetwork
                     ::where('description', '<>', null)
                     ->where('address', '<>', null)
                     ->where('ip_range', '<>', null)
@@ -371,47 +406,47 @@ class HomeController extends Controller
                     ->where('connected_subnets_id', '<>', null)
                     ->count())
 
-            ->with("gateways", Gateway::All()->count())
+            ->with("gateways", Gateway::count())
             ->with("gateways_lvl1", Gateway
                     ::where('description', '<>', null)
                     ->where('authentification', '<>', null)
                     ->where('ip', '<>', null)
                     ->count())
 
-            ->with("externalConnectedEntities", ExternalConnectedEntity::All()->count())
+            ->with("externalConnectedEntities", ExternalConnectedEntity::count())
             ->with("externalConnectedEntities_lvl2", ExternalConnectedEntity
                     ::where('responsible_sec', '<>', null)
                     ->where('contacts', '<>', null)
                     ->count())
 
-            ->with("switches", NetworkSwitch::All()->count())
+            ->with("switches", NetworkSwitch::count())
             ->with("switches_lvl1", NetworkSwitch
                     ::where('description', '<>', null)
                     // IP not mandatory on a switch
                     // ->where('ip', '<>', null)
                     ->count())
 
-            ->with("routers", Router::All()->count())
+            ->with("routers", Router::count())
             ->with("routers_lvl1", Router
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("securityDevices", SecurityDevice::All()->count())
+            ->with("securityDevices", SecurityDevice::count())
             ->with("securityDevices_lvl1", SecurityDevice
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("DHCPServers", DhcpServer::All()->count())
+            ->with("DHCPServers", DhcpServer::count())
             ->with("DHCPServers_lvl2", DhcpServer
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("DNSServers", DnsServer::All()->count())
+            ->with("DNSServers", DnsServer::count())
             ->with("DNSServers_lvl2", DnsServer
                     ::where('description', '<>', null)
                     ->count())
 
-            ->with("logicalServers", LogicalServer::All()->count())
+            ->with("logicalServers", LogicalServer::count())
             ->with("logicalServers_lvl1", LogicalServer
                     ::where('description', '<>', null)
                     ->where('operating_system', '<>', null)
@@ -432,22 +467,22 @@ class HomeController extends Controller
                     ->count())
 
             // Physical
-            ->with("sites", Site::All()->count())
+            ->with("sites", Site::count())
             ->with("sites_lvl1", Site
             		::where('description', '<>', null)
                     ->count())
 
-            ->with("buildings", Building::All()->count())
+            ->with("buildings", Building::count())
             ->with("buildings_lvl1", Building
             		::where('description', '<>', null)
                     ->count())
 
-            ->with("bays", Bay::All()->count())
+            ->with("bays", Bay::count())
             ->with("bays_lvl1", Bay
             		::where('description', '<>', null)
                     ->count())
             
-            ->with("physicalServers", PhysicalServer::All()->count())
+            ->with("physicalServers", PhysicalServer::count())
             ->with("physicalServers_lvl1",  PhysicalServer
             		::where('descrition', '<>', null)
                     ->where('configuration', '<>', null)
@@ -458,14 +493,14 @@ class HomeController extends Controller
                     ->where('responsible', '<>', null)
                     ->count())
             
-            ->with("workstations", Workstation::All()->count())
+            ->with("workstations", Workstation::count())
             ->with("workstations_lvl1", Workstation
                     ::where('description', '<>', null)
                     ->where('site_id', '<>', null)
                     ->where('building_id', '<>', null)
                     ->count())
 
-            ->with("storageDevices", StorageDevice::All()->count())
+            ->with("storageDevices", StorageDevice::count())
             ->with("storageDevices_lvl1", StorageDevice
                     ::where('description', '<>', null)
                     ->where('site_id', '<>', null)
@@ -474,7 +509,7 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("peripherals", Peripheral::All()->count())
+            ->with("peripherals", Peripheral::count())
             ->with("peripherals_lvl1", Peripheral
                     ::where('type', '<>', null)
                     ->where('description', '<>', null)
@@ -485,7 +520,7 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("phones", Phone::All()->count())
+            ->with("phones", Phone::count())
             ->with("phones_lvl1", Phone
                     ::where('type', '<>', null)
                     ->where('description', '<>', null)
@@ -494,7 +529,7 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("physicalSwitchs", PhysicalSwitch::All()->count())
+            ->with("physicalSwitchs", PhysicalSwitch::count())
             ->with("physicalSwitchs_lvl1", PhysicalSwitch
                     ::where('type', '<>', null)
                     ->where('description', '<>', null)
@@ -504,7 +539,7 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("physicalRouters", PhysicalRouter::All()->count())
+            ->with("physicalRouters", PhysicalRouter::count())
             ->with("physicalRouters_lvl1", PhysicalRouter
                     ::where('description', '<>', null)
                     ->where('type', '<>', null)
@@ -514,7 +549,7 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("wifiTerminals", WifiTerminal::All()->count())
+            ->with("wifiTerminals", WifiTerminal::count())
             ->with("wifiTerminals_lvl1", WifiTerminal
                     ::where('description', '<>', null)
                     ->where('type', '<>', null)
@@ -522,7 +557,7 @@ class HomeController extends Controller
                     ->where('building_id', '<>', null)
                     ->count())
 
-            ->with("physicalSecurityDevices", PhysicalSecurityDevice::All()->count())
+            ->with("physicalSecurityDevices", PhysicalSecurityDevice::count())
             ->with("physicalSecurityDevices_lvl1", PhysicalSecurityDevice
                     ::where('description', '<>', null)
                     ->where('type', '<>', null)
@@ -532,18 +567,18 @@ class HomeController extends Controller
                     // ->where('bay_id', '<>', null)
                     ->count())
 
-            ->with("wans", Wan::All()->count())
+            ->with("wans", Wan::count())
             ->with("wans_lvl1", Wan::count())
 
-            ->with("mans", Man::All()->count())
+            ->with("mans", Man::count())
             ->with("mans_lvl1", Man::count())
 
-            ->with("lans", Lan::All()->count())
+            ->with("lans", Lan::count())
             ->with("lans_lvl1", Lan
             		::where('description', '<>', null)
                     ->count())
 
-            ->with("vlans", Vlan::All()->count())
+            ->with("vlans", Vlan::count())
             ->with("vlans_lvl1", Vlan
             		::where('description', '<>', null)
                     ->count())

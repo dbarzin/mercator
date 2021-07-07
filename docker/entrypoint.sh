@@ -28,4 +28,4 @@ php artisan key:generate
 php artisan config:clear
 
 # start application
-php artisan serve --host=app
+php artisan serve --host=0.0.0.0

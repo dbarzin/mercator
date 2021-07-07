@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.process.fields.identifiant') }}
                         </th>
                         <td>
@@ -46,6 +46,9 @@
                         <td>
                             @foreach($process->activities as $key => $activities)
                                 <span class="label label-info">{{ $activities->name }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -56,6 +59,9 @@
                         <td>
                             @foreach($process->entities as $key => $entities)
                                 <span class="label label-info">{{ $entities->name }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -64,15 +70,21 @@
                             {{ trans('cruds.process.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($process->security_need==1) 
-                                Public
-                            @elseif ($process->security_need==2)
-                                Internal
-                            @elseif ($process->security_need==3)
-                                Confidential
-                            @elseif ($process->security_need==4)
-                                Secret
-                            @endif                            
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "" }}                            
                         </td>
                     </tr>
                     <tr>

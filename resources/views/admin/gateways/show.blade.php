@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.gateway.fields.id') }}
                         </th>
                         <td>
@@ -79,7 +79,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="gateway_subnetwords">
-            @includeIf('admin.gateways.relationships.gatewaySubnetwords', ['subnetwords' => $gateway->gatewaySubnetwords])
+            @includeIf('admin.gateways.relationships.gatewaySubnetwords', ['subnetworks' => $gateway->gatewaySubnetworks])
         </div>
     </div>
 </div>

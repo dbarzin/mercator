@@ -24,7 +24,7 @@ class UpdateInformationRequest extends FormRequest
                 'max:32',
                 'required',
                 //'unique:information,name,' . request()->route('information')->id,
-                'unique:inforation,name,'.request()->route('information')->id.',id,deleted_at,NULL',
+                'unique:information,name,'.request()->route('information')->id.',id,deleted_at,NULL',
             ],
             'processes.*'   => [
                 'integer',

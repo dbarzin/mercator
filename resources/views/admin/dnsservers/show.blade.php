@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.dnsserver.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $dnsserver->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.dnsserver.fields.name') }}
                         </th>
                         <td>

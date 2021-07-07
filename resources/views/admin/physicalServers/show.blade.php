@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.physicalServer.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $physicalServer->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.physicalServer.fields.name') }}
                         </th>
                         <td>
@@ -37,6 +29,14 @@
                         </th>
                         <td>
                             {!! $physicalServer->descrition !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.physicalServer.fields.type') }}
+                        </th>
+                        <td>
+                            {{ $physicalServer->type }}
                         </td>
                     </tr>
                     <tr>

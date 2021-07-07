@@ -20,7 +20,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = Entity::all()->sortBy('name');
+        $entities = Entity::orderBy('name')->get();
 
         return view('admin.entities.index', compact('entities'));
     }
@@ -29,7 +29,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
 
         return view('admin.entities.create',compact('processes'));
     }
@@ -47,7 +47,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
 
         $entity->load('entitiesProcesses');
 

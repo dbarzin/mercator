@@ -1,49 +1,68 @@
 # Procédure d'installation de Mercator
 
-Update and upgrade distribution
+## Configuration recommandée
 
-    sudo apt update
-    sudo apt upgrade
+- OS : Ubuntu 20.04 LTS
+- RAM : 2G
+- Disque : 50G
+- VCPU 2
 
-Install PHP and some PHP libraries
+## Installation 
+
+Mettre à jour la distribution linux
+
+    sudo apt update && sudo apt upgrade
+
+Insatller PHP et quelques librairies
 
     sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
-Install Graphviz
+Installer Graphviz
 
     sudo apt install graphviz
 
-Install GIT
+Installer GIT
 
     sudo apt install git
 
 ## Project
 
-Install the projet in the Apache Web directory.
+Créer le répertoire du projet
 
     cd /var/www
+    sudo mkdir mercator
+    sudo chown $USER:$GROUP mercator
+    
+Cloner le projet depuis Github
+
     git clone https://www.github.com/dbarzin/mercator
 
 ## Composer
 
-[Install Composer globally](https://getcomposer.org/download/).
+Installer Composer : [Install Composer globally](https://getcomposer.org/download/).
 
     sudo mv composer.phar /usr/local/bin/composer
 
-Install the packages
+Installer les packages avec composer :
 
     cd /var/www/mercator
     composer install
 
 ## MySQL
 
-Install MySQL
+Installer MySQL
 
     sudo apt install mysql-server
 
-Create a MySQL (or SQLite) database to use with your Laravel project.
+Vérifier que vous utilisez MySQL et pas MariaDB (Mercator ne fonctionne pas avec MariaDB).
+
+    sudo mysql --version
+
+Lancer MySQL avec les droits root
 
     sudo mysql
+
+Créer la base de données _mercator_ et l'utilisateur _mercator_user_
 
     CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;
     CREATE USER 'mercator_user'@'localhost' IDENTIFIED BY 's3cr3t';
@@ -53,13 +72,15 @@ Create a MySQL (or SQLite) database to use with your Laravel project.
     FLUSH PRIVILEGES;
     EXIT;
 
-## Configure
+## Configuration
 
-Update the .env file in the root directory of your project with the appropriate parameter values to match your new database:
+Créer un fichier .env dans le répertoire racine du projet :
 
     cd /var/www/mercator
 
     cp .env.example .env
+
+Mettre les paramètre de connexion à la base de données :
 
     vi .env
 
@@ -72,15 +93,15 @@ Update the .env file in the root directory of your project with the appropriate 
     DB_PASSWORD=s3cr3t
 
 
-## Create the database
+## Créer la base de données
 
-Run migration
+Exécuter les migrations
 
     php artisan migrate --seed 
 
-Notice: seed is important, because it will create the first admin user for you. 
+Remarque: la graine est importante (--seed), car elle créera le premier utilisateur administrateur pour vous.
 
-Generate Keys
+Générer la clé de l'application
  
     php artisan key:generate
 
@@ -88,27 +109,37 @@ Vider la cache
 
     php artisan config:clear
 
-start the application
+Pour importer la base de données de test (facultatif)
+
+    sudo mysql mercator < mercator_data.sql
+
+Démarrer l'application avec php
 
     php artisan serve
 
-Open your browser with the URL [http://127.0.0.1:8000]
-    user : admin@admin.com
-    password : password
+L'application est accessible à l'URL [http://127.0.0.1:8000]
+    utilisateur : admin@admin.com
+    mot de passe : password
 
-## Issues
+## Problèmes
+
+### Restaurer le mot de passe administrateur
+
+    mysql mercator -e "update users set password=$(php -r "echo password_hash('n3w-p4sSw0rD.', PASSWORD_BCRYPT, ['cost' => 10]);") where id=1;"
 
 ### PHP Memory
 
-If you generate big reports you will have to upgrade memory allocated to PHP in /etc/php/7.4/apache2/php.ini
+Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/7.4/apache2/php.ini
 
     memory_limit = 512M
 
-## Update process
+## Mise à jour
 
 Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
 
-Get the new sources
+    mysqldump mercator > mercator_backup.sql
+
+Récupérer les sources de GIT
 
     cd /var/www/mercator
     git pull
@@ -129,28 +160,28 @@ Redémarre l'application
 
     php artisan serve
    
-## Testing
+## Tests de non-régression
 
-Configure the environment
+Configurer l'environement
 
     cp .env .env.dusk.local
     vi .env.dusk.local
 
-Start the application
+Lancer l'application
 
     php artisan serve
 
-With another process, runs tests
+Dans un autre terminal, lancer les tests 
 
     php artisan dusk
 
-## Fix migration issue
+## Réparer les problèmes de migraton
 
-Update packages
+Mettre à jour les librairies
 
     composer update
 
-First backup database data
+Sauvegarder la base de données
 
     mysqldump mercator \
         --ignore-table=mercator.users \
@@ -170,29 +201,28 @@ Then backup database users
         --add-drop-table \
         > backup_mercator_users.sql
 
-Drop the mercator database
+Supprimer la base de données de Mercator
 
     sudo mysql -e "drop database mercator;"
 
-Create the database
+Créer une nouvelle base de données 
 
     sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-Run migration
+Exécuter les migrations 
 
     php artisan migrate --seed 
 
-Generate Keys
+Générer la clé
  
     php artisan key:generate
 
-Restore data
+Restaurer les données
 
     mysql mercator < backup_mercator_data.sql
 
-Restore users
+Restaurer les utilisateurs
 
     mysql mercator < backup_mercator_users.sql
 
-All migrations issues are the fixed
-
+Tous les problèmes de migration devraient être résolus.

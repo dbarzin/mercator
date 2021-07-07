@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.macroProcessus.fields.name') }}
                         </th>
                         <td>
@@ -44,15 +44,21 @@
                             {{ trans('cruds.macroProcessus.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($macroProcessus->security_need==1) 
-                                Public
-                            @elseif ($macroProcessus->security_need==2)
-                                Internal
-                            @elseif ($macroProcessus->security_need==3)
-                                Confidential
-                            @elseif ($macroProcessus->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcessus->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcessus->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcessus->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcessus->security_need_t] ?? "" }}                            
                         </td>
                     </tr>
                     <tr>
@@ -70,6 +76,9 @@
                         <td>
                             @foreach($macroProcessus->processes as $key => $processes)
                                 <span class="label label-info">{{ $processes->identifiant }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif                                                                
                             @endforeach
                         </td>
                     </tr>

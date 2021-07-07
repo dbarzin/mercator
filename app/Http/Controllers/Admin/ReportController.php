@@ -33,7 +33,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\NetworkSwitch;
@@ -55,15 +55,17 @@ use App\Phone;
 use App\PhysicalSwitch;
 use App\PhysicalRouter;
 use App\WifiTerminal;
+use App\PhysicalSecurityDevice;
+
 
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 // PhpOffice
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Element\TextRun;
@@ -382,7 +384,8 @@ class ReportController extends Controller
             }
         }
 
-        $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
+        $all_applicationBlocks = ApplicationBlock::orderBy("name")->get();
+        $all_application_ids = null;
         if ($applicationBlock==null)
             $all_applications=null;
         else {
@@ -482,7 +485,7 @@ class ReportController extends Controller
 
     public function logicalInfrastructure(Request $request) {            
         $networks = Network::All()->sortBy("name");
-        $subnetworks = Subnetword::All()->sortBy("name");
+        $subnetworks = Subnetwork::All()->sortBy("name");
         $gateways = Gateway::All()->sortBy("name");
         $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
         $networkSwitches = NetworkSwitch::All()->sortBy("name");
@@ -546,7 +549,7 @@ class ReportController extends Controller
                 });
 
             $all_buildings = Building::All()->sortBy("name")
-                ->filter(function($item) use($site, $building) {
+                ->filter(function($item) use($site) {
                     return $item->site_id == $site;
                 });
 
@@ -671,6 +674,33 @@ class ReportController extends Controller
                      return false;
                 });
 
+            $wifiTerminals = WifiTerminal::All()->sortBy("name")
+                ->filter(function($item) use($site,$buildings) {
+                    if (($item->building_id==null)&&($item->site_id == $site))
+                            return true;
+                    foreach($buildings as $building) 
+                        if ($item->building_id == $building->id) 
+                            return true;
+                    return false;
+                });
+
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name")
+                ->filter(function($item) use($site,$buildings,$bays) {       
+                    if (($item->bay_id==null)&&($item->building_id==null)&&($item->site_id == $site))
+                        return true;
+                    else 
+                        if ($item->bay_id==null) 
+                            foreach($buildings as $building) {
+                                if ($item->building_id == $building->id) 
+                                    return true;                                
+                            }
+                        else 
+                            foreach($bays as $bay) 
+                                if ($item->bay_id == $bay->id) 
+                                    return true;
+                     return false;
+                });
+
         }
         else 
         {
@@ -685,6 +715,8 @@ class ReportController extends Controller
             $phones = Phone::All()->sortBy("name");
             $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $wifiTerminals = WifiTerminal::All()->sortBy("name");
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
@@ -700,6 +732,8 @@ class ReportController extends Controller
             ->with("phones", $phones)
             ->with("physicalSwitches", $physicalSwitches)
             ->with("physicalRouters", $physicalRouters)
+            ->with("wifiTerminals", $wifiTerminals)
+            ->with("physicalSecurityDevices", $physicalSecurityDevices)
             ;
 
     }
@@ -716,6 +750,51 @@ class ReportController extends Controller
             ->with("forests",$forests)
             ->with("domains",$domains);
         }
+
+    public function entities(Request $request) {
+        $path=storage_path('app/' . "entities.xlsx");
+
+        $entities = Entity::All()->sortBy("name"); 
+
+        $header = array(
+                'Nom',
+                'Description',
+                'Niveau de sécurité',
+                'Point de contact',
+                'Applications supportées'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($entities as $entity) {
+                $sheet->setCellValue("A{$row}", $entity->name);
+                $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
+                $sheet->setCellValue("C{$row}", $html->toRichTextObject($entity->security_level));
+                $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->contact_point));
+                $txt = "";
+                foreach ($entity->entityRespMApplications as $application) {
+                    $txt .= $application->name;
+                    if ($entity->entityRespMApplications->last() != $application)
+                        $txt .= ", ";
+                }
+                $sheet->setCellValue("E{$row}", $txt);
+
+                $row++;
+            }        
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
+    
 
     public function applicationsByBlocks(Request $request) {
 
@@ -736,7 +815,10 @@ class ReportController extends Controller
                 "Type",
                 "Users",
                 "External",
-                "Security Need",
+                "Confidentiality",
+                "Integrity",
+                "Availability",
+                "Tracability",
                 "Documentation",
                 "Logical servers",
                 "Databases",
@@ -765,10 +847,15 @@ class ReportController extends Controller
                 $sheet->setCellValue("I{$row}", $application->type);
                 $sheet->setCellValue("J{$row}", $application->users);
                 $sheet->setCellValue("K{$row}", $application->external);
-                $sheet->setCellValue("L{$row}", $application->security_need);
-                $sheet->setCellValue("M{$row}", $application->documentation);
-                $sheet->setCellValue("N{$row}", $application->logical_servers->implode('name', ', '));
-                $sheet->setCellValue("O{$row}", $application->databases->implode('name', ', '));
+
+                $sheet->setCellValue("L{$row}", $application->security_need_c);
+                $sheet->setCellValue("M{$row}", $application->security_need_i);
+                $sheet->setCellValue("N{$row}", $application->security_need_a);
+                $sheet->setCellValue("O{$row}", $application->security_need_t);
+
+                $sheet->setCellValue("P{$row}", $application->documentation);
+                $sheet->setCellValue("Q{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue("R{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
@@ -780,7 +867,6 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
-    // xxx
     public function logicalServerResp(Request $request) {
         $path=storage_path('app/' . "logicalServersResp.xlsx");
 
@@ -902,13 +988,13 @@ class ReportController extends Controller
         
         // PhysicalServer
         if ($bay!=NULL) 
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalServers = PhysicalServer::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalServers = PhysicalServer::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalServers = PhysicalServer::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalServers = PhysicalServer::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalServers = PhysicalServer::All()->sortBy("name");
+            $physicalServers = PhysicalServer::orderBy("name")->get();
 
         foreach ($physicalServers as $physicalServer) {
             array_push($inventory,
@@ -916,19 +1002,20 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Server",
+                    "category" => "Server",
                     "name" => $physicalServer->name,
+                    "type" => $physicalServer->type,
                     "description" => $physicalServer->descrition,
                 ));
         }
         
         // Workstation;
         if ($building!=NULL)
-            $workstations = Workstation::All()->where("building_id","=",$building->id)->sortBy("name");
+            $workstations = Workstation::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $workstations = Workstation::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $workstations = Workstation::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $workstations = Workstation::All()->sortBy("name");
+            $workstations = Workstation::orderBy("name")->get();
 
         foreach ($workstations as $workstation) {            
             array_push($inventory,
@@ -936,21 +1023,22 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => "",
-                    "type" => "Workstation",
+                    "category" => "Workstation",
                     "name" => $workstation->name,
-                    "description" => $workstation->descrition,
+                    "type" => $workstation->type,
+                    "description" => $workstation->description,
                 ));
         }
         
         // StorageDevice;
         if ($bay!=NULL) 
-            $storageDevices = StorageDevice::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $storageDevices = StorageDevice::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $storageDevices = StorageDevice::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $storageDevices = StorageDevice::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $storageDevices = StorageDevice::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $storageDevices = StorageDevice::All()->sortBy("name");
+            $storageDevices = StorageDevice::orderBy("name")->get();
 
         foreach ($storageDevices as $storageDevice) {            
             array_push($inventory,
@@ -958,21 +1046,22 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Storage",
+                    "category" => "Storage",
                     "name" => $storageDevice->name,
-                    "description" => $storageDevice->descrition,
+                    "type" => $storageDevice->name,
+                    "description" => $storageDevice->description,
                 ));
         }
 
         // Peripheral
         if ($bay!=NULL) 
-            $peripherals = Peripheral::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $peripherals = Peripheral::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $peripherals = Peripheral::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $peripherals = Peripheral::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $peripherals = Peripheral::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $peripherals = Peripheral::All()->sortBy("name");
+            $peripherals = Peripheral::orderBy("name")->get();
 
         foreach ($peripherals as $peripheral) {            
             array_push($inventory,
@@ -980,19 +1069,20 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Peripheral",
+                    "category" => "Peripheral",
                     "name" => $peripheral->name,
-                    "description" => $peripheral->descrition,
+                    "type" => $peripheral->type,
+                    "description" => $peripheral->description,
                 ));
         }
 
         // Phone;
         if ($building!=NULL)
-            $phones = Phone::All()->where("building_id","=",$building->id)->sortBy("name");
+            $phones = Phone::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $phones = Phone::All()->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $phones = Phone::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $phones = Phone::All()->sortBy("name");
+            $phones = Phone::orderBy("name")->get();
 
         foreach ($phones as $phone) {            
             array_push($inventory,
@@ -1000,21 +1090,22 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => "",
-                    "type" => "Phone",
+                    "category" => "Phone",
                     "name" => $phone->name,
-                    "description" => $phone->descrition,
+                    "type" => $phone->type,
+                    "description" => $phone->description,
                 ));
         }
     
         // PhysicalSwitch;
         if ($bay!=NULL) 
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalSwitches = PhysicalSwitch::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
+            $physicalSwitches = PhysicalSwitch::orderBy("name")->get();
 
         foreach ($physicalSwitches as $physicalSwitch) {            
             array_push($inventory,
@@ -1022,21 +1113,22 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Switch",
+                    "category" => "Switch",
                     "name" => $physicalSwitch->name,
-                    "description" => $physicalSwitch->descrition,
+                    "type" => $physicalSwitch->type,
+                    "description" => $physicalSwitch->description,
                 ));
         }
 
         // PhysicalRouter
         if ($bay!=NULL) 
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",$bay->id)->sortBy("name");        
+            $physicalRouters = PhysicalRouter::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",$building->id)->sortBy("name");
+            $physicalRouters = PhysicalRouter::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
-            $physicalRouters = PhysicalRouter::All()->where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->sortBy("name");
+            $physicalRouters = PhysicalRouter::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
         else
-            $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $physicalRouters = PhysicalRouter::orderBy("name")->get();
 
         foreach ($physicalRouters as $physicalRouter) {            
             array_push($inventory,
@@ -1044,12 +1136,224 @@ class ReportController extends Controller
                     "site" => $site->name ?? "",
                     "room" => $building->name ?? "",
                     "bay" => $bay->name ?? "",
-                    "type" => "Router",
+                    "category" => "Router",
                     "name" => $physicalRouter->name,
-                    "description" => $physicalRouter->descrition,
+                    "type" => $physicalRouter->type,
+                    "description" => $physicalRouter->description,
                 ));
         }
+
+        // WifiTerminal
+        if ($building!=NULL)
+            $wifiTerminals = WifiTerminal::where("building_id","=",$building->id)->orderBy("name")->get();
+        else if ($site!=NULL)
+            $wifiTerminals = WifiTerminal::where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
+        else
+            $wifiTerminals = WifiTerminal::orderBy("name")->get();
+
+        foreach ($wifiTerminals as $wifiTerminal) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => "",
+                    "category" => "Wifi",
+                    "name" => $wifiTerminal->name,
+                    "type" => $wifiTerminal->type,
+                    "description" => $wifiTerminal->description,
+                ));
+        }
+
+        // Physical Security Devices
+        if ($bay!=NULL) 
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",$bay->id)->orderBy("name")->get();
+        else if ($building!=NULL)
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",null)->where("building_id","=",$building->id)->orderBy("name")->get();
+        else if ($site!=NULL)
+            $physicalSecurityDevices = PhysicalSecurityDevice::where("bay_id","=",null)->where("building_id","=",null)->where("site_id","=",$site->id)->orderBy("name")->get();
+        else
+            $physicalSecurityDevices = PhysicalSecurityDevice::orderBy("name")->get();
+
+        foreach ($physicalSecurityDevices as $physicalSecurityDevice) {            
+            array_push($inventory,
+                array(
+                    "site" => $site->name ?? "",
+                    "room" => $building->name ?? "",
+                    "bay" => $bay->name ?? "",
+                    "category" => "Sécurité",
+                    "name" => $physicalSecurityDevice->name,
+                    "type" => $physicalSecurityDevice->type,
+                    "description" => $physicalSecurityDevice->description,
+                ));
+        }
+
     }
+
+    public function securityNeeds(Request $request) {
+        $path=storage_path('app/' . "securityNeeds.xlsx");
+
+        // macroprocess - process - application - base de données - information
+        $header = array(
+            'Macroprocess',
+            'C','I','A','T',
+            'Process',
+            'C','I','A','T',
+            'Application',
+            'C','I','A','T',
+            'Database',
+            'C','I','A','T',
+            'Information',
+            'C','I','A','T'
+            );
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], NULL, 'A1');
+
+        // converter 
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+
+        // loop
+        // $macroprocesses = MacroProcessus::All();
+        $macroprocesses = MacroProcessus::with('processes')->get();
+        foreach ($macroprocesses as $macroprocess) {
+            if ($macroprocess->processes->count()==0) {
+                $this->addLine($sheet,$row,$macroprocess,null,null,null,null);
+                $row++;
+            }
+            else
+            foreach ($macroprocess->processes as $process) {
+                if ($process->processesMApplications->count()==0){
+                    $this->addLine($sheet,$row,$macroprocess,$process,null,null,null);
+                    $row++;
+                }
+                else
+                foreach ($process->processesMApplications as $application) {
+                    if ($application->databases->count()==0) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,null,null);
+                            $row++;                       
+                    }
+                    else
+                    foreach ($application->databases as $database) {
+                        if ($database->informations->count()==0) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,$database,null);
+                            $row++;
+                        }
+                        else
+                        foreach ($database->informations as $information) {
+                            $this->addLine($sheet,$row,$macroprocess,$process,$application,$database,$information);
+                            $row++;
+                            }
+                        }                         
+                    }
+                }
+            }
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+
+    }
+
+    private function setRedCell(Worksheet $sheet, string $cell) {
+        $sheet->getStyle($cell)
+                ->getFill()
+                ->setFillType("solid")
+                ->getStartColor()
+                ->setRGB('FF0000');
+    }
+
+    private function addLine(Worksheet $sheet, int $row, 
+                MacroProcessus $macroprocess, Process $process = null, MApplication $application = null, 
+                Database $database = null, Information $information = null) {
+
+        // Macroprocessus
+        $sheet->setCellValue("A{$row}", $macroprocess->name);
+        $sheet->setCellValue("B{$row}", $macroprocess->security_need_c);
+        $sheet->setCellValue("C{$row}", $macroprocess->security_need_i);
+        $sheet->setCellValue("D{$row}", $macroprocess->security_need_a);
+        $sheet->setCellValue("E{$row}", $macroprocess->security_need_t);
+        if ($process!=null) {
+            // Processus
+            $sheet->setCellValue("F{$row}", $process->identifiant);
+            $sheet->setCellValue("G{$row}", $process->security_need_c);
+            $sheet->setCellValue("H{$row}", $process->security_need_i);
+            $sheet->setCellValue("I{$row}", $process->security_need_a);
+            $sheet->setCellValue("J{$row}", $process->security_need_t);
+            // Check 
+            if ($process->security_need_c>$macroprocess->security_need_c)
+                $this->setRedCell($sheet, "B{$row}");
+            if ($process->security_need_i>$macroprocess->security_need_i)
+                $this->setRedCell($sheet, "C{$row}");
+            if ($process->security_need_a>$macroprocess->security_need_a)
+                $this->setRedCell($sheet, "D{$row}");
+            if ($process->security_need_t>$macroprocess->security_need_t)
+                $this->setRedCell($sheet, "E{$row}");
+
+            if ($application!=null) {
+                // Application
+                $sheet->setCellValue("K{$row}", $application->name);
+                $sheet->setCellValue("L{$row}", $application->security_need_c);
+                $sheet->setCellValue("M{$row}", $application->security_need_i);
+                $sheet->setCellValue("N{$row}", $application->security_need_a);
+                $sheet->setCellValue("O{$row}", $application->security_need_t);
+
+                // Check 
+                if ($application->security_need_c>$process->security_need_c)
+                    $this->setRedCell($sheet, "G{$row}");
+                if ($application->security_need_i>$process->security_need_i)
+                    $this->setRedCell($sheet, "H{$row}");
+                if ($application->security_need_a>$process->security_need_a)
+                    $this->setRedCell($sheet, "I{$row}");
+                if ($application->security_need_t>$process->security_need_t)
+                    $this->setRedCell($sheet, "J{$row}");
+
+                
+                if ($database!=null) {
+                    // Database
+                    $sheet->setCellValue("P{$row}", $database->name);
+                    $sheet->setCellValue("Q{$row}", $database->security_need_c);
+                    $sheet->setCellValue("R{$row}", $database->security_need_i);
+                    $sheet->setCellValue("S{$row}", $database->security_need_a);
+                    $sheet->setCellValue("T{$row}", $database->security_need_t);
+
+                    // Check 
+                    if ($database->security_need_c>$application->security_need_c)
+                        $this->setRedCell($sheet, "L{$row}");
+                    if ($database->security_need_i>$application->security_need_i)
+                        $this->setRedCell($sheet, "M{$row}");
+                    if ($database->security_need_a>$application->security_need_a)
+                        $this->setRedCell($sheet, "N{$row}");
+                    if ($database->security_need_t>$application->security_need_t)
+                        $this->setRedCell($sheet, "O{$row}");
+
+                    if ($information!=null) {
+                        // Information
+                        $sheet->setCellValue("U{$row}", $information->name);
+                        $sheet->setCellValue("V{$row}", $information->security_need_c);
+                        $sheet->setCellValue("W{$row}", $information->security_need_i);
+                        $sheet->setCellValue("X{$row}", $information->security_need_a);
+                        $sheet->setCellValue("Y{$row}", $information->security_need_t);
+
+                        // Check 
+                        if ($information->security_need_c>$database->security_need_c)
+                            $this->setRedCell($sheet, "Q{$row}");
+                        if ($information->security_need_i>$database->security_need_i)
+                            $this->setRedCell($sheet, "R{$row}");
+                        if ($information->security_need_a>$database->security_need_a)
+                            $this->setRedCell($sheet, "S{$row}");
+                        if ($information->security_need_t>$database->security_need_t)
+                            $this->setRedCell($sheet, "T{$row}");
+
+                    }
+                }
+            }
+        }
+    }
+
 
     public function physicalInventory(Request $request) {
 
@@ -1064,13 +1368,13 @@ class ReportController extends Controller
             $this->addToInventory($inventory, $site);
 
             // for all buildings
-            $buildings = Building::All()->where("site_id","=",$site->id)->sortBy("name");
+            $buildings = Building::where("site_id","=",$site->id)->orderBy("name")->get();
             foreach ($buildings as $building) {
 
                 $this->addToInventory($inventory, $site, $building);
 
                 // for all bays
-                $bays = Bay::All()->where("room_id","=",$building->id)->sortBy("name");
+                $bays = Bay::where("room_id","=",$building->id)->orderBy("name")->get();
                 foreach ($bays as $bay) {
 
                     $this->addToInventory($inventory, $site, $building, $bay);
@@ -1083,8 +1387,9 @@ class ReportController extends Controller
             'Site',
             'Room',
             'Bay',
-            'Type',
+            'Category',
             'Name',
+            'Type',
             'Description',
             );
 
@@ -1104,9 +1409,10 @@ class ReportController extends Controller
                 $sheet->setCellValue("A{$row}", $item["site"]);
                 $sheet->setCellValue("B{$row}", $item["room"]);
                 $sheet->setCellValue("C{$row}", $item["bay"]);
-                $sheet->setCellValue("D{$row}", $item["type"]);
+                $sheet->setCellValue("D{$row}", $item["category"]);
                 $sheet->setCellValue("E{$row}", $item["name"]);
-                $sheet->setCellValue("F{$row}", $html->toRichTextObject($item["description"]));
+                $sheet->setCellValue("F{$row}", $item["type"]);
+                $sheet->setCellValue("G{$row}", $html->toRichTextObject($item["description"]));
 
                 $row++;
         }

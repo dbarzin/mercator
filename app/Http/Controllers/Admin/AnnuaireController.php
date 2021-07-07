@@ -38,10 +38,6 @@ class AnnuaireController extends Controller
     {
         $annuaire = Annuaire::create($request->all());
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $annuaire->id]);
-        }
-
         return redirect()->route('admin.annuaires.index');
     }
 

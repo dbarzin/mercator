@@ -15,15 +15,7 @@
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.man.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $man->id }}
-                        </td>
-                    </tr>
-                    <tr>
+                    <tr width='10%'>
                         <th>
                             {{ trans('cruds.man.fields.name') }}
                         </th>

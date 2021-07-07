@@ -76,7 +76,23 @@
                                 </tr>
                                 <tr>
                                     <td><b>Besoin de sécurité</b></td>
-                                    <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "" }}</td>
+                                    <td>
+                                        {{ trans('global.confidentiality') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_c] ?? "" }}
+                                        <br>
+                                        {{ trans('global.integrity') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_i] ?? "" }}
+                                        <br>
+                                        {{ trans('global.availability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_a] ?? "" }}
+                                        <br>
+                                        {{ trans('global.tracability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_t] ?? "" }} 
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><b>Propritétaire</b></td>
@@ -163,7 +179,23 @@
                                     </tr>
                                     <tr>
                                         <td><b>Besoin de scurité</b></td>
-                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "" }}</td>
+                                        <td>
+                                        {{ trans('global.confidentiality') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_c] ?? "" }}
+                                        <br>
+                                        {{ trans('global.integrity') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_i] ?? "" }}
+                                        <br>
+                                        {{ trans('global.availability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_a] ?? "" }}
+                                        <br>
+                                        {{ trans('global.tracability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_t] ?? "" }} 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><b>Propriétaire</b></td>
@@ -347,7 +379,6 @@
                 <div class="card-body">
                     <p>Donnée faisant l’objet d’un traitement informatique.</p>
                         @foreach($informations as $information)
-
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
@@ -386,7 +417,23 @@
                                     </tr>
                                     <tr>
                                         <td><b>Besoins de sécurité</b></td>
-                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "" }}</td>
+                                        <td>
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_t] ?? "" }} 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><b>Sensibilité</b></td>

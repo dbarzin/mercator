@@ -13,7 +13,6 @@ use App\Peripheral;
 use App\Site;
 use Gate;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
@@ -45,10 +44,6 @@ class PeripheralController extends Controller
     public function store(StorePeripheralRequest $request)
     {
         $peripheral = Peripheral::create($request->all());
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $peripheral->id]);
-        }
 
         return redirect()->route('admin.peripherals.index');
     }

@@ -3,6 +3,11 @@
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information 
 comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
 
+[![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
+![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
+![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
+![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
+
 ## Introduction
 
 Les attaques informatiques interviennent dans un environnement en constante évolution. 
@@ -28,11 +33,29 @@ démarche globale de gestion des risques.
 - Multilingue
 
 ## Ecrans
-- [Page principale](http://www.barzin.be/mercator/images/mercator1.png)
-- [Vue de l’architecture physique](http://www.barzin.be/mercator/images/mercator2.png)
-- [Niveau de conformité](http://www.barzin.be/mercator/images/mercator3.png)
-- [Liste des processus](http://www.barzin.be/mercator/images/mercator4.png)
-- [Ajouter une application](http://www.barzin.be/mercator/images/mercator5.png)
+
+Page principale
+
+[<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png)
+[<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
+
+Niveaux de conformité
+
+[<img src="public/screenshots/mercator3.png" width="400">](public/screenshots/mercator3.png)
+
+Ecran de saisie
+
+[<img src="public/screenshots/mercator4.png" width="400" height="200">](public/screenshots/mercator4.png)
+[<img src="public/screenshots/mercator5.png" width="400" height="200">](public/screenshots/mercator5.png)
+
+Dessin de la cartographie
+
+[<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png)
+[<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
+
+Modèle de données
+
+[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
 
 ## Technologies
 - PHP, Javascript, Laravel
@@ -41,13 +64,13 @@ démarche globale de gestion des risques.
 - ChartJS
 
 ## TODO
-- vérifier la cohérence des informations fournies
-- calcul des chemins critiques
-- développer de REST API pour peupler la base de données
+- documentation utilisateur
+- développer des REST API pour peupler la base de données
 
 ## Installation
 
-- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
+- Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.md)
 
 ## License
 

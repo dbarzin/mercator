@@ -7,6 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
+/**
+ * App\ExternalConnectedEntity
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $responsible_sec
+ * @property string|null $contacts
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Network[] $connected_networks
+ * @property-read int|null $connected_networks_count
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity newQuery()
+ * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereContacts($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereResponsibleSec($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity withoutTrashed()
+ * @mixin \Eloquent
+ */
 class ExternalConnectedEntity extends Model
 {
     use SoftDeletes, Auditable;
@@ -41,6 +68,6 @@ class ExternalConnectedEntity extends Model
 
     public function connected_networks()
     {
-        return $this->belongsToMany(Network::class);
+        return $this->belongsToMany(Network::class)->orderBy("name");
     }
 }

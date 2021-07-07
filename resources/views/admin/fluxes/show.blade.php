@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.flux.fields.name') }}
                         </th>
                         <td>

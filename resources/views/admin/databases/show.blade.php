@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.database.fields.name') }}
                         </th>
                         <td>
@@ -38,6 +38,9 @@
                         <td>
                             @foreach($database->entities as $key => $entities)
                                 <span class="label label-info">{{ $entities->name }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -64,6 +67,9 @@
                         <td>
                             @foreach($database->informations as $key => $informations)
                                 <span class="label label-info">{{ $informations->name }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -80,15 +86,21 @@
                             {{ trans('cruds.database.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($database->security_need==1) 
-                                Public
-                            @elseif ($database->security_need==2)
-                                Internal
-                            @elseif ($database->security_need==3)
-                                Confidential
-                            @elseif ($database->security_need==4)
-                                Secret
-                            @endif                            
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_t] ?? "" }} 
                         </td>
                     </tr>
                     <tr>

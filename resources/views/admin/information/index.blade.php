@@ -32,9 +32,6 @@
                             {{ trans('cruds.information.fields.owner') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.security_need') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.information.fields.sensitivity') }}
                         </th>
                         <th>
@@ -45,17 +42,22 @@
                 <tbody>
                     @foreach($information as $key => $information)
                         <tr data-entry-id="{{ $information->id }}"
-
-@if(($information->descrition==null)||
-    ($information->owner==null)||
-    ($information->administrator==null)||
-    ($information->storage==null)||
-    ($information->security_need==null)||
-    ($information->sensitivity==null)
-    )
-                          class="table-warning"
-@endif
-
+                            @if(($information->descrition==null)||
+                                ($information->owner==null)||
+                                ($information->administrator==null)||
+                                ($information->storage==null)||                                
+                                ((auth()->user()->granularity>=2)&&                                
+                                    (
+                                    ($information->security_need_c==null)||
+                                    ($information->security_need_i==null)||
+                                    ($information->security_need_a==null)||
+                                    ($information->security_need_t==null)
+                                    )
+                                )||                                
+                                ($information->sensitivity==null)
+                                )
+                                                      class="table-warning"
+                            @endif
                             >
                             <td>
 
@@ -68,17 +70,6 @@
                             </td>
                             <td>
                                 {!! $information->owner ?? '' !!}
-                            </td>
-                            <td>
-                                @if ($information->security_need==1) 
-                                    Public
-                                @elseif ($information->security_need==2)
-                                    Internal
-                                @elseif ($information->security_need==3)
-                                    Confidential
-                                @elseif ($information->security_need==4)
-                                    Secret
-                                @endif                              
                             </td>
                             <td>
                                 {{ $information->sensitivity ?? '' }}

@@ -27,7 +27,7 @@ class GlobalSearchController extends Controller
         'ForestAd'                => 'cruds.forestAd.title',
         'DomaineAd'               => 'cruds.domaineAd.title',
         'Network'                 => 'cruds.network.title',
-        'Subnetword'              => 'cruds.subnetword.title',
+        'Subnetwork'              => 'cruds.subnetwork.title',
         'Gateway'                 => 'cruds.gateway.title',
         'ExternalConnectedEntity' => 'cruds.externalConnectedEntity.title',
         'NetworkSwitch'           => 'cruds.networkSwitch.title',

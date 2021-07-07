@@ -16,7 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.information.fields.name') }}
                         </th>
                         <td>
@@ -70,15 +70,21 @@
                             {{ trans('cruds.information.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($information->security_need==1) 
-                                Public
-                            @elseif ($information->security_need==2)
-                                Internal
-                            @elseif ($information->security_need==3)
-                                Confidential
-                            @elseif ($information->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "" }}                                                        
                         </td>
                     </tr>
                     <tr>

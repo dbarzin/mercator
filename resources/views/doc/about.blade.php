@@ -19,7 +19,7 @@
 <p>
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit 
 dans le <a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">Guide pour la cartographie du Système d’information</a> 
-de l’<a href="https://www.ssi.gouv.fr/">ANSSI</a>.
+de l’<a href="https://www.ssi.gouv.fr/">ANSSI</a>. Les sources de l'application sont disponibles sous <a href="https://www.github.com/dbarzin/mercator">Github</a>.
 </p>
 <p>
 Gérard Mercator, né le 5 mars 1512 à Rupelmonde et mort le 2 décembre 1594 à Duisbourg, 

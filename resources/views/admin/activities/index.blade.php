@@ -42,10 +42,9 @@
                 <tbody>
                     @foreach($activities as $key => $activity)
                         <tr data-entry-id="{{ $activity->id }}"
-@if(($activity->description==null))
-                          class="table-warning"
-@endif
-
+                            @if(($activity->description==null))
+                                                      class="table-warning"
+                            @endif
                           >
                             <td>
 
@@ -59,11 +58,17 @@
                             <td>
                                 @foreach($activity->operations as $key => $operations)
                                     <span class="label label-info">{{ $operations->name }}</span>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                    
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($activity->activitiesProcesses as $key => $processes)
                                     <span class="label label-info">{{ $processes->identifiant }}</span>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                    
                                 @endforeach
                             </td>
                             <td>

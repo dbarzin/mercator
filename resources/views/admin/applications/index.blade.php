@@ -43,15 +43,23 @@
                     @foreach($applications as $key => $application)
                         <tr data-entry-id="{{ $application->id }}"
 
-                        @if (($application->description==null)||
+                        @if (
+                            ($application->description==null)||
                             ($application->responsible==null)||
-                            ((auth()->user()->granularity>=2)&&($application->entity_resp_id==null))||
-                            ((auth()->user()->granularity>=2)&&($application->entities->count()>0))||
                             ($application->technology==null)||
                             ($application->type==null)||
-                            ((auth()->user()->granularity>=2)&&($application->users==null))||
-                            ($application->security_need==null)||
-                            ((auth()->user()->granularity>=2)&&($application->application_block==null))||
+                            ((auth()->user()->granularity>=2)&&
+                                (
+                                ($application->entities->count()==0)||
+                                ($application->entity_resp_id==null)||
+                                ($application->users==null)||
+                                ($application->security_need_c==null)||
+                                ($application->security_need_i==null)||
+                                ($application->security_need_a==null)||
+                                ($application->security_need_t==null)||
+                                ($application->application_block==null)
+                                )
+                            )||
                             ($application->processes->count()==0)                            
                             )
                                 class="table-warning"
@@ -62,7 +70,7 @@
 
                             </td>
                             <td>
-                                {{ $application->name ?? '' }}
+                                {{ $application->name ?? '' }} 
                             </td>
                             <td>
                                 {!! $application->description ?? '' !!}

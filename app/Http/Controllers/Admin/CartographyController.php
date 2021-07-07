@@ -33,7 +33,7 @@ use App\DomaineAd;
 
 // Logique
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use App\Gateway;
 use App\ExternalConnectedEntity;
 use App\NetworkSwitch;
@@ -54,6 +54,8 @@ use App\Peripheral;
 use App\Phone;
 use App\PhysicalSwitch;
 use App\PhysicalRouter;
+use App\WifiTerminal;
+use App\PhysicalSecurityDevice;
 
 use App\Http\Controllers\Controller;
 
@@ -79,7 +81,10 @@ class CartographyController extends Controller
     const FancyLeftTableCellStyle=array("bold"=>true, 'color' => '000000');
     const FancyRightTableCellStyle=array("bold"=>false, 'color' => '000000');
     const FancyLinkStyle=array('color' => '006699');
-    const NoSpace=array('spaceAfter' => 0);
+    const NoSpace=array(
+                    'spaceBefore' => 30,
+                    'spaceAfter' => 30
+                );
 
     private static function addTable(Section $section, String $title=null) {
         $table = $section->addTable(
@@ -87,31 +92,34 @@ class CartographyController extends Controller
                     'borderSize' => 2, 
                     'borderColor' => '006699', 
                     'cellMargin' => 80,
-                    'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER), 
-                CartographyController::NoSpace);
+                    'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER,
+                    ));
         $table->addRow();
         $table->addCell(8000,array('gridSpan' => 2))
-            ->addText($title,CartographyController::FancyTableTitleStyle, CartographyController::NoSpace);
+            ->addText($title,
+                CartographyController::FancyTableTitleStyle,
+                CartographyController::NoSpace
+                );
         return $table;
     }
 
     private static function addTextRow(Table $table, String $title, String $value=null) {
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
-        $table->addCell(6000)->addText($value, CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
+        $table->addCell(2000,CartographyController::NoSpace)->addText($title,CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
+        $table->addCell(6000,CartographyController::NoSpace)->addText($value, CartographyController::FancyRightTableCellStyle,CartographyController::NoSpace);
     }
 
     private static function addHTMLRow(Table $table, String $title, String $value=null) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
+        $table->addCell(2000)->addText($title, CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
         \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace("<br>", "<br/>", $value));
     }
 
     private static function addTextRunRow(Table $table, String $title) { 
         $table->addRow();
-        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle, CartographyController::NoSpace);
+        $table->addCell(2000)->addText($title,CartographyController::FancyLeftTableCellStyle,CartographyController::NoSpace);
         $cell=$table->addCell(6000);
-        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
+        return $cell->addTextRun(CartographyController::FancyRightTableCellStyle);
     }
 
     public function cartography(Request $request) {
@@ -157,6 +165,8 @@ class CartographyController extends Controller
                 array('numStyle' => 'hNum', 'numLevel' => 2));
 
 
+        // $phpWord->addParagraphStyle('P-Style', array('spaceAfter'=>0,'lineHeight'=>1.0))
+
         // Title
         $section->addTitle("Cartographie du Système d'Information",0);
         $section->addTextBreak(1);
@@ -184,8 +194,8 @@ class CartographyController extends Controller
             $section->addText("La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.");
 
             // Get data
-            $entities = Entity::All()->sortBy("name");
-            $relations = Relation::All()->sortBy("name");
+            $entities = Entity::orderBy("name")->get();
+            $relations = Relation::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -217,26 +227,26 @@ class CartographyController extends Controller
                 $textRun=$this->addTextRunRow($table,"Relations");
                 foreach ($entity->sourceRelations as $relation) {
                     if ($relation->id!=null)
-                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace);
                     $textRun->addText(' -> ');
                     if ($relation->destination_id!=null)
-                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? "", CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? "", CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     if ($entity->sourceRelations->last() != $relation) 
                         $textRun->addText(", ");                    
                 }
                 if ((count($entity->sourceRelations)>0)&&(count($entity->destinationRelations)>0))
                     $textRun->addText(", ");
                 foreach ($entity->destinationRelations as $relation) {                    
-                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     $textRun->addText(' <- ');
-                    $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? "", CartographyController::FancyLinkStyle, null, true);
+                    $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? "", CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                     if ($entity->destinationRelations->last() != $relation)  
                         $textRun->addText(", ");
                 }
-                // Porcessus soutenus
+                // Processus soutenus
                 $textRun=$this->addTextRunRow($table,"Processus soutenus");
                 foreach($entity->entitiesProcesses as $process) {
-                    $textRun->addLink("PROCESS".$process->id, $process->identifiant);
+                    $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->entitiesProcesses->last() != $process)  
                         $textRun->addText(", ");
                     }
@@ -278,13 +288,13 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // Get data
-            $macroProcessuses = MacroProcessus::All()->sortBy("name");
-            $processes = Process::All()->sortBy("identifiant");
-            $activities = Activity::All()->sortBy("name");
-            $operations = Operation::All()->sortBy("name");
-            $tasks = Task::All()->sortBy("nom");
-            $actors = Actor::All()->sortBy("name");
-            $informations = Information::All()->sortBy("name");
+            $macroProcessuses = MacroProcessus::orderBy("name")->get();
+            $processes = Process::orderBy("identifiant")->get();
+            $activities = Activity::orderBy("name")->get();
+            $operations = Operation::orderBy("name")->get();
+            $tasks = Task::orderBy("nom")->get();
+            $actors = Actor::orderBy("name")->get();
+            $informations = Information::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -347,10 +357,33 @@ class CartographyController extends Controller
                     $table = $this->addTable($section, $macroProcess->name);
                     $this->addHTMLRow($table, "Description", $macroProcess->description);
                     $this->addHTMLRow($table, "Éléments entrants et sortants",$macroProcess->io_elements);
-                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$macroProcess->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$macroProcess->security_need_t] ?? "") .
+                            '</p>'
+                        );
+                    //---
                     if ($granularity>=3)
-                        $this->addTextRow($table, "Propritétaire",$macroProcess->owner);                
+                        $this->addTextRow($table, "Propritétaire",$macroProcess->owner);
                     $textRun=$this->addTextRunRow($table, "Processus");
                     foreach($macroProcess->processes as $process) {
                         $textRun->addLink("PROCESS".$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
@@ -372,7 +405,7 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $process->identifiant);
                     $this->addHTMLRow($table,"Description",$process->description);
                     $this->addHTMLRow($table,"Éléments entrants et sortants",$process->in_out);
-                    $textRun=$this->addTextRunRow($table,"Activités");
+                    $textRun=$this->addTextRunRow($table,"Activités");                    
                     foreach($process->activities as $activity) {
                         $textRun->addLink("ACTIVITY".$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->activities->last() != $activity)  
@@ -390,9 +423,31 @@ class CartographyController extends Controller
                         if ($process->processesMApplications->last() != $application)  
                             $textRun->addText(", ", CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
-                    $textRun= $this->addTextRow($table, "Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "");
-
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$process->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "") .
+                            '</p>'
+                        );
+                    //----
                     $this->addTextRow($table,"Propriétaire",$process->owner);
                     $section->addTextBreak(1);
                     }
@@ -505,7 +560,7 @@ class CartographyController extends Controller
                 foreach($informations as $information) {
                     $section->addBookmark("INFORMATION".$information->id);
                     $table=$this->addTable($section, $information->name);
-                    $this->addHTMLRow($table,"Description",$information->description);
+                    $this->addHTMLRow($table,"Description",$information->descrition);
                     $this->addTextRow($table,"Propriétaire",$information->owner);
                     $this->addTextRow($table,"Administrateur",$information->administrator);
                     $this->addTextRow($table,"Stockage",$information->storage);
@@ -516,10 +571,32 @@ class CartographyController extends Controller
                         if ($information->processes->last() != $process)
                             $textRun->addText(", ");
                         }
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$information->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$information->security_need_t] ?? "") .
+                            '</p>'
+                        );
                     
-                    $this->addTextRow($table,"Sensibilité",$information->sensibility);
+                    $this->addTextRow($table,"Sensibilité",$information->sensitivity);
 
                     if ($granularity==3)
                         $this->addHTMLRow($table,"Contraintes règlementaires et normatives",$information->constraints);
@@ -539,12 +616,12 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // get all data
-            $applicationBlocks = ApplicationBlock::All()->sortBy("name");
-            $applications = MApplication::All()->sortBy("name");
-            $applicationServices = ApplicationService::All()->sortBy("name");
-            $applicationModules = ApplicationModule::All()->sortBy("name");
-            $databases = Database::All()->sortBy("name");
-            $fluxes = Flux::All()->sortBy("name");
+            $applicationBlocks = ApplicationBlock::orderBy("name")->get();
+            $applications = MApplication::orderBy("name")->get();
+            $applicationServices = ApplicationService::orderBy("name")->get();
+            $applicationModules = ApplicationModule::orderBy("name")->get();
+            $databases = Database::orderBy("name")->get();
+            $fluxes = Flux::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -644,8 +721,30 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$application->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_t] ?? "") .
+                            '</p>'
+                        );
 
                     $this->addTextRow($table,"Exposition à l’externe",$application->external);
 
@@ -720,7 +819,7 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Exposition à l’externe",$applicationService->external);
+                    $this->addTextRow($table,"Exposition à l’externe",$applicationService->exposition);
 
                     // Applications
                     $textRun=$this->addTextRunRow($table,"Applications qui utilisent ce service");
@@ -772,7 +871,7 @@ class CartographyController extends Controller
              }
 
             // =====================================
-            if ($applicationModules->count()>0) { 
+            if ($databases->count()>0) { 
                 $section->addTitle('Bases de données', 2);
                 $section->addText("Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.");
                 $section->addTextBreak(1); 
@@ -822,8 +921,30 @@ class CartographyController extends Controller
                             $textRun->addText(", ");
                     }
 
-                    $this->addTextRow($table,"Besoin de sécurité",
-                        array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$database->security_need] ?? "");
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$database->security_need_t] ?? "") .
+                            '</p>'
+                        );
 
                     $this->addTextRow($table,"Exposition à l’externe",$database->external);
        
@@ -1020,9 +1141,9 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $domain->name);
                     $this->addHTMLRow($table,"Description",$domain->description);
 
-                    $this->addTextRow($table,"Nombre de controleurs de domaine",$domain->domain_ctrl_cnt);
-                    $this->addTextRow($table,"Nombre de comptes utilisateurs rattachés",$domain->user_count);
-                    $this->addTextRow($table,"Nombre de machines rattachées",$domain->machine_count);
+                    $this->addTextRow($table,"Nombre de controleurs de domaine",strval($domain->domain_ctrl_cnt));
+                    $this->addTextRow($table,"Nombre de comptes utilisateurs rattachés",strval($domain->user_count));
+                    $this->addTextRow($table,"Nombre de machines rattachées",strval($domain->machine_count));
                     $this->addTextRow($table,"Relations inter-domaines",$domain->relation_inter_domaine);
 
                     $this->addTextRow($table,"Forêt Active Directory / Arborescence LDAP",$domain->relation_inter_domaine);
@@ -1049,16 +1170,16 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // Get all data
-            $networks = Network::All()->sortBy("name");
-            $subnetworks = Subnetword::All()->sortBy("name");
-            $gateways = Gateway::All()->sortBy("name");
-            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
-            $networkSwitches = NetworkSwitch::All()->sortBy("name");
-            $routers = Router::All()->sortBy("name");
-            $securityDevices = SecurityDevice::All()->sortBy("name");
-            $dhcpServers = DhcpServer::All()->sortBy("name");
-            $dnsservers = Dnsserver::All()->sortBy("name");
-            $logicalServers = LogicalServer::All()->sortBy("name");
+            $networks = Network::orderBy("name")->get();
+            $subnetworks = Subnetwork::orderBy("name")->get();
+            $gateways = Gateway::orderBy("name")->get();
+            $externalConnectedEntities = ExternalConnectedEntity::orderBy("name")->get();
+            $networkSwitches = NetworkSwitch::orderBy("name")->get();
+            $routers = Router::orderBy("name")->get();
+            $securityDevices = SecurityDevice::orderBy("name")->get();
+            $dhcpServers = DhcpServer::orderBy("name")->get();
+            $dnsservers = Dnsserver::orderBy("name")->get();
+            $logicalServers = LogicalServer::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -1093,7 +1214,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1); 
 
                 foreach($networks as $network) {
-                    $section->addBookmark("NETWORK".$zone->id);
+                    $section->addBookmark("NETWORK".$network->id);
                     $table=$this->addTable($section, $network->name);
                     $this->addHTMLRow($table,"Description",$network->description);
 
@@ -1165,7 +1286,7 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $gateway->name);
                     $this->addHTMLRow($table,"Caractéristiques techniques",$gateway->description);
 
-                    $this->addTextRow($table,"Type d'authentification",$gateway->authentication);
+                    $this->addTextRow($table,"Type d'authentification",$gateway->authentification);
                     $this->addTextRow($table,"IP publique et privée",$gateway->ip);
 
                     // Réseau ratachés
@@ -1218,7 +1339,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Adresse IP",$logicalServer->address_ip);
                     $this->addTextRow($table,"CPU",$logicalServer->cpu);
                     $this->addTextRow($table,"Mémoire",$logicalServer->memory);
-                    $this->addTextRow($table,"Disque",$logicalServer->disk);
+                    $this->addTextRow($table,"Disque",strval($logicalServer->disk));
                     $this->addTextRow($table,"Services réseau",$logicalServer->net_services);
 
                     $this->addHTMLRow($table,"Configuration",$logicalServer->configuration);
@@ -1254,16 +1375,18 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // Get all data
-            $sites=Site::All()->sortBy("name");
-            $buildings = Building::All()->sortBy("name");            
-            $bays = Bay::All()->sortBy("name");
-            $physicalServers = PhysicalServer::All()->sortBy("name");
-            $workstations = Workstation::All()->sortBy("name");
-            $storageDevices = StorageDevice::All()->sortBy("name");
-            $peripherals = Peripheral::All()->sortBy("name");
-            $phones = Phone::All()->sortBy("name");
-            $physicalSwitches = PhysicalSwitch::All()->sortBy("name");
-            $physicalRouters = PhysicalRouter::All()->sortBy("name");
+            $sites=Site::orderBy("name")->get();
+            $buildings = Building::orderBy("name")->get();
+            $bays = Bay::orderBy("name")->get();
+            $physicalServers = PhysicalServer::orderBy("name")->get();
+            $workstations = Workstation::orderBy("name")->get();
+            $storageDevices = StorageDevice::orderBy("name")->get();
+            $peripherals = Peripheral::orderBy("name")->get();
+            $phones = Phone::orderBy("name")->get();
+            $physicalSwitches = PhysicalSwitch::orderBy("name")->get();
+            $physicalRouters = PhysicalRouter::orderBy("name")->get();
+            $wifiTerminals = WifiTerminal::orderBy("name")->get();
+            $physicalSecurityDevices = PhysicalSecurityDevice::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -1294,7 +1417,7 @@ class CartographyController extends Controller
                 if ($workstation->building!=null)
                      $graph .= " B" . $workstation->building->id . "->W" . $workstation->id;
                 elseif ($workstation->site!=null)
-                     $graph .= " S" . $workstation->building->id . "->W" . $workstation->id;
+                     $graph .= " S" . $workstation->site->id . "->W" . $workstation->id;
                 }            
             foreach($storageDevices as $storageDevice) {
                 $graph .= " SD" . $storageDevice->id ."[label=\"" . $storageDevice->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/storage.png") . "\"]";
@@ -1339,6 +1462,13 @@ class CartographyController extends Controller
                 elseif ($router->site!=null)
                      $graph .= " S" . $router->site->id . "->ROUTER" . $router->id;
                 }
+            foreach($wifiTerminals as $wifiTerminal) { 
+                $graph .= " WIFI" . $wifiTerminal->id . "[label=\"" . $wifiTerminal->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/wifi.png") . "\"]";
+                if ($wifiTerminal->building!=null)
+                     $graph .= " B" . $wifiTerminal->building->id . "->WIFI" . $wifiTerminal->id;
+                elseif ($wifiTerminal->site!=null)
+                     $graph .= " S" . $wifiTerminal->site->id . "->WIFI" . $wifiTerminal->id;
+                }
             $graph .= "}";
 
             // IMAGE
@@ -1381,11 +1511,13 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$building->description);
 
                     // Baies
-                    $textRun=$this->addTextRunRow($table,"Baies");
-                    foreach($building->roomBays as $bay) {
-                        $textRun->addLink("BAY".$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($building->roomBays->last()!=$bay)
-                            $textRun->addText(", ");
+                    if ($building->roomBays->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Baies");
+                        foreach($building->roomBays as $bay) {
+                            $textRun->addLink("BAY".$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($building->roomBays->last()!=$bay)
+                                $textRun->addText(", ");
+                            }
                         }
 
                     $section->addTextBreak(1); 
@@ -1403,12 +1535,65 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $bay->name);
                     $this->addHTMLRow($table,"Description",$bay->description);
 
-                    // Serveurs
-                    $textRun=$this->addTextRunRow($table,"Serveurs physique");
-                    foreach($bay->bayPhysicalServers as $physicalServer) {
-                        $textRun->addLink("PSERVER".$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($bay->bayPhysicalServers->last()!=$physicalServer)
-                            $textRun->addText(", ");
+                    // Serveurs physiques
+                    if ($bay->bayPhysicalServers->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Serveurs physique");
+                        foreach($bay->bayPhysicalServers as $physicalServer) {
+                            $textRun->addLink("PSERVER".$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalServers->last()!=$physicalServer)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // PhysicalRouters
+                    if ($bay->bayPhysicalRouters->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Routeurs");
+                        foreach($bay->bayPhysicalRouters as $physicalRouter) {
+                            $textRun->addLink("ROUTER".$physicalRouter->id, $physicalRouter->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalRouters->last()!=$physicalRouter)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+
+                    // Physical Switches
+                    if ($bay->bayPhysicalSwitches->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Commutateurs");
+                        foreach($bay->bayPhysicalSwitches as $physicalSwitch) {
+                            $textRun->addLink("SWITCH".$physicalSwitch->id, $physicalSwitch->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalSwitches->last()!=$physicalSwitch)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // Storage Devices 
+                    if ($bay->bayStorageDevices->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Stockage");
+                        foreach($bay->bayStorageDevices as $storageDevice) {
+                            $textRun->addLink("STORAGEDEVICE".$storageDevice->id, $storageDevice->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayStorageDevices->last()!=$storageDevice)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // PhysicalSecurityDevices
+                    if ($bay->bayPhysicalSecurityDevices->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Equipement de sécurité");
+                        foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) {
+                            $textRun->addLink("PSD".$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPhysicalSecurityDevices->last()!=$physicalSecurityDevice)
+                                $textRun->addText(", ");
+                            }
+                        }
+
+                    // Peripherals
+                    if ($bay->bayPeripherals->count()>0) {
+                        $textRun=$this->addTextRunRow($table,"Périphériques");
+                        foreach($bay->bayPeripherals as $peripheral) {
+                            $textRun->addLink("PERIPHERAL".$peripheral->id, $peripheral->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($bay->bayPeripherals->last()!=$peripheral)
+                                $textRun->addText(", ");
+                            }
                         }
 
                     $section->addTextBreak(1); 
@@ -1424,7 +1609,7 @@ class CartographyController extends Controller
                 foreach($physicalServers as $server) {
                     $section->addBookmark("PSERVER".$server->id);
                     $table=$this->addTable($section, $server->name);
-                    $this->addHTMLRow($table,"Description",$server->description);
+                    $this->addHTMLRow($table,"Description",$server->descrition);
                     $this->addHTMLRow($table,"Configuration",$server->configuration);
 
                     if ($server->site!=null) {
@@ -1447,7 +1632,7 @@ class CartographyController extends Controller
                     // Serveurs logiques
                     $textRun=$this->addTextRunRow($table,"Serveurs logiques");
                     foreach($server->serversLogicalServers as $logicalServer) {
-                        $textRun->addLink("PSERVER".$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink("LOGICAL_SERVER".$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
                         if ($server->serversLogicalServers->last()!=$logicalServer)
                             $textRun->addText(", ");
                         }
@@ -1457,7 +1642,7 @@ class CartographyController extends Controller
                 }            
 
             // =====================================
-            if ($physicalServers->count()>0) { 
+            if ($workstations->count()>0) { 
                 $section->addTitle('Postes de travail', 2);
                 $section->addText("Machine physique permettant à un utilisateur d’accéder au système d’information.");
                 $section->addTextBreak(1); 
@@ -1465,8 +1650,8 @@ class CartographyController extends Controller
                 foreach($workstations as $workstation) {
                     $section->addBookmark("WORKSTATION".$workstation->id);
                     $table=$this->addTable($section, $workstation->name);
+                    $this->addHTMLRow($table,"Type",$workstation->type);
                     $this->addHTMLRow($table,"Description",$workstation->description);
-                    $this->addHTMLRow($table,"Configuration",$workstation->configuration);
 
                     if ($workstation->site!=null) {
                         $textRun=$this->addTextRunRow($table,"Site");
@@ -1637,6 +1822,65 @@ class CartographyController extends Controller
                     $section->addTextBreak(1); 
                     }
                 }
+            // =====================================
+            if ($wifiTerminals->count()>0) { 
+                $section->addTitle('Borne wifi', 2);
+                $section->addText("Matériel permettant l’accès au réseau sans fil wifi.");
+                $section->addTextBreak(1); 
+
+                foreach($wifiTerminals as $wifiTerminal) {
+                    $section->addBookmark("WIFI".$wifiTerminal->id);
+                    $table=$this->addTable($section, $wifiTerminal->name);
+                    $this->addHTMLRow($table,"Description",$wifiTerminal->description);
+
+                    $this->addTextRow($table,"Type",$wifiTerminal->type);
+
+                    if ($wifiTerminal->site!=null) {
+                        $textRun=$this->addTextRunRow($table,"Site");
+                        $textRun->addLink("SITE".$wifiTerminal->site->id, $wifiTerminal->site->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($wifiTerminal->building!=null) {
+                        $textRun=$this->addTextRunRow($table,"Building / Salle");
+                        $textRun->addLink("BUILDING".$wifiTerminal->building->id, $wifiTerminal->building->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+            // =====================================
+            if ($physicalSecurityDevices->count()>0) { 
+                $section->addTitle('Equipement de sécurité', 2);
+                $section->addText("Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.");
+                $section->addTextBreak(1); 
+
+                foreach($physicalSecurityDevices as $physicalSecurityDevice) {
+                    $section->addBookmark("PSD".$physicalSecurityDevice->id);
+                    $table=$this->addTable($section, $physicalSecurityDevice->name);
+                    $this->addHTMLRow($table,"Description",$physicalSecurityDevice->description);
+
+                    $this->addTextRow($table,"Type",$physicalSecurityDevice->type);
+
+                    if ($physicalSecurityDevice->site!=null) {
+                        $textRun=$this->addTextRunRow($table,"Site");
+                        $textRun->addLink("SITE".$physicalSecurityDevice->site->id, $physicalSecurityDevice->site->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($physicalSecurityDevice->building!=null) {
+                        $textRun=$this->addTextRunRow($table,"Building / Salle");
+                        $textRun->addLink("BUILDING".$physicalSecurityDevice->building->id, $physicalSecurityDevice->building->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    if ($physicalSecurityDevice->bay!=null) {
+                        $textRun=$this->addTextRunRow($table,"Baie");
+                        $textRun->addLink("BAY".$physicalSecurityDevice->bay->id, $physicalSecurityDevice->bay->name, CartographyController::FancyLinkStyle, null, true);
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+
             }
 
         // Finename

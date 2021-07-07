@@ -123,7 +123,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   $('.datatable-wanLans:not(.ajaxTable)').DataTable({ buttons: dtButtons })

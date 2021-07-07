@@ -1,7 +1,7 @@
 @can('man_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.men.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.mans.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.man.title_singular') }}
             </a>
         </div>
@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($men as $key => $man)
+                    @foreach($mans as $key => $man)
                         <tr data-entry-id="{{ $man->id }}">
                             <td>
 
@@ -54,19 +54,19 @@
                             </td>
                             <td>
                                 @can('man_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.men.show', $man->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.mans.show', $man->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('man_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.men.edit', $man->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.mans.edit', $man->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('man_delete')
-                                    <form action="{{ route('admin.men.destroy', $man->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.mans.destroy', $man->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -92,7 +92,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.men.massDestroy') }}",
+    url: "{{ route('admin.mans.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -120,7 +120,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   let table = $('.datatable-lansMen:not(.ajaxTable)').DataTable({ buttons: dtButtons })

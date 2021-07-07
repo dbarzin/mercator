@@ -16,15 +16,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.annuaire.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $annuaire->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.annuaire.fields.name') }}
                         </th>
                         <td>

@@ -15,7 +15,7 @@
                         </div>
                     @endif
 
-                    @if (auth()->user()->granuarity>=2)
+                    @if (auth()->user()->granularity>=2)
                     <div class="col-sm-5">
                         <form action="/admin/report/applications">
                                 <table class="table table-bordered table-striped">
@@ -187,15 +187,21 @@
                                     <tr>
                                         <th>Besoins de sécurité</th>
                                         <td>
-                                            @if ($application->security_need==1) 
-                                                Public
-                                            @elseif ($application->security_need==2)
-                                                Internal
-                                            @elseif ($application->security_need==3)
-                                                Confidential
-                                            @elseif ($application->security_need==4)
-                                                Secret
-                                            @endif
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$application->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$application->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$application->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$application->security_need_t] ?? "" }} 
                                         </td>
                                     </tr>
                                     <tr>
@@ -318,7 +324,7 @@
                                     </tr>
                                     <tr>
                                         <th>Exposition à l’externe</th>
-                                        <td>{{ $applicationService->external }}</td>
+                                        <td>{{ $applicationService->exposition }}</td>
                                     </tr>
                                     <tr>
                                         <th>Applications qui utilisent ce service</th>
@@ -484,19 +490,23 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Besoins de sécurité (DICT)</th>
+                                        <th>Besoins de sécurité</th>
                                         <td>
-                                            @if ($database->security_need==1)
-                                                Public                                            
-                                            @elseif ($database->security_need==2)
-                                                Interne
-                                            @elseif ($database->security_need==3) 
-                                                Confidentiel
-                                            @elseif ($database->security_need==4) 
-                                                Secret
-                                            @else
-                                                -
-                                            @endif
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_t] ?? "" }} 
                                         </td>
                                     </tr>
                                     <tr>

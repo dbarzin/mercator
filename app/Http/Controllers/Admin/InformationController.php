@@ -86,15 +86,4 @@ class InformationController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function storeCKEditorImages(Request $request)
-    {
-        abort_if(Gate::denies('information_create') && Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $model         = new Information();
-        $model->id     = $request->input('crud_id', 0);
-        $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
-
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-    }
 }

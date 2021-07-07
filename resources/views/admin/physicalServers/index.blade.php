@@ -26,7 +26,7 @@
                             {{ __('cruds.physicalServer.fields.name') }}
                         </th>
                         <th>
-                            {{ __('cruds.physicalServer.fields.descrition') }}
+                            {{ __('cruds.physicalServer.fields.type') }}
                         </th>                        
                         <th>
                             {{ __('cruds.physicalServer.fields.responsible') }}
@@ -67,7 +67,7 @@
                                 {{ $physicalServer->name ?? '' }}
                             </td>
                             <td>
-                                {!! $physicalServer->descrition ?? '' !!}
+                                {!! $physicalServer->type ?? '' !!}
                             </td>
                             <td>
                                 {{ $physicalServer->responsible }}

@@ -16,19 +16,27 @@ class ReportingTest extends DuskTestCase
     public function testMaturityLevels()
     {
         $admin = \App\User::find(1);
-        $this->browse(function (Browser $browser) use ($admin) {
-            $browser->loginAs($admin);
+        retry($times = 5,  function () use ($admin) {
+            $this->browse(function (Browser $browser) use ($admin) {
+                $browser->loginAs($admin);
 
-            // Maturity levels
-            $browser->visit(route('admin.report.maturity1'));
-            $browser->assertRouteIs('admin.report.maturity1');
+                // Maturity levels
+                $browser->visit(route('admin.report.maturity1'));
+                $browser->assertRouteIs('admin.report.maturity1');
+                $browser->assertSee('%');
+                $browser->assertSee('#');
+                $browser->assertDontSee('ErrorException');
 
-            $browser->visit(route('admin.report.maturity2'));
-            $browser->assertRouteIs('admin.report.maturity2');
+                $browser->visit(route('admin.report.maturity2'));
+                $browser->assertRouteIs('admin.report.maturity2');
+                $browser->assertSee('%');
+                $browser->assertDontSee('ErrorException');
 
-            $browser->visit(route('admin.report.maturity3'));
-            $browser->assertRouteIs('admin.report.maturity3');
+                $browser->visit(route('admin.report.maturity3'));
+                $browser->assertRouteIs('admin.report.maturity3');
+                $browser->assertSee('%');
+                $browser->assertDontSee('ErrorException');
+            });
         });
-
     }
 }

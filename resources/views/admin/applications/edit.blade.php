@@ -34,12 +34,12 @@
 
           <div class="row">
             <div class="col-sm">
-                @if (auth()->user()->granuarity>=2)
+                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
                     <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}" name="entities[]" id="entities" multiple>
-                        @foreach($entities as $id => $entities)
-                            <option value="{{ $id }}" {{ (in_array($id, old('entities', [])) || $application->entities->contains($id)) ? 'selected' : '' }}>{{ $entities }}</option>
+                        @foreach($entities as $id => $entity)
+                            <option value="{{ $id }}" {{ (in_array($id, old('entities', [])) || $application->entities->contains($id)) ? 'selected' : '' }}>{{ $entity }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('entities'))
@@ -122,7 +122,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.type_helper') }}</span>
                 </div>
 
-                @if (auth()->user()->granuarity>=2)
+                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
                     <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
@@ -146,23 +146,6 @@
             <div class="col-sm">
 
                 <div class="form-group">
-                    <label class="recommended" for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
-                    <select class="form-control select2 {{ $errors->has('security_need') ? 'is-invalid' : '' }}" name="security_need" id="security_need">
-                        <option value="0" {{ ($application->security_need ? $application->security_need : old('security_need')) == 0 ? 'selected' : '' }}></option>
-                        <option value="1" {{ ($application->security_need ? $application->security_need : old('security_need')) == 1 ? 'selected' : '' }}>Public</option>
-                        <option value="2" {{ ($application->security_need ? $application->security_need : old('security_need')) == 2 ? 'selected' : '' }}>Internal</option>
-                        <option value="3" {{ ($application->security_need ? $application->security_need : old('security_need')) == 3 ? 'selected' : '' }}>Confidential</option>
-                        <option value="4" {{ ($application->security_need ? $application->security_need : old('security_need')) == 4 ? 'selected' : '' }}>Secret</option>
-                    </select>
-                    @if($errors->has('security_need'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('security_need') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>
-                </div>
-
-                <div class="form-group">
                     <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
                     <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
                         @if (!$type_list->contains(old('external')))
@@ -179,7 +162,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.external_helper') }}</span>
                 </div>
-                @if (auth()->user()->granuarity>=2)
+                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
                     <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', $application->documentation) }}">
@@ -196,6 +179,82 @@
         </div>
 
 
+          <div class="row">
+            <div class="col-sm">
+
+                    <div class="form-group">
+                        <table cellspacing="5" cellpadding="5" border="0" width='100%'>
+                            <tr>
+                                <td width='20%'>
+                                    <label 
+                                        @if (auth()->user()->granularity>=2)
+                                        class="recommended" 
+                                        @endif
+                                        for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
+                                </td>
+                                <td align="right" width="10">
+                                    <label for="security_need">C</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
+                                        <option class="" value="0" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
+                                        <option class="white" value="1" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option class="yellow" value="2" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option class="orange" value="3" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option style="background-color: green;" value="4" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">I</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
+                                        <option value="0" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">D</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
+                                        <option value="0" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                <td align="right">
+                                    <label for="security_need">T</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
+                                        <option value="0" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
+                                        <option value="1" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        @if($errors->has('security_need'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('security_need') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>                    </div>
+
+                </div>
+                <div class="col-sm">
+                </div>
+        </div>
+
+
       <div class="row">
         <div class="col-sm">
 
@@ -207,8 +266,8 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="processes" multiple>
-                    @foreach($processes as $id => $processes)
-                        <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $application->processes->contains($id)) ? 'selected' : '' }}>{{ $processes }}</option>
+                    @foreach($processes as $id => $process)
+                        <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $application->processes->contains($id)) ? 'selected' : '' }}>{{ $process }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('processes'))
@@ -219,7 +278,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.processes_helper') }}</span>
             </div>
 
-            @if (auth()->user()->granuarity>=2)
+            @if (auth()->user()->granularity>=2)
             <div class="form-group">
                 <label for="services">{{ trans('cruds.application.fields.services') }}</label>
                 <div style="padding-bottom: 4px">
@@ -283,7 +342,7 @@
             </div>
         </div>            
         <div class="form-group">
-            @if (auth()->user()->granuarity>=2)
+            @if (auth()->user()->granularity>=2)
                 <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                 <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
                     @foreach($application_blocks as $id => $application_block)

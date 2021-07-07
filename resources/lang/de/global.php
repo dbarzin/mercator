@@ -266,4 +266,14 @@ return [
     "youAreLoggedIn" => "Du bist verbunden!",
     "you_have_no_messages" => "Du hast keine Nachrichten.",
     "yourAccountNeedsAdminApproval" => "Ihr Konto muss vom Administrator genehmigt werden, bevor Sie sich anmelden können"
+    //
+    "confidentiality" => "Confidentiality",
+    "integrity" => "Intégrity",
+    "availability" => "Availability",
+    "tracability" => "Tracability",
+    //
+    "low" => "Low", 
+    "medium" => "Medium", 
+    "strong" => "Strong", 
+    "very_strong" => "Very strong",
 ];

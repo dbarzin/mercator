@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.physicalSecurityDevice.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
                         </th>
                         <th>
@@ -50,9 +47,6 @@
                         <tr data-entry-id="{{ $physicalSecurityDevice->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $physicalSecurityDevice->id ?? '' }}
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->name ?? '' }}
@@ -139,7 +133,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   $('.datatable-PhysicalSecurityDevice:not(.ajaxTable)').DataTable({ buttons: dtButtons })

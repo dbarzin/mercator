@@ -7,6 +7,40 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
+/**
+ * App\PhysicalSecurityDevice
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $type
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $site_id
+ * @property int|null $building_id
+ * @property int|null $bay_id
+ * @property-read \App\Bay|null $bay
+ * @property-read \App\Building|null $building
+ * @property-read \App\Site|null $site
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice newQuery()
+ * @method static \Illuminate\Database\Query\Builder|PhysicalSecurityDevice onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereBayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereBuildingId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereSiteId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSecurityDevice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|PhysicalSecurityDevice withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|PhysicalSecurityDevice withoutTrashed()
+ * @mixin \Eloquent
+ */
 class PhysicalSecurityDevice extends Model 
 {
     use SoftDeletes, Auditable;
