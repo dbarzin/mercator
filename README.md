@@ -36,8 +36,8 @@ démarche globale de gestion des risques.
 
 Page principale
 
-[<img src="public/screenshots/mercator1.png" width="400">](public/screenshots/mercator1.png)
-[<img src="public/screenshots/mercator2.png" width="400">](public/screenshots/mercator2.png)
+[<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png)
+[<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
 
 Niveaux de conformité
 
@@ -45,13 +45,13 @@ Niveaux de conformité
 
 Ecran de saisie
 
-[<img src="public/screenshots/mercator4.png" width="400">](public/screenshots/mercator4.png)
-[<img src="public/screenshots/mercator5.png" width="400">](public/screenshots/mercator5.png)
+[<img src="public/screenshots/mercator4.png" width="400" height="200">](public/screenshots/mercator4.png)
+[<img src="public/screenshots/mercator5.png" width="400" height="200">](public/screenshots/mercator5.png)
 
 Dessin de la cartographie
 
-[<img src="public/screenshots/mercator6.png" width="400">](public/screenshots/mercator6.png)
-[<img src="public/screenshots/mercator7.png" width="400">](public/screenshots/mercator7.png)
+[<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png)
+[<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
 
 Modèle de données
 

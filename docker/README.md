@@ -10,6 +10,10 @@ copier le dépot source
 
     git clone https://github.com/dbarzin/mercator
 
+recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
+
+    cp docker-compose.yml.tmpl docker-compose.yml
+
 Aller dans le répertoire mercator
 
     cd mercator/docker
@@ -18,6 +22,10 @@ Recopier le fichier de configuration ../.env.example et docker-compose.yml.tmpl
 
     cp  ../.env.example .env
     cp docker-compose.yml.tmpl docker-compose.yml
+
+Modifier la variable DB_HOST=db ; la valeur doit correspondre au nom du container dans docker-compose.yml (db)
+
+    sed -i -e 's/DB_HOST=127.0.0.1/DB_HOST=db/' .env
 
 Toutes les valeurs du fichier peuvent être modifiées selon votre convenance, mais celle-ci doivent être fixées :
 
@@ -118,5 +126,3 @@ fixme.
 - donner des indications concernant la procédure de MAJ applicative.
 - le fonctionnement de l'application derrière un reverse-proxy ne fonctionne pas ; voir [ticket](https://github.com/mqu/mercator/issues/1) :
   - bug résiduel concernant le formulaire d'authentification qui passe en HTTP(80) au lieu de HTTPS(443). Le reste du paramétrage semble OK.
-
-
