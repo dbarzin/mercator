@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\MacroProcessus;
+use App\Process;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-use App\MacroProcessus;
-use App\Process;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends Controller

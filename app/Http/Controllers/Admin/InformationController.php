@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Information;
+use App\Process;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
-use App\Information;
-use App\Process;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller

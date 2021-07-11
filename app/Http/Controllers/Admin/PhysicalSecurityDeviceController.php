@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Bay;
 use App\Building;
+use App\PhysicalSecurityDevice;
+use App\Site;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use App\PhysicalSecurityDevice;
-use App\Site;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSecurityDeviceController extends Controller

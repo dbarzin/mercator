@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Router;
+use App\NetworkSwitch;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
-use App\Router;
-use App\NetworkSwitch;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class RouterController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

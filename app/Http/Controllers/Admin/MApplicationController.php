@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+
 use App\ApplicationBlock;
 use App\ApplicationService;
 use App\Database;
 use App\Entity;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyMApplicationRequest;
-use App\Http\Requests\StoreMApplicationRequest;
-use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
 use App\Process;
-use Gate;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyMApplicationRequest;
+use App\Http\Requests\StoreMApplicationRequest;
+use App\Http\Requests\UpdateMApplicationRequest;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller

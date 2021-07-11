@@ -768,6 +768,16 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
 
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // column size
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(60, 'pt');
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
@@ -815,18 +825,47 @@ class ReportController extends Controller
                 "Type",
                 "Users",
                 "External",
-                "Confidentiality",
-                "Integrity",
-                "Availability",
-                "Tracability",
+                "C",
+                "I",
+                "A",
+                "T",
                 "Documentation",
                 "Logical servers",
                 "Databases",
-            );
+            );        
+
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
+
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setWidth(60, 'pt');
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+        // CIAT
+        $sheet->getColumnDimension('L')->setWidth(5, 'pt');
+        $sheet->getStyle('L')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension('M')->setWidth(5, 'pt');
+        $sheet->getStyle('M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension('N')->setWidth(5, 'pt');
+        $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension('O')->setWidth(5, 'pt');
+        $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        //
+        $sheet->getColumnDimension('P')->setAutoSize(true);
+        $sheet->getColumnDimension('Q')->setAutoSize(true);
+        $sheet->getColumnDimension('R')->setAutoSize(true);
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -849,6 +888,11 @@ class ReportController extends Controller
                 $sheet->setCellValue("K{$row}", $application->external);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
+                /* TODO
+                $sheet->getStyle("L{$row}")->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setARGB('FFFF0000');
+                */
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
@@ -886,6 +930,18 @@ class ReportController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // column size
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -952,6 +1008,9 @@ class ReportController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -1210,6 +1269,9 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
 
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
@@ -1396,6 +1458,9 @@ class ReportController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
 
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();

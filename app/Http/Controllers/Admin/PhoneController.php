@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Building;
+use App\Phone;
+use App\Site;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
-use App\Phone;
-use App\Site;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
 {
-    use MediaUploadingTrait;
 
     public function index()
     {

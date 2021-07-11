@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Entity;
+use App\Relation;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
-use App\Relation;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('relation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

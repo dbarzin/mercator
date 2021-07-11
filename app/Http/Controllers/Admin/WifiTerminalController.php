@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Bay;
 use App\Building;
+use App\Site;
+use App\WifiTerminal;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
-use App\Site;
-use App\WifiTerminal;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
 {
-    use MediaUploadingTrait;
 
     public function index()
     {

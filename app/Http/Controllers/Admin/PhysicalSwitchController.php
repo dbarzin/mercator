@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+
 use App\Bay;
 use App\Building;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
-use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
 use App\PhysicalSwitch;
 use App\Site;
-use Gate;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
+use App\Http\Requests\StorePhysicalSwitchRequest;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('physical_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Bay;
 use App\Building;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyPhysicalRouterRequest;
-use App\Http\Requests\StorePhysicalRouterRequest;
-use App\Http\Requests\UpdatePhysicalRouterRequest;
 use App\PhysicalRouter;
 use App\Site;
 use App\Vlan;
-use Gate;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyPhysicalRouterRequest;
+use App\Http\Requests\StorePhysicalRouterRequest;
+use App\Http\Requests\UpdatePhysicalRouterRequest;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends Controller

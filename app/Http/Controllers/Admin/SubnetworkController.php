@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+use App\Subnetwork;
 use App\Gateway;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
-use App\Subnetwork;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubnetworkController extends Controller
 {
-    use MediaUploadingTrait;
 
     public function index()
     {

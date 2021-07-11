@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Bay;
 use App\Building;
+use App\Peripheral;
+use App\Site;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use App\Peripheral;
-use App\Site;
-use Gate;
+
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
-    use MediaUploadingTrait;
 
     public function index()
     {

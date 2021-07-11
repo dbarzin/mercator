@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Activity;
 use App\Process;
+use App\Operation;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use App\Operation;
-use Gate;
+
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

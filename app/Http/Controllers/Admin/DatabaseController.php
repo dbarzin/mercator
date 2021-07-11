@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
+
 use App\Database;
 use App\MApplication;
 use App\Entity;
+use App\Information;
+
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use App\Information;
-use Gate;
+
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
