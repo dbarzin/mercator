@@ -23,6 +23,14 @@ class StoreCertificateRequest extends FormRequest
                 'min:3',
                 'required',
             ],
+            'start_validity' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'end_validity' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
         ];
     }
 }

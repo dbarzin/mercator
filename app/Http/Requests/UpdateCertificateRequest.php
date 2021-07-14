@@ -32,6 +32,7 @@ class UpdateCertificateRequest extends FormRequest
             'end_validity' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
+                'after:start_validity'
             ],
 
         ];
