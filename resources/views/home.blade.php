@@ -108,7 +108,7 @@
             $macroProcessuses+$processes+$operations+$actors+$informations+
             $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
             $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates+
             $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
             ) > 0 ?
             number_format ( 
@@ -117,7 +117,7 @@
             $macroProcessuses_lvl2+$processes_lvl2+$operations_lvl2+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
-            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
+            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+$certificates_lvl2+
             $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
             ) * 100 /
             (
@@ -125,7 +125,7 @@
             $macroProcessuses+$processes+$operations+$actors+$informations+
             $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
             $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates+
             $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
             )
             ,0) : 0 }}; 
@@ -136,7 +136,7 @@
             $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
             $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
             $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates+
             $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
             ) > 0 ?
             number_format ( 
@@ -145,7 +145,7 @@
             $macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$tasks_lvl3+$operations_lvl2+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
-            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
+            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+$certificates_lvl2+
             $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
             ) * 100 /
             (
@@ -153,7 +153,7 @@
             $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
             $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
             $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
+            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates_lvl2+
             $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
             )
             ,0) : 0 }};  
@@ -436,6 +436,11 @@
           value: {{ $logicalServers }},
           url: "/admin/logical-servers"
         }, {
+          label: "{{ trans('cruds.certificate.title_short') }}",
+          data: [0, 0, 0, 0, {{ $certificates }}, 0],
+          value: {{ $certificates }},
+          url: "/admin/certificates"
+        }, {
           label: "{{ trans('cruds.site.title') }}",
           data: [0, 0, 0, 0, 0, {{ $sites }}],
           value: {{ $sites }},
@@ -624,6 +629,7 @@
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.router.title_short') }}" , num:{{ $routers }}, url: "/admin/routers" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.securityDevice.title_short') }}" , num:{{ $securityDevices }}, url: "/admin/security-devices" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.logicalServer.title_short') }}" , num:{{ $logicalServers }}, url: "/admin/logical-servers" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.certificate.title_short') }}" , num:{{ $certificates }}, url: "/admin/certificates" },
      {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.site.title') }}" , num: {{ $sites }}, url: "/admin/sites" },
      {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.building.title') }}" , num:{{ $buildings }}, url: "/admin/buildings" },
      {group:"{{ trans('cruds.physical_infrastructure.title_short') }}", tag:"{{ trans('cruds.bay.title') }}" , num:{{ $bays }}, url: "/admin/bays" },

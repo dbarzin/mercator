@@ -147,6 +147,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('logical-servers', Admin\LogicalServerController::Class);
     Route::delete('logical-servers-destroy', [Admin\LogicalServerController::Class,'massDestroy'])->name('logical-servers.massDestroy');
 
+    // Certificates
+    Route::resource('certificates', Admin\CertificateController::Class);
+    Route::delete('certificates-destroy', [Admin\CertificateController::Class,'massDestroy'])->name('certificates.massDestroy');
+
     // Sites
     Route::resource('sites', Admin\SiteController::Class);
     Route::delete('sites-destroy', [Admin\SiteController::Class,'massDestroy'])->name('sites.massDestroy');
@@ -222,6 +226,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('macro-processuses', Admin\MacroProcessusController::Class);
     Route::delete('macro-processuses-destroy', [Admin\MacroProcessusController::Class,'massDestroy'])->name('macro-processuses.massDestroy');
 
+    // Global Search engine !
     Route::get('global-search', [Admin\GlobalSearchController::Class,'search'])->name('globalSearch');
 
     // Views

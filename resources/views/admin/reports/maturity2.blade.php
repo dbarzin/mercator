@@ -180,12 +180,12 @@
                 <th>
                     <center>
                     {{
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers)>0
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates)>0
                         ?
                         number_format(
-                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1) 
+                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1+$certificates_lvl2) 
                         *100 /
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$logicalServers),0)
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$logicalServers+$certificates),0)
                         : 0
                     }}
                     %
@@ -254,6 +254,12 @@
                     <td><center>{{ $logicalServers }}</center></td>
                     <td><center>{{ $logicalServers_lvl1 }}</center></td>
                     <td><center>{{ $logicalServers>0 ? number_format($logicalServers_lvl1*100/$logicalServers,0):0 }}%</center></td>
+                </tr>
+                <tr>
+                    <td><a href="/admin/certificates">{{ trans("cruds.certificate.title") }}</a></td>
+                    <td><center>{{ $certificates }}</center></td>
+                    <td><center>{{ $certificates_lvl2 }}</center></td>
+                    <td><center>{{ $certificates>0 ? number_format($certificates_lvl2*100/$certificates,0):0 }}%</center></td>
                 </tr>
             </tbody>
 

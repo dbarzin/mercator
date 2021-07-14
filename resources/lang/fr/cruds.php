@@ -1275,5 +1275,32 @@ return [
         "title" => "Zones d'administration",
         "title_short" => "Zones",
         "title_singular" => "Zone d'administration"
-    ]
+    ],
+    "certificate" => [
+        "fields" => [
+            "created_at" => "Créé à",
+            "created_at_helper" => "",
+            "deleted_at" => "Supprimé à",
+            "deleted_at_helper" => "",
+            "description" => "Description",
+            "description_helper" => "Description du certificat",
+            "type" => "Type",
+            "type_helper" => "Type de certificat",
+            "start_validity" => "Date de début",
+            "start_validity_helper" => "Date de début de validité du certificat",
+            "end_validity" => "Date de fin",
+            "end_validity_helper" => "Date de fin de validité du certificat",
+            "id" => "ID",
+            "id_helper" => "",
+            "name" => "Nom",
+            "name_helper" => "Nom du certificat",
+            "updated_at" => "Remplacé à",
+            "updated_at_helper" => "",
+            "logical_servers" => "Serveurs logiques",
+            "logical_servers_helper" => "Serveur logiques ou est installé ce certificat"
+        ],
+        "title" => "Certificats",
+        "title_short" => "Certificat",
+        "title_singular" => "Cartificat"
+    ],  
 ];

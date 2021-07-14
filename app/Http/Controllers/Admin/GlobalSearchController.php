@@ -54,6 +54,7 @@ class GlobalSearchController extends Controller
         'Vlan'                    => 'cruds.vlan.title',
         'ApplicationModule'       => 'cruds.applicationModule.title',
         'MacroProcessus'          => 'cruds.macroProcessus.title',
+        'Certificate'             => 'cruds.certificate.title',
     ];
 
     public function search(Request $request)

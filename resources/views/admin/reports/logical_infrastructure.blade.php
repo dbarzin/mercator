@@ -68,7 +68,7 @@
                                     <tr>
                                         <th>Entités externes connectées</th>
                                         <td>
-                                            @foreach($network->connectedNetworksExternalConnectedEntities as $entity) 
+                                            @foreach($network->connectedNetworksExternalConnectedEntities as $entity)
                                                 <a href="#EXTENTITY{{$entity->id}}">{{$entity->name}}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -338,6 +338,69 @@
                     </div>
                 </div>
                 @endif
+
+
+            @if ($certificates->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    Certificats
+                </div>
+                <div class="card-body">
+                    <p>Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.</p>
+                        @foreach($certificates as $certificate)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="CERT{{ $certificate->id }}">
+                                        <th colspan="2">
+                                        <a href="/admin/certificates/{{ $certificate->id }}/edit">{{ $certificate->name }}</a><br>
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%">{{ trans('cruds.certificate.fields.type') }}</th>
+                                            <td>{!! $certificate->type !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">Description</th>
+                                            <td>{!! $certificate->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('cruds.certificate.fields.start_validity') }}</th>
+                                            <td>{{ $certificate->start_validity }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('cruds.certificate.fields.end_validity') }}</th>
+                                            <td>{{ $certificate->end_validity }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>{{ trans('cruds.certificate.fields.logical_servers') }}</th>
+                                            <td>
+                                                @if ($certificate->logical_servers!=null)
+                                                    @foreach($certificate->logical_servers as $logical_server)
+                                                    <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logical_server->id}}">{{ $logical_server->name }}</a>
+                                                        @if (!$loop->last)
+                                                        ,
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -359,6 +422,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/network.png", "64px", "64px")
     .addImage("/images/gateway.png", "64px", "64px")
     .addImage("/images/entity.png", "64px", "64px")
+    .addImage("/images/certificate.png", "64px", "64px")    
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
             @foreach($networks as $network) \
@@ -381,6 +445,14 @@ d3.select("#graph").graphviz()
                 @foreach($entity->connected_networks as $network)\
                     NET{{ $network->id }} -> E{{ $entity->id }}\
                 @endforeach\
+            @endforeach\
+            @foreach($certificates as $certificate) \
+                CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
+                @if ($certificate->logical_servers!=null)\
+                    @foreach($certificate->logical_servers as $logical_server)\
+                        CERT{{ $certificate->id }} -> LOGICAL_SERVER{{ $logical_server->id }}\
+                    @endforeach\
+                @endif\
             @endforeach\
         }");
 

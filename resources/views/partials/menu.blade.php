@@ -381,6 +381,18 @@
                                 </a>
                             </li>
                         @endcan
+                        @if (auth()->user()->granularity>=2)
+                        @can('certificate_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificatess') || request()->is('admin/certificates/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.certificate.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @endif
                     </ul>
                 </li>
             @endcan

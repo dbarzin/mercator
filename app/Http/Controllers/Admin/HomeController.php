@@ -40,6 +40,7 @@ use App\NetworkSwitch;
 use App\Router;
 use App\SecurityDevice;
 use App\LogicalServer;
+use App\Certificate;
 
 // Physique
 use App\Site;
@@ -465,6 +466,19 @@ class HomeController extends Controller
                             ->whereRaw("logical_server_physical_server.logical_server_id = logical_servers.id");
                     })
                     ->count())
+
+            ->with("certificates", Certificate::count())
+            ->with("certificates_lvl2", Certificate
+                    ::where('description', '<>', null)
+                    ->where('type', '<>', null)
+                    ->where('start_validity', '<>', null)
+                    ->where('end_validity', '<>', null)
+                    // certificate must be on a logical server
+                    ->whereExists(function ($query) {
+                        $query->select("certificate_logical_server.logical_server_id")
+                            ->from("certificate_logical_server")
+                            ->whereRaw("certificate_logical_server.certificate_id = certificates.id");
+                    })->count())
 
             // Physical
             ->with("sites", Site::count())

@@ -42,6 +42,7 @@ use App\SecurityDevice;
 use App\DhcpServer;
 use App\Dnsserver;
 use App\LogicalServer;
+use App\Certificate;
 
 // Physique
 use App\Site;
@@ -63,7 +64,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-// PhpOffice
+// PhpOffice 
+// see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpWord\SimpleType\TblWidth;
@@ -72,10 +74,7 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Chart;
 use PhpOffice\PhpWord\Element\Table;
-
-
 use PhpOffice\PhpWord\Element\Line;
-// use PhpOffice\PhpWord\Element\Section;
 
 class ReportController extends Controller
 {
@@ -494,6 +493,7 @@ class ReportController extends Controller
         $dhcpServers = DhcpServer::All()->sortBy("name");
         $dnsservers = Dnsserver::All()->sortBy("name");
         $logicalServers = LogicalServer::All()->sortBy("name");
+        $certificates = Certificate::All()->sortBy("name");
 
         return view('admin/reports/logical_infrastructure')
             ->with("networks",$networks)
@@ -506,6 +506,7 @@ class ReportController extends Controller
             ->with("dhcpServers",$dhcpServers)
             ->with("dnsservers",$dnsservers)
             ->with("logicalServers",$logicalServers)
+            ->with("certificates",$certificates)
             ;
     }
 
@@ -888,7 +889,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("K{$row}", $application->external);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
-                /* TODO
+                /* TODO 
                 $sheet->getStyle("L{$row}")->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setARGB('FFFF0000');

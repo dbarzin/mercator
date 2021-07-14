@@ -42,6 +42,7 @@ use App\SecurityDevice;
 use App\DhcpServer;
 use App\Dnsserver;
 use App\LogicalServer;
+use App\Certificate;
 
 // Physique
 use App\Site;
@@ -1180,6 +1181,7 @@ class CartographyController extends Controller
             $dhcpServers = DhcpServer::orderBy("name")->get();
             $dnsservers = Dnsserver::orderBy("name")->get();
             $logicalServers = LogicalServer::orderBy("name")->get();
+            $certificates = Certificate::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -1363,6 +1365,33 @@ class CartographyController extends Controller
                     $section->addTextBreak(1); 
                     }
                 }
+
+            // =====================================
+            if ($certificates->count()>0) { 
+                $section->addTitle('Certificats', 2);
+                $section->addText("Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.");
+                $section->addTextBreak(1); 
+
+                foreach($certificates as $certificate) {
+                    $section->addBookmark("CERTIFICATE".$certificate->id);
+                    $table=$this->addTable($section, $certificate->name);
+                    $this->addTextRow($table,"Type",$certificate->type);
+                    $this->addHTMLRow($table,"Description",$certificate->description);
+                    $this->addTextRow($table,"Date de début",$certificate->start_validity);
+                    $this->addTextRow($table,"Date de fin",$certificate->end_validity);
+
+                    // Logical Servers
+                    $textRun=$this->addTextRunRow($table,"Serveurs logiques");
+                    foreach($certificate->logical_servers as $logical_server) {
+                        $textRun->addLink("LOGICAL_SERVER".$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($certificate->logical_servers->last()!=$logical_server)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
             }
 
         // =====================
