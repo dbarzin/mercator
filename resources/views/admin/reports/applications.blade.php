@@ -30,7 +30,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            Applications :
+                                            applications :
                                             <select name="application" onchange="this.form.submit()">
                                                 <option value="-1">-- All --</option>
                                                 @if ($all_applications!=null)
@@ -79,7 +79,7 @@
                                         <td>{{ $ab->responsible }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Applications</th>
+                                        <th>applications</th>
                                         <td>
                                             @foreach($ab->applications as $application) 
                                                 <a href="#APPLICATION{{$application->id}}"> {{ $application->name }}</a>
@@ -101,7 +101,7 @@
             @if ($applications->count()>0)            
             <div class="card">
                 <div class="card-header">
-                    Applications
+                    applications
                 </div>
 
                 <div class="card-body">
@@ -329,7 +329,7 @@
                                     <tr>
                                         <th>Applications qui utilisent ce service</th>
                                         <td>
-                                            @foreach($applicationService->servicesMApplications as $application)
+                                            @foreach($applicationService->servicesMapplications as $application)
                                                 <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
@@ -372,7 +372,7 @@
                                         <tr>
                                             <th>Services qui utilisent ce module</th>
                                             <td>
-                                                @foreach($applicationModule->modulesApplicationServices as $service)
+                                                @foreach($applicationModule->modulesapplicationServices as $service)
                                                     <a href="#SERVICE{{ $service->id }}">{{ $service->name }}</a>
                                                     @if(!$loop->last)
                                                     ,
@@ -546,7 +546,7 @@
                                     </tr>
                                     @if ($flux->application_source!=null) 
                                     <tr>
-                                        <th>Application Source</th>
+                                        <th>application Source</th>
                                         <td><a href="#APPLICATION{{$flux->application_source->id}}">{{$flux->application_source->name}}</a></td>
                                     </tr>
                                     @endif
@@ -574,7 +574,7 @@
 
                                     @if ($flux->application_dest!=null) 
                                     <tr>
-                                        <th>Application destinataire</th>
+                                        <th>application destinataire</th>
                                         <td><a href="#APPLICATION{{$flux->application_dest->id}}">{{$flux->application_dest->name}}</a></td>
                                     </tr>
                                     @endif

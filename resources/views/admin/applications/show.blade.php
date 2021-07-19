@@ -20,7 +20,7 @@
                             {{ trans('cruds.application.fields.name') }}
                         </th>
                         <td>
-                            {{ $Application->name }}
+                            {{ $application->name }}
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             {{ trans('cruds.application.fields.description') }}
                         </th>
                         <td>
-                            {!! $Application->description !!}
+                            {!! $application->description !!}
                         </td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@
                             {{ trans('cruds.application.fields.entities') }}
                         </th>
                         <td>
-                            @foreach($Application->entities as $key => $entities)
+                            @foreach($application->entities as $key => $entities)
                                 <span class="label label-info">{{ $entities->name }}</span>
                             @endforeach
                         </td>
@@ -46,7 +46,7 @@
                             {{ trans('cruds.application.fields.entity_resp') }}
                         </th>
                         <td>
-                            {{ $Application->entity_resp->name ?? '' }}
+                            {{ $application->entity_resp->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                             {{ trans('cruds.application.fields.responsible') }}
                         </th>
                         <td>
-                            {{ $Application->responsible }}
+                            {{ $application->responsible }}
                         </td>
                     </tr>
                     <tr>
@@ -62,7 +62,7 @@
                             {{ trans('cruds.application.fields.technology') }}
                         </th>
                         <td>
-                            {{ $Application->technology }}
+                            {{ $application->technology }}
                         </td>
                     </tr>
                     <tr>
@@ -70,7 +70,7 @@
                             {{ trans('cruds.application.fields.type') }}
                         </th>
                         <td>
-                            {{ $Application->type }}
+                            {{ $application->type }}
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +78,7 @@
                             {{ trans('cruds.application.fields.users') }}
                         </th>
                         <td>
-                            {{ $Application->users }}
+                            {{ $application->users }}
                         </td>
                     </tr>
                     <tr>
@@ -86,15 +86,21 @@
                             {{ trans('cruds.application.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($Application->security_need==1) 
-                                Public
-                            @elseif ($Application->security_need==2)
-                                Internal
-                            @elseif ($Application->security_need==3)
-                                Confidential
-                            @elseif ($Application->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$application->security_need_t] ?? "" }} 
                         </td>
                     </tr>
                     <tr>
@@ -102,7 +108,7 @@
                             {{ trans('cruds.application.fields.external') }}
                         </th>
                         <td>
-                            {{ $Application->external }}
+                            {{ $application->external }}
                         </td>
                     </tr>
                     <tr>
@@ -110,7 +116,7 @@
                             {{ trans('cruds.application.fields.processes') }}
                         </th>
                         <td>
-                            @foreach($Application->processes as $key => $processes)
+                            @foreach($application->processes as $key => $processes)
                                 <span class="label label-info">{{ $processes->identifiant }}</span>
                             @endforeach
                         </td>
@@ -120,7 +126,7 @@
                             {{ trans('cruds.application.fields.services') }}
                         </th>
                         <td>
-                            @foreach($Application->services as $key => $services)
+                            @foreach($application->services as $key => $services)
                                 <span class="label label-info">{{ $services->name }}</span>
                             @endforeach
                         </td>
@@ -130,7 +136,7 @@
                             {{ trans('cruds.application.fields.databases') }}
                         </th>
                         <td>
-                            @foreach($Application->databases as $key => $databases)
+                            @foreach($application->databases as $key => $databases)
                                 <span class="label label-info">{{ $databases->name }}</span>
                             @endforeach
                         </td>
@@ -140,7 +146,7 @@
                             {{ trans('cruds.application.fields.logical_servers') }}
                         </th>
                         <td>
-                            @foreach($Application->logical_servers as $key => $logical_servers)
+                            @foreach($application->logical_servers as $key => $logical_servers)
                                 <span class="label label-info">{{ $logical_servers->name }}</span>
                             @endforeach
                         </td>
@@ -150,7 +156,7 @@
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
                         <td>
-                            {{ $Application->application_block->name ?? '' }}
+                            {{ $application->application_block->name ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -182,10 +188,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="application_source_fluxes">
-            @includeIf('admin.mApplications.relationships.applicationSourceFluxes', ['fluxes' => $Application->applicationSourceFluxes])
+            @includeIf('admin.mapplications.relationships.applicationSourceFluxes', ['fluxes' => $application->applicationSourceFluxes])
         </div>
         <div class="tab-pane" role="tabpanel" id="application_dest_fluxes">
-            @includeIf('admin.mApplications.relationships.applicationDestFluxes', ['fluxes' => $Application->applicationDestFluxes])
+            @includeIf('admin.mapplications.relationships.applicationDestFluxes', ['fluxes' => $application->applicationDestFluxes])
         </div>
     </div>
 </div>

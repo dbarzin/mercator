@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
 
 // ecosystem
 use App\Entity;
@@ -806,7 +806,6 @@ class ReportController extends Controller
         return response()->download($path);
     }
     
-
     public function applicationsByBlocks(Request $request) {
 
         $path=storage_path('app/' . "applications.xlsx");
@@ -889,14 +888,36 @@ class ReportController extends Controller
                 $sheet->setCellValue("K{$row}", $application->external);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
-                /* TODO 
-                $sheet->getStyle("L{$row}")->getFill()
+                
+                $sheet->getStyle("L{$row}")
+                    ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()->setARGB('FFFF0000');
-                */
+                    ->getStartColor()
+                    ->setARGB($this::getSecurityColor($application->security_need_c));
+
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
+
+                $sheet->getStyle("M{$row}")
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB($this::getSecurityColor($application->security_need_i));
+
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
+
+                $sheet->getStyle("N{$row}")
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB($this::getSecurityColor($application->security_need_a));
+
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
+
+                $sheet->getStyle("O{$row}")
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB($this::getSecurityColor($application->security_need_t));
 
                 $sheet->setCellValue("P{$row}", $application->documentation);
                 $sheet->setCellValue("Q{$row}", $application->logical_servers->implode('name', ', '));
@@ -1270,6 +1291,59 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], NULL, 'A1');
 
+        // Widths
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('C')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('E')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('H')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('I')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('J')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+        $sheet->getColumnDimension('L')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('M')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('N')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('O')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('P')->setAutoSize(true);
+        $sheet->getColumnDimension('Q')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('R')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('S')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('T')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('U')->setAutoSize(true);
+        $sheet->getColumnDimension('V')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('W')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('X')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('Y')->setWidth(5, 'pt');
+
+        // Center
+        $sheet->getStyle('B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('G')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('H')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('I')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('L')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('Q')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('R')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('S')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('T')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('V')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('W')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('X')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('Y')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
 
@@ -1322,11 +1396,22 @@ class ReportController extends Controller
     }
 
     private function setRedCell(Worksheet $sheet, string $cell) {
+        /*
         $sheet->getStyle($cell)
                 ->getFill()
                 ->setFillType("solid")
                 ->getStartColor()
                 ->setRGB('FF0000');
+        */
+    }
+
+    private function setSecurityNeedColor(Worksheet $sheet, string $cell, $i) {
+        static $colors = array(0=>'FFFFFF',1=>'FFFFFF',2=>'FFFA00',3=>'FF7D00',4=>'FF0000');
+        $sheet->getStyle($cell)
+                ->getFill()
+                ->setFillType("solid")
+                ->getStartColor()
+                ->setRGB($colors[($i==null) ? 0 : $i]);
     }
 
     private function addLine(Worksheet $sheet, int $row, 
@@ -1335,17 +1420,34 @@ class ReportController extends Controller
 
         // Macroprocessus
         $sheet->setCellValue("A{$row}", $macroprocess->name);
+
         $sheet->setCellValue("B{$row}", $macroprocess->security_need_c);
+        $this->setSecurityNeedColor($sheet,"B{$row}",$macroprocess->security_need_c);
+
         $sheet->setCellValue("C{$row}", $macroprocess->security_need_i);
+        $this->setSecurityNeedColor($sheet,"C{$row}",$macroprocess->security_need_i);
+
         $sheet->setCellValue("D{$row}", $macroprocess->security_need_a);
+        $this->setSecurityNeedColor($sheet,"D{$row}",$macroprocess->security_need_a);
+
         $sheet->setCellValue("E{$row}", $macroprocess->security_need_t);
+        $this->setSecurityNeedColor($sheet,"E{$row}",$macroprocess->security_need_t);
+
         if ($process!=null) {
             // Processus
             $sheet->setCellValue("F{$row}", $process->identifiant);
             $sheet->setCellValue("G{$row}", $process->security_need_c);
+            $this->setSecurityNeedColor($sheet,"G{$row}",$process->security_need_c);
+
             $sheet->setCellValue("H{$row}", $process->security_need_i);
+            $this->setSecurityNeedColor($sheet,"H{$row}",$process->security_need_i);
+
             $sheet->setCellValue("I{$row}", $process->security_need_a);
+            $this->setSecurityNeedColor($sheet,"I{$row}",$process->security_need_a);
+
             $sheet->setCellValue("J{$row}", $process->security_need_t);
+            $this->setSecurityNeedColor($sheet,"J{$row}",$process->security_need_t);
+
             // Check 
             if ($process->security_need_c>$macroprocess->security_need_c)
                 $this->setRedCell($sheet, "B{$row}");
@@ -1359,10 +1461,18 @@ class ReportController extends Controller
             if ($application!=null) {
                 // Application
                 $sheet->setCellValue("K{$row}", $application->name);
+
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
+                $this->setSecurityNeedColor($sheet,"L{$row}",$application->security_need_c);
+
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
+                $this->setSecurityNeedColor($sheet,"M{$row}",$application->security_need_i);
+
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
+                $this->setSecurityNeedColor($sheet,"N{$row}",$application->security_need_a);
+
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
+                $this->setSecurityNeedColor($sheet,"O{$row}",$application->security_need_t);
 
                 // Check 
                 if ($application->security_need_c>$process->security_need_c)
@@ -1379,9 +1489,13 @@ class ReportController extends Controller
                     // Database
                     $sheet->setCellValue("P{$row}", $database->name);
                     $sheet->setCellValue("Q{$row}", $database->security_need_c);
+                    $this->setSecurityNeedColor($sheet,"Q{$row}",$database->security_need_c);                    
                     $sheet->setCellValue("R{$row}", $database->security_need_i);
+                    $this->setSecurityNeedColor($sheet,"R{$row}",$database->security_need_i);
                     $sheet->setCellValue("S{$row}", $database->security_need_a);
+                    $this->setSecurityNeedColor($sheet,"S{$row}",$database->security_need_a);
                     $sheet->setCellValue("T{$row}", $database->security_need_t);
+                    $this->setSecurityNeedColor($sheet,"T{$row}",$database->security_need_t);
 
                     // Check 
                     if ($database->security_need_c>$application->security_need_c)
@@ -1397,9 +1511,13 @@ class ReportController extends Controller
                         // Information
                         $sheet->setCellValue("U{$row}", $information->name);
                         $sheet->setCellValue("V{$row}", $information->security_need_c);
+                        $this->setSecurityNeedColor($sheet,"V{$row}",$information->security_need_c);
                         $sheet->setCellValue("W{$row}", $information->security_need_i);
+                        $this->setSecurityNeedColor($sheet,"W{$row}",$information->security_need_i);
                         $sheet->setCellValue("X{$row}", $information->security_need_a);
+                        $this->setSecurityNeedColor($sheet,"X{$row}",$information->security_need_a);
                         $sheet->setCellValue("Y{$row}", $information->security_need_t);
+                        $this->setSecurityNeedColor($sheet,"Y{$row}",$information->security_need_t);
 
                         // Check 
                         if ($information->security_need_c>$database->security_need_c)

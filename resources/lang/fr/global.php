@@ -192,7 +192,7 @@ return [
     "redeem_time" => "Échangez le temps",
     "register" => "S'inscrire",
     "registration" => "Enregistrement",
-    "relatedData" => "Date relative",
+    "relatedData" => "Relations",
     "remember_me" => "Se souvenir de moi",
     "remember_token" => "Se souvenir du jeton",
     "reply" => "Répondre",

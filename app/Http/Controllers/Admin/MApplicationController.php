@@ -106,13 +106,13 @@ class MApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function show(MApplication $Application)
+    public function show(MApplication $application)
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $Application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
 
-        return view('admin.applications.show', compact('Application'));
+        return view('admin.applications.show', compact('application'));
     }
 
     public function destroy(MApplication $application)
