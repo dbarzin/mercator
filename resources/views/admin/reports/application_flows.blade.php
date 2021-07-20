@@ -199,14 +199,14 @@
                                         <td>
                                             Source :
                                             @foreach($application->applicationSourceFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
                                             @endforeach                 
                                             <br>Destinataire :
                                             @foreach($application->applicationDestFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
@@ -293,7 +293,7 @@
                       <div class="row">
                         <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
-                                <thead id="APPLICATIONSERVICE{{$applicationService->id}}">
+                                <thead id="SERVICE{{$applicationService->id}}">
                                     <th colspan="2">
                                         <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a><br>
                                     </th>
@@ -307,7 +307,7 @@
                                         <th>Liste des modules qui le composent</th>
                                         <td>
                                             @foreach($applicationService->modules as $module)
-                                                <a href="#APPLICATIONMODULE{{ $module->id }}">{{ $module->name }}</a>
+                                                <a href="#MODULE{{ $module->id }}">{{ $module->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif                                                
@@ -319,14 +319,14 @@
                                         <td>
                                             Source :
                                             @foreach($applicationService->serviceSourceFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
                                             @endforeach                 
                                             <br>Destinataire :
                                             @foreach($applicationService->serviceDestFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
@@ -341,7 +341,7 @@
                                         <th>Applications qui utilisent ce service</th>
                                         <td>
                                             @foreach($applicationService->servicesMApplications as $application)
-                                                <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
+                                                <a href="APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif                                                
@@ -367,7 +367,7 @@
                           <div class="row">
                             <div class="col-sm-6">                        
                                 <table class="table table-bordered table-striped table-hover">
-                                    <thead id="APPLICATIONMODULE{{$applicationModule->id}}">
+                                    <thead id="MODULE{{$applicationModule->id}}">
                                         <th colspan="2">
                                             <a href="/admin/application-modules/{{ $applicationModule->id }}/edit">{{ $applicationModule->name }}</a><br>
                                         </th>
@@ -381,7 +381,7 @@
                                             <th>Services qui utilisent ce module</th>
                                             <td>
                                                 @foreach($applicationModule->modulesApplicationServices as $service)
-                                                    <a href="#SERVICE{{ $service->id }}">{{ $service->name }}</a>
+                                                    <a href="#MODULE{{ $service->id }}">{{ $service->name }}</a>
                                                     @if(!$loop->last)
                                                     ,
                                                     @endif                                                
@@ -393,14 +393,14 @@
                                             <td>
                                                 Source :
                                                 @foreach($applicationModule->moduleSourceFluxes as $flux)
-                                                    <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                    <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
                                                 @endforeach                 
                                                 <br>Destinataire :
                                                 @foreach($applicationModule->moduleSourceFluxes as $flux)
-                                                    <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                    <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
@@ -467,14 +467,14 @@
                                         <td>
                                             Source :
                                             @foreach($database->databaseSourceFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
                                             @endforeach                 
                                             <br>Destinataire :
                                             @foreach($database->databaseDestFluxes as $flux)
-                                                <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
+                                                <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
@@ -534,10 +534,10 @@ d3.select("#graph").graphviz()
                 A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"]\
             @endforEach\
             @foreach($applicationServices as $service) \
-                S{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#APPLICATIONSERVICE{{$service->id}}\"]\
+                S{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#SERVICE{{$service->id}}\"]\
             @endforeach\
             @foreach($applicationModules as $module) \
-                M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#APPLICATIONMODULE{{$module->id}}\"]\
+                M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#MODULE{{$module->id}}\"]\
             @endforeach\
             @foreach($databases as $database) \
                 DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
