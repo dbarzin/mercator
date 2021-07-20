@@ -19,10 +19,11 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.flux.fields.name_helper') }}</span>
-            </div>
+	    </div>
+
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.flux.fields.description') }}</label>
-                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description', $flux->description) }}</textarea>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $flux->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
                         {{ $errors->first('description') }}
@@ -182,3 +183,28 @@
 
 
 @endsection
+
+
+@section('scripts')
+<script>
+$(document).ready(function () {
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: []
+      }
+    );
+  }
+});
+
+$(document).ready(function() {
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    })
+  });
+</script>
+@endsection
+

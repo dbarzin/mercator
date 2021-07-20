@@ -26,7 +26,7 @@
                             {{ trans('cruds.flux.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.flux.fields.description') }}
+			    {{ trans('cruds.flux.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.flux.fields.source') }}
@@ -76,7 +76,7 @@
                                 {{ $flux->name ?? '' }}
                             </td>
                             <td>
-                                {{ $flux->description ?? '' }}
+                                {!! $flux->description ?? '' !!}
                             </td>
                             <td>
                               {{ $flux->application_source ? $flux->application_source->name : '' }}

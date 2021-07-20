@@ -28,7 +28,7 @@
                             {{ trans('cruds.flux.fields.description') }}
                         </th>
                         <td>
-                            {{ $flux->description }}
+                            {!! $flux->description !!}
                         </td>
                     </tr>
 
