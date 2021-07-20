@@ -152,9 +152,9 @@ Mettre à jour les librairies
 
     composer update
 
-Vider la cache
+Vider les caches
 
-    php artisan config:clear
+    php artisan config:clear &&  php artisan view:clear
     
 Redémarre l'application
 
