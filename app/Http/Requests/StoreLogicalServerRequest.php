@@ -29,6 +29,12 @@ class StoreLogicalServerRequest extends FormRequest
             'servers.*' => [
                 'integer',
             ],
+            'disk' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:2147483647',
+            ],
             'servers'   => [
                 'array',
             ],

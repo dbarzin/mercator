@@ -827,7 +827,7 @@ class ReportController extends Controller
                 "External",
                 "C",
                 "I",
-                "A",
+                "D",
                 "T",
                 "Documentation",
                 "Logical servers",
@@ -1014,7 +1014,6 @@ class ReportController extends Controller
 
         $header = array(
             'name',
-            'description',
             'operating_system',
             'address_ip',
             'cpu',
@@ -1034,6 +1033,25 @@ class ReportController extends Controller
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
 
+        // Widths 
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+
+        // center
+        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
@@ -1041,18 +1059,17 @@ class ReportController extends Controller
         $row = 2;
         foreach ($logicalServers as $logicalServer) {
 
-                $sheet->setCellValue("A{$row}", $logicalServer->name);
-                $sheet->setCellValue("B{$row}", $html->toRichTextObject($logicalServer->description));
-                $sheet->setCellValue("C{$row}", $logicalServer->operating_system);
-                $sheet->setCellValue("D{$row}", $logicalServer->address_ip);
-                $sheet->setCellValue("E{$row}", $logicalServer->cpu);
-                $sheet->setCellValue("F{$row}", $logicalServer->memory);
-                $sheet->setCellValue("G{$row}", $logicalServer->disk);
-                $sheet->setCellValue("H{$row}", $logicalServer->environment);
-                $sheet->setCellValue("I{$row}", $logicalServer->net_services);
-                $sheet->setCellValue("J{$row}", $html->toRichTextObject($logicalServer->configuration));
-                $sheet->setCellValue("K{$row}", $logicalServer->applications->implode('name', ', '));
-                $sheet->setCellValue("L{$row}", $logicalServer->servers->implode('name', ', '));
+                $sheet->setCellValue("A{$row}", $logicalServer->name);                
+                $sheet->setCellValue("B{$row}", $logicalServer->operating_system);
+                $sheet->setCellValue("C{$row}", $logicalServer->address_ip);
+                $sheet->setCellValue("D{$row}", $logicalServer->cpu);
+                $sheet->setCellValue("E{$row}", $logicalServer->memory);
+                $sheet->setCellValue("F{$row}", $logicalServer->disk);
+                $sheet->setCellValue("G{$row}", $logicalServer->environment);
+                $sheet->setCellValue("H{$row}", $logicalServer->net_services);
+                $sheet->setCellValue("I{$row}", $html->toRichTextObject($logicalServer->configuration));
+                $sheet->setCellValue("J{$row}", $logicalServer->applications->implode('name', ', '));
+                $sheet->setCellValue("K{$row}", $logicalServer->servers->implode('name', ', '));
 
                 $row++;
             
@@ -1568,7 +1585,7 @@ class ReportController extends Controller
             'Site',
             'Room',
             'Bay',
-            'Category',
+            'Asset',
             'Name',
             'Type',
             'Description',
@@ -1580,6 +1597,15 @@ class ReportController extends Controller
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // Widths 
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter 
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();

@@ -26,6 +26,12 @@ class UpdateLogicalServerRequest extends FormRequest
                 //'unique:logical_servers,name,' . request()->route('logical_server')->id,
                 'unique:logical_servers,name,'.request()->route('logical_server')->id.',id,deleted_at,NULL',
             ],
+            'disk' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:2147483647',
+            ],
             'servers.*' => [
                 'integer',
             ],
