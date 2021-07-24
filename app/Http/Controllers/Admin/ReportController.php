@@ -1412,16 +1412,6 @@ class ReportController extends Controller
 
     }
 
-    private function setRedCell(Worksheet $sheet, string $cell) {
-        /*
-        $sheet->getStyle($cell)
-                ->getFill()
-                ->setFillType("solid")
-                ->getStartColor()
-                ->setRGB('FF0000');
-        */
-    }
-
     private function setSecurityNeedColor(Worksheet $sheet, string $cell, $i) {
         static $colors = array(0=>'FFFFFF',1=>'FFFFFF',2=>'FFFA00',3=>'FF7D00',4=>'FF0000');
         $sheet->getStyle($cell)
@@ -1465,16 +1455,6 @@ class ReportController extends Controller
             $sheet->setCellValue("J{$row}", $process->security_need_t);
             $this->setSecurityNeedColor($sheet,"J{$row}",$process->security_need_t);
 
-            // Check 
-            if ($process->security_need_c>$macroprocess->security_need_c)
-                $this->setRedCell($sheet, "B{$row}");
-            if ($process->security_need_i>$macroprocess->security_need_i)
-                $this->setRedCell($sheet, "C{$row}");
-            if ($process->security_need_a>$macroprocess->security_need_a)
-                $this->setRedCell($sheet, "D{$row}");
-            if ($process->security_need_t>$macroprocess->security_need_t)
-                $this->setRedCell($sheet, "E{$row}");
-
             if ($application!=null) {
                 // Application
                 $sheet->setCellValue("K{$row}", $application->name);
@@ -1490,17 +1470,6 @@ class ReportController extends Controller
 
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
                 $this->setSecurityNeedColor($sheet,"O{$row}",$application->security_need_t);
-
-                // Check 
-                if ($application->security_need_c>$process->security_need_c)
-                    $this->setRedCell($sheet, "G{$row}");
-                if ($application->security_need_i>$process->security_need_i)
-                    $this->setRedCell($sheet, "H{$row}");
-                if ($application->security_need_a>$process->security_need_a)
-                    $this->setRedCell($sheet, "I{$row}");
-                if ($application->security_need_t>$process->security_need_t)
-                    $this->setRedCell($sheet, "J{$row}");
-
                 
                 if ($database!=null) {
                     // Database
@@ -1514,16 +1483,6 @@ class ReportController extends Controller
                     $sheet->setCellValue("T{$row}", $database->security_need_t);
                     $this->setSecurityNeedColor($sheet,"T{$row}",$database->security_need_t);
 
-                    // Check 
-                    if ($database->security_need_c>$application->security_need_c)
-                        $this->setRedCell($sheet, "L{$row}");
-                    if ($database->security_need_i>$application->security_need_i)
-                        $this->setRedCell($sheet, "M{$row}");
-                    if ($database->security_need_a>$application->security_need_a)
-                        $this->setRedCell($sheet, "N{$row}");
-                    if ($database->security_need_t>$application->security_need_t)
-                        $this->setRedCell($sheet, "O{$row}");
-
                     if ($information!=null) {
                         // Information
                         $sheet->setCellValue("U{$row}", $information->name);
@@ -1535,16 +1494,6 @@ class ReportController extends Controller
                         $this->setSecurityNeedColor($sheet,"X{$row}",$information->security_need_a);
                         $sheet->setCellValue("Y{$row}", $information->security_need_t);
                         $this->setSecurityNeedColor($sheet,"Y{$row}",$information->security_need_t);
-
-                        // Check 
-                        if ($information->security_need_c>$database->security_need_c)
-                            $this->setRedCell($sheet, "Q{$row}");
-                        if ($information->security_need_i>$database->security_need_i)
-                            $this->setRedCell($sheet, "R{$row}");
-                        if ($information->security_need_a>$database->security_need_a)
-                            $this->setRedCell($sheet, "S{$row}");
-                        if ($information->security_need_t>$database->security_need_t)
-                            $this->setRedCell($sheet, "T{$row}");
 
                     }
                 }

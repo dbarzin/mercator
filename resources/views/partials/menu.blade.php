@@ -624,7 +624,6 @@
                     </ul>
                 </li>
             @endcan
-            {{--
             @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                 @can('profile_password_edit')
                     <li class="nav-item">
@@ -636,7 +635,6 @@
                     </li>
                 @endcan
             @endif
-            --}}
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">
