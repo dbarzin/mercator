@@ -845,7 +845,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setWidth(60, 'pt');
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
@@ -888,36 +888,16 @@ class ReportController extends Controller
                 $sheet->setCellValue("K{$row}", $application->external);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
-                
-                $sheet->getStyle("L{$row}")
-                    ->getFill()
-                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()
-                    ->setARGB($this::getSecurityColor($application->security_need_c));
+	        $this->setSecurityNeedColor($sheet,"L{$row}",$application->security_need_c);
 
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
-
-                $sheet->getStyle("M{$row}")
-                    ->getFill()
-                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()
-                    ->setARGB($this::getSecurityColor($application->security_need_i));
+	        $this->setSecurityNeedColor($sheet,"M{$row}",$application->security_need_i);
 
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
-
-                $sheet->getStyle("N{$row}")
-                    ->getFill()
-                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()
-                    ->setARGB($this::getSecurityColor($application->security_need_a));
+	        $this->setSecurityNeedColor($sheet,"N{$row}",$application->security_need_a);
 
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
-
-                $sheet->getStyle("O{$row}")
-                    ->getFill()
-                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-                    ->getStartColor()
-                    ->setARGB($this::getSecurityColor($application->security_need_t));
+	        $this->setSecurityNeedColor($sheet,"O{$row}",$application->security_need_t);
 
                 $sheet->setCellValue("P{$row}", $application->documentation);
                 $sheet->setCellValue("Q{$row}", $application->logical_servers->implode('name', ', '));
@@ -1416,7 +1396,7 @@ class ReportController extends Controller
         static $colors = array(0=>'FFFFFF',1=>'FFFFFF',2=>'FFFA00',3=>'FF7D00',4=>'FF0000');
         $sheet->getStyle($cell)
                 ->getFill()
-                ->setFillType("solid")
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()
                 ->setRGB($colors[($i==null) ? 0 : $i]);
     }
