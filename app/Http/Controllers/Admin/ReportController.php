@@ -824,7 +824,7 @@ class ReportController extends Controller
                 "Technology",
                 "Type",
                 "Users",
-                "External",
+                "Exposition",
                 "C",
                 "I",
                 "D",
