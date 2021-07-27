@@ -1301,6 +1301,6 @@ return [
         ],
         "title" => "Certificats",
         "title_short" => "Certificat",
-        "title_singular" => "Cartificat"
+        "title_singular" => "Certificat"
     ],  
 ];
