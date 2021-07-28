@@ -624,15 +624,6 @@
                     </ul>
                 </li>
             @endcan
-            @can('profile_password_edit')
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
-                        <i class="fa-fw fas fa-key nav-icon">
-                        </i>
-                        {{ trans('global.change_password') }}
-                    </a>
-                </li>
-            @endcan
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">
