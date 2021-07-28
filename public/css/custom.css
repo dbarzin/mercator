@@ -173,3 +173,10 @@ table.dataTable thead .sorting_desc {
 .form-check.is-invalid ~ .invalid-feedback {
     display: block;
 }
+
+/* Fixed Headers, On-Page Links, and Overlapping Content, Oh My! */
+/* https://css-tricks.com/fixed-headers-on-page-links-and-overlapping-content-oh-my/ */
+html {
+  scroll-padding-top: 70px; /* height of sticky header */
+}
+
