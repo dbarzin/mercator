@@ -32,7 +32,7 @@
                       <div class="row">
                         <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
-                                <thead id="APPLICATIONBLOCK{{ $network->id }}">
+                                <thead id="NETWORK{{ $network->id }}">
                                     <th colspan="2">
                                     <a href="/admin/networks/{{ $network->id }}/edit">{{ $network->name }}</a><br>
                                     </th>
