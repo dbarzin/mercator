@@ -422,6 +422,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/network.png", "64px", "64px")
     .addImage("/images/gateway.png", "64px", "64px")
     .addImage("/images/entity.png", "64px", "64px")
+    .addImage("/images/server.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")    
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
@@ -446,11 +447,14 @@ d3.select("#graph").graphviz()
                     NET{{ $network->id }} -> E{{ $entity->id }}\
                 @endforeach\
             @endforeach\
+            @foreach($logicalServers as $logicalServer) \
+                LOGICAL_SERVER{{ $logicalServer->id }} [label=\"{{ $logicalServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#LOGICAL_SERVER{{$logicalServer->id}}\"]\
+            @endforeach\
             @foreach($certificates as $certificate) \
                 CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
                 @if ($certificate->logical_servers!=null)\
                     @foreach($certificate->logical_servers as $logical_server)\
-                        CERT{{ $certificate->id }} -> LOGICAL_SERVER{{ $logical_server->id }}\
+                        LOGICAL_SERVER{{ $logical_server->id }} -> CERT{{ $certificate->id }}\
                     @endforeach\
                 @endif\
             @endforeach\
