@@ -30,9 +30,17 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationService.fields.description_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="exposition">{{ trans('cruds.applicationService.fields.exposition') }}</label>
-                <input class="form-control {{ $errors->has('exposition') ? 'is-invalid' : '' }}" type="text" name="exposition" id="exposition" value="{{ old('exposition', $applicationService->exposition) }}">
+                <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="exposition" id="exposition">
+                    @if (!$exposition_list->contains(old('exposition')))
+                        <option> {{ old('exposition') }}</option>'
+                    @endif
+                    @foreach($exposition_list as $t)
+                        <option {{ (old('exposition') ? old('exposition') : $applicationService->exposition) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('exposition'))
                     <div class="invalid-feedback">
                         {{ $errors->first('exposition') }}
@@ -40,6 +48,27 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationService.fields.exposition_helper') }}</span>
             </div>
+
+
+            <div class="form-group">
+                <label for="applications">{{ trans('cruds.applicationService.fields.applications') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    @foreach($applications as $id => $applications)
+                        <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $applicationService->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('applications'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('applications') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.applicationService.fields.modules_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="modules">{{ trans('cruds.applicationService.fields.modules') }}</label>
                 <div style="padding-bottom: 4px">
@@ -58,6 +87,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationService.fields.modules_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -73,67 +103,23 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/application-services/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
-
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $applicationService->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
-
+$(document).ready(function () {
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
 });
-</script>
 
+$(document).ready(function() {
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+  }); 
+</script>
 @endsection

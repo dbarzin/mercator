@@ -32,6 +32,9 @@
                             {{ trans('cruds.applicationService.fields.exposition') }}
                         </th>
                         <th>
+                            {{ trans('cruds.applicationService.fields.applications') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.applicationService.fields.modules') }}
                         </th>
                         <th>
@@ -55,8 +58,19 @@
                                 {{ $applicationService->exposition ?? '' }}
                             </td>
                             <td>
+                                @foreach($applicationService->applications as $key => $item)
+                                    {{ $item->name }}
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>
                                 @foreach($applicationService->modules as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                    {{ $item->name }}
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>

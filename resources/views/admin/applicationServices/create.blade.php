@@ -29,9 +29,17 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationService.fields.description_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="exposition">{{ trans('cruds.applicationService.fields.exposition') }}</label>
-                <input class="form-control {{ $errors->has('exposition') ? 'is-invalid' : '' }}" type="text" name="exposition" id="exposition" value="{{ old('exposition', '') }}">
+                <select class="form-control select2-free {{ $errors->has('exposition') ? 'is-invalid' : '' }}" name="exposition" id="exposition">
+                    @if (!$exposition_list->contains(old('exposition')))
+                        <option> {{ old('exposition') }}</option>'
+                    @endif
+                    @foreach($exposition_list as $t)
+                        <option {{ old('exposition') == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('exposition'))
                     <div class="invalid-feedback">
                         {{ $errors->first('exposition') }}
@@ -39,6 +47,26 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.applicationService.fields.exposition_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="applications">{{ trans('cruds.applicationService.fields.applications') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    @foreach($applications as $id => $applications)
+                        <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $applications }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('applications'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('applications') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.applicationService.fields.modules_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="modules">{{ trans('cruds.applicationService.fields.modules') }}</label>
                 <div style="padding-bottom: 4px">

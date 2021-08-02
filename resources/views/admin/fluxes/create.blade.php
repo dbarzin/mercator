@@ -203,9 +203,59 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    })
+    });
+
+    $('#application_source_id').on("select2:selecting", function(e) { 
+       $('#service_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+    
+    $('#service_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+
+    $('#module_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#service_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+
+    $('#database_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#service_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+    });
+
+
+    $('#application_dest_id').on("select2:selecting", function(e) { 
+       $('#service_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+    
+    $('#service_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+
+    $('#module_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#service_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+
+    $('#database_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#service_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+    });
 
 });
+
 </script>
 @endsection
 

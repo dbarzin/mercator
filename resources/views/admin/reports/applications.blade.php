@@ -329,7 +329,7 @@
                                     <tr>
                                         <th>Applications qui utilisent ce service</th>
                                         <td>
-                                            @foreach($applicationService->servicesMapplications as $application)
+                                            @foreach($applicationService->applications as $application)
                                                 <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,

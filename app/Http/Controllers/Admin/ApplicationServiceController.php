@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Gate;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
 
@@ -29,15 +30,19 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
+        $exposition_list = ApplicationService::select('exposition')->where("exposition","<>",null)->distinct()->orderBy('exposition')->pluck('exposition');
 
-        return view('admin.applicationServices.create', compact('modules'));
+        return view('admin.applicationServices.create', 
+                        compact('modules','applications','exposition_list'));
     }
 
     public function store(StoreApplicationServiceRequest $request)
     {
         $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
+        $applicationService->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.application-services.index');
     }
@@ -46,17 +51,21 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
+        $exposition_list = ApplicationService::select('exposition')->where("exposition","<>",null)->distinct()->orderBy('exposition')->pluck('exposition');
 
-        $applicationService->load('modules');
+        $applicationService->load('modules','applications');
 
-        return view('admin.applicationServices.edit', compact('modules', 'applicationService'));
+        return view('admin.applicationServices.edit', 
+            compact('modules', 'applications', 'exposition_list', 'applicationService'));
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)
     {
         $applicationService->update($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
+        $applicationService->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.application-services.index');
     }

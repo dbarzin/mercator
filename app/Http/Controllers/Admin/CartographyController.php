@@ -824,9 +824,9 @@ class CartographyController extends Controller
 
                     // Applications
                     $textRun=$this->addTextRunRow($table,"Applications qui utilisent ce service");
-                    foreach($applicationService->servicesMApplications as $application) {
+                    foreach($applicationService->applications as $application) {
                         $textRun->addLink("APPLICATION".$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($applicationService->servicesMApplications->last()!=$application)
+                        if ($applicationService->applications->last()!=$application)
                             $textRun->addText(", ");
                     }
                     $section->addTextBreak(1); 

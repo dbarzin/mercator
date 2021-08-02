@@ -82,7 +82,7 @@ class ApplicationService extends Model
         return $this->hasMany(Flux::class, 'service_dest_id', 'id')->orderBy("name");
     }
 
-    public function servicesMApplications()
+    public function servicesApplications()
     {
         return $this->belongsToMany(MApplication::class)->orderBy("name");
     }
@@ -90,5 +90,10 @@ class ApplicationService extends Model
     public function modules()
     {
         return $this->belongsToMany(ApplicationModule::class)->orderBy("name");
+    }
+
+    public function applications()
+    {
+        return $this->belongsToMany(MApplication::class)->orderBy("name");
     }
 }

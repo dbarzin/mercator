@@ -358,7 +358,7 @@ class ReportController extends Controller
             $request->session()->put("applicationBlock",null);
             $applicationBlock=null;
             $request->session()->put("application",null);
-            $application=null;
+            $application_id=null;
         }
         else {
             if ($request->applicationBlock!=null) {
@@ -371,15 +371,15 @@ class ReportController extends Controller
 
             if ((int)($request->application)==-1) {
                 $request->session()->put("application",null);
-                $application=null;
+                $application_id=null;
             }
             else 
             if ($request->application!=null) {
                     $request->session()->put("application",$request->application);
-                    $application=$request->application;
+                    $application_id=$request->application;
                 }
             else {
-                $application=$request->session()->get("application");
+                $application_id=$request->session()->get("application");
             }
         }
 
@@ -402,18 +402,29 @@ class ReportController extends Controller
         // get flows
         // TODO : improve filtering on module, services and databases
         $flows = Flux::All()->sortBy("name");
-        if ($applicationBlock!=null) {
+        if ($application_id!=null) {
             $flows = $flows
                 ->filter(function($item) use($all_application_ids) {
                     return 
                         in_array($item->application_source_id,$all_application_ids)||
                         in_array($item->application_dest_id,$all_application_ids);
                 });
-        } else if ($application!=null) {
+            }
+        else if ($applicationBlock!=null) {
+            $app_applicationservice_ids = Mapplication::where('id','=',$application_id)
+                                                ->first()->services()->pluck("id");
+            // dd($app_applicationservice_ids);
             $flows = $flows
-                ->filter(function($item) use($application) {
-                    return $item->application_source_id=$application->id || $item->application_dest_id;
+                ->filter(function($item) use($application_id,$app_applicationservice_ids) {
+                    return 
+                        $item->application_source_id=$application_id || 
+                        $item->application_dest_id=$application_id ||
+                        in_array($item->module_source_id,$app_applicationservice_ids) ||
+                        in_array($item->module_dest_id,$app_applicationservice_ids);
                 });
+            }
+        else {
+            // no filters
         }
 
         // get linked objects
