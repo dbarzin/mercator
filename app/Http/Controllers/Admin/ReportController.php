@@ -404,14 +404,17 @@ class ReportController extends Controller
         $flows = Flux::All()->sortBy("name");
         if ($application_id!=null) {
             $flows = $flows
-                ->filter(function($item) use($all_application_ids) {
+                ->filter(function($item) use($application_id) {
                     return 
-                        in_array($item->application_source_id,$all_application_ids)||
-                        in_array($item->application_dest_id,$all_application_ids);
+                        $item->application_source_id=$application_id || 
+                        $item->application_dest_id=$application_id;
                 });
-            }
-        else if ($applicationBlock!=null) {
-            $app_applicationservice_ids = Mapplication::where('id','=',$application_id)
+	}
+	/*	
+	else if ($applicationBlock!=null) {
+                $app_applicationservice_ids = Mapplication::where('id','=',$application_id);
+                if (!empty($app_applicationservice_ids))
+                    $app_applicationservice_ids = $app_applicationservice_ids
                                                 ->first()->services()->pluck("id");
             // dd($app_applicationservice_ids);
             $flows = $flows
@@ -425,7 +428,7 @@ class ReportController extends Controller
             }
         else {
             // no filters
-        }
+	}*/
 
         // get linked objects
         $application_ids = [];
