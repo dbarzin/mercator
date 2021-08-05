@@ -351,88 +351,30 @@ class ReportController extends Controller
 
     }
 
-
     public function applicationFlows(Request $request) {
-        // for filtering
-        if ((int)($request->applicationBlock)==-1) {
-            $request->session()->put("applicationBlock",null);
-            $applicationBlock=null;
-            $request->session()->put("application",null);
-            $application_id=null;
-        }
-        else {
-            if ($request->applicationBlock!=null) {
-                    $request->session()->put("applicationBlock",$request->applicationBlock);
-                    $applicationBlock=$request->applicationBlock;
-                }
-            else {
-                $applicationBlock=$request->session()->get("applicationBlock");
-            }
 
-            if ((int)($request->application)==-1) {
-                $request->session()->put("application",null);
-                $application_id=null;
-            }
-            else 
-            if ($request->application!=null) {
-                    $request->session()->put("application",$request->application);
-                    $application_id=$request->application;
-                }
-            else {
-                $application_id=$request->session()->get("application");
-            }
-        }
+        //update list application blocks
+        $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
 
-        $all_applicationBlocks = ApplicationBlock::orderBy("name")->get();
-        $all_application_ids = null;
-        if ($applicationBlock==null)
-            $all_applications=null;
-        else {
-            $all_applications = MApplication::All()->sortBy("name")
-                ->filter(function($item) use($applicationBlock) {
-                    return $item->application_block_id == $applicationBlock;
-                });
-            // for filtering
-            $all_application_ids = [];
-            foreach ($all_applications as $app) {
-                array_push($all_application_ids,$app->id);
-                }
-            }
+        // if application block change
+        // update selected applications - services - modules - database
+        // else
+        // get active applicatons - services - modules - databases
 
-        // get flows
-        // TODO : improve filtering on module, services and databases
+        // get all flux
         $flows = Flux::All()->sortBy("name");
-        if ($application_id!=null) {
-            $flows = $flows
-                ->filter(function($item) use($all_application_ids) {
-                    return 
-                        in_array($item->application_source_id,$all_application_ids)||
-                        in_array($item->application_dest_id,$all_application_ids);
-                });
-            }
-        else if ($applicationBlock!=null) {
-            $app_applicationservice_ids = Mapplication::where('id','=',$application_id)
-                                                ->first()->services()->pluck("id");
-            // dd($app_applicationservice_ids);
-            $flows = $flows
-                ->filter(function($item) use($application_id,$app_applicationservice_ids) {
-                    return 
-                        $item->application_source_id=$application_id || 
-                        $item->application_dest_id=$application_id ||
-                        in_array($item->module_source_id,$app_applicationservice_ids) ||
-                        in_array($item->module_dest_id,$app_applicationservice_ids);
-                });
-            }
-        else {
-            // no filters
-        }
+
+
+
+
+        // filter flux on applications - services - modules and databases
 
         // get linked objects
         $application_ids = [];
         $service_ids = [];
         $module_ids = [];
         $database_ids = [];
-
+        
         // loop on flows
         foreach ($flows as $flux) {
             // applications
@@ -480,17 +422,27 @@ class ReportController extends Controller
             ->sortBy("name");
         $databases = Database::All()
             ->whereIn('id', $database_ids)
-            ->sortBy("name");
+            ->sortBy("name");        
+
+        // update lists
+        $all_applications = MApplication::All()->sortBy("name")->pluck("name","id");
+        $all_applicationServices = ApplicationService::All()->sortBy("name")->pluck("name","id");
+        $all_applicationModules = ApplicationModule::All()->sortBy("name")->pluck("name","id");
+        $all_databases = Database::All()->sortBy("name")->pluck("name","id");
 
         // return
         return view('admin/reports/application_flows')
-            ->with("all_applicationBlocks",$all_applicationBlocks)
+            ->with('all_applicationBlocks',$all_applicationBlocks)
             ->with("all_applications",$all_applications)
-            ->with("flows",$flows)
+            ->with("all_applicationModules",$all_applicationModules)
+            ->with("all_applicationServices",$all_applicationServices)
+            ->with("all_databases",$all_databases)
             ->with("applications",$applications)
             ->with("applicationServices",$applicationServices)
             ->with("applicationModules",$applicationModules)
-            ->with("databases",$databases);
+            ->with("databases",$databases)
+            ->with("flows",$flows)
+            ;
     }
 
     public function logicalInfrastructure(Request $request) {            

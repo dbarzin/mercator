@@ -83,7 +83,6 @@
 
             </div>
             <div class="col-sm">
-
                 <div class="form-group">
                     <label class="recommended" for="technology">{{ trans('cruds.application.fields.technology') }}</label>
                     <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}" name="technology" id="technology">
