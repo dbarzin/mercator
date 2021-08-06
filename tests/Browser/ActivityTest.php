@@ -59,7 +59,7 @@ class ActivityTest extends DuskTestCase
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
-                $browser->visit("/admin/activities/create");
+                $browser->visit("/admin/activities/create");                
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/activities/create");
             });        
