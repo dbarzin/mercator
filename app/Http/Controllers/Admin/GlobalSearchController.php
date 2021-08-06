@@ -94,9 +94,9 @@ class GlobalSearchController extends Controller
                 $parsedData['fields_formated'] = $formattedFields;
 
                 // TODO: Fix me please (XXXX)
-                $parsedData['url'] = url('/admin/' .
+                $parsedData['url'] = '/admin/' .
                     ($model=='MApplication' ? 'applications' : Str::plural(Str::snake($model, '-'))) . 
-                    '/' . $result->id . '/edit');
+                    '/' . $result->id . '/edit';
 
                 $searchableData[] = $parsedData;
             }

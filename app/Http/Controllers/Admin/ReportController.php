@@ -362,7 +362,8 @@ class ReportController extends Controller
         // get active applicatons - services - modules - databases
 
         // get all flux
-        $flows = Flux::All()->sortBy("name");
+	$flows = Flux::All()->sortBy("name");
+	/*
         if ($application_id!=null) {
             $flows = $flows
                 ->filter(function($item) use($application_id) {
