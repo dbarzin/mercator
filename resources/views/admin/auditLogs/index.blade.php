@@ -58,7 +58,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.audit-logs.index') }}",
+    ajax: "/admin/audit-logs", /*"{{ route('admin.audit-logs.index') }}"*/
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
