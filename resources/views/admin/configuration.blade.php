@@ -33,11 +33,11 @@
             <label class="required" for="name">les certificats qui expirent dans</label>
             <select class="form-control select2" name="building_id" id="building_id">
                 <option value="1">1 jour</option>
-                <option value="2">7 jours</option>
-                <option value="3">15 jours</option>
-                <option value="4">1 mois</option>
-                <option value="5">2 mois</option>
-                <option value="6">3 mois</option>
+                <option value="7">7 jours</option>
+                <option value="15">15 jours</option>
+                <option value="30">1 mois</option>
+                <option value="60">2 mois</option>
+                <option value="90">3 mois</option>
             </select>
             </div>
 

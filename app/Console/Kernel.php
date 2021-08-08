@@ -25,8 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('mercator:cleanup')->everyMinute();;
-
+        $schedule->command('mercator:cleanup')->daily();;
+        $schedule->command('mercator:certificate-expiracy')->daily();;
     }
 
     /**

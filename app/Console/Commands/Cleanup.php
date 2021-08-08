@@ -37,6 +37,7 @@ class Cleanup extends Command
      */
     public function handle()
     {
+        // clean reports
         $folder = storage_path('app/reports');
         $files = glob($folder . '/*.docx'); 
         $cnt=0;
@@ -46,7 +47,10 @@ class Cleanup extends Command
             $cnt++;
           }
         }
-
         $this->info('Removed ' . $cnt . ' files from ' . $folder);
+
+        // clean laravel.log
+        unlink(storage_path('logs').'/laravel.log');
+        $this->info('Laravel logs cleared.');
     }
 }
