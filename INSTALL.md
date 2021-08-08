@@ -121,6 +121,16 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
     utilisateur : admin@admin.com
     mot de passe : password
 
+## Sheduler
+
+Modifier le crontab
+
+    crontab -e
+
+ajouter cette ligne dans le crontab
+
+    * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
+
 ## Problèmes
 
 ### Restaurer le mot de passe administrateur

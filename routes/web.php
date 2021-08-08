@@ -229,6 +229,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Global Search engine !
     Route::get('global-search', [Admin\GlobalSearchController::Class,'search'])->name('globalSearch');
 
+    // Configuration page
+    Route::get('configuration', [Admin\ConfigurationController::Class,'index'])->name('configuration');
+    Route::put('configuration', [Admin\ConfigurationController::Class,'save'])->name('configuration');
+
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::Class,'ecosystem'])->name('report.view.ecosystem');
     Route::get('report/information_system', [Admin\ReportController::Class,'informationSystem'])->name('report.view.informaton-system');

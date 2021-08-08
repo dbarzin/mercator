@@ -1035,7 +1035,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'profile_password_edit',
             ],
 
-
+            // Certificates
             [
                 'id'    => '257',
                 'title' => 'certificate_create',
@@ -1056,6 +1056,13 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '261',
                 'title' => 'certificate_access',
             ],
+
+            // Configuration
+            [
+                'id'    => '262',
+                'title' => 'configure',
+            ],
+
         ];
 
         Permission::insert($permissions);

@@ -77,6 +77,9 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="/profile/preferences">{{ trans('panel.menu.options') }}</a>
                       <a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a>
+                      @can('configure')
+                      <a class="dropdown-item" href="/admin/configuration">{{ trans('panel.menu.config') }}</a>
+                      @endcan
                     </div>
                 </li>
                 </li>

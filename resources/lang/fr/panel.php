@@ -12,6 +12,7 @@ return [
         "administration" => "Administration",
         "application_flows" => "Flux applicatifs",
         "applications" => "Applications",
+        "config" => "Configuration",
         "documentation" => "Documentation",
         "ecosystem" => "Ecosystème",
         "guide" => "Guide",
