@@ -47,10 +47,10 @@ class CertificateExpiracy extends Command
         // Check for old certificates        
         $certificates = Certificate::
             select('name','type','end_validity')
-            ->where('end_validity', '>=', 
+		->where('end_validity', '<=', 
                 Carbon::now()
                 ->addDays(intval(config('mercator-config.cert.expire-delay')))
-                ->toDateTimeString())
+                ->toDateString())
             ->get();
 
         $this->info($certificates->count() . ' certificate(s) will expire in '. config('mercator-config.cert.expire-delay') . " days.");
@@ -67,13 +67,14 @@ class CertificateExpiracy extends Command
 
              // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
              $headers[] = 'MIME-Version: 1.0';
-             $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+             $headers[] = 'Content-type: text/html;charset=iso-8859-1';
 
              // En-têtes additionnels
              $headers[] = 'From: '. config('mercator-config.cert.mail-from');
-            mail($to_email, $subject, $message, implode("\r\n", $headers));
-
-            $this->info('Mail sent to '.$to_email." !");
+             if (mail($to_email, $subject, $message, implode("\r\n", $headers), " -f". config('mercator-config.cert.mail-from')))
+		     $this->info('Mail sent to '.$to_email);
+	     else
+		     $this->info('Email sending fail.');
             } 
     }
 }
