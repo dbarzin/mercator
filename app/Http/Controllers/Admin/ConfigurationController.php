@@ -25,7 +25,7 @@ class ConfigurationController extends Controller
 
         // Return
         return view('admin.configuration',
-            compact('cleanup_delay','mail_from','mail_to','mail_subject','check_frequency','expire_delay'));
+            compact('mail_from','mail_to','mail_subject','check_frequency','expire_delay'));
     }
 
     public function save(Request $request) {
@@ -51,7 +51,7 @@ class ConfigurationController extends Controller
 
         // Return
         return view('admin.configuration',
-            compact('cleanup_delay','mail_from','mail_to','mail_subject','check_frequency','expire_delay'))
+            compact('mail_from','mail_to','mail_subject','check_frequency','expire_delay'))
             ->withErrors('Configuration saved !');
     }
 
