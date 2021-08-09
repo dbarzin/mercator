@@ -53,7 +53,7 @@ class CertificateExpiracy extends Command
                 ->toDateTimeString())
             ->get();
 
-        $this->info($certificates->count() . ' certificate(s) have expired');
+        $this->info($certificates->count() . ' certificate(s) will expire in '. config('mercator-config.cert.expire-delay') . " days.");
 
         if ($certificates->count()>0) {
             // send email alert
@@ -70,11 +70,10 @@ class CertificateExpiracy extends Command
              $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
              // En-têtes additionnels
-             $headers[] = 'To: ' . config('mercator-config.cert.mail-to');
              $headers[] = 'From: '. config('mercator-config.cert.mail-from');
             mail($to_email, $subject, $message, implode("\r\n", $headers));
 
-            $this->info('Mail sent !');
+            $this->info('Mail sent to '.$to_email." !");
             } 
     }
 }

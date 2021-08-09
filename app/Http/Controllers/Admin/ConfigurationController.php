@@ -15,7 +15,6 @@ class ConfigurationController extends Controller
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get configuration
-        $cleanup_delay=config('mercator-config.cleanup-delay');        
         $mail_from=config('mercator-config.cert.mail-from');
         $mail_to=config('mercator-config.cert.mail-to');
         $mail_subject=config('mercator-config.cert.mail-subject');
@@ -33,7 +32,6 @@ class ConfigurationController extends Controller
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // read request
-        $cleanup_delay=request('cleanup_delay');        
         $mail_from=request('mail_from');
         $mail_to=request('mail_to');
         $mail_subject=request('mail_subject');
@@ -41,10 +39,9 @@ class ConfigurationController extends Controller
         $expire_delay=request('expire_delay');
 
         // put in config file
-        config(['mercator-config.cleanup.delay' => $cleanup_delay]);
         config(['mercator-config.cert.mail-from' => $mail_from]);
         config(['mercator-config.cert.mail-to' => $mail_to]);
-        config(['mercator-config.cert.mail-subject' => $mail_subject]);
+	config(['mercator-config.cert.mail-subject' => $mail_subject]);
         config(['mercator-config.cert.check-frequency' => $check_frequency]);
         config(['mercator-config.cert.expire-delay' => $expire_delay]);
 
@@ -52,7 +49,6 @@ class ConfigurationController extends Controller
         $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
         file_put_contents(config_path('mercator-config.php'), $text);
 
-        // TODO : message config saved 
         // Return
         return view('admin.configuration',
             compact('cleanup_delay','mail_from','mail_to','mail_subject','check_frequency','expire_delay'))
