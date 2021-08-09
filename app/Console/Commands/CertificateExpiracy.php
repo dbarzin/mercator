@@ -72,9 +72,9 @@ class CertificateExpiracy extends Command
              // En-têtes additionnels
              $headers[] = 'From: '. config('mercator-config.cert.mail-from');
              if (mail($to_email, $subject, $message, implode("\r\n", $headers), " -f". config('mercator-config.cert.mail-from')))
-		     $this->info('Mail sent to '.$to_email);
-	     else
-		     $this->info('Email sending fail.');
+                $this->info('Mail sent to '.$to_email);
+            else
+                $this->info('Email sending fail.');
             } 
     }
 }

@@ -239,6 +239,7 @@ return [
     "team-management-singular" => "Equipe",
     "test_answers" => "Test Answers",
     "test_results" => "Test Results",
+    "test" => "Test",
     "tests" => "Tests",
     "text" => "Texte",
     "thankYouForUsingOurApplication" => "Merci d'utiliser notre site",
