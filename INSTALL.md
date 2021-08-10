@@ -121,6 +121,20 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
     utilisateur : admin@admin.com
     mot de passe : password
 
+## Mail configuration
+
+Installer postfix et mailx
+
+    sudo apt install postfix mailx 
+
+Configurer postfix 
+
+    sudo dpkg-reconfigure postfix
+
+Envoyer un mail de test avec  
+
+    echo "Test mail body" | mailx -r "mercator@yourdomain.local" -s "Subject Test" yourname@yourdomain.local
+
 ## Sheduler
 
 Modifier le crontab
