@@ -121,7 +121,9 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
     utilisateur : admin@admin.com
     mot de passe : password
 
-## Mail configuration
+## Configuration du mail 
+
+Si vous souhaitez envoyer des mails de notification depuis Mercator.
 
 Installer postfix et mailx
 
