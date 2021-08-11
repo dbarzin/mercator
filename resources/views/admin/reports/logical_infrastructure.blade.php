@@ -388,6 +388,20 @@
                                             </td>
                                         </tr>
 
+                                        <tr>
+                                            <th>{{ trans('cruds.certificate.fields.applications') }}</th>
+                                            <td>
+                                                @if ($certificate->applications!=null)
+                                                    @foreach($certificate->applications as $application)
+                                                    <a href="/admin/report/applications#APPLICATION{{ $application->id}}">{{ $application->name }}</a>
+                                                        @if (!$loop->last)
+                                                        ,
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>

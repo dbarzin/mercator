@@ -49,8 +49,9 @@
                             ($certificate->type==null)||
                             ($certificate->start_validity==null)||
                             ($certificate->end_validity==null)||
-                            ($certificate->logical_servers->count()==0)
-                            )
+                            (
+                            ($certificate->logical_servers->count()==0)&&($certificate->applications->count()==0)
+                            ))
                                 class="table-warning"
                         @endif
                           >
@@ -102,8 +103,6 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
 @section('scripts')

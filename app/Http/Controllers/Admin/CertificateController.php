@@ -6,6 +6,7 @@ use Gate;
 
 use App\Certificate;
 use App\LogicalServer;
+use App\MApplication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCertificateRequest;
@@ -31,12 +32,13 @@ class CertificateController extends Controller
         abort_if(Gate::denies('certificate_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
         $type_list = Certificate::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
 
         return view('admin.certificates.create', 
-            compact('logical_servers','type_list'));
+            compact('logical_servers','applications','type_list'));
     }
 
     public function store(StoreCertificateRequest $request)
@@ -44,6 +46,7 @@ class CertificateController extends Controller
         $certificate = Certificate::create($request->all());
 
         $certificate->logical_servers()->sync($request->input('logical_servers', []));        
+        $certificate->applications()->sync($request->input('applications', []));        
 
         return redirect()->route('admin.certificates.index');
     }
@@ -53,12 +56,13 @@ class CertificateController extends Controller
         abort_if(Gate::denies('certificate_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
         $type_list = Certificate::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
 
         return view('admin.certificates.edit', 
-            compact('certificate','logical_servers','type_list'));
+            compact('certificate','logical_servers','type_list','applications'));
     }
 
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
@@ -66,6 +70,7 @@ class CertificateController extends Controller
         $certificate->update($request->all());
 
         $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        $certificate->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.certificates.index');
     }

@@ -1299,7 +1299,9 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => "",
             "logical_servers" => "Serveurs logiques",
-            "logical_servers_helper" => "Serveur logiques ou est installé ce certificat"
+            "logical_servers_helper" => "Serveurs logiques où est installé ce certificat",
+            "applications" => "Applications",
+            "applications_helper" => "Applications où est installé ce certificat",
         ],
         "title" => "Certificats",
         "title_short" => "Certificat",

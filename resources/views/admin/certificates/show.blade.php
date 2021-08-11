@@ -65,6 +65,16 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.certificate.fields.applications') }}
+                        </th>
+                        <td>
+                            @foreach($certificate->applications as $key => $application)
+                                <span class="label label-info">{{ $application->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

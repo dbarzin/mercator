@@ -84,10 +84,30 @@
                                 {{ $errors->first('logical_servers') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.certificate.fields.logical_servers') }}</span>
+                        <span class="help-block">{{ trans('cruds.certificate.fields.logical_servers_helper') }}</span>
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="applications">{{ trans('cruds.certificate.fields.applications') }}</label>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="logical_servers" multiple>
+                            @foreach($applications as $id => $application)
+                                <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $certificate->applications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('applications'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('applications') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.certificate.fields.applications_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

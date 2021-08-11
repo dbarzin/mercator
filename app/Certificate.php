@@ -67,4 +67,9 @@ class Certificate extends Model
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy("name");
     }
+
+    public function applications()
+    {
+        return $this->belongsToMany(MApplication::class)->orderBy("name");
+    }
 }
