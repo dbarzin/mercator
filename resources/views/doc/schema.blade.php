@@ -61,6 +61,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
+    .addImage("/images/certificate.png", "64px", "64px")
 
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
@@ -102,11 +103,14 @@ d3.select("#graph").graphviz()
                   NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
                   SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetwords\"]\
                   LOGICALSERVER [label=\"Serveur Logique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
+                  CERTIFICATE [label=\"Certificat\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"/admin/certificates\"]\
                   \
                   NETWORK -> SUBNETWORK [label=\"  0-n\"]\
                   SUBNETWORK -> LOGICALSERVER [label=\"  0-n\"]\
                   LOGICALSERVER -> PHYSICALSERVER [label=\"  n-m\"]\
                   APPLICATION -> LOGICALSERVER [label=\"  0-n\"]\
+                  CERTIFICATE -> LOGICALSERVER [label=\"  0-n\"]\
+                  CERTIFICATE -> APPLICATION [label=\"  0-n\"]\
                   \
                   SITE [label=\"Site\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"/admin/sites\"]\
                   BUILDING [label=\"Local\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"/admin/buildings\"]\
