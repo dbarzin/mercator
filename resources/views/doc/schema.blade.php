@@ -87,7 +87,7 @@ d3.select("#graph").graphviz()
                   OPERATION -> ACTOR  [label=\"  0-n\"]\
                   \
                   APPLICBLOCK [label=\"Bloc applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"/admin/application-blocks\"]\
-                  APPLICATION [label=\"Application\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"/admin/m-applications\"]\
+                  APPLICATION [label=\"Application\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"/admin/applications\"]\
                   APPLICSERV [label=\"Service Applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"/admin/application-services\"]\
                   APPLICMODULE [label=\"Module Applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"/admin/application-modules\"]\
                   DATABASE [label=\"Base de données\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"/admin/databases\"]\
