@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Log;
 use Config;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -63,7 +64,7 @@ class LoginController extends Controller
             $password = $credentials['password'];
 
             try {
-                // if (true) {
+                //if (true) {
                 if ($this->ldapLogin($username,$password)) {
                     $user = \App\User::where('name', $username)->first();
                     if (!$user) return false;
@@ -71,8 +72,13 @@ class LoginController extends Controller
                     return true;
                 }
                 return false;
-            }
-            finally { return false; }
+	    }
+	    catch (Exception $e) {
+               Log::error($e->getMessage());
+	    }
+	    finally { 
+	       return false; 
+	    }
         }
         else {
             return $this->guard()->attempt(
