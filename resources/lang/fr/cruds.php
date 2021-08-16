@@ -1304,7 +1304,7 @@ return [
             "applications_helper" => "Applications où est installé ce certificat",
         ],
         "title" => "Certificats",
-        "title_short" => "Certificat",
+        "title_short" => "Certificats",
         "title_singular" => "Certificat"
     ],  
 ];
