@@ -1058,10 +1058,12 @@ class PermissionsTableSeeder extends Seeder
             ],
 
             // Configuration
+            /* Already in migration_08_08
             [
                 'id'    => '262',
                 'title' => 'configure',
             ],
+            */
 
         ];
 

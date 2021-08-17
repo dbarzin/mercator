@@ -17,17 +17,20 @@ class ConfigRight extends Migration
      */
     public function up()
     {
-        $permissions = [
-            [
-                'id'    => '262',
-                'title' => 'configure',
-            ],
-        ];
-
-        Permission::insert($permissions);
-
+        // Create permission 262
+        $perm = Permission::find(262);
+        if ($perm==null) {
+            $permissions = [
+                [
+                    'id'    => '262',
+                    'title' => 'configure',
+                ],
+            ];
+            Permission::insert($permissions);
+        }
         $admin_permissions = Permission::all();
-        // find administrator
+
+        // find Administrator Role
         $admin = Role::find(1);
         // admin might not exists already at initial creation
         if ($admin!=null)            
