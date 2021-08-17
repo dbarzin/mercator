@@ -892,7 +892,7 @@ class CartographyController extends Controller
 
                     // entity_resp
                     $textRun=$this->addTextRunRow($table,"Entité resposanble de l'exploitation");
-                    if ($database->entity_resp->id!=null)
+                    if ($database->entity_resp!=null)
                         $textRun->addLink("ENTITY".$database->entity_resp->id, $database->entity_resp->name, CartographyController::FancyLinkStyle, null, true);
 
                     $this->addTextRow($table,"Responsable SSI",$database->responsible);
