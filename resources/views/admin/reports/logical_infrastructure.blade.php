@@ -453,11 +453,14 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
+                @if ($subnetwork->connected_subnets!=null)\
+                    SUBNET{{ $subnetwork->connected_subnets->id }} -> SUBNET{{ $subnetwork->id }} \
+                @endif\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
                 @foreach($entity->connected_networks as $network)\
-                    NET{{ $network->id }} -> E{{ $entity->id }}\
+                    E{{ $entity->id }} -> NET{{ $network->id }} \
                 @endforeach\
             @endforeach\
             @foreach($logicalServers as $logicalServer) \
