@@ -807,7 +807,7 @@ d3.select("#graph").graphviz()
                 @if ($workstation->building!=null)\
                      B{{ $workstation->building->id }}\ -> W{{ $workstation->id }}\
                 @elseif ($workstation->site!=null)\
-                     S{{ $workstation->building->id }}\ -> W{{ $workstation->id }}\
+                     S{{ $workstation->site->id }}\ -> W{{ $workstation->id }}\
                 @endif\
             @endforeach\
             @foreach($storageDevices as $storageDevice) \
