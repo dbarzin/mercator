@@ -28,7 +28,7 @@ class ConfigRight extends Migration
 
         $admin_permissions = Permission::all();
         // find administrator
-        $admin = Role::findOrFail(1);
+        $admin = Role::find(1);
         // admin might not exists already at initial creation
         if ($admin!=null)            
             $admin->permissions()->sync($admin_permissions->pluck('id'));
@@ -44,7 +44,7 @@ class ConfigRight extends Migration
         DB::delete('delete from permissions where id=262;');
 
         $admin_permissions = Permission::all();
-        $admin=Role::findOrFail(1);
+        $admin=Role::find(1);
         if($admin!=null)
             $admin->permissions()->sync($admin_permissions->pluck('id'));        
     }
