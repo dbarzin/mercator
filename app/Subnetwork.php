@@ -66,8 +66,7 @@ class Subnetwork extends Model
 
     public static $searchable = [
         'name',
-        'description',
-        'address',
+        'description',        
         'responsible_exp',
     ];
 
@@ -75,7 +74,6 @@ class Subnetwork extends Model
         'name',
         'description',
         'address',
-        'ip_range',
         'ip_allocation_type',
         'responsible_exp',
         'dmz',
@@ -111,4 +109,14 @@ class Subnetwork extends Model
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
+
+    public function ipRange() {
+        if ($this->address==null)
+            return null;        
+        $range = array();
+        $cidr = explode('/', $this->address);
+        $range[0] = long2ip((ip2long($cidr[0])) & ((-1 << (32 - (int)$cidr[1]))));
+        $range[1] = long2ip((ip2long($range[0])) + pow(2, (32 - (int)$cidr[1])) - 1);    
+        return $range[0] . " - " . $range[1];
+    }    
 }

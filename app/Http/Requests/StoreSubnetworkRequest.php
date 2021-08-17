@@ -22,10 +22,13 @@ class StoreSubnetworkRequest extends FormRequest
             'name' => [
                 'min:3',
                 'max:32',
-                'required',
-                //'unique:subnetworks',
+                'required',                
                 'unique:subnetworks,name,NULL,id,deleted_at,NULL',
             ],
+            'address' => [
+                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/[0-9][0-9]?$/i',
+                'nullable'
+            ]
         ];
     }
 }

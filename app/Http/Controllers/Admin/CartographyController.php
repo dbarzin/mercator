@@ -1254,24 +1254,21 @@ class CartographyController extends Controller
                     $section->addBookmark("SUBNET".$subnetwork->id);
                     $table=$this->addTable($section, $subnetwork->name);
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
-
-                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address);
+                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . "( " . $subnetwork->ipRange() " )");
+                    $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
+                    $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
+                    $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
                     // gateway
                     $textRun=$this->addTextRunRow($table,"Passerelle");
                     if ($subnetwork->gateway!=null) 
                         $textRun->addLink("GATEWAY".$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FancyLinkStyle, null, true);
-                    $this->addTextRow($table,"Plage d’adresses IP",$subnetwork->ip_range);
-                    $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
-                    $this->addTextRow($table,"Responsable d’exploitation",$subnetwork->responsible_exp);
-                    $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
 
                     // subnetworks
                     $textRun=$this->addTextRunRow($table,"Sous-réseaux connectés");
                     if ($subnetwork->connected_subnets!=null) {
                         $textRun->addLink("SUBNET".$subnetwork->connected_subnets->id, $subnetwork->connected_subnets->name, CartographyController::FancyLinkStyle, null, true);
                         }
-
-                    $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
+                    $this->addTextRow($table,"Responsable d’exploitation",$subnetwork->responsible_exp);
 
                     $section->addTextBreak(1); 
                     }

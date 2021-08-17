@@ -109,7 +109,10 @@
                                     </tr>
                                     <tr>
                                         <th>Adresse/Masque</th>
-                                        <td>{{ $subnetwork->address }}</td>
+                                        <td>
+                                            {{ $subnetwork->address }} 
+                                            ( {{ $subnetwork->ipRange() }} )
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Passerelle</th>
@@ -118,10 +121,6 @@
                                             <a href="#GATEWAY{{$subnetwork->gateway->id}}">{{ $subnetwork->gateway->name }}</a>
                                         @endif
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Plage d’adresses IP</th>
-                                        <td>{{ $subnetwork->ip_range }}</td>
                                     </tr>
                                     <tr>
                                         <th>Méthode d’attribution des IP</th>
