@@ -462,6 +462,15 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($logicalServers as $logicalServer) \
                 LOGICAL_SERVER{{ $logicalServer->id }} [label=\"{{ $logicalServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#LOGICAL_SERVER{{$logicalServer->id}}\"]\
+                @if ($logicalServer->address_ip!=null)\
+                    @foreach($subnetworks as $subnetwork) \
+                        @foreach(explode(',',$logicalServer->address_ip) as $address) \
+                            @if ($subnetwork->contains($address))\
+                                SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }} \
+                            @endif\
+                        @endforeach\
+                    @endforeach\
+                @endif\
             @endforeach\
             @foreach($certificates as $certificate) \
                 CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\

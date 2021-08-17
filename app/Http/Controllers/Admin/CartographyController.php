@@ -1193,7 +1193,7 @@ class CartographyController extends Controller
             foreach($gateways as $gateway) {
                 $graph .= " GATEWAY" . $gateway->id . "[label=\"" . $gateway->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/gateway.png") . "\"]";
                 foreach($gateway->gatewaySubnetworks as $subnetwork) 
-                    $graph .= " NET" . $subnetwork->id . "->GATEWAY" . $gateway->id;                
+                    $graph .= " SUBNET" . $subnetwork->id . "->GATEWAY" . $gateway->id;                
                 }
             foreach($subnetworks as $subnetwork) 
                 $graph .= " SUBNET" . $subnetwork->id . "[label=\"" . $subnetwork->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/network.png") . "\"]";
@@ -1202,8 +1202,24 @@ class CartographyController extends Controller
                 foreach($entity->connected_networks as $network)
                     $graph .= " NET" . $network->id . "->E" . $entity->id;                
                 }
+
+            foreach($logicalServers as $logicalServer) {
+                $graph .= " LOGICAL_SERVER" . $logicalServer->id ."[label=\"" . $logicalServer->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/server.png") . "\"]";
+                if ($logicalServer->address_ip!=null)
+                    foreach($subnetworks as $subnetwork) 
+                        foreach(explode(',',$logicalServer->address_ip) as $address)
+                            if ($subnetwork->contains($address))
+                                $graph .= " SUBNET" . $subnetwork->id . "->LOGICAL_SERVER" . $logicalServer->id ; 
+                }
+
+            foreach($certificates as $certificate) {
+                $graph .= " CERT" . $certificate->id . "[label=\"" . $certificate->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/certificate.png") ."\"]";
+                if ($certificate->logical_servers!=null)
+                    foreach($certificate->logical_servers as $logical_server)
+                        $graph .= " LOGICAL_SERVER" . $logical_server->id . "->CERT". $certificate->id;
+                }
             $graph .= "}";
-            
+
             // IMAGE
             $image_paths[] = $image_path=$this->generateGraphImage($graph);
             Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600,getimagesize ($image_path)[0]/2) . '"/></td></tr></table>');
@@ -1254,7 +1270,7 @@ class CartographyController extends Controller
                     $section->addBookmark("SUBNET".$subnetwork->id);
                     $table=$this->addTable($section, $subnetwork->name);
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
-                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . "( " . $subnetwork->ipRange() " )");
+                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . "( " . $subnetwork->ipRange() . " )");
                     $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
                     $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
                     $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
