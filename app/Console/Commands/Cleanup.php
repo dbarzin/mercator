@@ -50,7 +50,8 @@ class Cleanup extends Command
         $this->info('Removed ' . $cnt . ' files from ' . $folder);
 
         // clean laravel.log
-        unlink(storage_path('logs').'/laravel.log');
+        // unlink(storage_path('logs').'/laravel.log');
+        file_put_contents(storage_path('logs').'/laravel.log', "");
         $this->info('Laravel logs cleared.');
     }
 }
