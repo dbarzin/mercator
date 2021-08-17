@@ -198,8 +198,7 @@ Installer le pluggin dusk
 
 Configurer l'environement
 
-    cp .env .env.dusk.local
-    vi .env.dusk.local
+    cp .env .env.dusk.local    
 
 Lancer l'application
 
