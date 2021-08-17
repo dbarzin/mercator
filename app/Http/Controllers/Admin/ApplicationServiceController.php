@@ -74,7 +74,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('application_service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationService->load('modules', 'serviceSourceFluxes', 'serviceDestFluxes', 'servicesMApplications');
+        $applicationService->load('modules', 'serviceSourceFluxes', 'serviceDestFluxes', 'applications');
 
         return view('admin.applicationServices.show', compact('applicationService'));
     }

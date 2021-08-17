@@ -89,7 +89,7 @@
             @includeIf('admin.applicationServices.relationships.serviceDestFluxes', ['fluxes' => $applicationService->serviceDestFluxes])
         </div>
         <div class="tab-pane" role="tabpanel" id="services_m_applications">
-            @includeIf('admin.applicationServices.relationships.servicesMApplications', ['mApplications' => $applicationService->servicesMApplications])
+            @includeIf('admin.applicationServices.relationships.servicesMApplications', ['mApplications' => $applicationService->applications])
         </div>
     </div>
 </div>
