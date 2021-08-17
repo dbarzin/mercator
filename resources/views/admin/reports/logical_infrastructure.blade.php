@@ -473,8 +473,8 @@ d3.select("#graph").graphviz()
                 @endif\
             @endforeach\
             @foreach($certificates as $certificate) \
-                CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
-                @if ($certificate->logical_servers!=null)\
+                @if ($certificate->logical_servers->count()>0)\
+                    CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
                     @foreach($certificate->logical_servers as $logical_server)\
                         LOGICAL_SERVER{{ $logical_server->id }} -> CERT{{ $certificate->id }}\
                     @endforeach\

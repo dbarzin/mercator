@@ -114,7 +114,8 @@ class Subnetwork extends Model
         if ($this->address==null)
             return null;        
         $range = array();
-        $cidr = explode('/', $this->address);
+        // $cidr = explode('/ ', $this->address);
+        $cidr = preg_split('/[ ]?\/[ ]?/', $this->address);
         $range[0] = long2ip((ip2long($cidr[0])) & ((-1 << (32 - (int)$cidr[1]))));
         $range[1] = long2ip((ip2long($range[0])) + pow(2, (32 - (int)$cidr[1])) - 1);    
         return $range[0] . " - " . $range[1];
@@ -125,7 +126,7 @@ class Subnetwork extends Model
             return null;
         if ($this->address==null)
             return null;
-        \Log::info("Subnetwork.contains " . $this->address . " " . $ip);
+        // \Log::info("Subnetwork.contains " . $this->address . " " . $ip);
         $src = ip2long($ip);
         $range = array();        
         $cidr = explode('/', $this->address);

@@ -48,7 +48,14 @@
 
                     <div class="form-group">
                         <label for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
-                        <input class="form-control {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" type="text" name="ip_allocation_type" id="ip_allocation_type" value="{{ old('ip_allocation_type', $subnetwork->ip_allocation_type) }}">
+                        <select class="form-control select2-free {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" name="ip_allocation_type" id="ip_allocation_type">
+                            @if (!$ip_allocation_type_list->contains(old('ip_allocation_type')))
+                                <option> {{ old('ip_allocation_type') }}</option>'
+                            @endif
+                            @foreach($ip_allocation_type_list as $t)
+                                <option {{ (old('ip_allocation_type') ? old('ip_allocation_type') : $subnetwork->ip_allocation_type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('ip_allocation_type'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('ip_allocation_type') }}
@@ -56,7 +63,6 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.ip_allocation_type_helper') }}</span>
                     </div>
-
 
                     <div class="form-group">
                         <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
@@ -81,19 +87,32 @@
 
                     <div class="form-group">
                         <label for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
-                        <input class="form-control {{ $errors->has('dmz') ? 'is-invalid' : '' }}" type="text" name="dmz" id="dmz" value="{{ old('dmz', $subnetwork->dmz) }}">
+                        <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}" name="dmz" id="dmz">
+                            @if (!$wifi_list->contains(old('dmz')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($dmz_list as $z)
+                                <option {{ (old('dmz') ? old('dmz') : $subnetwork->dmz) == $z ? 'selected' : '' }}>{{$z}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('dmz'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('dmz') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.subnetwork.fields.dmz_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
                     </div>
-
 
                     <div class="form-group">
                         <label for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
-                        <input class="form-control {{ $errors->has('wifi') ? 'is-invalid' : '' }}" type="text" name="wifi" id="wifi" value="{{ old('wifi', $subnetwork->wifi) }}">
+                        <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}" name="wifi" id="wifi">
+                            @if (!$wifi_list->contains(old('wifi')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($wifi_list as $w)
+                                <option {{ (old('wifi') ? old('wifi') : $subnetwork->wifi) == $w ? 'selected' : '' }}>{{$w}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('wifi'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('wifi') }}
@@ -102,10 +121,18 @@
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
                     </div>
 
+
                     <div class="form-group">
                         <label for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
-                        <input class="form-control {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" type="text" name="responsible_exp" id="responsible_exp" value="{{ old('responsible_exp', $subnetwork->responsible_exp) }}">
-                        @if($errors->has('responsible_exp'))
+                        <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" name="responsible_exp" id="responsible_exp">
+                            @if (!$responsible_exp_list->contains(old('responsible_exp')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($responsible_exp_list as $t)
+                                <option {{ (old('responsible_exp') ? old('responsible_exp') : $subnetwork->responsible_exp) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('responsible'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('responsible_exp') }}
                             </div>
@@ -146,67 +173,23 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/subnetwords/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
-
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $subnetwork->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
-
+$(document).ready(function () {
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
 });
-</script>
 
+$(document).ready(function() {
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+  }); 
+</script>
 @endsection

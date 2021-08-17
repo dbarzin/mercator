@@ -1213,8 +1213,8 @@ class CartographyController extends Controller
                 }
 
             foreach($certificates as $certificate) {
-                $graph .= " CERT" . $certificate->id . "[label=\"" . $certificate->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/certificate.png") ."\"]";
-                if ($certificate->logical_servers!=null)
+                if ($certificate->logical_servers->count()>0)
+                    $graph .= " CERT" . $certificate->id . "[label=\"" . $certificate->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/certificate.png") ."\"]";
                     foreach($certificate->logical_servers as $logical_server)
                         $graph .= " LOGICAL_SERVER" . $logical_server->id . "->CERT". $certificate->id;
                 }
