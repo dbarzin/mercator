@@ -112,7 +112,7 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#connected_subnets_subnetwords" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#connected_subnets_subnetworks" role="tab" data-toggle="tab">
                 {{ trans('cruds.subnetwork.title') }}
             </a>
         </li>
@@ -123,11 +123,11 @@
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="connected_subnets_subnetwords">
-            @includeIf('admin.subnetwords.relationships.connectedSubnetsSubnetwords', ['subnetwords' => $subnetwork->connectedSubnetsSubnetwords])
+        <div class="tab-pane" role="tabpanel" id="connected_subnets_subnetworks">
+            @includeIf('admin.subnetworks.relationships.connectedSubnetsSubnetwords', ['subnetworks' => $subnetwork->connectedSubnetsSubnetwords])
         </div>
         <div class="tab-pane" role="tabpanel" id="subnetworks_networks">
-            @includeIf('admin.subnetwords.relationships.subnetworksNetworks', ['networks' => $subnetwork->subnetworksNetworks])
+            @includeIf('admin.subnetworks.relationships.subnetworksNetworks', ['networks' => $subnetwork->subnetworksNetworks])
         </div>
     </div>
 </div>

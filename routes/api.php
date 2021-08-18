@@ -83,8 +83,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('networks', 'NetworkApiController');
 
     // Subnetwords
-    Route::post('subnetwords/media', 'SubnetwordApiController@storeMedia')->name('subnetwords.storeMedia');
-    Route::apiResource('subnetwords', 'SubnetwordApiController');
+    Route::post('subnetworks/media', 'SubnetwordApiController@storeMedia')->name('subnetworks.storeMedia');
+    Route::apiResource('subnetworks', 'SubnetwordApiController');
 
     // Gateways
     Route::post('gateways/media', 'GatewayApiController@storeMedia')->name('gateways.storeMedia');

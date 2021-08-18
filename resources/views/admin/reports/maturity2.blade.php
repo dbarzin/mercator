@@ -202,7 +202,7 @@
                 </tr>
 
                 <tr>
-                    <td><a href="/admin/subnetwords">{{ trans("cruds.subnetwork.title") }}</a></td>
+                    <td><a href="/admin/subnetworks">{{ trans("cruds.subnetwork.title") }}</a></td>
                     <td><center>{{ $subnetworks }}</center></td>
                     <td><center>{{ $subnetworks_lvl1 }}</center></td>
                     <td><center>{{ $subnetworks>0 ? number_format($subnetworks_lvl1*100/$subnetworks,0):0 }}%</center></td>

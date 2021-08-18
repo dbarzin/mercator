@@ -101,7 +101,7 @@ d3.select("#graph").graphviz()
                   DATABASE -> ENTITY [label=\"  0-n\"]\
                   \
                   NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
-                  SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetwords\"]\
+                  SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetworks\"]\
                   LOGICALSERVER [label=\"Serveur Logique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
                   CERTIFICATE [label=\"Certificat\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"/admin/certificates\"]\
                   \
