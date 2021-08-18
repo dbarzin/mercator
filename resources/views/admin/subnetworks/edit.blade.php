@@ -20,6 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.subnetwork.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $subnetwork->description) !!}</textarea>
@@ -31,96 +32,117 @@
                 <span class="help-block">{{ trans('cruds.subnetwork.fields.description_helper') }}</span>
             </div>
 
-
-          <div class="row">
-            <div class="col-sm">
+            <div class="row">
+                <div class="col-sm">
                 
-                <div class="form-group">
-                    <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
-                    <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', $subnetwork->address) }}">
-                    @if($errors->has('address'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('address') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="ip_range">{{ trans('cruds.subnetwork.fields.ip_range') }}</label>
-                    <input class="form-control {{ $errors->has('ip_range') ? 'is-invalid' : '' }}" type="text" name="ip_range" id="ip_range" value="{{ old('ip_range', $subnetwork->ip_range) }}">
-                    @if($errors->has('ip_range'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('ip_range') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.ip_range_helper') }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
-                    <input class="form-control {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" type="text" name="ip_allocation_type" id="ip_allocation_type" value="{{ old('ip_allocation_type', $subnetwork->ip_allocation_type) }}">
-                    @if($errors->has('ip_allocation_type'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('ip_allocation_type') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.ip_allocation_type_helper') }}</span>
-                </div>
-
-            </div>
-            <div class="col-sm">
-
-                <div class="form-group">
-                    <label for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
-                    <input class="form-control {{ $errors->has('dmz') ? 'is-invalid' : '' }}" type="text" name="dmz" id="dmz" value="{{ old('dmz', $subnetwork->dmz) }}">
-                    @if($errors->has('dmz'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('dmz') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.dmz_helper') }}</span>
-                </div>
-
-
-                <div class="form-group">
-                    <label for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
-                    <input class="form-control {{ $errors->has('wifi') ? 'is-invalid' : '' }}" type="text" name="wifi" id="wifi" value="{{ old('wifi', $subnetwork->wifi) }}">
-                    @if($errors->has('wifi'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('wifi') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
-                    <select class="form-control select2 {{ $errors->has('gateway') ? 'is-invalid' : '' }}" name="gateway_id" id="gateway_id">
-                        @foreach($gateways as $id => $gateway)
-                            <option value="{{ $id }}" {{ ($subnetwork->gateway ? $subnetwork->gateway->id : old('gateway_id')) == $id ? 'selected' : '' }}>{{ $gateway }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('gateway'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('gateway') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
-                </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
-                <input class="form-control {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" type="text" name="responsible_exp" id="responsible_exp" value="{{ old('responsible_exp', $subnetwork->responsible_exp) }}">
-                @if($errors->has('responsible_exp'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsible_exp') }}
+                    <div class="form-group">
+                        <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
+                        <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', $subnetwork->address) }}">
+                        @if($errors->has('address'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('address') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.subnetwork.fields.responsible_exp_helper') }}</span>
+
+                    <div class="form-group">
+                        <label for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" name="ip_allocation_type" id="ip_allocation_type">
+                            @if (!$ip_allocation_type_list->contains(old('ip_allocation_type')))
+                                <option> {{ old('ip_allocation_type') }}</option>'
+                            @endif
+                            @foreach($ip_allocation_type_list as $t)
+                                <option {{ (old('ip_allocation_type') ? old('ip_allocation_type') : $subnetwork->ip_allocation_type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('ip_allocation_type'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('ip_allocation_type') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.ip_allocation_type_helper') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gateway_id">{{ trans('cruds.subnetwork.fields.gateway') }}</label>
+                        <select class="form-control select2 {{ $errors->has('gateway') ? 'is-invalid' : '' }}" name="gateway_id" id="gateway_id">
+                            @foreach($gateways as $id => $gateway)
+                                <option value="{{ $id }}" {{ ($subnetwork->gateway ? $subnetwork->gateway->id : old('gateway_id')) == $id ? 'selected' : '' }}>{{ $gateway }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('gateway'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('gateway') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-sm">
+
+                    <div class="form-group">
+                        <label for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}" name="dmz" id="dmz">
+                            @if (!$wifi_list->contains(old('dmz')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($dmz_list as $z)
+                                <option {{ (old('dmz') ? old('dmz') : $subnetwork->dmz) == $z ? 'selected' : '' }}>{{$z}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('dmz'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('dmz') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}" name="wifi" id="wifi">
+                            @if (!$wifi_list->contains(old('wifi')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($wifi_list as $w)
+                                <option {{ (old('wifi') ? old('wifi') : $subnetwork->wifi) == $w ? 'selected' : '' }}>{{$w}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('wifi'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('wifi') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" name="responsible_exp" id="responsible_exp">
+                            @if (!$responsible_exp_list->contains(old('responsible_exp')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($responsible_exp_list as $t)
+                                <option {{ (old('responsible_exp') ? old('responsible_exp') : $subnetwork->responsible_exp) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('responsible'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('responsible_exp') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.responsible_exp_helper') }}</span>
+                    </div>
+
             </div>
+        </div>
+
 
             <div class="form-group">
                 <label for="connected_subnets_id">{{ trans('cruds.subnetwork.fields.connected_subnets') }}</label>
@@ -151,67 +173,23 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/subnetwords/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
-
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $subnetwork->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
-
+$(document).ready(function () {
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
 });
-</script>
 
+$(document).ready(function() {
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+  }); 
+</script>
 @endsection

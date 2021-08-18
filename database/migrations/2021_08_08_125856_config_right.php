@@ -17,17 +17,24 @@ class ConfigRight extends Migration
      */
     public function up()
     {
-        $permissions = [
-            [
-                'id'    => '262',
-                'title' => 'configure',
-            ],
-        ];
-
-        Permission::insert($permissions);
-
+        // Create permission 262
+        $perm = Permission::find(262);
+        if ($perm==null) {
+            $permissions = [
+                [
+                    'id'    => '262',
+                    'title' => 'configure',
+                ],
+            ];
+            Permission::insert($permissions);
+        }
         $admin_permissions = Permission::all();
-        Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
+
+        // find Administrator Role
+        $admin = Role::find(1);
+        // admin might not exists already at initial creation
+        if ($admin!=null)            
+            $admin->permissions()->sync($admin_permissions->pluck('id'));
     }
 
     /**
@@ -40,6 +47,8 @@ class ConfigRight extends Migration
         DB::delete('delete from permissions where id=262;');
 
         $admin_permissions = Permission::all();
-        Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));        
+        $admin=Role::find(1);
+        if($admin!=null)
+            $admin->permissions()->sync($admin_permissions->pluck('id'));        
     }
 }

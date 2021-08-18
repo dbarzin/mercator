@@ -23,7 +23,6 @@ class UpdateLogicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:logical_servers,name,' . request()->route('logical_server')->id,
                 'unique:logical_servers,name,'.request()->route('logical_server')->id.',id,deleted_at,NULL',
             ],
             'disk' => [
@@ -38,6 +37,14 @@ class UpdateLogicalServerRequest extends FormRequest
             'servers'   => [
                 'array',
             ],
+            'address_ip' => [
+                // ipv6 :
+                // 'regex:/^\*$|^(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3}(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
+                // only ipv4 :
+                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
+                'nullable'
+            ]
+
         ];
     }
 }

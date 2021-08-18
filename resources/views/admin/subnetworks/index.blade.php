@@ -55,7 +55,7 @@
                                 {{ $subnetwork->address ?? '' }}
                             </td>
                             <td>
-                                {{ $subnetwork->ip_range ?? '' }}
+                                {{ $subnetwork->ipRange() }}
                             </td>
                             <td>
                                 @can('subnetwork_show')

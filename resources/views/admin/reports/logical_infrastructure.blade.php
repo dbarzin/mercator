@@ -109,7 +109,10 @@
                                     </tr>
                                     <tr>
                                         <th>Adresse/Masque</th>
-                                        <td>{{ $subnetwork->address }}</td>
+                                        <td>
+                                            {{ $subnetwork->address }} 
+                                            ( {{ $subnetwork->ipRange() }} )
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Passerelle</th>
@@ -118,10 +121,6 @@
                                             <a href="#GATEWAY{{$subnetwork->gateway->id}}">{{ $subnetwork->gateway->name }}</a>
                                         @endif
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Plage d’adresses IP</th>
-                                        <td>{{ $subnetwork->ip_range }}</td>
                                     </tr>
                                     <tr>
                                         <th>Méthode d’attribution des IP</th>
@@ -454,19 +453,31 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
+                @if ($subnetwork->connected_subnets!=null)\
+                    SUBNET{{ $subnetwork->connected_subnets->id }} -> SUBNET{{ $subnetwork->id }} \
+                @endif\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
                 @foreach($entity->connected_networks as $network)\
-                    NET{{ $network->id }} -> E{{ $entity->id }}\
+                    E{{ $entity->id }} -> NET{{ $network->id }} \
                 @endforeach\
             @endforeach\
             @foreach($logicalServers as $logicalServer) \
                 LOGICAL_SERVER{{ $logicalServer->id }} [label=\"{{ $logicalServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#LOGICAL_SERVER{{$logicalServer->id}}\"]\
+                @if ($logicalServer->address_ip!=null)\
+                    @foreach($subnetworks as $subnetwork) \
+                        @foreach(explode(',',$logicalServer->address_ip) as $address) \
+                            @if ($subnetwork->contains($address))\
+                                SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }} \
+                            @endif\
+                        @endforeach\
+                    @endforeach\
+                @endif\
             @endforeach\
             @foreach($certificates as $certificate) \
-                CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
-                @if ($certificate->logical_servers!=null)\
+                @if ($certificate->logical_servers->count()>0)\
+                    CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
                     @foreach($certificate->logical_servers as $logical_server)\
                         LOGICAL_SERVER{{ $logical_server->id }} -> CERT{{ $certificate->id }}\
                     @endforeach\

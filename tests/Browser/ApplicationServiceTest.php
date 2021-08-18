@@ -24,8 +24,8 @@ class ApplicationServiceTest extends DuskTestCase
     public function testView()
     {
         $admin = \App\User::find(1);
-        // $data = \App\ApplicationService::first();
-        // if ($data!=null) 
+        $data = \App\ApplicationService::first();
+        if ($data!=null) 
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);

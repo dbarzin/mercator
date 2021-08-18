@@ -66,8 +66,7 @@ class Subnetwork extends Model
 
     public static $searchable = [
         'name',
-        'description',
-        'address',
+        'description',        
         'responsible_exp',
     ];
 
@@ -75,7 +74,6 @@ class Subnetwork extends Model
         'name',
         'description',
         'address',
-        'ip_range',
         'ip_allocation_type',
         'responsible_exp',
         'dmz',
@@ -111,4 +109,32 @@ class Subnetwork extends Model
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
+
+    public function ipRange() {
+        if ($this->address==null)
+            return null;        
+        $range = array();
+        // $cidr = explode('/ ', $this->address);
+        $cidr = preg_split('/[ ]?\/[ ]?/', $this->address);
+        $range[0] = long2ip((ip2long($cidr[0])) & ((-1 << (32 - (int)$cidr[1]))));
+        $range[1] = long2ip((ip2long($range[0])) + pow(2, (32 - (int)$cidr[1])) - 1);    
+        return $range[0] . " - " . $range[1];
+    }    
+
+    public function contains($ip) {
+        if ($ip==null)
+            return null;
+        if ($this->address==null)
+            return null;
+        // \Log::info("Subnetwork.contains " . $this->address . " " . $ip);
+        $src = ip2long($ip);
+        $range = array();        
+        // $cidr = explode('/ ', $this->address);
+        $cidr = preg_split('/[ ]?\/[ ]?/', $this->address);
+        $range[0] = ((ip2long($cidr[0])) & ((-1 << (32 - (int)$cidr[1]))));
+        $range[1] = ((($range[0])) + pow(2, (32 - (int)$cidr[1])) - 1);    
+        \Log::info("Subnetwork.contains " . $src . " [" . $range[0] . " " . $range[1] ."]");
+        return ($src>=$range[0]) && ($src<=$range[1]);
+    }
+
 }
