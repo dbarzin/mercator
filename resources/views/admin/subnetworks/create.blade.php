@@ -45,6 +45,20 @@
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
                 </div>
 
+                <div class="form-group">
+                    <label for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
+                    <select class="form-control select2 {{ $errors->has('gateway') ? 'is-invalid' : '' }}" name="vlan_id" id="vlan_id">
+                        @foreach($vlans as $id => $vlan)
+                            <option value="{{ $id }}" {{ old('vlan_id') == $id ? 'selected' : '' }}>{{ $vlan }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('vlan'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('vlan') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.subnetwork.fields.vlan_helper') }}</span>
+                </div>
 
                 <div class="form-group">
                     <label class="recommended" for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
@@ -84,6 +98,27 @@
             </div>
 
             <div class="col-sm">
+
+                <div class="form-group">
+                    <label class="recommended" for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}" name="zone" id="zone">
+                        <option></option>
+                        @foreach($zone_list as $z)
+                            <option {{ old('zone') == $z ? 'selected' : '' }}>{{$z}}</option>
+                        @endforeach
+                        @if (!$ip_allocation_type_list->contains(old('zone')))
+                            <option {{ old('zone') ? 'selected' : ''}}> {{ old('zone') }}</option>
+                        @endif
+                    </select>
+
+                    @if($errors->has('zone'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('zone') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.subnetwork.fields.zone_helper') }}</span>
+                </div>
+
                 <div class="form-group">
                     <label class="recommended" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                     <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}" name="dmz" id="dmz">
@@ -98,7 +133,7 @@
 
                     @if($errors->has('dmz'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('dmz_type') }}
+                            {{ $errors->first('dmz') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.dmz_helper') }}</span>
@@ -111,14 +146,14 @@
                         @foreach($wifi_list as $w)
                             <option {{ old('wifi') == $w ? 'selected' : '' }}>{{$w}}</option>
                         @endforeach
-                        @if (!$ip_allocation_type_list->contains(old('dmz')))
+                        @if (!$ip_allocation_type_list->contains(old('wifi')))
                             <option {{ old('wifi') ? 'selected' : ''}}> {{ old('wifi') }}</option>
                         @endif
                     </select>
 
                     @if($errors->has('wifi'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('wifi_type') }}
+                            {{ $errors->first('wifi') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
@@ -142,28 +177,24 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.subnetwork.fields.responsible_exp_helper') }}</span>
-                </div>
-
-                
+                </div>                
             </div>
         </div>
 
-
-            <div class="form-group">
-                <label for="connected_subnets_id">{{ trans('cruds.subnetwork.fields.connected_subnets') }}</label>
-                <select class="form-control select2 {{ $errors->has('connected_subnets') ? 'is-invalid' : '' }}" name="connected_subnets_id" id="connected_subnets_id">
-                    @foreach($connected_subnets as $id => $connected_subnets)
-                        <option value="{{ $id }}" {{ old('connected_subnets_id') == $id ? 'selected' : '' }}>{{ $connected_subnets }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('connected_subnets'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('connected_subnets') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.subnetwork.fields.connected_subnets_helper') }}</span>
-            </div>
-
+        <div class="form-group">
+            <label for="network_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
+            <select class="form-control select2 {{ $errors->has('network') ? 'is-invalid' : '' }}" name="network_id" id="network_id">
+                @foreach($networks as $id => $network)
+                    <option value="{{ $id }}" {{ old('network_id') == $id ? 'selected' : '' }}>{{ $network }}</option>
+                @endforeach
+            </select>
+            @if($errors->has('network'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('network') }}
+                </div>
+            @endif
+            <span class="help-block">{{ trans('cruds.subnetwork.fields.network_helper') }}</span>
+        </div>
 
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

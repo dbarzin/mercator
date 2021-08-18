@@ -37,14 +37,23 @@
                         </th>
                         <td>
                             {{ $subnetwork->address }}
+                            ( {{ $subnetwork->ipRange() }} )
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.subnetwork.fields.ip_range') }}
+                            {{ trans('cruds.subnetwork.fields.vlan') }}
                         </th>
                         <td>
-                            {{ $subnetwork->ip_range }}
+                            {{ $subnetwork->vlan->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.zone') }}
+                        </th>
+                        <td>
+                            {{ $subnetwork->zone }}
                         </td>
                     </tr>
                     <tr>
@@ -81,14 +90,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.subnetwork.fields.connected_subnets') }}
-                        </th>
-                        <td>
-                            {{ $subnetwork->connected_subnets->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.subnetwork.fields.gateway') }}
                         </th>
                         <td>
@@ -106,30 +107,5 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#connected_subnets_subnetworks" role="tab" data-toggle="tab">
-                {{ trans('cruds.subnetwork.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#subnetworks_networks" role="tab" data-toggle="tab">
-                {{ trans('cruds.network.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="connected_subnets_subnetworks">
-            @includeIf('admin.subnetworks.relationships.connectedSubnetsSubnetwords', ['subnetworks' => $subnetwork->connectedSubnetsSubnetwords])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="subnetworks_networks">
-            @includeIf('admin.subnetworks.relationships.subnetworksNetworks', ['networks' => $subnetwork->subnetworksNetworks])
-        </div>
-    </div>
-</div>
 
 @endsection

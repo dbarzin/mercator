@@ -35,6 +35,15 @@
                             {{ trans('cruds.subnetwork.fields.ip_range') }}
                         </th>
                         <th>
+                            {{ trans('cruds.subnetwork.fields.vlan') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.zone') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.network') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -56,6 +65,15 @@
                             </td>
                             <td>
                                 {{ $subnetwork->ipRange() }}
+                            </td>
+                            <td>
+                                {{ $subnetwork->vlan->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $subnetwork->zone }}
+                            </td>
+                            <td>
+                                {{ $subnetwork->network->name ?? '' }}
                             </td>
                             <td>
                                 @can('subnetwork_show')

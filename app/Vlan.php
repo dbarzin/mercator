@@ -60,10 +60,6 @@ class Vlan extends Model
     protected $fillable = [
         'name',
         'description',
-        'address',
-        'mask',
-        'gateway',
-        'zone',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -78,4 +74,10 @@ class Vlan extends Model
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy("name");
     }
+
+    public function subnetworks()
+    {
+        return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy("name");
+    }
+
 }

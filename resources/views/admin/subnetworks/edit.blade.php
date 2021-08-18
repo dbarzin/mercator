@@ -33,8 +33,7 @@
             </div>
 
             <div class="row">
-                <div class="col-sm">
-                
+                <div class="col-sm">                
                     <div class="form-group">
                         <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
                         <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', $subnetwork->address) }}">
@@ -44,6 +43,21 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
+                        <select class="form-control select2 {{ $errors->has('vlan') ? 'is-invalid' : '' }}" name="vlan_id" id="vlan_id">
+                            @foreach($vlans as $id => $vlan)
+                                <option value="{{ $id }}" {{ ($subnetwork->vlan ? $subnetwork->vlan->id : old('vlan_id')) == $id ? 'selected' : '' }}>{{ $vlan }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('vlan'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('vlan') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.vlan_helper') }}</span>
                     </div>
 
                     <div class="form-group">
@@ -78,12 +92,27 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.gateway_helper') }}</span>
                     </div>
-
                 </div>
 
-
-
                 <div class="col-sm">
+
+                    <div class="form-group">
+                        <label for="zone">{{ trans('cruds.subnetwork.fields.zone') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('zone') ? 'is-invalid' : '' }}" name="zone" id="zone">
+                            @if (!$wifi_list->contains(old('zone')))
+                                <option> {{ old('responsible_exp') }}</option>'
+                            @endif
+                            @foreach($zone_list as $z)
+                                <option {{ (old('zone') ? old('zone') : $subnetwork->zone) == $z ? 'selected' : '' }}>{{$z}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('zone'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('zone') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.subnetwork.fields.zone_helper') }}</span>
+                    </div>
 
                     <div class="form-group">
                         <label for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
@@ -121,7 +150,6 @@
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.wifi_helper') }}</span>
                     </div>
 
-
                     <div class="form-group">
                         <label for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" name="responsible_exp" id="responsible_exp">
@@ -139,25 +167,24 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.subnetwork.fields.responsible_exp_helper') }}</span>
                     </div>
-
+                </div>
             </div>
-        </div>
-
 
             <div class="form-group">
-                <label for="connected_subnets_id">{{ trans('cruds.subnetwork.fields.connected_subnets') }}</label>
-                <select class="form-control select2 {{ $errors->has('connected_subnets') ? 'is-invalid' : '' }}" name="connected_subnets_id" id="connected_subnets_id">
-                    @foreach($connected_subnets as $id => $connected_subnets)
-                        <option value="{{ $id }}" {{ ($subnetwork->connected_subnets ? $subnetwork->connected_subnets->id : old('connected_subnets_id')) == $id ? 'selected' : '' }}>{{ $connected_subnets }}</option>
+                <label for="vlan_id">{{ trans('cruds.subnetwork.fields.network') }}</label>
+                <select class="form-control select2 {{ $errors->has('network') ? 'is-invalid' : '' }}" name="network_id" id="network_id">
+                    @foreach($networks as $id => $network)
+                        <option value="{{ $id }}" {{ ($subnetwork->network ? $subnetwork->network->id : old('network_id')) == $id ? 'selected' : '' }}>{{ $network }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('connected_subnets'))
+                @if($errors->has('network'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('connected_subnets') }}
+                        {{ $errors->first('network') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.subnetwork.fields.connected_subnets_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.subnetwork.fields.network_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

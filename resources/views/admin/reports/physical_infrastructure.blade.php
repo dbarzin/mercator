@@ -685,7 +685,6 @@
             </div>
             @endif
 
-
             @if ($physicalSecurityDevices->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -744,6 +743,51 @@
             </div>
             @endif
 
+
+
+
+
+            @if ($vlans->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    Réseaux virtuels
+                </div>
+                <div class="card-body">
+                    <p>Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+                      @foreach($vlans as $vlan)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="VLAN{{ $vlan->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/vlans/{{ $vlan->id }}/edit">{{ $vlan->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">Description</th>
+                                    <td>{!! $vlan->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th width="20%">Sous-réseaux</th>
+                                    <td>
+                                        @foreach($vlan->subnetworks as $subnetwork) 
+                                            <a href="/admin/report/logical_infrastructure#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
+                                            @if (!$loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       </div>
+                       @endforeach
+                    </div>
+                </div>
+            </div>
+            @endif
 
         </div>
     </div>

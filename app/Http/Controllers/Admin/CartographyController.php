@@ -57,6 +57,7 @@ use App\PhysicalSwitch;
 use App\PhysicalRouter;
 use App\WifiTerminal;
 use App\PhysicalSecurityDevice;
+use App\Vlan;
 
 use App\Http\Controllers\Controller;
 
@@ -1270,7 +1271,12 @@ class CartographyController extends Controller
                     $section->addBookmark("SUBNET".$subnetwork->id);
                     $table=$this->addTable($section, $subnetwork->name);
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
-                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . "( " . $subnetwork->ipRange() . " )");
+                    $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . " ( " . $subnetwork->ipRange() . " )");
+                    // VLAN
+                    $textRun=$this->addTextRunRow($table,"Vlan");
+                    if ($subnetwork->gateway!=null) 
+                        $textRun->addLink("VLAN".$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FancyLinkStyle, null, true);
+                    $this->addTextRow($table,"Zone",$subnetwork->zone);
                     $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
                     $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
                     $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
@@ -1429,6 +1435,7 @@ class CartographyController extends Controller
             $physicalRouters = PhysicalRouter::orderBy("name")->get();
             $wifiTerminals = WifiTerminal::orderBy("name")->get();
             $physicalSecurityDevices = PhysicalSecurityDevice::orderBy("name")->get();
+            $vlans = Vlan::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -1922,6 +1929,28 @@ class CartographyController extends Controller
                     }
                 }
 
+            // =====================================
+            if ($vlans->count()>0) { 
+                $section->addTitle('VLANs', 2);
+                $section->addText("Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.");
+                $section->addTextBreak(1); 
+
+                foreach($vlans as $vlan) {
+                    $section->addBookmark("VLAN".$vlan->id);
+                    $table=$this->addTable($section, $vlan->name);
+                    $this->addHTMLRow($table,"Description",$vlan->description);
+
+                    // Sous-réseaux
+                    $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");
+                    foreach($vlan->subnetworks as $subnetwork) {
+                        $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($vlan->subnetworks->last()!=$subnetwork)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
 
             }
 

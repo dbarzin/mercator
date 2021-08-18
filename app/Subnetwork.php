@@ -75,11 +75,13 @@ class Subnetwork extends Model
         'description',
         'address',
         'ip_allocation_type',
-        'responsible_exp',
+        'vlan_id',
+        'zone',
         'dmz',
-        'wifi', 
-        'connected_subnets_id',
+        'wifi',
+        'responsible_exp',
         'gateway_id',
+        'network_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -95,9 +97,9 @@ class Subnetwork extends Model
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy("name");
     }
 
-    public function subnetworksNetworks()
+    public function network()
     {
-        return $this->belongsToMany(Network::class)->orderBy("name");
+        return $this->belongsTo(Network::class, 'network_id');
     }
 
     public function connected_subnets()
@@ -108,6 +110,11 @@ class Subnetwork extends Model
     public function gateway()
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
+    }
+
+    public function vlan()
+    {
+        return $this->belongsTo(Vlan::class, 'vlan_id');
     }
 
     public function ipRange() {

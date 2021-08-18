@@ -115,6 +115,20 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>VLAN</th>
+                                        <td>
+                                            @if ($subnetwork->vlan!=null)
+                                                <a href="/admin/report/physical_infrastructure#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Zone</th>
+                                        <td>
+                                            {{ $subnetwork->zone }} 
+                                        </td>
+                                    </tr>                                    
+                                    <tr>
                                         <th>Passerelle</th>
                                         <td>
                                         @if ($subnetwork->gateway!=null) 
@@ -131,19 +145,11 @@
                                         <td>{{ $subnetwork->responsible_exp }}</td>
                                     </tr>
                                     <tr>
-                                        <th>DMZ ou non</th>
+                                        <th>DMZ</th>
                                         <td>{{ $subnetwork->dmz }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Sous-réseau connecté</th>
-                                        <td>
-                                            @if ($subnetwork->connected_subnets!=null)
-                                                <a href="#SUBNET{{$subnetwork->connected_subnets->id }}">{{$subnetwork->connected_subnets->name }}</a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Possibilité d’accès sans ﬁl</th>
+                                        <th>Accès WiFi</th>
                                         <td>{{ $subnetwork->wifi }}</td>
                                     </tr>
                                 </tbody>
@@ -453,9 +459,6 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
-                @if ($subnetwork->connected_subnets!=null)\
-                    SUBNET{{ $subnetwork->connected_subnets->id }} -> SUBNET{{ $subnetwork->id }} \
-                @endif\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
