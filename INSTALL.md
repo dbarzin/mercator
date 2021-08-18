@@ -188,10 +188,17 @@ Redémarre l'application
    
 ## Tests de non-régression
 
+Instaler Chromium
+
+    sudo apt install chromium-browser
+
+Installer le pluggin dusk
+
+    php artisan dusk:chrome-driver
+
 Configurer l'environement
 
-    cp .env .env.dusk.local
-    vi .env.dusk.local
+    cp .env .env.dusk.local    
 
 Lancer l'application
 
