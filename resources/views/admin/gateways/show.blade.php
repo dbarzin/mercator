@@ -72,13 +72,13 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#gateway_subnetwords" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#gateway_subnetworks" role="tab" data-toggle="tab">
                 {{ trans('cruds.subnetwork.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="gateway_subnetwords">
+        <div class="tab-pane" role="tabpanel" id="gateway_subnetworks">
             @includeIf('admin.gateways.relationships.gatewaySubnetwords', ['subnetworks' => $gateway->gatewaySubnetworks])
         </div>
     </div>
