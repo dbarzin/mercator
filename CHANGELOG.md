@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add colors for security needs in information forms
 - Cleanup unused columns in database
-- Change link between subnetworks ans VANs
+- Change link between subnetworks and VLANs
 - Add security needs with CIAT values
 
 ### Fixed
