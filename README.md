@@ -75,7 +75,7 @@ Modèle de données
 
 ## Changelog
 
-
+All notable changes to this project will be documented in this [file](https://github.com/dbarzin/mercator/blob/master/CHANGELOG.md).
 
 ## License
 
