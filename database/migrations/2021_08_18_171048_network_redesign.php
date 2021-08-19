@@ -21,7 +21,7 @@ class NetworkRedesign extends Migration
             $table->foreign('vlan_id', 'vlan_fk_6844934')->references('id')->on('vlans')->onUpdate('NO ACTION')->onDelete('NO ACTION');        
             // add link to network in subnetwork
             $table->unsignedInteger('network_id')->nullable()->index('network_fk_5476544');
-            $table->foreign('network_id', 'network_fk_5476544')->references('id')->on('vlans')->onUpdate('NO ACTION')->onDelete('NO ACTION');        
+            $table->foreign('network_id', 'network_fk_5476544')->references('id')->on('networks')->onUpdate('NO ACTION')->onDelete('NO ACTION');        
         });
 
         /* to process later...
