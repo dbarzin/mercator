@@ -57,6 +57,7 @@ use App\PhysicalSwitch;
 use App\PhysicalRouter;
 use App\WifiTerminal;
 use App\PhysicalSecurityDevice;
+use App\Vlan;
 
 
 use App\Http\Controllers\Controller;
@@ -480,6 +481,7 @@ class ReportController extends Controller
         $dnsservers = Dnsserver::All()->sortBy("name");
         $logicalServers = LogicalServer::All()->sortBy("name");
         $certificates = Certificate::All()->sortBy("name");
+        $vlans = Vlan::All()->sortBy("name");
 
         return view('admin/reports/logical_infrastructure')
             ->with("networks",$networks)
@@ -688,6 +690,8 @@ class ReportController extends Controller
                      return false;
                 });
 
+            // filtering ???
+            $vlans = Vlan::All()->sortBy("name");
         }
         else 
         {
@@ -704,6 +708,7 @@ class ReportController extends Controller
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
             $wifiTerminals = WifiTerminal::All()->sortBy("name");
             $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
+            $vlans = Vlan::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
@@ -721,6 +726,7 @@ class ReportController extends Controller
             ->with("physicalRouters", $physicalRouters)
             ->with("wifiTerminals", $wifiTerminals)
             ->with("physicalSecurityDevices", $physicalSecurityDevices)
+            ->with("vlans", $vlans)
             ;
 
     }

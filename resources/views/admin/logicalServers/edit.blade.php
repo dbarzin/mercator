@@ -60,7 +60,7 @@
                             {{ $errors->first('address_ip') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.logicalServer.fields.address_ip') }}</span>
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.address_ip_helper') }}</span>
                 </div>
 
             </div>

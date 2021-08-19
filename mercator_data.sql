@@ -170,7 +170,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `certificate_m_application` WRITE;
 /*!40000 ALTER TABLE `certificate_m_application` DISABLE KEYS */;
-INSERT INTO `certificate_m_application` VALUES (7,1),(7,2);
 /*!40000 ALTER TABLE `certificate_m_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +249,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `domaine_ad_forest_ad` WRITE;
 /*!40000 ALTER TABLE `domaine_ad_forest_ad` DISABLE KEYS */;
-INSERT INTO `domaine_ad_forest_ad` VALUES (1,1),(2,1);
+INSERT INTO `domaine_ad_forest_ad` VALUES (1,1),(2,1),(1,3),(2,5),(1,4);
 /*!40000 ALTER TABLE `domaine_ad_forest_ad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,7 +488,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `network_subnetwork` WRITE;
 /*!40000 ALTER TABLE `network_subnetwork` DISABLE KEYS */;
-INSERT INTO `network_subnetwork` VALUES (1,1),(2,2),(2,5),(2,6);
+INSERT INTO `network_subnetwork` VALUES (2,2),(2,5),(2,6);
 /*!40000 ALTER TABLE `network_subnetwork` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,7 +508,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `networks` WRITE;
 /*!40000 ALTER TABLE `networks` DISABLE KEYS */;
-INSERT INTO `networks` VALUES (1,'Réseau 1','TCP','Pierre','Paul',3,'<p>Nom du réseau 1</p>','2020-06-23 12:34:14','2020-07-01 15:23:29',NULL),(2,'Réseau 2','TCP','Johan','Jean-Marc',1,'<p>Description du réseau 2</p>','2020-07-01 15:45:41','2021-08-17 08:25:00',NULL);
+INSERT INTO `networks` VALUES (1,'Réseau 1','TCP','Pierre','Paul',3,'<p>Description du réseau 1</p>','2020-06-23 12:34:14','2021-08-18 16:54:45',NULL),(2,'Réseau 2','TCP','Johan','Jean-Marc',1,'<p>Description du réseau 2</p>','2020-07-01 15:45:41','2021-08-17 08:25:00',NULL);
 /*!40000 ALTER TABLE `networks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -614,7 +613,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_router_vlan` WRITE;
 /*!40000 ALTER TABLE `physical_router_vlan` DISABLE KEYS */;
-INSERT INTO `physical_router_vlan` VALUES (1,1),(1,3),(1,4),(2,3),(1,2),(1,5),(2,5),(1,6),(2,6);
+INSERT INTO `physical_router_vlan` VALUES (1,1),(1,3),(1,4),(2,3),(1,2);
 /*!40000 ALTER TABLE `physical_router_vlan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -724,7 +723,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `subnetworks` WRITE;
 /*!40000 ALTER TABLE `subnetworks` DISABLE KEYS */;
-INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-17 18:18:47',NULL,NULL,1),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Statc','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-17 18:15:35',NULL,NULL,5),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static',NULL,NULL,NULL,'Subnet4','2020-11-06 12:56:33','2021-08-17 17:46:13',NULL,2,5),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,NULL,NULL,NULL,NULL,'Subnet3','2021-05-19 14:48:39','2021-08-17 18:15:02',NULL,NULL,1),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed',NULL,NULL,NULL,'Subnet5','2021-08-17 11:35:28','2021-08-17 15:48:13',NULL,NULL,1),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-17 18:19:36',NULL,2,4);
+INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_ACCUEIL',2,1),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-18 16:54:45',NULL,NULL,5,'ZONE_WORK',1,1),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-18 16:54:45',NULL,2,5,'ZONE_WORK',4,1),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_WORK',3,1),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-18 16:54:45',NULL,2,4,'ZONE_APP',5,1),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/32',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-18 16:54:45',NULL,NULL,NULL,'ZONE_BACKUP',5,1),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1);
 /*!40000 ALTER TABLE `subnetworks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -744,7 +743,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `vlans` WRITE;
 /*!40000 ALTER TABLE `vlans` DISABLE KEYS */;
-INSERT INTO `vlans` VALUES (1,'VLAN_2','VLAN Wifi','2020-07-07 14:31:53','2020-07-07 14:39:10',NULL,'123.4.0.0','/12','1',NULL),(2,'VLAN_1','VLAN publc','2020-07-07 14:34:30','2020-07-07 14:38:53',NULL,'123.0.0.1','/12','1',NULL),(3,'VLAN_3','VLAN application','2020-07-07 14:38:41','2020-07-08 19:35:53',NULL,'125.6.0.0','/12','2','125.6.0.2'),(4,'VLAN_4','Vlan Client','2020-07-08 19:34:11','2020-07-08 19:36:06',NULL,'142.3.5 - 123.32.43.2','/18','1','123.43.5.2'),(5,'VLAN_5','Test vlan 5','2020-07-11 17:12:03','2020-07-11 17:14:13',NULL,'123.4.5.0','255.255.255.0','1','123.4.5.1'),(6,'VLAN_6',NULL,'2020-07-11 17:14:55','2020-07-11 17:14:55',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `vlans` VALUES (1,'VLAN_2','VLAN Wifi','2020-07-07 14:31:53','2020-07-07 14:39:10',NULL,'123.4.0.0','/12','1',NULL),(2,'VLAN_1','VLAN publc','2020-07-07 14:34:30','2020-07-07 14:38:53',NULL,'123.0.0.1','/12','1',NULL),(3,'VLAN_3','VLAN application','2020-07-07 14:38:41','2020-07-08 19:35:53',NULL,'125.6.0.0','/12','2','125.6.0.2'),(4,'VLAN_4','Vlan Client','2020-07-08 19:34:11','2020-07-08 19:36:06',NULL,'142.3.5 - 123.32.43.2','/18','1','123.43.5.2'),(5,'VLAN_5','Test Production','2020-07-11 17:12:03','2021-08-18 17:35:54',NULL,'123.4.5.0','255.255.255.0','1','123.4.5.1'),(6,'VLAN_6','VLAN démilitarisé','2020-07-11 17:14:55','2021-08-18 17:36:12',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `vlans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -797,4 +796,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-17 22:33:04
+-- Dump completed on 2021-08-18 21:49:07

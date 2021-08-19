@@ -37,7 +37,7 @@ class NetworkController extends Controller
     public function store(StoreNetworkRequest $request)
     {
         $network = Network::create($request->all());
-        $network->subnetworks()->sync($request->input('subnetworks', []));
+        // $network->subnetworks()->sync($request->input('subnetworks', []));
 
         return redirect()->route('admin.networks.index');
     }
@@ -56,7 +56,9 @@ class NetworkController extends Controller
     public function update(UpdateNetworkRequest $request, Network $network)
     {
         $network->update($request->all());
-        $network->subnetworks()->sync($request->input('subnetworks', []));
+
+        // Subnetwork::where('network_id', $network->id)->update(['network_id' => null]);
+        // Subnetwork::whereIn('id', $request->input('subnetworks', []))->update(['network_id' => $network->id]);
 
         return redirect()->route('admin.networks.index');
     }
