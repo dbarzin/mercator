@@ -35,6 +35,9 @@
                             {{ trans('cruds.information.fields.sensitivity') }}
                         </th>
                         <th>
+                            {{ trans('cruds.information.fields.security_need') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -73,6 +76,64 @@
                             </td>
                             <td>
                                 {{ $information->sensitivity ?? '' }}
+                            </td>
+                            <td>                                
+                                <span
+                                    @if ($information->security_need_c==1)
+                                        class="veryLowRisk"> 1
+                                    @elseif ($information->security_need_c==2)
+                                        class="lowRisk"> 2
+                                    @elseif ($information->security_need_c==3)
+                                        class="mediumRisk"> 3
+                                    @elseif ($information->security_need_c==4)
+                                        class="highRisk"> 4
+                                    @else
+                                        > *
+                                    @endif                                    
+                                </span>
+                                -
+                                <span
+                                    @if ($information->security_need_i==1)
+                                        class="veryLowRisk"> 1
+                                    @elseif ($information->security_need_i==2)
+                                        class="lowRisk"> 2
+                                    @elseif ($information->security_need_i==3)
+                                        class="mediumRisk"> 3
+                                    @elseif ($information->security_need_i==4)
+                                        class="highRisk"> 4
+                                    @else
+                                        > *
+                                    @endif                                    
+                                </span>
+                                -
+                                <span
+                                    @if ($information->security_need_a==1)
+                                        class="veryLowRisk"> 1
+                                    @elseif ($information->security_need_a==2)
+                                        class="lowRisk"> 2
+                                    @elseif ($information->security_need_a==3)
+                                        class="mediumRisk"> 3 
+                                    @elseif ($information->security_need_a==4)
+                                        class="highRisk"> 4
+                                    @else
+                                        > *
+                                    @endif                                    
+                                </span>
+                                -
+                                <span
+                                    @if ($information->security_need_t==1)
+                                        class="veryLowRisk"> 1
+                                    @elseif ($information->security_need_t==2)
+                                        class="lowRisk"> 2
+                                    @elseif ($information->security_need_t==3)
+                                        class="mediumRisk"> 3
+                                    @elseif ($information->security_need_t==4)
+                                        class="highRisk"> 4
+                                    @else
+                                        > *
+                                    @endif                                    
+                                </span>
+
                             </td>
                             <td>
                                 @can('information_show')

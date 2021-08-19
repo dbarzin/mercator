@@ -87,6 +87,18 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.information.fields.administrator_helper') }}</span>
                     </div>
+
+                    <div class="form-group">
+                        <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
+                        <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
+                        @if($errors->has('sensitivity'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('sensitivity') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
+                    </div>
+
                 </div>
             </div>
 
@@ -106,7 +118,7 @@
                                     <label for="security_need">C</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
                                         <option class="" value="0" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
                                         <option class="white" value="1" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option class="yellow" value="2" {{ ($information->security_need_c ? $information->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -118,7 +130,7 @@
                                     <label for="security_need">I</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
                                         <option value="0" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($information->security_need_i ? $information->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -130,7 +142,7 @@
                                     <label for="security_need">D</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
                                         <option value="0" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($information->security_need_a ? $information->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -142,7 +154,7 @@
                                     <label for="security_need">T</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
+                                    <select class="form-control select2 risk{{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
                                         <option value="0" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($information->security_need_t ? $information->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -161,16 +173,7 @@
                     </div>
                 </div>
                 <div class="col-sm">
-                    <div class="form-group">
-                        <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
-                        <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
-                        @if($errors->has('sensitivity'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('sensitivity') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.information.fields.sensitivity_helper') }}</span>
-                    </div>
+                    .
                 </div>
             </div>
             <div class="form-group">
@@ -198,66 +201,37 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/information/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
 
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $information->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
+$(document).ready(function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
+    function template(data, container) {      
+      if (data.id==4) {
+         return '\<span class="highRisk"\>'+data.text+'</span>';
+      } else if (data.id==3) {
+         return '\<span class="mediumRisk"\>'+data.text+'</span>';
+      } else if (data.id==2) {
+         return '\<span class="lowRisk"\>'+data.text+'</span>';
+      } else if (data.id==1) {
+         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
+      } else {
+         return data.text;
+      }
+    }
+
+    $('.risk').select2({
+      templateSelection: template,
+      escapeMarkup: function(m) {
+          return m;
+      }
+    });
 });
 </script>
 

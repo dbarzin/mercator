@@ -180,3 +180,23 @@ html {
   scroll-padding-top: 70px; /* height of sticky header */
 }
 
+/* Risks selest2 colors */
+.highRisk {
+  background: #E15759;
+  padding: 3px;
+}
+
+.mediumRisk {
+  background: #F28E2B;
+  padding: 3px;
+}
+
+.lowRisk {
+  background: #F1CE63;
+  padding: 3px;
+}
+
+.veryLowRisk {
+  background: #8CD17D;
+  padding: 3px;
+}

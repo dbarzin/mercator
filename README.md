@@ -57,6 +57,7 @@ Modèle de données
 
 [<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
 
+
 ## Technologies
 - PHP, Javascript, Laravel
 - Base de données supportées : MySQL, Postgres, SQLite, SQL Server
@@ -71,6 +72,10 @@ Modèle de données
 
 - Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
 - Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.md)
+
+## Changelog
+
+
 
 ## License
 
