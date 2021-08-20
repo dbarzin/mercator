@@ -108,10 +108,12 @@
                                         <td>{!! $subnetwork->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Adresse/Masque</th>
+                                        <th>Adresse/Masque - Passerelle par défaut</th>
                                         <td>
                                             {{ $subnetwork->address }} 
                                             ( {{ $subnetwork->ipRange() }} )
+                                            -
+                                            {{ $subnetwork->default_gateway }} 
                                         </td>
                                     </tr>
                                     <tr>

@@ -57,6 +57,9 @@ use App\PhysicalSwitch;
 use App\PhysicalRouter;
 use App\WifiTerminal;
 use App\PhysicalSecurityDevice;
+use App\Wan;
+use App\Man;
+use App\Lan;
 use App\Vlan;
 
 use App\Http\Controllers\Controller;
@@ -1272,6 +1275,7 @@ class CartographyController extends Controller
                     $table=$this->addTable($section, $subnetwork->name);
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
                     $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . " ( " . $subnetwork->ipRange() . " )");
+                    $this->addTextRow($table,"Passerelle par défaut",$subnetwork->default_gateway);
                     // VLAN
                     $textRun=$this->addTextRunRow($table,"Vlan");
                     if ($subnetwork->gateway!=null) 
@@ -1435,6 +1439,9 @@ class CartographyController extends Controller
             $physicalRouters = PhysicalRouter::orderBy("name")->get();
             $wifiTerminals = WifiTerminal::orderBy("name")->get();
             $physicalSecurityDevices = PhysicalSecurityDevice::orderBy("name")->get();
+            $wans = Wan::orderBy("name")->get();
+            $mans = Man::orderBy("name")->get();
+            $lans = Lan::orderBy("name")->get();
             $vlans = Vlan::orderBy("name")->get();
 
             // Generate Graph
@@ -1930,6 +1937,75 @@ class CartographyController extends Controller
                 }
 
             // =====================================
+            if ($wans->count()>0) { 
+                $section->addTitle('WANs', 2);
+                $section->addText("Réseau informatique reliant des équipements sur des distances importantes. Il interconnecte généralement des MAN ou LAN entre eux.");
+                $section->addTextBreak(1); 
+
+                foreach($wans as $wan) {
+                    $section->addBookmark("WAN".$wan->id);
+                    $table=$this->addTable($section, $wan->name);
+                    $this->addHTMLRow($table,"Description",$wan->description);
+
+                    // Mans
+                    $textRun=$this->addTextRunRow($table,"MANs");
+                    foreach($wan->mans as $man) {
+                        $textRun->addLink("MAN".$man->id, $man->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($wan->mans->last()!=$man)
+                            $textRun->addText(", ");
+                        }
+
+                    // Lans
+                    $textRun=$this->addTextRunRow($table,"LANs");
+                    foreach($wan->lans as $lan) {
+                        $textRun->addLink("LAN".$lan->id, $lan->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($wan->lans->last()!=$lan)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+            // =====================================
+            if ($mans->count()>0) { 
+                $section->addTitle('MANs', 2);
+                $section->addText("Réseau informatique reliant des équipements sur des distances moyennement importantes. Il interconnecte généralement des LAN entre eux.");
+                $section->addTextBreak(1); 
+
+                foreach($mans as $man) {
+                    $section->addBookmark("MAN".$man->id);
+                    $table=$this->addTable($section, $man->name);
+                    $this->addHTMLRow($table,"Description",$man->description);
+
+                    // Lans
+                    $textRun=$this->addTextRunRow($table,"LANs");
+                    foreach($man->lans as $lan) {
+                        $textRun->addLink("LAN".$lan->id, $lan->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($man->lans->last()!=$lan)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+            // =====================================
+            if ($lans->count()>0) { 
+                $section->addTitle('LANs', 2);
+                $section->addText("Réseau informatique reliant des équipements sur une aire géographique réduite.");
+                $section->addTextBreak(1); 
+
+                foreach($lans as $lan) {
+                    $section->addBookmark("LAN".$man->id);
+                    $table=$this->addTable($section, $lan->name);
+                    $this->addHTMLRow($table,"Description",$lan->description);
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+
+            // =====================================
             if ($vlans->count()>0) { 
                 $section->addTitle('VLANs', 2);
                 $section->addText("Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.");
@@ -1951,6 +2027,7 @@ class CartographyController extends Controller
                     $section->addTextBreak(1); 
                     }
                 }
+            // =====================================
 
             }
 

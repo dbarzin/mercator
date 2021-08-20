@@ -35,6 +35,9 @@
                             {{ trans('cruds.subnetwork.fields.ip_range') }}
                         </th>
                         <th>
+                            {{ trans('cruds.subnetwork.fields.default_gateway') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.subnetwork.fields.vlan') }}
                         </th>
                         <th>
@@ -65,6 +68,9 @@
                             </td>
                             <td>
                                 {{ $subnetwork->ipRange() }}
+                            </td>
+                            <td>
+                                {{ $subnetwork->default_gateway }}
                             </td>
                             <td>
                                 {{ $subnetwork->vlan->name ?? '' }}

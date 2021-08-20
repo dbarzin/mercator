@@ -743,10 +743,6 @@
             </div>
             @endif
 
-
-
-
-
             @if ($vlans->count()>0)
             <div class="card">
                 <div class="card-header">
