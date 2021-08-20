@@ -117,7 +117,7 @@
                                     <label for="security_need">C</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
                                         <option class="" value="0" {{ ($process->security_need_c ? $process->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
                                         <option class="white" value="1" {{ ($process->security_need_c ? $process->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option class="yellow" value="2" {{ ($process->security_need_c ? $process->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -129,7 +129,7 @@
                                     <label for="security_need">I</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
                                         <option value="0" {{ ($process->security_need_i ? $process->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($process->security_need_i ? $process->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($process->security_need_i ? $process->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -141,7 +141,7 @@
                                     <label for="security_need">D</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
                                         <option value="0" {{ ($process->security_need_a ? $process->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($process->security_need_a ? $process->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($process->security_need_a ? $process->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -153,7 +153,7 @@
                                     <label for="security_need">T</label>
                                 </td>
                                 <td  width="120">
-                                    <select class="form-control select2 {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
+                                    <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
                                         <option value="0" {{ ($process->security_need_t ? $process->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
                                         <option value="1" {{ ($process->security_need_t ? $process->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ ($process->security_need_t ? $process->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -243,6 +243,26 @@ $(document).ready(function () {
         allowClear: true,
         tags: true
     }) 
+    function template(data, container) {      
+      if (data.id==4) {
+         return '\<span class="highRisk"\>'+data.text+'</span>';
+      } else if (data.id==3) {
+         return '\<span class="mediumRisk"\>'+data.text+'</span>';
+      } else if (data.id==2) {
+         return '\<span class="lowRisk"\>'+data.text+'</span>';
+      } else if (data.id==1) {
+         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
+      } else {
+         return data.text;
+      }
+    }
+
+    $('.risk').select2({
+      templateSelection: template,
+      escapeMarkup: function(m) {
+          return m;
+      }
+    });
 
 });
 </script>
