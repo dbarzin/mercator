@@ -184,19 +184,23 @@ html {
 .highRisk {
   background: #E15759;
   padding: 3px;
+  border-radius: 20% / 30%;  
 }
 
 .mediumRisk {
   background: #F28E2B;
   padding: 3px;
+  border-radius: 20% / 30%;  
 }
 
 .lowRisk {
   background: #F1CE63;
   padding: 3px;
+  border-radius: 20% / 30%;  
 }
 
 .veryLowRisk {
   background: #8CD17D;
   padding: 3px;
+  border-radius: 20% / 30%;  
 }

@@ -74,6 +74,7 @@ class Subnetwork extends Model
         'name',
         'description',
         'address',
+        'default_gateway',
         'ip_allocation_type',
         'vlan_id',
         'zone',

@@ -34,16 +34,34 @@
           <div class="row">
             <div class="col-sm">
 
-                <div class="form-group">
-                    <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
-                    <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', '') }}">
-                    @if($errors->has('address'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('address') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
-                </div>
+                <table width='100%'>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
+                                <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', '') }}">
+                                @if($errors->has('address'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('address') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.subnetwork.fields.address_helper') }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="default_gateway">{{ trans('cruds.subnetwork.fields.default_gateway') }}</label>
+                                <input class="form-control {{ $errors->has('default_gateway') ? 'is-invalid' : '' }}" type="text" name="default_gateway" id="default_gateway" value="{{ old('default_gateway', '') }}">
+                                @if($errors->has('default_gateway'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('default_gateway') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.subnetwork.fields.default_gateway_helper') }}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
                 <div class="form-group">
                     <label for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>

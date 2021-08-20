@@ -1069,6 +1069,8 @@ return [
         "fields" => [
             "address" => "Plage IP : Adresse / Masque",
             "address_helper" => "Filtre : xxx.xxx.xxx.xxx / xx",
+            "default_gateway" => "Passerelle par défaut",
+            "default_gateway_helper" => "Filtre: xxx.xxx.xxx.xxx",
             "connected_subnets" => "Sous-réseaux",
             "connected_subnets_helper" => "Liste des sous-réseaux interconnectés",
             "created_at" => "Créé à",
