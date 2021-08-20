@@ -22,7 +22,7 @@
             </div>
 
             <div class="form-group">
-                <label for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.subnetwork.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $subnetwork->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -38,7 +38,7 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
+                                    <label class="recommended" for="address">{{ trans('cruds.subnetwork.fields.address') }}</label>
                                     <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', $subnetwork->address) }}">
                                     @if($errors->has('address'))
                                         <div class="invalid-feedback">
@@ -50,7 +50,7 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="default_gateway">{{ trans('cruds.subnetwork.fields.default_gateway') }}</label>
+                                    <label class="recommended" for="default_gateway">{{ trans('cruds.subnetwork.fields.default_gateway') }}</label>
                                     <input class="form-control {{ $errors->has('default_gateway') ? 'is-invalid' : '' }}" type="text" name="default_gateway" id="default_gateway" value="{{ old('default_gateway', $subnetwork->default_gateway) }}">
                                     @if($errors->has('default_gateway'))
                                         <div class="invalid-feedback">
@@ -64,7 +64,7 @@
                     </table>
 
                     <div class="form-group">
-                        <label for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
+                        <label class="recommended" for="vlan_id">{{ trans('cruds.subnetwork.fields.vlan') }}</label>
                         <select class="form-control select2 {{ $errors->has('vlan') ? 'is-invalid' : '' }}" name="vlan_id" id="vlan_id">
                             @foreach($vlans as $id => $vlan)
                                 <option value="{{ $id }}" {{ ($subnetwork->vlan ? $subnetwork->vlan->id : old('vlan_id')) == $id ? 'selected' : '' }}>{{ $vlan }}</option>
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
+                        <label class="recommended" for="ip_allocation_type">{{ trans('cruds.subnetwork.fields.ip_allocation_type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('ip_allocation_type') ? 'is-invalid' : '' }}" name="ip_allocation_type" id="ip_allocation_type">
                             @if (!$ip_allocation_type_list->contains(old('ip_allocation_type')))
                                 <option> {{ old('ip_allocation_type') }}</option>'
@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
+                        <label class="recommended" for="dmz">{{ trans('cruds.subnetwork.fields.dmz') }}</label>
                         <select class="form-control select2-free {{ $errors->has('dmz') ? 'is-invalid' : '' }}" name="dmz" id="dmz">
                             @if (!$wifi_list->contains(old('dmz')))
                                 <option> {{ old('responsible_exp') }}</option>'
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
+                        <label class="recommended" for="wifi">{{ trans('cruds.subnetwork.fields.wifi') }}</label>
                         <select class="form-control select2-free {{ $errors->has('wifi') ? 'is-invalid' : '' }}" name="wifi" id="wifi">
                             @if (!$wifi_list->contains(old('wifi')))
                                 <option> {{ old('responsible_exp') }}</option>'
@@ -169,7 +169,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
+                        <label class="recommended" for="responsible_exp">{{ trans('cruds.subnetwork.fields.responsible_exp') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible_exp') ? 'is-invalid' : '' }}" name="responsible_exp" id="responsible_exp">
                             @if (!$responsible_exp_list->contains(old('responsible_exp')))
                                 <option> {{ old('responsible_exp') }}</option>'

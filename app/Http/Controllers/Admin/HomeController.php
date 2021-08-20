@@ -399,12 +399,12 @@ class HomeController extends Controller
             ->with("subnetworks_lvl1", Subnetwork
                     ::where('description', '<>', null)
                     ->where('address', '<>', null)
-                    ->where('ip_range', '<>', null)
+                    ->where('default_gateway', '<>', null)
                     ->where('ip_allocation_type', '<>', null)
                     ->where('responsible_exp', '<>', null)
                     ->where('dmz', '<>', null)
                     ->where('wifi', '<>', null)
-                    ->where('connected_subnets_id', '<>', null)
+                    ->where('vlan_id', '<>', null)
                     ->count())
 
             ->with("gateways", Gateway::count())

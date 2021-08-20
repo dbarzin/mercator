@@ -53,7 +53,19 @@
                 </thead>
                 <tbody>
                     @foreach($subnetworks as $key => $subnetwork)
-                        <tr data-entry-id="{{ $subnetwork->id }}">
+                        <tr data-entry-id="{{ $subnetwork->id }}"
+                          @if(
+                            ($subnetwork->description==null)||
+                            ($subnetwork->address==null)||
+                            ($subnetwork->default_gateway==null)||
+                            ($subnetwork->ip_allocation_type==null)||
+                            ($subnetwork->vlan_id==null)||
+                            ($subnetwork->responsible_exp==null)||
+                            ($subnetwork->wifi==null)
+                            )
+                          class="table-warning"
+                          @endif
+                          >
                             <td>
 
                             </td>
