@@ -160,7 +160,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `certificate_logical_server` WRITE;
 /*!40000 ALTER TABLE `certificate_logical_server` DISABLE KEYS */;
-INSERT INTO `certificate_logical_server` VALUES (4,1),(5,2),(1,1),(2,1),(3,1);
+INSERT INTO `certificate_logical_server` VALUES (4,1),(5,2),(1,1),(2,1),(3,1),(7,1);
 /*!40000 ALTER TABLE `certificate_logical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `databases` WRITE;
 /*!40000 ALTER TABLE `databases` DISABLE KEYS */;
-INSERT INTO `databases` VALUES (1,'Database 1','<p>Description Database 1</p>','Paul','MySQL',1,'Interne','2020-06-17 14:18:48','2021-05-14 10:19:45',NULL,1,2,3,4),(3,'Database 2','<p>Description database 2</p>','Paul','MySQL',1,'Interne','2020-06-17 14:19:24','2021-05-14 10:29:47',NULL,1,1,1,1),(4,'MainDB','<p>description de la base de données</p>','Paul','Oracle',2,'Interne','2020-07-01 15:08:57','2020-08-24 15:43:49',NULL,4,NULL,NULL,NULL),(5,'DB Compta','<p>Base de donnée de la compta</p>','Paul','MariaDB',1,'Interne','2020-08-24 15:58:23','2021-08-17 15:25:46',NULL,1,0,0,0),(6,'Data Warehouse','<p>Base de données du datawarehouse</p>','Jean','Oracle',4,'Interne','2021-05-14 10:24:02','2021-05-14 10:24:02',NULL,1,3,4,3);
+INSERT INTO `databases` VALUES (1,'Database 1','<p>Description Database 1</p>','Paul','MySQL',1,'Interne','2020-06-17 14:18:48','2021-05-14 10:19:45',NULL,1,2,3,4),(3,'Database 2','<p>Description database 2</p>','Paul','MySQL',1,'Interne','2020-06-17 14:19:24','2021-05-14 10:29:47',NULL,1,1,1,1),(4,'MainDB','<p>description de la base de données</p>','Paul','Oracle',2,'Interne','2020-07-01 15:08:57','2021-08-20 01:52:23',NULL,4,2,2,2),(5,'DB Compta','<p>Base de donnée de la compta</p>','Paul','MariaDB',1,'Interne','2020-08-24 15:58:23','2021-08-20 01:52:11',NULL,1,1,1,1),(6,'Data Warehouse','<p>Base de données du datawarehouse</p>','Jean','Oracle',4,'Interne','2021-05-14 10:24:02','2021-08-20 01:29:42',NULL,1,3,3,3);
 /*!40000 ALTER TABLE `databases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +339,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `gateways` WRITE;
 /*!40000 ALTER TABLE `gateways` DISABLE KEYS */;
-INSERT INTO `gateways` VALUES (1,'GW01','<p>Gateway 01 vers réseau médor</p>','123.5.6.4/12','Carte à puce','2020-07-13 17:34:45','2020-07-13 17:34:45',NULL),(2,'Workspace One','<p>Test workspace One</p>','10.10.10.1','Token','2021-04-17 19:32:57','2021-04-17 19:40:31','2021-04-17 19:40:31'),(3,'PubicGW','<p>Public Gateway</p>','10.10.10.1','Token','2021-04-17 19:39:04','2021-04-17 19:40:25','2021-04-17 19:40:25'),(4,'PublicGW','<p>Public gateway</p>','8.8.8.8','Token','2021-04-17 19:40:48','2021-04-17 19:48:34',NULL),(5,'GW02','<p>Segonde gateway</p>',NULL,'Token','2021-05-18 18:27:13','2021-05-18 18:27:13',NULL);
+INSERT INTO `gateways` VALUES (1,'GW01','<p>Gateway 01 vers réseau médor</p>','123.5.6.4/12','Carte à puce','2020-07-13 17:34:45','2020-07-13 17:34:45',NULL),(2,'Workspace One','<p>Test workspace One</p>','10.10.10.1','Token','2021-04-17 19:32:57','2021-04-17 19:40:31','2021-04-17 19:40:31'),(3,'PubicGW','<p>Public Gateway</p>','10.10.10.1','Token','2021-04-17 19:39:04','2021-04-17 19:40:25','2021-04-17 19:40:25'),(4,'PublicGW','<p>Public gateway</p>','8.8.8.8','Token','2021-04-17 19:40:48','2021-04-17 19:48:34',NULL),(5,'GW02','<p>Second gateway</p>',NULL,'Token','2021-05-18 18:27:13','2021-08-18 18:04:23',NULL);
 /*!40000 ALTER TABLE `gateways` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +349,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `information` WRITE;
 /*!40000 ALTER TABLE `information` DISABLE KEYS */;
-INSERT INTO `information` VALUES (1,'Information 1','<p>Description de l\'information 1</p>','Nestor','Nom de l\'administrateur','externe',1,'Donnée à caractère personnel','<p>Description des contraintes règlementaires et normatives</p>','2020-06-13 00:06:43','2021-08-17 08:22:58',NULL,0,0,0),(2,'information 2','<p>Description de l\'information</p>','Nestor','Nom de l\'administrateur','externe',2,'Donnée à caractère personnel',NULL,'2020-06-13 00:09:13','2021-08-17 08:23:11',NULL,0,0,0),(3,'information 3','<p>Descripton de l\'information 3</p>','Proriétaire',NULL,NULL,4,NULL,NULL,'2020-06-13 00:10:07','2020-07-01 14:50:29',NULL,NULL,NULL,NULL),(4,'Information de test','<p>decription du test</p>','RSSI',NULL,NULL,2,NULL,NULL,'2020-07-01 15:00:37','2020-07-01 15:00:58',NULL,NULL,NULL,NULL),(5,'Données du client','<p>Données d\'identification du client</p>','Nestor','Paul','Local',4,'Donnée à caractère personnel','<p>RGPD</p>','2021-05-14 10:50:09','2021-08-17 08:23:23',NULL,3,4,3);
+INSERT INTO `information` VALUES (1,'Information 1','<p>Description de l\'information 1</p>','Nestor','Nom de l\'administrateur','externe',1,'Donnée à caractère personnel','<p>Description des contraintes règlementaires et normatives</p>','2020-06-13 00:06:43','2021-08-19 16:18:48',NULL,3,2,2),(2,'information 2','<p>Description de l\'information</p>','Nestor','Nom de l\'administrateur','externe',2,'Donnée à caractère personnel',NULL,'2020-06-13 00:09:13','2021-08-19 16:42:53',NULL,1,1,1),(3,'information 3','<p>Descripton de l\'information 3</p>','Proriétaire','Jean','Local',4,'Donnée à caractère personnel',NULL,'2020-06-13 00:10:07','2021-08-19 16:45:21',NULL,4,3,4),(4,'Information de test','<p>decription du test</p>','RSSI','Paul','Local',1,'Technical',NULL,'2020-07-01 15:00:37','2021-08-19 16:45:52',NULL,1,1,1),(5,'Données du client','<p>Données d\'identification du client</p>','Nestor','Paul','Local',3,'Donnée à caractère personnel','<p>RGPD</p>','2021-05-14 10:50:09','2021-08-19 17:03:59',NULL,2,2,2);
 /*!40000 ALTER TABLE `information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,7 +359,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `information_process` WRITE;
 /*!40000 ALTER TABLE `information_process` DISABLE KEYS */;
-INSERT INTO `information_process` VALUES (3,2),(4,3),(4,4),(4,7),(4,8),(4,1),(1,4),(2,9),(5,1),(5,2),(5,4),(5,9);
+INSERT INTO `information_process` VALUES (3,2),(4,3),(4,4),(4,1),(1,4),(2,9),(5,1),(5,2),(5,4),(5,9);
 /*!40000 ALTER TABLE `information_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -723,7 +723,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `subnetworks` WRITE;
 /*!40000 ALTER TABLE `subnetworks` DISABLE KEYS */;
-INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_ACCUEIL',2,1),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-18 16:54:45',NULL,NULL,5,'ZONE_WORK',1,1),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-18 16:54:45',NULL,2,5,'ZONE_WORK',4,1),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_WORK',3,1),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-18 16:54:45',NULL,2,4,'ZONE_APP',5,1),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/32',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-18 16:54:45',NULL,NULL,NULL,'ZONE_BACKUP',5,1),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1);
+INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-20 01:50:42',NULL,NULL,1,'ZONE_ACCUEIL',2,1,'10.10.0.1'),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-20 02:26:32',NULL,NULL,5,'ZONE_WORK',1,1,'10.20.0.1'),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-20 07:56:50',NULL,2,5,'ZONE_WORK',4,1,'10.40.0.1'),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-20 07:57:01',NULL,NULL,1,'ZONE_WORK',3,1,'10.30.0.1'),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1,NULL),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-18 16:54:45',NULL,2,4,'ZONE_APP',5,1,NULL),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/32',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-18 16:54:45',NULL,NULL,NULL,'ZONE_BACKUP',5,1,NULL),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1,NULL);
 /*!40000 ALTER TABLE `subnetworks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,4 +796,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-18 21:49:07
+-- Dump completed on 2021-08-20 13:05:17
