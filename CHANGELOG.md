@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 
 
 - Add default gateway address to subnetworks
-- Add colors for security needs in information forms
+- Add colors for security needs in forms
 - Cleanup unused columns in database
 - Change link between subnetworks and VLANs
 - Add security needs with CIAT values in information, database, process and macro_process tables

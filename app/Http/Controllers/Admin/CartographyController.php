@@ -1276,24 +1276,19 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table,"Description",$subnetwork->description);
                     $this->addTextRow($table,"Adresse/Masque",$subnetwork->address . " ( " . $subnetwork->ipRange() . " )");
                     $this->addTextRow($table,"Passerelle par défaut",$subnetwork->default_gateway);
-                    // VLAN
-                    $textRun=$this->addTextRunRow($table,"Vlan");
-                    if ($subnetwork->gateway!=null) 
-                        $textRun->addLink("VLAN".$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FancyLinkStyle, null, true);
                     $this->addTextRow($table,"Zone",$subnetwork->zone);
                     $this->addTextRow($table,"Méthode d’attribution des IP",$subnetwork->ip_allocation_type);
                     $this->addTextRow($table,"DMZ ou non",$subnetwork->dmz);
                     $this->addTextRow($table,"Possibilité d’accès sans ﬁl",$subnetwork->wifi);
+                    // VLAN
+                    $textRun=$this->addTextRunRow($table,"VLAN");
+                    if ($subnetwork->vlan!=null) 
+                        $textRun->addLink("VLAN".$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FancyLinkStyle, null, true);
                     // gateway
                     $textRun=$this->addTextRunRow($table,"Passerelle");
                     if ($subnetwork->gateway!=null) 
                         $textRun->addLink("GATEWAY".$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FancyLinkStyle, null, true);
 
-                    // subnetworks
-                    $textRun=$this->addTextRunRow($table,"Sous-réseaux connectés");
-                    if ($subnetwork->connected_subnets!=null) {
-                        $textRun->addLink("SUBNET".$subnetwork->connected_subnets->id, $subnetwork->connected_subnets->name, CartographyController::FancyLinkStyle, null, true);
-                        }
                     $this->addTextRow($table,"Responsable d’exploitation",$subnetwork->responsible_exp);
 
                     $section->addTextBreak(1); 
