@@ -409,7 +409,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_server_physical_server` WRITE;
 /*!40000 ALTER TABLE `logical_server_physical_server` DISABLE KEYS */;
-INSERT INTO `logical_server_physical_server` VALUES (2,1),(2,2),(1,1),(1,7);
+INSERT INTO `logical_server_physical_server` VALUES (2,1),(2,2),(1,1),(1,7),(3,8);
 /*!40000 ALTER TABLE `logical_server_physical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,7 +419,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_servers` WRITE;
 /*!40000 ALTER TABLE `logical_servers` DISABLE KEYS */;
-INSERT INTO `logical_servers` VALUES (1,'SRV-1','<p>Description du serveur 1</p>','DNS, HTTP, HTTPS','<p>Configuration du serveur 1</p>','2020-07-12 16:57:42','2021-08-17 13:13:21',NULL,'Windows 3.1','10.10.1.1, 10.10.10.1','2','8','PROD',60),(2,'SRV-2','<p>Description du serveur 2</p>','HTTPS, SSH','<p>Configuration par défaut</p>','2020-07-30 10:00:16','2021-08-17 18:17:41',NULL,'Windows 10','10.50.1.2','2','5','PROD',100);
+INSERT INTO `logical_servers` VALUES (1,'SRV-1','<p>Description du serveur 1</p>','DNS, HTTP, HTTPS','<p>Configuration du serveur 1</p>','2020-07-12 16:57:42','2021-08-17 13:13:21',NULL,'Windows 3.1','10.10.1.1, 10.10.10.1','2','8','PROD',60),(2,'SRV-2','<p>Description du serveur 2</p>','HTTPS, SSH','<p>Configuration par défaut</p>','2020-07-30 10:00:16','2021-08-17 18:17:41',NULL,'Windows 10','10.50.1.2','2','5','PROD',100),(3,'SRV-3','<p>Description du serveur 3</p>','HTTP, HTTPS',NULL,'2021-08-26 14:33:03','2021-08-26 14:33:38',NULL,'Ubuntu 20.04','10.70.8.3','4','16','PROD',80);
 /*!40000 ALTER TABLE `logical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -723,7 +723,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `subnetworks` WRITE;
 /*!40000 ALTER TABLE `subnetworks` DISABLE KEYS */;
-INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-20 01:50:42',NULL,NULL,1,'ZONE_ACCUEIL',2,1,'10.10.0.1'),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-20 02:26:32',NULL,NULL,5,'ZONE_WORK',1,1,'10.20.0.1'),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-20 07:56:50',NULL,2,5,'ZONE_WORK',4,1,'10.40.0.1'),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-20 07:57:01',NULL,NULL,1,'ZONE_WORK',3,1,'10.30.0.1'),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1,NULL),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-18 16:54:45',NULL,2,4,'ZONE_APP',5,1,NULL),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/32',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-18 16:54:45',NULL,NULL,NULL,'ZONE_BACKUP',5,1,NULL),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1,NULL);
+INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-20 01:50:42',NULL,NULL,1,'ZONE_ACCUEIL',2,1,'10.10.0.1'),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-20 02:26:32',NULL,NULL,5,'ZONE_WORK',1,1,'10.20.0.1'),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-20 07:56:50',NULL,2,5,'ZONE_WORK',4,1,'10.40.0.1'),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-20 07:57:01',NULL,NULL,1,'ZONE_WORK',3,1,'10.30.0.1'),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1,NULL),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-26 13:49:46',NULL,2,4,'ZONE_APP',5,2,NULL),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/16',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-26 14:34:46',NULL,NULL,NULL,'ZONE_BACKUP',5,2,NULL),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1,NULL);
 /*!40000 ALTER TABLE `subnetworks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,4 +796,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-20 13:05:17
+-- Dump completed on 2021-08-26 19:20:32
