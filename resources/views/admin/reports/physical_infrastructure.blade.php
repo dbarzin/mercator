@@ -15,37 +15,37 @@
                         </div>
                     @endif
 
-        <div class="col-sm-4">
-            <form action="/admin/report/physical_infrastructure">
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td>
-                                Site :
-                                <select name="site" onchange="this.form.building.value=-1;this.form.submit()">
-                                    <option value="-1">-- All sites --</option>
-                                    @foreach ($all_sites as $site)
-                                        <option value="{{$site->id}}" {{ Session::get('site')==$site->id ? "selected" : "" }}>{{ $site->name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                Building :
-                                <select name="building" onchange="this.form.submit()">
-                                    <option value="-1">-- All buildings --</option>
-                                    @if ($all_buildings!=null)
-                                        @foreach ($all_buildings as $building)
-                                            <option value="{{$building->id}}" {{ Session::get('building')==$building->id ? "selected" : "" }}>{{ $building->name }}</option>
+                <div class="col-sm-4">
+                    <form action="/admin/report/physical_infrastructure">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td>
+                                    Site :
+                                    <select name="site" onchange="this.form.building.value=-1;this.form.submit()">
+                                        <option value="-1">-- All sites --</option>
+                                        @foreach ($all_sites as $site)
+                                            <option value="{{$site->id}}" {{ Session::get('site')==$site->id ? "selected" : "" }}>{{ $site->name }}</option>
                                         @endforeach
-                                    @endif
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-                <div id="graph"></div>
+                                    </select>
+                                </td>
+                                <td>
+                                    Building :
+                                    <select name="building" onchange="this.form.submit()">
+                                        <option value="-1">-- All buildings --</option>
+                                        @if ($all_buildings!=null)
+                                            @foreach ($all_buildings as $building)
+                                                <option value="{{$building->id}}" {{ Session::get('building')==$building->id ? "selected" : "" }}>{{ $building->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
+                <div id="graph"></div>
             </div>
+        </div>
 
             @if ($sites->count()>0)
             <div class="card">

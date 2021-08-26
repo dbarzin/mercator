@@ -15,6 +15,36 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    <div class="col-sm-4">
+                        <form action="/admin/report/logical_infrastructure">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>
+                                        Network :
+                                        <select name="network" onchange="this.form.subnetwork.value=-1;this.form.submit()">
+                                            <option value="-1">-- All networks --</option>
+                                            @foreach ($all_networks as $network)
+                                                <option value="{{$network->id}}" {{ Session::get('network')==$network->id ? "selected" : "" }}>{{ $network->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        Subnetwork :
+                                        <select name="subnetwork" onchange="this.form.submit()">
+                                            <option value="-1">-- All subnetworks --</option>
+                                            @if ($all_subnetworks!=null)
+                                                @foreach ($all_subnetworks as $subnetwork)
+                                                    <option value="{{$subnetwork->id}}" {{ Session::get('subnetwork')==$subnetwork->id ? "selected" : "" }}>{{ $subnetwork->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
                     <div id="graph"></div>
                 </div>
             </div>
@@ -449,9 +479,6 @@ d3.select("#graph").graphviz()
             <?php  $i=0; ?>\
             @foreach($networks as $network) \
                 NET{{ $network->id }} [label=\"{{ $network->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"#NETWORK{{$network->id}}\"]\
-                @foreach($network->subnetworks as $subnetwork) \
-                    NET{{ $network->id }} -> SUBNET{{ $subnetwork->id }}\
-                @endforeach\
             @endforeach\
             @foreach($gateways as $gateway) \
                 GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
@@ -461,6 +488,9 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
+                @if ($subnetwork->network_id!=null) \
+                    NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}\
+                @endif\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\

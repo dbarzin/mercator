@@ -469,33 +469,143 @@ class ReportController extends Controller
             ;
     }
 
-    public function logicalInfrastructure(Request $request) {            
-        $networks = Network::All()->sortBy("name");
-        $subnetworks = Subnetwork::All()->sortBy("name");
-        $gateways = Gateway::All()->sortBy("name");
-        $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
-        $networkSwitches = NetworkSwitch::All()->sortBy("name");
-        $routers = Router::All()->sortBy("name");
-        $securityDevices = SecurityDevice::All()->sortBy("name");
-        $dhcpServers = DhcpServer::All()->sortBy("name");
-        $dnsservers = Dnsserver::All()->sortBy("name");
-        $logicalServers = LogicalServer::All()->sortBy("name");
-        $certificates = Certificate::All()->sortBy("name");
-        $vlans = Vlan::All()->sortBy("name");
+    public function logicalInfrastructure(Request $request) {
 
-        return view('admin/reports/logical_infrastructure')
-            ->with("networks",$networks)
-            ->with("subnetworks",$subnetworks)
-            ->with("gateways",$gateways)
-            ->with("externalConnectedEntities",$externalConnectedEntities)
-            ->with("networkSwitches",$networkSwitches)
-            ->with("routers",$routers)
-            ->with("securityDevices",$securityDevices)
-            ->with("dhcpServers",$dhcpServers)
-            ->with("dnsservers",$dnsservers)
-            ->with("logicalServers",$logicalServers)
-            ->with("certificates",$certificates)
-            ;
+        if ((int)($request->network)==-1) {
+            $request->session()->put("network",null);
+            $network=null;
+            $request->session()->put("subnetwork",null);
+            $subnetwork=null;
+        }
+        else {
+            if ($request->network!=null) {
+                    $request->session()->put("network",$request->network);
+                    $network=$request->network;
+                }
+            else {
+                $network=$request->session()->get("network");
+            }
+
+            if ((int)($request->subnetwork)==-1) {
+                $request->session()->put("subnetwork",null);
+                $subnetwork=null;
+            }
+            else 
+            if ($request->subnetwork!=null) {
+                    $request->session()->put("subnetwork",$request->subnetwork);
+                    $subnetwork=$request->subnetwork;                
+                }
+            else {
+                $subnetwork=$request->session()->get("subnetwork");
+            }
+        }
+
+        // TODO: pluck
+        $all_networks = Network::All()->sortBy("name");
+        if ($network!=null) {
+            // TODO: pluck
+            $all_subnetworks = Subnetwork::All()->sortBy("name")
+                ->filter(function($item) use($network) {
+                    return $item->network_id == $network;
+                });
+
+            $networks = Network::All()->sortBy("name")
+                ->filter(function($item) use($network) {
+                    return $item->id == $network;
+                });
+
+            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name")
+                ->filter(function($item) use($network) {
+                    foreach($item->connected_networks as $connected_network)
+                        return $connected_network->id == $network;
+                    return false;
+                });
+
+            if ($subnetwork!=null)
+                $subnetworks = Subnetwork::All()->sortBy("name")
+                    ->filter(function($item) use($subnetwork) {
+                        return $item->id == $subnetwork;
+                    });
+            else
+                $subnetworks = Subnetwork::All()->sortBy("name")
+                    ->filter(function($item) use($network) {
+                        return $item->network_id == $network;
+                    });
+
+            $gateways = Gateway::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    foreach($item->gatewaySubnetworks as $connectedSubnetworks)
+                        return $subnetworks->pluck("id")->contains($connectedSubnetworks->id);
+                    return false;
+                });
+
+            $networkSwitches = NetworkSwitch::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                });
+
+            $routers = Router::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                });
+
+            $securityDevices = SecurityDevice::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                });
+
+            // TODO: fixme
+            $dhcpServers = null; // DhcpServer::All()->sortBy("name")
+            $dnsservers = null;  //Dnsserver::All()->sortBy("name");
+
+            $logicalServers = LogicalServer::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    foreach($subnetworks as $subnetwork)
+                        foreach(explode(',',$item->address_ip) as $address) 
+                            if ($subnetwork->contains($address))
+                                return true;                        
+                    return false;
+                });
+
+            $certificates = Certificate::All()->load("logical_servers")->sortBy("name")
+                ->filter(function($item) use($logicalServers) {                    
+                    foreach($item->logical_servers as $logical_server)
+                        return $logicalServers->pluck("id")->contains($logical_server->id);
+                    return false;
+                });
+            }
+        else {
+            $all_subnetworks = Subnetwork::All()->sortBy("name");
+
+            // all
+            $networks = Network::All()->sortBy("name");
+            $subnetworks = Subnetwork::All()->sortBy("name");
+            $gateways = Gateway::All()->sortBy("name");
+            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name");
+            $networkSwitches = NetworkSwitch::All()->sortBy("name");
+            $routers = Router::All()->sortBy("name");
+            $securityDevices = SecurityDevice::All()->sortBy("name");
+            $dhcpServers = DhcpServer::All()->sortBy("name");
+            $dnsservers = Dnsserver::All()->sortBy("name");
+            $logicalServers = LogicalServer::All()->sortBy("name");
+            $certificates = Certificate::All()->sortBy("name");
+        }
+
+        return view('admin/reports/logical_infrastructure',
+            compact(
+                "all_networks", 
+                "all_subnetworks",
+                "networks", 
+                "subnetworks", 
+                "gateways",
+                "externalConnectedEntities",
+                "networkSwitches",
+                "routers",
+                "securityDevices",
+                "dhcpServers",
+                "dnsservers",
+                "logicalServers",
+                "certificates"));
     }
 
     public function physicalInfrastructure(Request $request) {        
@@ -529,6 +639,7 @@ class ReportController extends Controller
             }
         }
 
+        // TODO : pluck
         $all_sites = Site::All()->sortBy("name");
 
         if ($site!=null) {

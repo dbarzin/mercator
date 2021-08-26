@@ -86,7 +86,6 @@ class Network extends Model
 
     public function subnetworks()
     {
-        // return $this->belongsToMany(Subnetwork::class)->orderBy("name");
         return $this->hasMany(Subnetwork::class, 'network_id', 'id')->orderBy("name");        
     }
 
