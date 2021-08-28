@@ -24,8 +24,8 @@
                                         Network :
                                         <select name="network" onchange="this.form.subnetwork.value=-1;this.form.submit()">
                                             <option value="-1">-- All networks --</option>
-                                            @foreach ($all_networks as $network)
-                                                <option value="{{$network->id}}" {{ Session::get('network')==$network->id ? "selected" : "" }}>{{ $network->name }}</option>
+                                            @foreach($all_networks as $id => $name)                                            
+                                                <option value="{{$id}}" {{ Session::get('network')==$id ? "selected" : "" }}>{{ $name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -34,8 +34,8 @@
                                         <select name="subnetwork" onchange="this.form.submit()">
                                             <option value="-1">-- All subnetworks --</option>
                                             @if ($all_subnetworks!=null)
-                                                @foreach ($all_subnetworks as $subnetwork)
-                                                    <option value="{{$subnetwork->id}}" {{ Session::get('subnetwork')==$subnetwork->id ? "selected" : "" }}>{{ $subnetwork->name }}</option>
+                                                @foreach($all_subnetworks as $id => $name)                                            
+                                                    <option value="{{$id}}" {{ Session::get('subnetwork')==$id ? "selected" : "" }}>{{ $name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>

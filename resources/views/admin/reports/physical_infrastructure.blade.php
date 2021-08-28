@@ -23,8 +23,8 @@
                                     Site :
                                     <select name="site" onchange="this.form.building.value=-1;this.form.submit()">
                                         <option value="-1">-- All sites --</option>
-                                        @foreach ($all_sites as $site)
-                                            <option value="{{$site->id}}" {{ Session::get('site')==$site->id ? "selected" : "" }}>{{ $site->name }}</option>
+                                        @foreach($all_sites as $id => $name)                                            
+                                            <option value="{{$id}}" {{ Session::get('site')==$id ? "selected" : "" }}>{{ $name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -33,8 +33,8 @@
                                     <select name="building" onchange="this.form.submit()">
                                         <option value="-1">-- All buildings --</option>
                                         @if ($all_buildings!=null)
-                                            @foreach ($all_buildings as $building)
-                                                <option value="{{$building->id}}" {{ Session::get('building')==$building->id ? "selected" : "" }}>{{ $building->name }}</option>
+                                            @foreach($all_buildings as $id => $name)                                            
+                                                <option value="{{$id}}" {{ Session::get('building')==$id ? "selected" : "" }}>{{ $name }}</option>
                                             @endforeach
                                         @endif
                                     </select>

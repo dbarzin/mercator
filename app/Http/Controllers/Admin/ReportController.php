@@ -364,7 +364,7 @@ class ReportController extends Controller
 
         // get all flux
 	$flows = Flux::All()->sortBy("name");
-	/*
+	/* TODO: fixme
         if ($application_id!=null) {
             $flows = $flows
                 ->filter(function($item) use($application_id) {
@@ -499,22 +499,16 @@ class ReportController extends Controller
                 $subnetwork=$request->session()->get("subnetwork");
             }
         }
-
-        // TODO: pluck
-        $all_networks = Network::All()->sortBy("name");
+        
+        $all_networks = Network::All()->sortBy("name")->pluck("name","id");
         if ($network!=null) {
-            // TODO: pluck
             $all_subnetworks = Subnetwork::All()->sortBy("name")
-                ->filter(function($item) use($network) {
-                    return $item->network_id == $network;
-                });
+                ->where("network_id","=",$network)->pluck("name","id");
 
-            $networks = Network::All()->sortBy("name")
-                ->filter(function($item) use($network) {
-                    return $item->id == $network;
-                });
+            $networks = Network::All()->sortBy("name")->where("id","=",$network);
 
-            $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy("name")
+            // TODO: improve me
+            $externalConnectedEntities = ExternalConnectedEntity::All()
                 ->filter(function($item) use($network) {
                     foreach($item->connected_networks as $connected_network)
                         return $connected_network->id == $network;
@@ -523,15 +517,12 @@ class ReportController extends Controller
 
             if ($subnetwork!=null)
                 $subnetworks = Subnetwork::All()->sortBy("name")
-                    ->filter(function($item) use($subnetwork) {
-                        return $item->id == $subnetwork;
-                    });
+                    -> where("id","=",$subnetwork);
             else
                 $subnetworks = Subnetwork::All()->sortBy("name")
-                    ->filter(function($item) use($network) {
-                        return $item->network_id == $network;
-                    });
+                    ->where("network_id","=",$network);
 
+            // TODO: improve me
             $gateways = Gateway::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
                     foreach($item->gatewaySubnetworks as $connectedSubnetworks)
@@ -539,16 +530,19 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO: improve me
             $networkSwitches = NetworkSwitch::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
                     return $subnetworks->pluck('id')->contains($item->subnetwork_id);
                 });
 
+            // TODO: improve me
             $routers = Router::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
                     return $subnetworks->pluck('id')->contains($item->subnetwork_id);
                 });
 
+            // TODO: improve me
             $securityDevices = SecurityDevice::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
                     return $subnetworks->pluck('id')->contains($item->subnetwork_id);
@@ -558,6 +552,7 @@ class ReportController extends Controller
             $dhcpServers = null; // DhcpServer::All()->sortBy("name")
             $dnsservers = null;  //Dnsserver::All()->sortBy("name");
 
+            // TODO: improve me
             $logicalServers = LogicalServer::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
                     foreach($subnetworks as $subnetwork)
@@ -567,6 +562,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO: improve me
             $certificates = Certificate::All()->load("logical_servers")->sortBy("name")
                 ->filter(function($item) use($logicalServers) {                    
                     foreach($item->logical_servers as $logical_server)
@@ -639,28 +635,20 @@ class ReportController extends Controller
             }
         }
 
-        // TODO : pluck
-        $all_sites = Site::All()->sortBy("name");
+        $all_sites = Site::All()->sortBy("name")->pluck("name","id");
 
         if ($site!=null) {
-            $sites = Site::All()->sortBy("name")
-                ->filter(function($item) use($site) {
-                    return $item->id == $site;
-                });
+            $sites = Site::All()->sortBy("name")->where("id","=",$site);
 
             $all_buildings = Building::All()->sortBy("name")
-                ->filter(function($item) use($site) {
-                    return $item->site_id == $site;
-                });
+                ->where("site_id","=",$site)->pluck("name","id");
 
-            $buildings=Building::All()->sortBy("name")
-                ->filter(function($item) use($site, $building) {
-                    if ($building==null)
-                        return $item->site_id == $site;
-                    else
-                        return $item->id == $building;
-                });
+            if ($building==null)
+                $buildings=Building::All()->sortBy("name")->where("site_id","=",$site);
+            else                
+                $buildings=Building::All()->sortBy("name")->where("id","=",$building);
 
+            // TODO: improve me
             $bays = Bay::All()->sortBy("name")
                 ->filter(function($item) use($buildings) {
                     foreach($buildings as $building) 
