@@ -832,7 +832,7 @@ class ReportController extends Controller
         }
         else 
         {
-            $sites=$all_sites;
+            $sites=Site::All()->sortBy("name");
             $buildings = Building::All()->sortBy("name");
             $all_buildings = null;
             $bays = Bay::All()->sortBy("name");
