@@ -63,6 +63,7 @@ use App\Vlan;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 // PhpOffice 
@@ -129,6 +130,7 @@ class ReportController extends Controller
                     return $item->id == $macroprocess;
                 });
 
+            // TODO : improve me
             $processes = Process::All()->sortBy("identifiant")
                 ->filter(function($item) use($macroProcessuses, $process) {
                     if($process!=null)
@@ -140,6 +142,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $all_process = Process::All()->sortBy("identifiant")
                 ->filter(function($item) use($macroProcessuses, $process) {
                     foreach($macroProcessuses as $macroprocess) 
@@ -150,6 +153,7 @@ class ReportController extends Controller
                 });
 
 
+            // TODO : improve me
             $activities = Activity::All()->sortBy("name")
                 ->filter(function($item) use($processes) {
                     foreach($item->activitiesProcesses as $p)
@@ -159,6 +163,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $operations = Operation::All()->sortBy("name")
                 ->filter(function($item) use($activities) {
                     foreach($item->operationsActivities as $o)
@@ -168,6 +173,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $tasks = Task::All()->sortBy("nom")
                 ->filter(function($item) use($operations) {
                     foreach($operations as $operation)
@@ -177,6 +183,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $actors = Actor::All()->sortBy("name")
                 ->filter(function($item) use($operations) {
                     foreach($operations as $operation) {
@@ -186,6 +193,8 @@ class ReportController extends Controller
                     }
                     return false;
                 });
+
+            // TODO : improve me
             $informations = Information::All()->sortBy("name")
                 ->filter(function($item) use($processes) {
                     foreach($processes as $process) 
@@ -253,11 +262,13 @@ class ReportController extends Controller
         $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
 
         if ($applicationBlock!=null) {
+            // TODO : improve me
             $applicationBlocks = ApplicationBlock::All()->sortBy("name")
                 ->filter(function($item) use($applicationBlock) {
                     return $item->id == $applicationBlock;
                 });
 
+            // TODO : improve me
             $applications = MApplication::All()->sortBy("name")
                 ->filter(function($item) use($applicationBlock, $application) {
                     if($application!=null)
@@ -271,6 +282,7 @@ class ReportController extends Controller
                     return $item->application_block_id == $applicationBlock;
                 });
 
+            // TODO : improve me
             $applications = MApplication::All()->sortBy("name")
                 ->filter(function($item) use($applicationBlock, $application) {
                     if ($application==null)
@@ -279,6 +291,7 @@ class ReportController extends Controller
                         return $item->id == $application;
                 });
 
+            // TODO : improve me
             $applicationServices = ApplicationService::All()->sortBy("name")
                 ->filter(function($item) use($applications) {
                     foreach($applications as $application)
@@ -288,6 +301,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $applicationModules = ApplicationModule::All()->sortBy("name")
                 ->filter(function($item) use($applicationServices) {
                     foreach($applicationServices as $service)
@@ -297,6 +311,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $databases = Database::All()->sortBy("name")
                 ->filter(function($item) use($applications) {
                     foreach($applications as $application)
@@ -306,6 +321,7 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // TODO : improve me
             $fluxes = Flux::All()->sortBy("name")
                 ->filter(function($item) use($applications,$applicationModules,$databases) {
                     foreach($applications as $application) {                        
@@ -354,44 +370,66 @@ class ReportController extends Controller
 
     public function applicationFlows(Request $request) {
 
+        if ((int)($request->applicationBlock)==-1) {
+            $request->session()->put("applicationBlock",null);
+            $applicationBlock=null;
+        }
+        else {
+            if ($request->applicationBlock!=null) {
+                    $request->session()->put("applicationBlock",$request->applicationBlock);
+                    $applicationBlock=$request->applicationBlock;
+                }
+            else {
+                $applicationBlock=$request->session()->get("applicationBlock");
+            }
+        }
+
         //update list application blocks
         $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
 
-        // if application block change
-        // update selected applications - services - modules - database
-        // else
-        // get active applicatons - services - modules - databases
+    	$flows = Flux::All()->sortBy("name");
+        if ($applicationBlock!=null) {
 
-        // get all flux
-	$flows = Flux::All()->sortBy("name");
-	/* TODO: fixme
-        if ($application_id!=null) {
+            $application_ids = Mapplication::where('application_block_id','=',$applicationBlock)->pluck("id");
+
+            $applicationservice_ids = DB::table("m_applications")
+                ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
+                ->where("application_block_id","=",$applicationBlock)
+                ->pluck("m_application_id")
+                ->unique();
+
+            $applicationmodule_ids = DB::table("m_applications")
+                ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
+                ->join("application_module_application_service","application_service_m_application.application_service_id","=","application_module_application_service.application_service_id")
+                ->where("application_block_id","=",$applicationBlock)
+                ->pluck("m_application_id")
+                ->unique();
+
+            $database_ids = DB::table("m_applications")
+                ->join("database_m_application","m_applications.id","=","database_m_application.m_application_id")
+                ->where("application_block_id","=",$applicationBlock)
+                ->pluck("database_id")
+                ->unique();
+
             $flows = $flows
-                ->filter(function($item) use($application_id) {
+                ->filter(function($item) use(
+                    $application_ids,
+                    $applicationservice_ids,$applicationmodule_ids,$database_ids) {
                     return 
-                        $item->application_source_id=$application_id || 
-                        $item->application_dest_id=$application_id;
-                });
-	}
-	/*	
-	else if ($applicationBlock!=null) {
-                $app_applicationservice_ids = Mapplication::where('id','=',$application_id);
-                if (!empty($app_applicationservice_ids))
-                    $app_applicationservice_ids = $app_applicationservice_ids
-                                                ->first()->services()->pluck("id");
-            // dd($app_applicationservice_ids);
-            $flows = $flows
-                ->filter(function($item) use($application_id,$app_applicationservice_ids) {
-                    return 
-                        $item->application_source_id=$application_id || 
-                        $item->application_dest_id=$application_id ||
-                        in_array($item->module_source_id,$app_applicationservice_ids) ||
-                        in_array($item->module_dest_id,$app_applicationservice_ids);
-                });
+                        // application
+                        $application_ids->contains($item->application_source_id) ||
+                        $application_ids->contains($item->application_dest_id) ||
+                        // service
+                        $applicationservice_ids->contains($item->service_source_id)||
+                        $applicationservice_ids->contains($item->service_dest_id)||
+                        // module
+                        $applicationmodule_ids->contains($item->module_source_id)||
+                        $applicationmodule_ids->contains($item->module_dest_id)||
+                        // database
+                        $database_ids->contains($item->database_source_id)||
+                        $database_ids->contains($item->database_dest_id);
+                    });
             }
-        else {
-            // no filters
-	}*/
 
         // get linked objects
         $application_ids = [];
