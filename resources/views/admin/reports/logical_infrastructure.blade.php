@@ -482,14 +482,14 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($gateways as $gateway) \
                 GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
-                @foreach($gateway->gatewaySubnetworks as $subnetwork) \
-                    SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $gateway->id }}\
-                @endforeach\
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
                 @if ($subnetwork->network_id!=null) \
                     NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}\
+                @endif\
+                @if ($subnetwork->gateway_id!=null) \
+                    SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}\
                 @endif\
             @endforeach\
             @foreach($externalConnectedEntities as $entity) \

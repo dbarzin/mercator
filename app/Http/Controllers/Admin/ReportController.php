@@ -609,7 +609,7 @@ class ReportController extends Controller
                 });
             }
         else {
-            $all_subnetworks = Subnetwork::All()->sortBy("name");
+            $all_subnetworks = Subnetwork::All()->sortBy("name")->pluck("name","id");
 
             // all
             $networks = Network::All()->sortBy("name");
