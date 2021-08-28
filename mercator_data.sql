@@ -81,7 +81,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `application_blocks` WRITE;
 /*!40000 ALTER TABLE `application_blocks` DISABLE KEYS */;
-INSERT INTO `application_blocks` VALUES (1,'Bloc applicatif 1','<p>Description du bloc applicatif</p>','Jean Pierre','2020-06-13 04:09:01','2020-06-13 04:09:01',NULL),(2,'Bloc applicatif 2','<p>Second bloc applicatif.</p>','Marcel pierre','2020-06-13 04:10:52','2020-06-17 16:13:33',NULL),(3,'Block applicatif 3','<p>toto</p>','Nestor','2020-08-29 12:00:10','2021-06-23 19:34:57',NULL);
+INSERT INTO `application_blocks` VALUES (1,'Bloc applicatif 1','<p>Description du bloc applicatif</p>','Jean Pierre','2020-06-13 04:09:01','2020-06-13 04:09:01',NULL),(2,'Bloc applicatif 2','<p>Second bloc applicatif.</p>','Marcel pierre','2020-06-13 04:10:52','2020-06-17 16:13:33',NULL),(3,'Bloc applicatif 3','<p>toto</p>','Nestor','2020-08-29 12:00:10','2021-08-28 09:04:39',NULL);
 /*!40000 ALTER TABLE `application_blocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,7 +439,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `m_applications` WRITE;
 /*!40000 ALTER TABLE `m_applications` DISABLE KEYS */;
-INSERT INTO `m_applications` VALUES (1,'Application 1','<p>Description de l\'application 1</p>',1,'RSSI','logiciel','Microsoft',NULL,'> 20','2020-06-14 09:20:15','2021-06-23 19:34:57',NULL,1,3,'Docuemntaton/application1.docx',1,1,1),(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2</p>',2,'RSSI','progiciel','martian','SaaS','>100','2020-06-14 09:31:16','2021-05-15 08:05:57',NULL,1,1,'None',2,2,2),(3,'Application 3','<p>Test application 3</p>',1,'RSSI','progiciel','Microsoft','Interne','>100','2020-06-17 17:33:41','2021-05-15 08:06:53',NULL,8,2,'Aucune',2,3,3),(4,'Application 4','<p>Description app4</p>',2,'RSSI','logiciel','Microsoft','Internl','>100','2020-08-11 14:13:02','2021-07-11 08:59:57',NULL,NULL,2,'None',2,3,2),(5,'CUST AP01','<p>Customer appication</p>',0,NULL,NULL,'web',NULL,NULL,'2020-08-22 04:58:18','2020-08-26 14:56:20','2020-08-26 14:56:20',1,NULL,NULL,NULL,NULL,NULL),(6,'totototo',NULL,0,NULL,NULL,'totottoo',NULL,NULL,'2020-08-22 04:59:26','2020-08-22 04:59:43','2020-08-22 04:59:43',NULL,NULL,NULL,NULL,NULL,NULL),(7,'Windows Word','<p>Description de l\'application</p>',3,'Nestor','artificiel','client lourd',NULL,'>100','2020-08-23 08:20:34','2020-08-26 14:56:23','2020-08-26 14:56:23',10,2,NULL,NULL,NULL,NULL),(8,'Application 99',NULL,1,'André','progiciel','client lourd','SaaS','>100','2020-08-23 10:08:02','2020-08-26 14:56:13','2020-08-26 14:56:13',NULL,NULL,NULL,NULL,NULL,NULL),(9,'Test33','<p>fsfsdfsd</p>',0,'Nestor','progiciel','martian',NULL,NULL,'2020-08-26 14:54:05','2020-08-26 14:54:35','2020-08-26 14:54:35',10,NULL,NULL,NULL,NULL,NULL),(10,'Test33R','<p>fsfsdfsd</p>',0,'Nestor','progiciel','martian',NULL,NULL,'2020-08-26 14:54:28','2020-08-26 14:54:39','2020-08-26 14:54:39',10,NULL,NULL,NULL,NULL,NULL),(11,'SuperApp','<p>Supper application</p>',0,'RSSI','logiciel','martian',NULL,NULL,'2021-04-12 14:54:57','2021-04-12 17:10:44','2021-04-12 17:10:44',NULL,NULL,NULL,NULL,NULL,NULL),(12,'SuperApp','<p>Super super application !</p>',1,'RSSI','Web','Oracle','Interne',NULL,'2021-04-12 17:10:59','2021-06-23 19:33:15',NULL,NULL,2,NULL,1,1,1),(13,'test application',NULL,0,NULL,NULL,NULL,NULL,NULL,'2021-05-07 08:23:59','2021-05-07 08:24:03','2021-05-07 08:24:03',NULL,NULL,NULL,NULL,NULL,NULL),(14,'Windows Calc','<p>Calculatrice windows</p>',2,'RSSI','logiciel','Microsoft','Internl',NULL,'2021-05-13 08:15:27','2021-06-23 19:35:26',NULL,NULL,3,NULL,0,0,0),(15,'Compta','<p>Application de comptabilité</p>',3,'RSSI','progiciel','Microsoft','Interne','>100','2021-05-15 07:53:15','2021-05-15 07:53:15',NULL,2,2,NULL,4,2,3),(16,'Queue Manager','<p>Queue manager</p>',4,'RSSI','logiciel','Internal Dev','Interne','>100','2021-08-02 15:17:11','2021-08-02 15:18:32',NULL,2,1,'//Portal/QueueManager.doc',4,4,4);
+INSERT INTO `m_applications` VALUES (1,'Application 1','<p>Description de l\'application 1</p>',1,'RSSI','logiciel','Microsoft',NULL,'> 20','2020-06-14 09:20:15','2021-08-28 09:04:39',NULL,1,3,'Docuemntaton/application1.docx',1,1,1),(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2</p>',2,'RSSI','progiciel','martian','SaaS','>100','2020-06-14 09:31:16','2021-05-15 08:05:57',NULL,1,1,'None',2,2,2),(3,'Application 3','<p>Test application 3</p>',1,'RSSI','progiciel','Microsoft','Interne','>100','2020-06-17 17:33:41','2021-05-15 08:06:53',NULL,8,2,'Aucune',2,3,3),(4,'Application 4','<p>Description app4</p>',2,'RSSI','logiciel','Microsoft','Internl','>100','2020-08-11 14:13:02','2021-07-11 08:59:57',NULL,NULL,2,'None',2,3,2),(5,'CUST AP01','<p>Customer appication</p>',0,NULL,NULL,'web',NULL,NULL,'2020-08-22 04:58:18','2020-08-26 14:56:20','2020-08-26 14:56:20',1,NULL,NULL,NULL,NULL,NULL),(6,'totototo',NULL,0,NULL,NULL,'totottoo',NULL,NULL,'2020-08-22 04:59:26','2020-08-22 04:59:43','2020-08-22 04:59:43',NULL,NULL,NULL,NULL,NULL,NULL),(7,'Windows Word','<p>Description de l\'application</p>',3,'Nestor','artificiel','client lourd',NULL,'>100','2020-08-23 08:20:34','2020-08-26 14:56:23','2020-08-26 14:56:23',10,2,NULL,NULL,NULL,NULL),(8,'Application 99',NULL,1,'André','progiciel','client lourd','SaaS','>100','2020-08-23 10:08:02','2020-08-26 14:56:13','2020-08-26 14:56:13',NULL,NULL,NULL,NULL,NULL,NULL),(9,'Test33','<p>fsfsdfsd</p>',0,'Nestor','progiciel','martian',NULL,NULL,'2020-08-26 14:54:05','2020-08-26 14:54:35','2020-08-26 14:54:35',10,NULL,NULL,NULL,NULL,NULL),(10,'Test33R','<p>fsfsdfsd</p>',0,'Nestor','progiciel','martian',NULL,NULL,'2020-08-26 14:54:28','2020-08-26 14:54:39','2020-08-26 14:54:39',10,NULL,NULL,NULL,NULL,NULL),(11,'SuperApp','<p>Supper application</p>',0,'RSSI','logiciel','martian',NULL,NULL,'2021-04-12 14:54:57','2021-04-12 17:10:44','2021-04-12 17:10:44',NULL,NULL,NULL,NULL,NULL,NULL),(12,'SuperApp','<p>Super super application !</p>',1,'RSSI','Web','Oracle','Interne',NULL,'2021-04-12 17:10:59','2021-06-23 19:33:15',NULL,NULL,2,NULL,1,1,1),(13,'test application',NULL,0,NULL,NULL,NULL,NULL,NULL,'2021-05-07 08:23:59','2021-05-07 08:24:03','2021-05-07 08:24:03',NULL,NULL,NULL,NULL,NULL,NULL),(14,'Windows Calc','<p>Calculatrice windows</p>',2,'RSSI','logiciel','Microsoft','Internl',NULL,'2021-05-13 08:15:27','2021-08-28 09:04:39',NULL,NULL,3,NULL,0,0,0),(15,'Compta','<p>Application de comptabilité</p>',3,'RSSI','progiciel','Microsoft','Interne','>100','2021-05-15 07:53:15','2021-05-15 07:53:15',NULL,2,2,NULL,4,2,3),(16,'Queue Manager','<p>Queue manager</p>',4,'RSSI','logiciel','Internal Dev','Interne','>100','2021-08-02 15:17:11','2021-08-02 15:18:32',NULL,2,1,'//Portal/QueueManager.doc',4,4,4);
 /*!40000 ALTER TABLE `m_applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,16 +480,6 @@ UNLOCK TABLES;
 LOCK TABLES `media` WRITE;
 /*!40000 ALTER TABLE `media` DISABLE KEYS */;
 /*!40000 ALTER TABLE `media` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `network_subnetwork`
---
-
-LOCK TABLES `network_subnetwork` WRITE;
-/*!40000 ALTER TABLE `network_subnetwork` DISABLE KEYS */;
-INSERT INTO `network_subnetwork` VALUES (2,2),(2,5),(2,6);
-/*!40000 ALTER TABLE `network_subnetwork` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -633,7 +623,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_security_devices` WRITE;
 /*!40000 ALTER TABLE `physical_security_devices` DISABLE KEYS */;
-INSERT INTO `physical_security_devices` VALUES (1,'Dispositif01','Sure securure type','<p>Description</p>','2021-05-20 14:40:43','2021-05-20 14:40:43',NULL,1,1,1),(2,'Magic Firewall','EastTel 342','<p>The magic firewall</p>','2021-06-07 14:56:26','2021-06-07 14:56:37',NULL,2,3,5);
+INSERT INTO `physical_security_devices` VALUES (1,'Magic Gate','PhySec 4392','<p>Description</p>','2021-05-20 14:40:43','2021-08-28 07:44:06',NULL,1,1,1),(2,'Magic Firewall','EastTel 342','<p>The magic firewall</p>','2021-06-07 14:56:26','2021-06-07 14:56:37',NULL,2,3,5);
 /*!40000 ALTER TABLE `physical_security_devices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -723,7 +713,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `subnetworks` WRITE;
 /*!40000 ALTER TABLE `subnetworks` DISABLE KEYS */;
-INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-20 01:50:42',NULL,NULL,1,'ZONE_ACCUEIL',2,1,'10.10.0.1'),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-20 02:26:32',NULL,NULL,5,'ZONE_WORK',1,1,'10.20.0.1'),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-20 07:56:50',NULL,2,5,'ZONE_WORK',4,1,'10.40.0.1'),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-20 07:57:01',NULL,NULL,1,'ZONE_WORK',3,1,'10.30.0.1'),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-18 16:54:45',NULL,NULL,1,'ZONE_BACKUP',5,1,NULL),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-26 13:49:46',NULL,2,4,'ZONE_APP',5,2,NULL),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/16',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-26 14:34:46',NULL,NULL,NULL,'ZONE_BACKUP',5,2,NULL),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-18 17:37:38',NULL,NULL,1,'ZONE_DMZ',5,1,NULL);
+INSERT INTO `subnetworks` VALUES (1,'<p>Description du sous-réseau 1</p>','10.10.0.0 /16','312132213-312312312','Statc','Marc','non','non','Subnet1','2020-06-23 12:35:41','2021-08-20 01:50:42',NULL,NULL,1,'ZONE_ACCUEIL',2,1,'10.10.0.1'),(2,'<p>Description du subnet 2</p>','10.20.0.0 / 16','123456-1234567','Static','Henri','Oui','Oui','Subnet2','2020-07-04 07:35:10','2021-08-20 02:26:32',NULL,NULL,5,'ZONE_WORK',1,1,'10.20.0.1'),(3,'<p>Description du quatrième subnet</p>','10.40.0.0/16',NULL,'Static','Jean','non','non','Subnet4','2020-11-06 12:56:33','2021-08-20 07:56:50',NULL,2,5,'ZONE_WORK',4,1,'10.40.0.1'),(4,'<p>descrption subnet 3</p>','8.8.8.8 /  255.255.255.0',NULL,NULL,NULL,NULL,NULL,'test subnet 3','2021-02-24 11:49:16','2021-02-24 11:49:33','2021-02-24 11:49:33',NULL,NULL,NULL,NULL,NULL,NULL),(5,'<p>Troisième sous-réseau</p>','10.30.0.0/16',NULL,'Static','Jean','non','non','Subnet3','2021-05-19 14:48:39','2021-08-20 07:57:01',NULL,NULL,1,'ZONE_WORK',3,1,'10.30.0.1'),(6,'<p>Description du cinquième réseau</p>','10.50.0.0/16',NULL,'Fixed','Jean','Oui','non','Subnet5','2021-08-17 11:35:28','2021-08-26 15:27:41',NULL,NULL,1,'ZONE_BACKUP',5,1,'10.50.0.1'),(7,'<p>Description du sixième sous-réseau</p>','10.60.0.0/16',NULL,'Fixed','Jean','non','non','Subnet6','2021-08-17 16:32:47','2021-08-26 15:27:57',NULL,2,4,'ZONE_APP',5,2,'10.60.1.1'),(8,'<p>Test</p>',NULL,NULL,NULL,NULL,NULL,NULL,'Subnet7','2021-08-18 16:05:50','2021-08-18 16:10:19','2021-08-18 16:10:19',NULL,NULL,NULL,NULL,NULL,NULL),(9,'<p>Sous-réseau numéro sept</p>','10.70.0.0/16',NULL,'Static','Jean','Oui','Oui','Subnet7','2021-08-18 16:11:10','2021-08-26 15:27:30',NULL,NULL,NULL,'ZONE_BACKUP',5,2,'10.70.0.1'),(10,'<p>Sous réseau démilitarisé</p>','10.70.0.0/32',NULL,'Fixed','Jean','Oui','non','Subnet8','2021-08-18 16:33:48','2021-08-26 15:28:10',NULL,NULL,1,'ZONE_DMZ',5,1,'10.70.0.1');
 /*!40000 ALTER TABLE `subnetworks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -743,7 +733,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `vlans` WRITE;
 /*!40000 ALTER TABLE `vlans` DISABLE KEYS */;
-INSERT INTO `vlans` VALUES (1,'VLAN_2','VLAN Wifi','2020-07-07 14:31:53','2020-07-07 14:39:10',NULL,'123.4.0.0','/12','1',NULL),(2,'VLAN_1','VLAN publc','2020-07-07 14:34:30','2020-07-07 14:38:53',NULL,'123.0.0.1','/12','1',NULL),(3,'VLAN_3','VLAN application','2020-07-07 14:38:41','2020-07-08 19:35:53',NULL,'125.6.0.0','/12','2','125.6.0.2'),(4,'VLAN_4','Vlan Client','2020-07-08 19:34:11','2020-07-08 19:36:06',NULL,'142.3.5 - 123.32.43.2','/18','1','123.43.5.2'),(5,'VLAN_5','Test Production','2020-07-11 17:12:03','2021-08-18 17:35:54',NULL,'123.4.5.0','255.255.255.0','1','123.4.5.1'),(6,'VLAN_6','VLAN démilitarisé','2020-07-11 17:14:55','2021-08-18 17:36:12',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `vlans` VALUES (1,'VLAN_2','VLAN Wifi','2020-07-07 14:31:53','2020-07-07 14:39:10',NULL),(2,'VLAN_1','VLAN publc','2020-07-07 14:34:30','2020-07-07 14:38:53',NULL),(3,'VLAN_3','VLAN application','2020-07-07 14:38:41','2020-07-08 19:35:53',NULL),(4,'VLAN_4','Vlan Client','2020-07-08 19:34:11','2020-07-08 19:36:06',NULL),(5,'VLAN_5','Test Production','2020-07-11 17:12:03','2021-08-18 17:35:54',NULL),(6,'VLAN_6','VLAN démilitarisé','2020-07-11 17:14:55','2021-08-18 17:36:12',NULL);
 /*!40000 ALTER TABLE `vlans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -763,7 +753,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `wifi_terminals` WRITE;
 /*!40000 ALTER TABLE `wifi_terminals` DISABLE KEYS */;
-INSERT INTO `wifi_terminals` VALUES (1,'WIFI_01','<p>Borne wifi 01</p>','Alcatel 3500','2020-07-22 14:44:37','2020-07-22 14:44:37',NULL,1,2,NULL),(2,'WIFI_02','<p>Borne Wifi 2</p>','ALCALSYS 3001','2021-06-07 14:37:47','2021-06-07 14:37:47',NULL,2,1,NULL),(3,'WIFI_03','<p>Borne Wifi 3</p>','SYSTEL 3310','2021-06-07 14:42:29','2021-06-07 14:43:18',NULL,3,4,NULL);
+INSERT INTO `wifi_terminals` VALUES (1,'WIFI_01','<p>Borne wifi 01</p>','Alcatel 3500','2020-07-22 14:44:37','2020-07-22 14:44:37',NULL,1,2),(2,'WIFI_02','<p>Borne Wifi 2</p>','ALCALSYS 3001','2021-06-07 14:37:47','2021-06-07 14:37:47',NULL,2,1),(3,'WIFI_03','<p>Borne Wifi 3</p>','SYSTEL 3310','2021-06-07 14:42:29','2021-06-07 14:43:18',NULL,3,4);
 /*!40000 ALTER TABLE `wifi_terminals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,4 +786,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-26 19:20:32
+-- Dump completed on 2021-08-28 17:50:24
