@@ -563,8 +563,9 @@ class ReportController extends Controller
             // TODO: improve me
             $gateways = Gateway::All()->sortBy("name")
                 ->filter(function($item) use($subnetworks) {
-                    foreach($item->gatewaySubnetworks as $connectedSubnetworks)
-                        return $subnetworks->pluck("id")->contains($connectedSubnetworks->id);
+                    foreach($subnetworks as $subnetwork)
+                        if ($subnetwork->gateway_id==$item->id)
+                            return true;
                     return false;
                 });
 
