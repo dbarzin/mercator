@@ -12,13 +12,16 @@ class Cleanup extends Migration
      * @return void
      */
     public function up()
-    {
-        
+    {        
         Schema::table('vlans', function(Blueprint $table) {
             $table->dropColumn('address');
             $table->dropColumn('mask');
             $table->dropColumn('zone');
-            $table->dropColumn('gateway');
+            $table->dropColumn('gateway');            
+        });
+    
+        Schema::table('subnetworks', function(Blueprint $table) {
+            $table->dropColumn('ip_range');            
         });
 
         Schema::table('wifi_terminals', function(Blueprint $table) {
@@ -49,6 +52,10 @@ class Cleanup extends Migration
             $table->foreign('physical_switch_id', 'physical_switch_fk_593584')->references('id')->on('physical_switches')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
+        Schema::table('subnetworks', function(Blueprint $table) {
+            $table->char('ip_range')->nullable();
+        });
+        
         Schema::create('network_subnetwork', function (Blueprint $table) {
             $table->unsignedInteger('network_id')->index('network_id_fk_1492377');
             $table->unsignedInteger('subnetword_id')->index('subnetword_id_fk_1492377');
