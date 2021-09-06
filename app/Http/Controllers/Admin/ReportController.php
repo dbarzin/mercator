@@ -370,69 +370,88 @@ class ReportController extends Controller
 
     public function applicationFlows(Request $request) {
 
-        if ((int)($request->applicationBlock)==-1) {
-            $request->session()->put("applicationBlock",null);
-            $applicationBlock=null;
+        // Blocks
+        if ($request->applicationBlocks==null) {
+            $request->session()->put("applicationBlocks", array());
+            $applicationBlocks=array();
         }
         else {
-            if ($request->applicationBlock!=null) {
-                    $request->session()->put("applicationBlock",$request->applicationBlock);
-                    $applicationBlock=$request->applicationBlock;
+            if ($request->applicationBlocks!=null) {
+                    $request->session()->put("applicationBlocks",$request->applicationBlocks);
+                    $applicationBlocks=$request->applicationBlocks;
                 }
             else {
-                $applicationBlock=$request->session()->get("applicationBlock");
+                $applicationBlocks=$request->session()->get("applicationBlocks");
             }
         }
 
-        //update list application blocks
-        $all_applicationBlocks = ApplicationBlock::All()->sortBy("name");
-
-    	$flows = Flux::All()->sortBy("name");
-        if ($applicationBlock!=null) {
-
-            $application_ids = Mapplication::where('application_block_id','=',$applicationBlock)->pluck("id");
-
-            $applicationservice_ids = DB::table("m_applications")
-                ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
-                ->where("application_block_id","=",$applicationBlock)
-                ->pluck("m_application_id")
-                ->unique();
-
-            $applicationmodule_ids = DB::table("m_applications")
-                ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
-                ->join("application_module_application_service","application_service_m_application.application_service_id","=","application_module_application_service.application_service_id")
-                ->where("application_block_id","=",$applicationBlock)
-                ->pluck("m_application_id")
-                ->unique();
-
-            $database_ids = DB::table("m_applications")
-                ->join("database_m_application","m_applications.id","=","database_m_application.m_application_id")
-                ->where("application_block_id","=",$applicationBlock)
-                ->pluck("database_id")
-                ->unique();
-
-            $flows = $flows
-                ->filter(function($item) use(
-                    $application_ids,
-                    $applicationservice_ids,$applicationmodule_ids,$database_ids) {
-                    return 
-                        // application
-                        $application_ids->contains($item->application_source_id) ||
-                        $application_ids->contains($item->application_dest_id) ||
-                        // service
-                        $applicationservice_ids->contains($item->service_source_id)||
-                        $applicationservice_ids->contains($item->service_dest_id)||
-                        // module
-                        $applicationmodule_ids->contains($item->module_source_id)||
-                        $applicationmodule_ids->contains($item->module_dest_id)||
-                        // database
-                        $database_ids->contains($item->database_source_id)||
-                        $database_ids->contains($item->database_dest_id);
-                    });
+        // Applications
+        if ($request->applications==null) {
+            $request->session()->put("applications", array());
+            $applications=array();
+        }
+        else {
+            if ($request->applications!=null) {
+                    $request->session()->put("applications",$request->applications);
+                    $applications=$request->applications;
+                }
+            else {
+                $applications=$request->session()->get("applications");
             }
+        }
 
-        // get linked objects
-        $application_ids = [];
+        // Get assets
+
+        $application_ids = 
+            DB::table("m_applications")
+            ->whereIn('application_block_id',$applicationBlocks)
+            ->orWhereIn('id',$applications)
+            ->pluck("id");
+
+        $applicationservice_ids = DB::table("m_applications")
+            ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
+            ->whereIn("application_block_id",$applicationBlocks)
+            ->pluck("application_service_id")
+            ->unique();
+
+        $applicationmodule_ids = DB::table("m_applications")
+            ->join("application_service_m_application","m_applications.id","=","application_service_m_application.m_application_id")
+            ->join("application_module_application_service","application_service_m_application.application_service_id","=","application_module_application_service.application_service_id")
+            ->whereIn("application_block_id",$applicationBlocks)
+            ->pluck("application_module_id")
+            ->unique();
+
+        $database_ids = DB::table("m_applications")
+            ->join("database_m_application","m_applications.id","=","database_m_application.m_application_id")
+            ->whereIn("application_block_id",$applicationBlocks)
+            ->pluck("database_id")
+            ->unique();
+
+        // get all flows
+        $flows = Flux::All()->sortBy("name");
+
+        // Filter Flows
+        $flows = $flows
+            ->filter(function($item) use(
+                $application_ids,
+                $applicationservice_ids,$applicationmodule_ids,$database_ids) {
+                return 
+                    // application
+                    $application_ids->contains($item->application_source_id) ||
+                    $application_ids->contains($item->application_dest_id) ||
+                    // service
+                    $applicationservice_ids->contains($item->service_source_id)||
+                    $applicationservice_ids->contains($item->service_dest_id)||
+                    // module
+                    $applicationmodule_ids->contains($item->module_source_id)||
+                    $applicationmodule_ids->contains($item->module_dest_id)||
+                    // database
+                    $database_ids->contains($item->database_source_id)||
+                    $database_ids->contains($item->database_dest_id);
+                });
+
+        // filter linked objects
+        $application_ids = $application_ids->toArray();
         $service_ids = [];
         $module_ids = [];
         $database_ids = [];
@@ -476,6 +495,7 @@ class ReportController extends Controller
         $applications = MApplication::All()
             ->whereIn('id', $application_ids)
             ->sortBy("name");
+//dd($applications);            
         $applicationServices = ApplicationService::All()
             ->whereIn('id', $service_ids)
             ->sortBy("name");
@@ -487,18 +507,19 @@ class ReportController extends Controller
             ->sortBy("name");        
 
         // update lists
+        $all_applicationBlocks = ApplicationBlock::All()->sortBy("name")->pluck("name","id");
         $all_applications = MApplication::All()->sortBy("name")->pluck("name","id");
-        $all_applicationServices = ApplicationService::All()->sortBy("name")->pluck("name","id");
-        $all_applicationModules = ApplicationModule::All()->sortBy("name")->pluck("name","id");
-        $all_databases = Database::All()->sortBy("name")->pluck("name","id");
+        // $all_applicationServices = ApplicationService::All()->sortBy("name")->pluck("name","id");
+        // $all_applicationModules = ApplicationModule::All()->sortBy("name")->pluck("name","id");
+        // $all_databases = Database::All()->sortBy("name")->pluck("name","id");
 
         // return
         return view('admin/reports/application_flows')
             ->with('all_applicationBlocks',$all_applicationBlocks)
             ->with("all_applications",$all_applications)
-            ->with("all_applicationModules",$all_applicationModules)
-            ->with("all_applicationServices",$all_applicationServices)
-            ->with("all_databases",$all_databases)
+            // ->with("all_applicationModules",$all_applicationModules)
+            // ->with("all_applicationServices",$all_applicationServices)
+            // ->with("all_databases",$all_databases)
             ->with("applications",$applications)
             ->with("applicationServices",$applicationServices)
             ->with("applicationModules",$applicationModules)
