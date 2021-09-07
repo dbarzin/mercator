@@ -54,18 +54,18 @@
                                             -> 
                                             <a href="#ENTITY{{ $relation->destination_id }}">{{ $relation->destination->name ?? '' }}</a>
                                             @if (!$loop->last)
-                                            ,
+                                            <br>
                                             @endif
                                         @endforeach
-                				        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0))	
-                                        , <br>
+                                        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0)) 
+                                        <br>
                                         @endif
                                         @foreach ($entity->destinationRelations as $relation)
                                             <a href="#ENTITY{{ $relation->source_id }}">{{ $relation->source->name ?? '' }}</a>
                                             <-
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
                                             @if (!$loop->last)
-                                            ,
+                                            <br>
                                             @endif
                                         @endforeach
                                     </td>
@@ -75,6 +75,29 @@
                                     <td>
                                         @foreach ($entity->entitiesProcesses as $process)
                                             <a href="/admin/report/information_system#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Exploite</b></td>
+                                    <td>
+                                        @foreach($entity->applications as $application)
+                                            <a href="/admin/report/applications#APPLICATION{{$application->id}}">{{$application->name}}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                        @if (
+                                            ($entity->applications->count()>0)&&
+                                            ($entity->databases->count()>0)
+                                            )
+                                            ,<br>
+                                        @endif
+                                        @foreach($entity->databases as $database)
+                                            <a href="/admin/report/applications#DATABASE{{$database->id}}">{{$database->name}}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif

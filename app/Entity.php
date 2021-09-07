@@ -24,9 +24,9 @@ use \DateTimeInterface;
  * @property-read int|null $entities_m_applications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Process[] $entitiesProcesses
  * @property-read int|null $entities_processes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Database[] $entityRespDatabases
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Database[] $databases
  * @property-read int|null $entity_resp_databases_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $entityRespMApplications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $applications
  * @property-read int|null $entity_resp_m_applications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Relation[] $sourceRelations
  * @property-read int|null $source_relations_count
@@ -80,12 +80,12 @@ class Entity extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function entityRespDatabases()
+    public function databases()
     {
         return $this->hasMany(Database::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    public function entityRespMApplications()
+    public function applications()
     {
         return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
     }

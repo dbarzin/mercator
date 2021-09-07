@@ -52,6 +52,40 @@
             </div>
 
             <div class="form-group">
+                <label class="recommended" for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    @foreach($applications as $id => $application)
+                        <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $entity->applications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('applications'))
+                    <span class="text-danger">{{ $errors->first('applications') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.entity.fields.applications_resp_helper') }}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="recommended" for="databases">{{ trans('cruds.entity.fields.databases_resp') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                    @foreach($databases as $id => $name)
+                        <option value="{{ $id }}" {{ (in_array($id, old('databases', [])) || $entity->databases->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('databases'))
+                    <span class="text-danger">{{ $errors->first('databases') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.entity.fields.databases_resp_helper') }}</span>
+            </div>
+
+            <div class="form-group">
                 <label class="recommended" for="processes">{{ trans('cruds.entity.fields.processes') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

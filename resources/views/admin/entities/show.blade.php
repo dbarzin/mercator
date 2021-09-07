@@ -96,10 +96,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="entity_resp_databases">
-            @includeIf('admin.entities.relationships.entityRespDatabases', ['databases' => $entity->entityRespDatabases])
+            @includeIf('admin.entities.relationships.databases', ['databases' => $entity->entityRespDatabases])
         </div>
         <div class="tab-pane" role="tabpanel" id="entity_resp_m_applications">
-            @includeIf('admin.entities.relationships.entityRespMApplications', ['mApplications' => $entity->entityRespMApplications])
+            @includeIf('admin.entities.relationships.applications', ['mApplications' => $entity->entityRespMApplications])
         </div>
         <div class="tab-pane" role="tabpanel" id="source_relations">
             @includeIf('admin.entities.relationships.sourceRelations', ['relations' => $entity->sourceRelations])

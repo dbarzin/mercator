@@ -941,9 +941,9 @@ class ReportController extends Controller
                 $sheet->setCellValue("C{$row}", $html->toRichTextObject($entity->security_level));
                 $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->contact_point));
                 $txt = "";
-                foreach ($entity->entityRespMApplications as $application) {
+                foreach ($entity->applications as $application) {
                     $txt .= $application->name;
-                    if ($entity->entityRespMApplications->last() != $application)
+                    if ($entity->applications->last() != $application)
                         $txt .= ", ";
                 }
                 $sheet->setCellValue("E{$row}", $txt);
