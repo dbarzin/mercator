@@ -15,8 +15,8 @@
                         </div>
                     @endif
 
+                <div class="col-sm-8">
                     <form action="/admin/report/application_flows">
-
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td>
@@ -45,10 +45,9 @@
                                 </td>
                             </tr>
                         </table>                       
-
-                        <div id="graph"></div>
-
                     </form>
+                </div>
+                <div id="graph"></div>
                 </div>
             </div>
 

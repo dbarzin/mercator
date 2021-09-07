@@ -29,6 +29,22 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.vlan.fields.description_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label class="recommended" for="subnetworks">{{ trans('cruds.vlan.fields.subnetworks') }}</label>
+                <select class="form-control select2 {{ $errors->has('subnetworks') ? 'is-invalid' : '' }}" name="subnetworks[]" id="subnetworks" multiple>
+                    @foreach($subnetworks as $id => $subnetwork)
+                        <option value="{{ $id }}" {{ in_array($id, old('subnetworks', [])) ? 'selected' : '' }}>{{ $subnetwork }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('subnetworks'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('subnetworks') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.vlan.fields.subnetworks_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
