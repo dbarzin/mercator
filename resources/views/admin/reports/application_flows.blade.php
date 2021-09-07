@@ -17,40 +17,40 @@
 
                     <form action="/admin/report/application_flows">
 
-                        <div class="col-sm-6">
-                            <table class="table table-bordered table-striped">
-                                <tr>
-                                    <td>
-                                        Blocs applicatif :
-                                        <div style="padding-bottom: 4px">
-                                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                        </div>
-                                        <select class="form-control select2 " name="applicationBlocks[]" id="applicationBlocks" multiple onchange="this.form.submit();">
-                                            @foreach($all_applicationBlocks as $id => $name)
-                                                <option value="{{ $id }}" {{ in_array($id, Session::get('applicationBlocks')) ? 'selected' : '' }}>{{ $name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        Applications :
-                                        <div style="padding-bottom: 4px">
-                                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                        </div>
-                                        <select class="form-control select2 " name="applications[]" id="applications" multiple onchange="this.form.submit();">
-                                            @foreach($all_applications as $id => $name)
-                                                <option value="{{ $id }}" {{ in_array($id, Session::get('applications')) ? 'selected' : '' }}>{{ $name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                       
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td>
+                                    Blocs applicatif :
+                                    <div style="padding-bottom: 4px">
+                                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                    </div>
+                                    <select class="form-control select2 " name="applicationBlocks[]" id="applicationBlocks" multiple onchange="this.form.submit();">
+                                        @foreach($all_applicationBlocks as $id => $name)
+                                            <option value="{{ $id }}" {{ in_array($id, Session::get('applicationBlocks')) ? 'selected' : '' }}>{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    Applications :
+                                    <div style="padding-bottom: 4px">
+                                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                    </div>
+                                    <select class="form-control select2 " name="applications[]" id="applications" multiple onchange="this.form.submit();">
+                                        @foreach($all_applications as $id => $name)
+                                            <option value="{{ $id }}" {{ in_array($id, Session::get('applications')) ? 'selected' : '' }}>{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>                       
 
                         <div id="graph"></div>
 
                     </form>
+                </div>
+            </div>
 
             <div class="card">
                 <div class="card-header">

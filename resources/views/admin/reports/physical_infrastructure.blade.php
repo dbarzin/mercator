@@ -15,7 +15,6 @@
                         </div>
                     @endif
 
-                <div class="col-sm-4">
                     <form action="/admin/report/physical_infrastructure">
                         <table class="table table-bordered table-striped">
                             <tr>
@@ -41,11 +40,10 @@
                                 </td>
                             </tr>
                         </table>
+                <div id="graph"></div>
                     </form>
                 </div>
-                <div id="graph"></div>
             </div>
-        </div>
 
             @if ($sites->count()>0)
             <div class="card">
