@@ -17,7 +17,7 @@
 
                     <form action="/admin/report/application_flows">
 
-                        <div class="col-sm-6    ">
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <td>
@@ -46,12 +46,11 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
+                       
 
                         <div id="graph"></div>
 
                     </form>
-                </div>
 
             <div class="card">
                 <div class="card-header">
