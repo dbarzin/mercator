@@ -315,6 +315,12 @@ class HomeController extends Controller
             ->with("applicationServices", ApplicationService::count())
             ->with("applicationServices_lvl2", ApplicationService
                     ::where('description', '<>', null)
+                    // applicationService must have one application
+                    ->whereExists(function ($query) {
+                        $query->select("application_service_m_application.m_application_id")
+                            ->from("application_service_m_application")
+                            ->whereRaw("application_service_m_application.application_service_id = application_services.id");
+                    })
                     ->count())
 
             ->with("applicationModules", ApplicationModule::count())

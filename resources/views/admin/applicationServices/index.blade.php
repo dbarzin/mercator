@@ -44,7 +44,16 @@
                 </thead>
                 <tbody>
                     @foreach($applicationServices as $key => $applicationService)
-                        <tr data-entry-id="{{ $applicationService->id }}">
+                        <tr data-entry-id="{{ $applicationService->id }}"
+
+                        @if (
+                                ($applicationService->description==null)||
+                                ($applicationService->servicesApplications->count()==0)
+                            )
+                                class="table-warning"
+                        @endif
+
+                            >
                             <td>
 
                             </td>
@@ -58,8 +67,8 @@
                                 {{ $applicationService->exposition ?? '' }}
                             </td>
                             <td>
-                                @foreach($applicationService->applications as $key => $item)
-                                    {{ $item->name }}
+                                @foreach($applicationService->servicesApplications as $key => $application)
+                                    {{ $application->name }}
                                     @if (!$loop->last)
                                         ,
                                     @endif
