@@ -52,7 +52,7 @@
             </div>
 
             <div class="form-group">
-                <label class="recommended" for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
+                <label for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="form-group">
-                <label class="recommended" for="databases">{{ trans('cruds.entity.fields.databases_resp') }}</label>
+                <label for="databases">{{ trans('cruds.entity.fields.databases_resp') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
