@@ -1992,7 +1992,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1); 
 
                 foreach($lans as $lan) {
-                    $section->addBookmark("LAN".$man->id);
+                    $section->addBookmark("LAN".$lan->id);
                     $table=$this->addTable($section, $lan->name);
                     $this->addHTMLRow($table,"Description",$lan->description);
 
