@@ -11,10 +11,10 @@
                 <div class="card-body">
 
                   <div class="row">
-                    <div class="col-4" style="min-width: 460px;">
+                    <div class="col-3" style="min-width: 460px;">
                         <img src="/images/mercator.jpg">
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
 
 <p>
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit 
