@@ -14,12 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleanup unused columns in database
 - Change link between subnetworks and VLANs
 - Add security needs with CIAT values in information, database, process and macro_process tables
-- Add certificate management
+- Add certificates management
 - Filter on network and subnetworks in logical infrastructure view
+- Filter on application blocks and applications in flows view
 
 ### Fixed
 
 - Links to netwoks
+- Tons of small bugs
 
 ## [1.0] - 2019-03-13
 
