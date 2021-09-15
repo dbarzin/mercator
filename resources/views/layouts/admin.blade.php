@@ -234,7 +234,7 @@
         className: 'btn-default',
         text: copyButtonTrans,
         exportOptions: {
-          columns: ':visible'
+          columns: [':visible:not(:last-child):gt(0)']
         }
       },
       {
@@ -242,7 +242,7 @@
         className: 'btn-default',
         text: csvButtonTrans,
         exportOptions: {
-          columns: ':visible'
+          columns: [':visible:not(:last-child):gt(0)']
         }
       },
       {
@@ -250,7 +250,7 @@
         className: 'btn-default',
         text: excelButtonTrans,
         exportOptions: {
-          columns: ':visible'
+          columns: [':visible:not(:last-child):gt(0)']
         }
       },
       {
@@ -258,7 +258,7 @@
         className: 'btn-default',
         text: pdfButtonTrans,
         exportOptions: {
-          columns: ':visible'
+          columns: [':visible:not(:last-child):gt(0)']
         }
       },
       {
@@ -266,7 +266,7 @@
         className: 'btn-default',
         text: printButtonTrans,
         exportOptions: {
-          columns: ':visible'
+          columns: [':visible:not(:last-child):gt(0)']
         }
       },
       {
