@@ -130,7 +130,7 @@ class CartographyController extends Controller
     public function cartography(Request $request) {
 
         // converter 
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        // $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
         // Image paths
         $image_paths = array();
