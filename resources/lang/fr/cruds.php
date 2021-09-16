@@ -1306,5 +1306,36 @@ return [
         "title" => "Certificats",
         "title_short" => "Certificats",
         "title_singular" => "Certificat"
-    ],  
+    ],
+    "report" => [
+        "cartography" => [
+            "title" => "Rapport de Cartographie du Système d'Information",
+            "granularity" => "Granularité",
+            "granularity_helper" => "Niveau de granularité du rapport",
+            "views" => "Vues",
+            "ecosystem" => "Ecosystème",
+            "information_system" => "Système d'information",
+            "applications" => "Applications",
+            "administration" => "Administration",
+            "logical_infrastructure" => "Infrastructure logique",
+            "physical_infrastructure" => "Infrastructure physique",
+            "views_helper" => "Vues présentes dans le rapport"            
+        ],
+        "lists" => [
+            "title" => "Listes",
+            "entities" => "Entités et application supportées",
+            "entities_helper" => "Liste des entités du système d'information et de leurs applications supportées",
+            "applications" => "Applications par groupe applicatif",
+            "applications_helper" => "Liste des applications par groupe applicatif",
+            "logical_servers" => "Serveurs logiques",
+            "logical_servers_helper" => "Liste des serveurs logiques par applications et responsables",
+            "security_needs" => "Analyse des besoins de sécurité",
+            "security_needs_helper" => "Liste des besoins de sécurité entre macro-processus, processus, applications, base de données et informations.",
+            "logical_server_configurations" => "Configuration des serveurs logiques",
+            "logical_server_configurations_helper" => "Liste de la configuration des serveurs logiques",
+            "physical_inventory" => "Inventaire de l'infrastructure physique",
+            "physical_inventory_helper" => "Liste des équipements par site/local"
+        ]
+    ]
+
 ];
