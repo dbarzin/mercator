@@ -495,7 +495,6 @@ class ReportController extends Controller
         $applications = MApplication::All()
             ->whereIn('id', $application_ids)
             ->sortBy("name");
-//dd($applications);            
         $applicationServices = ApplicationService::All()
             ->whereIn('id', $service_ids)
             ->sortBy("name");
@@ -909,11 +908,11 @@ class ReportController extends Controller
         $entities = Entity::All()->sortBy("name"); 
 
         $header = array(
-                'Nom',
-                'Description',
-                'Niveau de sécurité',
-                'Point de contact',
-                'Applications supportées'
+                trans("cruds.entity.fields.name"),
+                trans("cruds.entity.fields.description"),
+                trans("cruds.entity.fields.security_level"),
+                trans("cruds.entity.fields.contact_point"),
+                trans("cruds.entity.fields.applications_resp")
             );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -965,26 +964,25 @@ class ReportController extends Controller
         $applicationBlocks->load('applications');
 
         $header = array(
-                "Applicaiton Block", 
-                "Application",
-                "Description",
-                "Entity responsible",
-                "Entities",
-                "Responsible SSI",
-                "Process supported",
-                "Technology",
-                "Type",
-                "Users",
-                "Exposition",
+                trans("cruds.application.fields.application_block"),
+                trans("cruds.application.fields.name"),
+                trans("cruds.application.fields.description"),
+                trans("cruds.application.fields.entity_resp"),
+                trans("cruds.application.fields.entities"),
+                trans("cruds.application.fields.responsible"),
+                trans("cruds.application.fields.processes"),
+                trans("cruds.application.fields.technology"),
+                trans("cruds.application.fields.type"),
+                trans("cruds.application.fields.users"),
+                trans("cruds.application.fields.external"),
                 "C",
                 "I",
-                "D",
+                "A",
                 "T",
-                "Documentation",
-                "Logical servers",
-                "Databases",
-            );        
-
+                trans("cruds.application.fields.documentation"),
+                trans("cruds.application.fields.logical_servers"),
+                trans("cruds.application.fields.databases")
+            );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -1068,16 +1066,16 @@ class ReportController extends Controller
         $path=storage_path('app/' . "logicalServersResp.xlsx");
 
         $logicalServers = LogicalServer::All()->sortBy("name");
-        $logicalServers->load('applications');
+        $logicalServers->load('applications','applications.application_block');
 
         $header = array(
-            'Serveur',
-            'Application',
-            'Entité utilisatrice',
-            'Resp. Expoitation',
-            'Resp. SSI',
-            'Bloc applicatif',
-            'Resp. applicatif'
+            trans("cruds.logicalServer.title_singular"),
+            trans("cruds.application.title_singular"),
+            trans("cruds.application.fields.entities"),
+            trans("cruds.application.fields.entity_resp"),
+            trans("cruds.application.fields.responsible"),
+            trans("cruds.applicationBlock.title_singular"),
+            trans("cruds.applicationBlock.fields.responsible")
             );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1141,20 +1139,20 @@ class ReportController extends Controller
         $path=storage_path('app/' . "logicalServers.xlsx");
 
         $logicalServers = LogicalServer::All()->sortBy("name");
-        // $logicalServers->load('applications');
+        $logicalServers->load('applications','servers');
 
         $header = array(
-            'name',
-            'operating_system',
-            'address_ip',
-            'cpu',
-            'memory',
-            'disk',
-            'environment',
-            'net_services',
-            'configuration',
-            'applications',
-            'physical_servers'
+            trans("cruds.logicalServer.fields.name"),
+            trans("cruds.logicalServer.fields.operating_system"),
+            trans("cruds.logicalServer.fields.address_ip"),
+            trans("cruds.logicalServer.fields.cpu"),
+            trans("cruds.logicalServer.fields.memory"),
+            trans("cruds.logicalServer.fields.disk"),
+            trans("cruds.logicalServer.fields.environment"),
+            trans("cruds.logicalServer.fields.net_services"),
+            trans("cruds.logicalServer.fields.configuration"),
+            trans("cruds.logicalServer.fields.applications"),
+            trans("cruds.logicalServer.fields.servers"),
             );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1423,15 +1421,15 @@ class ReportController extends Controller
 
         // macroprocess - process - application - base de données - information
         $header = array(
-            'Macroprocess',
+            trans("cruds.macroProcessus.title"),
             'C','I','A','T',
-            'Process',
+            trans("cruds.process.title"),
             'C','I','A','T',
-            'Application',
+            trans("cruds.application.title"),
             'C','I','A','T',
-            'Database',
+            trans("cruds.database.title"),
             'C','I','A','T',
-            'Information',
+            trans("cruds.information.title"),
             'C','I','A','T'
             );
 
@@ -1544,7 +1542,7 @@ class ReportController extends Controller
     }
 
     private function setSecurityNeedColor(Worksheet $sheet, string $cell, $i) {
-        static $colors = array(0=>'FFFFFF',1=>'FFFFFF',2=>'FFFA00',3=>'FF7D00',4=>'FF0000');
+        static $colors = array(0=>'FFFFFF',1=>'8CD17D',2=>'F1CE63',3=>'F28E2B',4=>'E15759');
         $sheet->getStyle($cell)
                 ->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
@@ -1677,7 +1675,7 @@ class ReportController extends Controller
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
-
+        
         // Widths 
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);

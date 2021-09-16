@@ -86,10 +86,10 @@ return [
             "description_helper" => "",
             "documentation" => "Documentation",
             "documentation_helper" => "Lien vers la documentation",
-            "entities" => "Entités utilisatrices",
-            "entities_helper" => "",
-            "entity_resp" => "Entité responsable de l'exploitation",
-            "entity_resp_helper" => "",
+            "entities" => "Entités",
+            "entities_helper" => "Entités utilisatrices",
+            "entity_resp" => "Exploitation",
+            "entity_resp_helper" => "Entité responsable de l'exploitation",
             "external" => "Exposition à l’externe",
             "external_helper" => "ex. : solution de type Software as a Service – SaaS",
             "id" => "ID",
@@ -100,9 +100,9 @@ return [
             "name_helper" => "",
             "processes" => "Processus",
             "processes_helper" => "Processus soutenus par l'application",
-            "responsible" => "Responsable SSI",
-            "responsible_helper" => "",
-            "security_need" => "Besoins de sécurité (CIDT)",
+            "responsible" => "Responsable",
+            "responsible_helper" => "Responsable de la sécurité",
+            "security_need" => "Besoins de sécurité",
             "security_need_helper" => "Besoins de sécurité de l'application",
             "services" => "Services",
             "services_helper" => "Services délivrés par l’application",
@@ -552,7 +552,7 @@ return [
     ],
     "logicalServer" => [
         "fields" => [
-            "address_ip" => "Adresse(s) IP du serveur",
+            "address_ip" => "Adresse(s) IP",
             "address_ip_helper" => "Filtre : xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx, ...",
             "applications" => "Applications",
             "applications_helper" => "Applications installées",
@@ -718,8 +718,7 @@ return [
         ],
         "title" => "Opérations",
         "title_singular" => "Operation"
-    ],
-    "papplication" => ["title" => "", "title_singular" => ""],
+    ],    
     "peripheral" => [
         "fields" => [
             "bay" => "Bay",
