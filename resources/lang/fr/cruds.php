@@ -953,7 +953,7 @@ return [
             "destination_helper" => "Destinataire de la relation",
             "id" => "ID",
             "id_helper" => "",
-            "importance" => "Inportance",
+            "importance" => "Importance",
             "importance_helper" => "",
             "importance_level" => [
                 "low" => "Faible",
@@ -963,6 +963,7 @@ return [
             ],
             "name" => "Nom",
             "name_helper" => "Nom de la relation",
+            "link" => "Lien",
             "source" => "Source",
             "source_helper" => "Source de la relation",
             "type" => "Nature",

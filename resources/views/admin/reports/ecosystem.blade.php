@@ -114,10 +114,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.relation.fields.title') }}
+                    {{ trans('cruds.relation.title') }}
                 </div>
                 <div class="card-body">
-                    <p>{{ trans('cruds.relation.fields.subtitle') }}</p>
+                    <p>{{ trans('cruds.relation.subtitle') }}</p>
                         @foreach($relations as $relation)
                       <div class="row">
                         <div class="col-sm-6">                        

@@ -97,10 +97,10 @@
 
                 <select class="form-control select2 {{ $errors->has('importance') ? 'is-invalid' : '' }}" name="importance" id="importance">
                     <option value="0"></option>
-                    <option value="1" {{ old('importance') == 1 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.low') }}</option>
-                    <option value="2" {{ old('importance') == 2 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.medium') }}</option>
-                    <option value="3" {{ old('importance') == 3 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.high') }}</option>
-                    <option value="4" {{ old('importance') == 4 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.critical') }}</option>
+                    <option value="1" {{ old('importance') == 1 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.low') }}</option>
+                    <option value="2" {{ old('importance') == 2 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.medium') }}</option>
+                    <option value="3" {{ old('importance') == 3 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.high') }}</option>
+                    <option value="4" {{ old('importance') == 4 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.critical') }}</option>
                 </select>
 
                 @if($errors->has('importance'))

@@ -97,10 +97,10 @@
                 <label class="recommended" for="importance">{{ trans('cruds.relation.fields.importance') }}</label>
                 <select class="form-control select2 {{ $errors->has('importance') ? 'is-invalid' : '' }}" name="importance" id="importance">
                     <option value="0" {{ ($relation->importance ? $relation->importance : old('importance')) == 0 ? 'selected' : '' }}></option>
-                    <option value="1" {{ ($relation->importance ? $relation->importance : old('importance')) == 1 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.low') }}</option>
-                    <option value="2" {{ ($relation->importance ? $relation->importance : old('importance')) == 2 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.medium') }}</option>
-                    <option value="3" {{ ($relation->importance ? $relation->importance : old('importance')) == 3 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.high') }}</option>
-                    <option value="4" {{ ($relation->importance ? $relation->importance : old('importance')) == 4 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance-level.critical') }}</option>
+                    <option value="1" {{ ($relation->importance ? $relation->importance : old('importance')) == 1 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.low') }}</option>
+                    <option value="2" {{ ($relation->importance ? $relation->importance : old('importance')) == 2 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.medium') }}</option>
+                    <option value="3" {{ ($relation->importance ? $relation->importance : old('importance')) == 3 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.high') }}</option>
+                    <option value="4" {{ ($relation->importance ? $relation->importance : old('importance')) == 4 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.critical') }}</option>
                 </select>
 
                 @if($errors->has('importance'))

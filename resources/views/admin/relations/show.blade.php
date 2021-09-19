@@ -41,17 +41,17 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.inportance') }}
+                            {{ trans('cruds.relation.fields.importance') }}
                         </th>
                         <td>
-                            @if ($relation->inportance==1)
-                                Faible
-                            @elseif ($relation->inportance==2)
-                                Moyen
-                            @elseif ($relation->inportance==3)
-                                Fort
-                            @elseif ($relation->inportance==4)
-                                Critique
+                            @if ($relation->importance==1)
+                                {{ trans('cruds.relation.fields.importance_level.low') }}
+                            @elseif ($relation->importance==2)
+                                {{ trans('cruds.relation.fields.importance_level.medium') }}
+                            @elseif ($relation->importance==3)
+                                {{ trans('cruds.relation.fields.importance_level.high') }}
+                            @elseif ($relation->importance==4)
+                                {{ trans('cruds.relation.fields.importance_level.critical') }}
                             @endif
                         </td>
                     </tr>
