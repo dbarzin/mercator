@@ -24,11 +24,11 @@ class StoreRelationRequest extends FormRequest
                 'max:32',
                 'required',
             ],
-            'inportance'     => [
+            'importance'     => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:4',
             ],
             'source_id'      => [
                 'required',

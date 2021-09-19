@@ -94,7 +94,7 @@ class HomeController extends Controller
             ->with("relations_lvl2", Relation
                    	::where('type', '<>', null)
                     ->where('description', '<>', null)
-                    ->where('inportance', '>', 0)
+                    ->where('importance', '>', 0)
                     ->count())
 
             // information system            

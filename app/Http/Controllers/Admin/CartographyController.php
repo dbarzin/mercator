@@ -272,9 +272,9 @@ class CartographyController extends Controller
                 if ($granularity>1) {
                     $this->addTextRow($table,"Type",$relation->type);
                     $textRun=$this->addTextRow($table,"Importance",
-                        $relation->inportance==null ? 
+                        $relation->importance==null ? 
                             "-" : 
-                            array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->inportance]);
+                            array(1=>"Faible",2=>"Moyen",3=>"Fort",4=>"Critique")[$relation->importance]);
                     }   
                 $textRun=$this->addTextRunRow($table,"Lien");
                 $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? "", CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);

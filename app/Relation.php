@@ -11,7 +11,7 @@ use \DateTimeInterface;
  * App\Relation
  *
  * @property int $id
- * @property int|null $inportance
+ * @property int|null $importance
  * @property string $name
  * @property string|null $type
  * @property string|null $description
@@ -62,7 +62,7 @@ class Relation extends Model
         'name',
         'type',
         'description',
-        'inportance',
+        'importance',
         'source_id',
         'destination_id',
         'created_at',

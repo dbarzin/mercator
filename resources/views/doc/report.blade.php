@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("cruds.report.cartography.title") }}
+                    {{ trans("cruds.ecosystem.title") }}
                 </div>
                 <div class="card-body">
                   <form method="POST" action="/admin/report/cartography" enctype="multipart/form-data" target="_new">

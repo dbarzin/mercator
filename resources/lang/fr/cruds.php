@@ -388,7 +388,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Entités",
-        "title_singular" => "Entité"
+        "title_singular" => "Entité",
+        "subtitle" => "Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié."
     ],
     "externalConnectedEntity" => [
         "fields" => [
@@ -952,8 +953,14 @@ return [
             "destination_helper" => "Destinataire de la relation",
             "id" => "ID",
             "id_helper" => "",
-            "inportance" => "Inportance",
-            "inportance_helper" => "",
+            "importance" => "Inportance",
+            "importance_helper" => "",
+            "importance_level" => [
+                "low" => "Faible",
+                "medium" => "Moyen",
+                "high" => "Fort",
+                "critical" => "Critique"
+            ],
             "name" => "Nom",
             "name_helper" => "Nom de la relation",
             "source" => "Source",
@@ -964,7 +971,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Relations",
-        "title_singular" => "Relation"
+        "title_singular" => "Relation",
+        "subtitle" => "Lien entre deux entités ou systèmes."
     ],
     "role" => [
         "fields" => [

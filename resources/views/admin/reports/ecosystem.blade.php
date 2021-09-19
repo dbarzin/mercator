@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Vue de l'écosystème
+                    {{ trans('cruds.ecosystem.title') }}
                 </div>
 
                 <div class="card-body">
@@ -20,10 +20,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    Entités
+                    {{ trans('cruds.entity.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.</p>
+                    <p>{{ trans('cruds.entity.subtitle') }}</p>
                         @foreach($entities as $entity)
                       <div class="row">
                         <div class="col-sm-6">                        
@@ -35,19 +35,19 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>Description</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.entity.fields.description') }}</b></td>
                                     <td>{!! $entity->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Niveau de sécurité</b></td>
+                                    <td><b>{{ trans('cruds.entity.fields.security_level') }}</b></td>
                                     <td>{!! $entity->security_level !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Point de conatct</b></td>
+                                    <td><b>{{ trans('cruds.entity.fields.contact_point') }}</b></td>
                                     <td>{!! $entity->contact_point !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Relations</b></td>
+                                    <td><b>{{ trans('cruds.relation.title') }}</b></td>
                                     <td>
                                         @foreach ($entity->sourceRelations as $relation)
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
@@ -71,7 +71,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Processus soutenus</b></td>
+                                    <td><b>{{ trans('cruds.entity.fields.processes') }}</b></td>
                                     <td>
                                         @foreach ($entity->entitiesProcesses as $process)
                                             <a href="/admin/report/information_system#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
@@ -82,7 +82,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Exploite</b></td>
+                                    <td><b>{{ trans('cruds.entity.fields.exploits') }}</b></td>
                                     <td>
                                         @foreach($entity->applications as $application)
                                             <a href="/admin/report/applications#APPLICATION{{$application->id}}">{{$application->name}}</a>
@@ -114,10 +114,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    Relations
+                    {{ trans('cruds.relation.fields.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Lien entre deux entités ou systèmes.</p>
+                    <p>{{ trans('cruds.relation.fields.subtitle') }}</p>
                         @foreach($relations as $relation)
                       <div class="row">
                         <div class="col-sm-6">                        
@@ -129,29 +129,29 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>Description</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.relation.fields.description') }}</b></td>
                                     <td>{!! $relation->description !!}</td>
                                 </tr>
                                 <tr>                                    
-                                    <td><b>Type</b></td>
+                                    <td><b>{{ trans('cruds.relation.fields.type') }}</b></td>
                                     <td>{{ $relation->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Importance</b></td>
+                                    <td><b>{{ trans('cruds.relation.fields.importance') }}</b></td>
                                     <td>
-                                    @if ($relation->inportance==1) 
-                                        Faible
-                                    @elseif ($relation->inportance==2)
-                                        Moyen
-                                    @elseif ($relation->inportance==3)
-                                        Fort
-                                    @elseif ($relation->inportance==4)
-                                        Critique
+                                    @if ($relation->importance==1) 
+                                        {{ trans('cruds.relation.fields.importance_level.low') }}
+                                    @elseif ($relation->importance==2)
+                                        {{ trans('cruds.relation.fields.importance_level.medium') }}
+                                    @elseif ($relation->importance==3)
+                                        {{ trans('cruds.relation.fields.importance_level.high') }}
+                                    @elseif ($relation->importance==4)
+                                        {{ trans('cruds.relation.fields.importance_level.critical') }}
                                     @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Lien</b></td>
+                                    <td><b>{{ trans('cruds.relation.fields.link') }}</b></td>
                                     <td>
                                         <a href="#ENTITY{{ $relation->source_id }}">
                                             {{ $relation->source->name ?? ""}}
@@ -166,7 +166,7 @@
                         </table>
                     </div>
                 </div>
-                        @endforeach                    
+                @endforeach
                 </div>
             </div>
         </div>
