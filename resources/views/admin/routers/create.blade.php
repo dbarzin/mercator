@@ -30,6 +30,16 @@
                 <span class="help-block">{{ trans('cruds.router.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="ip_addresses">{{ trans('cruds.router.fields.ip_addresses') }}</label>
+                <input class="form-control {{ $errors->has('ip_addresses') ? 'is-invalid' : '' }}" type="text" name="ip_addresses" id="ip_addresses" value="{{ old('ip_addresses', '') }}">
+                @if($errors->has('ip_addresses'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('ip_addresses') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.router.fields.ip_adresses_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="rules">{{ trans('cruds.router.fields.rules') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('rules') ? 'is-invalid' : '' }}" name="rules" id="rules">{!! old('rules') !!}</textarea>
                 @if($errors->has('rules'))

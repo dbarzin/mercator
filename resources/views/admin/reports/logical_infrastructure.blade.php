@@ -285,6 +285,43 @@
             </div>                                
             @endif
 
+            @if ($routers->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    Routeurs
+                </div>
+                <div class="card-body">
+                    <p>Composant gérant les connexions entre différents réseaux.</p>
+                        @foreach($routers as $router)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="ROUTER{{ $router->id }}">
+                                        <th colspan="2">
+                                        <a href="/admin/routers/{{ $router->id }}/edit">{{ $router->name }}</a><br>
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%">Description</th>
+                                            <td>{!! $router->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">Adresses IP</th>
+                                            <td>{!! $router->ip_addresses !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="20%">Rules</th>
+                                            <td>{!! $router->rules !!}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                    @endforeach
+                </div>
+            @endif
+
             @if ($logicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -474,6 +511,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/gateway.png", "64px", "64px")
     .addImage("/images/entity.png", "64px", "64px")
     .addImage("/images/server.png", "64px", "64px")
+    .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")    
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
@@ -517,6 +555,18 @@ d3.select("#graph").graphviz()
                         LOGICAL_SERVER{{ $logical_server->id }} -> CERT{{ $certificate->id }}\
                     @endforeach\
                 @endif\
+            @endforeach\
+            @foreach($routers as $router) \
+                R{{ $router->id }} [label=\"{{ $router->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"#ROUTER{{$router->id}}\"]\
+                @foreach($subnetworks as $subnetwork) \
+                    @if (($router->ip_addresses!=null)&&($subnetwork->address!=null))\
+                        @foreach(explode(',',$router->ip_addresses) as $address) \
+                            @if ($subnetwork->contains($address))\
+                                SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}\
+                            @endif\
+                        @endforeach\
+                    @endif\
+                @endforeach\
             @endforeach\
         }");
 

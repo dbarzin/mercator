@@ -134,15 +134,16 @@ class Subnetwork extends Model
             return null;
         if ($this->address==null)
             return null;
-        // \Log::info("Subnetwork.contains " . $this->address . " " . $ip);
-        $src = ip2long($ip);
+        $src = ip2long(trim($ip));
         $range = array();        
         // $cidr = explode('/ ', $this->address);
         $cidr = preg_split('/[ ]?\/[ ]?/', $this->address);
         $range[0] = ((ip2long($cidr[0])) & ((-1 << (32 - (int)$cidr[1]))));
         $range[1] = ((($range[0])) + pow(2, (32 - (int)$cidr[1])) - 1);    
-        \Log::info("Subnetwork.contains " . $src . " [" . $range[0] . " " . $range[1] ."]");
-        return ($src>=$range[0]) && ($src<=$range[1]);
+        $res=($src>=$range[0]) && ($src<=$range[1]);
+        // \Log::info("Subnetwork.contains " . $this->address . " " . $ip . "(" . $cidr[0] . "/" . $cidr[1] .")" . "->" . ($res ? "true" : "false"));
+        // \Log::info("Subnetwork.contains " . $src . " [" . $range[0] . " " . $range[1] ."]");
+        return $res;
     }
 
 }

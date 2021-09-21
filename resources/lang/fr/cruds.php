@@ -1009,6 +1009,8 @@ return [
             "network_switches_helper" => "Listes des commutateurs connectés",
             "rules" => "Régles de filtrage réseau",
             "rules_helper" => "",
+            "ip_addresses" => "Adresses IP du routeur",
+            "ip_addresses_helper" => "Filtre : xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx, ...",
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],

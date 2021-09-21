@@ -23,9 +23,12 @@ class StoreRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:routers',
                 'unique:routers,name,NULL,id,deleted_at,NULL',
             ],
+            'ip_addresses' => [
+                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
+                'nullable'
+            ],            
         ];
     }
 }

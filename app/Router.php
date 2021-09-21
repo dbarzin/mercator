@@ -55,6 +55,7 @@ class Router extends Model
         'name',
         'description',
         'rules',
+        'ip_addresses',
         'created_at',
         'updated_at',
         'deleted_at',
