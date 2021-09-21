@@ -1296,6 +1296,23 @@ class CartographyController extends Controller
                 }
 
             // =====================================
+            if ($routers->count()>0) { 
+                $section->addTitle('Routeurs', 2);
+                $section->addText("Composant gérant les connexions entre différents réseaux.");
+                $section->addTextBreak(1); 
+
+                foreach($routers as $router) {
+                    $section->addBookmark("ROUTER".$router->id);
+                    $table=$this->addTable($section, $router->name);
+                    $this->addHTMLRow($table,"Description",$router->description);
+                    $this->addTextRow($table,"Adresses IP",$router->ip_addresses);
+                    $this->addHTMLRow($table,"Régles de filtrage réseau",$router->rules);
+
+                    $section->addTextBreak(1); 
+                }
+            }
+
+            // =====================================
             if ($gateways->count()>0) { 
                 $section->addTitle('Passerelle d’entrée depuis l’extérieur', 2);
                 $section->addText("Composants permettant de relier un réseau local avec l’extérieur");
