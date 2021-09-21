@@ -20,7 +20,7 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $routers = Router::orderBy('name');
+        $routers = Router::all()->sortBy('name');
 
         return view('admin.routers.index', compact('routers'));
     }

@@ -53,8 +53,6 @@
                             )
                                 class="table-warning"
                         @endif
-
-
                           >
                             <td>
 
@@ -102,9 +100,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -112,9 +108,6 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
@@ -161,8 +154,6 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
 })
-
 </script>
 @endsection
