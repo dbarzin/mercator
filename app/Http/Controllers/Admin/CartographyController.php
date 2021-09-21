@@ -1186,21 +1186,26 @@ class CartographyController extends Controller
             $dnsservers = Dnsserver::orderBy("name")->get();
             $logicalServers = LogicalServer::orderBy("name")->get();
             $certificates = Certificate::orderBy("name")->get();
+            $vlans = Vlan::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
             foreach($networks as $network) { 
                 $graph .= " NET" . $network->id . "[label=\"" . $network->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/cloud.png") . "\"]";
-                foreach($network->subnetworks as $subnetwork) 
-                    $graph .= " NET" . $network->id . "->SUBNET" . $subnetwork->id;
                 }
             foreach($gateways as $gateway) {
                 $graph .= " GATEWAY" . $gateway->id . "[label=\"" . $gateway->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/gateway.png") . "\"]";
-                foreach($gateway->gatewaySubnetworks as $subnetwork) 
-                    $graph .= " SUBNET" . $subnetwork->id . "->GATEWAY" . $gateway->id;                
                 }
-            foreach($subnetworks as $subnetwork) 
+            foreach($subnetworks as $subnetwork) {
                 $graph .= " SUBNET" . $subnetwork->id . "[label=\"" . $subnetwork->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/network.png") . "\"]";
+                if ($subnetwork->vlan_id!=null) 
+                    $graph .= " SUBNET" . $subnetwork->id . "->VLAN" . $subnetwork->vlan_id;                
+                if ($subnetwork->network_id!=null) 
+                    $graph .= " NET" . $subnetwork->network_id . "->SUBNET" . $subnetwork->id;                
+                if ($subnetwork->gateway_id!=null) 
+                    $graph .= " SUBNET" . $subnetwork->id . "->GATEWAY" . $subnetwork->gateway_id;
+                }
+
             foreach($externalConnectedEntities as $entity) {
                 $graph .= " E" . $entity->id . "[label=\"" . $entity->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/entity.png") . "\"]";
                 foreach($entity->connected_networks as $network)
@@ -1232,6 +1237,9 @@ class CartographyController extends Controller
                             if ($subnetwork->contains($address))
                                 $graph .= " SUBNET" . $subnetwork->id . "->R" . $router->id;
                 }
+
+            foreach($vlans as $vlan) 
+                $graph .= " VLAN" . $vlan->id . "[label=\"" . $vlan->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"" . public_path("/images/vlan.png") . "\"]";
 
             $graph .= "}";
 
@@ -1437,7 +1445,29 @@ class CartographyController extends Controller
                     $section->addTextBreak(1); 
                     }
                 }
+            // =====================================
+            if ($vlans->count()>0) { 
+                $section->addTitle('VLANs', 2);
+                $section->addText("Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.");
+                $section->addTextBreak(1); 
 
+                foreach($vlans as $vlan) {
+                    $section->addBookmark("VLAN".$vlan->id);
+                    $table=$this->addTable($section, $vlan->name);
+                    $this->addHTMLRow($table,"Description",$vlan->description);
+
+                    // Sous-réseaux
+                    $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");
+                    foreach($vlan->subnetworks as $subnetwork) {
+                        $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($vlan->subnetworks->last()!=$subnetwork)
+                            $textRun->addText(", ");
+                        }
+
+                    $section->addTextBreak(1); 
+                    }
+                }
+            // ==================================
             }
 
         // =====================
@@ -1465,7 +1495,6 @@ class CartographyController extends Controller
             $wans = Wan::orderBy("name")->get();
             $mans = Man::orderBy("name")->get();
             $lans = Lan::orderBy("name")->get();
-            $vlans = Vlan::orderBy("name")->get();
 
             // Generate Graph
             $graph = "digraph  {";
@@ -2028,28 +2057,6 @@ class CartographyController extends Controller
                     }
                 }
 
-            // =====================================
-            if ($vlans->count()>0) { 
-                $section->addTitle('VLANs', 2);
-                $section->addText("Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.");
-                $section->addTextBreak(1); 
-
-                foreach($vlans as $vlan) {
-                    $section->addBookmark("VLAN".$vlan->id);
-                    $table=$this->addTable($section, $vlan->name);
-                    $this->addHTMLRow($table,"Description",$vlan->description);
-
-                    // Sous-réseaux
-                    $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");
-                    foreach($vlan->subnetworks as $subnetwork) {
-                        $textRun->addLink("SUBNET".$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($vlan->subnetworks->last()!=$subnetwork)
-                            $textRun->addText(", ");
-                        }
-
-                    $section->addTextBreak(1); 
-                    }
-                }
             // =====================================
 
             }
