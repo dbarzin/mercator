@@ -150,7 +150,7 @@
                                         <th>VLAN</th>
                                         <td>
                                             @if ($subnetwork->vlan!=null)
-                                                <a href="/admin/report/physical_infrastructure#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
+                                                <a href="#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
                                             @endif
                                         </td>
                                     </tr>
@@ -317,8 +317,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                    </div>
+                        </div>
                     @endforeach
+                    </div>
                 </div>
             @endif
 
@@ -486,10 +487,50 @@
                 @endif
 
 
+            @if ($vlans->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    Réseaux virtuels
+                </div>
+                <div class="card-body">
+                    <p>Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+                      @foreach($vlans as $vlan)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="VLAN{{ $vlan->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/vlans/{{ $vlan->id }}/edit">{{ $vlan->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">Description</th>
+                                    <td>{!! $vlan->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th width="20%">Sous-réseaux</th>
+                                    <td>
+                                        @foreach($vlan->subnetworks as $subnetwork) 
+                                            <a href="/admin/report/logical_infrastructure#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
+                                            @if (!$loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       </div>
+                       @endforeach
+                    </div>
+                </div>
+            @endif
 
 
 
-            </div>
+
         </div>
     </div>
 </div>
@@ -513,6 +554,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/server.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")    
+    .addImage("/images/vlan.png", "64px", "64px")    
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
             @foreach($networks as $network) \
@@ -523,6 +565,9 @@ d3.select("#graph").graphviz()
             @endforeach\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
+                @if ($subnetwork->vlan_id!=null) \
+                    SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}\
+                @endif\
                 @if ($subnetwork->network_id!=null) \
                     NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}\
                 @endif\
@@ -567,6 +612,9 @@ d3.select("#graph").graphviz()
                         @endforeach\
                     @endif\
                 @endforeach\
+            @endforeach\
+            @foreach($vlans as $vlan) \
+                VLAN{{ $vlan->id }} [label=\"{{ $vlan->name }}\" shape=none labelloc=\"b\" width=1 height=1.1 image=\"/images/vlan.png\" href=\"#VLAN{{$vlan->id}}\"]\
             @endforeach\
         }");
 

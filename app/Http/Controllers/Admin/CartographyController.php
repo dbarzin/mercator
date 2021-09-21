@@ -1222,6 +1222,17 @@ class CartographyController extends Controller
                     foreach($certificate->logical_servers as $logical_server)
                         $graph .= " LOGICAL_SERVER" . $logical_server->id . "->CERT". $certificate->id;
                 }
+
+
+            foreach($routers as $router) {
+                $graph .= " R". $router->id . " [label=\"". $router->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"". public_path("/images/router.png") . "\"]";
+                foreach($subnetworks as $subnetwork) 
+                    if (($router->ip_addresses!=null)&&($subnetwork->address!=null))
+                        foreach(explode(',',$router->ip_addresses) as $address)
+                            if ($subnetwork->contains($address))
+                                $graph .= " SUBNET" . $subnetwork->id . "->R" . $router->id;
+                }
+
             $graph .= "}";
 
             // IMAGE

@@ -628,6 +628,12 @@ class ReportController extends Controller
                         return $logicalServers->pluck("id")->contains($logical_server->id);
                     return false;
                 });
+
+            // TODO: improve me
+            $vlans = Vlan::All()->sortBy("name")
+                ->filter(function($item) use($subnetworks) {
+                    return $subnetworks->pluck("vlan_id")->contains($item->id);
+                });
             }
         else {
             $all_subnetworks = Subnetwork::All()->sortBy("name")->pluck("name","id");
@@ -644,6 +650,7 @@ class ReportController extends Controller
             $dnsservers = Dnsserver::All()->sortBy("name");
             $logicalServers = LogicalServer::All()->sortBy("name");
             $certificates = Certificate::All()->sortBy("name");
+            $vlans = Vlan::All()->sortBy("name");
         }
 
         return view('admin/reports/logical_infrastructure',
@@ -660,7 +667,8 @@ class ReportController extends Controller
                 "dhcpServers",
                 "dnsservers",
                 "logicalServers",
-                "certificates"));
+                "certificates",
+                "vlans"));
     }
 
     public function physicalInfrastructure(Request $request) {        
@@ -848,8 +856,6 @@ class ReportController extends Controller
                      return false;
                 });
 
-            // filtering ???
-            $vlans = Vlan::All()->sortBy("name");
         }
         else 
         {
@@ -866,7 +872,6 @@ class ReportController extends Controller
             $physicalRouters = PhysicalRouter::All()->sortBy("name");
             $wifiTerminals = WifiTerminal::All()->sortBy("name");
             $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy("name");
-            $vlans = Vlan::All()->sortBy("name");
         }
 
         return view('admin/reports/physical_infrastructure')
@@ -884,7 +889,6 @@ class ReportController extends Controller
             ->with("physicalRouters", $physicalRouters)
             ->with("wifiTerminals", $wifiTerminals)
             ->with("physicalSecurityDevices", $physicalSecurityDevices)
-            ->with("vlans", $vlans)
             ;
 
     }
