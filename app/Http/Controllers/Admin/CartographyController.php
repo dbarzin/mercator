@@ -304,21 +304,20 @@ class CartographyController extends Controller
             // Generate Graph
             $graph = "digraph  {";
             if ($granularity>=2)
-                foreach($macroProcessuses as $macroProcess) 
+                foreach($macroProcessuses as $macroProcess)  {
                     $graph .= " MP" . $macroProcess->id . " [label=\"". $macroProcess->name . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/macroprocess.png")."\"]";
-            
+                    foreach($macroProcess->processes as $process)
+                        $graph.=" MP" . $macroProcess->id ."->P" . $process->id;
+                }
+
             foreach($processes as $process) {
                 $graph .= " P".$process->id . " [label=\"" . $process->identifiant . "\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/process.png")."\"]";
                 if ($granularity==3)
                     foreach($process->activities as $activity)
                         $graph .= " P".$process->id . "->A". $activity->id;
-                foreach($process->processInformation as $information) {
+                foreach($process->processInformation as $information) 
                     $graph .= " P". $process->id ."->I". $information->id;
-                    if ($granularity>=2)
-                        if ($process->macroprocess_id!=null)
-                            $graph.=" MP" . $process->macroprocess_id ."-> P".$process->id;
-                    }    
-            }
+                }
             if ($granularity==3)
                 foreach($activities as $activity) {
                     $graph .= " A" . $activity->id ." [label=\"". $activity->name ."\" shape=none labelloc=b width=1 height=1.8 image=\"".public_path("/images/activity.png")."\"]";
@@ -1262,6 +1261,33 @@ class CartographyController extends Controller
                     $this->addTextRow($table,"Type de protocol",$network->protocol_type);
                     $this->addTextRow($table,"Responsable d'exploitation",$network->responsible);
                     $this->addTextRow($table,"Responsable SSI",$network->responsible_sec);
+
+                    // Security Needs
+                    $textRun= $this->addHTMLRow($table, "Besoins de sécurité",
+                            '<p>'.
+                            trans('global.confidentiality') . 
+                            ' : ' .                    
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                    [$network->security_need_c] ?? "") .
+                            "<br>" .
+                            trans('global.integrity') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_i] ?? "") .
+                            "<br>" .
+                            trans('global.availability') .
+                            ' : ' .                            
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_a] ?? "") .
+                            "<br>" .
+                            trans('global.tracability') .
+                            ' : ' .
+                            (array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_t] ?? "") .
+                            '</p>'
+                        );
+                    //----
+
 
                     // subnetworks
                     $textRun=$this->addTextRunRow($table,"Sous-réseaux ratachés");

@@ -398,7 +398,10 @@ class HomeController extends Controller
                     ->where('protocol_type', '<>', null)
                     ->where('responsible', '<>', null)
                     ->where('responsible_sec', '<>', null)
-                    ->where('security_need', '<>', null)
+                    ->where('security_need_c', '<>', null)
+                    ->where('security_need_i', '<>', null)
+                    ->where('security_need_a', '<>', null)
+                    ->where('security_need_t', '<>', null)
                     ->count())
 
             ->with("subnetworks", Subnetwork::count())

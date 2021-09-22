@@ -60,15 +60,21 @@
                             {{ trans('cruds.network.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($network->security_need==1) 
-                                Public
-                            @elseif ($network->security_need==2)
-                                Internal
-                            @elseif ($network->security_need==3)
-                                Confidential
-                            @elseif ($network->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_t] ?? "" }}                                                        
                         </td>
                     </tr>
                     <tr>
@@ -78,6 +84,9 @@
                         <td>
                             @foreach($network->subnetworks as $key => $subnetworks)
                                 <span class="label label-info">{{ $subnetworks->name }}</span>
+                                @if ($network->subnetworks->last()<>$subnetworks)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
