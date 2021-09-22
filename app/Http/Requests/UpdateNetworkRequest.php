@@ -23,14 +23,31 @@ class UpdateNetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:networks,name,' . request()->route('network')->id,
                 'unique:networks,name,'.request()->route('network')->id.',id,deleted_at,NULL',
             ],
-            'security_need' => [
+            'security_need_c' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_i' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_a' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_t' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
             ],
             'subnetworks.*' => [
                 'integer',

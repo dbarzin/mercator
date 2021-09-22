@@ -172,8 +172,7 @@
                         <span class="help-block">{{ trans('cruds.information.fields.security_need_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
-                    .
+                <div class="col-sm">                    
                 </div>
             </div>
             <div class="form-group">
