@@ -63,7 +63,7 @@
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>                    
-                        <input class="date form-control" type="text" id="end_validity" name="end_validity" value="{{ old('start_validity', $certificate->end_validity) }}">
+                        <input class="date form-control" type="text" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
