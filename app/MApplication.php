@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\MApplication
@@ -28,22 +28,24 @@ use \DateTimeInterface;
  * @property int|null $security_need_i
  * @property int|null $security_need_a
  * @property int|null $security_need_t
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $applicationDestFluxes
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $applicationDestFluxes
  * @property-read int|null $application_dest_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $applicationSourceFluxes
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $applicationSourceFluxes
  * @property-read int|null $application_source_fluxes_count
  * @property-read \App\ApplicationBlock|null $application_block
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Database[] $databases
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Database> $databases
  * @property-read int|null $databases_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity[] $entities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Entity> $entities
  * @property-read int|null $entities_count
  * @property-read \App\Entity|null $entity_resp
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LogicalServer[] $logical_servers
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\LogicalServer> $logical_servers
  * @property-read int|null $logical_servers_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Process[] $processes
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Process> $processes
  * @property-read int|null $processes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\ApplicationService[] $services
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $services
  * @property-read int|null $services_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newQuery()
  * @method static \Illuminate\Database\Query\Builder|MApplication onlyTrashed()
@@ -68,24 +70,25 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication whereUsers($value)
  * @method static \Illuminate\Database\Query\Builder|MApplication withTrashed()
  * @method static \Illuminate\Database\Query\Builder|MApplication withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class MApplication extends Model 
+class MApplication extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'm_applications';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     public static $searchable = [
         'name',
         'description',
         'responsible',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -108,24 +111,19 @@ class MApplication extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function applicationSourceFluxes()
     {
-        return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
     }
 
     public function applicationDestFluxes()
     {
-        return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
     }
 
     public function entities()
     {
-        return $this->belongsToMany(Entity::class)->orderBy("name");
+        return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
     public function entity_resp()
@@ -135,26 +133,31 @@ class MApplication extends Model
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class)->orderBy("identifiant");;
+        return $this->belongsToMany(Process::class)->orderBy('identifiant');
     }
 
     public function services()
     {
-        return $this->belongsToMany(ApplicationService::class)->orderBy("name");;
+        return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }
 
     public function databases()
     {
-        return $this->belongsToMany(Database::class)->orderBy("name");;
+        return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
     public function logical_servers()
     {
-        return $this->belongsToMany(LogicalServer::class)->orderBy("name");;
+        return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
     public function application_block()
     {
         return $this->belongsTo(ApplicationBlock::class, 'application_block_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

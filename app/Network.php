@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Network
@@ -20,10 +20,12 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\ExternalConnectedEntity[] $connectedNetworksExternalConnectedEntities
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ExternalConnectedEntity> $connectedNetworksExternalConnectedEntities
  * @property-read int|null $connected_networks_external_connected_entities_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Subnetwork[] $subnetworks
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Subnetwork> $subnetworks
  * @property-read int|null $subnetworks_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Network newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Network newQuery()
  * @method static \Illuminate\Database\Query\Builder|Network onlyTrashed()
@@ -40,6 +42,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Network whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Network withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Network withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Network extends Model
@@ -48,18 +51,18 @@ class Network extends Model
 
     public $table = 'networks';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     public static $searchable = [
         'name',
         'description',
         'protocol_type',
         'responsible',
         'responsible_sec',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -77,19 +80,18 @@ class Network extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function connectedNetworksExternalConnectedEntities()
     {
-        return $this->belongsToMany(ExternalConnectedEntity::class)->orderBy("name");;
+        return $this->belongsToMany(ExternalConnectedEntity::class)->orderBy('name');
     }
 
     public function subnetworks()
     {
-        return $this->hasMany(Subnetwork::class, 'network_id', 'id')->orderBy("name");        
+        return $this->hasMany(Subnetwork::class, 'network_id', 'id')->orderBy('name');
     }
 
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

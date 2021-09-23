@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Flux;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class MassDestroyFluxRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:fluxes,id',
         ];
     }

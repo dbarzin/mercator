@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Bay;
 use App\Building;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
-
-use Illuminate\Http\Request;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
@@ -83,5 +80,4 @@ class BayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

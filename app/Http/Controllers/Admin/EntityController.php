@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Entity;
-use App\Process;
-use App\MApplication;
 use App\Database;
-
+use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
 use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
-
-use Illuminate\Http\Request;
+use App\MApplication;
+use App\Process;
+use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,7 +33,7 @@ class EntityController extends Controller
         $applications = MApplication::orderBy('name')->pluck('name', 'id');
         $databases = Database::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.entities.create',compact('processes','applications','databases'));
+        return view('admin.entities.create', compact('processes', 'applications', 'databases'));
     }
 
     public function store(StoreEntityRequest $request)
@@ -44,24 +41,24 @@ class EntityController extends Controller
         $entity = Entity::create($request->all());
 
         $entity->entitiesProcesses()->sync($request->input('processes', []));
-        
+
         // update applications table
         DB::table('m_applications')
-              ->where('entity_resp_id', $entity->id)
-              ->update(['entity_resp_id' => null]);
+            ->where('entity_resp_id', $entity->id)
+            ->update(['entity_resp_id' => null]);
 
         DB::table('m_applications')
-              ->whereIn('id', $request->input('applications', []))
-              ->update(['entity_resp_id' => $entity->id]);
+            ->whereIn('id', $request->input('applications', []))
+            ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table
         DB::table('databases')
-              ->where('entity_resp_id', $entity->id)
-              ->update(['entity_resp_id' => null]);
+            ->where('entity_resp_id', $entity->id)
+            ->update(['entity_resp_id' => null]);
 
         DB::table('databases')
-              ->whereIn('id', $request->input('databases', []))
-              ->update(['entity_resp_id' => $entity->id]);
+            ->whereIn('id', $request->input('databases', []))
+            ->update(['entity_resp_id' => $entity->id]);
 
         return redirect()->route('admin.entities.index');
     }
@@ -74,9 +71,9 @@ class EntityController extends Controller
         $applications = MApplication::orderBy('name')->pluck('name', 'id');
         $databases = Database::orderBy('name')->pluck('name', 'id');
 
-        $entity->load('entitiesProcesses','applications','databases');
+        $entity->load('entitiesProcesses', 'applications', 'databases');
 
-        return view('admin.entities.edit', compact('entity','processes','applications','databases'));
+        return view('admin.entities.edit', compact('entity', 'processes', 'applications', 'databases'));
     }
 
     public function update(UpdateEntityRequest $request, Entity $entity)
@@ -87,21 +84,21 @@ class EntityController extends Controller
 
         // update applications table
         DB::table('m_applications')
-              ->where('entity_resp_id', $entity->id)
-              ->update(['entity_resp_id' => null]);
+            ->where('entity_resp_id', $entity->id)
+            ->update(['entity_resp_id' => null]);
 
         DB::table('m_applications')
-              ->whereIn('id', $request->input('applications', []))
-              ->update(['entity_resp_id' => $entity->id]);
+            ->whereIn('id', $request->input('applications', []))
+            ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table
         DB::table('databases')
-              ->where('entity_resp_id', $entity->id)
-              ->update(['entity_resp_id' => null]);
+            ->where('entity_resp_id', $entity->id)
+            ->update(['entity_resp_id' => null]);
 
         DB::table('databases')
-              ->whereIn('id', $request->input('databases', []))
-              ->update(['entity_resp_id' => $entity->id]);
+            ->whereIn('id', $request->input('databases', []))
+            ->update(['entity_resp_id' => $entity->id]);
 
         return redirect()->route('admin.entities.index');
     }
@@ -130,5 +127,4 @@ class EntityController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

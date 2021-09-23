@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Gateway
@@ -18,8 +18,10 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Subnetwork[] $gatewaySubnetworks
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Subnetwork> $gatewaySubnetworks
  * @property-read int|null $gateway_subnetworks_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Gateway newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Gateway newQuery()
  * @method static \Illuminate\Database\Query\Builder|Gateway onlyTrashed()
@@ -34,9 +36,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Gateway whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Gateway withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Gateway withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Gateway extends Model 
+class Gateway extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -64,13 +67,13 @@ class Gateway extends Model
         'deleted_at',
     ];
 
+    public function gatewaySubnetworks()
+    {
+        return $this->hasMany(Subnetwork::class, 'gateway_id', 'id')->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function gatewaySubnetworks()
-    {
-        return $this->hasMany(Subnetwork::class, 'gateway_id', 'id')->orderBy("name");
     }
 }

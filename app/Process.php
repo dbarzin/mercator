@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Process
@@ -24,15 +24,17 @@ use \DateTimeInterface;
  * @property int|null $security_need_i
  * @property int|null $security_need_a
  * @property int|null $security_need_t
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $activities
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Activity> $activities
  * @property-read int|null $activities_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity[] $entities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Entity> $entities
  * @property-read int|null $entities_count
  * @property-read \App\MacroProcessus|null $macroProcess
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Information[] $processInformation
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Information> $processInformation
  * @property-read int|null $process_information_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $processesMApplications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $processesMApplications
  * @property-read int|null $processes_m_applications_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Process newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Process newQuery()
  * @method static \Illuminate\Database\Query\Builder|Process onlyTrashed()
@@ -53,25 +55,26 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Process whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Process withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Process withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Process extends Model 
+class Process extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'processes';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'identifiant',
         'description',
         'in_out',
         'owner',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -89,34 +92,33 @@ class Process extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function processInformation()
     {
-        return $this->belongsToMany(Information::class)->orderBy("name");
+        return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
     public function processesMApplications()
     {
-        return $this->belongsToMany(MApplication::class)->orderBy("name");
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class)->orderBy("name");
+        return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
     public function entities()
     {
-        return $this->belongsToMany(Entity::class)->orderBy("name");
+        return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
     public function macroProcess()
     {
-        return $this->belongsTo(MacroProcessus::class, 'macroprocess_id')->orderBy("name");
+        return $this->belongsTo(MacroProcessus::class, 'macroprocess_id')->orderBy('name');
     }
 
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\ZoneAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyZoneAdminRequest;
 use App\Http\Requests\StoreZoneAdminRequest;
 use App\Http\Requests\UpdateZoneAdminRequest;
-
-use Illuminate\Http\Request;
+use App\ZoneAdmin;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ZoneAdminController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('zone_admin_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -76,5 +73,4 @@ class ZoneAdminController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

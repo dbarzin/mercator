@@ -21,7 +21,8 @@ class CreateCertificatesTable extends Migration
         Schema::create('certificates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('type')->nullable();;
+            $table->string('type')->nullable();
+            ;
             $table->longText('description')->nullable();
             $table->date('start_validity')->nullable();
             $table->date('end_validity')->nullable();
@@ -67,13 +68,12 @@ class CreateCertificatesTable extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([257,258,259,260,261],false);
+            Role::findOrFail(1)->permissions()->sync([257,258,259,260,261], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([257,258,259,260,261],false);
+            Role::findOrFail(2)->permissions()->sync([257,258,259,260,261], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([259,261],false);
+            Role::findOrFail(3)->permissions()->sync([259,261], false);
         }
-        
     }
 
     /**

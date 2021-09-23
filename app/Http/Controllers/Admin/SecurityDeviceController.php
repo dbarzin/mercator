@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\SecurityDevice;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-
-use Illuminate\Http\Request;
+use App\SecurityDevice;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends Controller
@@ -74,5 +71,4 @@ class SecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

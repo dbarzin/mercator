@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Subnetwork;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +26,11 @@ class UpdateSubnetworkRequest extends FormRequest
             ],
             'address' => [
                 'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[ ]*\/[ ]*[0-9][0-9]?$/i',
-                'nullable'
+                'nullable',
             ],
             'default_gateway' => [
                 'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i',
-                'nullable'
+                'nullable',
             ],
         ];
     }

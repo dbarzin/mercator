@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\WifiTerminal;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class StoreWifiTerminalRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
@@ -29,7 +28,7 @@ class StoreWifiTerminalRequest extends FormRequest
             'bays.*' => [
                 'integer',
             ],
-            'bays'   => [
+            'bays' => [
                 'array',
             ],
         ];

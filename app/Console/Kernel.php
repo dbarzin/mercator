@@ -21,12 +21,13 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('mercator:cleanup')->daily();;
-        $schedule->command('mercator:certificate-expiracy')->daily();;
+        $schedule->command('mercator:cleanup')->daily();
+        $schedule->command('mercator:certificate-expiracy')->daily();
     }
 
     /**

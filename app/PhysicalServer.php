@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\PhysicalServer
@@ -23,11 +23,13 @@ use \DateTimeInterface;
  * @property int|null $bay_id
  * @property int|null $physical_switch_id
  * @property string|null $type
+ *
  * @property-read \App\Bay|null $bay
  * @property-read \App\Building|null $building
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\LogicalServer[] $serversLogicalServers
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\LogicalServer> $serversLogicalServers
  * @property-read int|null $servers_logical_servers_count
  * @property-read \App\Site|null $site
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer newQuery()
  * @method static \Illuminate\Database\Query\Builder|PhysicalServer onlyTrashed()
@@ -47,19 +49,14 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|PhysicalServer withTrashed()
  * @method static \Illuminate\Database\Query\Builder|PhysicalServer withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class PhysicalServer extends Model 
+class PhysicalServer extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'physical_servers';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'name',
@@ -67,6 +64,12 @@ class PhysicalServer extends Model
         'description',
         'configuration',
         'responsible',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -83,14 +86,9 @@ class PhysicalServer extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-    
     public function serversLogicalServers()
     {
-        return $this->belongsToMany(LogicalServer::class)->orderBy("name");;
+        return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
     public function site()
@@ -108,4 +106,8 @@ class PhysicalServer extends Model
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

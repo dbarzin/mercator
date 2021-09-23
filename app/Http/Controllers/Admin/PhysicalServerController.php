@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
 use App\Bay;
 use App\Building;
-use App\PhysicalSwitch;
-use App\PhysicalServer;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-
-use Illuminate\Http\Request;
+use App\PhysicalServer;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends Controller
@@ -38,10 +33,12 @@ class PhysicalServerController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
-        $responsible_list = PhysicalServer::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
-        return view('admin.physicalServers.create', 
-            compact('sites', 'buildings', 'bays','responsible_list'));
+        return view(
+            'admin.physicalServers.create',
+            compact('sites', 'buildings', 'bays', 'responsible_list')
+        );
     }
 
     public function store(StorePhysicalServerRequest $request)
@@ -59,12 +56,14 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // List
-        $responsible_list = PhysicalServer::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         $physicalServer->load('site', 'building', 'bay');
 
-        return view('admin.physicalServers.edit', 
-            compact('sites', 'buildings', 'bays', 'responsible_list','physicalServer'));
+        return view(
+            'admin.physicalServers.edit',
+            compact('sites', 'buildings', 'bays', 'responsible_list', 'physicalServer')
+        );
     }
 
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
@@ -98,5 +97,4 @@ class PhysicalServerController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

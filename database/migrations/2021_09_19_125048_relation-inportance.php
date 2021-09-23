@@ -13,9 +13,9 @@ class RelationInportance extends Migration
      */
     public function up()
     {
-        Schema::table('relations', function(Blueprint $table) {
+        Schema::table('relations', function (Blueprint $table) {
             $table->renameColumn('inportance', 'importance');
-        });                
+        });
     }
 
     /**
@@ -25,8 +25,8 @@ class RelationInportance extends Migration
      */
     public function down()
     {
-        Schema::table('relations', function(Blueprint $table) {
+        Schema::table('relations', function (Blueprint $table) {
             $table->renameColumn('importance', 'inportance');
-        });                
+        });
     }
 }

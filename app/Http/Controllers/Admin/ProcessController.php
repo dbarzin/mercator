@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Activity;
 use App\Entity;
-use App\Process;
-use App\Information;
-use App\MacroProcessus;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
+use App\Information;
+use App\MacroProcessus;
+use App\Process;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
@@ -36,11 +33,12 @@ class ProcessController extends Controller
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $informations = Information::orderBy('name')->pluck('name', 'id');
         $macroProcessuses = MacroProcessus::orderBy('name')->pluck('name', 'id');
-        $owner_list = Process::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
-        return view('admin.processes.create', 
-            compact('activities', 'entities','informations','macroProcessuses','owner_list')
-            );
+        return view(
+            'admin.processes.create',
+            compact('activities', 'entities', 'informations', 'macroProcessuses', 'owner_list')
+        );
     }
 
     public function store(StoreProcessRequest $request)
@@ -64,12 +62,14 @@ class ProcessController extends Controller
         $informations = Information::orderBy('name')->pluck('name', 'id');
         $macroProcessuses = MacroProcessus::all()->sortBy('name')->pluck('name', 'id');
         // lists
-        $owner_list = Process::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
         $process->load('activities', 'entities', 'processInformation');
 
-        return view('admin.processes.edit', 
-            compact('activities', 'entities', 'informations','process','macroProcessuses','owner_list'));
+        return view(
+            'admin.processes.edit',
+            compact('activities', 'entities', 'informations', 'process', 'macroProcessuses', 'owner_list')
+        );
     }
 
     public function update(UpdateProcessRequest $request, Process $process)
@@ -106,5 +106,4 @@ class ProcessController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

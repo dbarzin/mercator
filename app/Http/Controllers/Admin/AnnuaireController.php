@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Annuaire;
-use App\ZoneAdmin;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
-
-use Illuminate\Http\Request;
+use App\ZoneAdmin;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnnuaireController extends Controller
@@ -83,5 +80,4 @@ class AnnuaireController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

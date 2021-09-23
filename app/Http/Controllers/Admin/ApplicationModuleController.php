@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\ApplicationModule;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-
-use Illuminate\Http\Request;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller
@@ -76,5 +73,4 @@ class ApplicationModuleController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

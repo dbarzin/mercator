@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\SecurityDevice
@@ -16,6 +16,7 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|SecurityDevice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SecurityDevice newQuery()
  * @method static \Illuminate\Database\Query\Builder|SecurityDevice onlyTrashed()
@@ -28,9 +29,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|SecurityDevice whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|SecurityDevice withTrashed()
  * @method static \Illuminate\Database\Query\Builder|SecurityDevice withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class SecurityDevice extends Model 
+class SecurityDevice extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -59,5 +61,4 @@ class SecurityDevice extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 }

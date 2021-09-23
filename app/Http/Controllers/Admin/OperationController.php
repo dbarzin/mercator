@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Actor;
-use App\Operation;
-use App\Task;
 use App\Activity;
-
+use App\Actor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
-
-use Illuminate\Http\Request;
+use App\Operation;
+use App\Task;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller
@@ -95,5 +92,4 @@ class OperationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

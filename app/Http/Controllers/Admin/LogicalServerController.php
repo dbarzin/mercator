@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
-use App\MApplication;
-use App\LogicalServer;
-use App\PhysicalServer;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-
-use Illuminate\Http\Request;
+use App\LogicalServer;
+use App\MApplication;
+use App\PhysicalServer;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
@@ -34,11 +30,13 @@ class LogicalServerController extends Controller
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $operating_system_list = LogicalServer::select('operating_system')->where("operating_system","<>",null)->distinct()->orderBy('operating_system')->pluck('operating_system');
-        $environment_list = LogicalServer::select('environment')->where("environment","<>",null)->distinct()->orderBy('environment')->pluck('environment');
+        $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
 
-        return view('admin.logicalServers.create', 
-            compact('servers','applications','environment_list','operating_system_list'));
+        return view(
+            'admin.logicalServers.create',
+            compact('servers', 'applications', 'environment_list', 'operating_system_list')
+        );
     }
 
     public function store(StoreLogicalServerRequest $request)
@@ -46,7 +44,7 @@ class LogicalServerController extends Controller
         $logicalServer = LogicalServer::create($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
-        
+
         return redirect()->route('admin.logical-servers.index');
     }
 
@@ -57,13 +55,15 @@ class LogicalServerController extends Controller
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $operating_system_list = LogicalServer::select('operating_system')->where("operating_system","<>",null)->distinct()->orderBy('operating_system')->pluck('operating_system');
-        $environment_list = LogicalServer::select('environment')->where("environment","<>",null)->distinct()->orderBy('environment')->pluck('environment');
+        $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
 
-        $logicalServer->load('servers','applications');
+        $logicalServer->load('servers', 'applications');
 
-        return view('admin.logicalServers.edit', 
-            compact('servers', 'applications', 'operating_system_list', 'environment_list', 'logicalServer'));
+        return view(
+            'admin.logicalServers.edit',
+            compact('servers', 'applications', 'operating_system_list', 'environment_list', 'logicalServer')
+        );
     }
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)

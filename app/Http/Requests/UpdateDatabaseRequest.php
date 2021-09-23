@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Database;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,26 +18,26 @@ class UpdateDatabaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'           => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:databases,name,' . request()->route('database')->id,
                 'unique:databases,name,'.request()->route('database')->id.',id,deleted_at,NULL',
             ],
-            'entities.*'     => [
+            'entities.*' => [
                 'integer',
             ],
-            'entities'       => [
+            'entities' => [
                 'array',
             ],
             'informations.*' => [
                 'integer',
             ],
-            'informations'   => [
+            'informations' => [
                 'array',
             ],
-            'security_need'  => [
+            'security_need' => [
                 'nullable',
                 'integer',
                 'min:-2147483648',

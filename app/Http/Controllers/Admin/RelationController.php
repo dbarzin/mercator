@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Entity;
-use App\Relation;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
-
-use Illuminate\Http\Request;
+use App\Relation;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
@@ -32,12 +29,13 @@ class RelationController extends Controller
         $sources = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
         $destinations = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
         // lists
-        $name_list = Relation::select('name')->where("name","<>",null)->distinct()->orderBy('name')->pluck('name');
-        $type_list = Relation::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
+        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.relations.create', 
-                compact('sources', 'destinations','name_list','type_list'
-                ));
+        return view(
+            'admin.relations.create',
+            compact('sources', 'destinations', 'name_list', 'type_list')
+        );
     }
 
     public function store(StoreRelationRequest $request)
@@ -54,13 +52,15 @@ class RelationController extends Controller
         $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $destinations = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // lists
-        $name_list = Relation::select('name')->where("name","<>",null)->distinct()->orderBy('name')->pluck('name');
-        $type_list = Relation::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
+        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $relation->load('source', 'destination');
 
-        return view('admin.relations.edit', 
-            compact('sources', 'destinations', 'relation','type_list','name_list'));
+        return view(
+            'admin.relations.edit',
+            compact('sources', 'destinations', 'relation', 'type_list', 'name_list')
+        );
     }
 
     public function update(UpdateRelationRequest $request, Relation $relation)
@@ -94,5 +94,4 @@ class RelationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

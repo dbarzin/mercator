@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Task
@@ -16,8 +16,10 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Operation[] $operations
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Operation> $operations
  * @property-read int|null $operations_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
  * @method static \Illuminate\Database\Query\Builder|Task onlyTrashed()
@@ -30,6 +32,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Task extends Model
@@ -57,13 +60,13 @@ class Task extends Model
         'deleted_at',
     ];
 
+    public function operations()
+    {
+        return $this->belongsToMany(Operation::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function operations()
-    {
-        return $this->belongsToMany(Operation::class)->orderBy("name");
     }
 }

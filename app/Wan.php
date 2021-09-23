@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Wan
@@ -15,10 +15,12 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Lan[] $lans
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Lan> $lans
  * @property-read int|null $lans_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Man[] $mans
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Man> $mans
  * @property-read int|null $mans_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Wan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Wan newQuery()
  * @method static \Illuminate\Database\Query\Builder|Wan onlyTrashed()
@@ -30,6 +32,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Wan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Wan withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Wan withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Wan extends Model
@@ -55,18 +58,18 @@ class Wan extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function mans()
     {
-        return $this->belongsToMany(Man::class)->orderBy("name");
+        return $this->belongsToMany(Man::class)->orderBy('name');
     }
 
     public function lans()
     {
-        return $this->belongsToMany(Lan::class)->orderBy("name");
+        return $this->belongsToMany(Lan::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

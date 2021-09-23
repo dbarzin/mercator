@@ -3,14 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use \DateTimeInterface;
 
 /**
  * App\User
@@ -26,15 +25,17 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Passport\Client> $clients
  * @property-read int|null $clients_count
  * @property-read mixed $is_admin
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|array<\Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\Laravel\Passport\Token> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
@@ -52,6 +53,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -85,11 +87,6 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
@@ -119,6 +116,11 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class)->orderBy("title");
+        return $this->belongsToMany(Role::class)->orderBy('title');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

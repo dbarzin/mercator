@@ -12,14 +12,14 @@ class AddType extends Migration
      * @return void
      */
     public function up()
-    {        
-        Schema::table('physical_servers', function(Blueprint $table) {
+    {
+        Schema::table('physical_servers', function (Blueprint $table) {
             $table->string('type')->nullable();
         });
 
         Schema::table('workstations', function (Blueprint $table) {
             $table->string('type')->nullable();
-        });        
+        });
     }
 
     /**
@@ -29,12 +29,12 @@ class AddType extends Migration
      */
     public function down()
     {
-        Schema::table('physical_servers', function(Blueprint $table) {
+        Schema::table('physical_servers', function (Blueprint $table) {
             $table->dropColumn('type');
         });
 
         Schema::table('workstations', function (Blueprint $table) {
             $table->dropColumn('type');
-        });        
+        });
     }
 }

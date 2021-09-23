@@ -20,10 +20,10 @@ class RenameSubnetwork extends Migration
 
         Schema::rename('network_subnetword', 'network_subnetwork');
 
-        Schema::table('network_subnetwork', function(Blueprint $table) {
+        Schema::table('network_subnetwork', function (Blueprint $table) {
             $table->renameIndex('subnetword_id_fk_1492377', 'subnetwork_id_fk_1492377');
             $table->renameColumn('subnetword_id', 'subnetwork_id');
-        });        
+        });
 
         Schema::table('network_subnetwork', function (Blueprint $table) {
             $table->foreign('subnetwork_id', 'subnetwork_id_fk_1492377')->references('id')->on('subnetworks')->onUpdate('NO ACTION')->onDelete('CASCADE');
@@ -35,7 +35,6 @@ class RenameSubnetwork extends Migration
         DB::update("update permissions set title = 'subnetwork_show' where title = 'subnetword_show'");
         DB::update("update permissions set title = 'subnetwork_delete' where title = 'subnetword_delete'");
         DB::update("update permissions set title = 'subnetwork_access' where title = 'subnetword_access'");
-
     }
 
     /**
@@ -45,16 +44,16 @@ class RenameSubnetwork extends Migration
      */
     public function down()
     {
-        //        
+        //
         Schema::table('network_subnetwork', function (Blueprint $table) {
             $table->dropForeign('subnetwork_id_fk_1492377');
         });
         Schema::rename('network_subnetwork', 'network_subnetword');
 
-        Schema::table('network_subnetword', function(Blueprint $table) {
+        Schema::table('network_subnetword', function (Blueprint $table) {
             $table->renameIndex('subnetwork_id_fk_1492377', 'subnetword_id_fk_1492377');
             $table->renameColumn('subnetwork_id', 'subnetword_id');
-        });        
+        });
 
         Schema::table('network_subnetword', function (Blueprint $table) {
             $table->foreign('subnetword_id', 'subnetword_id_fk_1492377')->references('id')->on('subnetworks')->onUpdate('NO ACTION')->onDelete('CASCADE');
@@ -66,6 +65,5 @@ class RenameSubnetwork extends Migration
         DB::update("update permissions set title = 'subnetword_show' where title = 'subnetwork_show'");
         DB::update("update permissions set title = 'subnetword_delete' where title = 'subnetwork_delete'");
         DB::update("update permissions set title = 'subnetword_access' where title = 'subnetwork_access'");
-
     }
 }

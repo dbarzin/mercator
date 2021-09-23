@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Bay;
 use App\Building;
-use App\PhysicalSecurityDevice;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-
-use Illuminate\Http\Request;
+use App\PhysicalSecurityDevice;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSecurityDeviceController extends Controller
@@ -93,5 +90,4 @@ class PhysicalSecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

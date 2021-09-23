@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Process;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,23 +18,23 @@ class StoreProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant'   => [
+            'identifiant' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:processes',
                 'unique:processes,identifiant,NULL,id,deleted_at,NULL',
             ],
-            'activities.*'  => [
+            'activities.*' => [
                 'integer',
             ],
-            'activities'    => [
+            'activities' => [
                 'array',
             ],
-            'entities.*'    => [
+            'entities.*' => [
                 'integer',
             ],
-            'entities'      => [
+            'entities' => [
                 'array',
             ],
             'security_need' => [
@@ -43,7 +42,7 @@ class StoreProcessRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
-            ]
+            ],
         ];
     }
 }

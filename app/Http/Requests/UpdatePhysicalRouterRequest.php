@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\PhysicalRouter;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ class UpdatePhysicalRouterRequest extends FormRequest
             'vlans.*' => [
                 'integer',
             ],
-            'vlans'   => [
+            'vlans' => [
                 'array',
             ],
         ];

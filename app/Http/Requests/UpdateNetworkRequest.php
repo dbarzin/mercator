@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Network;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class UpdateNetworkRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
@@ -52,7 +51,7 @@ class UpdateNetworkRequest extends FormRequest
             'subnetworks.*' => [
                 'integer',
             ],
-            'subnetworks'   => [
+            'subnetworks' => [
                 'array',
             ],
         ];

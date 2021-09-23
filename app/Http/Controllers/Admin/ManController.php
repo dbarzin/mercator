@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateManRequest;
 use App\Lan;
 use App\Man;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ManController extends Controller

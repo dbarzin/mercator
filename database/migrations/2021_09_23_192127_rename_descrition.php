@@ -13,14 +13,13 @@ class RenameDescrition extends Migration
      */
     public function up()
     {
-        Schema::table('information', function(Blueprint $table) {
+        Schema::table('information', function (Blueprint $table) {
             $table->renameColumn('descrition', 'description');
-        });        
+        });
 
-        Schema::table('physical_servers', function(Blueprint $table) {
+        Schema::table('physical_servers', function (Blueprint $table) {
             $table->renameColumn('descrition', 'description');
-        });        
-
+        });
     }
 
     /**
@@ -30,12 +29,12 @@ class RenameDescrition extends Migration
      */
     public function down()
     {
-        Schema::table('information', function(Blueprint $table) {
+        Schema::table('information', function (Blueprint $table) {
             $table->renameColumn('description', 'descrition');
-        });        
+        });
 
-        Schema::table('physical_servers', function(Blueprint $table) {
+        Schema::table('physical_servers', function (Blueprint $table) {
             $table->renameColumn('description', 'descrition');
-        });        
+        });
     }
 }

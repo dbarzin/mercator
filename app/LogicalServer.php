@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\LogicalServer
@@ -24,10 +24,12 @@ use \DateTimeInterface;
  * @property string|null $memory
  * @property string|null $environment
  * @property int|null $disk
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $applications
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $applications
  * @property-read int|null $applications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhysicalServer[] $servers
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\PhysicalServer> $servers
  * @property-read int|null $servers_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LogicalServer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LogicalServer newQuery()
  * @method static \Illuminate\Database\Query\Builder|LogicalServer onlyTrashed()
@@ -48,25 +50,26 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|LogicalServer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|LogicalServer withTrashed()
  * @method static \Illuminate\Database\Query\Builder|LogicalServer withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class LogicalServer extends Model 
+class LogicalServer extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'logical_servers';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'name',
         'description',
         'configuration',
         'net_services',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -85,23 +88,23 @@ class LogicalServer extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function applications()
     {
-        return $this->belongsToMany(MApplication::class)->orderBy("name");
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
     public function servers()
     {
-        return $this->belongsToMany(PhysicalServer::class)->orderBy("name");
+        return $this->belongsToMany(PhysicalServer::class)->orderBy('name');
     }
 
     public function certificates()
     {
-        return $this->belongsToMany(Certificate::class)->orderBy("name");
+        return $this->belongsToMany(Certificate::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

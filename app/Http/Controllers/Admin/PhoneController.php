@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Building;
-use App\Phone;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
-
-use Illuminate\Http\Request;
+use App\Phone;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('phone_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -89,5 +85,4 @@ class PhoneController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

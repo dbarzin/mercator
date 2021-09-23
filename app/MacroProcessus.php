@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\MacroProcessus
@@ -22,8 +22,10 @@ use \DateTimeInterface;
  * @property int|null $security_need_i
  * @property int|null $security_need_a
  * @property int|null $security_need_t
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Process[] $processes
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Process> $processes
  * @property-read int|null $processes_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|MacroProcessus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MacroProcessus newQuery()
  * @method static \Illuminate\Database\Query\Builder|MacroProcessus onlyTrashed()
@@ -42,25 +44,26 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|MacroProcessus whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|MacroProcessus withTrashed()
  * @method static \Illuminate\Database\Query\Builder|MacroProcessus withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class MacroProcessus extends Model 
+class MacroProcessus extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'macro_processuses';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'name',
         'description',
         'io_elements',
         'owner',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -77,13 +80,13 @@ class MacroProcessus extends Model
         'deleted_at',
     ];
 
+    public function processes()
+    {
+        return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy('identifiant');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function processes()
-    {
-        return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy("identifiant");
     }
 }

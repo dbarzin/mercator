@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\MacroProcessus;
-use App\Process;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-
-use Illuminate\Http\Request;
+use App\MacroProcessus;
+use App\Process;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends Controller
@@ -31,9 +28,9 @@ class MacroProcessusController extends Controller
 
         $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
-        $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
-        return view('admin.macroProcessuses.create', compact('processes','owner_list'));
+        return view('admin.macroProcessuses.create', compact('processes', 'owner_list'));
     }
 
     public function store(StoreMacroProcessusRequest $request)
@@ -41,10 +38,10 @@ class MacroProcessusController extends Controller
         $macroProcessus = MacroProcessus::create($request->all());
 
         Process::where('macroprocess_id', $macroProcessus->id)
-              ->update(['macroprocess_id' => null]);
+            ->update(['macroprocess_id' => null]);
 
         Process::whereIn('id', $request->input('processes', []))
-              ->update(['macroprocess_id' => $macroProcessus->id]);
+            ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return redirect()->route('admin.macro-processuses.index');
     }
@@ -55,13 +52,14 @@ class MacroProcessusController extends Controller
 
         $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
-        $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
         $macroProcessus->load('processes');
 
-        return view('admin.macroProcessuses.edit', 
-            compact('processes', 'macroProcessus','owner_list')
-            );
+        return view(
+            'admin.macroProcessuses.edit',
+            compact('processes', 'macroProcessus', 'owner_list')
+        );
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
@@ -70,10 +68,10 @@ class MacroProcessusController extends Controller
 
         // $macroProcessus->processes()->sync($request->input('processes', []));
         Process::where('macroprocess_id', $macroProcessus->id)
-              ->update(['macroprocess_id' => null]);
+            ->update(['macroprocess_id' => null]);
 
         Process::whereIn('id', $request->input('processes', []))
-              ->update(['macroprocess_id' => $macroProcessus->id]);
+            ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return redirect()->route('admin.macro-processuses.index');
     }
@@ -102,5 +100,4 @@ class MacroProcessusController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

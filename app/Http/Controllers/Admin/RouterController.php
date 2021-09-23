@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Router;
-use App\NetworkSwitch;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
-
-use Illuminate\Http\Request;
+use App\NetworkSwitch;
+use App\Router;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class RouterController extends Controller
@@ -31,7 +28,7 @@ class RouterController extends Controller
 
         $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.create',compact('network_switches'));
+        return view('admin.routers.create', compact('network_switches'));
     }
 
     public function store(StoreRouterRequest $request)
@@ -48,7 +45,7 @@ class RouterController extends Controller
 
         $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.edit', compact('router','network_switches'));
+        return view('admin.routers.edit', compact('router', 'network_switches'));
     }
 
     public function update(UpdateRouterRequest $request, Router $router)
@@ -80,5 +77,4 @@ class RouterController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Network;
-use App\Subnetwork;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
-
-use Illuminate\Http\Request;
+use App\Network;
+use App\Subnetwork;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class NetworkController extends Controller
@@ -87,5 +84,4 @@ class NetworkController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

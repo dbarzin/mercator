@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Man
@@ -15,10 +15,12 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Lan[] $lans
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Lan> $lans
  * @property-read int|null $lans_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Wan[] $mansWans
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Wan> $mansWans
  * @property-read int|null $mans_wans_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Man newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Man newQuery()
  * @method static \Illuminate\Database\Query\Builder|Man onlyTrashed()
@@ -30,6 +32,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Man whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Man withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Man withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Man extends Model
@@ -55,18 +58,18 @@ class Man extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function mansWans()
     {
-        return $this->belongsToMany(Wan::class)->orderBy("name");
+        return $this->belongsToMany(Wan::class)->orderBy('name');
     }
 
     public function lans()
     {
-        return $this->belongsToMany(Lan::class)->orderBy("name");
+        return $this->belongsToMany(Lan::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

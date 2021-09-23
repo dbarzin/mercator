@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Entity
@@ -18,18 +18,20 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Relation[] $destinationRelations
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Relation> $destinationRelations
  * @property-read int|null $destination_relations_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $entitiesMApplications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $entitiesMApplications
  * @property-read int|null $entities_m_applications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Process[] $entitiesProcesses
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Process> $entitiesProcesses
  * @property-read int|null $entities_processes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Database[] $databases
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Database> $databases
  * @property-read int|null $entity_resp_databases_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $applications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $applications
  * @property-read int|null $entity_resp_m_applications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Relation[] $sourceRelations
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Relation> $sourceRelations
  * @property-read int|null $source_relations_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Entity newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Entity newQuery()
  * @method static \Illuminate\Database\Query\Builder|Entity onlyTrashed()
@@ -44,6 +46,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Entity whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Entity withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Entity withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Entity extends Model
@@ -52,17 +55,17 @@ class Entity extends Model
 
     public $table = 'entities';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     public static $searchable = [
         'name',
         'description',
         'security_level',
         'contact_point',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -74,11 +77,6 @@ class Entity extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 
     public function databases()
     {
@@ -108,5 +106,10 @@ class Entity extends Model
     public function entitiesProcesses()
     {
         return $this->belongsToMany(Process::class)->orderBy('identifiant');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Bay;
 use App\Building;
-use App\Site;
-use App\StorageDevice;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
-
-use Illuminate\Http\Request;
+use App\Site;
+use App\StorageDevice;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorageDeviceController extends Controller
@@ -93,5 +90,4 @@ class StorageDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

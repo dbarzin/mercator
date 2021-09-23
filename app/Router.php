@@ -2,12 +2,10 @@
 
 namespace App;
 
-use App\NetworkSwitches;
-
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Router
@@ -19,6 +17,7 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Router newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Router newQuery()
  * @method static \Illuminate\Database\Query\Builder|Router onlyTrashed()
@@ -32,9 +31,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Router whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Router withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Router withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Router extends Model 
+class Router extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -73,5 +73,4 @@ class Router extends Model
         return $this->hasMany(NetworkSwitches::class, 'router_id', 'id');
     }
     */
-
 }

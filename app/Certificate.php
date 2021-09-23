@@ -2,14 +2,13 @@
 
 namespace App;
 
-use Carbon\Carbon;
-
 use App\Traits\Auditable;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
-class Certificate extends Model 
+class Certificate extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -18,7 +17,7 @@ class Certificate extends Model
     public static $searchable = [
         'name',
         'description',
-        'type'
+        'type',
     ];
 
     protected $dates = [
@@ -37,11 +36,6 @@ class Certificate extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 
     public function getStartValidityAttribute($value)
     {
@@ -65,11 +59,16 @@ class Certificate extends Model
 
     public function logical_servers()
     {
-        return $this->belongsToMany(LogicalServer::class)->orderBy("name");
+        return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
     public function applications()
     {
-        return $this->belongsToMany(MApplication::class)->orderBy("name");
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

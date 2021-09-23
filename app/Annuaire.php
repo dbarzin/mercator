@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Annuaire
@@ -18,7 +18,9 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $zone_admin_id
+ *
  * @property-read \App\ZoneAdmin|null $zone_admin
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Annuaire newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Annuaire newQuery()
  * @method static \Illuminate\Database\Query\Builder|Annuaire onlyTrashed()
@@ -33,24 +35,25 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereZoneAdminId($value)
  * @method static \Illuminate\Database\Query\Builder|Annuaire withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Annuaire withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Annuaire extends Model 
+class Annuaire extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'annuaires';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     public static $searchable = [
         'name',
         'description',
         'solution',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -63,13 +66,13 @@ class Annuaire extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function zone_admin()
     {
         return $this->belongsTo(ZoneAdmin::class, 'zone_admin_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

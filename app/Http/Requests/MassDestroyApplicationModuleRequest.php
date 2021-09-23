@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\ApplicationModule;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class MassDestroyApplicationModuleRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids'   => 'required|array',
+            'ids' => 'required|array',
             'ids.*' => 'exists:application_modules,id',
         ];
     }

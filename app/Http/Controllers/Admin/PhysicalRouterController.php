@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Bay;
 use App\Building;
-use App\PhysicalRouter;
-use App\Site;
-use App\Vlan;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
-
-use Illuminate\Http\Request;
+use App\PhysicalRouter;
+use App\Site;
+use App\Vlan;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends Controller
@@ -100,5 +97,4 @@ class PhysicalRouterController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

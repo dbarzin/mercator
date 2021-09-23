@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\PhysicalSwitch
@@ -20,9 +20,11 @@ use \DateTimeInterface;
  * @property int|null $site_id
  * @property int|null $building_id
  * @property int|null $bay_id
+ *
  * @property-read \App\Bay|null $bay
  * @property-read \App\Building|null $building
  * @property-read \App\Site|null $site
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSwitch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSwitch newQuery()
  * @method static \Illuminate\Database\Query\Builder|PhysicalSwitch onlyTrashed()
@@ -39,9 +41,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalSwitch whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|PhysicalSwitch withTrashed()
  * @method static \Illuminate\Database\Query\Builder|PhysicalSwitch withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class PhysicalSwitch extends Model 
+class PhysicalSwitch extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -71,11 +74,6 @@ class PhysicalSwitch extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function site()
     {
         return $this->belongsTo(Site::class, 'site_id');
@@ -89,5 +87,10 @@ class PhysicalSwitch extends Model
     public function bay()
     {
         return $this->belongsTo(Bay::class, 'bay_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

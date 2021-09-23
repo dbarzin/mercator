@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Operation
@@ -16,12 +16,14 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Actor[] $actors
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Actor> $actors
  * @property-read int|null $actors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $operationsActivities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Activity> $operationsActivities
  * @property-read int|null $operations_activities_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Task> $tasks
  * @property-read int|null $tasks_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Operation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Operation newQuery()
  * @method static \Illuminate\Database\Query\Builder|Operation onlyTrashed()
@@ -34,9 +36,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Operation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Operation withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Operation withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Operation extends Model 
+class Operation extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -61,23 +64,23 @@ class Operation extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function operationsActivities()
     {
-        return $this->belongsToMany(Activity::class)->orderBy("name");
+        return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
     public function actors()
     {
-        return $this->belongsToMany(Actor::class)->orderBy("name");
+        return $this->belongsToMany(Actor::class)->orderBy('name');
     }
 
     public function tasks()
     {
-        return $this->belongsToMany(Task::class)->orderBy("nom");
+        return $this->belongsToMany(Task::class)->orderBy('nom');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

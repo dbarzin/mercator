@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Phone
@@ -20,8 +20,10 @@ use \DateTimeInterface;
  * @property int|null $site_id
  * @property int|null $building_id
  * @property int|null $physical_switch_id
+ *
  * @property-read \App\Building|null $building
  * @property-read \App\Site|null $site
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Phone newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Phone newQuery()
  * @method static \Illuminate\Database\Query\Builder|Phone onlyTrashed()
@@ -38,9 +40,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Phone whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Phone withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Phone withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Phone extends Model 
+class Phone extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -68,11 +71,6 @@ class Phone extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-    
     public function site()
     {
         return $this->belongsTo(Site::class, 'site_id');
@@ -81,5 +79,10 @@ class Phone extends Model
     public function building()
     {
         return $this->belongsTo(Building::class, 'building_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

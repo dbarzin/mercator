@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Information;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +18,17 @@ class StoreInformationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:information',
                 'unique:information,name,NULL,id,deleted_at,NULL',
             ],
-            'processes.*'   => [
+            'processes.*' => [
                 'integer',
             ],
-            'processes'     => [
+            'processes' => [
                 'array',
             ],
             'security_need' => [

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Building;
-use App\Site;
-use App\Workstation;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-
-use Illuminate\Http\Request;
+use App\Site;
+use App\Workstation;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
@@ -39,7 +36,7 @@ class WorkstationController extends Controller
 
     public function store(StoreWorkstationRequest $request)
     {
-        $workstation = Workstation::create($request->all());
+        Workstation::create($request->all());
 
         return redirect()->route('admin.workstations.index');
     }
@@ -88,5 +85,4 @@ class WorkstationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

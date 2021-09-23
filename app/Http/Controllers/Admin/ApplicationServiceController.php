@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-
-use Illuminate\Http\Request;
+use App\MApplication;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationServiceController extends Controller
@@ -32,10 +29,12 @@ class ApplicationServiceController extends Controller
 
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
-        $exposition_list = ApplicationService::select('exposition')->where("exposition","<>",null)->distinct()->orderBy('exposition')->pluck('exposition');
+        $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
 
-        return view('admin.applicationServices.create', 
-                        compact('modules','applications','exposition_list'));
+        return view(
+            'admin.applicationServices.create',
+            compact('modules', 'applications', 'exposition_list')
+        );
     }
 
     public function store(StoreApplicationServiceRequest $request)
@@ -53,12 +52,14 @@ class ApplicationServiceController extends Controller
 
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
-        $exposition_list = ApplicationService::select('exposition')->where("exposition","<>",null)->distinct()->orderBy('exposition')->pluck('exposition');
+        $exposition_list = ApplicationService::select('exposition')->where('exposition', '<>', null)->distinct()->orderBy('exposition')->pluck('exposition');
 
-        $applicationService->load('modules','applications');
+        $applicationService->load('modules', 'applications');
 
-        return view('admin.applicationServices.edit', 
-            compact('modules', 'applications', 'exposition_list', 'applicationService'));
+        return view(
+            'admin.applicationServices.edit',
+            compact('modules', 'applications', 'exposition_list', 'applicationService')
+        );
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)

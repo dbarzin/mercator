@@ -12,7 +12,6 @@ use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
 use App\MApplication;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class FluxController extends Controller

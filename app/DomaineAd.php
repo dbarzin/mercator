@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\DomaineAd
@@ -20,8 +20,10 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\ForestAd[] $domainesForestAds
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ForestAd> $domainesForestAds
  * @property-read int|null $domaines_forest_ads_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DomaineAd newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DomaineAd newQuery()
  * @method static \Illuminate\Database\Query\Builder|DomaineAd onlyTrashed()
@@ -38,9 +40,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|DomaineAd whereUserCount($value)
  * @method static \Illuminate\Database\Query\Builder|DomaineAd withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DomaineAd withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class DomaineAd extends Model 
+class DomaineAd extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -69,13 +72,13 @@ class DomaineAd extends Model
         'deleted_at',
     ];
 
+    public function domainesForestAds()
+    {
+        return $this->belongsToMany(ForestAd::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-    
-    public function domainesForestAds()
-    {
-        return $this->belongsToMany(ForestAd::class)->orderBy("name");
     }
 }

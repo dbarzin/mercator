@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\StorageDevice
@@ -20,9 +20,11 @@ use \DateTimeInterface;
  * @property int|null $building_id
  * @property int|null $bay_id
  * @property int|null $physical_switch_id
+ *
  * @property-read \App\Bay|null $bay
  * @property-read \App\Building|null $building
  * @property-read \App\Site|null $site
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|StorageDevice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StorageDevice newQuery()
  * @method static \Illuminate\Database\Query\Builder|StorageDevice onlyTrashed()
@@ -39,9 +41,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|StorageDevice whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|StorageDevice withTrashed()
  * @method static \Illuminate\Database\Query\Builder|StorageDevice withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class StorageDevice extends Model 
+class StorageDevice extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -70,11 +73,6 @@ class StorageDevice extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-    
     public function site()
     {
         return $this->belongsTo(Site::class, 'site_id');
@@ -88,5 +86,10 @@ class StorageDevice extends Model
     public function bay()
     {
         return $this->belongsTo(Bay::class, 'bay_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

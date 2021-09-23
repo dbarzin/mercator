@@ -10,7 +10,6 @@ use App\Lan;
 use App\Man;
 use App\Wan;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WanController extends Controller

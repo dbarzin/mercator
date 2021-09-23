@@ -9,7 +9,6 @@ use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
 use App\Network;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExternalConnectedEntityController extends Controller

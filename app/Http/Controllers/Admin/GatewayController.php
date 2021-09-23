@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Gateway;
-use App\Subnetwork;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
-
+use App\Subnetwork;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GatewayController extends Controller
@@ -39,7 +36,7 @@ class GatewayController extends Controller
         $gateway = Gateway::create($request->all());
 
         Subnetwork::whereIn('id', $request->input('subnetworks', []))
-              ->update(['gateway_id' => $gateway->id]);
+            ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }
@@ -50,7 +47,7 @@ class GatewayController extends Controller
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.gateways.edit', compact('gateway','subnetworks'));
+        return view('admin.gateways.edit', compact('gateway', 'subnetworks'));
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)
@@ -58,10 +55,10 @@ class GatewayController extends Controller
         $gateway->update($request->all());
 
         Subnetwork::where('gateway_id', $gateway->id)
-              ->update(['gateway_id' => null]);
+            ->update(['gateway_id' => null]);
 
         Subnetwork::whereIn('id', $request->input('subnetworks', []))
-              ->update(['gateway_id' => $gateway->id]);
+            ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }
@@ -90,5 +87,4 @@ class GatewayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

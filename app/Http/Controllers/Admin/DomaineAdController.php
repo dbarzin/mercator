@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\DomaineAd;
 use App\ForestAd;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-
-use Illuminate\Http\Request;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DomaineAdController extends Controller
@@ -46,7 +43,7 @@ class DomaineAdController extends Controller
         $domainesForestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $domaineAd->load('domainesForestAds');
 
-        return view('admin.domaineAds.edit', compact('domaineAd','domainesForestAds'));
+        return view('admin.domaineAds.edit', compact('domaineAd', 'domainesForestAds'));
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
@@ -81,5 +78,4 @@ class DomaineAdController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

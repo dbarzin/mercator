@@ -1,7 +1,7 @@
 <?php
- 
+
 namespace App\Console\Commands;
- 
+
 use Illuminate\Console\Command;
 
 class Cleanup extends Command
@@ -12,14 +12,14 @@ class Cleanup extends Command
      * @var string
      */
     protected $signature = 'mercator:cleanup';
-     
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Cleanup temporary files';
-     
+
     /**
      * Create a new command instance.
      *
@@ -29,7 +29,7 @@ class Cleanup extends Command
     {
         parent::__construct();
     }
-     
+
     /**
      * Execute the console command.
      *
@@ -39,19 +39,19 @@ class Cleanup extends Command
     {
         // clean reports
         $folder = storage_path('app/reports');
-        $files = glob($folder . '/*.docx'); 
-        $cnt=0;
-        foreach($files as $file){ 
-          if(is_file($file)) {
-            unlink($file); 
-            $cnt++;
-          }
+        $files = glob($folder . '/*.docx');
+        $cnt = 0;
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+                $cnt++;
+            }
         }
         $this->info('Removed ' . $cnt . ' files from ' . $folder);
 
         // clean laravel.log
         // unlink(storage_path('logs').'/laravel.log');
-        file_put_contents(storage_path('logs').'/laravel.log', "");
+        file_put_contents(storage_path('logs').'/laravel.log', '');
         $this->info('Laravel logs cleared.');
     }
 }

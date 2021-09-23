@@ -8,8 +8,6 @@ use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
@@ -75,5 +73,4 @@ class SiteController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

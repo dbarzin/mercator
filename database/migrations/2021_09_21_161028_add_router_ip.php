@@ -13,7 +13,7 @@ class AddRouterIp extends Migration
      */
     public function up()
     {
-        Schema::table('routers', function(Blueprint $table) {
+        Schema::table('routers', function (Blueprint $table) {
             $table->string('ip_addresses')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddRouterIp extends Migration
      */
     public function down()
     {
-        Schema::table('routers', function(Blueprint $table) {
+        Schema::table('routers', function (Blueprint $table) {
             $table->dropColumn('ip_addresses');
         });
     }

@@ -12,7 +12,7 @@ class SetLocale
         if (request('change_language')) {
             session()->put('language', request('change_language'));
             $language = request('change_language');
-            // $user->languge = $language;
+        // $user->languge = $language;
         } elseif (isset(Auth::User()->language)) {
             $language = Auth::User()->language;
         } elseif (session('language')) {

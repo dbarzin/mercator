@@ -8,7 +8,6 @@ use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
 use App\Lan;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class LanController extends Controller

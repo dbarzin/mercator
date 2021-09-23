@@ -8,7 +8,6 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Task;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
@@ -31,7 +30,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->all());
+        Task::create($request->all());
 
         return redirect()->route('admin.tasks.index');
     }

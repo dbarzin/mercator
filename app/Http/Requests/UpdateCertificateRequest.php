@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Gate;
-use App\Certificate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +31,7 @@ class UpdateCertificateRequest extends FormRequest
             'end_validity' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
-                'after:start_validity'
+                'after:start_validity',
             ],
         ];
     }

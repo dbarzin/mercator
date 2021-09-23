@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Information;
-use App\Process;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
-
-use Illuminate\Http\Request;
+use App\Information;
+use App\Process;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller
@@ -85,5 +82,4 @@ class InformationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

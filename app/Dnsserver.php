@@ -30,7 +30,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Query\Builder|Dnsserver withoutTrashed()
  * @mixin \Eloquent
  */
-class Dnsserver extends Model 
+class Dnsserver extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -59,5 +59,4 @@ class Dnsserver extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 }

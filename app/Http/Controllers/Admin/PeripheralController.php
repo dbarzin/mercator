@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Bay;
 use App\Building;
-use App\Peripheral;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-
-use Illuminate\Http\Request;
+use App\Peripheral;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -94,5 +90,4 @@ class PeripheralController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

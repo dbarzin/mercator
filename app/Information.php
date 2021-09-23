@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Information
@@ -25,10 +25,12 @@ use \DateTimeInterface;
  * @property int|null $security_need_i
  * @property int|null $security_need_a
  * @property int|null $security_need_t
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Database[] $informationsDatabases
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Database> $informationsDatabases
  * @property-read int|null $informations_databases_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Process[] $processes
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Process> $processes
  * @property-read int|null $processes_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Information newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Information newQuery()
  * @method static \Illuminate\Database\Query\Builder|Information onlyTrashed()
@@ -50,25 +52,26 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Information withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Information withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Information extends Model 
+class Information extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'information';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'name',
         'description',
         'owner',
         'constraints',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -88,18 +91,18 @@ class Information extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function informationsDatabases()
     {
-        return $this->belongsToMany(Database::class)->orderBy("name");
+        return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class)->orderBy("identifiant");
+        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

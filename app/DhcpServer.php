@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\DhcpServer
@@ -16,6 +16,7 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DhcpServer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DhcpServer newQuery()
  * @method static \Illuminate\Database\Query\Builder|DhcpServer onlyTrashed()
@@ -28,9 +29,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|DhcpServer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|DhcpServer withTrashed()
  * @method static \Illuminate\Database\Query\Builder|DhcpServer withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class DhcpServer extends Model 
+class DhcpServer extends Model
 {
     use SoftDeletes, Auditable;
 

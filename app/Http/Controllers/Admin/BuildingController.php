@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Building;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-
-use Illuminate\Http\Request;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
@@ -37,9 +34,9 @@ class BuildingController extends Controller
     public function store(StoreBuildingRequest $request)
     {
         $building = Building::create($request->all());
-        $building->camera = $request->has("camera");
-        $building->badge = $request->has("badge");
-        $building-> save();
+        $building->camera = $request->has('camera');
+        $building->badge = $request->has('badge');
+        $building->save();
 
         return redirect()->route('admin.buildings.index');
     }
@@ -57,8 +54,8 @@ class BuildingController extends Controller
 
     public function update(UpdateBuildingRequest $request, Building $building)
     {
-        $building->camera = $request->has("camera");
-        $building->badge = $request->has("badge");
+        $building->camera = $request->has('camera');
+        $building->badge = $request->has('badge');
         $building->update($request->all());
 
         return redirect()->route('admin.buildings.index');
@@ -88,5 +85,4 @@ class BuildingController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

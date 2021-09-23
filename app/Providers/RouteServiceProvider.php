@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+
+    /**
+     * The path to the "home" route for your application.
+     */
+    public const HOME = '/home';
     /**
      * This namespace is applied to your controller routes.
      *
@@ -17,21 +22,12 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = '';
 
     /**
-     * The path to the "home" route for your application.
-     *
-     * @var string
-     */
-    public const HOME = '/home';
-
-    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
-
         parent::boot();
     }
 
@@ -46,7 +42,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+    
     }
 
     /**
@@ -59,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->group(base_path('routes/web.php'));
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -72,7 +68,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->group(base_path('routes/api.php'));
     }
 }

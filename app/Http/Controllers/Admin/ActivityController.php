@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Activity;
-use App\Process;
-use App\Operation;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-
-use Illuminate\Http\Request;
+use App\Operation;
+use App\Process;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
@@ -33,7 +30,7 @@ class ActivityController extends Controller
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('identifiant', 'id');
 
-        return view('admin.activities.create', compact('operations','processes'));
+        return view('admin.activities.create', compact('operations', 'processes'));
     }
 
     public function store(StoreActivityRequest $request)
@@ -52,7 +49,7 @@ class ActivityController extends Controller
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
 
-        $activity->load('operations','activitiesProcesses');
+        $activity->load('operations', 'activitiesProcesses');
 
         return view('admin.activities.edit', compact('operations', 'activity', 'processes'));
     }
@@ -90,5 +87,4 @@ class ActivityController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

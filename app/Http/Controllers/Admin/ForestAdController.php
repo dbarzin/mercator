@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\DomaineAd;
 use App\ForestAd;
-use App\ZoneAdmin;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyForestAdRequest;
 use App\Http\Requests\StoreForestAdRequest;
 use App\Http\Requests\UpdateForestAdRequest;
-
-use Illuminate\Http\Request;
+use App\ZoneAdmin;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ForestAdController extends Controller
@@ -90,5 +87,4 @@ class ForestAdController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

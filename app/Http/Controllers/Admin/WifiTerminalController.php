@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\Bay;
 use App\Building;
-use App\Site;
-use App\WifiTerminal;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
-
-use Illuminate\Http\Request;
+use App\Site;
+use App\WifiTerminal;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('wifi_terminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,7 +36,7 @@ class WifiTerminalController extends Controller
 
     public function store(StoreWifiTerminalRequest $request)
     {
-        $wifiTerminal = WifiTerminal::create($request->all());
+        WifiTerminal::create($request->all());
 
         return redirect()->route('admin.wifi-terminals.index');
     }
@@ -90,5 +85,4 @@ class WifiTerminalController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

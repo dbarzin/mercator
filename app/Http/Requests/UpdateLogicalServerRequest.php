@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\LogicalServer;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class UpdateLogicalServerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
@@ -34,7 +33,7 @@ class UpdateLogicalServerRequest extends FormRequest
             'servers.*' => [
                 'integer',
             ],
-            'servers'   => [
+            'servers' => [
                 'array',
             ],
             'address_ip' => [
@@ -42,8 +41,8 @@ class UpdateLogicalServerRequest extends FormRequest
                 // 'regex:/^\*$|^(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3}(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
                 // only ipv4 :
                 'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
-                'nullable'
-            ]
+                'nullable',
+            ],
 
         ];
     }

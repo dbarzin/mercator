@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Flux;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +18,11 @@ class UpdateFluxRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 
-                ['min:3','max:64','required'],
+            'name' => ['min:3','max:64','required'],
             /*
-            'application_source_id' => 
+            'application_source_id' =>
                 ['required_without_all:service_source_id,module_source_id,database_source_id'],
-            'service_source_id' => 
+            'service_source_id' =>
                 ['required_without_all:application_source_id,module_source_id,database_source_id'],
             'module_source_id' =>
                 ['required_without_all:application_source_id,service_source_id,database_source_id'],

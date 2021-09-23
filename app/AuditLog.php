@@ -2,8 +2,8 @@
 
 namespace App;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use \DateTimeInterface;
 
 /**
  * App\AuditLog
@@ -17,6 +17,7 @@ use \DateTimeInterface;
  * @property string|null $host
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog query()
@@ -29,6 +30,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog whereSubjectType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AuditLog whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class AuditLog extends Model

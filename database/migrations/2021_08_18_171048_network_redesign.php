@@ -13,15 +13,15 @@ class NetworkRedesign extends Migration
      */
     public function up()
     {
-        Schema::table('subnetworks', function(Blueprint $table) {
+        Schema::table('subnetworks', function (Blueprint $table) {
             // add column zone in subnetworks
             $table->string('zone')->nullable();
             // add link to vlan in subnetwork
             $table->unsignedInteger('vlan_id')->nullable()->index('vlan_fk_6844934');
-            $table->foreign('vlan_id', 'vlan_fk_6844934')->references('id')->on('vlans')->onUpdate('NO ACTION')->onDelete('NO ACTION');        
+            $table->foreign('vlan_id', 'vlan_fk_6844934')->references('id')->on('vlans')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             // add link to network in subnetwork
             $table->unsignedInteger('network_id')->nullable()->index('network_fk_5476544');
-            $table->foreign('network_id', 'network_fk_5476544')->references('id')->on('networks')->onUpdate('NO ACTION')->onDelete('NO ACTION');        
+            $table->foreign('network_id', 'network_fk_5476544')->references('id')->on('networks')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
         /* to process later...
@@ -50,7 +50,7 @@ class NetworkRedesign extends Migration
      */
     public function down()
     {
-        Schema::table('subnetworks', function(Blueprint $table) {
+        Schema::table('subnetworks', function (Blueprint $table) {
             // remove column zone in subnetworks
             $table->dropColumn('zone');
             // remove link to vlan in subnetwork
@@ -60,5 +60,5 @@ class NetworkRedesign extends Migration
             $table->dropForeign('network_fk_5476544');
             $table->dropColumn('network_id');
         });
-        }
+    }
 }

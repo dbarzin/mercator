@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\ApplicationModule
@@ -16,12 +16,14 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $moduleDestFluxes
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $moduleDestFluxes
  * @property-read int|null $module_dest_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $moduleSourceFluxes
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $moduleSourceFluxes
  * @property-read int|null $module_source_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\ApplicationService[] $modulesApplicationServices
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $modulesApplicationServices
  * @property-read int|null $modules_application_services_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|ApplicationModule newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ApplicationModule newQuery()
  * @method static \Illuminate\Database\Query\Builder|ApplicationModule onlyTrashed()
@@ -34,6 +36,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|ApplicationModule whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|ApplicationModule withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ApplicationModule withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class ApplicationModule extends Model
@@ -61,23 +64,23 @@ class ApplicationModule extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function moduleSourceFluxes()
     {
-        return $this->hasMany(Flux::class, 'module_source_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'module_source_id', 'id')->orderBy('name');
     }
 
     public function moduleDestFluxes()
     {
-        return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy('name');
     }
 
     public function modulesApplicationServices()
     {
-        return $this->belongsToMany(ApplicationService::class)->orderBy("name");
+        return $this->belongsToMany(ApplicationService::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Vlan
@@ -20,8 +20,10 @@ use \DateTimeInterface;
  * @property string|null $mask
  * @property string|null $zone
  * @property string|null $gateway
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhysicalRouter[] $vlanPhysicalRouters
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\PhysicalRouter> $vlanPhysicalRouters
  * @property-read int|null $vlan_physical_routers_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Vlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Vlan newQuery()
  * @method static \Illuminate\Database\Query\Builder|Vlan onlyTrashed()
@@ -38,6 +40,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Vlan whereZone($value)
  * @method static \Illuminate\Database\Query\Builder|Vlan withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Vlan withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Vlan extends Model
@@ -65,19 +68,18 @@ class Vlan extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function vlanPhysicalRouters()
     {
-        return $this->belongsToMany(PhysicalRouter::class)->orderBy("name");
+        return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
     public function subnetworks()
     {
-        return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy("name");
+        return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');
     }
 
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

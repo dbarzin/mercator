@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Site
@@ -16,20 +16,22 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Building[] $siteBuildings
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Building> $siteBuildings
  * @property-read int|null $site_buildings_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Peripheral[] $sitePeripherals
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Peripheral> $sitePeripherals
  * @property-read int|null $site_peripherals_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Phone[] $sitePhones
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Phone> $sitePhones
  * @property-read int|null $site_phones_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhysicalServer[] $sitePhysicalServers
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\PhysicalServer> $sitePhysicalServers
  * @property-read int|null $site_physical_servers_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhysicalSwitch[] $sitePhysicalSwitches
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\PhysicalSwitch> $sitePhysicalSwitches
  * @property-read int|null $site_physical_switches_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\StorageDevice[] $siteStorageDevices
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\StorageDevice> $siteStorageDevices
  * @property-read int|null $site_storage_devices_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Workstation[] $siteWorkstations
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Workstation> $siteWorkstations
  * @property-read int|null $site_workstations_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Site newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Site newQuery()
  * @method static \Illuminate\Database\Query\Builder|Site onlyTrashed()
@@ -42,9 +44,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Site whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Site withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Site withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Site extends Model 
+class Site extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -68,11 +71,6 @@ class Site extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 
     public function siteBuildings()
     {
@@ -107,5 +105,10 @@ class Site extends Model
     public function sitePhysicalSwitches()
     {
         return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

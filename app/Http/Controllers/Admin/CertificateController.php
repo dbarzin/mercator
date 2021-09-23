@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
 use App\Certificate;
-use App\LogicalServer;
-use App\MApplication;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-
-use Illuminate\Http\Request;
+use App\LogicalServer;
+use App\MApplication;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class CertificateController extends Controller
@@ -35,18 +31,20 @@ class CertificateController extends Controller
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
-        $type_list = Certificate::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Certificate::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.certificates.create', 
-            compact('logical_servers','applications','type_list'));
+        return view(
+            'admin.certificates.create',
+            compact('logical_servers', 'applications', 'type_list')
+        );
     }
 
     public function store(StoreCertificateRequest $request)
     {
         $certificate = Certificate::create($request->all());
 
-        $certificate->logical_servers()->sync($request->input('logical_servers', []));        
-        $certificate->applications()->sync($request->input('applications', []));        
+        $certificate->logical_servers()->sync($request->input('logical_servers', []));
+        $certificate->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.certificates.index');
     }
@@ -59,10 +57,12 @@ class CertificateController extends Controller
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
-        $type_list = Certificate::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $type_list = Certificate::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.certificates.edit', 
-            compact('certificate','logical_servers','type_list','applications'));
+        return view(
+            'admin.certificates.edit',
+            compact('certificate', 'logical_servers', 'type_list', 'applications')
+        );
     }
 
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
@@ -97,5 +97,4 @@ class CertificateController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\ExternalConnectedEntity
@@ -17,8 +17,10 @@ use \DateTimeInterface;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Network[] $connected_networks
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Network> $connected_networks
  * @property-read int|null $connected_networks_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity newQuery()
  * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity onlyTrashed()
@@ -32,6 +34,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|ExternalConnectedEntity whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity withTrashed()
  * @method static \Illuminate\Database\Query\Builder|ExternalConnectedEntity withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class ExternalConnectedEntity extends Model
@@ -40,16 +43,16 @@ class ExternalConnectedEntity extends Model
 
     public $table = 'external_connected_entities';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
     public static $searchable = [
         'name',
         'responsible_sec',
         'contacts',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -61,13 +64,13 @@ class ExternalConnectedEntity extends Model
         'deleted_at',
     ];
 
+    public function connected_networks()
+    {
+        return $this->belongsToMany(Network::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function connected_networks()
-    {
-        return $this->belongsToMany(Network::class)->orderBy("name");
     }
 }

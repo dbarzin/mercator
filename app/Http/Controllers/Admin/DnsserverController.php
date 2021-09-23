@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
 use App\Dnsserver;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
-
-use Illuminate\Http\Request;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DnsserverController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('dnsserver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -75,5 +71,4 @@ class DnsserverController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

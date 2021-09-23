@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\NetworkSwitch;
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
-
-use Illuminate\Http\Request;
+use App\NetworkSwitch;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class NetworkSwitchController extends Controller
@@ -74,5 +71,4 @@ class NetworkSwitchController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

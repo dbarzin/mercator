@@ -33,8 +33,9 @@ class ConfigRight extends Migration
         // find Administrator Role
         $admin = Role::find(1);
         // admin might not exists already at initial creation
-        if ($admin!=null)            
+        if ($admin!=null) {
             $admin->permissions()->sync($admin_permissions->pluck('id'));
+        }
     }
 
     /**
@@ -48,7 +49,8 @@ class ConfigRight extends Migration
 
         $admin_permissions = Permission::all();
         $admin=Role::find(1);
-        if($admin!=null)
-            $admin->permissions()->sync($admin_permissions->pluck('id'));        
+        if ($admin!=null) {
+            $admin->permissions()->sync($admin_permissions->pluck('id'));
+        }
     }
 }

@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\PhysicalRouter
@@ -20,11 +20,13 @@ use \DateTimeInterface;
  * @property int|null $building_id
  * @property int|null $bay_id
  * @property string|null $name
+ *
  * @property-read \App\Bay|null $bay
  * @property-read \App\Building|null $building
  * @property-read \App\Site|null $site
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Vlan[] $vlans
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Vlan> $vlans
  * @property-read int|null $vlans_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter newQuery()
  * @method static \Illuminate\Database\Query\Builder|PhysicalRouter onlyTrashed()
@@ -41,9 +43,10 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|PhysicalRouter withTrashed()
  * @method static \Illuminate\Database\Query\Builder|PhysicalRouter withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class PhysicalRouter extends Model 
+class PhysicalRouter extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -73,11 +76,6 @@ class PhysicalRouter extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function site()
     {
         return $this->belongsTo(Site::class, 'site_id');
@@ -95,6 +93,11 @@ class PhysicalRouter extends Model
 
     public function vlans()
     {
-        return $this->belongsToMany(Vlan::class)->orderBy("name");;
+        return $this->belongsToMany(Vlan::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

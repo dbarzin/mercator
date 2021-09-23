@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Subnetwork;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,16 +21,16 @@ class StoreSubnetworkRequest extends FormRequest
             'name' => [
                 'min:3',
                 'max:32',
-                'required',                
+                'required',
                 'unique:subnetworks,name,NULL,id,deleted_at,NULL',
             ],
             'address' => [
                 'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[ ]*\/[ ]*[0-9][0-9]?$/i',
-                'nullable'
+                'nullable',
             ],
             'default_gateway' => [
                 'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i',
-                'nullable'
+                'nullable',
             ],
         ];
     }

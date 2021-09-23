@@ -3,9 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
 /**
  * App\Database
@@ -24,17 +24,19 @@ use \DateTimeInterface;
  * @property int|null $security_need_i
  * @property int|null $security_need_a
  * @property int|null $security_need_t
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $databaseDestFluxes
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $databaseDestFluxes
  * @property-read int|null $database_dest_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Flux[] $databaseSourceFluxes
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $databaseSourceFluxes
  * @property-read int|null $database_source_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\MApplication[] $databasesMApplications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $databasesMApplications
  * @property-read int|null $databases_m_applications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity[] $entities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Entity> $entities
  * @property-read int|null $entities_count
  * @property-read \App\Entity|null $entity_resp
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Information[] $informations
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Information> $informations
  * @property-read int|null $informations_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Database newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Database newQuery()
  * @method static \Illuminate\Database\Query\Builder|Database onlyTrashed()
@@ -55,25 +57,26 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Database whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Database withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Database withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Database extends Model 
+class Database extends Model
 {
     use SoftDeletes, Auditable;
 
     public $table = 'databases';
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public static $searchable = [
         'name',
         'description',
         'responsible',
         'type',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
@@ -92,29 +95,24 @@ class Database extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function databaseSourceFluxes()
     {
-        return $this->hasMany(Flux::class, 'database_source_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'database_source_id', 'id')->orderBy('name');
     }
 
     public function databaseDestFluxes()
     {
-        return $this->hasMany(Flux::class, 'database_dest_id', 'id')->orderBy("name");
+        return $this->hasMany(Flux::class, 'database_dest_id', 'id')->orderBy('name');
     }
 
     public function databasesMApplications()
     {
-        return $this->belongsToMany(MApplication::class)->orderBy("name");
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
     public function entities()
     {
-        return $this->belongsToMany(Entity::class)->orderBy("name");
+        return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
     public function entity_resp()
@@ -124,6 +122,11 @@ class Database extends Model
 
     public function informations()
     {
-        return $this->belongsToMany(Information::class)->orderBy("name");
+        return $this->belongsToMany(Information::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

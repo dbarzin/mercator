@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,30 +14,33 @@ class ConfigurationController extends Controller
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get configuration
-        $mail_from=config('mercator-config.cert.mail-from');
-        $mail_to=config('mercator-config.cert.mail-to');
-        $mail_subject=config('mercator-config.cert.mail-subject');
-        $check_frequency=config('mercator-config.cert.check-frequency');
-        $expire_delay=config('mercator-config.cert.expire-delay');
+        $mail_from = config('mercator-config.cert.mail-from');
+        $mail_to = config('mercator-config.cert.mail-to');
+        $mail_subject = config('mercator-config.cert.mail-subject');
+        $check_frequency = config('mercator-config.cert.check-frequency');
+        $expire_delay = config('mercator-config.cert.expire-delay');
 
         // dd($mail_from);
 
         // Return
-        return view('admin.configuration',
-            compact('mail_from','mail_to','mail_subject','check_frequency','expire_delay'));
+        return view(
+            'admin.configuration',
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay')
+        );
     }
 
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // read request
-        $mail_from=request('mail_from');
-        $mail_to=request('mail_to');
-        $mail_subject=request('mail_subject');
-        $check_frequency=request('check_frequency');
-        $expire_delay=request('expire_delay');
+        $mail_from = request('mail_from');
+        $mail_to = request('mail_to');
+        $mail_subject = request('mail_subject');
+        $check_frequency = request('check_frequency');
+        $expire_delay = request('expire_delay');
         switch ($request->input('action')) {
-            case 'save': 
+            case 'save':
                 // put in config file
                 config(['mercator-config.cert.mail-from' => $mail_from]);
                 config(['mercator-config.cert.mail-to' => $mail_to]);
@@ -51,11 +53,11 @@ class ConfigurationController extends Controller
                 file_put_contents(config_path('mercator-config.php'), $text);
 
                 // Return
-                $msg='Configuration saved !';
+                $msg = 'Configuration saved !';
                 break;
             case 'test':
                 // send test email alert
-                $message = '<html><body><br>This is a test message !<br><br></body></html>'; 
+                $message = '<html><body><br>This is a test message !<br><br></body></html>';
 
                 // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
                 $headers[] = 'MIME-Version: 1.0';
@@ -63,13 +65,16 @@ class ConfigurationController extends Controller
 
                 // En-têtes additionnels
                 $headers[] = 'From: '. $mail_from;
-                if (mail($mail_to, 'Test: ' . $mail_subject, $message, implode("\r\n", $headers), " -f". $mail_from))
+                if (mail($mail_to, 'Test: ' . $mail_subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
-                else
+                } else {
                     $msg = 'Email sending fail.';
-            }
-        return view('admin.configuration',
-            compact('mail_from','mail_to','mail_subject','check_frequency','expire_delay'))
-            ->withErrors($msg);
+                }
         }
+        return view(
+            'admin.configuration',
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay')
+        )
+            ->withErrors($msg);
+    }
 }

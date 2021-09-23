@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
 use App\Bay;
 use App\Building;
-use App\Http\Requests\UpdatePhysicalSwitchRequest;
-use App\PhysicalSwitch;
-use App\Site;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
-
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdatePhysicalSwitchRequest;
+use App\PhysicalSwitch;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller
@@ -92,5 +88,4 @@ class PhysicalSwitchController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

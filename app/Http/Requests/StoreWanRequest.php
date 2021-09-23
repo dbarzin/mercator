@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Wan;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,20 +18,20 @@ class StoreWanRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => [
+            'name' => [
                 'min:3',
                 'max:32',
             ],
             'mans.*' => [
                 'integer',
             ],
-            'mans'   => [
+            'mans' => [
                 'array',
             ],
             'lans.*' => [
                 'integer',
             ],
-            'lans'   => [
+            'lans' => [
                 'array',
             ],
         ];
