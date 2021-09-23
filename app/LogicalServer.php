@@ -99,4 +99,9 @@ class LogicalServer extends Model
     {
         return $this->belongsToMany(PhysicalServer::class)->orderBy("name");
     }
+
+    public function certificates()
+    {
+        return $this->belongsToMany(Certificate::class)->orderBy("name");
+    }
 }

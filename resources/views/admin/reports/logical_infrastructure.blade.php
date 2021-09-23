@@ -588,17 +588,18 @@ d3.select("#graph").graphviz()
                         @foreach(explode(',',$logicalServer->address_ip) as $address) \
                             @if ($subnetwork->contains($address))\
                                 SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }} \
+                                @break\
                             @endif\
                         @endforeach\
                     @endforeach\
                 @endif\
+                @foreach($logicalServer->certificates as $certificate)\
+                    LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}\
+                @endforeach\
             @endforeach\
             @foreach($certificates as $certificate) \
                 @if ($certificate->logical_servers->count()>0)\
                     CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
-                    @foreach($certificate->logical_servers as $logical_server)\
-                        LOGICAL_SERVER{{ $logical_server->id }} -> CERT{{ $certificate->id }}\
-                    @endforeach\
                 @endif\
             @endforeach\
             @foreach($routers as $router) \
