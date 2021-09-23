@@ -13,9 +13,9 @@ return [
             "name" => "Nom",
             "name_helper" => "Nom de l'opération",
             "operations" => "Operations",
-            "operations_helper" => "Liste des opération réalisées",
+            "operations_helper" => "Liste des opérations réalisées",
             "processes" => "Processus",
-            "processes_helper" => "Liste des processus parent",
+            "processes_helper" => "Liste des processus parents",
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
@@ -94,7 +94,7 @@ return [
             "external_helper" => "ex. : solution de type Software as a Service – SaaS",
             "id" => "ID",
             "id_helper" => "",
-            "logical_servers" => "Serveurs Logiques",
+            "logical_servers" => "Serveurs logiques",
             "logical_servers_helper" => "Serveurs où est installée l'application",
             "name" => "Nom",
             "name_helper" => "",
@@ -126,7 +126,7 @@ return [
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
             "applications" => "Applications",
-            "applications_helper" => "Applications qui font partie de ce block applicatif",
+            "applications_helper" => "Applications qui font partie de ce bloc applicatif",
             "description" => "Description",
             "description_helper" => "",
             "id" => "ID",
@@ -156,7 +156,7 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Modules Applicatifs",
+        "title" => "Modules applicatifs",
         "title_short" => "Modules",
         "title_singular" => "Module Applicatif"
     ],
@@ -188,7 +188,7 @@ return [
     "application_view" => [
         "title" => "Vue des applications",
         "title_short" => "Applications",
-        "title_singular" => "Vue des application"
+        "title_singular" => "Vue des applications"
     ],
     "auditLog" => [
         "fields" => [
@@ -262,7 +262,7 @@ return [
     "database" => [
         "fields" => [
             "applications" => "Applications",
-            "applications_helper" => "Liste des application qui utilisent la base de données",
+            "applications_helper" => "Liste des applications qui utilisent la base de données",
             "created_at" => "Créé à",
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",
@@ -358,7 +358,7 @@ return [
     ],
     "ecosystem" => [
         "title" => "Vue de l'écosystème",
-        "title_short" => "Ecosystème",
+        "title_short" => "Écosystème",
         "title_singular" => "Vue écosystème"
     ],
     "entity" => [
@@ -416,7 +416,7 @@ return [
     ],
     "flux" => [
         "fields" => [
-            "application_dest" => "Application Destinataire",
+            "application_dest" => "Application destinataire",
             "application_dest_helper" => "",
             "application_source" => "Application Source",
             "application_source_helper" => "",
@@ -434,13 +434,13 @@ return [
             "description_helper" => "",
             "id" => "ID",
             "id_helper" => "",
-            "module_dest" => "Module Destinataire",
+            "module_dest" => "Module destinataire",
             "module_dest_helper" => "",
             "module_source" => "Module Source",
             "module_source_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
-            "service_dest" => "Service Destinataire",
+            "service_dest" => "Service destinataire",
             "service_dest_helper" => "",
             "service_source" => "Service Source",
             "service_source_helper" => "",
@@ -486,7 +486,7 @@ return [
             "description" => "Caractéristiques techniques",
             "description_helper" => "",
             "subnetworks" => "Sous-réseaux connectés",
-            "subnetworks_helper" => "Sous-réseaux accessibles depuis la gateway",
+            "subnetworks_helper" => "Sous-réseaux accessibles depuis la passerelle",
             "id" => "ID",
             "id_helper" => "",
             "ip" => "IP publique et privée",
@@ -510,7 +510,7 @@ return [
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
-            "descrition" => "Descrition",
+            "description" => "Descrition",
             "descrition_helper" => "",
             "id" => "ID",
             "id_helper" => "",
@@ -519,7 +519,7 @@ return [
             "owner" => "Propriétaire",
             "owner_helper" => "",
             "process" => "Processus",
-            "process_helper" => "Processus lisés",
+            "process_helper" => "Processus liés",
             "security_need" => "Besoins de sécurité (CIDT)",
             "security_need_helper" => "Besoins de sécurité de l'information",
             "sensitivity" => "Sensibilité",
@@ -558,7 +558,7 @@ return [
             "applications" => "Applications",
             "applications_helper" => "Applications installées",
             "configuration" => "Configuration",
-            "configuration_helper" => "Autres caractéritiques techniques",
+            "configuration_helper" => "Autres caractéristiques techniques",
             "cpu" => "CPU",
             "cpu_helper" => "Nombre de CPU",
             "disk" => "Disque",
@@ -577,7 +577,7 @@ return [
             "memory_helper" => "Quantité de mémoire allouée",
             "name" => "Nom",
             "name_helper" => "",
-            "net_services" => "Services réseaux actifs",
+            "net_services" => "Services réseau actifs",
             "net_services_helper" => "",
             "operating_system" => "Operating Système",
             "operating_system_helper" => "Nom et version de l'OS",
@@ -586,14 +586,14 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Serveurs Logiques",
+        "title" => "Serveurs logiques",
         "title_short" => "Serveurs",
-        "title_singular" => "Serveur Logique"
+        "title_singular" => "Serveur logique"
     ],
     "logical_infrastructure" => [
         "title" => "Vue des infrastructures logiques",
         "title_short" => "Logique",
-        "title_singular" => "Vue de l'infrastructures logique",
+        "title_singular" => "Vue de l'infrastructure logique",
         "titleshort" => ""
     ],
     "macroProcessus" => [
@@ -630,7 +630,7 @@ return [
             "deleted_at_helper" => "",
             "id" => "ID",
             "id_helper" => "",
-            "lans" => "LAN rattachés",
+            "lans" => "LANs rattachés",
             "lans_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
@@ -813,9 +813,9 @@ return [
             "vlan" => "VLAN",
             "vlan_helper" => "VLAN associés"
         ],
-        "title" => "Routeurs Physiques",
+        "title" => "Routeurs physiques",
         "title_short" => "Routeurs",
-        "title_singular" => "Routeur Physique"
+        "title_singular" => "Routeur physique"
     ],
     "physicalSecurityDevice" => [
         "fields" => [
@@ -856,7 +856,7 @@ return [
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
-            "descrition" => "Description",
+            "description" => "Description",
             "descrition_helper" => "",
             "id" => "ID",
             "id_helper" => "",
@@ -873,9 +873,9 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Serveurs Physiques",
+        "title" => "Serveurs physiques",
         "title_short" => "Serveurs",
-        "title_singular" => "Serveur Physique"
+        "title_singular" => "Serveur physique"
     ],
     "physicalSwitch" => [
         "fields" => [
@@ -925,14 +925,14 @@ return [
             "id_helper" => "",
             "identifiant" => "Identifiant",
             "identifiant_helper" => "",
-            "in_out" => "Elements entrants et sortants",
+            "in_out" => "Éléments entrants et sortants",
             "in_out_helper" => "",
             "informations" => "Informations",
-            "informations_helper" => "Information utilisées par le process",
+            "informations_helper" => "Informations utilisées par le process",
             "macroprocessus" => "Macro-Processus",
             "macroprocessus_helper" => "Fait partie du macro-processus",
             "owner" => "Responsable",
-            "owner_helper" => "Responasble du processus",
+            "owner_helper" => "Responsable du processus",
             "security_need" => "Besoins de sécurité (CIDT)",
             "security_need_helper" => "Besoins de sécurité du processus",
             "updated_at" => "Remplacé à",
@@ -1007,7 +1007,7 @@ return [
             "name_helper" => "",
             "network_switches" => "Commutateurs",
             "network_switches_helper" => "Listes des commutateurs connectés",
-            "rules" => "Régles de filtrage réseau",
+            "rules" => "Règles de filtrage réseau",
             "rules_helper" => "",
             "ip_addresses" => "Adresses IP du routeur",
             "ip_addresses_helper" => "Filtre : xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx, ...",
@@ -1035,7 +1035,7 @@ return [
         ],
         "title" => "Equipements de sécurité",
         "title_short" => "Sécurité",
-        "title_singular" => "Equipement de sécurité"
+        "title_singular" => "Équipement de sécurité"
     ],
     "site" => [
         "fields" => [
@@ -1153,7 +1153,7 @@ return [
             "granularity_1" => "Niveau 1",
             "granularity_2" => "Niveau 2",
             "granularity_3" => "Niveau 3",
-            "granularity_helper" => "Niveau de granulatiré",
+            "granularity_helper" => "Niveau de granularité",
             "id" => "ID",
             "id_helper" => "",
             "language" => "Langue",
@@ -1185,8 +1185,8 @@ return [
             "name_helper" => "",
             "description" => "Description",
             "description_helper" => "",
-            "subnetworks" => "Sous-résaux",
-            "subnetworks_helper" => "Sous-réseaux ratachés",
+            "subnetworks" => "Sous-réseaux",
+            "subnetworks_helper" => "Sous-réseaux rattachés",
             "created_at" => "Créé à",
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",
@@ -1206,9 +1206,9 @@ return [
             "deleted_at_helper" => "",
             "id" => "ID",
             "id_helper" => "",
-            "lans" => "LAN rattachés",
+            "lans" => "LANs rattachés",
             "lans_helper" => "",
-            "mans" => "MAN rattachés",
+            "mans" => "MANs rattachés",
             "mans_helper" => "",
             "name" => "Name",
             "name_helper" => "",
@@ -1324,7 +1324,7 @@ return [
             "granularity" => "Granularité",
             "granularity_helper" => "Niveau de granularité du rapport",
             "views" => "Vues",
-            "ecosystem" => "Ecosystème",
+            "ecosystem" => "Écosystème",
             "information_system" => "Système d'information",
             "applications" => "Applications",
             "administration" => "Administration",
@@ -1350,3 +1350,4 @@ return [
     ]
 
 ];
+
