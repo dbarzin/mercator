@@ -1236,7 +1236,7 @@ class ReportController extends Controller
                     "category" => "Server",
                     "name" => $physicalServer->name,
                     "type" => $physicalServer->type,
-                    "description" => $physicalServer->descrition,
+                    "description" => $physicalServer->description,
                 ));
         }
         
@@ -1307,7 +1307,7 @@ class ReportController extends Controller
                 ));
         }
 
-        // Phone;
+        // Phone
         if ($building!=NULL)
             $phones = Phone::where("building_id","=",$building->id)->orderBy("name")->get();
         else if ($site!=NULL)
@@ -1328,7 +1328,7 @@ class ReportController extends Controller
                 ));
         }
     
-        // PhysicalSwitch;
+        // PhysicalSwitch
         if ($bay!=NULL) 
             $physicalSwitches = PhysicalSwitch::where("bay_id","=",$bay->id)->orderBy("name")->get();
         else if ($building!=NULL)

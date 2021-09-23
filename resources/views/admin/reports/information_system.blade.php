@@ -390,7 +390,7 @@
                                 <tbody>
                                     <tr>
                                         <td width="20%"><b>Description</b></td>
-                                        <td>{!! $information->descrition !!}</td>
+                                        <td>{!! $information->description !!}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Propriétaire</b></td>

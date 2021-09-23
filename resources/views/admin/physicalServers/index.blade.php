@@ -50,7 +50,7 @@
                         <tr data-entry-id="{{ $physicalServer->id }}"
 
 
-                        @if (($physicalServer->descrition==null)||
+                        @if (($physicalServer->description==null)||
                             ($physicalServer->configuration==null)||
                             ($physicalServer->site_id==null)||
                             ($physicalServer->building_id==null)||

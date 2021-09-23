@@ -564,7 +564,7 @@ class CartographyController extends Controller
                 foreach($informations as $information) {
                     $section->addBookmark("INFORMATION".$information->id);
                     $table=$this->addTable($section, $information->name);
-                    $this->addHTMLRow($table,"Description",$information->descrition);
+                    $this->addHTMLRow($table,"Description",$information->description);
                     $this->addTextRow($table,"Propriétaire",$information->owner);
                     $this->addTextRow($table,"Administrateur",$information->administrator);
                     $this->addTextRow($table,"Stockage",$information->storage);
@@ -1743,7 +1743,7 @@ class CartographyController extends Controller
                 foreach($physicalServers as $server) {
                     $section->addBookmark("PSERVER".$server->id);
                     $table=$this->addTable($section, $server->name);
-                    $this->addHTMLRow($table,"Description",$server->descrition);
+                    $this->addHTMLRow($table,"Description",$server->description);
                     $this->addHTMLRow($table,"Configuration",$server->configuration);
 
                     if ($server->site!=null) {

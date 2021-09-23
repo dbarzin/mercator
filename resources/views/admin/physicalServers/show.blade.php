@@ -25,10 +25,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.physicalServer.fields.descrition') }}
+                            {{ trans('cruds.physicalServer.fields.description') }}
                         </th>
                         <td>
-                            {!! $physicalServer->descrition !!}
+                            {!! $physicalServer->description !!}
                         </td>
                     </tr>
                     <tr>

@@ -26,7 +26,7 @@
                             {{ trans('cruds.information.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.descrition') }}
+                            {{ trans('cruds.information.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.information.fields.owner') }}
@@ -45,7 +45,7 @@
                 <tbody>
                     @foreach($information as $key => $information)
                         <tr data-entry-id="{{ $information->id }}"
-                            @if(($information->descrition==null)||
+                            @if(($information->description==null)||
                                 ($information->owner==null)||
                                 ($information->administrator==null)||
                                 ($information->storage==null)||                                
@@ -69,7 +69,7 @@
                                 {{ $information->name ?? '' }}
                             </td>
                             <td>
-                                {!! $information->descrition ?? '' !!}
+                                {!! $information->description ?? '' !!}
                             </td>
                             <td>
                                 {!! $information->owner ?? '' !!}

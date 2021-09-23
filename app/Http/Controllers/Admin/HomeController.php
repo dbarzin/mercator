@@ -222,14 +222,14 @@ class HomeController extends Controller
 
             ->with("informations", Information::count())
             ->with("informations_lvl1", Information
-                    ::where('descrition', '<>', null)
+                    ::where('description', '<>', null)
                     ->where('owner', '<>', null)
                     ->where('administrator', '<>', null)
                     ->where('storage', '<>', null)
                     ->count())
 
             ->with("informations_lvl2", Information
-                    ::where('descrition', '<>', null)
+                    ::where('description', '<>', null)
                     ->where('owner', '<>', null)
                     ->where('administrator', '<>', null)
                     ->where('storage', '<>', null)
@@ -507,7 +507,7 @@ class HomeController extends Controller
             
             ->with("physicalServers", PhysicalServer::count())
             ->with("physicalServers_lvl1",  PhysicalServer
-            		::where('descrition', '<>', null)
+            		::where('description', '<>', null)
                     ->where('configuration', '<>', null)
                     ->where('site_id', '<>', null)
                     ->where('building_id', '<>', null)

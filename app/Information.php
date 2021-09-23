@@ -12,7 +12,7 @@ use \DateTimeInterface;
  *
  * @property int $id
  * @property string $name
- * @property string|null $descrition
+ * @property string|null $description
  * @property string|null $owner
  * @property string|null $administrator
  * @property string|null $storage
@@ -37,7 +37,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereConstraints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereDescrition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Information whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Information whereOwner($value)
@@ -66,14 +66,14 @@ class Information extends Model
 
     public static $searchable = [
         'name',
-        'descrition',
+        'description',
         'owner',
         'constraints',
     ];
 
     protected $fillable = [
         'name',
-        'descrition',
+        'description',
         'owner',
         'administrator',
         'storage',

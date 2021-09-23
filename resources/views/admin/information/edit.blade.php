@@ -21,14 +21,14 @@
                 <span class="help-block">{{ trans('cruds.information.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="recommended" for="descrition">{{ trans('cruds.information.fields.descrition') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('descrition') ? 'is-invalid' : '' }}" name="descrition" id="descrition">{!! old('descrition', $information->descrition) !!}</textarea>
-                @if($errors->has('descrition'))
+                <label class="recommended" for="description">{{ trans('cruds.information.fields.description') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $information->description) !!}</textarea>
+                @if($errors->has('description'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('descrition') }}
+                        {{ $errors->first('description') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.information.fields.descrition_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.information.fields.description_helper') }}</span>
             </div>
 
             <div class="row">

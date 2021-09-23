@@ -12,7 +12,7 @@ use \DateTimeInterface;
  *
  * @property int $id
  * @property string $name
- * @property string|null $descrition
+ * @property string|null $description
  * @property string|null $responsible
  * @property string|null $configuration
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -37,7 +37,7 @@ use \DateTimeInterface;
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereConfiguration($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereDescrition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PhysicalServer wherePhysicalSwitchId($value)
@@ -64,7 +64,7 @@ class PhysicalServer extends Model
     public static $searchable = [
         'name',
         'type',
-        'descrition',
+        'description',
         'configuration',
         'responsible',
     ];
@@ -72,7 +72,7 @@ class PhysicalServer extends Model
     protected $fillable = [
         'name',
         'type',
-        'descrition',
+        'description',
         'configuration',
         'site_id',
         'building_id',

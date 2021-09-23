@@ -32,14 +32,14 @@
             </div>
 
             <div class="form-group">
-                <label for="descrition">{{ trans('cruds.physicalServer.fields.descrition') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('descrition') ? 'is-invalid' : '' }}" name="descrition" id="descrition">{!! old('descrition') !!}</textarea>
-                @if($errors->has('descrition'))
+                <label for="description">{{ trans('cruds.physicalServer.fields.description') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
+                @if($errors->has('description'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('descrition') }}
+                        {{ $errors->first('description') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.physicalServer.fields.descrition_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.physicalServer.fields.description_helper') }}</span>
             </div>
 
 
