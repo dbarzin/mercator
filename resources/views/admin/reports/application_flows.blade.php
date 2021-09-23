@@ -517,12 +517,12 @@
 @endsection
 
 @section('scripts')
-<!-- //d3js.org/d3.v5.min.js -->
+<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
 <script src="/js/d3.v5.min.js"></script>
 <!-- https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js -->
 <script src="/js/index.min.js"></script>
-<!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
-<script src="/js/d3-graphviz.js"></script>
+<!--<script src="https://unpkg.com/d3-graphviz@4.0.0/build/d3-graphviz.js"></script>-->
+<script src="/js/d3-graphviz.js"></script> 
 
 <script>
 d3.select("#graph").graphviz()
@@ -530,6 +530,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/applicationservice.png", "64px", "64px")
     .addImage("/images/applicationmodule.png", "64px", "64px")
     .addImage("/images/database.png", "64px", "64px")
+    .engine("circo")
     .renderDot("digraph  {\
             @foreach($applications as $application) \
                     A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"] \

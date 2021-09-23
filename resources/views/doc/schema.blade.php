@@ -104,7 +104,7 @@ d3.select("#graph").graphviz()
                   \
                   NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
                   SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetworks\"]\
-                  VLAN [label=\"VLAN\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/vlan.png\" href=\"/admin/vlans\"]\
+                  VLAN [label=\"vlan\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/vlan.png\" href=\"/admin/vlans\"]\
                   LOGICALSERVER [label=\"Serveur Logique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
                   CERTIFICATE [label=\"Certificat\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"/admin/certificates\"]\
                   \
