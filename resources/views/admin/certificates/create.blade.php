@@ -56,14 +56,14 @@
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>              
-                        <input class="form-control date" type="text" name="start_validity" id="start_validity">
+                        <input class="form-control date" type="text" name="start_validity" id="start_validity" value="{{ old('start_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>                    
-                        <input class="date form-control" type="text" id="end_validity" name="end_validity">
+                        <input class="date form-control" type="text" id="end_validity" name="end_validity" value="{{ old('end_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>

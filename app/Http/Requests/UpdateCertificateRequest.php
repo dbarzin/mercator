@@ -34,7 +34,6 @@ class UpdateCertificateRequest extends FormRequest
                 'nullable',
                 'after:start_validity'
             ],
-
         ];
     }
 }

@@ -19,9 +19,11 @@ class StoreCertificateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
+                'max:32',
                 'required',
+                'unique:certificates,name,NULL,id,deleted_at,NULL',
             ],
             'start_validity' => [
                 'date_format:' . config('panel.date_format'),
@@ -30,6 +32,7 @@ class StoreCertificateRequest extends FormRequest
             'end_validity' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
+                'after:start_validity',
             ],
         ];
     }
