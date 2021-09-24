@@ -5,7 +5,7 @@ namespace Tests\Browser;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class DnsServerTest extends DuskTestCase
+class DnsserverTest extends DuskTestCase
 {
     public function testIndex()
     {
