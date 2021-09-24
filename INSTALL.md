@@ -46,7 +46,7 @@ Installer Composer : [Install Composer globally](https://getcomposer.org/downloa
 Installer les packages avec composer :
 
     cd /var/www/mercator
-    composer install
+    composer update
 
 Publier tous les actifs publiables à partir des packages des fournisseurs
 
