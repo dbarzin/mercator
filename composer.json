@@ -1,12 +1,15 @@
 {
-    "name": "laravel/laravel",
+    "name": "Mercator",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Mapping the information system",
     "keywords": [
-        "framework",
-        "laravel"
+        "anssi",
+        "cartograhy",
+        "urbanisation",
+        "oiv",
+        "security-tools"
     ],
-    "license": "MIT",
+    "license": "GPL-3.0-only",
     "require": {
         "php": "^7.2.5",
         "bugsnag/bugsnag-laravel": "^2.18",
