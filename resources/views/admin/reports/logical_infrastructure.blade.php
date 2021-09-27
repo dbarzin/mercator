@@ -379,7 +379,7 @@
 
                                         <tr>
                                             <th>
-                                                Applications
+                                                {{ trans('cruds.logicalServer.fields.applications') }}
                                             </th>
                                             <td>
                                                 @foreach($logicalServer->applications as $application)
@@ -390,7 +390,6 @@
                                                 @endforeach
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.logicalServer.fields.servers') }}
@@ -398,6 +397,19 @@
                                             <td>
                                                 @foreach($logicalServer->servers as $server)
                                                     <a href="/admin/report/physical_infrastructure#PSERVER{{ $server->id}}">{{ $server->name }}</a>
+                                                    @if (!$loop->last)
+                                                    ,
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.logicalServer.fields.certificates') }}
+                                            </th>
+                                            <td>
+                                                @foreach($logicalServer->certificates as $certificate)
+                                                    <a href="/admin/certificates/{{ $certificate->id}}/edit">{{ $certificate->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif

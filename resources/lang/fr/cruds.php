@@ -559,6 +559,8 @@ return [
             "applications_helper" => "Applications installées",
             "configuration" => "Configuration",
             "configuration_helper" => "Autres caractéristiques techniques",
+            "certificates" => "Certificats",
+            "certificates_helper" => "Certificats installés sur ce serveur",
             "cpu" => "CPU",
             "cpu_helper" => "Nombre de CPU",
             "disk" => "Disque",
