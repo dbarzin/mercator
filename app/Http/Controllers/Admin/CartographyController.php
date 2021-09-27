@@ -143,12 +143,12 @@ class CartographyController extends Controller
         // Add footer
         $footer = $section->addFooter();
         $footer->addPreserveText('Page {PAGE} of {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        // $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
-
+	// $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
+	
         // ====================
         // ==== Ecosystème ====
         // ====================
-        if ($vues === null || in_array('1', $vues)) {
+        if ($vues === null || count($vues)==0 || in_array('1', $vues)) {
             // schema
             $section->addTitle('Ecosystème', 1);
             $section->addText('La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.');
@@ -237,7 +237,7 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRow(
                         $table,
                         'Importance',
-                        $relation->importance === null ?
+			$relation->importance === null ?
                             '-' :
                         [1 => 'Faible',2 => 'Moyen',3 => 'Fort',4 => 'Critique'][$relation->importance]
                     );
@@ -253,7 +253,7 @@ class CartographyController extends Controller
         // =====================
         // SYSTEME D'INFORMATION
         // =====================
-        if ($vues === null || in_array('2', $vues)) {
+        if ($vues === null || count($vues)==0 || in_array('2', $vues)) {
             $section->addTitle("Système d'information", 1);
             $section->addText('La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.');
             $section->addTextBreak(1);
@@ -600,7 +600,7 @@ class CartographyController extends Controller
         // =====================
         // APPLICATIONS
         // =====================
-        if (($vues === null) || in_array('3', $vues)) {
+        if (($vues === null) || count($vues)==0 || in_array('3', $vues)) {
             $section->addTextBreak(2);
             $section->addTitle('Applications', 1);
             $section->addText('La vue des applications décrit une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.');
@@ -1028,7 +1028,7 @@ class CartographyController extends Controller
         // =====================
         // Administration
         // =====================
-        if ($vues === null || in_array('4', $vues)) {
+        if ($vues === null || count($vues)==0 || in_array('4', $vues)) {
             $section->addTextBreak(2);
             $section->addTitle('Administration', 1);
             $section->addText('La vue de l’administration est un cas particulier de la vue des applications. Elle répertorie les périmètres et les niveaux de privilèges des administrateurs.');
@@ -1188,7 +1188,7 @@ class CartographyController extends Controller
         // =====================
         // Infrastructure logique
         // =====================
-        if ($vues === null || in_array('5', $vues)) {
+        if ($vues === null || count($vues)==0 || in_array('5', $vues)) {
             $section->addTextBreak(2);
             $section->addTitle('Infrastructure logique', 1);
             $section->addText("La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.");
@@ -1540,7 +1540,7 @@ class CartographyController extends Controller
         // =====================
         // Infrastructure physique
         // =====================
-        if ($vues === null || in_array('6', $vues)) {
+        if ($vues === null || count($vues)==0 || in_array('6', $vues)) {
             $section->addTextBreak(2);
             $section->addTitle('Infrastructure physique', 1);
             $section->addText('La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.');
