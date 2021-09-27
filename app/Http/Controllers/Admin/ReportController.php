@@ -401,7 +401,6 @@ class ReportController extends Controller
         }
 
         // Get assets
-
         $application_ids =
             DB::table('m_applications')
                 ->whereIn('application_block_id', $applicationBlocks)
@@ -453,7 +452,7 @@ class ReportController extends Controller
             });
 
         // filter linked objects
-        $application_ids = $application_ids->toArray();
+        $application_ids = []; //$application_ids->toArray();
         $service_ids = [];
         $module_ids = [];
         $database_ids = [];

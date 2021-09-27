@@ -237,9 +237,9 @@ class CartographyController extends Controller
                     $textRun = $this->addTextRow(
                         $table,
                         'Importance',
-			$relation->importance === null ?
+            			$relation->importance === null ?
                             '-' :
-                        [1 => 'Faible',2 => 'Moyen',3 => 'Fort',4 => 'Critique'][$relation->importance]
+                        ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$relation->importance] ?? '')
                     );
                 }
                 $textRun = $this->addTextRunRow($table, 'Lien');
@@ -1477,6 +1477,16 @@ class CartographyController extends Controller
                     foreach ($logicalServer->servers as $server) {
                         $textRun->addLink('PSERVER'.$server->id, $server->name, CartographyController::FancyLinkStyle, null, true);
                         if ($logicalServer->servers->last() !== $server) {
+                            $textRun->addText(', ');
+                        }
+                    }
+
+                    // Certificates
+                    if ($logicalServer->certificates != null && count($logicalServer->certificates)>0)
+                    $textRun = $this->addTextRunRow($table, 'Certificats');
+                    foreach ($logicalServer->certificates as $certificate) {
+                        $textRun->addLink('CERTIFICATE'.$certificate->id, $certificate->name, CartographyController::FancyLinkStyle, null, true);
+                        if ($logicalServer->certificates->last() !== $certificate) {
                             $textRun->addText(', ');
                         }
                     }
