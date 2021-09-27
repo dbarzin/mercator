@@ -77,15 +77,35 @@
                                         <td>{{ $network->protocol_type }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Responsable d'exploitation</th>
+                                        <th>{{ trans('cruds.network.fields.security_need') }}</th>
+                                        <td>
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$network->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$network->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$network->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$network->security_need_t] ?? "" }} 
+                                        </td>
+                                    </tr>                                    
+                                    <tr>
+                                        <th>{{ trans('cruds.network.fields.responsible') }}</th>
                                         <td>{{ $network->responsible }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Responsable SSI</th>
+                                        <th>{{ trans('cruds.network.fields.responsible_sec') }}</th>
                                         <td>{{ $network->responsible_sec }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Sous-réseaux ratachés</th>
+                                        <th>{{ trans('cruds.network.fields.subnetworks') }}</th>
                                         <td>
                                             @foreach($network->subnetworks as $subnetwork) 
                                                 <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
@@ -96,9 +116,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Entités externes connectées</th>
+                                        <th>{{ trans('cruds.network.fields.externalConnectedEntities') }}</th>
                                         <td>
-                                            @foreach($network->connectedNetworksExternalConnectedEntities as $entity)
+                                            @foreach($network->externalConnectedEntities as $entity)
                                                 <a href="#EXTENTITY{{$entity->id}}">{{$entity->name}}</a>
                                                 @if (!$loop->last)
                                                 ,

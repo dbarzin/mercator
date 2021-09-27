@@ -1332,9 +1332,9 @@ class CartographyController extends Controller
 
                     // entités externes connectées
                     $textRun = $this->addTextRunRow($table, 'Entités externes connectées');
-                    foreach ($network->connectedNetworksExternalConnectedEntities as $entity) {
+                    foreach ($network->externalConnectedEntities as $entity) {
                         $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($network->connectedNetworksExternalConnectedEntities->last() !== $entity) {
+                        if ($network->externalConnectedEntities->last() !== $entity) {
                             $textRun->addText(', ');
                         }
                     }

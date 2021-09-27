@@ -79,7 +79,7 @@ return [
             "created_at" => "Créé à",
             "created_at_helper" => "",
             "databases" => "Bases de données",
-            "databases_helper" => "Bases de données utilisées par l'application",
+            "databases_helper" => "Liste des bases de données utilisées par l’application",
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
             "description" => "Description",
@@ -87,7 +87,7 @@ return [
             "documentation" => "Documentation",
             "documentation_helper" => "Lien vers la documentation",
             "entities" => "Entités",
-            "entities_helper" => "Entités utilisatrices",
+            "entities_helper" => "Liste des entités utilisatrices",
             "entity_resp" => "Exploitation",
             "entity_resp_helper" => "Entité responsable de l'exploitation",
             "external" => "Exposition à l’externe",
@@ -95,17 +95,17 @@ return [
             "id" => "ID",
             "id_helper" => "",
             "logical_servers" => "Serveurs logiques",
-            "logical_servers_helper" => "Serveurs où est installée l'application",
+            "logical_servers_helper" => "Liste des serveurs logiques soutenant l’application",
             "name" => "Nom",
             "name_helper" => "",
             "processes" => "Processus",
-            "processes_helper" => "Processus soutenus par l'application",
+            "processes_helper" => "Liste des processus soutenus par l'application",
             "responsible" => "Responsable",
             "responsible_helper" => "Responsable de la sécurité",
             "security_need" => "Besoins de sécurité",
             "security_need_helper" => "Besoins de sécurité de l'application",
             "services" => "Services",
-            "services_helper" => "Services délivrés par l’application",
+            "services_helper" => "Liste des services applicatifs délivrés par l’application",
             "technology" => "Technologie",
             "technology_helper" => "Type de technologie: client loud, web, etc.",
             "type" => "Type d'application",
@@ -113,11 +113,14 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => "",
             "users" => "Utilisateurs",
-            "users_helper" => "Volume d’utilisateurs et profils"
+            "users_helper" => "Volume d’utilisateurs et profils",
+            "flux" => "Flux",
+            "flux_helper" => "Flux associés"
         ],
         "title" => "Applications",
         "title_short" => "Applications",
-        "title_singular" => "Application"
+        "title_singular" => "Application",
+        "description" => "Ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs."
     ],
     "applicationBlock" => [
         "fields" => [
@@ -138,8 +141,8 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Bloc applicatif",
-        "title_singular" => "Bloc applicatif"
+        "title" => "Blocs applicatif",
+        "title_singular" => "Bloc applicatif"        
     ],
     "applicationModule" => [
         "fields" => [
@@ -179,11 +182,14 @@ return [
             "name" => "Nom",
             "name_helper" => "",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "flux" => "Flux",
+            "flux_helper" => "Flux associés"
         ],
         "title" => "Services applicatifs",
         "title_short" => "Services",
-        "title_singular" => "Service applicatif"
+        "title_singular" => "Service applicatif",
+        "description" => "Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud)."
     ],
     "application_view" => [
         "title" => "Vue des applications",
@@ -356,11 +362,6 @@ return [
         "title_short" => "Domaines",
         "title_singular" => "Domaine Active Directory / LDAP"
     ],
-    "ecosystem" => [
-        "title" => "Vue de l'écosystème",
-        "title_short" => "Écosystème",
-        "title_singular" => "Vue écosystème"
-    ],
     "entity" => [
         "fields" => [
             "id" => "ID",
@@ -450,7 +451,8 @@ return [
             "destination" => "Destination",
         ],
         "title" => "Flux",
-        "title_singular" => "Flux"
+        "title_singular" => "Flux",
+        "description" => "Echange d’informations entre un émetteur ou un récepteur (service applicatif, application ou acteur)."
     ],
     "forestAd" => [
         "fields" => [
@@ -671,7 +673,9 @@ return [
             "subnetworks" => "Sous-réseaux",
             "subnetworks_helper" => "Liste des sous-réseaux rattachés",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "externalConnectedEntities" => "Entités externes connectées",
+            "externalConnectedEntities_helper" => "Liste des entités externes connectées au réseau",
         ],
         "title" => "Réseaux",
         "title_short" => "Réseaux",
@@ -1349,6 +1353,18 @@ return [
             "physical_inventory" => "Inventaire de l'infrastructure physique",
             "physical_inventory_helper" => "Liste des équipements par site/local"
         ]
+    ],
+    "views" => [
+        "application_flow" => [
+            "title" => "Vue des flux applicatifs",
+            "title_short" => "Flux",
+            "title_singular" => "Flux applicatifs"
+        ],
+        "ecosystem" => [
+            "title" => "Vue de l'écosystème",
+            "title_short" => "Écosystème",
+            "title_singular" => "Vue écosystème"
+        ],
     ]
 
 ];

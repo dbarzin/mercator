@@ -64,7 +64,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network->load('subnetworks', 'connectedNetworksExternalConnectedEntities');
+        $network->load('subnetworks', 'externalConnectedEntities');
 
         return view('admin.networks.show', compact('network'));
     }

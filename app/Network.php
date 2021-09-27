@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ExternalConnectedEntity> $connectedNetworksExternalConnectedEntities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ExternalConnectedEntity> $externalConnectedEntities
  * @property-read int|null $connected_networks_external_connected_entities_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Subnetwork> $subnetworks
  * @property-read int|null $subnetworks_count
@@ -80,7 +80,7 @@ class Network extends Model
         'deleted_at',
     ];
 
-    public function connectedNetworksExternalConnectedEntities()
+    public function externalConnectedEntities()
     {
         return $this->belongsToMany(ExternalConnectedEntity::class)->orderBy('name');
     }

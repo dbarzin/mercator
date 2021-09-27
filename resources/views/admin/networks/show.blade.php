@@ -114,7 +114,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="connected_networks_external_connected_entities">
-            @includeIf('admin.networks.relationships.connectedNetworksExternalConnectedEntities', ['externalConnectedEntities' => $network->connectedNetworksExternalConnectedEntities])
+            @includeIf('admin.networks.relationships.externalConnectedEntities', ['externalConnectedEntities' => $network->externalConnectedEntities])
         </div>
     </div>
 </div>
