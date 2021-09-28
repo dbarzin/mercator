@@ -625,7 +625,7 @@
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.subnetwork.title_short') }}" , num:{{ $subnetworks }}, url: "/admin/subnetworks" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.gateway.title_short') }}" , num:{{ $gateways }}, url: "/admin/gateways" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.externalConnectedEntity.title_short') }}" , num:{{ $externalConnectedEntities }}, url: "/admin/external-connected-entities" },
-     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.networkSwitch.title_short') }}" , num:{{ $switches }}, url: "/admin/switches" },
+     {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.networkSwitch.title_short') }}" , num:{{ $switches }}, url: "/admin/network-switches" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.router.title_short') }}" , num:{{ $routers }}, url: "/admin/routers" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.securityDevice.title_short') }}" , num:{{ $securityDevices }}, url: "/admin/security-devices" },
      {group:"{{ trans('cruds.logical_infrastructure.title_short') }}", tag:"{{ trans('cruds.logicalServer.title_short') }}" , num:{{ $logicalServers }}, url: "/admin/logical-servers" },
