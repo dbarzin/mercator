@@ -422,7 +422,8 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                        </tr>
+					</tr>
+					@if ($logicalServer->certificates->count()>0)
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.logicalServer.fields.certificates') }}
@@ -436,7 +437,7 @@
                                                 @endforeach
                                             </td>
                                         </tr>
-
+					@endif
                                     </tbody>
                                 </table>
                             </div>
@@ -494,7 +495,7 @@
                                                 @endif
                                             </td>
                                         </tr>
-
+					
                                         <tr>
                                             <th>{{ trans('cruds.certificate.fields.applications') }}</th>
                                             <td>
