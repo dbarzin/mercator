@@ -635,8 +635,11 @@ class ReportController extends Controller
             // TODO: improve me
             $certificates = Certificate::All()->load('logical_servers')->sortBy('name')
                 ->filter(function ($item) use ($logicalServers) {
-                    foreach ($item->logical_servers as $logical_server) {
-                        return $logicalServers->pluck('id')->contains($logical_server->id);
+                    foreach ($logicalServers as $logical_server) {
+                        foreach ($logical_server->certificates as $cert) {
+				if ($cert->id == $item->id)
+					return true;
+				 }
                     }
                     return false;
                 });
