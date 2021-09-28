@@ -28,7 +28,14 @@ class InformationController extends Controller
 
         $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
 
-        return view('admin.information.create', compact('processes'));
+        // lists
+        $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $storage_list = Information::select('storage')->where('storage', '<>', null)->distinct()->orderBy('storage')->pluck('storage');
+        $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
+        $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
+
+        return view('admin.information.create', compact('processes',
+            'owner_list','storage_list','sensitivity_list','administrator_list'));
     }
 
     public function store(StoreInformationRequest $request)
@@ -43,11 +50,19 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
-
         $information->load('processes');
 
-        return view('admin.information.edit', compact('processes', 'information'));
+        // links
+        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+
+        // lists
+        $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $storage_list = Information::select('storage')->where('storage', '<>', null)->distinct()->orderBy('storage')->pluck('storage');
+        $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
+        $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
+
+        return view('admin.information.edit', compact('processes', 'information', 
+            'owner_list','storage_list','sensitivity_list','administrator_list'));
     }
 
     public function update(UpdateInformationRequest $request, Information $information)

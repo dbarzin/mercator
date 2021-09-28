@@ -56,7 +56,14 @@
 
                     <div class="form-group">
                         <label class="recommended" for="storage">{{ trans('cruds.information.fields.storage') }}</label>
-                        <input class="form-control {{ $errors->has('storage') ? 'is-invalid' : '' }}" type="text" name="storage" id="storage" value="{{ old('storage', $information->storage) }}">
+                        <select class="form-control select2-free {{ $errors->has('storage') ? 'is-invalid' : '' }}" name="storage" id="storage">
+                            @if (!$owner_list->contains(old('storage')))
+                                <option> {{ old('storage') }}</option>'
+                            @endif
+                            @foreach($storage_list as $t)
+                                <option {{ (old('storage') ? old('storage') : $information->storage) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('storage'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('storage') }}
@@ -69,7 +76,14 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="recommended" for="owner">{{ trans('cruds.information.fields.owner') }}</label>
-                        <input class="form-control {{ $errors->has('owner') ? 'is-invalid' : '' }}" type="text" name="owner" id="owner" value="{{ old('owner', $information->owner) }}">
+                        <select class="form-control select2-free {{ $errors->has('owner') ? 'is-invalid' : '' }}" name="owner" id="owner">
+                            @if (!$owner_list->contains(old('owner')))
+                                <option> {{ old('owner') }}</option>'
+                            @endif
+                            @foreach($owner_list as $t)
+                                <option {{ (old('owner') ? old('owner') : $information->owner) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('owner'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('owner') }}
@@ -79,7 +93,14 @@
                     </div>
                     <div class="form-group">
                         <label class="recommended" for="administrator">{{ trans('cruds.information.fields.administrator') }}</label>
-                        <input class="form-control {{ $errors->has('administrator') ? 'is-invalid' : '' }}" type="text" name="administrator" id="administrator" value="{{ old('administrator', $information->administrator) }}">
+                        <select class="form-control select2-free {{ $errors->has('administrator') ? 'is-invalid' : '' }}" name="administrator" id="administrator">
+                            @if (!$owner_list->contains(old('administrator')))
+                                <option> {{ old('administrator') }}</option>'
+                            @endif
+                            @foreach($administrator_list as $t)
+                                <option {{ (old('administrator') ? old('administrator') : $information->administrator) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('administrator'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('administrator') }}
@@ -90,7 +111,14 @@
 
                     <div class="form-group">
                         <label class="recommended" for="sensitivity">{{ trans('cruds.information.fields.sensitivity') }}</label>
-                        <input class="form-control {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" type="text" name="sensitivity" id="sensitivity" value="{{ old('sensitivity', $information->sensitivity) }}">
+                        <select class="form-control select2-free {{ $errors->has('sensitivity') ? 'is-invalid' : '' }}" name="sensitivity" id="sensitivity">
+                            @if (!$owner_list->contains(old('sensitivity')))
+                                <option> {{ old('sensitivity') }}</option>'
+                            @endif
+                            @foreach($sensitivity_list as $t)
+                                <option {{ (old('sensitivity') ? old('sensitivity') : $information->sensitivity) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('sensitivity'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('sensitivity') }}
@@ -211,6 +239,13 @@ $(document).ready(function () {
       }
     );
   }
+
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+
     function template(data, container) {      
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
