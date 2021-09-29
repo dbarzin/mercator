@@ -127,6 +127,23 @@
                                         <td><a href="#DATABASE{{$flux->database_dest->id}}">{{$flux->database_dest->name}}</a></td>
                                     </tr>
                                     @endif
+
+                                    @if ($flux->crypted || $flux->bidirectional)
+                                    <tr>
+                                        <td colspan="2">
+                                            @if ($flux->crypted)
+                                            {{ trans('cruds.flux.fields.crypted_helper') }} 
+                                            @endif
+                                            @if ($flux->bidirectional)
+                                                @if ($flux->crypted)
+                                                ,
+                                                @endif
+                                            {{ trans('cruds.flux.fields.bidirectional_helper') }} 
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endif
+
                                 </tbody>
                             </table>
                         </div>
@@ -572,7 +589,11 @@ d3.select("#graph").graphviz()
                         @elseif ($flow->application_dest_id!=null) \
                         A{{ $flow->application_dest_id }} \
                         @endif\
-                [ label=\"{{ $flow->name }}\" href=\"#FLOW{{$flow->id}}\"]\
+                [ label=\"{{ $flow->name }}\" \
+                @if ($flow->bidirectional)\
+                    dir=\"both\"\
+                @endif\
+                href=\"#FLOW{{$flow->id}}\"]\
                 @endif\
             @endforEach\
         }");
