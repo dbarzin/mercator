@@ -135,9 +135,6 @@
                                             {{ trans('cruds.flux.fields.crypted_helper') }} 
                                             @endif
                                             @if ($flux->bidirectional)
-                                                @if ($flux->crypted)
-                                                ,
-                                                @endif
                                             {{ trans('cruds.flux.fields.bidirectional_helper') }} 
                                             @endif
                                         </td>
@@ -384,11 +381,11 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    Modules applicatif
+                    {{ trans('cruds.applicationModule.title') }}
                 </div>
 
                 <div class="card-body">
-                    <p>Composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.</p>
+                    <p>{{ trans('cruds.applicationModule.description') }}</p>
                         @foreach($applicationModules as $applicationModule)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -400,13 +397,13 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th width="30%">Description</th>
+                                            <th width="30%">{{ trans('cruds.applicationModule.fields.description') }}</th>
                                             <td>{!! $applicationModule->description !!}</td>
                                         </tr>
                                         <tr>
-                                            <th>Services qui utilisent ce module</th>
+                                            <th>{{ trans('cruds.applicationModule.fields.services') }}</th>
                                             <td>
-                                                @foreach($applicationModule->modulesApplicationServices as $service)
+                                                @foreach($applicationModule->applicationServices as $service)
                                                     <a href="#MODULE{{ $service->id }}">{{ $service->name }}</a>
                                                     @if(!$loop->last)
                                                     ,
@@ -415,16 +412,16 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Flux associés</th>
+                                            <th>{{ trans('cruds.flux.title') }}</th>
                                             <td>
-                                                Source :
+                                                {{ trans('cruds.flux.fields.source') }} :
                                                 @foreach($applicationModule->moduleSourceFluxes as $flux)
                                                     <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
-                                                @endforeach                 
-                                                <br>Destinataire :
+                                                @endforeach
+                                                <br>{{ trans('cruds.flux.fields.destination') }} :
                                                 @foreach($applicationModule->moduleSourceFluxes as $flux)
                                                     <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                     @if (!$loop->last)
@@ -442,11 +439,11 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    Bases de données
+                    {{ trans('cruds.database.title') }}
                 </div>
 
                 <div class="card-body">
-                    <p>Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.</p>
+                    <p>{{ trans('cruds.database.description') }}</p>
                     @foreach($databases as $database)
                       <div class="row">
                         <div class="col-sm-6">                        
@@ -458,11 +455,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th width="30%">Description</th>
+                                        <th width="30%">{{ trans('cruds.database.fields.description') }}</th>
                                         <td>{!! $database->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Entité(s) utilisatrice(s)</th>
+                                        <th>{{ trans('cruds.database.fields.entities') }}</th>
                                         <td>
                                             @foreach($database->entities as $entity)
                                                 <a href="/admin/report/ecosystem#ENTITY{{ $entity->id }}">{{ $entity->name }}</a>
@@ -473,7 +470,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Entité resposanble de l'exploitation</th>
+                                        <th>{{ trans('cruds.database.fields.entity_resp') }}</th>
                                         <td>
                                             @if ($database->entity_resp!=null)
                                             <a href="/admin/report/ecosystem#ENTITY{{ $database->entity_resp->id }}">{{ $database->entity_resp->name }}</a>
@@ -481,24 +478,24 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Responsable SSI</th>
+                                        <th>{{ trans('cruds.database.fields.responsible') }}</th>
                                         <td>{{ $database->responsible }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Type de technologie</th>
+                                        <th>{{ trans('cruds.database.fields.type') }}</th>
                                         <td>{{ $database->type }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Flux associés</th>
+                                        <th>{{ trans('cruds.flux.title') }}</th>
                                         <td>
-                                            Source :
+                                            {{ trans('cruds.flux.fields.source') }} :
                                             @foreach($database->databaseSourceFluxes as $flux)
                                                 <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
                                             @endforeach                 
-                                            <br>Destinataire :
+                                            <br>{{ trans('cruds.flux.fields.destination') }} :
                                             @foreach($database->databaseDestFluxes as $flux)
                                                 <a href="#FLOW{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
@@ -508,7 +505,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Liste des informations contenues :</th>
+                                        <th>{{ trans('cruds.database.fields.informations') }}</th>
                                         <td>
                                             @foreach($database->informations as $information)
                                                 <a href="/admin/report/information_system#INFORMATION{{ $information->id }}">{{ $information->name }}</a>
@@ -519,13 +516,27 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Besoins de sécurité (DICT)</th>
+                                        <th>{{ trans('cruds.database.fields.security_need') }}</th>
                                         <td>
-                                            {{ $database->security_need }}
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$database->security_need_t] ?? "" }} 
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Exposition à l’externe</th>
+                                        <th>{{ trans('cruds.database.fields.external') }}</th>
                                         <td>{{ $database->external }}</td>
                                     </tr>
                                 </tbody>

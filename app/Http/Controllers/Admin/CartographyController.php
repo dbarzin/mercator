@@ -854,9 +854,9 @@ class CartographyController extends Controller
 
                     // Services
                     $textRun = $this->addTextRunRow($table, 'Services qui utilisent ce module');
-                    foreach ($applicationModule->modulesApplicationServices as $service) {
+                    foreach ($applicationModule->applicationServices as $service) {
                         $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($applicationModule->modulesApplicationServices->last() !== $service) {
+                        if ($applicationModule->applicationServices->last() !== $service) {
                             $textRun->addText(', ');
                         }
                     }

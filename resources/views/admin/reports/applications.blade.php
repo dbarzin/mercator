@@ -372,8 +372,8 @@
                                         <tr>
                                             <th>Services qui utilisent ce module</th>
                                             <td>
-                                                @foreach($applicationModule->modulesapplicationServices as $service)
-                                                    <a href="#SERVICE{{ $service->id }}">{{ $service->name }}</a>
+                                                @foreach($applicationModule->applicationServices as $service)
+                                                    <a href="#APPLICATIONSERVICE{{ $service->id }}">{{ $service->name }}</a>
                                                     @if(!$loop->last)
                                                     ,
                                                     @endif                                                

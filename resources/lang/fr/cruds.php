@@ -150,6 +150,8 @@ return [
             "created_at_helper" => "",
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
+            "services" => "Services",
+            "service_helper" => "Services qui utilisent ce module",
             "description" => "Description",
             "description_helper" => "",
             "id" => "ID",
@@ -159,9 +161,10 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Modules applicatifs",
+        "title" => "Modules applicatif",
         "title_short" => "Modules",
-        "title_singular" => "Module Applicatif"
+        "title_singular" => "Module Applicatif",
+        "description" => "Composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique."
     ],
     "applicationService" => [
         "fields" => [
@@ -297,7 +300,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Bases de données",
-        "title_singular" => "Base de données"
+        "title_singular" => "Base de données",
+        "description" => "Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement."
     ],
     "dhcpServer" => [
         "fields" => [

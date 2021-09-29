@@ -42,38 +42,4 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#module_source_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#module_dest_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#modules_application_services" role="tab" data-toggle="tab">
-                {{ trans('cruds.applicationService.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="module_source_fluxes">
-            @includeIf('admin.applicationModules.relationships.moduleSourceFluxes', ['fluxes' => $applicationModule->moduleSourceFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="module_dest_fluxes">
-            @includeIf('admin.applicationModules.relationships.moduleDestFluxes', ['fluxes' => $applicationModule->moduleDestFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="modules_application_services">
-            @includeIf('admin.applicationModules.relationships.modulesApplicationServices', ['applicationServices' => $applicationModule->modulesApplicationServices])
-        </div>
-    </div>
-</div>
-
 @endsection

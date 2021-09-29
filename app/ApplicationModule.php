@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $module_dest_fluxes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Flux> $moduleSourceFluxes
  * @property-read int|null $module_source_fluxes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $modulesApplicationServices
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $services
  * @property-read int|null $modules_application_services_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|ApplicationModule newModelQuery()
@@ -74,7 +74,7 @@ class ApplicationModule extends Model
         return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy('name');
     }
 
-    public function modulesApplicationServices()
+    public function applicationServices()
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }

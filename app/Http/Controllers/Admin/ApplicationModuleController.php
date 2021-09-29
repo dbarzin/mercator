@@ -53,7 +53,7 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationModule->load('moduleSourceFluxes', 'moduleDestFluxes', 'modulesApplicationServices');
+        $applicationModule->load('moduleSourceFluxes', 'moduleDestFluxes', 'applicationServices');
 
         return view('admin.applicationModules.show', compact('applicationModule'));
     }
