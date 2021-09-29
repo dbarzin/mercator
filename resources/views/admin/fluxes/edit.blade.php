@@ -159,18 +159,20 @@
 
             <div class="form-group">
                 <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
-                <select class="form-control select2 {{ $errors->has('crypted') ? 'is-invalid' : '' }}" name="crypted" id="crypted">
-                    <option value=""></option>
-                    <option value="1" {{ $flux->crypted  == true ? 'selected' : '' }}>Oui</option>
-                    <option value="0" {{ $flux->crypted  == false ? 'selected' : '' }}>Non</option>
-                </select>
-                @if($errors->has('crypted'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('crypted') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.flux.fields.crypted_helper') }}</span>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="crypted" name="crypted" value="1" {{ $flux->crypted ? "checked" : "" }}>
+                  <label class="form-check-label" for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
+                </div>
             </div>
+
+            <div class="form-group">
+                <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional" value="1" {{ $flux->bidirectional ? "checked" : "" }} >
+                  <label class="form-check-label" for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
+                </div>
+            </div>
+
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

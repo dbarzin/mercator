@@ -88,6 +88,7 @@ class Flux extends Model
         'module_dest_id',
         'database_dest_id',
         'crypted',
+        'bidirectional',
         'created_at',
         'updated_at',
         'deleted_at',

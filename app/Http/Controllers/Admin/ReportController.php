@@ -72,23 +72,23 @@ class ReportController extends Controller
 
     public function informationSystem(Request $request)
     {
-        if ((int) ($request->macroprocess) === -1) {
+        if ((int) ($request->macroprocess) == -1) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
             $request->session()->put('process', null);
             $process = null;
         } else {
-            if ($request->macroprocess !== null) {
+            if ($request->macroprocess != null) {
                 $request->session()->put('macroprocess', $request->macroprocess);
                 $macroprocess = $request->macroprocess;
             } else {
                 $macroprocess = $request->session()->get('macroprocess');
             }
 
-            if ((int) ($request->process) === -1) {
+            if ((int) ($request->process) == -1) {
                 $request->session()->put('process', null);
                 $process = null;
-            } elseif ($request->process !== null) {
+            } elseif ($request->process != null) {
                 $request->session()->put('process', $request->process);
                 $process = $request->process;
             } else {
@@ -98,21 +98,21 @@ class ReportController extends Controller
 
         $all_macroprocess = MacroProcessus::All()->sortBy('name');
 
-        if ($macroprocess !== null) {
+        if ($macroprocess != null) {
             $macroProcessuses = MacroProcessus::All()->sortBy('name')
                 ->filter(function ($item) use ($macroprocess) {
-                    return $item->id === $macroprocess;
+                    return $item->id == $macroprocess;
                 });
 
             // TODO : improve me
             $processes = Process::All()->sortBy('identifiant')
                 ->filter(function ($item) use ($macroProcessuses, $process) {
-                    if ($process !== null) {
-                        return $item->id === $process;
+                    if ($process != null) {
+                        return $item->id == $process;
                     }
                     foreach ($macroProcessuses as $macroprocess) {
                         foreach ($macroprocess->processes as $process) {
-                            if ($item->id === $process->id) {
+                            if ($item->id == $process->id) {
                                 return true;
                             }
                         }
@@ -125,7 +125,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($macroProcessuses, $process) {
                     foreach ($macroProcessuses as $macroprocess) {
                         foreach ($macroprocess->processes as $process) {
-                            if ($item->id === $process->id) {
+                            if ($item->id == $process->id) {
                                 return true;
                             }
                         }
@@ -138,7 +138,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($processes) {
                     foreach ($item->activitiesProcesses as $p) {
                         foreach ($processes as $process) {
-                            if ($p->id === $process->id) {
+                            if ($p->id == $process->id) {
                                 return true;
                             }
                         }
@@ -151,7 +151,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($activities) {
                     foreach ($item->operationsActivities as $o) {
                         foreach ($activities as $activity) {
-                            if ($o->id === $activity->id) {
+                            if ($o->id == $activity->id) {
                                 return true;
                             }
                         }
@@ -164,7 +164,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($operations) {
                     foreach ($operations as $operation) {
                         foreach ($operation->tasks as $task) {
-                            if ($item->id === $task->id) {
+                            if ($item->id == $task->id) {
                                 return true;
                             }
                         }
@@ -177,7 +177,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($operations) {
                     foreach ($operations as $operation) {
                         foreach ($operation->actors as $actor) {
-                            if ($item->id === $actor->id) {
+                            if ($item->id == $actor->id) {
                                 return true;
                             }
                         }
@@ -190,7 +190,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($processes) {
                     foreach ($processes as $process) {
                         foreach ($process->processInformation as $information) {
-                            if ($item->id === $information->id) {
+                            if ($item->id == $information->id) {
                                 return true;
                             }
                         }
@@ -222,23 +222,23 @@ class ReportController extends Controller
 
     public function applications(Request $request)
     {
-        if ((int) ($request->applicationBlock) === -1) {
+        if ((int) ($request->applicationBlock) == -1) {
             $request->session()->put('applicationBlock', null);
             $applicationBlock = null;
             $request->session()->put('application', null);
             $application = null;
         } else {
-            if ($request->applicationBlock !== null) {
+            if ($request->applicationBlock != null) {
                 $request->session()->put('applicationBlock', $request->applicationBlock);
                 $applicationBlock = $request->applicationBlock;
             } else {
                 $applicationBlock = $request->session()->get('applicationBlock');
             }
 
-            if ((int) ($request->application) === -1) {
+            if ((int) ($request->application) == -1) {
                 $request->session()->put('application', null);
                 $application = null;
-            } elseif ($request->application !== null) {
+            } elseif ($request->application != null) {
                 $request->session()->put('application', $request->application);
                 $application = $request->application;
             } else {
@@ -248,18 +248,18 @@ class ReportController extends Controller
 
         $all_applicationBlocks = ApplicationBlock::All()->sortBy('name');
 
-        if ($applicationBlock !== null) {
+        if ($applicationBlock != null) {
             // TODO : improve me
             $applicationBlocks = ApplicationBlock::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock) {
-                    return $item->id === $applicationBlock;
+                    return $item->id == $applicationBlock;
                 });
 
             // TODO : improve me
             $applications = MApplication::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock, $application) {
-                    if ($application !== null) {
-                        return $item->id === $application;
+                    if ($application != null) {
+                        return $item->id == $application;
                     }
                     return $item->application_block_id = $applicationBlock;
 
@@ -268,16 +268,16 @@ class ReportController extends Controller
 
             $all_applications = MApplication::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock) {
-                    return $item->application_block_id === $applicationBlock;
+                    return $item->application_block_id == $applicationBlock;
                 });
 
             // TODO : improve me
             $applications = MApplication::All()->sortBy('name')
                 ->filter(function ($item) use ($applicationBlock, $application) {
-                    if ($application === null) {
-                        return $item->application_block_id === $applicationBlock;
+                    if ($application == null) {
+                        return $item->application_block_id == $applicationBlock;
                     }
-                    return $item->id === $application;
+                    return $item->id == $application;
 
                 
                 });
@@ -287,7 +287,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($applications) {
                     foreach ($applications as $application) {
                         foreach ($application->services as $service) {
-                            if ($item->id === $service->id) {
+                            if ($item->id == $service->id) {
                                 return true;
                             }
                         }
@@ -300,7 +300,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($applicationServices) {
                     foreach ($applicationServices as $service) {
                         foreach ($service->modules as $module) {
-                            if ($item->id === $module->id) {
+                            if ($item->id == $module->id) {
                                 return true;
                             }
                         }
@@ -313,7 +313,7 @@ class ReportController extends Controller
                 ->filter(function ($item) use ($applications) {
                     foreach ($applications as $application) {
                         foreach ($application->databases as $database) {
-                            if ($item->id === $database->id) {
+                            if ($item->id == $database->id) {
                                 return true;
                             }
                         }
@@ -325,26 +325,26 @@ class ReportController extends Controller
             $fluxes = Flux::All()->sortBy('name')
                 ->filter(function ($item) use ($applications, $applicationModules, $databases) {
                     foreach ($applications as $application) {
-                        if ($item->application_source_id === $application->id) {
+                        if ($item->application_source_id == $application->id) {
                             return true;
                         }
-                        if ($item->application_dest_id === $application->id) {
+                        if ($item->application_dest_id == $application->id) {
                             return true;
                         }
                     }
                     foreach ($applicationModules as $module) {
-                        if ($item->module_source_id === $module->id) {
+                        if ($item->module_source_id == $module->id) {
                             return true;
                         }
-                        if ($item->module_dest_id === $module->id) {
+                        if ($item->module_dest_id == $module->id) {
                             return true;
                         }
                     }
                     foreach ($databases as $database) {
-                        if ($item->database_source_id === $database->id) {
+                        if ($item->database_source_id == $database->id) {
                             return true;
                         }
-                        if ($item->database_dest_id === $database->id) {
+                        if ($item->database_dest_id == $database->id) {
                             return true;
                         }
                     }
@@ -375,11 +375,11 @@ class ReportController extends Controller
     {
 
         // Blocks
-        if ($request->applicationBlocks === null) {
+        if ($request->applicationBlocks == null) {
             $request->session()->put('applicationBlocks', []);
             $applicationBlocks = [];
         } else {
-            if ($request->applicationBlocks !== null) {
+            if ($request->applicationBlocks != null) {
                 $request->session()->put('applicationBlocks', $request->applicationBlocks);
                 $applicationBlocks = $request->applicationBlocks;
             } else {
@@ -388,11 +388,11 @@ class ReportController extends Controller
         }
 
         // Applications
-        if ($request->applications === null) {
+        if ($request->applications == null) {
             $request->session()->put('applications', []);
             $applications = [];
         } else {
-            if ($request->applications !== null) {
+            if ($request->applications != null) {
                 $request->session()->put('applications', $request->applications);
                 $applications = $request->applications;
             } else {
@@ -460,41 +460,41 @@ class ReportController extends Controller
         // loop on flows
         foreach ($flows as $flux) {
             // applications
-            if (($flux->application_source_id !== null) &&
+            if (($flux->application_source_id != null) &&
                (! in_array($flux->application_source_id, $application_ids))) {
                 array_push($application_ids, $flux->application_source_id);
             }
-            if (($flux->application_dest_id !== null) &&
+            if (($flux->application_dest_id != null) &&
                (! in_array($flux->application_dest_id, $application_ids))) {
                 array_push($application_ids, $flux->application_dest_id);
             }
 
             // services
-            if (($flux->service_source_id !== null) &&
+            if (($flux->service_source_id != null) &&
                (! in_array($flux->service_source_id, $service_ids))) {
                 array_push($service_ids, $flux->service_source_id);
             }
-            if (($flux->service_dest_id !== null) &&
+            if (($flux->service_dest_id != null) &&
                (! in_array($flux->service_dest_id, $service_ids))) {
                 array_push($service_ids, $flux->service_dest_id);
             }
 
             // modules
-            if (($flux->module_source_id !== null) &&
+            if (($flux->module_source_id != null) &&
                (! in_array($flux->module_source_id, $module_ids))) {
                 array_push($module_ids, $flux->module_source_id);
             }
-            if (($flux->module_dest_id !== null) &&
+            if (($flux->module_dest_id != null) &&
                (! in_array($flux->module_dest_id, $module_ids))) {
                 array_push($module_ids, $flux->module_dest_id);
             }
 
             // databases
-            if (($flux->database_source_id !== null) &&
+            if (($flux->database_source_id != null) &&
                (! in_array($flux->database_source_id, $database_ids))) {
                 array_push($database_ids, $flux->database_source_id);
             }
-            if (($flux->database_dest_id !== null) &&
+            if (($flux->database_dest_id != null) &&
                (! in_array($flux->database_dest_id, $database_ids))) {
                 array_push($database_ids, $flux->database_dest_id);
             }
@@ -538,23 +538,23 @@ class ReportController extends Controller
 
     public function logicalInfrastructure(Request $request)
     {
-        if ((int) ($request->network) === -1) {
+        if ((int) ($request->network) == -1) {
             $request->session()->put('network', null);
             $network = null;
             $request->session()->put('subnetwork', null);
             $subnetwork = null;
         } else {
-            if ($request->network !== null) {
+            if ($request->network != null) {
                 $request->session()->put('network', $request->network);
                 $network = $request->network;
             } else {
                 $network = $request->session()->get('network');
             }
 
-            if ((int) ($request->subnetwork) === -1) {
+            if ((int) ($request->subnetwork) == -1) {
                 $request->session()->put('subnetwork', null);
                 $subnetwork = null;
-            } elseif ($request->subnetwork !== null) {
+            } elseif ($request->subnetwork != null) {
                 $request->session()->put('subnetwork', $request->subnetwork);
                 $subnetwork = $request->subnetwork;
             } else {
@@ -563,7 +563,7 @@ class ReportController extends Controller
         }
 
         $all_networks = Network::All()->sortBy('name')->pluck('name', 'id');
-        if ($network !== null) {
+        if ($network != null) {
             $all_subnetworks = Subnetwork::All()->sortBy('name')
                 ->where('network_id', '=', $network)->pluck('name', 'id');
 
@@ -573,12 +573,12 @@ class ReportController extends Controller
             $externalConnectedEntities = ExternalConnectedEntity::All()
                 ->filter(function ($item) use ($network) {
                     foreach ($item->connected_networks as $connected_network) {
-                        return $connected_network->id === $network;
+                        return $connected_network->id == $network;
                     }
                     return false;
                 });
 
-            if ($subnetwork !== null) {
+            if ($subnetwork != null) {
                 $subnetworks = Subnetwork::All()->sortBy('name')
                     ->where('id', '=', $subnetwork);
             } else {
@@ -590,7 +590,7 @@ class ReportController extends Controller
             $gateways = Gateway::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
-                        if ($subnetwork->gateway_id === $item->id) {
+                        if ($subnetwork->gateway_id == $item->id) {
                             return true;
                         }
                     }
@@ -690,23 +690,23 @@ class ReportController extends Controller
 
     public function physicalInfrastructure(Request $request)
     {
-        if ((int) ($request->site) === -1) {
+        if ((int) ($request->site) == -1) {
             $request->session()->put('site', null);
             $site = null;
             $request->session()->put('building', null);
             $building = null;
         } else {
-            if ($request->site !== null) {
+            if ($request->site != null) {
                 $request->session()->put('site', $request->site);
                 $site = $request->site;
             } else {
                 $site = $request->session()->get('site');
             }
 
-            if ((int) ($request->building) === -1) {
+            if ((int) ($request->building) == -1) {
                 $request->session()->put('building', null);
                 $building = null;
-            } elseif ($request->building !== null) {
+            } elseif ($request->building != null) {
                 $request->session()->put('building', $request->building);
                 $building = $request->building;
             } else {
@@ -716,13 +716,13 @@ class ReportController extends Controller
 
         $all_sites = Site::All()->sortBy('name')->pluck('name', 'id');
 
-        if ($site !== null) {
+        if ($site != null) {
             $sites = Site::All()->sortBy('name')->where('id', '=', $site);
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
 
-            if ($building === null) {
+            if ($building == null) {
                 $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
             } else {
                 $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
@@ -732,7 +732,7 @@ class ReportController extends Controller
             $bays = Bay::All()->sortBy('name')
                 ->filter(function ($item) use ($buildings) {
                     foreach ($buildings as $building) {
-                        if ($item->room_id === $building->id) {
+                        if ($item->room_id == $building->id) {
                             return true;
                         }
                     }
@@ -741,18 +741,18 @@ class ReportController extends Controller
 
             $physicalServers = PhysicalServer::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($buildings === null) && ($item->site_id === $site)) {
+                    if (($buildings == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -762,11 +762,11 @@ class ReportController extends Controller
 
             $workstations = Workstation::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings) {
-                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
                     foreach ($buildings as $building) {
-                        if ($item->building_id === $building->id) {
+                        if ($item->building_id == $building->id) {
                             return true;
                         }
                     }
@@ -775,18 +775,18 @@ class ReportController extends Controller
 
             $storageDevices = StorageDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) && ($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->bay_id == null) && ($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -796,18 +796,18 @@ class ReportController extends Controller
 
             $peripherals = Peripheral::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) && ($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->bay_id == null) && ($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -817,11 +817,11 @@ class ReportController extends Controller
 
             $phones = Phone::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings) {
-                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
                     foreach ($buildings as $building) {
-                        if ($item->building_id === $building->id) {
+                        if ($item->building_id == $building->id) {
                             return true;
                         }
                     }
@@ -830,18 +830,18 @@ class ReportController extends Controller
 
             $physicalSwitches = PhysicalSwitch::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) && ($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->bay_id == null) && ($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -851,18 +851,18 @@ class ReportController extends Controller
 
             $physicalRouters = PhysicalRouter::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) && ($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->bay_id == null) && ($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -872,11 +872,11 @@ class ReportController extends Controller
 
             $wifiTerminals = WifiTerminal::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings) {
-                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
                     foreach ($buildings as $building) {
-                        if ($item->building_id === $building->id) {
+                        if ($item->building_id == $building->id) {
                             return true;
                         }
                     }
@@ -885,18 +885,18 @@ class ReportController extends Controller
 
             $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) && ($item->building_id === null) && ($item->site_id === $site)) {
+                    if (($item->bay_id == null) && ($item->building_id == null) && ($item->site_id == $site)) {
                         return true;
                     }
-                    if ($item->bay_id === null) {
+                    if ($item->bay_id == null) {
                         foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
+                            if ($item->building_id == $building->id) {
                                 return true;
                             }
                         }
                     } else {
                         foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
+                            if ($item->bay_id == $bay->id) {
                                 return true;
                             }
                         }
@@ -992,7 +992,7 @@ class ReportController extends Controller
             $txt = '';
             foreach ($entity->applications as $application) {
                 $txt .= $application->name;
-                if ($entity->applications->last() !== $application) {
+                if ($entity->applications->last() != $application) {
                     $txt .= ', ';
                 }
             }
@@ -1158,7 +1158,7 @@ class ReportController extends Controller
                 $entities = $application->entities()->get();
                 $l = null;
                 foreach ($entities as $entity) {
-                    if ($l === null) {
+                    if ($l == null) {
                         $l = $entity->name;
                     } else {
                         $l .= ', '.$entity->name;
@@ -1346,22 +1346,22 @@ class ReportController extends Controller
         // $macroprocesses = MacroProcessus::All();
         $macroprocesses = MacroProcessus::with('processes')->get();
         foreach ($macroprocesses as $macroprocess) {
-            if ($macroprocess->processes->count() === 0) {
+            if ($macroprocess->processes->count() == 0) {
                 $this->addLine($sheet, $row, $macroprocess, null, null, null, null);
                 $row++;
             } else {
                 foreach ($macroprocess->processes as $process) {
-                    if ($process->processesMApplications->count() === 0) {
+                    if ($process->processesMApplications->count() == 0) {
                         $this->addLine($sheet, $row, $macroprocess, $process, null, null, null);
                         $row++;
                     } else {
                         foreach ($process->processesMApplications as $application) {
-                            if ($application->databases->count() === 0) {
+                            if ($application->databases->count() == 0) {
                                 $this->addLine($sheet, $row, $macroprocess, $process, $application, null, null);
                                 $row++;
                             } else {
                                 foreach ($application->databases as $database) {
-                                    if ($database->informations->count() === 0) {
+                                    if ($database->informations->count() == 0) {
                                         $this->addLine($sheet, $row, $macroprocess, $process, $application, $database, null);
                                         $row++;
                                     } else {
@@ -1462,11 +1462,11 @@ class ReportController extends Controller
     {
 
         // PhysicalServer
-        if ($bay !== null) {
+        if ($bay != null) {
             $physicalServers = PhysicalServer::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $physicalServers = PhysicalServer::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $physicalServers = PhysicalServer::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $physicalServers = PhysicalServer::orderBy('name')->get();
@@ -1488,9 +1488,9 @@ class ReportController extends Controller
         }
 
         // Workstation;
-        if ($building !== null) {
+        if ($building != null) {
             $workstations = Workstation::where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $workstations = Workstation::where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $workstations = Workstation::orderBy('name')->get();
@@ -1512,11 +1512,11 @@ class ReportController extends Controller
         }
 
         // StorageDevice;
-        if ($bay !== null) {
+        if ($bay != null) {
             $storageDevices = StorageDevice::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $storageDevices = StorageDevice::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $storageDevices = StorageDevice::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $storageDevices = StorageDevice::orderBy('name')->get();
@@ -1538,11 +1538,11 @@ class ReportController extends Controller
         }
 
         // Peripheral
-        if ($bay !== null) {
+        if ($bay != null) {
             $peripherals = Peripheral::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $peripherals = Peripheral::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $peripherals = Peripheral::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $peripherals = Peripheral::orderBy('name')->get();
@@ -1564,9 +1564,9 @@ class ReportController extends Controller
         }
 
         // Phone
-        if ($building !== null) {
+        if ($building != null) {
             $phones = Phone::where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $phones = Phone::where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $phones = Phone::orderBy('name')->get();
@@ -1588,11 +1588,11 @@ class ReportController extends Controller
         }
 
         // PhysicalSwitch
-        if ($bay !== null) {
+        if ($bay != null) {
             $physicalSwitches = PhysicalSwitch::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $physicalSwitches = PhysicalSwitch::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $physicalSwitches = PhysicalSwitch::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $physicalSwitches = PhysicalSwitch::orderBy('name')->get();
@@ -1614,11 +1614,11 @@ class ReportController extends Controller
         }
 
         // PhysicalRouter
-        if ($bay !== null) {
+        if ($bay != null) {
             $physicalRouters = PhysicalRouter::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $physicalRouters = PhysicalRouter::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $physicalRouters = PhysicalRouter::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $physicalRouters = PhysicalRouter::orderBy('name')->get();
@@ -1640,9 +1640,9 @@ class ReportController extends Controller
         }
 
         // WifiTerminal
-        if ($building !== null) {
+        if ($building != null) {
             $wifiTerminals = WifiTerminal::where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $wifiTerminals = WifiTerminal::where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $wifiTerminals = WifiTerminal::orderBy('name')->get();
@@ -1664,11 +1664,11 @@ class ReportController extends Controller
         }
 
         // Physical Security Devices
-        if ($bay !== null) {
+        if ($bay != null) {
             $physicalSecurityDevices = PhysicalSecurityDevice::where('bay_id', '=', $bay->id)->orderBy('name')->get();
-        } elseif ($building !== null) {
+        } elseif ($building != null) {
             $physicalSecurityDevices = PhysicalSecurityDevice::where('bay_id', '=', null)->where('building_id', '=', $building->id)->orderBy('name')->get();
-        } elseif ($site !== null) {
+        } elseif ($site != null) {
             $physicalSecurityDevices = PhysicalSecurityDevice::where('bay_id', '=', null)->where('building_id', '=', null)->where('site_id', '=', $site->id)->orderBy('name')->get();
         } else {
             $physicalSecurityDevices = PhysicalSecurityDevice::orderBy('name')->get();
@@ -1697,7 +1697,7 @@ class ReportController extends Controller
             ->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()
-            ->setRGB($colors[$i === null ? 0 : $i]);
+            ->setRGB($colors[$i == null ? 0 : $i]);
     }
 
     private function addLine(
@@ -1725,7 +1725,7 @@ class ReportController extends Controller
         $sheet->setCellValue("E{$row}", $macroprocess->security_need_t);
         $this->setSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
 
-        if ($process !== null) {
+        if ($process != null) {
             // Processus
             $sheet->setCellValue("F{$row}", $process->identifiant);
             $sheet->setCellValue("G{$row}", $process->security_need_c);
@@ -1740,7 +1740,7 @@ class ReportController extends Controller
             $sheet->setCellValue("J{$row}", $process->security_need_t);
             $this->setSecurityNeedColor($sheet, "J{$row}", $process->security_need_t);
 
-            if ($application !== null) {
+            if ($application != null) {
                 // Application
                 $sheet->setCellValue("K{$row}", $application->name);
 
@@ -1756,7 +1756,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
                 $this->setSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
 
-                if ($database !== null) {
+                if ($database != null) {
                     // Database
                     $sheet->setCellValue("P{$row}", $database->name);
                     $sheet->setCellValue("Q{$row}", $database->security_need_c);
@@ -1768,7 +1768,7 @@ class ReportController extends Controller
                     $sheet->setCellValue("T{$row}", $database->security_need_t);
                     $this->setSecurityNeedColor($sheet, "T{$row}", $database->security_need_t);
 
-                    if ($information !== null) {
+                    if ($information != null) {
                         // Information
                         $sheet->setCellValue("U{$row}", $information->name);
                         $sheet->setCellValue("V{$row}", $information->security_need_c);
