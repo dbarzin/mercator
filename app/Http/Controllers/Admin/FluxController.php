@@ -42,8 +42,10 @@ class FluxController extends Controller
     }
 
     public function store(StoreFluxRequest $request)
-    {
+    {        
         $flux = Flux::create($request->all());
+        $flux->crypted = $request->has('crypted');
+        $flux->bidirectional = $request->has('bidirectional');
 
         return redirect()->route('admin.fluxes.index');
     }
@@ -70,7 +72,7 @@ class FluxController extends Controller
     {
         $flux->crypted = $request->has('crypted');
         $flux->bidirectional = $request->has('bidirectional');
-        
+
         $flux->update($request->all());
 
         return redirect()->route('admin.fluxes.index');
