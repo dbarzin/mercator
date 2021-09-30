@@ -66,8 +66,8 @@ d3.select("#graph").graphviz()
 
     .addImage("/images/vlan.png", "64px", "64px")
 
-.width(window.innerWidth - 300)
-    .height(window.innerHeight - 300)
+    .width(window.innerWidth - 250)
+    .height(window.innerHeight - 250)
     .renderDot("\
         digraph G {\
         pencolor=\"#7c123e\"\
@@ -108,6 +108,7 @@ d3.select("#graph").graphviz()
           label=\"Infrastructure logique\" \
           fontsize=16 \
           href=\"/admin/report/logical_infrastructure\" \
+          EXTERNAL [label=\"Entité extérieure connectée\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/external-connected-entities\"]\
           NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
           SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetworks\"]\
           VLAN [label=\"vlan\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/vlan.png\" href=\"/admin/vlans\"]\
@@ -150,6 +151,7 @@ d3.select("#graph").graphviz()
           APPLICATION -> DATABASE   [label=\"  0-n\"]\
           /* ENTITY -> DATABASE [label=\"  0-n\"] */\
 \
+          EXTERNAL -> NETWORK [label=\"  0-n\"]\
           NETWORK -> SUBNETWORK [label=\"  0-n\"]\
           SUBNETWORK -> LOGICALSERVER [label=\"  0-n\"]\
           SUBNETWORK -> VLAN [label=\"  0-n\"]\
