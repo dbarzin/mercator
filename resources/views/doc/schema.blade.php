@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Modèle de données
+                    {{ trans('panel.menu.schema') }}
                 </div>
                 <div class="card-body">
 
@@ -28,7 +28,7 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
-d3.select("#graph").graphviz()
+    d3.select("#graph").graphviz()
 
     .addImage("/images/entity.png", "64px", "64px")
     .addImage("/images/relation.png", "64px", "64px")
@@ -175,10 +175,7 @@ d3.select("#graph").graphviz()
           BAY -> ROUTER [label=\"  0-n\"]\
           BUILDING -> WIFI [label=\"  0-n\"]\
 }")
-
-        .fit(true)
-      ;
-
+        .fit(true);
 </script>
 @parent
 @endsection
