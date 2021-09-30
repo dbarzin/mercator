@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Schéma
+                    Modèle de données
                 </div>
                 <div class="card-body">
 

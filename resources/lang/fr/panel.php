@@ -23,7 +23,7 @@ return [
         "physical_infrastructure" => "Infrastructure physique",
         "preferences" => "Préferences",
         "reports" => "Rapports",
-        "schema" => "Schéma"
+        "schema" => "Modèle de données"
     ],
     "repartition" => "Répartition par domaine",
     "treemap" => "Carte proportionnelle globale",
