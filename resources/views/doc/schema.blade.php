@@ -63,6 +63,7 @@
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
+    .addImage("/images/security.png", "64px", "64px")
 
     .addImage("/images/vlan.png", "64px", "64px")
 
@@ -135,9 +136,10 @@
           PERIPHERAL [label=\"Périphérique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"/admin/peripherals\"]\
           WIFI [label=\"Borne Wifi\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"/admin/wifi-terminals\"]\
           PHONE [label=\"Téléphone\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"/admin/phones\"]\
-          SWITCH [label=\"Switch\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/physical-switches\"]\
+          SWITCH [label=\"Commutateur\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/physical-switches\"]\
           STORAGE [label=\"Stockage\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"/admin/storage-devices\"]\
           ROUTER [label=\"Router\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/physical-routers\"]\
+          SECURITY [label=\"Sécurité\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/security.png\" href=\"/admin/physical-security-devices\"]\
           }\
           MPROCESS -> PROCESS  [label=\"  0-n\"]\
           PROCESS -> ACTIVITY  [label=\"  0-n\"]\
@@ -178,6 +180,7 @@
           BAY -> STORAGE [label=\"  0-n\"]\
           BAY -> SWITCH [label=\"  0-n\"]\
           BAY -> ROUTER [label=\"  0-n\"]\
+          BAY -> SECURITY [label=\"  0-n\"]\
           BUILDING -> WIFI [label=\"  0-n\"]\
 }")
         .fit(true);
