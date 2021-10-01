@@ -70,7 +70,8 @@ return [
         ],
         "title" => "Services d'annuaire d'administration",
         "title_short" => "Annuaires",
-        "title_singular" => "Service d'annuaire d'administration"
+        "title_singular" => "Service d'annuaire d'administration",
+        "description" => "Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration."
     ],
     "application" => [
         "fields" => [
@@ -349,8 +350,6 @@ return [
             "description_helper" => "",
             "domain_ctrl_cnt" => "Nombre de contrôleurs de domaine",
             "domain_ctrl_cnt_helper" => "",
-            "id" => "ID",
-            "id_helper" => "",
             "machine_count" => "Nombre de machines",
             "machine_count_helper" => "",
             "name" => "Nom",
@@ -360,11 +359,13 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => "",
             "user_count" => "Nombre de comptes utilisateur",
-            "user_count_helper" => ""
+            "user_count_helper" => "",
+            "forestAds" => "Forêts Active Directory / ArborescencesLDAP",
         ],
         "title" => "Domaines Active Directory / LDAP",
         "title_short" => "Domaines",
-        "title_singular" => "Domaine Active Directory / LDAP"
+        "title_singular" => "Domaine Active Directory / LDAP",
+        "description" => "Ensemble d’éléments (membres, ressources) régis par une même politique de sécurité."
     ],
     "entity" => [
         "fields" => [
@@ -462,26 +463,25 @@ return [
     ],
     "forestAd" => [
         "fields" => [
-            "created_at" => "Créé à",
-            "created_at_helper" => "",
-            "deleted_at" => "Supprimé à",
-            "deleted_at_helper" => "",
             "description" => "Description",
             "description_helper" => "",
             "domaines" => "Domaines",
             "domaines_helper" => "Domaines appartenant à la forêt/l’arborescence",
-            "id" => "ID",
-            "id_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
+            "zone_admin" => "Zone d'administration",
+            "zone_admin_helper" => "",
             "updated_at" => "Remplacé à",
             "updated_at_helper" => "",
-            "zone_admin" => "Zone d'administration",
-            "zone_admin_helper" => ""
+            "created_at" => "Créé à",
+            "created_at_helper" => "",
+            "deleted_at" => "Supprimé à",
+            "deleted_at_helper" => "",
         ],
         "title" => "Forêts Active Directory / LDAP",
         "title_short" => "LDAP",
-        "title_singular" => "Forêt Active Directory / LDAP"
+        "title_singular" => "Forêt Active Directory / LDAP",
+        "description" => "Regroupement organisé de domaines Active Directory/LDAP."
     ],
     "gateway" => [
         "fields" => [
@@ -1290,16 +1290,19 @@ return [
             "deleted_at_helper" => "",
             "description" => "Description",
             "description_helper" => "",
+            "annuaires" => "Annuaires",
+            "forests" => "Forêts Active Directory / Arborescences LDAP",
             "id" => "ID",
             "id_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
         ],
         "title" => "Zones d'administration",
         "title_short" => "Zones",
-        "title_singular" => "Zone d'administration"
+        "title_singular" => "Zone d'administration",
+        "description" => "Ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s)."
     ],
     "certificate" => [
         "fields" => [
@@ -1370,6 +1373,11 @@ return [
             "title" => "Vue de l'écosystème",
             "title_short" => "Écosystème",
             "title_singular" => "Vue écosystème"
+        ],
+        "administration" => [
+            "title" => "Vue de l'administration",
+            "title_short" => "Administration",
+            "title_singular" => "Vue administrative"
         ],
     ]
 

@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Vue de l'administration
+                    {{ trans('cruds.views.administration.title') }}
                 </div>
 
                 <div class="card-body">
@@ -20,11 +20,11 @@
             @if ($zones->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Zones d'administration
+                    {{ trans('cruds.zoneAdmin.title') }}
                 </div>
 
                 <div class="card-body">
-                    <p>Ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).</p>
+                    <p>{{ trans('cruds.zoneAdmin.title') }}</p>
                     <ul>
                         @foreach($zones as $zone)
                           <div class="row">
@@ -37,22 +37,28 @@
                                     </thead>                                    
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans('cruds.zoneAdmin.fields.description') }}</th>
                                         <td>{!! $zone->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Annuaires</th>
+                                        <th>{{ trans('cruds.zoneAdmin.fields.annuaires') }}</th>
                                         <td>
                                             @foreach($zone->zoneAdminAnnuaires as $annuaire) 
                                                 <a href="#ANNUAIRE{{$annuaire->id}}">{{ $annuaire->name }}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Forêt Active Directory / Arborescence LDAP</th>
+                                        <th>{{ trans('cruds.zoneAdmin.fields.forests') }}</th>
                                         <td>
                                             @foreach($zone->zoneAdminForestAds as $forest) 
                                                 <a href="#FOREST{{$forest->id}}">{{ $forest->name }}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif                                                
                                             @endforeach
                                         </td>
                                     </tr>
@@ -70,11 +76,11 @@
             @if ($annuaires->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Service d’annuaire d’administration
+                    {{ trans('cruds.annuaire.title') }}
                 </div>
 
                 <div class="card-body">
-                    <p>Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration.</p>
+                    <p>{{ trans('cruds.annuaire.description') }}</p>
                     <ul>
                         @foreach($annuaires as $annuaire)
                           <div class="row">
@@ -87,18 +93,21 @@
                                     </thead>                                    
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans('cruds.annuaire.fields.description') }}</th>
                                         <td>{!! $annuaire->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Solution</th>
+                                        <th>{{ trans('cruds.annuaire.fields.solution') }}</th>
                                         <td>{{ $annuaire->solution }}</td>
                                     </tr>
                                     <tr>                                        
-                                        <th>Zone d'administration</th>
+                                        <th>{{ trans('cruds.annuaire.fields.zone_admin') }}</th>
                                         <td>
                                            @if ($annuaire->zone_admin!=null)
                                                 <a href="#ZONE{{$annuaire->zone_admin->id}}">{{$annuaire->zone_admin->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -116,11 +125,11 @@
             @if ($forests->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Forêt Active Directory / Arborescence LDAP
+                    {{ trans('cruds.forestAd.title') }}
                 </div>
 
                 <div class="card-body">
-                    <p>Regroupement organisé de domaines Active Directory/LDAP.</p>
+                    <p>{{ trans('cruds.forestAd.description') }}</p>
                     <ul>
                         @foreach($forests as $forest)
                           <div class="row">
@@ -133,11 +142,11 @@
                                     </thead>                                    
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans('cruds.forestAd.fields.description') }}</th>
                                         <td>{!! $forest->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Zone d'administration</th>
+                                        <th>{{ trans('cruds.forestAd.fields.zone_admin') }}</th>
                                         <td>
                                             @if ($forest->zone_admin!=null)
                                                 <a href="#ZONE{{$forest->zone_admin->id}}">{{$forest->zone_admin->name}}</a>
@@ -145,10 +154,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Domaines</th>
+                                        <th>{{ trans('cruds.forestAd.fields.domaines') }}</th>
                                         <td>
                                             @foreach($forest->domaines as $domain) 
                                                 <a href="#DOMAIN{{$domain->id}}">{{$domain->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -165,10 +177,10 @@
             @if ($domains->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Domaines
+                    {{ trans('cruds.domaineAd.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Ensemble d’éléments (membres, ressources) régis par une même politique de sécurité.</p>
+                    <p>{{ trans('cruds.domaineAd.description') }}</p>
                     <ul>
                         @foreach($domains as $domain)
                           <div class="row">
@@ -181,30 +193,33 @@
                                     </thead>                                    
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans('cruds.domaineAd.fields.description') }}</th>
                                         <td>{!! $domain->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nombre de controleurs de domaine</th>
+                                        <th>{{ trans('cruds.domaineAd.fields.domain_ctrl_cnt') }}</th>
                                         <td>{{ $domain->domain_ctrl_cnt }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nombre de comptes utilisateurs rattachés</th>
+                                        <th>{{ trans('cruds.domaineAd.fields.user_count') }}</th>
                                         <td>{{ $domain->user_count }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nombre de machines rattachées</th>
+                                        <th>{{ trans('cruds.domaineAd.fields.machine_count') }}</th>
                                         <td>{{ $domain->machine_count }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Relations inter-domaines</th>
+                                        <th>{{ trans('cruds.domaineAd.fields.relation_inter_domaine') }}</th>
                                         <td>{{ $domain->relation_inter_domaine }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Forêt Active Directory / Arborescence LDAP</th>
+                                        <th>{{ trans('cruds.domaineAd.fields.forestAds') }}</th>
                                         <td>
                                             @foreach($domain->domainesForestAds as $forest)
                                                 <a href="#FOREST{{$forest->id}}">{{ $forest->name}}</a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
