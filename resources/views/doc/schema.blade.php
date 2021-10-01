@@ -69,12 +69,13 @@
     .width(window.innerWidth - 250)
     .height(window.innerHeight - 250)
     .renderDot("\
-        digraph G {\
+        digraph {\
         pencolor=\"#7c123e\"\
         penwidth=2\
         subgraph clusterA {\
           label=\"Ecosystème\"\
           fontsize=16 \
+          graph[style=dotted];\
           href=\"/admin/report/ecosystem\" \
           shape = \"Mrecord\"\
           ENTITY [label=\"Entité\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/entities\"]\
@@ -83,6 +84,7 @@
         subgraph clusterB {\
           label=\"Système d'information\"\
           fontsize=16 \
+          graph[style=dotted];\
           href=\"/admin/report/information_system\" \
           MPROCESS [label=\"Macro-Processus\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/macroprocess.png\" href=\"/admin/macro-processuses\"]\
           PROCESS [label=\"Processus\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/process.png\" href=\"/admin/processes\"]\
@@ -96,6 +98,7 @@
         subgraph clusterC {\
           label=\"Applications\"\
           fontsize=16 \
+          graph[style=dotted];\
           href=\"/admin/report/applications\" \
           APPLICBLOCK [label=\"Bloc applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"/admin/application-blocks\"]\
           APPLICATION [label=\"Application\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"/admin/applications\"]\
@@ -107,6 +110,7 @@
         subgraph clusterD {\
           label=\"Infrastructure logique\" \
           fontsize=16 \
+          graph[style=dotted];\
           href=\"/admin/report/logical_infrastructure\" \
           EXTERNAL [label=\"Entité extérieure connectée\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/external-connected-entities\"]\
           NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
@@ -121,6 +125,7 @@
         subgraph clusterE {\
           label=\"Infratructure physique\"\
           fontsize=16 \
+          graph[style=dotted];\
           href=\"/admin/report/physical_infrastructure\" \
           SITE [label=\"Site\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"/admin/sites\"]\
           BUILDING [label=\"Local\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"/admin/buildings\"]\
