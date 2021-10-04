@@ -22,7 +22,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.ecosystem.title') }}
+                        {{ trans('cruds.menu.ecosystem.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('entity_access')
@@ -54,7 +54,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.metier.title') }}
+                        {{ trans('cruds.menu.metier.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @if (auth()->user()->granularity>=2)
@@ -146,7 +146,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.application_view.title') }}
+                        {{ trans('cruds.menu.application.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @if (auth()->user()->granularity>=2)                        
@@ -274,7 +274,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.logical_infrastructure.title') }}
+                        {{ trans('cruds.menu.logical_infrastructure.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('network_access')
@@ -402,7 +402,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.physical_infrastructure.title') }}
+                        {{ trans('cruds.menu.physical_infrastructure.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('site_access')
@@ -578,7 +578,7 @@
                         <i class="fa-fw fas fa-users nav-icon">
 
                         </i>
-                        {{ trans('cruds.userManagement.title') }}
+                        {{ trans('cruds.menu.user_management.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('permission_access')

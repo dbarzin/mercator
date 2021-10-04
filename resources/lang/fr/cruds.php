@@ -181,11 +181,6 @@ return [
         "title_singular" => "Service applicatif",
         "description" => "Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud)."
     ],
-    "application_view" => [
-        "title" => "Vue des applications",
-        "title_short" => "Applications",
-        "title_singular" => "Vue des applications"
-    ],
     "auditLog" => [
         "fields" => [
             "created_at" => "Créé à",
@@ -560,12 +555,6 @@ return [
         "title_short" => "Serveurs",
         "title_singular" => "Serveur logique"
     ],
-    "logical_infrastructure" => [
-        "title" => "Vue des infrastructures logiques",
-        "title_short" => "Logique",
-        "title_singular" => "Vue de l'infrastructure logique",
-        "titleshort" => ""
-    ],
     "macroProcessus" => [
         "fields" => [
             "created_at" => "Créé à",
@@ -606,11 +595,6 @@ return [
         "title" => "MAN - Middle Area Network",
         "title_short" => "MAN",
         "title_singular" => "MAN - Middle Area Network"
-    ],
-    "metier" => [
-        "title" => "Vue métier du système d’information",
-        "title_short" => "Informations",
-        "title_singular" => "Vue métier du système d’information"
     ],
     "network" => [
         "fields" => [
@@ -851,11 +835,6 @@ return [
         "title" => "Commutateurs physiques",
         "title_short" => "Commutateurs",
         "title_singular" => "Commutateur physique"
-    ],
-    "physical_infrastructure" => [
-        "title" => "Vue des infrastructures physiques",
-        "title_short" => "Physique",
-        "title_singular" => "Vue de l'infrastructure physique"
     ],
     "process" => [
         "fields" => [
@@ -1103,10 +1082,6 @@ return [
         "title" => "Utilisateurs",
         "title_singular" => "Utilisateur"
     ],
-    "userManagement" => [
-        "title" => "Gestion des utilisateurs",
-        "title_singular" => "Gestion des utilisateurs"
-    ],
     "vlan" => [
         "fields" => [
             "name" => "Nom",
@@ -1269,21 +1244,38 @@ return [
             "physical_inventory_helper" => "Liste des équipements par site/local"
         ]
     ],
-    "views" => [
+    "menu" => [
         "application_flow" => [
             "title" => "Vue des flux applicatifs",
             "title_short" => "Flux",
-            "title_singular" => "Flux applicatifs"
         ],
         "ecosystem" => [
             "title" => "Vue de l'écosystème",
-            "title_short" => "Écosystème",
-            "title_singular" => "Vue écosystème"
+            "title_short" => "Écosystème"
         ],
         "administration" => [
             "title" => "Vue de l'administration",
             "title_short" => "Administration",
-            "title_singular" => "Vue administrative"
+        ],
+        "metier" => [
+            "title" => "Vue métier du système d’information",
+            "title_short" => "Système d'Information",
+        ],
+        "application" => [
+            "title" => "Vue des applications",
+            "title_short" => "Applications"
+        ],
+        "logical_infrastructure" => [
+            "title" => "Vue des infrastructures logiques",
+            "title_short" => "Logique",
+        ],
+        "physical_infrastructure" => [
+            "title" => "Vue des infrastructures physiques",
+            "title_short" => "Physique"
+        ],
+        "user_management" => [
+            "title" => "Gestion des utilisateurs",
+            "title_short" => "Utilisateurs"
         ],
     ]
 
