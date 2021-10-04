@@ -405,9 +405,9 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun = $this->addTextRunRow($table, 'Applications qui le soutiennent');
-                    foreach ($process->processesMApplications as $application) {
+                    foreach ($process->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
-                        if ($process->processesMApplications->last() !== $application) {
+                        if ($process->applications->last() !== $application) {
                             $textRun->addText(', ', CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
                     }

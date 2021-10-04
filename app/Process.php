@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\MacroProcessus|null $macroProcess
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Information> $processInformation
  * @property-read int|null $process_information_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $processesMApplications
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\MApplication> $applications
  * @property-read int|null $processes_m_applications_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Process newModelQuery()
@@ -97,7 +97,7 @@ class Process extends Model
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    public function processesMApplications()
+    public function applications()
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }

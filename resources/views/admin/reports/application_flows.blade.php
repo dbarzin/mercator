@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.views.application_flow.title') }}
+                    {{ trans('cruds.menu.application_flow.title') }}
                 </div>
 
                 <div class="card-body">

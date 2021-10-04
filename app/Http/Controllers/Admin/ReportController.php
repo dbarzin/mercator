@@ -1351,11 +1351,11 @@ class ReportController extends Controller
                 $row++;
             } else {
                 foreach ($macroprocess->processes as $process) {
-                    if ($process->processesMApplications->count() == 0) {
+                    if ($process->applications->count() == 0) {
                         $this->addLine($sheet, $row, $macroprocess, $process, null, null, null);
                         $row++;
                     } else {
-                        foreach ($process->processesMApplications as $application) {
+                        foreach ($process->applications as $application) {
                             if ($application->databases->count() == 0) {
                                 $this->addLine($sheet, $row, $macroprocess, $process, $application, null, null);
                                 $row++;

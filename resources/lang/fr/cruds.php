@@ -10,7 +10,7 @@ return [
             "description_helper" => "Description de l'opération",
             "name" => "Nom",
             "name_helper" => "Nom de l'opération",
-            "operations" => "Operations",
+            "operations" => "Opérations",
             "operations_helper" => "Liste des opérations réalisées",
             "processes" => "Processus",
             "processes_helper" => "Liste des processus parents",
@@ -18,7 +18,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Activités",
-        "title_singular" => "Activité"
+        "title_singular" => "Activité",
+        "description" => "Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise."
     ],
     "actor" => [
         "fields" => [
@@ -31,14 +32,15 @@ return [
             "name" => "Nom",
             "name_helper" => "Nom de l'acteur",
             "nature" => "Nature",
-            "nature_helper" => "personne, groupe, entité, etc.",
+            "nature_helper" => "Ex : personne, groupe, entité, etc.",
             "type" => "Type",
             "type_helper" => "interne ou externe à l’organisme",
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
         "title" => "Acteurs",
-        "title_singular" => "Acteur"
+        "title_singular" => "Acteur",
+        "description" => "Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité."
     ],
     "administration" => [
         "title" => "Vue de l'administration",
@@ -485,8 +487,8 @@ return [
             "name_helper" => "",
             "owner" => "Propriétaire",
             "owner_helper" => "",
-            "process" => "Processus",
-            "process_helper" => "Processus liés",
+            "processes" => "Processus",
+            "processes_helper" => "Processus liés",
             "security_need" => "Besoins de sécurité (CIDT)",
             "security_need_helper" => "Besoins de sécurité de l'information",
             "sensitivity" => "Sensibilité",
@@ -497,7 +499,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Informations",
-        "title_singular" => "Information"
+        "title_singular" => "Information",
+        "description" => "Donnée faisant l’objet d’un traitement informatique."
     ],
     "lan" => [
         "fields" => [
@@ -577,7 +580,8 @@ return [
             "updated_at_helper" => ""
         ],
         "title" => "Macro-Processus",
-        "title_singular" => "Macro-Processus"
+        "title_singular" => "Macro-Processus",
+        "description" => "Ensemble des macro-processus."
     ],
     "man" => [
         "fields" => [
@@ -659,12 +663,15 @@ return [
             "name" => "Nom",
             "name_helper" => "",
             "tasks" => "Tâches",
-            "tasks_helper" => "Liste des tâches réalisées",
+            "tasks_helper" => "Liste des tâches qui la compose",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "actors" => "Acteurs",
+            "actors_helper" => "Liste des acteurs qui interviennent",
         ],
         "title" => "Opérations",
-        "title_singular" => "Operation"
+        "title_singular" => "Opération",
+        "description" => "Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité."
     ],    
     "peripheral" => [
         "fields" => [
@@ -861,10 +868,13 @@ return [
             "security_need" => "Besoins de sécurité (CIDT)",
             "security_need_helper" => "Besoins de sécurité du processus",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "applications" => "Applications soutenues",
+            "applications_helper" => "Applications qui soutiennent ce processus"
         ],
         "title" => "Processus",
-        "title_singular" => "Processus"
+        "title_singular" => "Processus",
+        "description" => "Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus."
     ],
     "relation" => [
         "fields" => [
@@ -1045,8 +1055,9 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Tâches",
-        "title_singular" => "Tâche"
+        "title" => "Activités",
+        "title_singular" => "Activité",
+        "description" => "Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus."
     ],
     "user" => [
         "fields" => [
