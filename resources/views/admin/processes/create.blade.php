@@ -80,27 +80,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.process.fields.entities_helper') }}</span>
                 </div>
-            </div>
 
-            <div class="col-sm">
-                <div class="form-group">
-                    <label for="entities">{{ trans('cruds.process.fields.informations') }}</label>
-                    <div style="padding-bottom: 4px">
-                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                    </div>
-                    <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}" name="informations[]" id="informations" multiple>
-                        @foreach($informations as $id => $informations)
-                            <option value="{{ $id }}" {{ in_array($id, old('informations', [])) ? 'selected' : '' }}>{{ $informations }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('informations'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('informations') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.process.fields.informations_helper') }}</span>
-                </div>
 
                 <div class="form-group">
                     <table cellspacing="5" cellpadding="5" border="0" width='100%'>
@@ -169,6 +149,50 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.process.fields.security_need_helper') }}</span>
                 </div>
+                
+            </div>
+
+            <div class="col-sm">
+
+                <div class="form-group">
+                    <label for="entities">{{ trans('cruds.process.fields.applications') }}</label>
+                    <div style="padding-bottom: 4px">
+                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                    </div>
+                    <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                        @foreach($applications as $id => $application)
+                            <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $application }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('applications'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('applications') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.process.fields.applications_helper') }}</span>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="entities">{{ trans('cruds.process.fields.informations') }}</label>
+                    <div style="padding-bottom: 4px">
+                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                    </div>
+                    <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}" name="informations[]" id="informations" multiple>
+                        @foreach($informations as $id => $informations)
+                            <option value="{{ $id }}" {{ in_array($id, old('informations', [])) ? 'selected' : '' }}>{{ $informations }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('informations'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('informations') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.process.fields.informations_helper') }}</span>
+                </div>
+
 
                 <div class="form-group">
                     <label class="recommended" for="owner">{{ trans('cruds.process.fields.owner') }}</label>
