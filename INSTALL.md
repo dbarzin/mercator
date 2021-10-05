@@ -32,7 +32,7 @@ Créer le répertoire du projet
     cd /var/www
     sudo mkdir mercator
     sudo chown $USER:$GROUP mercator
-    
+
 Cloner le projet depuis Github
 
     git clone https://www.github.com/dbarzin/mercator
@@ -101,12 +101,12 @@ Mettre les paramètre de connexion à la base de données :
 
 Exécuter les migrations
 
-    php artisan migrate --seed 
+    php artisan migrate --seed
 
 Remarque: la graine est importante (--seed), car elle créera le premier utilisateur administrateur pour vous.
 
 Générer la clé de l'application
- 
+
     php artisan key:generate
 
 Vider la cache
@@ -125,19 +125,19 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
     utilisateur : admin@admin.com
     mot de passe : password
 
-## Configuration du mail 
+## Configuration du mail
 
 Si vous souhaitez envoyer des mails de notification depuis Mercator.
 
 Installer postfix et mailx
 
-    sudo apt install postfix mailx 
+    sudo apt install postfix mailx
 
-Configurer postfix 
+Configurer postfix
 
     sudo dpkg-reconfigure postfix
 
-Envoyer un mail de test avec  
+Envoyer un mail de test avec
 
     echo "Test mail body" | mailx -r "mercator@yourdomain.local" -s "Subject Test" yourname@yourdomain.local
 
@@ -150,6 +150,39 @@ Modifier le crontab
 ajouter cette ligne dans le crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
+
+## Apache
+
+Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
+
+    chown -R www-data:www-data /var/www/mercator
+    chmod -R 775 /var/www/mercator/storage
+
+Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour servir l'application Mercator :
+
+    vi /etc/apache2/sites-available/mercator.conf
+
+Ajouter les lignes suivantes :
+
+    <VirtualHost *:80>
+    ServerName mercator.local
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/mercator/public
+    <Directory /var/www/html/laravelapp>
+    AllowOverride All
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+
+Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de réécriture avec la commande suivante :
+
+    a2ensite mercator.conf
+    a2enmod rewrite
+
+Enfin, redémarrez le service Apache pour activer les modifications :
+
+    systemctl restart apache2
 
 ## Problèmes
 
