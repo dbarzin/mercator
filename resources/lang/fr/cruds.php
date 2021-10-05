@@ -72,7 +72,7 @@ return [
     "application" => [
         "fields" => [
             "application_block" => "Bloc applicatif",
-            "application_block_helper" => "",
+            "application_block_helper" => "Bloc applicatif dont fait partie cette application",
             "created_at" => "Créé à",
             "created_at_helper" => "",
             "databases" => "Bases de données",
@@ -130,12 +130,13 @@ return [
             "name" => "Nom",
             "name_helper" => "",
             "responsible" => "Responsable",
-            "responsible_helper" => "",
+            "responsible_helper" => "Responsable des applications",
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
         "title" => "Blocs applicatif",
-        "title_singular" => "Bloc applicatif"        
+        "title_singular" => "Bloc applicatif",
+        "description" => "Ensemble d'applications."
     ],
     "applicationModule" => [
         "fields" => [
@@ -144,13 +145,15 @@ return [
             "deleted_at" => "Supprimé à",
             "deleted_at_helper" => "",
             "services" => "Services",
-            "service_helper" => "Services qui utilisent ce module",
+            "services_helper" => "Services qui utilisent ce module",
             "description" => "Description",
             "description_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "flux" => "flux",
+            "flux_helper" => "Flux associés"
         ],
         "title" => "Modules applicatif",
         "title_short" => "Modules",
@@ -273,7 +276,9 @@ return [
             "type" => "Type de technologie",
             "type_helper" => "ex: mySQL, Oracle, SQL Server",
             "updated_at" => "Remplacé à",
-            "updated_at_helper" => ""
+            "updated_at_helper" => "",
+            "flux" => "Flux",
+            "flux_helper" => "Flux associés",
         ],
         "title" => "Bases de données",
         "title_singular" => "Base de données",
@@ -1278,11 +1283,11 @@ return [
         ],
         "logical_infrastructure" => [
             "title" => "Vue des infrastructures logiques",
-            "title_short" => "Logique",
+            "title_short" => "Infrastructure Logique",
         ],
         "physical_infrastructure" => [
             "title" => "Vue des infrastructures physiques",
-            "title_short" => "Physique"
+            "title_short" => "Infrastructure Physique"
         ],
         "user_management" => [
             "title" => "Gestion des utilisateurs",
