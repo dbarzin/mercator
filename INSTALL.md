@@ -218,14 +218,11 @@ Mettre à jour les librairies
 Vider les caches
 
     php artisan config:clear &&  php artisan view:clear
-    
-Redémarre l'application
 
-    php artisan serve
-   
+
 ## Tests de non-régression
 
-Instaler Chromium
+Pour exécuter les tests de non-régression de Mercator, vous devez d'abord instaler Chromium :
 
     sudo apt install chromium-browser
 
@@ -235,13 +232,13 @@ Installer le pluggin dusk
 
 Configurer l'environement
 
-    cp .env .env.dusk.local    
+    cp .env .env.dusk.local
 
 Lancer l'application
 
     php artisan serve
 
-Dans un autre terminal, lancer les tests 
+Dans un autre terminal, lancer les tests
 
     php artisan dusk
 
@@ -275,16 +272,16 @@ Supprimer la base de données de Mercator
 
     sudo mysql -e "drop database mercator;"
 
-Créer une nouvelle base de données 
+Créer une nouvelle base de données
 
     sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-Exécuter les migrations 
+Exécuter les migrations
 
-    php artisan migrate --seed 
+    php artisan migrate --seed
 
 Générer la clé
- 
+
     php artisan key:generate
 
 Restaurer les données
