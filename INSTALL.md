@@ -168,7 +168,7 @@ Ajouter les lignes suivantes :
     ServerName mercator.local
     ServerAdmin admin@example.com
     DocumentRoot /var/www/mercator/public
-    <Directory /var/www/html/laravelapp>
+    <Directory /var/www/mercator>
     AllowOverride All
     </Directory>
     ErrorLog ${APACHE_LOG_DIR}/error.log
