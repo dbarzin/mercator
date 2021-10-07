@@ -91,7 +91,7 @@ class MacroProcessusController extends Controller
 
         $macroProcessus->delete();
 
-        return back();
+        return redirect()->route('admin.macro-processuses.index');
     }
 
     public function massDestroy(MassDestroyMacroProcessusRequest $request)

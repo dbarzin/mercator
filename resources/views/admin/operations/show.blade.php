@@ -12,19 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.operations.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('entity_edit')
+                    <a class="btn btn-info" href="{{ route('admin.operations.edit', $operation->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('entity_delete')
+                    <form action="{{ route('admin.operations.destroy', $operation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.operation.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $operation->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.operation.fields.name') }}
                         </th>
                         <td>
@@ -46,6 +53,9 @@
                         <td>
                             @foreach($operation->actors as $key => $actors)
                                 <span class="label label-info">{{ $actors->name }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -56,6 +66,9 @@
                         <td>
                             @foreach($operation->tasks as $key => $tasks)
                                 <span class="label label-info">{{ $tasks->nom }}</span>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>

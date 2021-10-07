@@ -1060,8 +1060,8 @@ return [
             "updated_at" => "Remplacé à",
             "updated_at_helper" => ""
         ],
-        "title" => "Activités",
-        "title_singular" => "Activité",
+        "title" => "Tâches",
+        "title_singular" => "Tâche",
         "description" => "Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus."
     ],
     "user" => [

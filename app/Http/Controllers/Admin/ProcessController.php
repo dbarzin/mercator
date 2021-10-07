@@ -104,7 +104,7 @@ class ProcessController extends Controller
 
         $process->delete();
 
-        return back();
+        return redirect()->route('admin.processes.index');
     }
 
     public function massDestroy(MassDestroyProcessRequest $request)

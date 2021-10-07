@@ -120,7 +120,7 @@ class EntityController extends Controller
 
         $entity->delete();
 
-        return back();
+        return redirect()->route('admin.entities.index');
     }
 
     public function massDestroy(MassDestroyEntityRequest $request)

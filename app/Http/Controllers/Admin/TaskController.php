@@ -62,7 +62,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return back();
+        return redirect()->route('admin.tasks.index');
     }
 
     public function massDestroy(MassDestroyTaskRequest $request)

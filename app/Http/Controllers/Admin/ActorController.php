@@ -62,7 +62,7 @@ class ActorController extends Controller
 
         $actor->delete();
 
-        return back();
+        return redirect()->route('admin.actors.index');
     }
 
     public function massDestroy(MassDestroyActorRequest $request)

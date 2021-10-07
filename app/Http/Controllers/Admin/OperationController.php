@@ -83,7 +83,7 @@ class OperationController extends Controller
 
         $operation->delete();
 
-        return back();
+        return redirect()->route('admin.operations.index');
     }
 
     public function massDestroy(MassDestroyOperationRequest $request)

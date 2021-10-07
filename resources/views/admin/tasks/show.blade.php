@@ -12,19 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.tasks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('task_edit')
+                    <a class="btn btn-info" href="{{ route('admin.tasks.edit', $task->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('task_delete')
+                    <form action="{{ route('admin.tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.task.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $task->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.task.fields.nom') }}
                         </th>
                         <td>

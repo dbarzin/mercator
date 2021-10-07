@@ -85,7 +85,7 @@ class RelationController extends Controller
 
         $relation->delete();
 
-        return back();
+        return redirect()->route('admin.relations.index');
     }
 
     public function massDestroy(MassDestroyRelationRequest $request)
