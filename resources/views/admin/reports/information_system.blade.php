@@ -49,6 +49,7 @@
                 </div>
             </div>
 
+            @can('macro_processus_access')
             @if ((auth()->user()->granularity>=2)&&($macroProcessuses->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -62,7 +63,11 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                 <th colspan="2">
+                                    @can('macro_processus_edit')
                                     <a href="/admin/macro-processuses/{{ $macroProcess->id }}/edit">{{ $macroProcess->name }}</a>
+                                    @else
+                                    <a href="/admin/macro-processuses/{{ $macroProcess->id }}">{{ $macroProcess->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -117,7 +122,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('process_access')
             @if ($processes->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -131,7 +138,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PROCESS{{ $process->id }}">
                                     <th colspan="2">
+                                        @can('process_edit')
                                         <a href="/admin/processes/{{ $process->id }}/edit">{{ $process->identifiant }}</a>
+                                        @else
+                                        <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -208,7 +219,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('activity_access')
             @if ($activities->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -222,7 +235,11 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ACTIVITY{{ $activity->id }}">
                                 <th colspan="2">
+                                    @can('activity_edit')
                                     <a href="/admin/activities/{{ $activity->id }}/edit">{{ $activity->name }}</a>
+                                    @else
+                                    <a href="/admin/activities/{{ $activity->id }}">{{ $activity->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -251,7 +268,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('operation_access')
             @if ($operations->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -265,7 +284,11 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="OPERATION{{ $operation->id }}">
                                 <th colspan="2">
+                                    @can('operation_edit')
                                     <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
+                                    @else
+                                    <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -305,7 +328,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('task_access')
             @if ($tasks->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -319,7 +344,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="TASK{{ $task->id }}">
                                     <th colspan="2">
+                                        @can('task_edit')
                                         <a href="/admin/tasks/{{ $task->id }}/edit">{{ $task->nom }}</a>
+                                        @else
+                                        <a href="/admin/tasks/{{ $task->id }}">{{ $task->nom }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -335,7 +364,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('actors_access')
             @if ($actors->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -349,7 +380,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ACTOR{{ $actor->id }}">
                                     <th colspan="2">
+                                        @can('actor_edit')
                                         <a href="/admin/actors/{{ $actor->id }}/edit">{{ $actor->name }}</a>
+                                        @else
+                                        <a href="/admin/actors/{{ $actor->id }}">{{ $actor->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -373,7 +408,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('information_access')
             @if ($informations->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -387,7 +424,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="INFORMATION{{ $information->id }}">
                                     <th colspan="2">
+                                        @can('information_edit')
                                         <a href="/admin/information/{{ $information->id }}/edit">{{ $information->name }}</a>
+                                        @else
+                                        <a href="/admin/information/{{ $information->id }}">{{ $information->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -454,6 +495,7 @@
                 </div>
             </div>
             @endif
+            @endcan
         </div>
     </div>
 </div>

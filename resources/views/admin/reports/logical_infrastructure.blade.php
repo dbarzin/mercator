@@ -49,6 +49,7 @@
                 </div>
             </div>
 
+            @can('network_access')
             @if ($networks->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -64,7 +65,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="NETWORK{{ $network->id }}">
                                     <th colspan="2">
-                                    <a href="/admin/networks/{{ $network->id }}/edit">{{ $network->name }}</a><br>
+                                    @can('network_edit')
+                                    <a href="/admin/networks/{{ $network->id }}/edit">{{ $network->name }}</a>
+                                    @else
+                                    <a href="/admin/networks/{{ $network->id }}">{{ $network->name }}</a>
+                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -134,7 +139,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('subnetwork_access')
             @if ($subnetworks->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -149,7 +156,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SUBNET{{ $subnetwork->id }}">
                                     <th colspan="2">
-                                    <a href="/admin/subnetworks/{{ $subnetwork->id }}/edit">{{ $subnetwork->name }}</a><br>
+                                    @can('subnetwork_edit')
+                                    <a href="/admin/subnetworks/{{ $subnetwork->id }}/edit">{{ $subnetwork->name }}</a>
+                                    @else
+                                    <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
+                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -212,7 +223,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can("gateway_access")
             @if ($gateways->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -226,7 +239,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="GATEWAY{{ $gateway->id }}">
                                         <th colspan="2">
-                                        <a href="/admin/gateways/{{ $gateway->id }}/edit">{{ $gateway->name }}</a><br>
+                                        @can("gateway_edit")
+                                        <a href="/admin/gateways/{{ $gateway->id }}/edit">{{ $gateway->name }}</a>
+                                        @else
+                                        <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
+                                        @endcan
                                         </th>
                                     </thead>
                                     <tr>
@@ -260,7 +277,9 @@
                 </div>
             </div>                                
             @endif
+            @endcan
 
+            @can('external_connected_entity_access')
             @if ($externalConnectedEntities->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -274,7 +293,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="EXTENTITY{{ $entity->id }}">
                                         <th colspan="2">
-                                        <a href="/admin/external-connected-entities/{{ $entity->id }}/edit">{{ $entity->name }}</a><br>
+                                        @can('external_connected_entity_edit')
+                                        <a href="/admin/external-connected-entities/{{ $entity->id }}/edit">{{ $entity->name }}</a>
+                                        @else
+                                        <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
+                                        @endcan
                                         </th>
                                     </thead>
                                     <tr>
@@ -304,7 +327,9 @@
                 </div>
             </div>                                
             @endif
+            @endcan
 
+            @can("router_access")
             @if ($routers->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -318,7 +343,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ROUTER{{ $router->id }}">
                                         <th colspan="2">
-                                        <a href="/admin/routers/{{ $router->id }}/edit">{{ $router->name }}</a><br>
+                                        @can("router_access_edit")
+                                        <a href="/admin/routers/{{ $router->id }}/edit">{{ $router->name }}</a>
+                                        @else
+                                        <a href="/admin/routers/{{ $router->id }}">{{ $router->name }}</a>
+                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -342,7 +371,9 @@
                     </div>
                 </div>
             @endif
+            @endcan
 
+            @can('logical_server_access')
             @if ($logicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -356,7 +387,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
                                         <th colspan="2">
-                                        <a href="/admin/logical-servers/{{ $logicalServer->id }}/edit">{{ $logicalServer->name }}</a><br>
+                                        @can('logical_server_edit')
+                                        <a href="/admin/logical-servers/{{ $logicalServer->id }}/edit">{{ $logicalServer->name }}</a>
+                                        @else
+                                        <a href="/admin/logical-servers/{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
+                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -422,7 +457,7 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-					</tr>
+					                   </tr>
 					@if ($logicalServer->certificates->count()>0)
                                         <tr>
                                             <th>
@@ -446,8 +481,9 @@
                     </div>
                 </div>
                 @endif
+                @endcan
 
-
+            @can('certificate_access')
             @if ($certificates->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -461,7 +497,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="CERT{{ $certificate->id }}">
                                         <th colspan="2">
-                                        <a href="/admin/certificates/{{ $certificate->id }}/edit">{{ $certificate->name }}</a><br>
+                                        @can('certificate_edit')
+                                        <a href="/admin/certificates/{{ $certificate->id }}/edit">{{ $certificate->name }}</a>
+                                        @else
+                                        <a href="/admin/certificates/{{ $certificate->id }}">{{ $certificate->name }}</a>
+                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -518,8 +558,10 @@
                     </div>
                 </div>
                 @endif
+                @endcan
 
 
+            @can('vlan_access')
             @if ($vlans->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -533,7 +575,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="VLAN{{ $vlan->id }}">
                                     <th colspan="2">
+                                        @can('vlan_edit') 
                                         <a href="/admin/vlans/{{ $vlan->id }}/edit">{{ $vlan->name }}</a>
+                                        @else
+                                        <a href="/admin/vlans/{{ $vlan->id }}">{{ $vlan->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -560,10 +606,7 @@
                     </div>
                 </div>
             @endif
-
-
-
-
+            @endcan
         </div>
     </div>
 </div>
@@ -589,13 +632,17 @@ d3.select("#graph").graphviz()
     .addImage("/images/certificate.png", "64px", "64px")    
     .addImage("/images/vlan.png", "64px", "64px")    
     .renderDot("digraph  {\
-            <?php  $i=0; ?>\
+            @can('network_access')\
             @foreach($networks as $network) \
                 NET{{ $network->id }} [label=\"{{ $network->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"#NETWORK{{$network->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('gateway_access')\
             @foreach($gateways as $gateway) \
                 GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('subnetwork_access')\
             @foreach($subnetworks as $subnetwork) \
                 SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
                 @if ($subnetwork->vlan_id!=null) \
@@ -608,12 +655,16 @@ d3.select("#graph").graphviz()
                     SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('external_connected_entity_access')\
             @foreach($externalConnectedEntities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
                 @foreach($entity->connected_networks as $network)\
                     E{{ $entity->id }} -> NET{{ $network->id }} \
                 @endforeach\
             @endforeach\
+            @endcan\
+            @can('logical_server_access')\
             @foreach($logicalServers as $logicalServer) \
                 LOGICAL_SERVER{{ $logicalServer->id }} [label=\"{{ $logicalServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#LOGICAL_SERVER{{$logicalServer->id}}\"]\
                 @if ($logicalServer->address_ip!=null)\
@@ -630,6 +681,8 @@ d3.select("#graph").graphviz()
                     LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}\
                 @endforeach\
             @endforeach\
+            @endcan\
+            @can('certificate_access')\
             @foreach($certificates as $certificate) \
                 @if ($certificate->logical_servers->count()>0)\
                     CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
@@ -647,9 +700,12 @@ d3.select("#graph").graphviz()
                     @endif\
                 @endforeach\
             @endforeach\
+            @endcan\
+            @can('vlan_access')\
             @foreach($vlans as $vlan) \
                 VLAN{{ $vlan->id }} [label=\"{{ $vlan->name }}\" shape=none labelloc=\"b\" width=1 height=1.1 image=\"/images/vlan.png\" href=\"#VLAN{{$vlan->id}}\"]\
             @endforeach\
+            @endcan\
         }");
 
 </script>

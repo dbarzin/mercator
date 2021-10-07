@@ -51,6 +51,7 @@
                 </div>
             </div>
 
+            @can('application_block_access')
             @if ((auth()->user()->granularity>=2)&&($applicationBlocks->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -66,7 +67,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATIONBLOCK{{ $ab->id }}">
                                     <th colspan="2">
-                                    <a href="/admin/application-blocks/{{ $ab->id }}/edit">{{ $ab->name }}</a><br>
+                                    @can('application_block_edit')
+                                    <a href="/admin/application-blocks/{{ $ab->id }}/edit">{{ $ab->name }}</a>
+                                    @else
+                                    <a href="/admin/application-blocks/{{ $ab->id }}">{{ $ab->name }}</a>
+                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -97,7 +102,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('application_access')
             @if ($applications->count()>0)            
             <div class="card">
                 <div class="card-header">
@@ -112,7 +119,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATION{{$application->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/applications/{{ $application->id }}/edit">{{ $application->name }}</a><br>
+                                        @can('application_edit')
+                                        <a href="/admin/applications/{{ $application->id }}/edit">{{ $application->name }}</a>
+                                        @else
+                                        <a href="/admin/applications/{{ $application->id }}">{{ $application->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -269,7 +280,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('application_service_access')
             @if ((auth()->user()->granularity>=2)&&($applicationServices->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -284,7 +297,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATIONSERVICE{{$applicationService->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a><br>
+                                        @can('application_service_edit')
+                                        <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a>
+                                        @else
+                                        <a href="/admin/application-services/{{ $applicationService->id }}">{{ $applicationService->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -345,7 +362,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('application_module_access')
             @if ((auth()->user()->granularity>=2)&&($applicationModules->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -360,7 +379,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="APPLICATIONMODULE{{$applicationModule->id}}">
                                         <th colspan="2">
+                                            @can('application_module_edit')
                                             <a href="/admin/application-modules/{{ $applicationModule->id }}/edit">{{ $applicationModule->name }}</a><br>
+                                            @else
+                                            <a href="/admin/application-modules/{{ $applicationModule->id }}">{{ $applicationModule->name }}</a><br>
+                                            @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -406,7 +429,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('database_access')
             @if ($databases->count()>0)                        
             <div class="card">
                 <div class="card-header">
@@ -421,7 +446,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="DATABASE{{$database->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/databases/{{ $database->id }}/edit">{{ $database->name }}</a><br>
+                                        @can('database_edit')
+                                        <a href="/admin/databases/{{ $database->id }}/edit">{{ $database->name }}</a>
+                                        @else
+                                        <a href="/admin/databases/{{ $database->id }}">{{ $database->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -520,7 +549,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('flux_access')
             @if ($fluxes->count()>0)                                    
             <div class="card">
                 <div class="card-header">
@@ -535,7 +566,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="FLUX{{$flux->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/fluxes/{{ $flux->id }}/edit">{{ $flux->name }}</a><br>
+                                        @can('flux_edit')
+                                        <a href="/admin/fluxes/{{ $flux->id }}/edit">{{ $flux->name }}</a>
+                                        @else
+                                        <a href="/admin/fluxes/{{ $flux->id }}">{{ $flux->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -603,6 +638,7 @@
                             </div>
                         </div>
                     @endif
+                    @endcan
                 </div>
             </div>
         </div>
@@ -625,11 +661,14 @@ d3.select("#graph").graphviz()
     .addImage("/images/database.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
+            @can('application_block_access')\
             @if (auth()->user()->granularity>=2)\
                 @foreach($applicationBlocks as $ab) \
                     AB{{ $ab->id }} [label=\"{{ $ab->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"#APPLICATIONBLOCK{{$ab->id}}\"]\
                 @endforEach\
             @endif\
+            @endcan\
+            @can('application_access')\
             @foreach($applications as $application) \
                 A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"]\
                 @if (auth()->user()->granularity>=2)\
@@ -646,6 +685,8 @@ d3.select("#graph").graphviz()
                     @endif\
                 @endif\
             @endforEach\
+            @endcan\
+            @can('application_service_access')\
             @if (auth()->user()->granularity>=2)\
                 @foreach($applicationServices as $service) \
                     AS{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#APPLICATIONSERVICE{{$service->id}}\"]\
@@ -657,9 +698,12 @@ d3.select("#graph").graphviz()
                     M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#APPLICATIONMODULE{{$module->id}}\"]\
                 @endforeach\
             @endif\
+            @endcan\
+            @can('database_access')\
             @foreach($databases as $database) \
                 DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
             @endforeach\
+            @endcan\
         }");
 
 </script>

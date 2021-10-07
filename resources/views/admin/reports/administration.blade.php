@@ -17,6 +17,8 @@
                     <div id="graph"></div>
                 </div>
             </div>
+
+            @can('zone_admin_access')
             @if ($zones->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -32,7 +34,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ZONE{{ $zone->id }}">
                                         <th colspan="2">
+                                            @can('zone_admin_edit')
                                             <a href="/admin/zone-admins/{{ $zone->id }}/edit">{{ $zone->name }}</a>
+                                            @else
+                                            <a href="/admin/zone-admins/{{ $zone->id }}">{{ $zone->name }}</a>
+                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -72,7 +78,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('annuaire_access')            
             @if ($annuaires->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -88,7 +96,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ANNUAIRE{{ $annuaire->id }}">
                                         <th colspan="2">
+                                            @can('annuaire_edit')
                                             <a href="/admin/annuaires/{{ $annuaire->id }}/edit">{{ $annuaire->name }}</a>
+                                            @else
+                                            <a href="/admin/annuaires/{{ $annuaire->id }}">{{ $annuaire->name }}</a>
+                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -105,9 +117,6 @@
                                         <td>
                                            @if ($annuaire->zone_admin!=null)
                                                 <a href="#ZONE{{$annuaire->zone_admin->id}}">{{$annuaire->zone_admin->name}}</a>
-                                                @if (!$loop->last)
-                                                ,
-                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -121,7 +130,9 @@
                 </div>
             </div>
             @endif
-            
+            @endcan
+
+            @can('forest_ad_access')            
             @if ($forests->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -137,7 +148,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="FOREST{{ $forest->id }}">
                                         <th colspan="2">
+                                            @can('forest_ad_edit')
                                             <a href="/admin/forest-ads/{{ $forest->id }}/edit">{{ $forest->name }}</a>
+                                            @else
+                                            <a href="/admin/forest-ads/{{ $forest->id }}">{{ $forest->name }}</a>
+                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -173,7 +188,9 @@
                 </div>
             </div>
             @endif
-            
+            @endcan
+
+            @can('domaine_ad_access')            
             @if ($domains->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -188,7 +205,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="DOMAIN{{ $domain->id }}">
                                         <th colspan="2">
+                                            @can('domaine_ad_edit')
                                             <a href="/admin/domaine-ads/{{ $domain->id }}/edit">{{ $domain->name }}</a>
+                                            @else
+                                            <a href="/admin/domaine-ads/{{ $domain->id }}">{{ $domain->name }}</a>
+                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -232,6 +253,7 @@
                 </div>
             </div>
             @endif
+            @endcan
         </div>
     </div>
 </div>

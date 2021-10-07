@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        if (env('APP_DEBUG')) {
-            // Log SQL queries
+        // Log SQL queries
+        if (false) { // env('APP_DEBUG')) {            
             \DB::listen(function ($query) {
                 \Log::info($query->time . ':' . $query->sql);
             });

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+@if (Gate::check('entity_show') || Gate::check('relation_show'))
 <div class="content">
     <div class="row">
         <div class="col-lg-12">
@@ -18,6 +19,8 @@
                 </div>
             </div>
 
+            @can('entity_show')
+            @if($entities->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.entity.title') }}
@@ -30,7 +33,11 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ENTITY{{ $entity->id }}">
                                 <th colspan="2">
-                                    <a href="/admin/entities/{{ $entity->id }}/edit">{{ $entity->name }}</a><br>
+                                    @can('entity_edit')
+                                    <a href="/admin/entities/{{ $entity->id }}/edit">{{ $entity->name }}</a>
+                                    @else
+                                    <a href="/admin/entities/{{ $entity->id }}">{{ $entity->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -111,7 +118,11 @@
                         @endforeach
                 </div>
             </div>
+            @endif
+            @endcan
 
+            @can('relation_show')
+            @if($relations->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.relation.title') }}
@@ -124,7 +135,11 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="RELATION{{$relation->id}}">
                                 <th colspan="2">
-                                <a href="/admin/relations/{{ $relation->id }}/edit">{{ $relation->name }}</a> <br>
+                                @can('relation_edit')                                    
+                                <a href="/admin/relations/{{ $relation->id }}/edit">{{ $relation->name }}</a>
+                                @else
+                                <a href="/admin/relations/{{ $relation->id }}">{{ $relation->name }}</a>
+                                @endcan                                
                                 </th>
                             </thead>
                             <tbody>
@@ -169,9 +184,12 @@
                 @endforeach
                 </div>
             </div>
+            @endif
+            @endcan
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @section('scripts')
@@ -186,13 +204,16 @@
 d3.select("#graph").graphviz()
     .addImage("/images/entity.png", "64px", "64px")
     .renderDot("digraph  {\
-            <?php  $i=0; ?>\
+        @can('entity_show')\
             @foreach($entities as $entity) \
                 E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]\
             @endforEach\
+        @endcan\
+        @can('relation_show')\
             @foreach($relations as $relation) \
                 E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]\
             @endforEach\
+        @endcan\
         }");
 
 </script>

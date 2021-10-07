@@ -51,6 +51,7 @@
                 </div>
             </div>
 
+            @can('flux_access')
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.flux.title') }} :
@@ -64,7 +65,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="FLOW{{$flux->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/fluxes/{{ $flux->id }}/edit">{{ $flux->name }}</a><br>
+                                        @can('flux_edit')
+                                        <a href="/admin/fluxes/{{ $flux->id }}/edit">{{ $flux->name }}</a>
+                                        @else
+                                        <a href="/admin/fluxes/{{ $flux->id }}">{{ $flux->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -148,8 +153,9 @@
                 @endforeach
                 </div>
             </div>
+            @endcan
 
-
+            @can('application_access')
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.application.title') }}
@@ -163,7 +169,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATION{{$application->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/applications/{{ $application->id }}/edit">{{ $application->name }}</a><br>
+                                        @can('application_edit')
+                                        <a href="/admin/applications/{{ $application->id }}/edit">{{ $application->name }}</a>
+                                        @else
+                                        <a href="/admin/applications/{{ $application->id }}">{{ $application->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -305,6 +315,9 @@
                     @endforeach
                 </div>
             </div>
+            @endcan
+
+            @can('application_service_access')
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.applicationService.title') }}
@@ -318,7 +331,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SERVICE{{$applicationService->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a><br>
+                                        @can('application_service_edit')
+                                        <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a>
+                                        @else
+                                        <a href="/admin/application-services/{{ $applicationService->id }}">{{ $applicationService->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -379,6 +396,9 @@
                     @endforeach
                 </div>
             </div>
+            @endcan
+
+            @can('application_module_access')
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.applicationModule.title') }}
@@ -392,7 +412,11 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="MODULE{{$applicationModule->id}}">
                                         <th colspan="2">
-                                            <a href="/admin/application-modules/{{ $applicationModule->id }}/edit">{{ $applicationModule->name }}</a><br>
+                                            @can('application_module_edit')
+                                            <a href="/admin/application-modules/{{ $applicationModule->id }}/edit">{{ $applicationModule->name }}</a>
+                                            @else
+                                            <a href="/admin/application-modules/{{ $applicationModule->id }}">{{ $applicationModule->name }}</a>
+                                            @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -437,6 +461,9 @@
                         @endforeach
                 </div>
             </div>
+            @endcan
+
+            @can('database_access')
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.database.title') }}
@@ -450,7 +477,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="DATABASE{{$database->id}}">
                                     <th colspan="2">
-                                        <a href="/admin/databases/{{ $database->id }}/edit">{{ $database->name }}</a><br>
+                                        @can('database_edit')
+                                        <a href="/admin/databases/{{ $database->id }}/edit">{{ $database->name }}</a>
+                                        @else
+                                        <a href="/admin/databases/{{ $database->id }}">{{ $database->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -546,6 +577,7 @@
                     @endforeach
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 </div>
@@ -567,18 +599,27 @@ d3.select("#graph").graphviz()
     .addImage("/images/database.png", "64px", "64px")
     .engine("circo")
     .renderDot("digraph  {\
+            @can('application_access')\
             @foreach($applications as $application) \
                     A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"] \
             @endforEach\
+            @endcan\
+            @can('application_service_access')\
             @foreach($applicationServices as $service) \
                     S{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#SERVICE{{$service->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('application_module_access')\
             @foreach($applicationModules as $module) \
                     M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#MODULE{{$module->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('database_access')\
             @foreach($databases as $database) \
                 DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('flux_access')\
             @foreach($flows as $flow) \
                 @if ((($flow->database_source_id!=null)||($flow->module_source_id!=null)||($flow->service_source_id!=null)||($flow->application_source_id!=null))&&(($flow->database_dest_id!=null)||($flow->module_dest_id!=null)||($flow->service_dest_id!=null)||($flow->application_dest_id!=null)))\
                         @if ($flow->database_source_id!=null) \
@@ -607,6 +648,7 @@ d3.select("#graph").graphviz()
                 href=\"#FLOW{{$flow->id}}\"]\
                 @endif\
             @endforEach\
+            @endcan\
         }");
 </script>
 @parent

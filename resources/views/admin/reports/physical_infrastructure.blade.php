@@ -47,6 +47,7 @@
             </div>
         </div>
 
+            @can('site_access')
             @if ($sites->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -60,7 +61,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SITE{{ $site->id }}">
                                 <th colspan="2">
-                                <a href="/admin/sites/{{ $site->id }}/edit">{{ $site->name }}</a><br>
+                                    @can('site_edit')
+                                    <a href="/admin/sites/{{ $site->id }}/edit">{{ $site->name }}</a>
+                                    @else
+                                    <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
+                                    @endcan
                                 </th>
                                 </thead>
                                 <tbody>
@@ -89,12 +94,14 @@
                     </table>
                 </div>
             </div>
-            @endforeach
+            @endforeach            
 
-                </div>
+            </div>
             </div>
             @endif
+            @endcan
 
+            @can('building_access')
             @if ($buildings->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -108,7 +115,11 @@
                             <table id="BUILDING{{ $building->id }}" class="table table-bordered table-striped table-hover">                                
                                 <thead >
                                 <th colspan="2">
-                                    <a href="/admin/buildings/{{ $building->id }}/edit">{{ $building->name }}</a><br>
+                                    @can('building_edit')
+                                    <a href="/admin/buildings/{{ $building->id }}/edit">{{ $building->name }}</a>
+                                    @else
+                                    <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
+                                    @endcan
                                 </th>
                                 </thead>
                                 <tbody>
@@ -135,7 +146,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('bay_access')
             @if ($bays->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -149,7 +162,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="BAY{{ $bay->id }}">
                                     <th colspan="2">
-                                    <a href="/admin/bays/{{ $bay->id }}/edit">{{ $bay->name }}</a><br>
+                                    @can('bay_edit')
+                                    <a href="/admin/bays/{{ $bay->id }}/edit">{{ $bay->name }}</a>
+                                    @else
+                                    <a href="/admin/bays/{{ $bay->id }}">{{ $bay->name }}</a>
+                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -220,7 +237,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('physical_server_access')
             @if ($physicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -234,7 +253,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PSERVER{{ $pserver->id }}">
                                     <th colspan="2">
-                                        <a href="/admin/physical-servers/{{ $pserver->id }}/edit">{{ $pserver->name }}</a><br>
+                                        @can('physical_server_edit')
+                                        <a href="/admin/physical-servers/{{ $pserver->id }}/edit">{{ $pserver->name }}</a>
+                                        @else
+                                        <a href="/admin/physical-servers/{{ $pserver->id }}">{{ $pserver->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -297,7 +320,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('workstation_access')
             @if ((auth()->user()->granularity>=2)&&($workstations->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -311,7 +336,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="WORKSTATION{{ $workstation->id }}">
                                     <th colspan="2">
-                                        <a href="/admin/workstations/{{ $workstation->id }}/edit">{{ $workstation->name }}</a><br>
+                                        @can('workstation_edit')
+                                        <a href="/admin/workstations/{{ $workstation->id }}/edit">{{ $workstation->name }}</a>
+                                        @else
+                                        <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -351,7 +380,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('storage_device_access')
             @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -365,7 +396,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="STORAGEDEVICE{{ $storageDevice->id }}">
                                     <th colspan="2">
+                                        @can('storage_device_edit')
                                         <a href="/admin/storage-devices/{{ $storageDevice->id }}/edit">{{ $storageDevice->name }}</a>
+                                        @else
+                                        <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -405,7 +440,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('peripheral_access')
             @if ((auth()->user()->granularity>=2)&&($peripherals->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -419,7 +456,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PERIPHERAL{{ $peripheral->id }}">
                                     <th colspan="2">
+                                        @can('peripheral_edit')
                                         <a href="/admin/peripherals/{{ $peripheral->id }}/edit">{{ $peripheral->name }}</a>
+                                        @else
+                                        <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -467,7 +508,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('phone_access')
             @if ((auth()->user()->granularity>=2)&&($phones->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -481,7 +524,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PHONE{{ $phone->id }}">
                                     <th colspan="2">
+                                        @can('phone_edit')
                                         <a href="/admin/phones/{{ $phone->id }}/edit">{{ $phone->name }}</a>
+                                        @else
+                                        <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -517,7 +564,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('physical_switch_access')
             @if ($physicalSwitches->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -531,7 +580,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SWITCH{{ $switch->id }}">
                                     <th colspan="2">
+                                        @can('physical_switch_edit')
                                         <a href="/admin/physical-switches/{{ $switch->id }}/edit">{{ $switch->name }}</a>
+                                        @else
+                                        <a href="/admin/physical-switches/{{ $switch->id }}">{{ $switch->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -575,7 +628,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('physical_router_access')
             @if ($physicalRouters->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -589,7 +644,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ROUTER{{ $router->id }}">
                                     <th colspan="2">
+                                        @can('physical_router_edit')
                                         <a href="/admin/physical-routers/{{ $router->id }}/edit">{{ $router->name }}</a>
+                                        @else
+                                        <a href="/admin/physical-routers/{{ $router->id }}">{{ $router->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -633,8 +692,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
-            <!-- Wifi Terminals -->
+            @can('wifi_terminal_access')
             @if ((auth()->user()->granularity>=2)&&($wifiTerminals->count()>0))
             <div class="card">
                 <div class="card-header">
@@ -648,7 +708,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="WIFI{{ $wifiTerminal->id }}">
                                     <th colspan="2">
+                                        @can('wifi_terminal_edit')
                                         <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}/edit">{{ $wifiTerminal->name }}</a>
+                                        @else
+                                        <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -684,7 +748,9 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('physical_security_device_access')
             @if ($physicalSecurityDevices->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -698,7 +764,11 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PSD{{ $physicalSecurityDevice->id }}">
                                     <th colspan="2">
+                                        @can('physical_security_device_edit')
                                         <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}/edit">{{ $physicalSecurityDevice->name }}</a>
+                                        @else
+                                        <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -742,12 +812,9 @@
                 </div>
             </div>
             @endif
+            @endcan
         </div>
     </div>
-
-
-
-
 </div>
 @endsection
 
@@ -776,9 +843,12 @@ d3.select("#graph").graphviz()
     .addImage("/images/security.png", "64px", "64px")
     .renderDot("digraph  {\
             <?php  $i=0; ?>\
+            @can('site_access')\
             @foreach($sites as $site) \
                 S{{ $site->id }} [label=\"{{ $site->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"#SITE{{$site->id}}\"]\
             @endforEach\
+            @endcan\
+            @can('building_access')\
             @foreach($buildings as $building) \
                 B{{ $building->id }} [label=\"{{ $building->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"#BUILDING{{$building->id}}\"]\
                 S{{ $building->site_id }} -> B{{ $building->id }} \
@@ -786,9 +856,13 @@ d3.select("#graph").graphviz()
                     B{{ $building->id }} -> BAY{{ $bay->id }}\
                 @endforeach\
             @endforEach\
+            @endcan\
+            @can('bay_access')\
             @foreach($bays as $bay) \
                 BAY{{ $bay->id }} [label=\"{{ $bay->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/bay.png\" href=\"#BAY{{$bay->id}}\"]\
             @endforeach\
+            @endcan\
+            @can('physical_server_access')\
             @foreach($physicalServers as $pServer) \
                 PSERVER{{ $pServer->id }} [label=\"{{ $pServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#PSERVER{{$pServer->id}}\"]\
                 @if ($pServer->bay!=null)\
@@ -799,6 +873,8 @@ d3.select("#graph").graphviz()
                      S{{ $pServer->site->id }}\ -> PSERVER{{ $pServer->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('workstation_access')\
             @foreach($workstations as $workstation) \
                 W{{ $workstation->id }} [label=\"{{ $workstation->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/workstation.png\" href=\"#WORKSTATION{{$workstation->id}}\"]\
                 @if ($workstation->building!=null)\
@@ -807,6 +883,8 @@ d3.select("#graph").graphviz()
                      S{{ $workstation->site->id }}\ -> W{{ $workstation->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('storage_device_access')\
             @foreach($storageDevices as $storageDevice) \
                 SD{{ $storageDevice->id }} [label=\"{{ $storageDevice->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"#STORAGEDEVICE{{$storageDevice->id}}\"]\
                 @if ($storageDevice->bay!=null)\
@@ -817,6 +895,8 @@ d3.select("#graph").graphviz()
                      S{{ $storageDevice->site->id }}\ -> SD{{ $storageDevice->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('peripheral_access')\
             @foreach($peripherals as $peripheral) \
                 PER{{ $peripheral->id }} [label=\"{{ $peripheral->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"#PERIPHERAL{{$peripheral->id}}\"]\
                 @if ($peripheral->bay!=null)\
@@ -827,6 +907,8 @@ d3.select("#graph").graphviz()
                      S{{ $peripheral->site->id }}\ -> PER{{ $peripheral->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('phone_access')\
             @foreach($phones as $phone) \
                 PHONE{{ $phone->id }} [label=\"{{ $phone->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"#PHONE{{$phone->id}}\"]\
                 @if ($phone->building!=null)\
@@ -835,6 +917,8 @@ d3.select("#graph").graphviz()
                      S{{ $phone->site->id }}\ -> PHONE{{ $phone->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('physical_switch_access')\
             @foreach($physicalSwitches as $switch) \
                 SWITCH{{ $switch->id }} [label=\"{{ $switch->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"#SWITCH{{$switch->id}}\"]\
                 @if ($switch->bay!=null)\
@@ -845,6 +929,8 @@ d3.select("#graph").graphviz()
                      S{{ $switch->site->id }}\ -> SWITCH{{ $switch->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('physical_router_access')\
             @foreach($physicalRouters as $router) \
                 ROUTER{{ $router->id }} [label=\"{{ $router->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"#ROUTER{{$router->id}}\"]\
                 @if ($router->bay!=null)\
@@ -855,6 +941,8 @@ d3.select("#graph").graphviz()
                      S{{ $router->site->id }}\ -> ROUTER{{ $router->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('wifi_terminal_access')\
             @foreach($wifiTerminals as $wifiTerminal) \
                 WIFI{{ $wifiTerminal->id }} [label=\"{{ $wifiTerminal->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"#WIFI{{$wifiTerminal->id}}\"]\
                 @if ($wifiTerminal->building!=null)\
@@ -863,6 +951,8 @@ d3.select("#graph").graphviz()
                      S{{ $wifiTerminal->site->id }}\ -> WIFI{{ $wifiTerminal->id }}\
                 @endif\
             @endforeach\
+            @endcan\
+            @can('physical_security_device_access')\
             @foreach($physicalSecurityDevices as $physicalSecurityDevice) \
                 PSD{{ $physicalSecurityDevice->id }} [label=\"{{ $physicalSecurityDevice->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/security.png\" href=\"#PSD{{$physicalSecurityDevice->id}}\"]\
                 @if ($physicalSecurityDevice->bay!=null)\
@@ -873,8 +963,8 @@ d3.select("#graph").graphviz()
                      S{{ $physicalSecurityDevice->site->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
                 @endif\
             @endforeach\
+            @endcan\
         }");
-
 </script>
 @parent
 @endsection
