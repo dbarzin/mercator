@@ -79,7 +79,7 @@ class PhysicalSwitchController extends Controller
 
         $physicalSwitch->delete();
 
-        return back();
+        return redirect()->route('admin.physical-switches.index');
     }
 
     public function massDestroy(MassDestroyPhysicalSwitchRequest $request)

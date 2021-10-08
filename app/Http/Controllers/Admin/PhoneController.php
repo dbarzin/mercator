@@ -76,7 +76,7 @@ class PhoneController extends Controller
 
         $phone->delete();
 
-        return back();
+        return redirect()->route('admin.phones.index');
     }
 
     public function massDestroy(MassDestroyPhoneRequest $request)

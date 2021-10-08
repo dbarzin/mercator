@@ -62,7 +62,7 @@ class DhcpServerController extends Controller
 
         $dhcpServer->delete();
 
-        return back();
+        return redirect()->route('admin.dhcp-servers.index');
     }
 
     public function massDestroy(MassDestroyDhcpServerRequest $request)

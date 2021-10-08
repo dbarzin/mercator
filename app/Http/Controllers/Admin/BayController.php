@@ -71,7 +71,7 @@ class BayController extends Controller
 
         $bay->delete();
 
-        return back();
+        return redirect()->route('admin.bays.index');
     }
 
     public function massDestroy(MassDestroyBayRequest $request)

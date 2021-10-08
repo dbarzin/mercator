@@ -64,7 +64,7 @@ class SiteController extends Controller
 
         $site->delete();
 
-        return back();
+        return redirect()->route('admin.sites.index');
     }
 
     public function massDestroy(MassDestroySiteRequest $request)

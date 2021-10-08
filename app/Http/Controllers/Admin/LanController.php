@@ -64,7 +64,7 @@ class LanController extends Controller
 
         $lan->delete();
 
-        return back();
+        return redirect()->route('admin.lans.index');
     }
 
     public function massDestroy(MassDestroyLanRequest $request)

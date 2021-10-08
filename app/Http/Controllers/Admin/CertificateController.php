@@ -88,7 +88,7 @@ class CertificateController extends Controller
 
         $certificate->delete();
 
-        return back();
+        return redirect()->route('admin.certificates.index');
     }
 
     public function massDestroy(MassDestroyCertificateRequest $request)

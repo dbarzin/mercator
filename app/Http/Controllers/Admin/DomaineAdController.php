@@ -69,7 +69,7 @@ class DomaineAdController extends Controller
 
         $domaineAd->delete();
 
-        return back();
+        return redirect()->route('admin.domaine-ads.index');
     }
 
     public function massDestroy(MassDestroyDomaineAdRequest $request)

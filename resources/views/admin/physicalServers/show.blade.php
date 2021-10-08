@@ -12,6 +12,19 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-servers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('physical_server_edit')
+                    <a class="btn btn-info" href="{{ route('admin.physical-servers.edit', $physicalServer->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('physical_server_delete')
+                    <form action="{{ route('admin.physical-servers.destroy', $physicalServer->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -96,24 +109,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#servers_logical_servers" role="tab" data-toggle="tab">
-                {{ trans('cruds.logicalServer.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="servers_logical_servers">
-            @includeIf('admin.physicalServers.relationships.serversLogicalServers', ['logicalServers' => $physicalServer->serversLogicalServers])
         </div>
     </div>
 </div>

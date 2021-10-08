@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.maturity_level_1") }}
+                    {{ trans("panel.level_1.title_long") }}
                 </div>
                 <div class="card-body">
                     <div style="width: 350px; height: 180px;">
@@ -16,7 +16,7 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.maturity_levels") }}
+                    {{ trans("panel.level_1.description") }}
                 </div>
                 <div class="card-body">
 

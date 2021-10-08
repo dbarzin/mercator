@@ -62,7 +62,7 @@ class DnsserverController extends Controller
 
         $dnsserver->delete();
 
-        return back();
+        return redirect()->route('admin.dnsservers.index');
     }
 
     public function massDestroy(MassDestroyDnsserverRequest $request)

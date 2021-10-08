@@ -15,7 +15,7 @@
                                 <div style="width: 350px; height: 180px;">
                                   <canvas id="gauge_chart1_div"></canvas>
                                 </div>
-                                {{ trans("panel.level_1") }}
+                                {{ trans("panel.level_1.title_short") }}
                               </a>
                             </td>
                             <td align="center">
@@ -23,14 +23,14 @@
                                 <div style="width: 350px; height: 180px;">
                                   <canvas id="gauge_chart2_div"></canvas>
                                 </div>
-                                {{ trans("panel.level_2") }}
+                                {{ trans("panel.level_2.title_short") }}
                               </a>
                             <td align="center">
                               <a href="/admin/report/maturity3">
                                 <div style="width: 350px; height: 180px;">
                                   <canvas id="gauge_chart3_div"></canvas>
                                 </div>
-                                {{ trans("panel.level_3") }}
+                                {{ trans("panel.level_3.title_short") }}
                               </a>
                             </td>
                         </tr>

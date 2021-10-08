@@ -78,7 +78,7 @@ class ForestAdController extends Controller
 
         $forestAd->delete();
 
-        return back();
+        return redirect()->route('admin.forest-ads.index');
     }
 
     public function massDestroy(MassDestroyForestAdRequest $request)

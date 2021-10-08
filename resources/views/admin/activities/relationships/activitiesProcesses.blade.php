@@ -22,9 +22,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.process.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.process.fields.identifiant') }}
                         </th>
                         <th>
@@ -49,9 +46,6 @@
                         <tr data-entry-id="{{ $process->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $process->id ?? '' }}
                             </td>
                             <td>
                                 {{ $process->identifiant ?? '' }}

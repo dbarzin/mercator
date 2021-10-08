@@ -71,7 +71,7 @@ class AnnuaireController extends Controller
 
         $annuaire->delete();
 
-        return back();
+        return redirect()->route('admin.annuaires.index');
     }
 
     public function massDestroy(MassDestroyAnnuaireRequest $request)

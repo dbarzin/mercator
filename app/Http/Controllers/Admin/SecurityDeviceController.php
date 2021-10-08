@@ -62,7 +62,7 @@ class SecurityDeviceController extends Controller
 
         $securityDevice->delete();
 
-        return back();
+        return redirect()->route('admin.security-devices.index');
     }
 
     public function massDestroy(MassDestroySecurityDeviceRequest $request)

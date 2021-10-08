@@ -12,6 +12,21 @@
                 <a class="btn btn-default" href="{{ route('admin.networks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('network_edit')
+                    <a class="btn btn-info" href="{{ route('admin.networks.edit', $network->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('network_delete')
+                    <form action="{{ route('admin.networks.destroy', $network->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -101,22 +116,5 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#connected_networks_external_connected_entities" role="tab" data-toggle="tab">
-                {{ trans('cruds.externalConnectedEntity.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="connected_networks_external_connected_entities">
-            @includeIf('admin.networks.relationships.externalConnectedEntities', ['externalConnectedEntities' => $network->externalConnectedEntities])
-        </div>
-    </div>
-</div>
 
 @endsection

@@ -88,7 +88,7 @@ class VlanController extends Controller
 
         $vlan->delete();
 
-        return back();
+        return redirect()->route('admin.vlans.index');
     }
 
     public function massDestroy(MassDestroyVlanRequest $request)

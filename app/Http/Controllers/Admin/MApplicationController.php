@@ -144,7 +144,7 @@ class MApplicationController extends Controller
 
         $application->delete();
 
-        return back();
+        return redirect()->route('admin.applications.index');
     }
 
     public function massDestroy(MassDestroyMApplicationRequest $request)

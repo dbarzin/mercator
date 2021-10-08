@@ -76,7 +76,7 @@ class BuildingController extends Controller
 
         $building->delete();
 
-        return back();
+        return redirect()->route('admin.buildings.index');
     }
 
     public function massDestroy(MassDestroyBuildingRequest $request)

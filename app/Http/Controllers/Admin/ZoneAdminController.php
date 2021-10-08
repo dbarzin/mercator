@@ -64,7 +64,7 @@ class ZoneAdminController extends Controller
 
         $zoneAdmin->delete();
 
-        return back();
+        return redirect()->route('admin.zone-admins.index');
     }
 
     public function massDestroy(MassDestroyZoneAdminRequest $request)

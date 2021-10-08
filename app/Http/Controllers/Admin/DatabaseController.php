@@ -116,7 +116,7 @@ class DatabaseController extends Controller
 
         $database->delete();
 
-        return back();
+        return redirect()->route('admin.databases.index');
     }
 
     public function massDestroy(MassDestroyDatabaseRequest $request)

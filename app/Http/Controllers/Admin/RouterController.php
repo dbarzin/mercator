@@ -68,7 +68,7 @@ class RouterController extends Controller
 
         $router->delete();
 
-        return back();
+        return redirect()->route('admin.routers.index');
     }
 
     public function massDestroy(MassDestroyRouterRequest $request)

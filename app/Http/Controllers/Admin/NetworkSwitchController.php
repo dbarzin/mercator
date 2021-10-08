@@ -62,7 +62,7 @@ class NetworkSwitchController extends Controller
 
         $networkSwitch->delete();
 
-        return back();
+        return redirect()->route('admin.network-switches.index');
     }
 
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)

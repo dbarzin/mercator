@@ -81,7 +81,7 @@ class StorageDeviceController extends Controller
 
         $storageDevice->delete();
 
-        return back();
+        return redirect()->route('admin.storage-devices.index');
     }
 
     public function massDestroy(MassDestroyStorageDeviceRequest $request)

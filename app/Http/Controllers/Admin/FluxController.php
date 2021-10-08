@@ -93,7 +93,7 @@ class FluxController extends Controller
 
         $flux->delete();
 
-        return back();
+        return redirect()->route('admin.fluxes.index');
     }
 
     public function massDestroy(MassDestroyFluxRequest $request)

@@ -12,6 +12,19 @@
                 <a class="btn btn-default" href="{{ route('admin.buildings.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('building_edit')
+                    <a class="btn btn-info" href="{{ route('admin.buildings.edit', $building->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('building_delete')
+                    <form action="{{ route('admin.buildings.destroy', $building->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -46,72 +59,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#room_bays" role="tab" data-toggle="tab">
-                {{ trans('cruds.bay.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_physical_servers" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalServer.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_workstations" role="tab" data-toggle="tab">
-                {{ trans('cruds.workstation.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_storage_devices" role="tab" data-toggle="tab">
-                {{ trans('cruds.storageDevice.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_peripherals" role="tab" data-toggle="tab">
-                {{ trans('cruds.peripheral.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_phones" role="tab" data-toggle="tab">
-                {{ trans('cruds.phone.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#building_physical_switches" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalSwitch.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="room_bays">
-            @includeIf('admin.buildings.relationships.roomBays', ['bays' => $building->roomBays])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_physical_servers">
-            @includeIf('admin.buildings.relationships.buildingPhysicalServers', ['physicalServers' => $building->buildingPhysicalServers])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_workstations">
-            @includeIf('admin.buildings.relationships.buildingWorkstations', ['workstations' => $building->buildingWorkstations])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_storage_devices">
-            @includeIf('admin.buildings.relationships.buildingStorageDevices', ['storageDevices' => $building->buildingStorageDevices])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_peripherals">
-            @includeIf('admin.buildings.relationships.buildingPeripherals', ['peripherals' => $building->buildingPeripherals])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_phones">
-            @includeIf('admin.buildings.relationships.buildingPhones', ['phones' => $building->buildingPhones])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="building_physical_switches">
-            @includeIf('admin.buildings.relationships.buildingPhysicalSwitches', ['physicalSwitches' => $building->buildingPhysicalSwitches])
         </div>
     </div>
 </div>

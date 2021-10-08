@@ -88,7 +88,7 @@ class InformationController extends Controller
 
         $information->delete();
 
-        return back();
+        return redirect()->route('admin.information.index');
     }
 
     public function massDestroy(MassDestroyInformationRequest $request)

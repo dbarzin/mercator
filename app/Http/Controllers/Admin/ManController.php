@@ -73,7 +73,7 @@ class ManController extends Controller
 
         $man->delete();
 
-        return back();
+        return redirect()->route('admin.mans.index');
     }
 
     public function massDestroy(MassDestroyManRequest $request)

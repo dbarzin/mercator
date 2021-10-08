@@ -81,7 +81,7 @@ class PeripheralController extends Controller
 
         $peripheral->delete();
 
-        return back();
+        return redirect()->route('admin.peripherals.index');
     }
 
     public function massDestroy(MassDestroyPeripheralRequest $request)

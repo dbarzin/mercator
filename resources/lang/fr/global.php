@@ -283,4 +283,8 @@ return [
     "medium" => "Moyen", 
     "strong" => "Fort", 
     "very_strong" => "Très fort",
+    //
+    "created_at" => "Créé le",
+    "deleted_at" => "Supprimé le",
+    "updated_at" => "Remplacé le",
 ];

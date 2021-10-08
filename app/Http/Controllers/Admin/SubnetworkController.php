@@ -118,7 +118,7 @@ class SubnetworkController extends Controller
 
         $subnetwork->delete();
 
-        return back();
+        return redirect()->route('admin.subnetworks.index');
     }
 
     public function massDestroy(MassDestroySubnetworkRequest $request)

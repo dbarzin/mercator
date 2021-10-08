@@ -80,7 +80,7 @@ class ApplicationBlockController extends Controller
 
         $applicationBlock->delete();
 
-        return back();
+        return redirect()->route('admin.application-blocks.index');
     }
 
     public function massDestroy(MassDestroyApplicationBlockRequest $request)

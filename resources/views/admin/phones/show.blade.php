@@ -12,6 +12,19 @@
                 <a class="btn btn-default" href="{{ route('admin.phones.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('phone_edit')
+                    <a class="btn btn-info" href="{{ route('admin.phones.edit', $phone->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('phone_delete')
+                    <form action="{{ route('admin.phones.destroy', $phone->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -65,7 +78,4 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection

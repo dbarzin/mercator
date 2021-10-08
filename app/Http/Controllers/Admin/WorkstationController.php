@@ -76,7 +76,7 @@ class WorkstationController extends Controller
 
         $workstation->delete();
 
-        return back();
+        return redirect()->route('admin.workstations.index');
     }
 
     public function massDestroy(MassDestroyWorkstationRequest $request)

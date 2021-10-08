@@ -64,7 +64,7 @@ class ApplicationModuleController extends Controller
 
         $applicationModule->delete();
 
-        return back();
+        return redirect()->route('admin.application-modules.index');
     }
 
     public function massDestroy(MassDestroyApplicationModuleRequest $request)

@@ -48,9 +48,7 @@ class WanController extends Controller
         abort_if(Gate::denies('wan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $mans = Man::all()->sortBy('name')->pluck('name', 'id');
-
         $lans = Lan::all()->sortBy('name')->pluck('name', 'id');
-
         $wan->load('mans', 'lans');
 
         return view('admin.wans.edit', compact('mans', 'lans', 'wan'));
@@ -80,7 +78,7 @@ class WanController extends Controller
 
         $wan->delete();
 
-        return back();
+        return redirect()->route('admin.wans.index');
     }
 
     public function massDestroy(MassDestroyWanRequest $request)

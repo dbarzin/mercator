@@ -12,6 +12,21 @@
                 <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('application_edit')
+                    <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('application_delete')
+                    <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -166,32 +181,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#application_source_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#application_dest_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="application_source_fluxes">
-            @includeIf('admin.mapplications.relationships.applicationSourceFluxes', ['fluxes' => $application->applicationSourceFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="application_dest_fluxes">
-            @includeIf('admin.mapplications.relationships.applicationDestFluxes', ['fluxes' => $application->applicationDestFluxes])
         </div>
     </div>
 </div>

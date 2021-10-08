@@ -88,7 +88,7 @@ class PhysicalServerController extends Controller
 
         $physicalServer->delete();
 
-        return back();
+        return redirect()->route('admin.physical-servers.index');
     }
 
     public function massDestroy(MassDestroyPhysicalServerRequest $request)

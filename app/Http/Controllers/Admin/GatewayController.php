@@ -78,7 +78,7 @@ class GatewayController extends Controller
 
         $gateway->delete();
 
-        return back();
+        return redirect()->route('admin.gateways.index');
     }
 
     public function massDestroy(MassDestroyGatewayRequest $request)

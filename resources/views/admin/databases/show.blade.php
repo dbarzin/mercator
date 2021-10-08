@@ -12,6 +12,20 @@
                 <a class="btn btn-default" href="{{ route('admin.databases.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('database_edit')
+                    <a class="btn btn-info" href="{{ route('admin.databases.edit', $database->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('entity_delete')
+                    <form action="{{ route('admin.databases.destroy', $database->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -118,40 +132,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#database_source_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#database_dest_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#databases_m_applications" role="tab" data-toggle="tab">
-                {{ trans('cruds.application.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="database_source_fluxes">
-            @includeIf('admin.databases.relationships.databaseSourceFluxes', ['fluxes' => $database->databaseSourceFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="database_dest_fluxes">
-            @includeIf('admin.databases.relationships.databaseDestFluxes', ['fluxes' => $database->databaseDestFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="databases_m_applications">
-            @includeIf('admin.databases.relationships.databasesMApplications', ['mApplications' => $database->databasesMApplications])
         </div>
     </div>
 </div>

@@ -81,7 +81,7 @@ class PhysicalSecurityDeviceController extends Controller
 
         $physicalSecurityDevice->delete();
 
-        return back();
+        return redirect()->route('admin.physical-security-devices.index');
     }
 
     public function massDestroy(MassDestroyPhysicalSecurityDeviceRequest $request)

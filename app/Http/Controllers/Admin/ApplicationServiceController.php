@@ -86,7 +86,7 @@ class ApplicationServiceController extends Controller
 
         $applicationService->delete();
 
-        return back();
+        return redirect()->route('admin.application-services.index');
     }
 
     public function massDestroy(MassDestroyApplicationServiceRequest $request)

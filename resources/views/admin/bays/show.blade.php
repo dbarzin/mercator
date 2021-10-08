@@ -12,6 +12,19 @@
                 <a class="btn btn-default" href="{{ route('admin.bays.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('bay_edit')
+                    <a class="btn btn-info" href="{{ route('admin.bays.edit', $bay->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('bay_delete')
+                    <form action="{{ route('admin.bays.destroy', $bay->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -46,64 +59,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_physical_servers" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalServer.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_storage_devices" role="tab" data-toggle="tab">
-                {{ trans('cruds.storageDevice.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_peripherals" role="tab" data-toggle="tab">
-                {{ trans('cruds.peripheral.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_physical_switches" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalSwitch.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_physical_routers" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalRouter.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#bay_physical_security_devices" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalSecurityDevice.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="bay_physical_servers">
-            @includeIf('admin.bays.relationships.bayPhysicalServers', ['physicalServers' => $bay->bayPhysicalServers])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="bay_storage_devices">
-            @includeIf('admin.bays.relationships.bayStorageDevices', ['storageDevices' => $bay->bayStorageDevices])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="bay_peripherals">
-            @includeIf('admin.bays.relationships.bayPeripherals', ['peripherals' => $bay->bayPeripherals])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="bay_physical_switches">
-            @includeIf('admin.bays.relationships.bayPhysicalSwitches', ['physicalSwitches' => $bay->bayPhysicalSwitches])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="bay_physical_routers">
-            @includeIf('admin.bays.relationships.bayPhysicalRouters', ['physicalRouters' => $bay->bayPhysicalRouters])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="bay_physical_security_devices">
-            @includeIf('admin.bays.relationships.bayPhysicalSecurityDevices', ['physicalSecurityDevices' => $bay->bayPhysicalSecurityDevices])
         </div>
     </div>
 </div>

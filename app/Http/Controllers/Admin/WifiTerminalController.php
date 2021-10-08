@@ -76,7 +76,7 @@ class WifiTerminalController extends Controller
 
         $wifiTerminal->delete();
 
-        return back();
+        return redirect()->route('admin.wifi-terminals.index');
     }
 
     public function massDestroy(MassDestroyWifiTerminalRequest $request)

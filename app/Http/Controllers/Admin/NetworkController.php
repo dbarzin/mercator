@@ -75,7 +75,7 @@ class NetworkController extends Controller
 
         $network->delete();
 
-        return back();
+        return redirect()->route('admin.networks.index');
     }
 
     public function massDestroy(MassDestroyNetworkRequest $request)

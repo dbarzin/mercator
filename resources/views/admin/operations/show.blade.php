@@ -83,22 +83,4 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#operations_activities" role="tab" data-toggle="tab">
-                {{ trans('cruds.activity.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="operations_activities">
-            @includeIf('admin.operations.relationships.operationsActivities', ['activities' => $operation->operationsActivities])
-        </div>
-    </div>
-</div>
-
 @endsection

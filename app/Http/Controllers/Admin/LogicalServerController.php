@@ -90,7 +90,7 @@ class LogicalServerController extends Controller
 
         $logicalServer->delete();
 
-        return back();
+        return redirect()->route('admin.logical-servers.index');
     }
 
     public function massDestroy(MassDestroyLogicalServerRequest $request)

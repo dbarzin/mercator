@@ -88,7 +88,7 @@ class PhysicalRouterController extends Controller
 
         $physicalRouter->delete();
 
-        return back();
+        return redirect()->route('admin.physical-routers.index');
     }
 
     public function massDestroy(MassDestroyPhysicalRouterRequest $request)
