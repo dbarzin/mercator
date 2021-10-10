@@ -75,7 +75,9 @@
                             {{ trans('cruds.relation.fields.source') }}
                         </th>
                         <td>
+                            <a href="{{ route('admin.entities.show', $relation->source_id) }}">
                             {{ $relation->source->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -83,7 +85,9 @@
                             {{ trans('cruds.relation.fields.destination') }}
                         </th>
                         <td>
+                            <a href="{{ route('admin.entities.show', $relation->destination_id) }}">
                             {{ $relation->destination->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -94,6 +98,10 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $relation->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $relation->updated_at->format(trans('global.timestamp')) }} 
     </div>
 </div>
 

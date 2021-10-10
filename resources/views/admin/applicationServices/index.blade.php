@@ -67,16 +67,20 @@
                                 {{ $applicationService->exposition ?? '' }}
                             </td>
                             <td>
-                                @foreach($applicationService->servicesApplications as $key => $application)
+                                @foreach($applicationService->servicesApplications as $application)
+                                    <a href="{{ route('admin.applications.show', $application->id) }}">
                                     {{ $application->name }}
+                                    </a>
                                     @if (!$loop->last)
                                         ,
                                     @endif
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($applicationService->modules as $key => $item)
-                                    {{ $item->name }}
+                                @foreach($applicationService->modules as $module)
+                                    <a href="{{ route('admin.application-modules.show', $module->id) }}">
+                                    {{ $module->name }}
+                                    </a>
                                     @if (!$loop->last)
                                         ,
                                     @endif

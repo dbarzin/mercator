@@ -75,10 +75,14 @@
                               @endif
                             </td>
                             <td>
-                                {{ $relation->source->name ?? '' }}
+                                <a href="{{ route('admin.entities.show', $relation->source->id) }}">
+                                    {{ $relation->source->name ?? '' }}        
+                                </a>
                             </td>
                             <td>
-                                {{ $relation->destination->name ?? '' }}
+                                <a href="{{ route('admin.entities.show', $relation->destination->id) }}">
+                                    {{ $relation->destination->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 @can('relation_show')

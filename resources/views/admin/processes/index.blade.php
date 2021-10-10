@@ -73,23 +73,31 @@
                                 {!! $process->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($process->activities as $key => $activities)
-                                    <span class="label label-info">{{ $activities->name }}</span>
+                                @foreach($process->activities as $activity)
+                                    <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                        {{ $activity->name }}
+                                    </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif                                
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($process->processInformation as $key => $informations)
-                                    <span class="label label-info">{{ $informations->name }}</span>
+                                @foreach($process->processInformation as $information)
+                                    <a href="{{ route('admin.information.show', $information->id) }}">
+                                        {{ $information->name }}
+                                    </span>
                                     @if (!$loop->last)
                                     ,
                                     @endif                                
                                 @endforeach
                             </td>
                             <td>
+                                @if ($process->macroprocess_id!=null)
+                                <a href="{{ route('admin.macro-processuses.show', $process->macroprocess_id) }}">
                                 {{ $process->macroProcess->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 {{ $process->owner ?? '' }}

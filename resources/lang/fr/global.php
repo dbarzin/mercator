@@ -286,5 +286,7 @@ return [
     //
     "created_at" => "Créé le",
     "deleted_at" => "Supprimé le",
-    "updated_at" => "Remplacé le",
+    "updated_at" => "Modifié le",
+    //
+    "timestamp" => "d/m/y - h:m"
 ];

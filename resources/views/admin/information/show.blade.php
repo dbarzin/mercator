@@ -75,8 +75,13 @@
                             {{ trans('cruds.information.fields.process') }}
                         </th>
                         <td>
-                            @foreach($information->processes as $key => $process)
-                                <span class="label label-info">{{ $process->identifiant }}</span>
+                            @foreach($information->processes as $process)
+                                <a href="{{ route('admin.processes.show', $process->id) }}">
+                                {{ $process->identifiant }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>

@@ -71,8 +71,10 @@
                                 {{ $database->type ?? '' }}
                             </td>
                             <td>
-                                @foreach($database->informations as $key => $informations)
-                                    <span class="label label-info">{{ $informations->name }}</span>
+                                @foreach($database->informations as $information)
+                                    <a href="{{ route('admin.information.show', $information->id) }}">
+                                    {{ $information->name }}
+                                    </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif

@@ -49,7 +49,11 @@
                                 {!! $bay->description ?? '' !!}
                             </td>
                             <td>
-                                {{ $bay->room->name ?? '' }}
+                                @if ($bay->room!=null)
+                                <a href="{{ route('admin.sites.show', $bay->room_id) }}">
+                                {{ $bay->room->name }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('bay_show')

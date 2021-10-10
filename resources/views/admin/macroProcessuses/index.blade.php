@@ -31,6 +31,9 @@
                             {{ trans('cruds.macroProcessus.fields.owner') }}
                         </th>
                         <th>
+                            {{ trans('cruds.macroProcessus.fields.processes') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -68,6 +71,17 @@
 
                             <td>
                                 {{ $macroProcessus->owner }}
+                            </td>
+
+                            <td>
+                                @foreach($macroProcessus->processes as $process)
+                                    <a href="{{ route('admin.processes.show', $process->id) }}">
+                                        {{ $process->identifiant}}
+                                        @if(!$loop->last)
+                                        ,
+                                        @endif
+                                    </a>
+                                @endforeach
                             </td>
 
                             <td>

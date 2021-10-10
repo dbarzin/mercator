@@ -59,8 +59,10 @@
                             {{ trans('cruds.process.fields.activities') }}
                         </th>
                         <td>
-                            @foreach($process->activities as $key => $activities)
-                                <span class="label label-info">{{ $activities->name }}</span>
+                            @foreach($process->activities as $activity)
+                                <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                {{ $activity->name }}
+                                </a>
                                 @if (!$loop->last)
                                 ,
                                 @endif                                
@@ -72,8 +74,10 @@
                             {{ trans('cruds.process.fields.entities') }}
                         </th>
                         <td>
-                            @foreach($process->entities as $key => $entities)
-                                <span class="label label-info">{{ $entities->name }}</span>
+                            @foreach($process->entities as $entity)
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">
+                                {{ $entity->name }}
+                                </a>
                                 @if (!$loop->last)
                                 ,
                                 @endif                                
@@ -118,6 +122,10 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $process->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $process->updated_at->format(trans('global.timestamp')) }} 
     </div>
 </div>
 

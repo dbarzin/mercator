@@ -26,7 +26,7 @@
                             {{ trans('cruds.flux.fields.name') }}
                         </th>
                         <th>
-			    {{ trans('cruds.flux.fields.description') }}
+            			    {{ trans('cruds.flux.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.flux.fields.source') }}
@@ -79,16 +79,46 @@
                                 {!! $flux->description ?? '' !!}
                             </td>
                             <td>
-                              {{ $flux->application_source ? $flux->application_source->name : '' }}
-                              {{ $flux->service_source ? $flux->service_source->name : '' }}
-                              {{ $flux->module_source ? $flux->module_source->name : '' }}
-                              {{ $flux->database_source ? $flux->database_source->name : '' }}
+                              @if ($flux->application_source!=null)
+                              <a href="{{ route('admin.applications.show', $flux->application_source_id) }}">
+                              {{ $flux->application_source->name }}
+                              @endif
+                              @if ($flux->service_source!=null)
+                              <a href="{{ route('admin.application-services.show', $flux->service_source_id) }}">
+                              {{ $flux->service_source->name }}
+                              </a>
+                              @endif
+                              @if ($flux->module_source!=null)
+                              <a href="{{ route('admin.application-modules.show', $flux->module_source_id) }}">
+                              {{ $flux->module_source->name }}
+                              </a>
+                              @endif
+                              @if ($flux->database_source!=null)
+                              <a href="{{ route('admin.databases.show', $flux->database_source_id) }}">
+                              {{ $flux->database_source->name }}
+                              </a>
+                              @endif                              
                             </td>
                             <td>
-                              {{ $flux->application_dest ? $flux->application_dest->name : '' }}
-                              {{ $flux->service_dest ? $flux->service_dest->name : '' }}
-                              {{ $flux->module_dest ? $flux->module_dest->name : '' }}
-                              {{ $flux->database_dest ? $flux->database_dest->name : '' }}
+                              @if ($flux->application_dest!=null)
+                              <a href="{{ route('admin.applications.show', $flux->application_dest_id) }}">
+                              {{ $flux->application_dest->name }}
+                              @endif
+                              @if ($flux->service_dest!=null)
+                              <a href="{{ route('admin.application-services.show', $flux->service_dest_id) }}">
+                              {{ $flux->service_dest->name }}
+                              </a>
+                              @endif
+                              @if ($flux->module_dest!=null)
+                              <a href="{{ route('admin.application-modules.show', $flux->module_dest_id) }}">
+                              {{ $flux->module_dest->name }}
+                              </a>
+                              @endif
+                              @if ($flux->database_dest!=null)
+                              <a href="{{ route('admin.databases.show', $flux->database_dest_id) }}">
+                              {{ $flux->database_dest->name }}
+                              </a>
+                              @endif                              
                             </td>
                             <td>
                               @if ($flux->crypted==0)

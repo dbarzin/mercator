@@ -70,13 +70,23 @@
                                 {!! $logicalServer->configuration ?? '' !!}
                             </td>
                             <td>
-                              @foreach($logicalServer->applications as $key => $application)
-                                  <span class="label label-info">{{ $application->name }}</span>
+                              @foreach($logicalServer->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                  {{ $application->name }}
+                                </a>
+                                  @if(!$loop->last)
+                                  ,
+                                  @endif
                               @endforeach
                             </td>
                             <td>
-                              @foreach($logicalServer->servers as $key => $servers)
-                                  <span class="label label-info">{{ $servers->name }}</span>
+                              @foreach($logicalServer->servers as $server)
+                                <a href="{{ route('admin.physical-servers.show', $server->id) }}">
+                                  {{ $server->name }}
+                                </a>
+                                  @if(!$loop->last)
+                                  ,
+                                  @endif
                               @endforeach
                             </td>
                             <td>

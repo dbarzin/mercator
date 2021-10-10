@@ -42,14 +42,12 @@
                 <tbody>
                     @foreach($actors as $key => $actor)
                         <tr data-entry-id="{{ $actor->id }}"
-@if(($actor->contact==null)||
-    ($actor->nature==null)||
-    ($actor->type==null)
-    )
+                            @if(($actor->contact==null)||
+                                ($actor->nature==null)||
+                                ($actor->type==null)
+                                )
                           class="table-warning"
-@endif
-
-
+                            @endif
                           >
                             <td>
 

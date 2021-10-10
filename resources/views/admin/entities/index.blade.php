@@ -70,20 +70,21 @@
                                 {!! $entity->security_level ?? '' !!}
                             </td>
                             <td>
-                                @foreach($entity->applications as $application) 
-                                    <a href="/admin/applications/{{$application->id}}">{{$application->name}}</a>
+                                @foreach($entity->applications as $application)
+                                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                                        {{ $application->name }}
+                                    </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif
                                 @endforeach
-                                @if (
-                                    ($entity->applications->count()>0)&&
-                                    ($entity->databases->count()>0)
-                                    )
+                                @if($entity->applications->count()>0)
                                     ,<br>
                                 @endif
                                 @foreach($entity->databases as $database)
-                                    <a href="/admin/databases/{{$database->id}}">{{$database->name}}</a>
+                                    <a href="{{ route('admin.databases.show', $database->id) }}">
+                                        {{ $database->name }}
+                                    </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif
@@ -168,7 +169,6 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
 })
 
 </script>

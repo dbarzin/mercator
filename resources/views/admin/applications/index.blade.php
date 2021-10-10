@@ -79,7 +79,11 @@
                                 {{ $application->entity_resp->name ?? '' }}
                             </td>
                             <td>
+                                @if ($application->application_block!=null)
+                                <a href="{{ route('admin.application-blocks.show', $application->application_block->id) }}">
                                 {{ $application->application_block->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('m_application_show')
