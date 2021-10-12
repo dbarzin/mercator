@@ -281,7 +281,7 @@ return [
         ],
         "title" => "Entités",
         "title_singular" => "Entité",
-        "subtitle" => "Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié."
+        "description" => "Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié."
     ],
     "externalConnectedEntity" => [
         "fields" => [
@@ -296,7 +296,8 @@ return [
         ],
         "title" => "Entités extérieures connectées",
         "title_short" => "Entités",
-        "title_singular" => "Entité extérieure connectée"
+        "title_singular" => "Entité extérieure connectée",
+        "description" => "Entités externes connectées au réseau."
     ],
     "flux" => [
         "fields" => [
@@ -362,7 +363,8 @@ return [
         ],
         "title" => "Passerelles d’entrées depuis l’extérieur",
         "title_short" => "Passerelles",
-        "title_singular" => "Passerelle d’entrée depuis l’extérieur"
+        "title_singular" => "Passerelle d’entrée depuis l’extérieur",
+        "description" => "Composants permettant de relier un réseau local avec l’extérieur."
     ],
     "information" => [
         "fields" => [
@@ -431,7 +433,8 @@ return [
         ],
         "title" => "Serveurs logiques",
         "title_short" => "Serveurs",
-        "title_singular" => "Serveur logique"
+        "title_singular" => "Serveur logique",
+        "description" => "Découpage logique d’un serveur physique."
     ],
     "macroProcessus" => [
         "fields" => [
@@ -484,7 +487,8 @@ return [
         ],
         "title" => "Réseaux",
         "title_short" => "Réseaux",
-        "title_singular" => "Réseau"
+        "title_singular" => "Réseau",
+        "description" => "Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations."
     ],
     "networkSwitch" => [
         "fields" => [
@@ -724,7 +728,8 @@ return [
         ],
         "title" => "Routeurs",
         "title_short" => "Routeurs",
-        "title_singular" => "Routeur"
+        "title_singular" => "Routeur",
+        "description" => "Composant gérant les connexions entre différents réseaux."
     ],
     "securityDevice" => [
         "fields" => [
@@ -795,7 +800,8 @@ return [
         ],
         "title" => "Sous-réseaux",
         "title_short" => "Sous-réseaux",
-        "title_singular" => "Sous-réseau"
+        "title_singular" => "Sous-réseau",
+        "description" => "Subdivision logique d’un réseau de taille plus importante."
     ],
     "task" => [
         "fields" => [
@@ -847,7 +853,8 @@ return [
         ],
         "title" => "VLAN - Virtual Local Area Network",
         "title_short" => "VLAN",
-        "title_singular" => "VLAN - Virtual Local Area Network"
+        "title_singular" => "VLAN - Virtual Local Area Network",
+        "description" => "Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques."
     ],
     "wan" => [
         "fields" => [
@@ -930,7 +937,8 @@ return [
         ],
         "title" => "Certificats",
         "title_short" => "Certificats",
-        "title_singular" => "Certificat"
+        "title_singular" => "Certificat",
+        "description" => "Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges."
     ],
     "report" => [
         "cartography" => [

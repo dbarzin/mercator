@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Vue de l'infrastructure logique
+                    {{ trans("cruds.menu.logical_infrastructure.title") }}
                 </div>
 
                 <div class="card-body">
@@ -21,7 +21,7 @@
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <td>
-                                        Network :
+                                        {{ trans("cruds.network.title_singular") }} :
                                         <select name="network" onchange="this.form.subnetwork.value=-1;this.form.submit()">
                                             <option value="-1">-- All networks --</option>
                                             @foreach($all_networks as $id => $name)
@@ -30,7 +30,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        Subnetwork :
+                                        {{ trans("cruds.subnetwork.title_singular") }} : :
                                         <select name="subnetwork" onchange="this.form.submit()">
                                             <option value="-1">-- All subnetworks --</option>
                                             @if ($all_subnetworks!=null)
@@ -53,11 +53,11 @@
             @if ($networks->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Réseaux
+                    {{ trans("cruds.network.title") }}
                 </div>
 
                 <div class="card-body">
-                    <p>Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.</p>
+                    <p>{{ trans("cruds.network.description") }}</p>
 
                       @foreach($networks as $network)
                       <div class="row">
@@ -74,11 +74,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans("cruds.network.fields.description") }}</th>
                                         <td>{!! $network->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Type de protocol</th>
+                                        <th>{{ trans("cruds.network.fields.protocol_type") }}</th>
                                         <td>{{ $network->protocol_type }}</td>
                                     </tr>
                                     <tr>
@@ -145,10 +145,10 @@
             @if ($subnetworks->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Sous-Réseaux
+                    {{ trans("cruds.subnetwork.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Subdivision logique d’un réseau de taille plus importante.</p>
+                    <p>{{ trans("cruds.subnetwork.description") }}</p>
 
                       @foreach($subnetworks as $subnetwork)
                       <div class="row">
@@ -165,11 +165,15 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <th width="20%">{{ trans("cruds.subnetwork.fields.description") }}</th>
                                         <td>{!! $subnetwork->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Adresse/Masque - Passerelle par défaut</th>
+                                        <th>
+                                            {{ trans("cruds.subnetwork.fields.address") }}
+                                            -
+                                            {{ trans("cruds.subnetwork.fields.default_gateway") }}
+                                        </th>
                                         <td>
                                             {{ $subnetwork->address }} 
                                             ( {{ $subnetwork->ipRange() }} )
@@ -178,7 +182,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>VLAN</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.vlan") }}</th>
                                         <td>
                                             @if ($subnetwork->vlan!=null)
                                                 <a href="#VLAN{{ $subnetwork->vlan_id }}">{{ $subnetwork->vlan->name }}</a>
@@ -186,13 +190,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Zone</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.zone") }}</th>
                                         <td>
                                             {{ $subnetwork->zone }} 
                                         </td>
                                     </tr>                                    
                                     <tr>
-                                        <th>Passerelle</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.gateway") }}</th>
                                         <td>
                                         @if ($subnetwork->gateway!=null) 
                                             <a href="#GATEWAY{{$subnetwork->gateway->id}}">{{ $subnetwork->gateway->name }}</a>
@@ -200,19 +204,19 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Méthode d’attribution des IP</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.ip_allocation_type") }}</th>
                                         <td>{{ $subnetwork->ip_allocation_type }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Responsable d’exploitation</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.responsible_exp") }}</th>
                                         <td>{{ $subnetwork->responsible_exp }}</td>
                                     </tr>
                                     <tr>
-                                        <th>DMZ</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.dmz") }}</th>
                                         <td>{{ $subnetwork->dmz }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Accès WiFi</th>
+                                        <th>{{ trans("cruds.subnetwork.fields.wifi") }}</th>
                                         <td>{{ $subnetwork->wifi }}</td>
                                     </tr>
                                 </tbody>
@@ -229,10 +233,10 @@
             @if ($gateways->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Passerelle d’entrée depuis l’extérieur
+                    {{ trans("cruds.gateway.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Composants permettant de relier un réseau local avec l’extérieur.</p>
+                    <p>{{ trans("cruds.gateway.description") }}</p>
                         @foreach($gateways as $gateway)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -247,21 +251,21 @@
                                         </th>
                                     </thead>
                                     <tr>
-                                        <th width="20%">Caractéristiques techniques</th>
+                                        <th width="20%">{{ trans("cruds.gateway.fields.description") }}</th>
                                         <td>{!! $gateway->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Type d'authentification</th>
+                                        <th>{{ trans("cruds.gateway.fields.authentification") }}</th>
                                         <td>{{ $gateway->authentification }}</td>
                                     </tr>
                                     <tr>
-                                        <th>IP publique et privée</th>
+                                        <th>{{ trans("cruds.gateway.fields.ip") }}</th>
                                         <td>{{ $gateway->ip }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Réseaux ratachés</th>
+                                        <th>{{ trans("cruds.gateway.fields.subnetworks") }}</th>
                                         <td>
-                                            @foreach($gateway->gatewaySubnetworks as $subnetwork) 
+                                            @foreach($gateway->subnetworks as $subnetwork) 
                                                 <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -283,10 +287,10 @@
             @if ($externalConnectedEntities->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Entités extérieurs connectées
+                    {{ trans("cruds.externalConnectedEntity.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Entités externes connectées au réseau</p>
+                    <p>{{ trans("cruds.externalConnectedEntity.description") }}</p>
                         @foreach($externalConnectedEntities as $entity)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -301,15 +305,15 @@
                                         </th>
                                     </thead>
                                     <tr>
-                                        <th width="20%">Responsable SSI</th>
+                                        <th width="20%">{{ trans("cruds.externalConnectedEntity.fields.responsible_sec") }}</th>
                                         <td>{{ $entity->responsible_sec }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Contacts SI</th>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.contacts") }}</th>
                                         <td>{{ $entity->contacts }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Réseaux connectés</th>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.connected_networks") }}</th>
                                         <td>
                                             @foreach($entity->connected_networks as $subnetwork) 
                                                 <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
@@ -333,10 +337,10 @@
             @if ($routers->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Routeurs
+                    {{ trans("cruds.router.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Composant gérant les connexions entre différents réseaux.</p>
+                    <p>{{ trans("cruds.router.description") }}</p>
                         @foreach($routers as $router)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -352,15 +356,15 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th width="20%">Description</th>
+                                            <th width="20%">{{ trans("cruds.router.fields.description") }}</th>
                                             <td>{!! $router->description !!}</td>
                                         </tr>
                                         <tr>
-                                            <th width="20%">Adresses IP</th>
+                                            <th>{{ trans("cruds.router.fields.ip_addresses") }}</th>
                                             <td>{!! $router->ip_addresses !!}</td>
                                         </tr>
                                         <tr>
-                                            <th width="20%">Rules</th>
+                                            <th>{{ trans("cruds.router.fields.rules") }}</th>
                                             <td>{!! $router->rules !!}</td>
                                         </tr>
                                     </tbody>
@@ -377,10 +381,10 @@
             @if ($logicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Serveurs logiques
+                    {{ trans("cruds.logicalServer.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Découpage logique d’un serveur physique.</p>
+                    <p>{{ trans("cruds.logicalServer.description") }}</p>
                         @foreach($logicalServers as $logicalServer)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -396,8 +400,8 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th width="20%">Description</th>
-                                            <td>{!! $logicalServer-> description !!}</td>
+                                            <th width="20%">{{ trans("cruds.logicalServer.fields.description") }}</th>
+                                            <td>{!! $logicalServer->description !!}</td>
                                         </tr>
                                         <tr>
                                             <th>{{ trans('cruds.logicalServer.fields.operating_system') }}</th>
@@ -431,7 +435,6 @@
                                             <th>{{ trans('cruds.logicalServer.fields.configuration') }}</th>
                                             <td>{!! $logicalServer->configuration !!}</td>
                                         </tr>
-
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.logicalServer.fields.applications') }}
@@ -487,10 +490,10 @@
             @if ($certificates->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Certificats
+                    {{ trans("cruds.certificate.title") }} 
                 </div>
                 <div class="card-body">
-                    <p>Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.</p>
+                    <p>{{ trans("cruds.certificate.description") }}</p>
                         @foreach($certificates as $certificate)
                           <div class="row">
                             <div class="col-sm-6">                        
@@ -510,7 +513,7 @@
                                             <td>{!! $certificate->type !!}</td>
                                         </tr>
                                         <tr>
-                                            <th width="20%">Description</th>
+                                            <th>{{ trans('cruds.certificate.fields.description') }}</th>
                                             <td>{!! $certificate->description !!}</td>
                                         </tr>
                                         <tr>
@@ -565,10 +568,10 @@
             @if ($vlans->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Réseaux virtuels
+                    {{ trans("cruds.vlan.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+                    <p>{{ trans("cruds.vlan.description") }}</p>
                       @foreach($vlans as $vlan)
                       <div class="row">
                         <div class="col-sm-6">
@@ -584,11 +587,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.vlan.fields.description") }}</th>
                                     <td>{!! $vlan->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <th width="20%">Sous-réseaux</th>
+                                    <th>{{ trans("cruds.vlan.fields.subnetworks") }}</th>
                                     <td>
                                         @foreach($vlan->subnetworks as $subnetwork) 
                                             <a href="/admin/report/logical_infrastructure#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>

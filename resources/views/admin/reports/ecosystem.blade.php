@@ -26,7 +26,7 @@
                     {{ trans('cruds.entity.title') }}
                 </div>
                 <div class="card-body">
-                    <p>{{ trans('cruds.entity.subtitle') }}</p>
+                    <p>{{ trans('cruds.entity.description') }}</p>
                         @foreach($entities as $entity)
                       <div class="row">
                         <div class="col-sm-6">                        

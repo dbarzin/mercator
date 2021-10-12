@@ -67,7 +67,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gateway->load('gatewaySubnetworks');
+        $gateway->load('subnetworks');
 
         return view('admin.gateways.show', compact('gateway'));
     }

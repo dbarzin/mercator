@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Subnetwork> $gatewaySubnetworks
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Subnetwork> $subnetworks
  * @property-read int|null $gateway_subnetworks_count
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Gateway newModelQuery()
@@ -67,7 +67,7 @@ class Gateway extends Model
         'deleted_at',
     ];
 
-    public function gatewaySubnetworks()
+    public function subnetworks()
     {
         return $this->hasMany(Subnetwork::class, 'gateway_id', 'id')->orderBy('name');
     }
