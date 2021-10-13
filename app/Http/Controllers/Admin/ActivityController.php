@@ -78,7 +78,7 @@ class ActivityController extends Controller
 
         $activity->delete();
 
-        return back();
+        return redirect()->route('admin.activities.index');
     }
 
     public function massDestroy(MassDestroyActivityRequest $request)
