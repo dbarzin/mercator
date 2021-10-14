@@ -18,6 +18,7 @@ class PhysicalRouterNameType extends Migration
             $table->string('name')->change();
         });    
         */
+        // For PostgresSQL : ALTER TABLE physical_routers ALTER COLUMN name TYPE varchar(255);
         DB::statement("ALTER TABLE physical_routers CHANGE name name varchar(255)");
     }
 

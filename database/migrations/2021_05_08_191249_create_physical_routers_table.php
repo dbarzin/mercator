@@ -22,7 +22,7 @@ class CreatePhysicalRoutersTable extends Migration
             $table->unsignedInteger('site_id')->nullable()->index('site_fk_1485497');
             $table->unsignedInteger('building_id')->nullable()->index('building_fk_1485498');
             $table->unsignedInteger('bay_id')->nullable()->index('bay_fk_1485499');
-            $table->char('name')->nullable();
+            $table->string('name');
             $table->unique(['name', 'deleted_at'], 'name');
         });
     }
