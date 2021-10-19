@@ -46,6 +46,14 @@
                             {!! $dnsserver->description !!}
                         </td>
                     </tr>
+                    <tr>
+                        <th width="10%">
+                            {{ trans('cruds.dnsserver.fields.address_ip') }}
+                        </th>
+                        <td>
+                            {{ $dnsserver->address_ip }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

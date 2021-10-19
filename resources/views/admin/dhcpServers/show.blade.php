@@ -44,6 +44,14 @@
                             {!! $dhcpServer->description !!}
                         </td>
                     </tr>
+                    <tr>
+                        <th width="10%">
+                            {{ trans('cruds.dhcpServer.fields.address_ip') }}
+                        </th>
+                        <td>
+                            {{ $dhcpServer->address_ip }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

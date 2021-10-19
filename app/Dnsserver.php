@@ -50,6 +50,7 @@ class Dnsserver extends Model
     protected $fillable = [
         'name',
         'description',
+        'address_ip',
         'created_at',
         'updated_at',
         'deleted_at',

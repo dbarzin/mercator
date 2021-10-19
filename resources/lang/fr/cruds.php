@@ -226,9 +226,12 @@ return [
             "name_helper" => "",
             "description" => "Description",
             "description_helper" => "Caractéristiques techniques : modèle, OS et version",
+            "address_ip" => "Adresse IP",
+            "address_ip_helper" => "Filtre : xxx.xxx.xxx.xxx",
         ],
         "title" => "Serveurs DHCP",
-        "title_singular" => "Serveur DHCP"
+        "title_singular" => "Serveur DHCP",
+        "description" => "Équipement physique ou virtuel permettant la gestion des adresses IP d’un réseau."
     ],
     "dnsserver" => [
         "fields" => [
@@ -236,9 +239,12 @@ return [
             "description_helper" => "Caractéristiques techniques : modèle, OS et version",
             "name" => "Nom",
             "name_helper" => "Nom du serveur DNS",
+            "address_ip" => "Adresse IP",
+            "address_ip_helper" => "Filtre : xxx.xxx.xxx.xxx",
         ],
         "title" => "Serveurs DNS",
-        "title_singular" => "Serveur DNS"
+        "title_singular" => "Serveur DNS",
+        "description" => "Serveur de noms de domaine (Domain Name System) – Équipement physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.",
     ],
     "domaineAd" => [
         "fields" => [

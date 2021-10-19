@@ -29,6 +29,9 @@
                             {{ trans('cruds.dnsserver.fields.description') }}
                         </th>                        
                         <th>
+                            {{ trans('cruds.dnsserver.fields.address_ip') }}
+                        </th>                        
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -42,9 +45,12 @@
                             <td>
                                 {{ $dnsserver->name ?? '' }}
                             </td>
-                          <td>
+                            <td>
                               {!! $dnsserver->description !!}
-                          </td>
+                            </td>
+                            <td>
+                                {{ $dnsserver->address_ip ?? '' }}
+                            </td>
                             <td>
                                 @can('dnsserver_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.dnsservers.show', $dnsserver->id) }}">

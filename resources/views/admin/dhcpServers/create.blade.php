@@ -30,6 +30,16 @@
                 <span class="help-block">{{ trans('cruds.dhcpServer.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="name">{{ trans('cruds.dhcpServer.fields.address_ip') }}</label>
+                <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}" required>
+                @if($errors->has('address_ip'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('address_ip') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.dhcpServer.fields.address_ip_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

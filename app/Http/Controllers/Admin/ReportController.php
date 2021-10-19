@@ -615,9 +615,31 @@ class ReportController extends Controller
                     return $subnetworks->pluck('id')->contains($item->subnetwork_id);
                 });
 
-            // TODO: fixme
-            $dhcpServers = null; // DhcpServer::All()->sortBy("name")
-            $dnsservers = null;  //Dnsserver::All()->sortBy("name");
+            // TODO: improve me
+            $dhcpServers = DhcpServer::All()->sortBy("name")
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach ($subnetworks as $subnetwork) {
+                        // foreach (explode(',', $item->address_ip) as $address) {
+                            if ($subnetwork->contains($item->address_ip)) {
+                                return true;
+                            }
+                        //}
+                    }
+                    return false;
+                });
+
+            // TODO: improve me
+            $dnsservers = Dnsserver::All()->sortBy("name")
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach ($subnetworks as $subnetwork) {
+                        // foreach (explode(',', $item->address_ip) as $address) {
+                            if ($subnetwork->contains($item->address_ip)) {
+                                return true;
+                            }
+                        //}
+                    }
+                    return false;
+                });
 
             // TODO: improve me
             $logicalServers = LogicalServer::All()->sortBy('name')

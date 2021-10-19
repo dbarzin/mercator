@@ -484,7 +484,87 @@
                     </div>
                 </div>
                 @endif
-                @endcan
+            @endcan
+
+            @can('dhcp_server_access')
+            @if ($dhcpServers->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.dhcpServer.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.dhcpServer.description") }}</p>
+                        @foreach($dhcpServers as $dhcpServer)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="DHCP_SERVER{{ $dhcpServer->id }}">
+                                        <th colspan="2">
+                                        @can('logical_server_edit')
+                                        <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}/edit">{{ $dhcpServer->name }}</a>
+                                        @else
+                                        <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}">{{ $dhcpServer->name }}</a>
+                                        @endcan
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%">{{ trans("cruds.dhcpServer.fields.description") }}</th>
+                                            <td>{!! $dhcpServer->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('cruds.dhcpServer.fields.address_ip') }}</th>
+                                            <td>{{ $dhcpServer->address_ip }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            @endcan
+
+            @can('dnsserver_access')
+            @if ($dnsservers->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.dnsserver.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.dnsserver.description") }}</p>
+                        @foreach($dnsservers as $dnsserver)
+                          <div class="row">
+                            <div class="col-sm-6">                        
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="DNS_SERVER{{ $dnsserver->id }}">
+                                        <th colspan="2">
+                                        @can('dnsserver_edit')
+                                        <a href="/admin/dnsservers/{{ $dnsserver->id }}/edit">{{ $dnsserver->name }}</a>
+                                        @else
+                                        <a href="/admin/dnsservers/{{ $dnsserver->id }}">{{ $dnsserver->name }}</a>
+                                        @endcan
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%">{{ trans("cruds.dnsserver.fields.description") }}</th>
+                                            <td>{!! $dnsserver->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('cruds.dnsserver.fields.address_ip') }}</th>
+                                            <td>{{ $dnsserver->address_ip }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            @endcan
 
             @can('certificate_access')
             @if ($certificates->count()>0)
@@ -683,6 +763,32 @@ d3.select("#graph").graphviz()
                 @foreach($logicalServer->certificates as $certificate)\
                     LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}\
                 @endforeach\
+            @endforeach\
+            @endcan\
+            @can('dhcp_server_access')\
+            @foreach($dhcpServers as $dhcpServer) \
+                DHCP_SERVER{{ $dhcpServer->id }} [label=\"{{ $dhcpServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#DHCP_SERVER{{$dhcpServer->id}}\"]\
+                @if ($dhcpServer->address_ip!=null)\
+                    @foreach($subnetworks as $subnetwork) \
+                        @if ($subnetwork->contains($dhcpServer->address_ip))\
+                            SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }} \
+                            @break\
+                        @endif\
+                    @endforeach\
+                @endif\
+            @endforeach\
+            @endcan\
+            @can('dnsserver_access')\
+            @foreach($dnsservers as $dnsserver) \
+                DNS_SERVER{{ $dnsserver->id }} [label=\"{{ $dnsserver->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#DNS_SERVER{{$dnsserver->id}}\"]\
+                @if ($dnsserver->address_ip!=null)\
+                    @foreach($subnetworks as $subnetwork) \
+                        @if ($subnetwork->contains($dnsserver->address_ip))\
+                            SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }} \
+                            @break\
+                        @endif\
+                    @endforeach\
+                @endif\
             @endforeach\
             @endcan\
             @can('certificate_access')\

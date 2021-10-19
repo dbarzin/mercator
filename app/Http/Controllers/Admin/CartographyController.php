@@ -1249,6 +1249,28 @@ class CartographyController extends Controller
                 }
             }
 
+            foreach ($dhcpServers as $dhcpServer) {
+                $graph .= ' DHCP_SERVER' . $dhcpServer->id .'[label="' . $dhcpServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                if ($dhcpServer->address_ip !== null) {
+                    foreach ($subnetworks as $subnetwork) {
+                        if ($subnetwork->contains($dhcpServer->address_ip)) {
+                            $graph .= ' SUBNET' . $subnetwork->id . '->DHCP_SERVER' . $dhcpServer->id;
+                        }
+                    }
+                }
+            }
+
+            foreach ($dnsservers as $dnsserver) {
+                $graph .= ' DNS_SERVER' . $dnsserver->id .'[label="' . $dnsserver->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                if ($dnsserver->address_ip !== null) {
+                    foreach ($subnetworks as $subnetwork) {
+                        if ($subnetwork->contains($dnsserver->address_ip)) {
+                            $graph .= ' SUBNET' . $subnetwork->id . '->DNS_SERVER' . $dnsserver->id;
+                        }
+                    }
+                }
+            }
+
             foreach ($certificates as $certificate) {
                 if ($certificate->logical_servers->count() > 0) {
                     $graph .= ' CERT' . $certificate->id . '[label="' . $certificate->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/certificate.png') .'"]';
@@ -1490,6 +1512,38 @@ class CartographyController extends Controller
                             $textRun->addText(', ');
                         }
                     }
+
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
+            if ($dhcpServers->count() > 0) {
+                $section->addTitle('Serveurs DHCP', 2);
+                $section->addText('Équipement physique ou virtuel permettant la gestion des adresses IP d’un réseau.');
+                $section->addTextBreak(1);
+
+                foreach ($dhcpServers as $dhcpServer) {
+                    $section->addBookmark('DHCP_SERVER'.$dhcpServer->id);
+                    $table = $this->addTable($section, $dhcpServer->name);
+                    $this->addHTMLRow($table, 'Description', $dhcpServer->description);
+                    $this->addTextRow($table, 'Adresse IP', $dhcpServer->address_ip);
+
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
+            if ($dnsservers->count() > 0) {
+                $section->addTitle('Serveurs DNS', 2);
+                $section->addText('Serveur de noms de domaine (Domain Name System) – Équipement physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.');
+                $section->addTextBreak(1);
+
+                foreach ($dnsservers as $dnsserver) {
+                    $section->addBookmark('DNS_SERVER'.$dnsserver->id);
+                    $table = $this->addTable($section, $dnsserver->name);
+                    $this->addHTMLRow($table, 'Description', $dnsserver->description);
+                    $this->addTextRow($table, 'Adresse IP', $dnsserver->address_ip);
 
                     $section->addTextBreak(1);
                 }
