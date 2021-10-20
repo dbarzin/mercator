@@ -56,16 +56,16 @@
                                 {!! $activity->description !!}
                             </td>
                             <td>
-                                @foreach($activity->operations as $key => $operations)
-                                    <span class="label label-info">{{ $operations->name }}</span>
+                                @foreach($activity->operations as $operation)
+                                    <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
                                     @if (!$loop->last)
                                     ,
                                     @endif                                    
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($activity->activitiesProcesses as $key => $processes)
-                                    <span class="label label-info">{{ $processes->identifiant }}</span>
+                                @foreach($activity->activitiesProcesses as $process)
+                                    <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>                                    
                                     @if (!$loop->last)
                                     ,
                                     @endif                                    
