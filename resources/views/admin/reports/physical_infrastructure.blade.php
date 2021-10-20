@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Vue de l'infrastructure physique
+                    {{ trans("cruds.menu.physical_infrastructure.title") }}
                 </div>
 
                 <div class="card-body">
@@ -20,7 +20,7 @@
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td>
-                                    Site :
+                                    {{ trans("cruds.site.title_singular") }} :
                                     <select name="site" onchange="this.form.building.value=-1;this.form.submit()">
                                         <option value="-1">-- All sites --</option>
                                         @foreach($all_sites as $id => $name)                                            
@@ -29,7 +29,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    Building :
+                                    {{ trans("cruds.building.title_singular") }} :
                                     <select name="building" onchange="this.form.submit()">
                                         <option value="-1">-- All buildings --</option>
                                         @if ($all_buildings!=null)
@@ -51,10 +51,10 @@
             @if ($sites->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Sites
+                    {{ trans("cruds.site.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Emplacement géographique rassemblant un ensemble de personnes et/ou de ressources.</p>
+                    <p>{{ trans("cruds.site.description") }}</p>
                         @foreach($sites as $site)
                       <div class="row">
                         <div class="col-sm-6">
@@ -70,16 +70,16 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th width="20%">
-                                            Description
-                                        </th>                          
+                                        <td width="20%">
+                                            {{ trans("cruds.site.fields.description") }}
+                                        </td>                          
                                     <td>
                                         {!! $site->description !!}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Buildings
+                                        {{ trans("cruds.site.fields.buildings") }}
                                     </th>
                                     <td>
                                         @foreach($site->siteBuildings as $building) 
@@ -105,10 +105,10 @@
             @if ($buildings->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Bâtiments / Salles
+                    {{ trans("cruds.building.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Localisation des personnes ou ressources à l’intérieur d’un site.</p>                    
+                    <p>{{ trans("cruds.building.description") }}</p>
                         @foreach($buildings as $building)
                       <div class="row">
                         <div class="col-sm-6">
@@ -124,11 +124,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th width="20%">Description</th>
+                                        <td width="20%">{{ trans("cruds.building.fields.description") }}</td>
                                         <td>{!! $building->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <th>Baies</th>
+                                        <th>{{ trans("cruds.building.fields.bays") }}</th>
                                     <td>         
                                         @foreach($building->roomBays as $bay) 
                                             <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
@@ -152,10 +152,10 @@
             @if ($bays->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Baies
+                    {{ trans("cruds.bay.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Armoire technique rassemblant des équipements de réseau informatique ou de téléphonie.</p>
+                    <p>{{ trans("cruds.bay.description") }}</p>
                         @foreach($bays as $bay)
                       <div class="row">
                         <div class="col-sm-6">
@@ -171,12 +171,12 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.bay.fields.description") }}</th>
                                     <td>{!! $bay->description !!}</td>
                                 </tr>
                                 @if ($bay->bayPhysicalServers->count()>0)
                                 <tr>
-                                    <th>Serveurs physique</th>
+                                    <th>{{ trans("cruds.bay.fields.physical_servers") }}</th>
                                     <td>
                                     @foreach($bay->bayPhysicalServers as $physicalServer) 
                                         <a href="#PSERVER{{$physicalServer->id}}">{{ $physicalServer->name}}</a>
@@ -189,7 +189,7 @@
                                 @endif
                                 @if ($bay->bayPhysicalRouters->count()>0)
                                 <tr>
-                                    <th>Routeurs</th>
+                                    <th>{{ trans("cruds.bay.fields.physical_routers") }}</th>
                                     <td>
                                     @foreach($bay->bayPhysicalRouters as $physicalRouter) 
                                         <a href="#ROUTER{{$physicalRouter->id}}">{{ $physicalRouter->name}}</a>
@@ -203,7 +203,7 @@
 
                                 @if ($bay->bayPhysicalSwitches->count()>0)
                                 <tr>
-                                    <th>Switch</th>
+                                    <th>{{ trans("cruds.bay.fields.physical_switch") }}</th>
                                     <td>
                                     @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch) 
                                         <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
@@ -217,7 +217,7 @@
 
                                 @if ($bay->bayStorageDevices->count()>0)
                                 <tr>
-                                    <th>Dispositif de stockage</th>
+                                    <th>{{ trans("cruds.bay.fields.storage_devices") }}</th>
                                     <td>
                                     @foreach($bay->bayStorageDevices as $bayStorageDevice) 
                                         <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
@@ -243,10 +243,10 @@
             @if ($physicalServers->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Serveurs physiques
+                    {{ trans("cruds.physicalServer.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Machine physique exécutant un ensemble de services informatiques.</p>
+                    <p>{{ trans("cruds.physicalServer.description") }}</p>
                         @foreach($physicalServers as $pserver)
                       <div class="row">
                         <div class="col-sm-6">
@@ -262,19 +262,19 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Type</th>
+                                    <th width="20%">{{ trans("cruds.physicalServer.fields.type") }}</th>
                                     <td>{{ $pserver->type }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Description</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.description") }}</th>
                                     <td>{!! $pserver->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <th>Configuration</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.configuration") }}</th>
                                     <td>{!! $pserver->configuration !!}</td>
                                 </tr>
                                 <tr>
-                                    <th>Site</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.site") }}</th>
                                     <td>
                                         @if ($pserver->site!=null)
                                             <a href="#SITE{{$pserver->site->id}}">{{ $pserver->site->name }}</a> 
@@ -282,7 +282,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Building</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.building") }}</th>
                                     <td>                                        
                                         @if ($pserver->building!=null)
                                             <a href="#BUILDING{{ $pserver->building->id }}">{{ $pserver->building->name }}</a>
@@ -290,7 +290,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Baie</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.bay") }}</th>
                                     <td>
                                         @if ($pserver->bay!=null)
                                             <a href="#BAY{{ $pserver->bay->id }}">{{ $pserver->bay->name }}</a>
@@ -298,11 +298,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Responsable</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.responsible") }}</th>
                                     <td>{{ $pserver->responsible }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Serveurs Logiques</th>
+                                    <th>{{ trans("cruds.physicalServer.fields.logical_servers") }}</th>
                                     <td>
                                         @foreach($pserver->serversLogicalServers as $logicalServer)
                                             <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
@@ -326,10 +326,10 @@
             @if ((auth()->user()->granularity>=2)&&($workstations->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Postes de travail
+                    {{ trans("cruds.workstation.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Machine physique permettant à un utilisateur d’accéder au système d’information</p>
+                    <p>{{ trans("cruds.workstation.description") }}</p>
                       @foreach($workstations as $workstation)
                       <div class="row">
                         <div class="col-sm-6">
@@ -345,19 +345,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Type</th>
-                                    <td>{{ $workstation->description }}</td>
+                                    <th width="20%">{{ trans("cruds.workstation.fields.type") }}</th>
+                                    <td>{{ $workstation->type }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Description</th>
+                                    <th>{{ trans("cruds.workstation.fields.description") }}</th>
                                     <td>{!! $workstation->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <th>Configuration</th>
-                                    <td>{!! $workstation->configuration !!}</td>
-                                </tr>
-                                <tr>
-                                    <th>Site</th>
+                                    <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                     <td>
                                         @if ($workstation->site!=null)
                                             <a href="#SITE{{$workstation->site->id}}">{{ $workstation->site->name }}</a> 
@@ -365,7 +361,7 @@
                                     </td>
                                 </tr>
                                 <tr>   
-                                    <th>Building</th>
+                                    <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                     <td>
                                         @if ($workstation->building!=null)
                                             <a href="#BUILDING{{ $workstation->building->id }}">{{ $workstation->building->name }}</a>
@@ -386,10 +382,10 @@
             @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Infrastructure de stockage
+                    {{ trans("cruds.storageDevice.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Support physique ou réseau de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…</p>
+                    <p>{{ trans("cruds.storageDevice.description") }}</p>
                       @foreach($storageDevices as $storageDevice)
                       <div class="row">
                         <div class="col-sm-6">
@@ -405,11 +401,11 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.storageDevice.fields.description") }}</th>
                                     <td>{!! $storageDevice->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <th>Site</th>
+                                    <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
                                     <td>
                                         @if ($storageDevice->site!=null)
                                             <a href="#SITE{{$storageDevice->site->id}}">{{ $storageDevice->site->name }}</a> 
@@ -417,7 +413,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Building</th>
+                                    <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
                                     <td>
                                         @if ($storageDevice->building!=null)
                                             <a href="#BUILDING{{ $storageDevice->building->id }}">{{ $storageDevice->building->name }}</a><br>
@@ -425,7 +421,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Baie</th>
+                                    <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
                                     <td>
                                         @if ($storageDevice->bay!=null)
                                             <a href="#BAY{{ $storageDevice->bay->id }}">{{ $storageDevice->bay->name }}</a><br>
@@ -446,10 +442,10 @@
             @if ((auth()->user()->granularity>=2)&&($peripherals->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Périphériques
+                    {{ trans("cruds.peripheral.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Composant physique connecté à un poste de travail aﬁn d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
+                    <p>{{ trans("cruds.peripheral.description") }}</p>
                       @foreach($peripherals as $peripheral)
                       <div class="row">
                         <div class="col-sm-6">
@@ -465,19 +461,19 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.peripheral.fields.description") }}</th>
                                     <td>{!! $peripheral->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.peripheral.fields.type") }}</th>
                                     <td>{{ $peripheral->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Responsable</td>
+                                    <th>{{ trans("cruds.peripheral.fields.responsible") }}</th>
                                     <td>{{ $peripheral->responsible }}</td>                                    
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                     <td>
                                         @if ($peripheral->site!=null)
                                             <a href="#SITE{{ $peripheral->site->id }}">{{ $peripheral->site->name }}</a><br>
@@ -485,7 +481,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.peripheral.fields.building") }}</th>
                                     <td>
                                         @if ($peripheral->building!=null)
                                             <a href="#BUILDING{{ $peripheral->building->id }}">{{ $peripheral->building->name }}</a><br>
@@ -493,7 +489,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Baie</td>
+                                    <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
                                     <td>
                                         @if ($peripheral->bay!=null)
                                             <a href="#BAY{{ $peripheral->bay->id }}">{{ $peripheral->bay->name }}</a><br>
@@ -514,10 +510,10 @@
             @if ((auth()->user()->granularity>=2)&&($phones->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Téléphones
+                    {{ trans("cruds.phone.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Téléphone ﬁxe ou portable appartenant à l’organisation</p>
+                    <p>{{ trans("cruds.phone.description") }}</p>
                       @foreach($phones as $phone)
                       <div class="row">
                         <div class="col-sm-6">
@@ -533,15 +529,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.phone.fields.description") }}</th>
                                     <td>{!! $phone->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.phone.fields.type") }}</th>
                                     <td>{{ $phone->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.phone.fields.site") }}</th>
                                     <td>
                                         @if ($phone->site!=null)
                                             <a href="#SITE{{ $phone->site->id }}">{{ $phone->site->name }}</a><br>
@@ -549,7 +545,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.phone.fields.building") }}</th>
                                     <td>
                                         @if ($phone->building!=null)
                                             <a href="#BUILDING{{ $phone->building->id }}">{{ $phone->building->name }}</a><br>
@@ -570,10 +566,10 @@
             @if ($physicalSwitches->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Commutateur (switch)
+                    {{ trans("cruds.physicalSwitch.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Composant gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+                    <p>{{ trans("cruds.physicalSwitch.description") }}</p>
                       @foreach($physicalSwitches as $switch)
                       <div class="row">
                         <div class="col-sm-6">
@@ -589,15 +585,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.physicalSwitch.fields.description") }}</th>
                                     <td>{!! $switch->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.physicalSwitch.fields.type") }}</th>
                                     <td>{{ $switch->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.physicalSwitch.fields.site") }}</th>
                                     <td>
                                         @if ($switch->site!=null)
                                             <a href="#SITE{{ $switch->site->id }}">{{ $switch->site->name }}</a><br>
@@ -605,7 +601,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.physicalSwitch.fields.building") }}</th>
                                     <td>
                                         @if ($switch->building!=null)
                                             <a href="#BUILDING{{ $switch->building->id }}">{{ $switch->building->name }}</a><br>
@@ -613,7 +609,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Baie</td>
+                                    <th>{{ trans("cruds.physicalSwitch.fields.bay") }}</th>
                                     <td>
                                         @if ($switch->bay!=null)
                                             <a href="#BAY{{ $switch->bay->id }}">{{ $switch->bay->name }}</a><br>
@@ -634,10 +630,10 @@
             @if ($physicalRouters->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Routeur Physique
+                    {{ trans("cruds.physicalRouter.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Composant gérant les connexions entre différents réseaux.</p>
+                    <p>{{ trans("cruds.physicalRouter.description") }}</p>
                       @foreach($physicalRouters as $router)
                       <div class="row">
                         <div class="col-sm-6">
@@ -653,15 +649,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.physicalRouter.fields.description") }}</th>
                                     <td>{!! $router->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.physicalRouter.fields.type") }}</th>
                                     <td>{{ $router->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.physicalRouter.fields.site") }}</th>
                                     <td>
                                         @if ($router->site!=null)
                                             <a href="#SITE{{ $router->site->id }}">{{ $router->site->name }}</a><br>
@@ -669,7 +665,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.physicalRouter.fields.building") }}</th>
                                     <td>
                                         @if ($router->building!=null)
                                             <a href="#BUILDING{{ $router->building->id }}">{{ $router->building->name }}</a><br>
@@ -677,7 +673,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Baie</td>
+                                    <th>{{ trans("cruds.physicalRouter.fields.bay") }}</th>
                                     <td>
                                         @if ($router->bay!=null)
                                             <a href="#BAY{{ $router->bay->id }}">{{ $router->bay->name }}</a><br>
@@ -698,10 +694,10 @@
             @if ((auth()->user()->granularity>=2)&&($wifiTerminals->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Borne Wifi
+                    {{ trans("cruds.wifiTerminal.title") }}
                 </div>
                 <div class="card-body">
-                    <p>Matériel permettant l’accès au réseau sans fil wifi.</p>
+                    <p>{{ trans("cruds.wifiTerminal.description") }}</p>
                       @foreach($wifiTerminals as $wifiTerminal)
                       <div class="row">
                         <div class="col-sm-6">
@@ -717,15 +713,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.wifiTerminal.fields.description") }}</th>
                                     <td>{!! $wifiTerminal->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.type") }}</th>
                                     <td>{{ $wifiTerminal->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
                                     <td>
                                         @if ($wifiTerminal->site!=null)
                                             <a href="#SITE{{ $wifiTerminal->site->id }}">{{ $wifiTerminal->site->name }}</a><br>
@@ -733,7 +729,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
                                     <td>
                                         @if ($wifiTerminal->building!=null)
                                             <a href="#BUILDING{{ $wifiTerminal->building->id }}">{{ $wifiTerminal->building->name }}</a><br>
@@ -754,10 +750,10 @@
             @if ($physicalSecurityDevices->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Équipement de sécurité physique
+                    {{ trans("cruds.physicalSecurityDevice.title") }}                    
                 </div>
                 <div class="card-body">
-                    <p>Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
+                    <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
                       @foreach($physicalSecurityDevices as $physicalSecurityDevice)
                       <div class="row">
                         <div class="col-sm-6">
@@ -773,15 +769,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th width="20%">Description</th>
+                                    <th width="20%">{{ trans("cruds.physicalSecurityDevice.fields.description") }}</th>
                                     <td>{!! $physicalSecurityDevice->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td>Type</td>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.type") }}</th>
                                     <td>{{ $physicalSecurityDevice->type }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Site</td>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.site") }}</th>
                                     <td>
                                         @if ($physicalSecurityDevice->site!=null)
                                             <a href="#SITE{{ $physicalSecurityDevice->site->id }}">{{ $physicalSecurityDevice->site->name }}</a><br>
@@ -789,7 +785,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Building</td>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
                                     <td>
                                         @if ($router->building!=null)
                                             <a href="#BUILDING{{ $physicalSecurityDevice->building->id }}">{{ $physicalSecurityDevice->building->name }}</a><br>
@@ -797,7 +793,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Baie</td>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.bay") }}</th>
                                     <td>
                                         @if ($physicalSecurityDevice->bay!=null)
                                             <a href="#BAY{{ $physicalSecurityDevice->bay->id }}">{{ $physicalSecurityDevice->bay->name }}</a><br>

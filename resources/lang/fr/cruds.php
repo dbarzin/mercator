@@ -168,11 +168,16 @@ return [
             "description_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
+            "physical_servers" => "Serveurs physiques",
+            "physical_routers" => "Routeurs physiques",
+            "physical_switch" => "Commutateurs physiques",
+            "storage_devices" => "Dispositifs de stockages", 
             "room" => "Bâtiment / Salle",
             "room_helper" => "",
         ],
         "title" => "Baies",
-        "title_singular" => "Baie"
+        "title_singular" => "Baie",
+        "description" => "Armoire technique rassemblant des équipements de réseau informatique ou de téléphonie."
     ],
     "building" => [
         "fields" => [
@@ -184,11 +189,14 @@ return [
             "badge_helper" => "L'accès est protégé par un lecteur de badge",
             "name" => "Nom",
             "name_helper" => "",
+            "bays" => "Baies",
+            "bays_helper" => "",
             "site" => "Site",
             "site_helper" => "Site sur lequel se trouve ce bâtiment / salle",
         ],
         "title" => "Bâtiments / Salles",
-        "title_singular" => "Bâtiment / Salle"
+        "title_singular" => "Bâtiment / Salle",
+        "description" => "Localisation des personnes ou ressources à l’intérieur d’un site."
     ],
     "configuration" => ["title" => "Configuration", "title_singular" => "Configuration"],
     "database" => [
@@ -546,7 +554,8 @@ return [
             "type_helper" => "Imprimante, scanner, etc.",
         ],
         "title" => "Périphériques",
-        "title_singular" => "Périphérique"
+        "title_singular" => "Périphérique",
+        "description" => "Composant physique connecté à un poste de travail aﬁn d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)."
     ],
     "permission" => [
         "fields" => [
@@ -570,7 +579,8 @@ return [
             "type_helper" => "",
         ],
         "title" => "Téléphones",
-        "title_singular" => "Téléphone"
+        "title_singular" => "Téléphone",
+        "description" => "Téléphone ﬁxe ou portable appartenant à l’organisation."
     ],
     "physicalRouter" => [
         "fields" => [
@@ -591,7 +601,8 @@ return [
         ],
         "title" => "Routeurs physiques",
         "title_short" => "Routeurs",
-        "title_singular" => "Routeur physique"
+        "title_singular" => "Routeur physique",
+        "description" => "Composant gérant les connexions entre différents réseaux."
     ],
     "physicalSecurityDevice" => [
         "fields" => [
@@ -610,7 +621,8 @@ return [
         ],
         "title" => "Équipements de sécurité physique",
         "title_short" => "Sécurité",
-        "title_singular" => "Équipement de sécurité physique"
+        "title_singular" => "Équipement de sécurité physique",
+        "description" => "Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information."
     ],
     "physicalServer" => [
         "fields" => [
@@ -628,6 +640,8 @@ return [
             "type_helper" => "Type de serveur",
             "physical_switch" => "Commutateur",
             "physical_switch_helper" => "Commutateur auquel est connecté le serveur",
+            "logical_servers" => "Serveurs logiques",
+            "logical_servers_helper" => "Serveurs logiques installés sur ce serveur",
             "responsible" => "Responsable",
             "responsible_helper" => "Responsable d’exploitation",
             "site" => "Site",
@@ -635,7 +649,8 @@ return [
         ],
         "title" => "Serveurs physiques",
         "title_short" => "Serveurs",
-        "title_singular" => "Serveur physique"
+        "title_singular" => "Serveur physique",
+        "description" => "Machine physique exécutant un ensemble de services informatiques.",
     ],
     "physicalSwitch" => [
         "fields" => [
@@ -654,7 +669,8 @@ return [
         ],
         "title" => "Commutateurs physiques",
         "title_short" => "Commutateurs",
-        "title_singular" => "Commutateur physique"
+        "title_singular" => "Commutateur physique",
+        "description" => "Composant gérant les connexions entre les différents serveurs au sein d’un réseau."
     ],
     "process" => [
         "fields" => [
@@ -752,11 +768,13 @@ return [
         "fields" => [
             "description" => "Description",
             "description_helper" => "",
+            "buildings" => "Bâtiments / Salles",
             "name" => "Nom",
             "name_helper" => "",
         ],
         "title" => "Sites",
-        "title_singular" => "Site"
+        "title_singular" => "Site",
+        "description" => "Emplacement géographique rassemblant un ensemble de personnes et/ou de ressources."
     ],
     "storageDevice" => [
         "fields" => [
@@ -773,7 +791,8 @@ return [
         ],
         "title" => "Infrastructures de stockage",
         "title_short" => "Stockage",
-        "title_singular" => "Infrastructure de stockage"
+        "title_singular" => "Infrastructure de stockage",
+        "description" => "Support physique ou réseau de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…"
     ],
     "subnetwork" => [
         "fields" => [
@@ -892,7 +911,8 @@ return [
         ],
         "title" => "Bornes Wifi",
         "title_short" => "Wifi",
-        "title_singular" => "Borne Wifi"
+        "title_singular" => "Borne Wifi",
+        "description" => "Matériel permettant l’accès au réseau sans fil wifi."
     ],
     "workstation" => [
         "fields" => [
@@ -908,7 +928,8 @@ return [
             "site_helper" => "Site sur lequel se trouve le poste de travail",
         ],
         "title" => "Postes de travail",
-        "title_singular" => "Poste de travail"
+        "title_singular" => "Poste de travail",
+        "description" => "Machine physique permettant à un utilisateur d’accéder au système d’information."
     ],
     "zoneAdmin" => [
         "fields" => [
@@ -1002,7 +1023,7 @@ return [
             "title_short" => "Infrastructure Logique",
         ],
         "physical_infrastructure" => [
-            "title" => "Vue des infrastructures physiques",
+            "title" => "Vue de l'infrastructure physique",
             "title_short" => "Infrastructure Physique"
         ],
         "user_management" => [
