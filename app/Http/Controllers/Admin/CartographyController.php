@@ -76,10 +76,6 @@ class CartographyController extends Controller
 
     public function cartography(Request $request)
     {
-
-        // converter
-        // $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
-
         // Image paths
         $image_paths = [];
 
@@ -128,7 +124,7 @@ class CartographyController extends Controller
         // $phpWord->addParagraphStyle('P-Style', array('spaceAfter'=>0,'lineHeight'=>1.0))
 
         // Title
-        $section->addTitle("Cartographie du Système d'Information", 0);
+        $section->addTitle(trans("cruds.report.cartography.title"), 0);
         $section->addTextBreak(1);
 
         // TOC
@@ -142,7 +138,7 @@ class CartographyController extends Controller
 
         // Add footer
         $footer = $section->addFooter();
-        $footer->addPreserveText('Page {PAGE} of {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+        $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
         // $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
 
         // ====================
@@ -150,7 +146,7 @@ class CartographyController extends Controller
         // ====================
         if ($vues === null || count($vues) === 0 || in_array('1', $vues)) {
             // schema
-            $section->addTitle('Ecosystème', 1);
+            $section->addTitle(trans("cruds.report.cartography.ecosystem"), 1);
             $section->addText('La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.');
 
             // Get data
