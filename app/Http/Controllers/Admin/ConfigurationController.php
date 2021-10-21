@@ -59,12 +59,14 @@ class ConfigurationController extends Controller
                 // send test email alert
                 $message = '<html><body><br>This is a test message !<br><br></body></html>';
 
-                // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-                $headers[] = 'MIME-Version: 1.0';
-                $headers[] = 'Content-type: text/html;charset=iso-8859-1';
+                // define the header
+                $headers = [
+                    'MIME-Version: 1.0',
+                    'Content-type: text/html;charset=iso-8859-1',
+                    'From: '. $mail_from,
+                ];
 
                 // En-têtes additionnels
-                $headers[] = 'From: '. $mail_from;
                 if (mail($mail_to, 'Test: ' . $mail_subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
                 } else {

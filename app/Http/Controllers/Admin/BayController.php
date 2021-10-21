@@ -33,7 +33,7 @@ class BayController extends Controller
 
     public function store(StoreBayRequest $request)
     {
-        $bay = Bay::create($request->all());
+        Bay::create($request->all());
 
         return redirect()->route('admin.bays.index');
     }

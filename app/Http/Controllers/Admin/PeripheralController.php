@@ -39,7 +39,7 @@ class PeripheralController extends Controller
 
     public function store(StorePeripheralRequest $request)
     {
-        $peripheral = Peripheral::create($request->all());
+        Peripheral::create($request->all());
 
         return redirect()->route('admin.peripherals.index');
     }

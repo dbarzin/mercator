@@ -30,7 +30,7 @@ class ApplicationModuleController extends Controller
 
     public function store(StoreApplicationModuleRequest $request)
     {
-        $applicationModule = ApplicationModule::create($request->all());
+        ApplicationModule::create($request->all());
 
         return redirect()->route('admin.application-modules.index');
     }

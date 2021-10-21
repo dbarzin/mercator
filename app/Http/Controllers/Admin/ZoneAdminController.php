@@ -30,7 +30,7 @@ class ZoneAdminController extends Controller
 
     public function store(StoreZoneAdminRequest $request)
     {
-        $zoneAdmin = ZoneAdmin::create($request->all());
+        ZoneAdmin::create($request->all());
 
         return redirect()->route('admin.zone-admins.index');
     }

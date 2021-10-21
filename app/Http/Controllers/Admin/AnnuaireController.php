@@ -33,7 +33,7 @@ class AnnuaireController extends Controller
 
     public function store(StoreAnnuaireRequest $request)
     {
-        $annuaire = Annuaire::create($request->all());
+        Annuaire::create($request->all());
 
         return redirect()->route('admin.annuaires.index');
     }

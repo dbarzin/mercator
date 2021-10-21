@@ -972,7 +972,7 @@ class ReportController extends Controller
 
     public function entities(Request $request)
     {
-        $path = storage_path('app/' . 'entities.xlsx');
+        $path = storage_path('app/entities.xlsx');
 
         $entities = Entity::All()->sortBy('name');
 
@@ -1028,7 +1028,7 @@ class ReportController extends Controller
 
     public function applicationsByBlocks(Request $request)
     {
-        $path = storage_path('app/' . 'applications.xlsx');
+        $path = storage_path('app/applications.xlsx');
 
         $applicationBlocks = ApplicationBlock::All()->sortBy('name');
         $applicationBlocks->load('applications');
@@ -1133,7 +1133,7 @@ class ReportController extends Controller
 
     public function logicalServerResp(Request $request)
     {
-        $path = storage_path('app/' . 'logicalServersResp.xlsx');
+        $path = storage_path('app/logicalServersResp.xlsx');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.application_block');
@@ -1206,7 +1206,7 @@ class ReportController extends Controller
 
     public function logicalServerConfigs(Request $request)
     {
-        $path = storage_path('app/' . 'logicalServers.xlsx');
+        $path = storage_path('app/logicalServers.xlsx');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'servers');
@@ -1279,7 +1279,7 @@ class ReportController extends Controller
 
     public function securityNeeds(Request $request)
     {
-        $path = storage_path('app/' . 'securityNeeds.xlsx');
+        $path = storage_path('app/securityNeeds.xlsx');
 
         // macroprocess - process - application - base de données - information
         $header = [
@@ -1355,14 +1355,10 @@ class ReportController extends Controller
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
 
-        // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
-
         // Populate the Timesheet
         $row = 2;
 
         // loop
-        // $macroprocesses = MacroProcessus::All();
         $macroprocesses = MacroProcessus::with('processes')->get();
         foreach ($macroprocesses as $macroprocess) {
             if ($macroprocess->processes->count() === 0) {
@@ -1404,7 +1400,7 @@ class ReportController extends Controller
 
     public function physicalInventory(Request $request)
     {
-        $path = storage_path('app/' . 'physicalInventory.xlsx');
+        $path = storage_path('app/physicalInventory.xlsx');
 
         $inventory = [];
 
@@ -1709,7 +1705,7 @@ class ReportController extends Controller
         }
     }
 
-    private function setSecurityNeedColor(Worksheet $sheet, string $cell, $i)
+    private function setSecurityNeedColor(Worksheet $sheet, string $cell, int $i)
     {
         static $colors = [0 => 'FFFFFF',1 => '8CD17D',2 => 'F1CE63',3 => 'F28E2B',4 => 'E15759'];
         $sheet->getStyle($cell)

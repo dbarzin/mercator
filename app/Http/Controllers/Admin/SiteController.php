@@ -30,7 +30,7 @@ class SiteController extends Controller
 
     public function store(StoreSiteRequest $request)
     {
-        $site = Site::create($request->all());
+        Site::create($request->all());
 
         return redirect()->route('admin.sites.index');
     }

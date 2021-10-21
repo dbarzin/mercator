@@ -30,7 +30,7 @@ class SecurityDeviceController extends Controller
 
     public function store(StoreSecurityDeviceRequest $request)
     {
-        $securityDevice = SecurityDevice::create($request->all());
+        SecurityDevice::create($request->all());
 
         return redirect()->route('admin.security-devices.index');
     }

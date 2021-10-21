@@ -36,7 +36,7 @@ class PhoneController extends Controller
 
     public function store(StorePhoneRequest $request)
     {
-        $phone = Phone::create($request->all());
+        Phone::create($request->all());
 
         return redirect()->route('admin.phones.index');
     }

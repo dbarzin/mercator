@@ -39,7 +39,7 @@ class StorageDeviceController extends Controller
 
     public function store(StoreStorageDeviceRequest $request)
     {
-        $storageDevice = StorageDevice::create($request->all());
+        StorageDevice::create($request->all());
 
         return redirect()->route('admin.storage-devices.index');
     }

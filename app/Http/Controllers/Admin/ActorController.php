@@ -30,7 +30,7 @@ class ActorController extends Controller
 
     public function store(StoreActorRequest $request)
     {
-        $actor = Actor::create($request->all());
+        Actor::create($request->all());
 
         return redirect()->route('admin.actors.index');
     }

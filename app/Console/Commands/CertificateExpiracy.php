@@ -91,12 +91,14 @@ class CertificateExpiracy extends Command
                 }
                 $message .= '</body></html>';
 
-                // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-                $headers[] = 'MIME-Version: 1.0';
-                $headers[] = 'Content-type: text/html;charset=iso-8859-1';
+                // Define the header
+                $headers = [
+                    'MIME-Version: 1.0',
+                    'Content-type: text/html;charset=iso-8859-1',
+                    'From: '. $mail_from,
+                ];
 
-                // En-têtes additionnels
-                $headers[] = 'From: '. config('mercator-config.cert.mail-from');
+                // Send mail
                 if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. config('mercator-config.cert.mail-from'))) {
                     $this->info('Mail sent to '.$to_email);
                 } else {

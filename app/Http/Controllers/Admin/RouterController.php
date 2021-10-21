@@ -33,8 +33,7 @@ class RouterController extends Controller
 
     public function store(StoreRouterRequest $request)
     {
-        $router = Router::create($request->all());
-        //$router->networkSwitches()->sync($request->input('networkSwitches', []));
+        Router::create($request->all());
 
         return redirect()->route('admin.routers.index');
     }

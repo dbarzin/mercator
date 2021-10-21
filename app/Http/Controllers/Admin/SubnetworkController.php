@@ -57,7 +57,7 @@ class SubnetworkController extends Controller
 
     public function store(StoreSubnetworkRequest $request)
     {
-        $subnetwork = Subnetwork::create($request->all());
+        Subnetwork::create($request->all());
 
         return redirect()->route('admin.subnetworks.index');
     }
