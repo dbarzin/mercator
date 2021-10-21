@@ -59,7 +59,6 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-
     public function maturity1()
     {
         return $this->compute_maturity(view('admin/reports/maturity1'));
@@ -212,10 +211,10 @@ class HomeController extends Controller
                 })
                     // must have at least one task
                         ->whereExists(function ($query) {
-                        $query->select('operation_task.operation_id')
-                            ->from('operation_task')
-                            ->whereRaw('operation_task.operation_id = operations.id');
-                    })
+                            $query->select('operation_task.operation_id')
+                                ->from('operation_task')
+                                ->whereRaw('operation_task.operation_id = operations.id');
+                        })
                         ->count())
 
             ->with('tasks', Task::count())
@@ -373,10 +372,10 @@ class HomeController extends Controller
                         ->where('database_source_id', '<>', null);
                 })
             ->orWhere(function ($query) {
-                    $query->where('application_dest_id', '<>', null)
-                        ->where('module_dest_id', '<>', null)
-                        ->where('database_dest_id', '<>', null);
-                })
+                $query->where('application_dest_id', '<>', null)
+                    ->where('module_dest_id', '<>', null)
+                    ->where('database_dest_id', '<>', null);
+            })
             ->where('crypted', '<>', null)
             ->count())
 
@@ -486,10 +485,10 @@ class HomeController extends Controller
                 })
                     // logicalServer must be installed on a pysical server
                         ->whereExists(function ($query) {
-                        $query->select('logical_server_physical_server.logical_server_id')
-                            ->from('logical_server_physical_server')
-                            ->whereRaw('logical_server_physical_server.logical_server_id = logical_servers.id');
-                    })
+                            $query->select('logical_server_physical_server.logical_server_id')
+                                ->from('logical_server_physical_server')
+                                ->whereRaw('logical_server_physical_server.logical_server_id = logical_servers.id');
+                        })
                         ->count())
 
             ->with('certificates', Certificate::count())

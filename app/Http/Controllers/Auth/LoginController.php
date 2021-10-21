@@ -54,8 +54,6 @@ class LoginController extends Controller
             return ldap_bind($ldapconn, $userid . '@' . Config::get('app.ldap_domain'), $password);
         }
         return false;
-
-    
     }
 
     protected function attemptLogin(Request $request)

@@ -4,9 +4,7 @@ namespace App\Console\Commands;
 
 use App\Certificate;
 use Carbon\Carbon;
-
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class CertificateExpiracy extends Command
 {
@@ -42,17 +40,17 @@ class CertificateExpiracy extends Command
     public function handle()
     {
 
-	// Log::debug("CertificateExpiracy - handle START");
+    // Log::debug("CertificateExpiracy - handle START");
 
-	$check_frequency = config('mercator-config.cert.check-frequency');
+        $check_frequency = config('mercator-config.cert.check-frequency');
 
-	// Log::debug("CertificateExpiracy - frequency ". $check_frequency);
-	// Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
+        // Log::debug("CertificateExpiracy - frequency ". $check_frequency);
+        // Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
         if (($check_frequency === null) || ($check_frequency === '0')) {
             return;
         }
-        if ( 
+        if (
             // Dayly
             ($check_frequency === '1') ||
             // Monday
@@ -66,8 +64,8 @@ class CertificateExpiracy extends Command
             // 3 month
             (($check_frequency === '90') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 3 === 0)))
         ) {
-		// Check for old certificates
-		//
+            // Check for old certificates
+            //
             // Log::debug("CertificateExpiracy - check");
 
             $certificates = Certificate::
@@ -105,7 +103,7 @@ class CertificateExpiracy extends Command
                     $this->info('Email sending fail.');
                 }
             }
-	}
-	// Log::debug("CertificateExpiracy - DONE.");
+        }
+        // Log::debug("CertificateExpiracy - DONE.");
     }
 }

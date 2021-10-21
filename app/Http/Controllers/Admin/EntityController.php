@@ -11,9 +11,7 @@ use App\Http\Requests\UpdateEntityRequest;
 use App\MApplication;
 use App\Process;
 use Gate;
-
 use Illuminate\Support\Facades\DB;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class EntityController extends Controller

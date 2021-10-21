@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
 use App\Activity;
 use App\Entity;
-use App\Information;
-use App\MApplication;
-use App\MacroProcessus;
-use App\Process;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-
+use App\Information;
+use App\MacroProcessus;
+use App\MApplication;
+use App\Process;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
@@ -40,7 +37,7 @@ class ProcessController extends Controller
         $applications = MApplication::orderBy('name')->pluck('name', 'id');
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)
-                    ->distinct()->orderBy('owner')->pluck('owner');
+            ->distinct()->orderBy('owner')->pluck('owner');
 
         return view(
             'admin.processes.create',
@@ -71,10 +68,11 @@ class ProcessController extends Controller
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
-        $process->load('activities', 'entities', 'processInformation','applications');
+        $process->load('activities', 'entities', 'processInformation', 'applications');
 
-        return view('admin.processes.edit',
-            compact('activities', 'entities', 'informations', 'process', 'macroProcessuses', 'owner_list','applications')
+        return view(
+            'admin.processes.edit',
+            compact('activities', 'entities', 'informations', 'process', 'macroProcessuses', 'owner_list', 'applications')
         );
     }
 

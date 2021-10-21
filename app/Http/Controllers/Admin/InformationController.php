@@ -34,8 +34,13 @@ class InformationController extends Controller
         $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
         $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
 
-        return view('admin.information.create', compact('processes',
-            'owner_list','storage_list','sensitivity_list','administrator_list'));
+        return view('admin.information.create', compact(
+            'processes',
+            'owner_list',
+            'storage_list',
+            'sensitivity_list',
+            'administrator_list'
+        ));
     }
 
     public function store(StoreInformationRequest $request)
@@ -61,8 +66,14 @@ class InformationController extends Controller
         $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
         $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
 
-        return view('admin.information.edit', compact('processes', 'information', 
-            'owner_list','storage_list','sensitivity_list','administrator_list'));
+        return view('admin.information.edit', compact(
+            'processes',
+            'information',
+            'owner_list',
+            'storage_list',
+            'sensitivity_list',
+            'administrator_list'
+        ));
     }
 
     public function update(UpdateInformationRequest $request, Information $information)
