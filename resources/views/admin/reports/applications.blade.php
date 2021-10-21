@@ -22,8 +22,8 @@
                                     <tr>
                                         <td>
                                             {{ trans("cruds.applicationBlock.title") }} :
-                                            <select name="applicationBlock" onchange="this.form.application.value=-1;this.form.submit()">
-                                                <option value="-1">-- All --</option>
+                                            <select name="applicationBlock" onchange="this.form.application.value='';this.form.submit()">
+                                                <option value="">-- All --</option>
                                                 @foreach ($all_applicationBlocks as $applicationBlock)
                                                     <option value="{{$applicationBlock->id}}" {{ Session::get('applicationBlock')==$applicationBlock->id ? "selected" : "" }}>{{ $applicationBlock->name }}</option>
                                                 @endforeach
@@ -32,7 +32,7 @@
                                         <td>
                                             {{ trans("cruds.application.title") }} :
                                             <select name="application" onchange="this.form.submit()">
-                                                <option value="-1">-- All --</option>
+                                                <option value="">-- All --</option>
                                                 @if ($all_applications!=null)
                                                     @foreach ($all_applications as $application)
                                                         <option value="{{$application->id}}" {{ Session::get('application')==$application->id ? "selected" : "" }}>{{ $application->name }}</option>

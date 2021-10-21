@@ -22,8 +22,8 @@
                                 <tr>
                                     <td>
                                         {{ trans('cruds.macroProcessus.title') }} :
-                                        <select name="macroprocess" onchange="this.form.process.value=-1;this.form.submit()">
-                                            <option value="-1">-- All --</option>
+                                        <select name="macroprocess" onchange="this.form.process.value='';this.form.submit()">
+                                            <option value="">-- All --</option>
                                             @foreach ($all_macroprocess as $macroprocess)
                                                 <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
                                             @endforeach
@@ -32,7 +32,7 @@
                                     <td>
                                         {{ trans('cruds.processus.title') }} :
                                         <select name="process" onchange="this.form.submit()">
-                                            <option value="-1">-- All --</option>
+                                            <option value="">-- All --</option>
                                             @if ($all_process!=null)
                                                 @foreach ($all_process as $process)
                                                     <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>

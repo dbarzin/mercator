@@ -21,8 +21,8 @@
                             <tr>
                                 <td>
                                     {{ trans("cruds.site.title_singular") }} :
-                                    <select name="site" onchange="this.form.building.value=-1;this.form.submit()">
-                                        <option value="-1">-- All sites --</option>
+                                    <select name="site" onchange="this.form.building.value='';this.form.submit()">
+                                        <option value="">-- All sites --</option>
                                         @foreach($all_sites as $id => $name)                                            
                                             <option value="{{$id}}" {{ Session::get('site')==$id ? "selected" : "" }}>{{ $name }}</option>
                                         @endforeach
@@ -31,7 +31,7 @@
                                 <td>
                                     {{ trans("cruds.building.title_singular") }} :
                                     <select name="building" onchange="this.form.submit()">
-                                        <option value="-1">-- All buildings --</option>
+                                        <option value="">-- All buildings --</option>
                                         @if ($all_buildings!=null)
                                             @foreach($all_buildings as $id => $name)                                            
                                                 <option value="{{$id}}" {{ Session::get('building')==$id ? "selected" : "" }}>{{ $name }}</option>

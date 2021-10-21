@@ -72,7 +72,7 @@ class ReportController extends Controller
 
     public function informationSystem(Request $request)
     {
-        if ((int) ($request->macroprocess) == -1) {
+        if ($request->macroprocess == null) {
             $request->session()->put('macroprocess', null);
             $macroprocess = null;
             $request->session()->put('process', null);
@@ -85,7 +85,7 @@ class ReportController extends Controller
                 $macroprocess = $request->session()->get('macroprocess');
             }
 
-            if ((int) ($request->process) == -1) {
+            if ($request->process == null) {
                 $request->session()->put('process', null);
                 $process = null;
             } elseif ($request->process != null) {
@@ -222,7 +222,7 @@ class ReportController extends Controller
 
     public function applications(Request $request)
     {
-        if ((int) ($request->applicationBlock) == -1) {
+        if ($request->applicationBlock === null) {
             $request->session()->put('applicationBlock', null);
             $applicationBlock = null;
             $request->session()->put('application', null);
@@ -235,7 +235,7 @@ class ReportController extends Controller
                 $applicationBlock = $request->session()->get('applicationBlock');
             }
 
-            if ((int) ($request->application) == -1) {
+            if ($request->application === null) {
                 $request->session()->put('application', null);
                 $application = null;
             } elseif ($request->application != null) {
@@ -538,7 +538,7 @@ class ReportController extends Controller
 
     public function logicalInfrastructure(Request $request)
     {
-        if ((int) ($request->network) == -1) {
+        if ($request->network === null) {
             $request->session()->put('network', null);
             $network = null;
             $request->session()->put('subnetwork', null);
@@ -551,7 +551,7 @@ class ReportController extends Controller
                 $network = $request->session()->get('network');
             }
 
-            if ((int) ($request->subnetwork) == -1) {
+            if ($request->subnetwork === null) {
                 $request->session()->put('subnetwork', null);
                 $subnetwork = null;
             } elseif ($request->subnetwork != null) {
@@ -712,7 +712,7 @@ class ReportController extends Controller
 
     public function physicalInfrastructure(Request $request)
     {
-        if ((int) ($request->site) == -1) {
+        if ($request->site === null) {
             $request->session()->put('site', null);
             $site = null;
             $request->session()->put('building', null);
@@ -725,7 +725,7 @@ class ReportController extends Controller
                 $site = $request->session()->get('site');
             }
 
-            if ((int) ($request->building) == -1) {
+            if ($request->building === null) {
                 $request->session()->put('building', null);
                 $building = null;
             } elseif ($request->building != null) {

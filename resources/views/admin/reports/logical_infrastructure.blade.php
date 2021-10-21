@@ -22,8 +22,8 @@
                                 <tr>
                                     <td>
                                         {{ trans("cruds.network.title_singular") }} :
-                                        <select name="network" onchange="this.form.subnetwork.value=-1;this.form.submit()">
-                                            <option value="-1">-- All networks --</option>
+                                        <select name="network" onchange="this.form.subnetwork.value='';this.form.submit()">
+                                            <option value="">-- All networks --</option>
                                             @foreach($all_networks as $id => $name)
                                                 <option value="{{$id}}" {{ Session::get('network')==$id ? "selected" : "" }}>{{ $name }}</option>
                                             @endforeach
@@ -32,7 +32,7 @@
                                     <td>
                                         {{ trans("cruds.subnetwork.title_singular") }} : :
                                         <select name="subnetwork" onchange="this.form.submit()">
-                                            <option value="-1">-- All subnetworks --</option>
+                                            <option value="">-- All subnetworks --</option>
                                             @if ($all_subnetworks!=null)
                                                 @foreach($all_subnetworks as $id => $name)
                                                     <option value="{{$id}}" {{ Session::get('subnetwork')==$id ? "selected" : "" }}>{{ $name }}</option>
