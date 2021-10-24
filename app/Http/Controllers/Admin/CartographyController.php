@@ -147,7 +147,7 @@ class CartographyController extends Controller
         if ($vues === null || count($vues) === 0 || in_array('1', $vues)) {
             // schema
             $section->addTitle(trans("cruds.report.cartography.ecosystem"), 1);
-            $section->addText('La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.');
+            $section->addText(trans("cruds.menu.ecosystem.description"));
 
             // Get data
             $entities = Entity::orderBy('name')->get();
@@ -169,20 +169,20 @@ class CartographyController extends Controller
             $section->addTextBreak(1);
 
             // ===============================
-            $section->addTitle('Entités', 2);
-            $section->addText('Partie de l’organisme (ex. : filiale, département, etc.) ou système d’information en relation avec le SI qui vise à être cartographié.');
+            $section->addTitle(trans("cruds.entity.title"), 2);
+            $section->addText(trans("cruds.entity.description"));
             $section->addTextBreak(1);
 
             // loop on entities
             foreach ($entities as $entity) {
                 $section->addBookmark('ENTITY'.$entity->id);
                 $table = $this->addTable($section, $entity->name);
-                $this->addHTMLRow($table, 'Description', $entity->description);
-                $this->addHTMLRow($table, 'Niveau de sécurité', $entity->security_level);
-                $this->addHTMLRow($table, 'Point de contact', $entity->contact_point);
+                $this->addHTMLRow($table, trans("cruds.entity.fields.description"), $entity->description);
+                $this->addHTMLRow($table, trans("cruds.entity.fields.security_level"), $entity->security_level);
+                $this->addHTMLRow($table, trans("cruds.entity.fields.contact_point"), $entity->contact_point);
 
                 // Relations
-                $textRun = $this->addTextRunRow($table, 'Relations');
+                $textRun = $this->addTextRunRow($table, trans("cruds.entity.fields.relations"));
                 foreach ($entity->sourceRelations as $relation) {
                     if ($relation->id !== null) {
                         $textRun->addLink('RELATION'.$relation->id, $relation->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace);
@@ -207,7 +207,7 @@ class CartographyController extends Controller
                     }
                 }
                 // Processus soutenus
-                $textRun = $this->addTextRunRow($table, 'Processus soutenus');
+                $textRun = $this->addTextRunRow($table, trans("cruds.entity.fields.processes"));
                 foreach ($entity->entitiesProcesses as $process) {
                     $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                     if ($entity->entitiesProcesses->last() !== $process) {
@@ -218,27 +218,27 @@ class CartographyController extends Controller
             }
 
             // ===============================
-            $section->addTitle('Relations', 2);
-            $section->addText('Lien entre deux entités ou systèmes.');
+            $section->addTitle(trans("cruds.relation.title"), 2);
+            $section->addText(trans("cruds.relation.description"));
             $section->addTextBreak(1);
 
             // Loop on relations
             foreach ($relations as $relation) {
                 $section->addBookmark('RELATION'.$relation->id);
                 $table = $this->addTable($section, $relation->name);
-                $this->addHTMLRow($table, 'Description', $relation->description);
+                $this->addHTMLRow($table, trans("cruds.relation.fields.description"), $relation->description);
 
                 if ($granularity > 1) {
-                    $this->addTextRow($table, 'Type', $relation->type);
+                    $this->addTextRow($table, trans("cruds.relation.fields.type"), $relation->type);
                     $textRun = $this->addTextRow(
                         $table,
-                        'Importance',
+                        trans("cruds.relation.fields.importance"),
                         $relation->importance === null ?
                             '-' :
                         ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$relation->importance] ?? '')
                     );
                 }
-                $textRun = $this->addTextRunRow($table, 'Lien');
+                $textRun = $this->addTextRunRow($table, trans("cruds.relation.fields.link"));
                 $textRun->addLink('ENTITY'.$relation->source_id, $relation->source->name ?? '', CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                 $textRun->addText(' -> ');
                 $textRun->addLink('ENTITY'.$relation->destination_id, $relation->destination->name ?? '', CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
@@ -250,8 +250,8 @@ class CartographyController extends Controller
         // SYSTEME D'INFORMATION
         // =====================
         if ($vues === null || count($vues) === 0 || in_array('2', $vues)) {
-            $section->addTitle("Système d'information", 1);
-            $section->addText('La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.');
+            $section->addTitle(trans("cruds.report.cartography.information_system"), 1);
+            $section->addText(trans("cruds.menu.metier.description"));
             $section->addTextBreak(1);
 
             // Get data
@@ -328,20 +328,20 @@ class CartographyController extends Controller
 
             // =====================================
             if (($granularity >= 2) && ($macroProcessuses->count() > 0)) {
-                $section->addTitle('Macro-processus', 2);
-                $section->addText('Les maro-processus représentent des ensembles de processus.');
+                $section->addTitle(trans("cruds.macroProcessus.title"), 2);
+                $section->addText(trans("cruds.macroProcessus.description"));
                 $section->addTextBreak(1);
 
                 // Loop on relations
                 foreach ($macroProcessuses as $macroProcess) {
                     $section->addBookmark('MACROPROCESS'.$macroProcess->id);
                     $table = $this->addTable($section, $macroProcess->name);
-                    $this->addHTMLRow($table, 'Description', $macroProcess->description);
-                    $this->addHTMLRow($table, 'Éléments entrants et sortants', $macroProcess->io_elements);
+                    $this->addHTMLRow($table, trans("cruds.macroProcessus.fields.description"), $macroProcess->description);
+                    $this->addHTMLRow($table, trans("cruds.macroProcessus.fields.io_elements"), $macroProcess->io_elements);
                     // Security Needs
                     $textRun = $this->addHTMLRow(
                         $table,
-                        'Besoins de sécurité',
+                        trans("cruds.macroProcessus.fields.security_need"),
                         '<p>'.
                             trans('global.confidentiality') .
                             ' : ' .
@@ -362,9 +362,9 @@ class CartographyController extends Controller
                     );
                     //---
                     if ($granularity >= 3) {
-                        $this->addTextRow($table, 'Propritétaire', $macroProcess->owner);
+                        $this->addTextRow($table, trans("cruds.macroProcessus.fields.owner"), $macroProcess->owner);
                     }
-                    $textRun = $this->addTextRunRow($table, 'Processus');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.macroProcessus.fields.processes"));
                     foreach ($macroProcess->processes as $process) {
                         $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                         if ($macroProcess->processes->last() !== $process) {
@@ -377,30 +377,30 @@ class CartographyController extends Controller
 
             // =====================================
             if ($processes->count() > 0) {
-                $section->addTitle('Processus', 2);
-                $section->addText('Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.');
+                $section->addTitle(trans("cruds.process.title"), 2);
+                $section->addText(trans("cruds.process.description"));
                 $section->addTextBreak(1);
 
                 foreach ($processes as $process) {
                     $section->addBookmark('PROCESS'.$process->id);
                     $table = $this->addTable($section, $process->identifiant);
-                    $this->addHTMLRow($table, 'Description', $process->description);
-                    $this->addHTMLRow($table, 'Éléments entrants et sortants', $process->in_out);
-                    $textRun = $this->addTextRunRow($table, 'Activités');
+                    $this->addHTMLRow($table, trans("cruds.process.fields.description"), $process->description);
+                    $this->addHTMLRow($table, trans("cruds.process.fields.in_out"), $process->in_out);
+                    $textRun = $this->addTextRunRow($table, trans("cruds.process.fields.activities"));
                     foreach ($process->activities as $activity) {
                         $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->activities->last() !== $activity) {
                             $textRun->addText(', ');
                         }
                     }
-                    $textRun = $this->addTextRunRow($table, 'Entités associées');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.process.fields.entities"));
                     foreach ($process->entities as $entity) {
                         $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->entities->last() !== $entity) {
                             $textRun->addText(', ', CartographyController::FancyRightTableCellStyle, CartographyController::NoSpace);
                         }
                     }
-                    $textRun = $this->addTextRunRow($table, 'Applications qui le soutiennent');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.process.fields.applications"));
                     foreach ($process->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, CartographyController::NoSpace, true);
                         if ($process->applications->last() !== $application) {
@@ -410,7 +410,7 @@ class CartographyController extends Controller
                     // Security Needs
                     $textRun = $this->addHTMLRow(
                         $table,
-                        'Besoins de sécurité',
+                        trans("cruds.process.fields.security_need"),
                         '<p>'.
                             trans('global.confidentiality') .
                             ' : ' .
@@ -429,24 +429,24 @@ class CartographyController extends Controller
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_t] ?? '') .
                             '</p>'
                     );
-                    //----
-                    $this->addTextRow($table, 'Propriétaire', $process->owner);
+                    // Owner
+                    $this->addTextRow($table, trans("cruds.process.fields.owner"), $process->owner);
                     $section->addTextBreak(1);
                 }
             }
 
             // =====================================
             if (($activities->count() > 0) && ($granularity === 3)) {
-                $section->addTitle('Activités', 2);
-                $section->addText('Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.');
+                $section->addTitle(trans("cruds.activity.title"), 2);
+                $section->addText(trans("cruds.activity.description"));
                 $section->addTextBreak(1);
 
                 foreach ($activities as $activity) {
                     $section->addBookmark('ACTIVITY'.$activity->id);
                     $table = $this->addTable($section, $activity->name);
-                    $this->addHTMLRow($table, 'Description', $activity->description);
+                    $this->addHTMLRow($table, trans("cruds.activity.fields.description"), $activity->description);
 
-                    $textRun = $this->addTextRunRow($table, 'Liste des opérations');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.activity.fields.operations"));
                     foreach ($activity->operations as $operation) {
                         $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($activity->operations->last() !== $operation) {
@@ -459,17 +459,17 @@ class CartographyController extends Controller
 
             // =====================================
             if ($operations->count() > 0) {
-                $section->addTitle('Opérations', 2);
-                $section->addText('Étape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.');
+                $section->addTitle(trans("cruds.operation.title"), 2);
+                $section->addText(trans("cruds.operation.description"));
                 $section->addTextBreak(1);
 
                 foreach ($operations as $operation) {
                     $section->addBookmark('OPERATION'.$operation->id);
                     $table = $this->addTable($section, $operation->name);
-                    $this->addHTMLRow($table, 'Description', $operation->description);
+                    $this->addHTMLRow($table, trans("cruds.operation.fields.description"), $operation->description);
                     // Tâches
                     if ($granularity === 3) {
-                        $textRun = $this->addTextRunRow($table, 'Liste des tâches qui la composent');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.operation.fields.tasks"));
                         foreach ($operation->tasks as $task) {
                             $textRun->addLink('TASK'.$task->id, $task->nom, CartographyController::FancyLinkStyle, null, true);
                             if ($operation->tasks->last() !== $task) {
@@ -479,7 +479,7 @@ class CartographyController extends Controller
                     }
                     // Liste des acteurs qui interviennent
                     if ($granularity >= 2) {
-                        $textRun = $this->addTextRunRow($table, 'Liste des acteurs qui interviennent');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.operation.fields.actors"));
                         foreach ($operation->actors as $actor) {
                             $textRun->addLink('ACTOR'.$actor->id, $actor->name, CartographyController::FancyLinkStyle, null, true);
                             if ($operation->actors->last() !== $actor) {
@@ -493,17 +493,17 @@ class CartographyController extends Controller
 
             // =====================================
             if (($tasks->count() > 0) && ($granularity === 3)) {
-                $section->addTitle('Tâches', 2);
-                $section->addText('Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus');
+                $section->addTitle(trans("cruds.task.title"), 2);
+                $section->addText(trans("cruds.task.description"));
                 $section->addTextBreak(1);
 
                 foreach ($tasks as $task) {
                     $section->addBookmark('TASK'.$task->id);
                     $table = $this->addTable($section, $task->nom);
-                    $this->addHTMLRow($table, 'Description', $task->description);
+                    $this->addHTMLRow($table, trans("cruds.task.fields.description"), $task->description);
 
                     // Operations
-                    $textRun = $this->addTextRunRow($table, 'Liste des opérations');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.task.fields.operations"));
                     foreach ($task->operations as $operation) {
                         $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($task->operations->last() !== $operation) {
@@ -516,18 +516,18 @@ class CartographyController extends Controller
 
             // =====================================
             if (($actors->count() > 0) && ($granularity >= 2)) {
-                $section->addTitle('Acteurs', 2);
-                $section->addText('Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.');
+                $section->addTitle(trans("cruds.actor.title"), 2);
+                $section->addText(trans("cruds.actor.description"));
                 $section->addTextBreak(1);
 
                 foreach ($actors as $actor) {
                     $section->addBookmark('ACTOR'.$actor->id);
                     $table = $this->addTable($section, $actor->name);
-                    $this->addHTMLRow($table, 'Nature', $actor->nature);
-                    $this->addHTMLRow($table, 'Type', $actor->type);
+                    $this->addHTMLRow($table, trans("cruds.actor.fields.nature"), $actor->nature);
+                    $this->addHTMLRow($table, trans("cruds.actor.fields.type"), $actor->type);
 
                     // Operations
-                    $textRun = $this->addTextRunRow($table, 'Liste des opérations');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.actor.fields.operations"));
                     foreach ($actor->operations as $operation) {
                         $textRun->addLink('OPERATION'.$operation->id, $operation->name, CartographyController::FancyLinkStyle, null, true);
                         if ($actor->operations->last() !== $operation) {
@@ -540,19 +540,19 @@ class CartographyController extends Controller
 
             // =====================================
             if ($informations->count() > 0) {
-                $section->addTitle('Informations', 2);
-                $section->addText('Donnée faisant l’objet d’un traitement informatique.');
+                $section->addTitle(trans("cruds.information.title"), 2);
+                $section->addText(trans("cruds.information.description"));
                 $section->addTextBreak(1);
 
                 foreach ($informations as $information) {
                     $section->addBookmark('INFORMATION'.$information->id);
                     $table = $this->addTable($section, $information->name);
-                    $this->addHTMLRow($table, 'Description', $information->description);
-                    $this->addTextRow($table, 'Propriétaire', $information->owner);
-                    $this->addTextRow($table, 'Administrateur', $information->administrator);
-                    $this->addTextRow($table, 'Stockage', $information->storage);
+                    $this->addHTMLRow($table, trans("cruds.information.fields.description"), $information->description);
+                    $this->addTextRow($table, trans("cruds.information.fields.owner"), $information->owner);
+                    $this->addTextRow($table, trans("cruds.information.fields.administrator"), $information->administrator);
+                    $this->addTextRow($table, trans("cruds.information.fields.storage"), $information->storage);
                     // processus liés
-                    $textRun = $this->addTextRunRow($table, 'Processus liés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.information.fields.processes"));
                     foreach ($information->processes as $process) {
                         $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                         if ($information->processes->last() !== $process) {
@@ -562,7 +562,7 @@ class CartographyController extends Controller
                     // Security Needs
                     $textRun = $this->addHTMLRow(
                         $table,
-                        'Besoins de sécurité',
+                        trans("cruds.information.fields.security_need"),
                         '<p>'.
                             trans('global.confidentiality') .
                             ' : ' .
@@ -582,10 +582,10 @@ class CartographyController extends Controller
                             '</p>'
                     );
 
-                    $this->addTextRow($table, 'Sensibilité', $information->sensitivity);
+                    $this->addTextRow($table, trans("cruds.information.fields.sensitivity"), $information->sensitivity);
 
                     if ($granularity === 3) {
-                        $this->addHTMLRow($table, 'Contraintes règlementaires et normatives', $information->constraints);
+                        $this->addHTMLRow($table, trans("cruds.information.fields.constraints"), $information->constraints);
                     }
 
                     $section->addTextBreak(1);

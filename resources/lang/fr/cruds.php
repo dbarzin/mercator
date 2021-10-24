@@ -288,6 +288,8 @@ return [
             "databases_resp_helper" => "Responsable de l'exploitation des bases de données",
             "processes" => "Processus soutenus",
             "processes_helper" => "Liste des processus soutenus par l'entité",
+            "relations" => "Relations",
+            "relations_helper" => "Relations avec d'autres entités",
             "name" => "Nom",
             "name_helper" => "Nom de l'entité ou du système",
             "security_level" => "Niveau de sécurité",
@@ -1004,7 +1006,8 @@ return [
         ],
         "ecosystem" => [
             "title" => "Vue de l'écosystème",
-            "title_short" => "Écosystème"
+            "title_short" => "Écosystème",
+            "description" => "La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité."
         ],
         "administration" => [
             "title" => "Vue de l'administration",
@@ -1013,6 +1016,7 @@ return [
         "metier" => [
             "title" => "Vue métier du système d’information",
             "title_short" => "Système d'Information",
+            "description" => "La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi."
         ],
         "application" => [
             "title" => "Vue des applications",

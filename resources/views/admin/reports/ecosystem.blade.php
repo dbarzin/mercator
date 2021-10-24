@@ -54,7 +54,7 @@
                                     <td>{!! $entity->contact_point !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>{{ trans('cruds.relation.title') }}</b></td>
+                                    <td><b>{{ trans('cruds.entity.fields.relations') }}</b></td>
                                     <td>
                                         @foreach ($entity->sourceRelations as $relation)
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
