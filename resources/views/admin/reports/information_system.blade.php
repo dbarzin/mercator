@@ -30,7 +30,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        {{ trans('cruds.processus.title') }} :
+                                        {{ trans('cruds.process.title') }} :
                                         <select name="process" onchange="this.form.submit()">
                                             <option value="">-- All --</option>
                                             @if ($all_process!=null)
