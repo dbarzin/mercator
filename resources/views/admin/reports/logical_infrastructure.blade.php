@@ -30,7 +30,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        {{ trans("cruds.subnetwork.title_singular") }} : :
+                                        {{ trans("cruds.subnetwork.title_singular") }} :
                                         <select name="subnetwork" onchange="this.form.submit()">
                                             <option value="">-- All subnetworks --</option>
                                             @if ($all_subnetworks!=null)
