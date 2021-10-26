@@ -78,7 +78,7 @@
                                     ,
                                     @endif
                                 @endforeach
-                                @if($entity->applications->count()>0)
+                                @if(($entity->applications->count()>0)&&($entity->databases->count()>0))
                                     ,<br>
                                 @endif
                                 @foreach($entity->databases as $database)
