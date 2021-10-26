@@ -288,5 +288,5 @@ return [
     "deleted_at" => "Supprimé le",
     "updated_at" => "Modifié le",
     //
-    "timestamp" => "d/m/y - h:m"
+    "timestamp" => "d/m/y - H:m"
 ];

@@ -703,7 +703,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans("cruds.application.fields.documentation"), $application->documentation);
 
                     $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.flux"));
-                    $textRun->addText('Source : ');
+                    $textRun->addText(trans("cruds.flux.fields.source") . ' : ');
                     foreach ($application->applicationSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->applicationSourceFluxes->last() !== $flux) {
@@ -711,7 +711,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText('Destination : ');
+                    $textRun->addText(trans("cruds.flux.fields.destination") . ' : ');
                     foreach ($application->applicationDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->applicationDestFluxes->last() !== $flux) {
@@ -722,7 +722,7 @@ class CartographyController extends Controller
                     // Security Needs
                     $textRun = $this->addHTMLRow(
                         $table,
-                        'Besoins de sécurité',
+                        trans("cruds.application.fields.security_need"),
                         '<p>'.
                             trans('global.confidentiality') .
                             ' : ' .
@@ -742,9 +742,9 @@ class CartographyController extends Controller
                             '</p>'
                     );
 
-                    $this->addTextRow($table, 'Exposition à l’externe', $application->external);
+                    $this->addTextRow($table, trans("cruds.application.fields.external"), $application->external);
 
-                    $textRun = $this->addTextRunRow($table, 'Processus utilisant l’application');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.processes"));
                     foreach ($application->processes as $process) {
                         $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FancyLinkStyle, null, true);
                         if ($application->processes->last() !== $process) {
@@ -752,7 +752,7 @@ class CartographyController extends Controller
                         }
                     }
 
-                    $textRun = $this->addTextRunRow($table, 'Services applicatifs délivrés par l’application');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.services"));
                     foreach ($application->services as $service) {
                         $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->services->last() !== $service) {
@@ -760,7 +760,7 @@ class CartographyController extends Controller
                         }
                     }
 
-                    $textRun = $this->addTextRunRow($table, 'Bases de données utilisées');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.databases"));
                     foreach ($application->databases as $database) {
                         $textRun->addLink('DATABASE'.$database->id, $database->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->databases->last() !== $database) {
@@ -768,12 +768,12 @@ class CartographyController extends Controller
                         }
                     }
 
-                    $textRun = $this->addTextRunRow($table, 'Bloc applicatif');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.application_block"));
                     if ($application->application_block !== null) {
                         $textRun->addLink('APPLICATIONBLOCK'.$application->application_block_id, $application->application_block->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
-                    $textRun = $this->addTextRunRow($table, 'Liste des serveurs logiques soutenant l’application');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.logical_servers"));
                     foreach ($application->logical_servers as $logical_server) {
                         $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->logical_servers->last() !== $logical_server) {
@@ -787,17 +787,17 @@ class CartographyController extends Controller
 
             // =====================================
             if ($applicationServices->count() > 0) {
-                $section->addTitle('Services applicatif', 2);
-                $section->addText('Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud)');
+                $section->addTitle(trans("cruds.applicationService.title"), 2);
+                $section->addText(trans("cruds.applicationService.description"));
                 $section->addTextBreak(1);
 
                 foreach ($applicationServices as $applicationService) {
                     $section->addBookmark('APPLICATIONSERVICE'.$applicationService->id);
                     $table = $this->addTable($section, $applicationService->name);
-                    $this->addHTMLRow($table, 'Description', $applicationService->description);
+                    $this->addHTMLRow($table, trans("cruds.applicationService.fields.description"), $applicationService->description);
 
                     // Modules
-                    $textRun = $this->addTextRunRow($table, 'Liste des modules qui le composent');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.applicationService.fields.modules"));
                     foreach ($applicationService->modules as $module) {
                         $textRun->addLink('APPLICATIONMODULE'.$module->id, $module->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->modules->last() !== $module) {
@@ -806,8 +806,8 @@ class CartographyController extends Controller
                     }
 
                     // Flux
-                    $textRun = $this->addTextRunRow($table, 'Flux associés');
-                    $textRun->addText('Source : ');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.applicationService.fields.flux"));
+                    $textRun->addText(trans("cruds.flux.fields.source") . ' : ');
                     foreach ($applicationService->serviceSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->serviceSourceFluxes->last() !== $flux) {
@@ -815,7 +815,7 @@ class CartographyController extends Controller
                         }
                     }
                     $textRun->addTextBreak(1);
-                    $textRun->addText('Destination : ');
+                    $textRun->addText(trans("cruds.flux.fields.destination") . ' : ');
                     foreach ($applicationService->serviceDestFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->serviceDestFluxes->last() !== $flux) {
@@ -823,10 +823,10 @@ class CartographyController extends Controller
                         }
                     }
 
-                    $this->addTextRow($table, 'Exposition à l’externe', $applicationService->exposition);
+                    $this->addTextRow($table, trans("cruds.applicationService.fields.exposition"), $applicationService->exposition);
 
                     // Applications
-                    $textRun = $this->addTextRunRow($table, 'Applications qui utilisent ce service');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.applicationService.fields.applications"));
                     foreach ($applicationService->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($applicationService->applications->last() !== $application) {
