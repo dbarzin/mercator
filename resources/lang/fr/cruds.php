@@ -1009,6 +1009,11 @@ return [
             "title_short" => "Écosystème",
             "description" => "La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie. Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité."
         ],
+        "application" => [
+            "title" => "Vue des applications",
+            "title_short" => "Applications",
+            "description" => "La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications."
+        ],
         "administration" => [
             "title" => "Vue de l'administration",
             "title_short" => "Administration",
@@ -1017,10 +1022,6 @@ return [
             "title" => "Vue métier du système d’information",
             "title_short" => "Système d'Information",
             "description" => "La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi."
-        ],
-        "application" => [
-            "title" => "Vue des applications",
-            "title_short" => "Applications"
         ],
         "logical_infrastructure" => [
             "title" => "Vue des infrastructures logiques",

@@ -146,7 +146,7 @@ class CartographyController extends Controller
         // ====================
         if ($vues === null || count($vues) === 0 || in_array('1', $vues)) {
             // schema
-            $section->addTitle(trans("cruds.report.cartography.ecosystem"), 1);
+            $section->addTitle(trans("cruds.menu.ecosystem.title"), 1);
             $section->addText(trans("cruds.menu.ecosystem.description"));
 
             // Get data
@@ -598,8 +598,8 @@ class CartographyController extends Controller
         // =====================
         if (($vues === null) || count($vues) === 0 || in_array('3', $vues)) {
             $section->addTextBreak(2);
-            $section->addTitle('Applications', 1);
-            $section->addText('La vue des applications décrit une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.');
+            $section->addTitle(trans("cruds.menu.application.title"), 1);
+            $section->addText(trans("cruds.menu.application.description"));
             $section->addTextBreak(1);
 
             // get all data
@@ -653,17 +653,17 @@ class CartographyController extends Controller
 
             // =====================================
             if ($applicationBlocks->count() > 0) {
-                $section->addTitle('Blocs Applicatif', 2);
-                $section->addText("Représente des ensembles d'applications.");
+                $section->addTitle(trans("cruds.applicationBlock.title"), 2);
+                $section->addText(trans("cruds.applicationBlock.description"));
                 $section->addTextBreak(1);
 
                 foreach ($applicationBlocks as $ab) {
                     $section->addBookmark('APPLICATIONBLOCK'.$ab->id);
                     $table = $this->addTable($section, $ab->name);
-                    $this->addHTMLRow($table, 'Description', $ab->description);
-                    $this->addTextRow($table, 'Responsable', $ab->responsible);
+                    $this->addHTMLRow($table, trans("cruds.applicationBlock.fields.description"), $ab->description);
+                    $this->addTextRow($table, trans("cruds.applicationBlock.fields.responsible"), $ab->responsible);
 
-                    $textRun = $this->addTextRunRow($table, 'Applications');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.applicationBlock.fields.applications"));
                     foreach ($ab->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($ab->applications->last() !== $application) {
@@ -676,16 +676,16 @@ class CartographyController extends Controller
 
             // =====================================
             if ($applications->count() > 0) {
-                $section->addTitle('Applications', 2);
-                $section->addText('Ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.');
+                $section->addTitle(trans("cruds.application.title"), 2);
+                $section->addText(trans("cruds.application.description"));
                 $section->addTextBreak(1);
 
                 foreach ($applications as $application) {
                     $section->addBookmark('APPLICATION'.$application->id);
                     $table = $this->addTable($section, $application->name);
-                    $this->addHTMLRow($table, 'Description', $application->description);
+                    $this->addHTMLRow($table, trans("cruds.application.fields.description"), $application->description);
 
-                    $textRun = $this->addTextRunRow($table, 'Liste de la (des) entité(s) utilisatrice(s)');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.entities"));
                     foreach ($application->entities as $entity) {
                         $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                         if ($application->entities->last() !== $entity) {
@@ -693,16 +693,16 @@ class CartographyController extends Controller
                         }
                     }
 
-                    $textRun = $this->addTextRunRow($table, "Entité responsable de l'exploitation");
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.entity_resp"));
                     if ($application->entity_resp !== null) {
                         $textRun->addLink('ENTITY'.$application->entity_resp->id, $application->entity_resp->name, CartographyController::FancyLinkStyle, null, true);
                     }
-                    $this->addTextRow($table, 'Type de technologie', $application->technology);
-                    $this->addTextRow($table, 'Type d’application', $application->type);
-                    $this->addTextRow($table, 'Volume d’utilisateurs et profils', $application->users);
-                    $this->addTextRow($table, 'Documentation', $application->documentation);
+                    $this->addTextRow($table, trans("cruds.application.fields.technology"), $application->technology);
+                    $this->addTextRow($table, trans("cruds.application.fields.type"), $application->type);
+                    $this->addTextRow($table, trans("cruds.application.fields.users"), $application->users);
+                    $this->addTextRow($table, trans("cruds.application.fields.documentation"), $application->documentation);
 
-                    $textRun = $this->addTextRunRow($table, 'Flux associés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.flux"));
                     $textRun->addText('Source : ');
                     foreach ($application->applicationSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
