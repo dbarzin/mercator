@@ -51,8 +51,11 @@
                             {{ trans('cruds.application.fields.entities') }}
                         </th>
                         <td>
-                            @foreach($application->entities as $key => $entities)
-                                <span class="label label-info">{{ $entities->name }}</span>
+                            @foreach($application->entities as $entity)
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -133,6 +136,9 @@
                         <td>
                             @foreach($application->processes as $process)
                                 <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
