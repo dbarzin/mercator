@@ -131,8 +131,8 @@
                             {{ trans('cruds.application.fields.processes') }}
                         </th>
                         <td>
-                            @foreach($application->processes as $key => $processes)
-                                <span class="label label-info">{{ $processes->identifiant }}</span>
+                            @foreach($application->processes as $process)
+                                <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</span>
                             @endforeach
                         </td>
                     </tr>
@@ -141,8 +141,11 @@
                             {{ trans('cruds.application.fields.services') }}
                         </th>
                         <td>
-                            @foreach($application->services as $key => $services)
-                                <span class="label label-info">{{ $services->name }}</span>
+                            @foreach($application->services as $service)
+                                <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -151,8 +154,11 @@
                             {{ trans('cruds.application.fields.databases') }}
                         </th>
                         <td>
-                            @foreach($application->databases as $key => $databases)
-                                <span class="label label-info">{{ $databases->name }}</span>
+                            @foreach($application->databases as $database)
+                                <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -161,8 +167,11 @@
                             {{ trans('cruds.application.fields.logical_servers') }}
                         </th>
                         <td>
-                            @foreach($application->logical_servers as $key => $logical_servers)
-                                <span class="label label-info">{{ $logical_servers->name }}</span>
+                            @foreach($application->logical_servers as $logical_server)
+                                <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -171,7 +180,9 @@
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
                         <td>
-                            {{ $application->application_block->name ?? '' }}
+                            @if ($application->application_block!=null)
+                            <a href='{{ route("admin.application-blocks.show", $application->application_block->id) }}'>{{ $application->application_block->name }}</a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

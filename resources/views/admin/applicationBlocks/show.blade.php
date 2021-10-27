@@ -60,7 +60,7 @@
                         </th>
                         <td>
                             @foreach($applicationBlock->applications as $key => $application)
-                                <span class="label label-info">{{ $application->name }}</span>
+                                <a href="{{ route('admin.applications.show',$application->id) }}">{{ $application->name }}</a>
                                 @if(!$loop->last)
                                 ,
                                 @endif
