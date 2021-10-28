@@ -862,7 +862,7 @@ class CartographyController extends Controller
                     $textRun->addText(trans("cruds.flux.fields.source") . ' : ');
                     foreach ($applicationModule->moduleSourceFluxes as $flux) {
                         $textRun->addLink('FLUX'.$flux->id, $flux->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($applicationModule->moduleSourceFluxes->last() !== $flux) {cr
+                        if ($applicationModule->moduleSourceFluxes->last() !== $flux) {
                             $textRun->addText(', ');
                         }
                     }
@@ -1026,8 +1026,8 @@ class CartographyController extends Controller
         // =====================
         if ($vues === null || count($vues) === 0 || in_array('4', $vues)) {
             $section->addTextBreak(2);
-            $section->addTitle('Administration', 1);
-            $section->addText('La vue de l’administration est un cas particulier de la vue des applications. Elle répertorie les périmètres et les niveaux de privilèges des administrateurs.');
+            $section->addTitle(trans("cruds.menu.administration.title"), 1);
+            $section->addText(trans("cruds.menu.administration.description"));
             $section->addTextBreak(1);
 
             // get all data
@@ -1068,17 +1068,17 @@ class CartographyController extends Controller
 
             // =====================================
             if ($zones->count() > 0) {
-                $section->addTitle('Zones', 2);
-                $section->addText('Ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).');
+                $section->addTitle(trans("cruds.zoneAdmin.title"), 2);
+                $section->addText(trans("cruds.zoneAdmin.description"));
                 $section->addTextBreak(1);
 
                 foreach ($zones as $zone) {
                     $section->addBookmark('ZONE'.$zone->id);
                     $table = $this->addTable($section, $zone->name);
-                    $this->addHTMLRow($table, 'Description', $zone->description);
+                    $this->addHTMLRow($table, trans("cruds.zoneAdmin.fields.description"), $zone->description);
 
                     // Annuaires
-                    $textRun = $this->addTextRunRow($table, 'Annuaires');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.zoneAdmin.fields.annuaires"));
                     foreach ($zone->zoneAdminAnnuaires as $annuaire) {
                         $textRun->addLink('ANNUAIRE'.$annuaire->id, $annuaire->name, CartographyController::FancyLinkStyle, null, true);
                         if ($zone->zoneAdminAnnuaires->last() !== $annuaire) {
@@ -1087,7 +1087,7 @@ class CartographyController extends Controller
                     }
 
                     // Forets
-                    $textRun = $this->addTextRunRow($table, 'Forêt Active Directory / Arborescence LDAP');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.zoneAdmin.fields.forests"));
                     foreach ($zone->zoneAdminForestAds as $forest) {
                         $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
                         if ($zone->zoneAdminForestAds->last() !== $forest) {
@@ -1100,19 +1100,19 @@ class CartographyController extends Controller
 
             // =====================================
             if ($annuaires->count() > 0) {
-                $section->addTitle('Service d’annuaire d’administration', 2);
-                $section->addText('Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration.');
+                $section->addTitle(trans("cruds.annuaire.title"), 2);
+                $section->addText(trans("cruds.annuaire.description"));
                 $section->addTextBreak(1);
 
                 foreach ($annuaires as $annuaire) {
                     $section->addBookmark('ANNUAIRE'.$annuaire->id);
                     $table = $this->addTable($section, $annuaire->name);
-                    $this->addHTMLRow($table, 'Description', $annuaire->description);
+                    $this->addHTMLRow($table, trans("cruds.annuaire.fields.description"), $annuaire->description);
 
-                    $this->addTextRow($table, 'Solution', $annuaire->solution);
+                    $this->addTextRow($table, trans("cruds.annuaire.fields.solution"), $annuaire->solution);
 
                     // Zone d'administration
-                    $textRun = $this->addTextRunRow($table, "Zone d'administration");
+                    $textRun = $this->addTextRunRow($table, trans("cruds.annuaire.fields.zone_admin"));
                     if ($annuaire->zone_admin !== null) {
                         $textRun->addLink('ZONE'.$annuaire->zone_admin->id, $annuaire->zone_admin->name, CartographyController::FancyLinkStyle, null, true);
                     }
@@ -1123,23 +1123,23 @@ class CartographyController extends Controller
 
             // =====================================
             if ($forests->count() > 0) {
-                $section->addTitle('Forêt Active Directory / Arborescence LDAP', 2);
-                $section->addText('Regroupement organisé de domaines Active Directory/LDAP.');
+                $section->addTitle(trans("cruds.forestAd.title"), 2);
+                $section->addText(trans("cruds.forestAd.description"));
                 $section->addTextBreak(1);
 
                 foreach ($forests as $forest) {
                     $section->addBookmark('FOREST'.$forest->id);
                     $table = $this->addTable($section, $forest->name);
-                    $this->addHTMLRow($table, 'Description', $forest->description);
+                    $this->addHTMLRow($table, trans("cruds.forestAd.fields.description"), $forest->description);
 
                     // Zone d'administration
-                    $textRun = $this->addTextRunRow($table, "Zone d'administration");
+                    $textRun = $this->addTextRunRow($table, trans("cruds.forestAd.fields.zone_admin"));
                     if ($forest->zone_admin !== null) {
                         $textRun->addLink('ZONE'.$forest->zone_admin->id, $forest->zone_admin->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     // Domaines
-                    $textRun = $this->addTextRunRow($table, 'Domaines');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.forestAd.fields.domaines"));
                     foreach ($forest->domaines as $domain) {
                         $textRun->addLink('DOMAIN'.$domain->id, $domain->name, CartographyController::FancyLinkStyle, null, true);
                         if ($forest->domaines->last() !== $domain) {
@@ -1152,24 +1152,22 @@ class CartographyController extends Controller
 
             // =====================================
             if ($domains->count() > 0) {
-                $section->addTitle('Domaines', 2);
-                $section->addText('Ensemble d’éléments (membres, ressources) régis par une même politique de sécurité.');
+                $section->addTitle(trans("cruds.domaineAd.title"), 2);
+                $section->addText(trans("cruds.domaineAd.description"));
                 $section->addTextBreak(1);
 
                 foreach ($domains as $domain) {
                     $section->addBookmark('DOMAIN'.$domain->id);
                     $table = $this->addTable($section, $domain->name);
-                    $this->addHTMLRow($table, 'Description', $domain->description);
+                    $this->addHTMLRow($table, trans("cruds.domaineAd.fields.description"), $domain->description);
 
-                    $this->addTextRow($table, 'Nombre de controleurs de domaine', strval($domain->domain_ctrl_cnt));
-                    $this->addTextRow($table, 'Nombre de comptes utilisateurs rattachés', strval($domain->user_count));
-                    $this->addTextRow($table, 'Nombre de machines rattachées', strval($domain->machine_count));
-                    $this->addTextRow($table, 'Relations inter-domaines', $domain->relation_inter_domaine);
-
-                    $this->addTextRow($table, 'Forêt Active Directory / Arborescence LDAP', $domain->relation_inter_domaine);
+                    $this->addTextRow($table, trans("cruds.domaineAd.fields.domain_ctrl_cnt"), strval($domain->domain_ctrl_cnt));
+                    $this->addTextRow($table, trans("cruds.domaineAd.fields.user_count"), strval($domain->user_count));
+                    $this->addTextRow($table, trans("cruds.domaineAd.fields.machine_count"), strval($domain->machine_count));
+                    $this->addTextRow($table, trans("cruds.domaineAd.fields.relation_inter_domaine"), $domain->relation_inter_domaine);
 
                     // FOREST
-                    $textRun = $this->addTextRunRow($table, 'Domaines');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.domaineAd.fields.forestAds"));
                     foreach ($domain->domainesForestAds as $forest) {
                         $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FancyLinkStyle, null, true);
                         if ($domain->domainesForestAds->last() !== $forest) {

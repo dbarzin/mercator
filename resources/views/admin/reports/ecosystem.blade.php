@@ -128,7 +128,7 @@
                     {{ trans('cruds.relation.title') }}
                 </div>
                 <div class="card-body">
-                    <p>{{ trans('cruds.relation.subtitle') }}</p>
+                    <p>{{ trans('cruds.relation.description') }}</p>
                         @foreach($relations as $relation)
                       <div class="row">
                         <div class="col-sm-6">                        

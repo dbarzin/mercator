@@ -25,6 +25,8 @@ return [
             "nature_helper" => "Ex : personne, groupe, entité, etc.",
             "type" => "Type",
             "type_helper" => "interne ou externe à l’organisme",
+            "operations" => "Opérations",
+            "operations_helper" => "Liste des opérations auxquels participe l'acteur"
         ],
         "title" => "Acteurs",
         "title_singular" => "Acteur",
@@ -725,7 +727,7 @@ return [
         ],
         "title" => "Relations",
         "title_singular" => "Relation",
-        "subtitle" => "Lien entre deux entités ou systèmes."
+        "description" => "Lien entre deux entités ou systèmes."
     ],
     "role" => [
         "fields" => [
@@ -1017,6 +1019,7 @@ return [
         "administration" => [
             "title" => "Vue de l'administration",
             "title_short" => "Administration",
+            "description" => "La vue de l’administration est un cas particulier de la vue des applications. Elle répertorie les périmètres et les niveaux de privilèges des administrateurs.",
         ],
         "metier" => [
             "title" => "Vue métier du système d’information",
