@@ -102,7 +102,7 @@ return [
             "name" => "Nom",
             "name_helper" => "",
             "responsible" => "Responsable",
-            "responsible_helper" => "Responsable des applications",
+            "responsible_helper" => "Responsable des applications de ce bloc d'applications",
         ],
         "title" => "Blocs applicatif",
         "title_singular" => "Bloc applicatif",
@@ -116,8 +116,8 @@ return [
             "description_helper" => "",
             "name" => "Nom",
             "name_helper" => "",
-            "flux" => "flux",
-            "flux_helper" => "Flux associés"
+            "flux" => "Flux",
+            "flux_helper" => "Flux associés au module"
         ],
         "title" => "Modules applicatif",
         "title_short" => "Modules",
