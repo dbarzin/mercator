@@ -77,14 +77,14 @@
                             <td>
                                 @if ($relation->source!=null)
                                 <a href="{{ route('admin.entities.show', $relation->source->id) }}">
-                                    {{ $relation->source->name ?? '' }}        
+                                    {{ $relation->source->name }}        
                                 </a>
                                 @endif
                             </td>
                             <td>
                                 @if ($relation->destination!=null)
                                 <a href="{{ route('admin.entities.show', $relation->destination->id) }}">
-                                    {{ $relation->destination->name ?? '' }}
+                                    {{ $relation->destination->name }}
                                 </a>
                                 @endif
                             </td>

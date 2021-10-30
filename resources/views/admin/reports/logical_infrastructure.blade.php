@@ -604,21 +604,20 @@
                                             <th>{{ trans('cruds.certificate.fields.end_validity') }}</th>
                                             <td>{{ $certificate->end_validity }}</td>
                                         </tr>
-
+                                        @if($certificate->logical_servers->count()>0)
                                         <tr>
                                             <th>{{ trans('cruds.certificate.fields.logical_servers') }}</th>
                                             <td>
-                                                @if ($certificate->logical_servers!=null)
-                                                    @foreach($certificate->logical_servers as $logical_server)
-                                                    <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logical_server->id}}">{{ $logical_server->name }}</a>
-                                                        @if (!$loop->last)
-                                                        ,
-                                                        @endif
-                                                    @endforeach
-                                                @endif
+                                                @foreach($certificate->logical_servers as $logical_server)
+                                                <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logical_server->id}}">{{ $logical_server->name }}</a>
+                                                    @if (!$loop->last)
+                                                    ,
+                                                    @endif
+                                                @endforeach
                                             </td>
                                         </tr>
-					
+                                        @endif
+                                        @if($certificate->applications->count()>0)					
                                         <tr>
                                             <th>{{ trans('cruds.certificate.fields.applications') }}</th>
                                             <td>
@@ -632,7 +631,7 @@
                                                 @endif
                                             </td>
                                         </tr>
-
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

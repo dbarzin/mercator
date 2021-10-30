@@ -1184,8 +1184,8 @@ class CartographyController extends Controller
         // =====================
         if ($vues === null || count($vues) === 0 || in_array('5', $vues)) {
             $section->addTextBreak(2);
-            $section->addTitle('Infrastructure logique', 1);
-            $section->addText("La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.");
+            $section->addTitle(trans("cruds.menu.logical_infrastructure.title"), 1);
+            $section->addText(trans("cruds.menu.logical_infrastructure.description"));
             $section->addTextBreak(1);
 
             // Get all data
@@ -1300,23 +1300,23 @@ class CartographyController extends Controller
 
             // =====================================
             if ($networks->count() > 0) {
-                $section->addTitle('Réseaux', 2);
-                $section->addText('Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.');
+                $section->addTitle(trans("cruds.network.title"), 2);
+                $section->addText(trans("cruds.network.description"));
                 $section->addTextBreak(1);
 
                 foreach ($networks as $network) {
                     $section->addBookmark('NETWORK'.$network->id);
                     $table = $this->addTable($section, $network->name);
-                    $this->addHTMLRow($table, 'Description', $network->description);
+                    $this->addHTMLRow($table, trans("cruds.network.fields.description"), $network->description);
 
-                    $this->addTextRow($table, 'Type de protocol', $network->protocol_type);
-                    $this->addTextRow($table, "Responsable d'exploitation", $network->responsible);
-                    $this->addTextRow($table, 'Responsable SSI', $network->responsible_sec);
+                    $this->addTextRow($table, trans("cruds.network.fields.protocol_type"), $network->protocol_type);
+                    $this->addTextRow($table, trans("cruds.network.fields.responsible"), $network->responsible);
+                    $this->addTextRow($table, trans("cruds.network.fields.responsible_sec"), $network->responsible_sec);
 
                     // Security Needs
                     $textRun = $this->addHTMLRow(
                         $table,
-                        'Besoins de sécurité',
+                        trans("cruds.network.fields.security_need"),
                         '<p>'.
                             trans('global.confidentiality') .
                             ' : ' .
@@ -1338,7 +1338,7 @@ class CartographyController extends Controller
                     //----
 
                     // subnetworks
-                    $textRun = $this->addTextRunRow($table, 'Sous-réseaux ratachés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.network.fields.subnetworks"));
                     foreach ($network->subnetworks as $subnetwork) {
                         $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($network->subnetworks->last() !== $subnetwork) {
@@ -1347,7 +1347,7 @@ class CartographyController extends Controller
                     }
 
                     // entités externes connectées
-                    $textRun = $this->addTextRunRow($table, 'Entités externes connectées');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.network.fields.externalConnectedEntities"));
                     foreach ($network->externalConnectedEntities as $entity) {
                         $textRun->addLink('ENTITY'.$entity->id, $entity->name, CartographyController::FancyLinkStyle, null, true);
                         if ($network->externalConnectedEntities->last() !== $entity) {
@@ -1360,32 +1360,32 @@ class CartographyController extends Controller
 
             // =====================================
             if ($subnetworks->count() > 0) {
-                $section->addTitle('Sous-Réseaux', 2);
-                $section->addText('Subdivision logique d’un réseau de taille plus importante.');
+                $section->addTitle(trans("cruds.subnetwork.title"), 2);
+                $section->addText(trans("cruds.subnetwork.description"));
                 $section->addTextBreak(1);
 
                 foreach ($subnetworks as $subnetwork) {
                     $section->addBookmark('SUBNET'.$subnetwork->id);
                     $table = $this->addTable($section, $subnetwork->name);
-                    $this->addHTMLRow($table, 'Description', $subnetwork->description);
-                    $this->addTextRow($table, 'Adresse/Masque', $subnetwork->address . ' ( ' . $subnetwork->ipRange() . ' )');
-                    $this->addTextRow($table, 'Passerelle par défaut', $subnetwork->default_gateway);
-                    $this->addTextRow($table, 'Zone', $subnetwork->zone);
-                    $this->addTextRow($table, 'Méthode d’attribution des IP', $subnetwork->ip_allocation_type);
-                    $this->addTextRow($table, 'DMZ ou non', $subnetwork->dmz);
-                    $this->addTextRow($table, 'Possibilité d’accès sans ﬁl', $subnetwork->wifi);
+                    $this->addHTMLRow($table, trans("cruds.subnetwork.fields.description"), $subnetwork->description);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.address"), $subnetwork->address . ' ( ' . $subnetwork->ipRange() . ' )');
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.default_gateway"), $subnetwork->default_gateway);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.zone"), $subnetwork->zone);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.ip_allocation_type"), $subnetwork->ip_allocation_type);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.dmz"), $subnetwork->dmz);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.wifi"), $subnetwork->wifi);
                     // VLAN
-                    $textRun = $this->addTextRunRow($table, 'VLAN');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.subnetwork.fields.vlan"));
                     if ($subnetwork->vlan !== null) {
                         $textRun->addLink('VLAN'.$subnetwork->vlan->id, $subnetwork->vlan->name, CartographyController::FancyLinkStyle, null, true);
                     }
                     // gateway
-                    $textRun = $this->addTextRunRow($table, 'Passerelle');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.subnetwork.fields.gateway"));
                     if ($subnetwork->gateway !== null) {
                         $textRun->addLink('GATEWAY'.$subnetwork->gateway->id, $subnetwork->gateway->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
-                    $this->addTextRow($table, 'Responsable d’exploitation', $subnetwork->responsible_exp);
+                    $this->addTextRow($table, trans("cruds.subnetwork.fields.responsible_exp"), $subnetwork->responsible_exp);
 
                     $section->addTextBreak(1);
                 }
@@ -1393,16 +1393,16 @@ class CartographyController extends Controller
 
             // =====================================
             if ($routers->count() > 0) {
-                $section->addTitle('Routeurs', 2);
-                $section->addText('Composant gérant les connexions entre différents réseaux.');
+                $section->addTitle(trans("cruds.router.title"), 2);
+                $section->addText(trans("cruds.router.description"));
                 $section->addTextBreak(1);
 
                 foreach ($routers as $router) {
                     $section->addBookmark('ROUTER'.$router->id);
                     $table = $this->addTable($section, $router->name);
-                    $this->addHTMLRow($table, 'Description', $router->description);
-                    $this->addTextRow($table, 'Adresses IP', $router->ip_addresses);
-                    $this->addHTMLRow($table, 'Régles de filtrage réseau', $router->rules);
+                    $this->addHTMLRow($table, trans("cruds.router.fields.description"), $router->description);
+                    $this->addTextRow($table, trans("cruds.router.fields.ip_addresses"), $router->ip_addresses);
+                    $this->addHTMLRow($table, trans("cruds.router.fields.rules"), $router->rules);
 
                     $section->addTextBreak(1);
                 }
@@ -1410,20 +1410,20 @@ class CartographyController extends Controller
 
             // =====================================
             if ($gateways->count() > 0) {
-                $section->addTitle('Passerelle d’entrée depuis l’extérieur', 2);
-                $section->addText('Composants permettant de relier un réseau local avec l’extérieur');
+                $section->addTitle(trans("cruds.gateway.title"), 2);
+                $section->addText(trans("cruds.gateway.description"));
                 $section->addTextBreak(1);
 
                 foreach ($gateways as $gateway) {
                     $section->addBookmark('GATEWAY'.$gateway->id);
                     $table = $this->addTable($section, $gateway->name);
-                    $this->addHTMLRow($table, 'Caractéristiques techniques', $gateway->description);
+                    $this->addHTMLRow($table, trans("cruds.gateway.fields.description"), $gateway->description);
 
-                    $this->addTextRow($table, "Type d'authentification", $gateway->authentification);
-                    $this->addTextRow($table, 'IP publique et privée', $gateway->ip);
+                    $this->addTextRow($table, trans("cruds.gateway.fields.authentification"), $gateway->authentification);
+                    $this->addTextRow($table, trans("cruds.gateway.fields.ip"), $gateway->ip);
 
                     // Réseau ratachés
-                    $textRun = $this->addTextRunRow($table, 'Réseaux ratachés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.gateway.fields.subnetworks"));
                     foreach ($gateway->subnetworks as $subnetwork) {
                         $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($gateway->subnetworks->last() !== $subnetwork) {
@@ -1437,18 +1437,18 @@ class CartographyController extends Controller
 
             // =====================================
             if ($externalConnectedEntities->count() > 0) {
-                $section->addTitle('Entités extérieurs connectées', 2);
-                $section->addText('Entités externes connectées au réseau.');
+                $section->addTitle(trans("cruds.externalConnectedEntity.title"), 2);
+                $section->addText(trans("cruds.externalConnectedEntity.description"));
                 $section->addTextBreak(1);
 
                 foreach ($externalConnectedEntities as $entity) {
                     $section->addBookmark('EXTENTITY'.$entity->id);
                     $table = $this->addTable($section, $entity->name);
 
-                    $this->addTextRow($table, 'Responsable SSI', $entity->responsible_sec);
-                    $this->addTextRow($table, 'Contacts SI', $entity->contacts);
+                    $this->addTextRow($table, trans("cruds.externalConnectedEntity.fields.responsible_sec"), $entity->responsible_sec);
+                    $this->addTextRow($table, trans("cruds.externalConnectedEntity.fields.contacts"), $entity->contacts);
 
-                    $textRun = $this->addTextRunRow($table, 'Réseaux connectés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.externalConnectedEntity.fields.connected_networks"));
                     foreach ($entity->connected_networks as $network) {
                         $textRun->addLink('NETWORK'.$network->id, $network->name, CartographyController::FancyLinkStyle, null, true);
                         if ($entity->connected_networks->last() !== $network) {
@@ -1461,26 +1461,26 @@ class CartographyController extends Controller
 
             // =====================================
             if ($logicalServers->count() > 0) {
-                $section->addTitle('Serveurs logiques', 2);
-                $section->addText('Découpage logique d’un serveur physique.');
+                $section->addTitle(trans("cruds.logicalServer.title"), 2);
+                $section->addText(trans("cruds.logicalServer.description"));
                 $section->addTextBreak(1);
 
                 foreach ($logicalServers as $logicalServer) {
                     $section->addBookmark('LOGICAL_SERVER'.$logicalServer->id);
                     $table = $this->addTable($section, $logicalServer->name);
-                    $this->addHTMLRow($table, 'Description', $logicalServer->description);
+                    $this->addHTMLRow($table, trans("cruds.logicalServer.fields.description"), $logicalServer->description);
 
-                    $this->addTextRow($table, 'Operating System', $logicalServer->operating_system);
-                    $this->addTextRow($table, 'Adresse IP', $logicalServer->address_ip);
-                    $this->addTextRow($table, 'CPU', $logicalServer->cpu);
-                    $this->addTextRow($table, 'Mémoire', $logicalServer->memory);
-                    $this->addTextRow($table, 'Disque', strval($logicalServer->disk));
-                    $this->addTextRow($table, 'Services réseau', $logicalServer->net_services);
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.operating_system"), $logicalServer->operating_system);
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.address_ip"), $logicalServer->address_ip);
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.cpu"), $logicalServer->cpu);
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.memory"), $logicalServer->memory);
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.disk"), strval($logicalServer->disk));
+                    $this->addTextRow($table, trans("cruds.logicalServer.fields.net_services"), $logicalServer->net_services);
 
-                    $this->addHTMLRow($table, 'Configuration', $logicalServer->configuration);
+                    $this->addHTMLRow($table, trans("cruds.logicalServer.fields.configuration"), $logicalServer->configuration);
 
                     // APPLICATIONS
-                    $textRun = $this->addTextRunRow($table, 'Applications');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.logicalServer.fields.applications"));
                     foreach ($logicalServer->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
                         if ($logicalServer->applications->last() !== $application) {
@@ -1489,7 +1489,7 @@ class CartographyController extends Controller
                     }
 
                     // Physical server
-                    $textRun = $this->addTextRunRow($table, 'Serveurs physiques');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.logicalServer.fields.servers"));
                     foreach ($logicalServer->servers as $server) {
                         $textRun->addLink('PSERVER'.$server->id, $server->name, CartographyController::FancyLinkStyle, null, true);
                         if ($logicalServer->servers->last() !== $server) {
@@ -1498,13 +1498,14 @@ class CartographyController extends Controller
                     }
 
                     // Certificates
-                    if ($logicalServer->certificates !== null && count($logicalServer->certificates) > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Certificats');
-                    }
-                    foreach ($logicalServer->certificates as $certificate) {
-                        $textRun->addLink('CERTIFICATE'.$certificate->id, $certificate->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($logicalServer->certificates->last() !== $certificate) {
-                            $textRun->addText(', ');
+                    if ($logicalServer->certificates->count() > 0) {
+                        $textRun = $this->addTextRunRow($table, trans("cruds.logicalServer.fields.certificates"));
+   
+                        foreach ($logicalServer->certificates as $certificate) {
+                            $textRun->addLink('CERTIFICATE'.$certificate->id, $certificate->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($logicalServer->certificates->last() !== $certificate) {
+                                $textRun->addText(', ');
+                            }
                         }
                     }
 
@@ -1514,15 +1515,15 @@ class CartographyController extends Controller
 
             // =====================================
             if ($dhcpServers->count() > 0) {
-                $section->addTitle('Serveurs DHCP', 2);
-                $section->addText('Équipement physique ou virtuel permettant la gestion des adresses IP d’un réseau.');
+                $section->addTitle(trans("cruds.dhcpServer.title"), 2);
+                $section->addText(trans("cruds.dhcpServer.description"));
                 $section->addTextBreak(1);
 
                 foreach ($dhcpServers as $dhcpServer) {
                     $section->addBookmark('DHCP_SERVER'.$dhcpServer->id);
                     $table = $this->addTable($section, $dhcpServer->name);
-                    $this->addHTMLRow($table, 'Description', $dhcpServer->description);
-                    $this->addTextRow($table, 'Adresse IP', $dhcpServer->address_ip);
+                    $this->addHTMLRow($table, trans("cruds.dhcpServer.fields.description"), $dhcpServer->description);
+                    $this->addTextRow($table, trans("cruds.dhcpServer.fields.address_ip"), $dhcpServer->address_ip);
 
                     $section->addTextBreak(1);
                 }
@@ -1530,15 +1531,15 @@ class CartographyController extends Controller
 
             // =====================================
             if ($dnsservers->count() > 0) {
-                $section->addTitle('Serveurs DNS', 2);
-                $section->addText('Serveur de noms de domaine (Domain Name System) – Équipement physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.');
+                $section->addTitle(trans("cruds.dnsserver.title"), 2);
+                $section->addText(trans("cruds.dnsserver.description"));
                 $section->addTextBreak(1);
 
                 foreach ($dnsservers as $dnsserver) {
                     $section->addBookmark('DNS_SERVER'.$dnsserver->id);
                     $table = $this->addTable($section, $dnsserver->name);
-                    $this->addHTMLRow($table, 'Description', $dnsserver->description);
-                    $this->addTextRow($table, 'Adresse IP', $dnsserver->address_ip);
+                    $this->addHTMLRow($table, trans("cruds.dnsserver.fields.description"), $dnsserver->description);
+                    $this->addTextRow($table, trans("cruds.dnsserver.fields.address_ip"), $dnsserver->address_ip);
 
                     $section->addTextBreak(1);
                 }
@@ -1546,43 +1547,55 @@ class CartographyController extends Controller
 
             // =====================================
             if ($certificates->count() > 0) {
-                $section->addTitle('Certificats', 2);
-                $section->addText("Un certificat électronique (aussi appelé certificat numérique ou certificat de clé publique) peut être vu comme une carte d'identité numérique. Il est utilisé principalement pour identifier et authentifier une personne physique ou morale, mais aussi pour chiffrer des échanges.");
+                $section->addTitle(trans("cruds.certificate.title"), 2);
+                $section->addText(trans("cruds.certificate.description"));
                 $section->addTextBreak(1);
 
                 foreach ($certificates as $certificate) {
                     $section->addBookmark('CERTIFICATE'.$certificate->id);
                     $table = $this->addTable($section, $certificate->name);
-                    $this->addTextRow($table, 'Type', $certificate->type);
-                    $this->addHTMLRow($table, 'Description', $certificate->description);
-                    $this->addTextRow($table, 'Date de début', $certificate->start_validity);
-                    $this->addTextRow($table, 'Date de fin', $certificate->end_validity);
+                    $this->addTextRow($table, trans("cruds.certificate.fields.type"), $certificate->type);
+                    $this->addHTMLRow($table, trans("cruds.certificate.fields.description"), $certificate->description);
+                    $this->addTextRow($table, trans("cruds.certificate.fields.start_validity"), $certificate->start_validity);
+                    $this->addTextRow($table, trans("cruds.certificate.fields.end_validity"), $certificate->end_validity);
 
                     // Logical Servers
-                    $textRun = $this->addTextRunRow($table, 'Serveurs logiques');
-                    foreach ($certificate->logical_servers as $logical_server) {
-                        $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
-                        if ($certificate->logical_servers->last() !== $logical_server) {
-                            $textRun->addText(', ');
+                    if ($certificate->logical_servers->count()>0) {
+                        $textRun = $this->addTextRunRow($table, trans("cruds.certificate.fields.logical_servers"));
+                        foreach ($certificate->logical_servers as $logical_server) {
+                            $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($certificate->logical_servers->last() !== $logical_server) {
+                                $textRun->addText(', ');
+                            }
                         }
                     }
 
+                    // Applications
+                    if ($certificate->applications->count()>0) {
+                        $textRun = $this->addTextRunRow($table, trans("cruds.certificate.fields.applications"));
+                        foreach ($certificate->applications as $application) {
+                            $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FancyLinkStyle, null, true);
+                            if ($certificate->applications->last() !== $application) {
+                                $textRun->addText(', ');
+                            }
+                        }
+                    }
                     $section->addTextBreak(1);
                 }
             }
             // =====================================
             if ($vlans->count() > 0) {
-                $section->addTitle('VLANs', 2);
-                $section->addText('Réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.');
+                $section->addTitle(trans("cruds.vlan.title"), 2);
+                $section->addText(trans("cruds.vlan.description"));
                 $section->addTextBreak(1);
 
                 foreach ($vlans as $vlan) {
                     $section->addBookmark('VLAN'.$vlan->id);
                     $table = $this->addTable($section, $vlan->name);
-                    $this->addHTMLRow($table, 'Description', $vlan->description);
+                    $this->addHTMLRow($table, trans("cruds.vlan.fields.description"), $vlan->description);
 
                     // Sous-réseaux
-                    $textRun = $this->addTextRunRow($table, 'Sous-réseaux ratachés');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.vlan.fields.subnetworks"));
                     foreach ($vlan->subnetworks as $subnetwork) {
                         $textRun->addLink('SUBNET'.$subnetwork->id, $subnetwork->name, CartographyController::FancyLinkStyle, null, true);
                         if ($vlan->subnetworks->last() !== $subnetwork) {

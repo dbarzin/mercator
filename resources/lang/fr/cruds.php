@@ -1029,6 +1029,7 @@ return [
         "logical_infrastructure" => [
             "title" => "Vue des infrastructures logiques",
             "title_short" => "Infrastructure Logique",
+            "description" => "La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic."
         ],
         "physical_infrastructure" => [
             "title" => "Vue de l'infrastructure physique",
