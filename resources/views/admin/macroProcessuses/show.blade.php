@@ -89,11 +89,13 @@
                             {{ trans('cruds.macroProcessus.fields.processes') }}
                         </th>
                         <td>
-                            @foreach($macroProcessus->processes as $key => $processes)
-                                <span class="label label-info">{{ $processes->identifiant }}</span>
-                                @if (!$loop->last)
-                                ,
-                                @endif                                                                
+                            @foreach($macroProcessus->processes as $process)
+                                <a href="{{ route('admin.processes.show', $process->id) }}">
+                                    {{ $process->identifiant}}
+                                    @if(!$loop->last)
+                                    ,
+                                    @endif
+                                </a>
                             @endforeach
                         </td>
                     </tr>

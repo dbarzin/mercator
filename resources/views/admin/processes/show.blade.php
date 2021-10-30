@@ -114,6 +114,21 @@
                             {{ $process->owner }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.process.fields.macroprocessus') }}
+                        </th>
+                        <td>
+                            @if($process->macroProcess!=null)
+                                <a href="{{ route('admin.macro-processuses.show', $process->macroProcess->id) }}">
+                                    {{ $process->macroProcess->name }}
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+
+
+
                 </tbody>
             </table>
             <div class="form-group">

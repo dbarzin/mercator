@@ -690,7 +690,7 @@ return [
             "in_out_helper" => "",
             "informations" => "Informations",
             "informations_helper" => "Informations utilisées par le process",
-            "macroprocessus" => "Macro-Processus",
+            "macroprocessus" => "Macro-processus",
             "macroprocessus_helper" => "Fait partie du macro-processus",
             "owner" => "Responsable",
             "owner_helper" => "Responsable du processus",
