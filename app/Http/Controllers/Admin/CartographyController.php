@@ -1614,8 +1614,8 @@ class CartographyController extends Controller
         // =====================
         if ($vues === null || count($vues) === 0 || in_array('6', $vues)) {
             $section->addTextBreak(2);
-            $section->addTitle(trans("menu.physical_infrastructure.title"), 1);
-            $section->addText(trans("menu.physical_infrastructure.description"));
+            $section->addTitle(trans("cruds.menu.physical_infrastructure.title"), 1);
+            $section->addText(trans("cruds.menu.physical_infrastructure.description"));
             $section->addTextBreak(1);
 
             // Get all data
@@ -1827,7 +1827,7 @@ class CartographyController extends Controller
 
                     // Storage Devices
                     if ($bay->bayStorageDevices->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.storage_device"));
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.storage_devices"));
                         foreach ($bay->bayStorageDevices as $storageDevice) {
                             $textRun->addLink('STORAGEDEVICE'.$storageDevice->id, $storageDevice->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayStorageDevices->last() !== $storageDevice) {

@@ -172,7 +172,7 @@ return [
             "name_helper" => "",
             "physical_servers" => "Serveurs physiques",
             "physical_routers" => "Routeurs physiques",
-            "physical_switch" => "Commutateurs physiques",
+            "physical_switches" => "Commutateurs physiques",
             "storage_devices" => "Dispositifs de stockages", 
             "physical_security_devices" => "Dispositifs de sécurité physique", 
             "peripherals" => "Périphériques",

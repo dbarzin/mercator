@@ -203,7 +203,7 @@
 
                                 @if ($bay->bayPhysicalSwitches->count()>0)
                                 <tr>
-                                    <th>{{ trans("cruds.bay.fields.physical_switch") }}</th>
+                                    <th>{{ trans("cruds.bay.fields.physical_switches") }}</th>
                                     <td>
                                     @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch) 
                                         <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
