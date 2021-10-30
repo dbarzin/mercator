@@ -51,8 +51,10 @@
                             {{ trans('cruds.operation.fields.actors') }}
                         </th>
                         <td>
-                            @foreach($operation->actors as $key => $actors)
-                                <span class="label label-info">{{ $actors->name }}</span>
+                            @foreach($operation->actors as $actor)
+                                <a href="{{ route('admin.actors.show', $actor->id) }}">
+                                    {{ $actor->name }}
+                                </a>
                                 @if (!$loop->last)
                                 ,
                                 @endif
@@ -64,8 +66,25 @@
                             {{ trans('cruds.operation.fields.tasks') }}
                         </th>
                         <td>
-                            @foreach($operation->tasks as $key => $tasks)
-                                <span class="label label-info">{{ $tasks->nom }}</span>
+                            @foreach($operation->tasks as $task)
+                                <a href="{{ route('admin.tasks.show', $task->id) }}">
+                                    {{ $task->nom }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.operation.fields.activities') }}
+                        </th>
+                        <td>
+                            @foreach($operation->operationsActivities as $activity)
+                                <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                    {{ $activity->name }}
+                                </a>
                                 @if (!$loop->last)
                                 ,
                                 @endif
