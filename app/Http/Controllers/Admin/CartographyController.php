@@ -1614,8 +1614,8 @@ class CartographyController extends Controller
         // =====================
         if ($vues === null || count($vues) === 0 || in_array('6', $vues)) {
             $section->addTextBreak(2);
-            $section->addTitle('Infrastructure physique', 1);
-            $section->addText('La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.');
+            $section->addTitle(trans("menu.physical_infrastructure.title"), 1);
+            $section->addText(trans("menu.physical_infrastructure.description"));
             $section->addTextBreak(1);
 
             // Get all data
@@ -1733,17 +1733,17 @@ class CartographyController extends Controller
 
             // =====================================
             if ($sites->count() > 0) {
-                $section->addTitle('Sites', 2);
-                $section->addText('Emplacement géographique rassemblant un ensemble de personnes et/ou de ressources.');
+                $section->addTitle(trans("cruds.site.title"), 2);
+                $section->addText(trans("cruds.site.description"));
                 $section->addTextBreak(1);
 
                 foreach ($sites as $site) {
                     $section->addBookmark('SITE'.$site->id);
                     $table = $this->addTable($section, $site->name);
-                    $this->addHTMLRow($table, 'Description', $site->description);
+                    $this->addHTMLRow($table, trans("cruds.site.fields.description"), $site->description);
 
                     // Buildings
-                    $textRun = $this->addTextRunRow($table, 'Buildings');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.site.fields.buildings"));
                     foreach ($site->siteBuildings as $building) {
                         $textRun->addLink('BUILDING'.$building->id, $building->name, CartographyController::FancyLinkStyle, null, true);
                         if ($site->siteBuildings->last() !== $building) {
@@ -1757,18 +1757,18 @@ class CartographyController extends Controller
 
             // =====================================
             if ($buildings->count() > 0) {
-                $section->addTitle('Bâtiments / Salles', 2);
-                $section->addText('Localisation des personnes ou ressources à l’intérieur d’un site.');
+                $section->addTitle(trans("cruds.building.title"), 2);
+                $section->addText(trans("cruds.building.description"));
                 $section->addTextBreak(1);
 
                 foreach ($buildings as $building) {
                     $section->addBookmark('BUILDING'.$building->id);
                     $table = $this->addTable($section, $building->name);
-                    $this->addHTMLRow($table, 'Description', $building->description);
+                    $this->addHTMLRow($table, trans("cruds.building.fields.description"), $building->description);
 
                     // Baies
                     if ($building->roomBays->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Baies');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.building.fields.bays"));
                         foreach ($building->roomBays as $bay) {
                             $textRun->addLink('BAY'.$bay->id, $bay->name, CartographyController::FancyLinkStyle, null, true);
                             if ($building->roomBays->last() !== $bay) {
@@ -1783,18 +1783,18 @@ class CartographyController extends Controller
 
             // =====================================
             if ($buildings->count() > 0) {
-                $section->addTitle('Baies', 2);
-                $section->addText('Armoire technique rassemblant des équipements de réseau informatique ou de téléphonie.');
+                $section->addTitle(trans("cruds.bay.title"), 2);
+                $section->addText(trans("cruds.bay.description"));
                 $section->addTextBreak(1);
 
                 foreach ($bays as $bay) {
                     $section->addBookmark('BAY'.$bay->id);
                     $table = $this->addTable($section, $bay->name);
-                    $this->addHTMLRow($table, 'Description', $bay->description);
+                    $this->addHTMLRow($table, trans("cruds.bay.fields.description"), $bay->description);
 
                     // Serveurs physiques
                     if ($bay->bayPhysicalServers->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Serveurs physique');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.physical_servers"));
                         foreach ($bay->bayPhysicalServers as $physicalServer) {
                             $textRun->addLink('PSERVER'.$physicalServer->id, $physicalServer->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayPhysicalServers->last() !== $physicalServer) {
@@ -1805,7 +1805,7 @@ class CartographyController extends Controller
 
                     // PhysicalRouters
                     if ($bay->bayPhysicalRouters->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Routeurs');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.physical_routers"));
                         foreach ($bay->bayPhysicalRouters as $physicalRouter) {
                             $textRun->addLink('ROUTER'.$physicalRouter->id, $physicalRouter->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayPhysicalRouters->last() !== $physicalRouter) {
@@ -1816,7 +1816,7 @@ class CartographyController extends Controller
 
                     // Physical Switches
                     if ($bay->bayPhysicalSwitches->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Commutateurs');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.physical_switches"));
                         foreach ($bay->bayPhysicalSwitches as $physicalSwitch) {
                             $textRun->addLink('SWITCH'.$physicalSwitch->id, $physicalSwitch->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayPhysicalSwitches->last() !== $physicalSwitch) {
@@ -1827,7 +1827,7 @@ class CartographyController extends Controller
 
                     // Storage Devices
                     if ($bay->bayStorageDevices->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Stockage');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.storage_device"));
                         foreach ($bay->bayStorageDevices as $storageDevice) {
                             $textRun->addLink('STORAGEDEVICE'.$storageDevice->id, $storageDevice->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayStorageDevices->last() !== $storageDevice) {
@@ -1838,7 +1838,7 @@ class CartographyController extends Controller
 
                     // PhysicalSecurityDevices
                     if ($bay->bayPhysicalSecurityDevices->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Equipement de sécurité');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.physical_security_devices"));
                         foreach ($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) {
                             $textRun->addLink('PSD'.$physicalSecurityDevice->id, $physicalSecurityDevice->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayPhysicalSecurityDevices->last() !== $physicalSecurityDevice) {
@@ -1849,7 +1849,7 @@ class CartographyController extends Controller
 
                     // Peripherals
                     if ($bay->bayPeripherals->count() > 0) {
-                        $textRun = $this->addTextRunRow($table, 'Périphériques');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.bay.fields.peripherals"));
                         foreach ($bay->bayPeripherals as $peripheral) {
                             $textRun->addLink('PERIPHERAL'.$peripheral->id, $peripheral->name, CartographyController::FancyLinkStyle, null, true);
                             if ($bay->bayPeripherals->last() !== $peripheral) {

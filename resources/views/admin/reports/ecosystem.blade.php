@@ -34,9 +34,9 @@
                             <thead id="ENTITY{{ $entity->id }}">
                                 <th colspan="2">
                                     @can('entity_edit')
-                                    <a href="/admin/entities/{{ $entity->id }}/edit">{{ $entity->name }}</a>
+                                    <a href="{{ route('admin.entities.edit',$entity->id) }}">{{ $entity->name }}</a>
                                     @else
-                                    <a href="/admin/entities/{{ $entity->id }}">{{ $entity->name }}</a>
+                                    <a href="{{ route('admin.entities.show',$entity->id) }}">{{ $entity->name }}</a>
                                     @endcan
                                 </th>
                             </thead>
@@ -136,9 +136,9 @@
                             <thead id="RELATION{{$relation->id}}">
                                 <th colspan="2">
                                 @can('relation_edit')                                    
-                                <a href="/admin/relations/{{ $relation->id }}/edit">{{ $relation->name }}</a>
+                                <a href="{{ route('admin.relations.edit',$relation->id) }}">{{ $relation->name }}</a>
                                 @else
-                                <a href="/admin/relations/{{ $relation->id }}">{{ $relation->name }}</a>
+                                <a href="{{ route('admin.relations.show',$relation->id) }}">{{ $relation->name }}</a>
                                 @endcan                                
                                 </th>
                             </thead>

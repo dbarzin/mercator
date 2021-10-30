@@ -229,6 +229,34 @@
                                 </tr>
                                 @endif
 
+                                @if ($bay->bayPhysicalSecurityDevices->count()>0)
+                                <tr>
+                                    <th>{{ trans("cruds.bay.fields.physical_security_devices") }}</th>
+                                    <td>
+                                    @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) 
+                                        <a href="#PSD{{$physicalSecurityDevice->id}}">{{ $physicalSecurityDevice->name}}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach                                        
+                                    </td>
+                                </tr>
+                                @endif
+
+                                @if ($bay->bayPeripherals->count()>0)
+                                <tr>
+                                    <th>{{ trans("cruds.bay.fields.peripherals") }}</th>
+                                    <td>
+                                    @foreach($bay->bayPeripherals as $peripheral) 
+                                        <a href="#PERIPHERAL{{$peripheral->id}}">{{ $peripheral->name}}</a>
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach                                        
+                                    </td>
+                                </tr>
+                                @endif
+
                             </tbody>
                         </table>                                
                     </div>

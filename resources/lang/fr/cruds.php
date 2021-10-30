@@ -174,6 +174,8 @@ return [
             "physical_routers" => "Routeurs physiques",
             "physical_switch" => "Commutateurs physiques",
             "storage_devices" => "Dispositifs de stockages", 
+            "physical_security_devices" => "Dispositifs de sécurité physique", 
+            "peripherals" => "Périphériques",
             "room" => "Bâtiment / Salle",
             "room_helper" => "",
         ],
@@ -1033,7 +1035,8 @@ return [
         ],
         "physical_infrastructure" => [
             "title" => "Vue de l'infrastructure physique",
-            "title_short" => "Infrastructure Physique"
+            "title_short" => "Infrastructure Physique",
+            "description" => "La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites."
         ],
         "user_management" => [
             "title" => "Gestion des utilisateurs",
