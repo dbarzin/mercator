@@ -1864,35 +1864,35 @@ class CartographyController extends Controller
 
             // =====================================
             if ($physicalServers->count() > 0) {
-                $section->addTitle('Serveurs physiques', 2);
-                $section->addText('Machine physique exécutant un ensemble de services informatiques.');
+                $section->addTitle(trans("cruds.physicalServer.title"), 2);
+                $section->addText(trans("cruds.physicalServer.description"));
                 $section->addTextBreak(1);
 
                 foreach ($physicalServers as $server) {
                     $section->addBookmark('PSERVER'.$server->id);
                     $table = $this->addTable($section, $server->name);
-                    $this->addHTMLRow($table, 'Description', $server->description);
-                    $this->addHTMLRow($table, 'Configuration', $server->configuration);
+                    $this->addHTMLRow($table, trans("cruds.physicalServer.fields.description"), $server->description);
+                    $this->addHTMLRow($table, trans("cruds.physicalServer.fields.configuration"), $server->configuration);
 
                     if ($server->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalServer.fields.site"));
                         $textRun->addLink('SITE'.$server->site->id, $server->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($server->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalServer.fields.building"));
                         $textRun->addLink('BUILDING'.$server->building->id, $server->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($server->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalServer.fields.bay"));
                         $textRun->addLink('BAY'.$server->bay->id, $server->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
-                    $this->addTextRow($table, 'Responsable', $server->responsible);
+                    $this->addTextRow($table, trans("cruds.physicalServer.fields.responsible"), $server->responsible);
 
                     // Serveurs logiques
-                    $textRun = $this->addTextRunRow($table, 'Serveurs logiques');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.physicalServer.fields.logical_servers"));
                     foreach ($server->serversLogicalServers as $logicalServer) {
                         $textRun->addLink('LOGICAL_SERVER'.$logicalServer->id, $logicalServer->name, CartographyController::FancyLinkStyle, null, true);
                         if ($server->serversLogicalServers->last() !== $logicalServer) {
@@ -1906,23 +1906,23 @@ class CartographyController extends Controller
 
             // =====================================
             if ($workstations->count() > 0) {
-                $section->addTitle('Postes de travail', 2);
-                $section->addText('Machine physique permettant à un utilisateur d’accéder au système d’information.');
+                $section->addTitle(trans("cruds.workstation.title"), 2);
+                $section->addText(trans("cruds.workstation.description"));
                 $section->addTextBreak(1);
 
                 foreach ($workstations as $workstation) {
                     $section->addBookmark('WORKSTATION'.$workstation->id);
                     $table = $this->addTable($section, $workstation->name);
-                    $this->addHTMLRow($table, 'Type', $workstation->type);
-                    $this->addHTMLRow($table, 'Description', $workstation->description);
+                    $this->addHTMLRow($table, trans("cruds.workstation.fields.type"), $workstation->type);
+                    $this->addHTMLRow($table, trans("cruds.workstation.fields.description"), $workstation->description);
 
                     if ($workstation->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.workstation.fields.site"));
                         $textRun->addLink('SITE'.$workstation->site->id, $workstation->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($workstation->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.workstation.fields.building"));
                         $textRun->addLink('BUILDING'.$workstation->building->id, $workstation->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -1932,27 +1932,27 @@ class CartographyController extends Controller
 
             // =====================================
             if ($storageDevices->count() > 0) {
-                $section->addTitle('Infrastructure de stockage', 2);
-                $section->addText('Support physique ou réseau de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…');
+                $section->addTitle(trans("cruds.storageDevice.title"), 2);
+                $section->addText(trans("cruds.storageDevice.description"));
                 $section->addTextBreak(1);
 
                 foreach ($storageDevices as $storageDevice) {
                     $section->addBookmark('STORAGEDEVICE'.$storageDevice->id);
                     $table = $this->addTable($section, $storageDevice->name);
-                    $this->addHTMLRow($table, 'Description', $storageDevice->description);
+                    $this->addHTMLRow($table, trans("cruds.storageDevice.fields.description"), $storageDevice->description);
 
                     if ($storageDevice->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.storageDevice.fields.site"));
                         $textRun->addLink('SITE'.$storageDevice->site->id, $storageDevice->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($storageDevice->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.storageDevice.fields.building"));
                         $textRun->addLink('BUILDING'.$storageDevice->building->id, $storageDevice->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($storageDevice->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.storageDevice.fields.bay"));
                         $textRun->addLink('BAY'.$storageDevice->bay->id, $storageDevice->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -1961,31 +1961,31 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($storageDevices->count() > 0) {
-                $section->addTitle('Périphériques', 2);
-                $section->addText('Composant physique connecté à un poste de travail aﬁn d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.).');
+            if ($peripherals->count() > 0) {
+                $section->addTitle(trans("cruds.peripheral.title"), 2);
+                $section->addText(trans("cruds.peripheral.description"));
                 $section->addTextBreak(1);
 
                 foreach ($peripherals as $peripheral) {
                     $section->addBookmark('PERIPHERAL'.$peripheral->id);
                     $table = $this->addTable($section, $peripheral->name);
-                    $this->addHTMLRow($table, 'Description', $peripheral->description);
+                    $this->addHTMLRow($table, trans("cruds.peripheral.fields.description"), $peripheral->description);
 
-                    $this->addTextRow($table, 'Type', $peripheral->type);
-                    $this->addTextRow($table, 'Responsable', $peripheral->responsible);
+                    $this->addTextRow($table, trans("cruds.peripheral.fields.type"), $peripheral->type);
+                    $this->addTextRow($table, trans("cruds.peripheral.fields.responsible"), $peripheral->responsible);
 
                     if ($peripheral->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.peripheral.fields.site"));
                         $textRun->addLink('SITE'.$peripheral->site->id, $peripheral->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($peripheral->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.peripheral.fields.building"));
                         $textRun->addLink('BUILDING'.$peripheral->building->id, $peripheral->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($peripheral->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.peripheral.fields.bay"));
                         $textRun->addLink('BAY'.$peripheral->bay->id, $peripheral->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -1994,25 +1994,25 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($storageDevices->count() > 0) {
-                $section->addTitle('Téléphones', 2);
-                $section->addText('Téléphone ﬁxe ou portable appartenant à l’organisation.');
+            if ($phones->count() > 0) {
+                $section->addTitle(trans("cruds.phone.title"), 2);
+                $section->addText(trans("cruds.phone.description"));
                 $section->addTextBreak(1);
 
                 foreach ($phones as $phone) {
                     $section->addBookmark('PHONE'.$phone->id);
                     $table = $this->addTable($section, $phone->name);
-                    $this->addHTMLRow($table, 'Description', $phone->description);
+                    $this->addHTMLRow($table, trans("cruds.phone.fields.description"), $phone->description);
 
-                    $this->addTextRow($table, 'Type', $phone->type);
+                    $this->addTextRow($table, trans("cruds.phone.fields.type"), $phone->type);
 
                     if ($phone->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.phone.fields.site"));
                         $textRun->addLink('SITE'.$phone->site->id, $phone->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($phone->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.phone.fields.building"));
                         $textRun->addLink('BUILDING'.$phone->building->id, $phone->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -2022,29 +2022,29 @@ class CartographyController extends Controller
 
             // =====================================
             if ($physicalSwitches->count() > 0) {
-                $section->addTitle('Commutateurs', 2);
-                $section->addText('Composant gérant les connexions entre les différents serveurs au sein d’un réseau.');
+                $section->addTitle(trans("cruds.physicalSwitch.title"), 2);
+                $section->addText(trans("cruds.physicalSwitch.description"));
                 $section->addTextBreak(1);
 
                 foreach ($physicalSwitches as $switch) {
                     $section->addBookmark('SWITCH'.$switch->id);
                     $table = $this->addTable($section, $switch->name);
-                    $this->addHTMLRow($table, 'Description', $switch->description);
+                    $this->addHTMLRow($table, trans("cruds.physicalSwitch.fields.description"), $switch->description);
 
-                    $this->addTextRow($table, 'Type', $switch->type);
+                    $this->addTextRow($table, trans("cruds.physicalSwitch.fields.type"), $switch->type);
 
                     if ($switch->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSwitch.fields.site"));
                         $textRun->addLink('SITE'.$switch->site->id, $switch->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($switch->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSwitch.fields.building"));
                         $textRun->addLink('BUILDING'.$switch->building->id, $switch->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($switch->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSwitch.fields.bay"));
                         $textRun->addLink('BAY'.$switch->bay->id, $switch->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -2053,30 +2053,30 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($physicalSwitches->count() > 0) {
-                $section->addTitle('Routeur Physique', 2);
-                $section->addText('Composant gérant les connexions entre différents réseaux.');
+            if ($physicalRouters->count() > 0) {
+                $section->addTitle(trans("cruds.physicalRouter.title"), 2);
+                $section->addText(trans("cruds.physicalRouter.description"));
                 $section->addTextBreak(1);
 
                 foreach ($physicalRouters as $router) {
                     $section->addBookmark('ROUTER'.$router->id);
                     $table = $this->addTable($section, $router->name);
-                    $this->addHTMLRow($table, 'Description', $router->description);
+                    $this->addHTMLRow($table, trans("cruds.physicalRouter.fields.description"), $router->description);
 
-                    $this->addTextRow($table, 'Type', $router->type);
+                    $this->addTextRow($table, trans("cruds.physicalRouter.fields.type"), $router->type);
 
                     if ($router->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalRouter.fields.site"));
                         $textRun->addLink('SITE'.$router->site->id, $router->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($router->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalRouter.fields.building"));
                         $textRun->addLink('BUILDING'.$router->building->id, $router->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($router->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalRouter.fields.bay"));
                         $textRun->addLink('BAY'.$router->bay->id, $router->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -2085,24 +2085,24 @@ class CartographyController extends Controller
             }
             // =====================================
             if ($wifiTerminals->count() > 0) {
-                $section->addTitle('Borne wifi', 2);
-                $section->addText('Matériel permettant l’accès au réseau sans fil wifi.');
+                $section->addTitle(trans("cruds.wifiTerminal.title"), 2);
+                $section->addText(trans("cruds.wifiTerminal.description"));
                 $section->addTextBreak(1);
 
                 foreach ($wifiTerminals as $wifiTerminal) {
                     $section->addBookmark('WIFI'.$wifiTerminal->id);
                     $table = $this->addTable($section, $wifiTerminal->name);
-                    $this->addHTMLRow($table, 'Description', $wifiTerminal->description);
+                    $this->addHTMLRow($table, trans("cruds.wifiTerminal.fields.description"), $wifiTerminal->description);
 
-                    $this->addTextRow($table, 'Type', $wifiTerminal->type);
+                    $this->addTextRow($table, trans("cruds.wifiTerminal.fields.type"), $wifiTerminal->type);
 
                     if ($wifiTerminal->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.wifiTerminal.fields.site"));
                         $textRun->addLink('SITE'.$wifiTerminal->site->id, $wifiTerminal->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($wifiTerminal->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.wifiTerminal.fields.building"));
                         $textRun->addLink('BUILDING'.$wifiTerminal->building->id, $wifiTerminal->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -2111,29 +2111,29 @@ class CartographyController extends Controller
             }
             // =====================================
             if ($physicalSecurityDevices->count() > 0) {
-                $section->addTitle('Equipement de sécurité', 2);
-                $section->addText('Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.');
+                $section->addTitle(trans("cruds.physicalSecurityDevice.title"), 2);
+                $section->addText(trans("cruds.physicalSecurityDevice.description"));
                 $section->addTextBreak(1);
 
                 foreach ($physicalSecurityDevices as $physicalSecurityDevice) {
                     $section->addBookmark('PSD'.$physicalSecurityDevice->id);
                     $table = $this->addTable($section, $physicalSecurityDevice->name);
-                    $this->addHTMLRow($table, 'Description', $physicalSecurityDevice->description);
+                    $this->addHTMLRow($table, trans("cruds.physicalSecurityDevice.fields.description"), $physicalSecurityDevice->description);
 
-                    $this->addTextRow($table, 'Type', $physicalSecurityDevice->type);
+                    $this->addTextRow($table, trans("cruds.physicalSecurityDevice.fields.type"), $physicalSecurityDevice->type);
 
                     if ($physicalSecurityDevice->site !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Site');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSecurityDevice.fields.site"));
                         $textRun->addLink('SITE'.$physicalSecurityDevice->site->id, $physicalSecurityDevice->site->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($physicalSecurityDevice->building !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Building / Salle');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSecurityDevice.fields.building"));
                         $textRun->addLink('BUILDING'.$physicalSecurityDevice->building->id, $physicalSecurityDevice->building->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
                     if ($physicalSecurityDevice->bay !== null) {
-                        $textRun = $this->addTextRunRow($table, 'Baie');
+                        $textRun = $this->addTextRunRow($table, trans("cruds.physicalSecurityDevice.fields.bay"));
                         $textRun->addLink('BAY'.$physicalSecurityDevice->bay->id, $physicalSecurityDevice->bay->name, CartographyController::FancyLinkStyle, null, true);
                     }
 
@@ -2143,17 +2143,16 @@ class CartographyController extends Controller
 
             // =====================================
             if ($wans->count() > 0) {
-                $section->addTitle('WANs', 2);
-                $section->addText('Réseau informatique reliant des équipements sur des distances importantes. Il interconnecte généralement des MAN ou LAN entre eux.');
+                $section->addTitle(trans("cruds.wan.title"), 2);
+                $section->addText(trans("cruds.wan.description"));
                 $section->addTextBreak(1);
 
                 foreach ($wans as $wan) {
                     $section->addBookmark('WAN'.$wan->id);
                     $table = $this->addTable($section, $wan->name);
-                    $this->addHTMLRow($table, 'Description', $wan->description);
 
                     // Mans
-                    $textRun = $this->addTextRunRow($table, 'MANs');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.wan.fields.mans"));
                     foreach ($wan->mans as $man) {
                         $textRun->addLink('MAN'.$man->id, $man->name, CartographyController::FancyLinkStyle, null, true);
                         if ($wan->mans->last() !== $man) {
@@ -2162,7 +2161,7 @@ class CartographyController extends Controller
                     }
 
                     // Lans
-                    $textRun = $this->addTextRunRow($table, 'LANs');
+                    $textRun = $this->addTextRunRow($table, trans("cruds.wan.fields.lans"));
                     foreach ($wan->lans as $lan) {
                         $textRun->addLink('LAN'.$lan->id, $lan->name, CartographyController::FancyLinkStyle, null, true);
                         if ($wan->lans->last() !== $lan) {
@@ -2176,19 +2175,19 @@ class CartographyController extends Controller
 
             // =====================================
             if ($mans->count() > 0) {
-                $section->addTitle('MANs', 2);
-                $section->addText('Réseau informatique reliant des équipements sur des distances moyennement importantes. Il interconnecte généralement des LAN entre eux.');
+                $section->addTitle(trans("cruds.man.title"), 2);
+                $section->addText(trans("cruds.man.description"));
                 $section->addTextBreak(1);
 
                 foreach ($mans as $man) {
                     $section->addBookmark('MAN'.$man->id);
                     $table = $this->addTable($section, $man->name);
-                    $this->addHTMLRow($table, 'Description', $man->description);
+                    $this->addHTMLRow($table, trans("cruds.man.fields.description"), $man->description);
 
                     // Lans
                     $textRun = $this->addTextRunRow($table, 'LANs');
                     foreach ($man->lans as $lan) {
-                        $textRun->addLink('LAN'.$lan->id, $lan->name, CartographyController::FancyLinkStyle, null, true);
+                        $textRun->addLink(trans("cruds.man.fields.lan").$lan->id, $lan->name, CartographyController::FancyLinkStyle, null, true);
                         if ($man->lans->last() !== $lan) {
                             $textRun->addText(', ');
                         }
@@ -2200,14 +2199,14 @@ class CartographyController extends Controller
 
             // =====================================
             if ($lans->count() > 0) {
-                $section->addTitle('LANs', 2);
-                $section->addText('Réseau informatique reliant des équipements sur une aire géographique réduite.');
+                $section->addTitle(trans("cruds.lan.title"), 2);
+                $section->addText(trans("cruds.lan.description"));
                 $section->addTextBreak(1);
 
                 foreach ($lans as $lan) {
                     $section->addBookmark('LAN'.$lan->id);
                     $table = $this->addTable($section, $lan->name);
-                    $this->addHTMLRow($table, 'Description', $lan->description);
+                    $this->addHTMLRow($table, trans("cruds.lan.fields.description"), $lan->description);
 
                     $section->addTextBreak(1);
                 }

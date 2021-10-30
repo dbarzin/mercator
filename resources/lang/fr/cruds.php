@@ -420,7 +420,8 @@ return [
         ],
         "title" => "LAN - Local Area Network",
         "title_short" => "LAN",
-        "title_singular" => "LAN - Local Area Network"
+        "title_singular" => "LAN - Local Area Network",
+        "description" => "Réseau informatique reliant des équipements sur une aire géographique réduite."
     ],
     "logicalServer" => [
         "fields" => [
@@ -484,7 +485,8 @@ return [
         ],
         "title" => "MAN - Middle Area Network",
         "title_short" => "MAN",
-        "title_singular" => "MAN - Middle Area Network"
+        "title_singular" => "MAN - Middle Area Network",
+        "description" => "Réseau informatique reliant des équipements sur des distances moyennement importantes. Il interconnecte généralement des LAN entre eux."
     ],
     "network" => [
         "fields" => [
@@ -889,6 +891,8 @@ return [
     ],
     "wan" => [
         "fields" => [
+            "description" => "Description",
+            "description_helper" => "",
             "lans" => "LANs rattachés",
             "lans_helper" => "",
             "mans" => "MANs rattachés",
@@ -898,7 +902,8 @@ return [
         ],
         "title" => "WAN - Wide Area Network",
         "title_short" => "WAN",
-        "title_singular" => "WAN - Wide Area Network"
+        "title_singular" => "WAN - Wide Area Network",
+        "description" => "Réseau informatique reliant des équipements sur des distances importantes. Il interconnecte généralement des MAN ou LAN entre eux."
     ],
     "wifiTerminal" => [
         "fields" => [
