@@ -72,8 +72,8 @@ Modèle de données
 
 ## Installation
 
-- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
-- Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.md)
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md) 
+- Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.fr.md)
 
 ## Changelog
 

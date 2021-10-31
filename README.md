@@ -70,7 +70,7 @@ Data model
 
 ## Installation
 
-- Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
+- [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
 - Deployment under [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.md)
 
 ## Changelog
