@@ -246,7 +246,7 @@ return [
             "name_helper" => "Name of the data base",
             "responsible" => "SSI Manager",
             "responsible_helper" => "",
-            "security_need" => "Security needs (CIDT)",
+            "security_need" => "Security needs (CIAT)",
             "security_need_helper" => "Database security requirements",
             "type" => "Type of technology",
             "type_helper" => "ex: mySQL, Oracle, SQL Server"
@@ -423,7 +423,7 @@ return [
             "owner_helper" => "",
             "processes" => "Process",
             "processes_helper" => "Related processes",
-            "security_need" => "Security needs (CIDT)",
+            "security_need" => "Security needs (CIAT)",
             "security_need_helper" => "Information security needs",
             "sensitivity" => "SENSITIVITY",
             "sensitivity_helper" => "Personal data, medical data, classified data, etc.",
@@ -492,7 +492,7 @@ return [
             "owner_helper" => "Macro-process owner",
             "processes" => "Process",
             "processes_helper" => "List of the processes that compose it",
-            "security_need" => "Security needs (CIDT)",
+            "security_need" => "Security needs (CIAT)",
             "security_need_helper" => "Macro-process security needs"
         ],
         "title" => "Macro-process",
@@ -559,7 +559,7 @@ return [
             "responsible_helper" => "",
             "responsible_sec" => "SSI Manager",
             "responsible_sec_helper" => "",
-            "security_need" => "Security needs (CIDT)",
+            "security_need" => "Security needs (CIAT)",
             "security_need_helper" => "Network security needs",
             "subnetworks" => "Subnets",
             "subnetworks_helper" => "List of subnets attached"
@@ -752,7 +752,7 @@ return [
             "macroprocessus_helper" => "Part of the macro-process",
             "owner" => "Responsible",
             "owner_helper" => "Responsible for the process",
-            "security_need" => "Security needs (CIDT)",
+            "security_need" => "Security needs (CIAT)",
             "security_need_helper" => "Process security needs"
         ],
         "title" => "Process",
