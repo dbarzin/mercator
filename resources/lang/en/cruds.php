@@ -70,7 +70,7 @@ return [
             "entity_resp_helper" => "Entity responsible for operations",
             "external" => "External exposure",
             "external_helper" => "ex. : Software as a Service - SaaS type solution",
-            "flux" => "Flux",
+            "flux" => "Flows",
             "flux_helper" => "Associated flows",
             "logical_servers" => "Logical Servers",
             "logical_servers_helper" => "List of logical servers supporting the application",
@@ -115,7 +115,7 @@ return [
         "fields" => [
             "description" => "Description",
             "description_helper" => "",
-            "flux" => "Flux",
+            "flux" => "Flows",
             "flux_helper" => "Flows associated with the module",
             "name" => "Name",
             "name_helper" => "",
@@ -135,7 +135,7 @@ return [
             "description_helper" => "",
             "exposition" => "exposure",
             "exposition_helper" => "External exposure (e.g. cloud service, cloud)",
-            "flux" => "Flux",
+            "flux" => "Flows",
             "flux_helper" => "Associated flows",
             "modules" => "Modules",
             "modules_helper" => "List of modules that make up this application service",
@@ -238,7 +238,7 @@ return [
             "entity_resp_helper" => "Entity responsible for the operation",
             "external" => "External exposure",
             "external_helper" => "ex: Internal / External / Local",
-            "flux" => "Flux",
+            "flux" => "Flows",
             "flux_helper" => "Associated flows",
             "informations" => "Information",
             "informations_helper" => "List of information contained in the database",
@@ -371,8 +371,8 @@ return [
             "service_source_helper" => "",
             "source" => "Source"
         ],
-        "title" => "Flux",
-        "title_singular" => "Flux"
+        "title" => "Flows",
+        "title_singular" => "Flow"
     ],
     "forestAd" => [
         "description" => "Organized grouping of Active Directory / LDAP domains.",
@@ -521,7 +521,7 @@ return [
             "title" => "Applications view",
             "title_short" => "Applications"
         ],
-        "application_flow" => ["title" => "View of application flows", "title_short" => "Flux"],
+        "application_flow" => ["title" => "View of application flows", "title_short" => "Flow"],
         "ecosystem" => [
             "description" => "The ecosystem view describes all the entities or systems that revolve around the information system considered in the context of the mapping. This view allows both to delimit the perimeter of the mapping, but also to have an overview of the ecosystem without being limited to the individual study of each entity.",
             "title" => "Ecosystem view",
