@@ -507,7 +507,7 @@ return [
             "name_helper" => ""
         ],
         "title" => "MAN - Middle Area Network",
-        "title_short" => "man",
+        "title_short" => "MAN",
         "title_singular" => "MAN - Middle Area Network"
     ],
     "menu" => [
