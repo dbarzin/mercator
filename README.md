@@ -14,17 +14,14 @@ Read this in other languages: [French](README.fr.md)
 ## Introduction
 
 Computer attacks occur in a constantly changing environment. 
-To meet these challenges, it is necessary to implement a global approach to 
-approach to risk management within the organization. 
+To meet these challenges, it is necessary to implement a global approach to risk management within the organization. 
 
-The Information System mapping allows to have a global view of all the elements that constitute the information system in order to 
-of the elements that make up the information system to obtain a better readability 
-and therefore a better control. 
+The mapping of the Information System allows to have a global view of all the elements which constitute the information 
+system to obtain a better readability, and thus a better control. 
 
-The elaboration of a cartography participates in the protection, the defense and the resilience 
-of the information system. It is an essential tool for the control of its information system 
-(IS) and is an obligation for Operators of Vital Importance (OIV) and is part of a global risk management 
-and is part of a global risk management approach.
+The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. 
+It is an essential tool for the control of its information system (IS) and is an obligation for Operators of Vital Importance (OVI) 
+and is part of a global risk management and is part of a global risk management approach.
 
 ## Major functions
 - View management (ecosystem, information system, administration, logical, applications, and physical)
