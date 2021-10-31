@@ -1,10 +1,10 @@
 <?php
 return [
     "password" => "The password must be at least 6 characters long and the confirmation must match.",
-    "reset" => "Your password has been reset!",
-    "sent" => "We have emailed your password reset link!",
-    "throttled" => "Please wait before retrying.",
-    "token" => "This password reset token is invalid.",
+    "reset" => "Your password has been reset.",
+    "sent" => "We just sent you an email with a link to reset your password.",
+    "throttled" => "",
+    "token" => "The password reset token is not valid.",
     "updated" => "Your password has been changed!",
-    "user" => "We can't find a user with that email address."
+    "user" => "We cannot find a user matching this email address."
 ];
