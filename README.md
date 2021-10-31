@@ -21,7 +21,7 @@ system to obtain a better readability, and thus a better control.
 
 The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. 
 It is an essential tool for the control of its information system (IS) and is an obligation for Operators of Vital Importance (OVI) 
-and is part of a global risk management and is part of a global risk management approach.
+and is part of a global risk management and a global risk management approach.
 
 ## Major functions
 - View management (ecosystem, information system, administration, logical, applications, and physical)
