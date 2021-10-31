@@ -146,7 +146,7 @@ return [
     "low" => "Low",
     "main_currency" => "Main currency",
     "mature" => "mature",
-    "medium" => "Way",
+    "medium" => "Medium",
     "message" => "Message",
     "messages" => "POSTS",
     "messenger" => "Messenger",
