@@ -2,7 +2,7 @@
 
 Mercator is a web application allowing to manage the mapping of an information system as described in the 
 [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) 
-of the [ANSSI](https://www.ssi.gouv.fr/). 
+of the [ANSSI](https://www.ssi.gouv.fr/en/). 
 
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
