@@ -224,7 +224,18 @@ return [
         "title_short" => "Certificates",
         "title_singular" => "Certificate"
     ],
-    "configuration" => ["title" => "Configuration", "title_singular" => "Configuration"],
+    "configuration" => [
+        "certificate" => [
+            "delay" => "certificates that expire in",
+            "message_subject" => "Subject",
+            "recurence" => "Every",
+            "sent_from" => "Sent from",
+            "title" => "Certificate expiration",
+            "to" => "to"
+        ],
+        "title" => "Configuration",
+        "title_singular" => "Configuration"
+    ],
     "database" => [
         "description" => "Structured and ordered set of information intended to be exploited by computer.",
         "fields" => [

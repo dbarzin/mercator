@@ -224,7 +224,18 @@ return [
         "title_short" => "Certificats",
         "title_singular" => "Certificat"
     ],
-    "configuration" => ["title" => "Configuration", "title_singular" => "Configuration"],
+    "configuration" => [
+        "certificate" => [
+            "delay" => "les certificats qui expirent dans",
+            "message_subject" => "Sujet du message",
+            "recurence" => "tous les",
+            "sent_from" => "Envoyé depuis",
+            "title" => "Expiration des certificats",
+            "to" => "à"
+        ],
+        "title" => "Configuration",
+        "title_singular" => "Configuration"
+    ],
     "database" => [
         "description" => "Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.",
         "fields" => [
