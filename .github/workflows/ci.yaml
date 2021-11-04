@@ -1,0 +1,44 @@
+on: push
+
+name: CI
+
+jobs:
+
+  phpunit:
+
+    runs-on: ubuntu-latest
+
+    services:
+
+      mysql:
+        image: mysql
+        restart: always
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+        env:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: mercator
+            MYSQL_USER: mercator_user
+            MYSQL_PASSWORD: s3cr3t
+        ports:
+          - 33306:3306
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Install composer dependencies
+      run: |
+        composer install --no-scripts
+        php artisan vendor:publish --all
+
+    - name: Prepare Laravel Application
+      run: |
+        cp .env.example .env
+        php artisan migrate --seed
+        php artisan key:generate
+
+#    - name: Run Testsuite
+#
+#     run: vendor/bin/phpunit tests/
+
