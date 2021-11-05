@@ -241,6 +241,10 @@ In another terminal, launch the tests
 
     php artisan dusk
 
+or to stop on first error
+
+    php artisan dusk --stop-on-error --stop-on-failure
+
 ## Repair the problems of migraton
 
 Update the libraries
