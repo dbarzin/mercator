@@ -1,4 +1,5 @@
 name: Continuous Integration Laravel 6
+
 on:
   push:
     branches: [master]
