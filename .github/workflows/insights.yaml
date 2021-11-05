@@ -18,6 +18,10 @@ jobs:
       run: |
           composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
 
+    - name: Publish the configuration
+      run: |
+          php artisan vendor:publish     
+
     - uses: stefanzweifel/laravel-phpinsights-action@v1.1.1
       with:
         args: -v --min-quality=80 --min-complexity=80 --min-architecture=80 --min-style=80
