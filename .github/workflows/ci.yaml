@@ -1,8 +1,7 @@
 name: Continuous Integration Laravel 6
 on:
   push:
-    branches:
-    - master
+    branches: master
 
 jobs:
 
@@ -19,25 +18,25 @@ jobs:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v1
+    steps:
+        name: Checkout code
+        uses: actions/checkout@v1
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v1
-              with:
-                  php-version: php:7.4
-                  extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
-                  coverage: none
+        name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+            php-version: php:7.4
+            extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
+            coverage: none
 
-            - name: Install dependencies
-              run: |
-                  composer require "laravel/framework:6.0" --no-interaction --no-update
-                  composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
+        name: Install dependencies
+        run: |
+            composer require "laravel/framework:6.0" --no-interaction --no-update
+            composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
 
-            - name: Prepare Laravel Application
-              run: |
-                cp .env.ci .env
-                php artisan migrate --seed
-                php artisan key:generate
+        name: Prepare Laravel Application
+        run: |
+          cp .env.ci .env
+          php artisan migrate --seed
+          php artisan key:generate
 
