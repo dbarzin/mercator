@@ -16,8 +16,9 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: mercator        
         ports:
-          - 33306:3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
 
     steps:
       - name: Checkout code
@@ -33,9 +34,19 @@ jobs:
         run: |
             composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
 
-      - name: Prepare Laravel Application
+      - name: Create Database
+        run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+      - name: Configrue Storage Permission
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Prepare the application
         run: |
-          cp .env.ci .env
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Generate Application Key
+        run: |
+          php artisan key:generate
 
       - name: Migrate database
         run: |
@@ -43,12 +54,7 @@ jobs:
 
       - name: Insert test data
         run: |
-          mysql mercator < mercator_data.sql
-
-      - name: Generate Application Key
-        run: |
-          php artisan key:generate
-          php artisan passport:keys
+          mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
       - name: Upgrade Chrome Driver
         run: php artisan dusk:chrome-driver
@@ -67,6 +73,7 @@ jobs:
           APP_ENV: local
           APP_URL: "http://127.0.0.1:8000"
           DB_CONNECTION: mysql
-          DB_DATABASE: dusk
+          DB_DATABASE: mercator
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USER: root
+          
