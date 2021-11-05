@@ -81,6 +81,7 @@ jobs:
 
       - name: Run Dusk Tests
         run: |
+          cp .env .env.dusk.local
           chmod -R 0755 vendor/laravel/dusk/bin/
           php artisan dusk --stop-on-error --stop-on-failure
         env:
