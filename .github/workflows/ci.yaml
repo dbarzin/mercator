@@ -1,8 +1,9 @@
 name: Continuous Integration Laravel 6
 on:
   push:
-    branches:
-    - master
+    branches: [master]
+  pull_request:
+    branches: [master, develop]
 
 jobs:
 
@@ -11,12 +12,14 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:8.0.21
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
@@ -46,9 +49,12 @@ jobs:
         run: |
           php artisan key:generate
 
+      - name: Clear Config
+        run: php artisan config:clear
+
       - name: Migrate database
         run: |
-          php artisan migrate
+          php artisan migrate -v
 
       - name: Insert test data
         run: |
