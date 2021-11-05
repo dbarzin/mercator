@@ -1,8 +1,9 @@
-name: Continuous Integration Laravel 6
+name: Continuous Integration
 
 on:
   push:
-    branches: [master]
+    branches: 
+      - master
   pull_request:
     branches: [master, develop]
 
@@ -51,10 +52,12 @@ jobs:
           php artisan key:generate
 
       - name: Publish any publishable assets from vendor packages
+        run: |
           php artisan vendor:publish --all
 
       - name: Remove the configuration cache file
-        run: php artisan config:clear
+        run: |
+          php artisan config:clear
 
       - name: Migrate database
         run: |
@@ -65,13 +68,16 @@ jobs:
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
       - name: Upgrade Chrome Driver
-        run: php artisan dusk:chrome-driver
+        run: |
+          php artisan dusk:chrome-driver
 
       - name: Start Chrome Driver
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
+        run: |
+          ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
 
       - name: Run Laravel Server
-        run: php artisan serve > /dev/null 2>&1 &
+        run: |
+          php artisan serve > /dev/null 2>&1 &
 
       - name: Run Dusk Tests
         run: |
