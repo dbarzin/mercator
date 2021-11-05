@@ -20,7 +20,7 @@ jobs:
 
     - name: Publish the configuration
       run: |
-          php artisan vendor:publish     
+          php artisan vendor:publish --all
 
     - uses: stefanzweifel/laravel-phpinsights-action@v1.1.1
       with:
