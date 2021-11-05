@@ -249,20 +249,22 @@ Update the libraries
 
 Backup the database
 
-    mysqldump mercator
-        --ignore-table=mercator.users
-        --ignore-table=mercator.roles
-        --ignore-table=mercator.permissions \
-        --ignore-table=mercator.permission_role
-        --ignore-table=mercator.role_user
-        --ignore-table=mercator.migrations
+    mysqldump mercator \
+        --complete-insert \
         --no-create-db \
         --no-create-info \
+        --ignore-table=mercator.users \
+        --ignore-table=mercator.roles \
+        --ignore-table=mercator.permissions \
+        --ignore-table=mercator.permission_role \
+        --ignore-table=mercator.role_user \
+        --ignore-table=mercator.migrations \
         > backup_mercator_data.sql
 
 Then backup database users
 
-    mysqldump mercator
+    mysqldump mercator \
+        --complete-insert \
         --tables users roles role_user
         --add-drop-table \
         > backup_mercator_users.sql
@@ -283,7 +285,7 @@ Generate the key
 
     php artisan key:generate
 
-Restore the data
+Restore the data and fix errors
 
     mysql mercator < backup_mercator_data.sql
 
