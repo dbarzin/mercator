@@ -30,7 +30,7 @@ class DhcpServerController extends Controller
 
     public function store(StoreDhcpServerRequest $request)
     {
-        $dhcpServer = DhcpServer::create($request->all());
+        DhcpServer::create($request->all());
 
         return redirect()->route('admin.dhcp-servers.index');
     }

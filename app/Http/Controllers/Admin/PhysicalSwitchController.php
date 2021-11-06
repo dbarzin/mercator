@@ -39,7 +39,7 @@ class PhysicalSwitchController extends Controller
 
     public function store(StorePhysicalSwitchRequest $request)
     {
-        $physicalSwitch = PhysicalSwitch::create($request->all());
+        PhysicalSwitch::create($request->all());
 
         return redirect()->route('admin.physical-switches.index');
     }

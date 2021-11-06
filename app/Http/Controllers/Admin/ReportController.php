@@ -1106,16 +1106,16 @@ class ReportController extends Controller
                 $sheet->setCellValue("K{$row}", $application->external);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
-                $this->setSecurityNeedColor($sheet, "L{$row}", $application->security_need_c);
+                $this->addSecurityNeedColor($sheet, "L{$row}", $application->security_need_c);
 
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
-                $this->setSecurityNeedColor($sheet, "M{$row}", $application->security_need_i);
+                $this->addSecurityNeedColor($sheet, "M{$row}", $application->security_need_i);
 
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
-                $this->setSecurityNeedColor($sheet, "N{$row}", $application->security_need_a);
+                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_a);
 
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
-                $this->setSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
+                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
 
                 $sheet->setCellValue("P{$row}", $application->documentation);
                 $sheet->setCellValue("Q{$row}", $application->logical_servers->implode('name', ', '));
@@ -1165,7 +1165,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        // $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
         // Populate the Timesheet
         $row = 2;
@@ -1705,7 +1705,7 @@ class ReportController extends Controller
         }
     }
 
-    private function setSecurityNeedColor(Worksheet $sheet, string $cell, int $i)
+    private function addSecurityNeedColor(Worksheet $sheet, string $cell, int $i)
     {
         static $colors = [0 => 'FFFFFF',1 => '8CD17D',2 => 'F1CE63',3 => 'F28E2B',4 => 'E15759'];
         $sheet->getStyle($cell)
@@ -1729,71 +1729,71 @@ class ReportController extends Controller
         $sheet->setCellValue("A{$row}", $macroprocess->name);
 
         $sheet->setCellValue("B{$row}", $macroprocess->security_need_c);
-        $this->setSecurityNeedColor($sheet, "B{$row}", $macroprocess->security_need_c);
+        $this->addSecurityNeedColor($sheet, "B{$row}", $macroprocess->security_need_c);
 
         $sheet->setCellValue("C{$row}", $macroprocess->security_need_i);
-        $this->setSecurityNeedColor($sheet, "C{$row}", $macroprocess->security_need_i);
+        $this->addSecurityNeedColor($sheet, "C{$row}", $macroprocess->security_need_i);
 
         $sheet->setCellValue("D{$row}", $macroprocess->security_need_a);
-        $this->setSecurityNeedColor($sheet, "D{$row}", $macroprocess->security_need_a);
+        $this->addSecurityNeedColor($sheet, "D{$row}", $macroprocess->security_need_a);
 
         $sheet->setCellValue("E{$row}", $macroprocess->security_need_t);
-        $this->setSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
+        $this->addSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
 
         if ($process !== null) {
             // Processus
             $sheet->setCellValue("F{$row}", $process->identifiant);
             $sheet->setCellValue("G{$row}", $process->security_need_c);
-            $this->setSecurityNeedColor($sheet, "G{$row}", $process->security_need_c);
+            $this->addSecurityNeedColor($sheet, "G{$row}", $process->security_need_c);
 
             $sheet->setCellValue("H{$row}", $process->security_need_i);
-            $this->setSecurityNeedColor($sheet, "H{$row}", $process->security_need_i);
+            $this->addSecurityNeedColor($sheet, "H{$row}", $process->security_need_i);
 
             $sheet->setCellValue("I{$row}", $process->security_need_a);
-            $this->setSecurityNeedColor($sheet, "I{$row}", $process->security_need_a);
+            $this->addSecurityNeedColor($sheet, "I{$row}", $process->security_need_a);
 
             $sheet->setCellValue("J{$row}", $process->security_need_t);
-            $this->setSecurityNeedColor($sheet, "J{$row}", $process->security_need_t);
+            $this->addSecurityNeedColor($sheet, "J{$row}", $process->security_need_t);
 
             if ($application !== null) {
                 // Application
                 $sheet->setCellValue("K{$row}", $application->name);
 
                 $sheet->setCellValue("L{$row}", $application->security_need_c);
-                $this->setSecurityNeedColor($sheet, "L{$row}", $application->security_need_c);
+                $this->addSecurityNeedColor($sheet, "L{$row}", $application->security_need_c);
 
                 $sheet->setCellValue("M{$row}", $application->security_need_i);
-                $this->setSecurityNeedColor($sheet, "M{$row}", $application->security_need_i);
+                $this->addSecurityNeedColor($sheet, "M{$row}", $application->security_need_i);
 
                 $sheet->setCellValue("N{$row}", $application->security_need_a);
-                $this->setSecurityNeedColor($sheet, "N{$row}", $application->security_need_a);
+                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_a);
 
                 $sheet->setCellValue("O{$row}", $application->security_need_t);
-                $this->setSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
+                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
 
                 if ($database !== null) {
                     // Database
                     $sheet->setCellValue("P{$row}", $database->name);
                     $sheet->setCellValue("Q{$row}", $database->security_need_c);
-                    $this->setSecurityNeedColor($sheet, "Q{$row}", $database->security_need_c);
+                    $this->addSecurityNeedColor($sheet, "Q{$row}", $database->security_need_c);
                     $sheet->setCellValue("R{$row}", $database->security_need_i);
-                    $this->setSecurityNeedColor($sheet, "R{$row}", $database->security_need_i);
+                    $this->addSecurityNeedColor($sheet, "R{$row}", $database->security_need_i);
                     $sheet->setCellValue("S{$row}", $database->security_need_a);
-                    $this->setSecurityNeedColor($sheet, "S{$row}", $database->security_need_a);
+                    $this->addSecurityNeedColor($sheet, "S{$row}", $database->security_need_a);
                     $sheet->setCellValue("T{$row}", $database->security_need_t);
-                    $this->setSecurityNeedColor($sheet, "T{$row}", $database->security_need_t);
+                    $this->addSecurityNeedColor($sheet, "T{$row}", $database->security_need_t);
 
                     if ($information !== null) {
                         // Information
                         $sheet->setCellValue("U{$row}", $information->name);
                         $sheet->setCellValue("V{$row}", $information->security_need_c);
-                        $this->setSecurityNeedColor($sheet, "V{$row}", $information->security_need_c);
+                        $this->addSecurityNeedColor($sheet, "V{$row}", $information->security_need_c);
                         $sheet->setCellValue("W{$row}", $information->security_need_i);
-                        $this->setSecurityNeedColor($sheet, "W{$row}", $information->security_need_i);
+                        $this->addSecurityNeedColor($sheet, "W{$row}", $information->security_need_i);
                         $sheet->setCellValue("X{$row}", $information->security_need_a);
-                        $this->setSecurityNeedColor($sheet, "X{$row}", $information->security_need_a);
+                        $this->addSecurityNeedColor($sheet, "X{$row}", $information->security_need_a);
                         $sheet->setCellValue("Y{$row}", $information->security_need_t);
-                        $this->setSecurityNeedColor($sheet, "Y{$row}", $information->security_need_t);
+                        $this->addSecurityNeedColor($sheet, "Y{$row}", $information->security_need_t);
                     }
                 }
             }

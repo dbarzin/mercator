@@ -30,7 +30,7 @@ class DnsserverController extends Controller
 
     public function store(StoreDnsserverRequest $request)
     {
-        $dnsserver = Dnsserver::create($request->all());
+        Dnsserver::create($request->all());
 
         return redirect()->route('admin.dnsservers.index');
     }
