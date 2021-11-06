@@ -61,17 +61,17 @@ class HomeController extends Controller
 {
     public function maturity1()
     {
-        return $this->compute_maturity(view('admin/reports/maturity1'));
+        return $this->computeMaturity(view('admin/reports/maturity1'));
     }
 
     public function maturity2()
     {
-        return $this->compute_maturity(view('admin/reports/maturity2'));
+        return $this->computeMaturity(view('admin/reports/maturity2'));
     }
 
     public function maturity3()
     {
-        return $this->compute_maturity(view('admin/reports/maturity3'));
+        return $this->computeMaturity(view('admin/reports/maturity3'));
     }
 
     /**
@@ -81,9 +81,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return $this->compute_maturity(view('home'));
+        return $this->computeMaturity(view('home'));
     }
-    private function compute_maturity(View $view)
+    private function computeMaturity(View $view)
     {
         return $view
             // ecosystem
@@ -466,8 +466,8 @@ class HomeController extends Controller
                     ::where('description', '<>', null)
                         ->count())
 
-            ->with('DNSServers', DnsServer::count())
-            ->with('DNSServers_lvl2', DnsServer
+            ->with('DNSServers', Dnsserver::count())
+            ->with('DNSServers_lvl2', Dnsserver
                     ::where('description', '<>', null)
                         ->count())
 
@@ -487,7 +487,9 @@ class HomeController extends Controller
                         ->whereExists(function ($query) {
                             $query->select('logical_server_physical_server.logical_server_id')
                                 ->from('logical_server_physical_server')
-                                ->whereRaw('logical_server_physical_server.logical_server_id = logical_servers.id');
+                                ->whereRaw(
+                                    'logical_server_physical_server.logical_server_id = logical_servers.id'
+                                );
                         })
                         ->count())
 
@@ -501,7 +503,9 @@ class HomeController extends Controller
                         ->whereExists(function ($query) {
                     $query->select('certificate_logical_server.logical_server_id')
                         ->from('certificate_logical_server')
-                        ->whereRaw('certificate_logical_server.certificate_id = certificates.id');
+                        ->whereRaw(
+                            'certificate_logical_server.certificate_id = certificates.id'
+                        );
                 })->count())
 
             // Physical
