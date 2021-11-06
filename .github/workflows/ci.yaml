@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-            composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
+            composer update --no-interaction --no-suggest
 
       - name: Create Database
         run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
