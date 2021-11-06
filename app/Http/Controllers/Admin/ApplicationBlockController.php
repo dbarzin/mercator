@@ -35,7 +35,7 @@ class ApplicationBlockController extends Controller
     {
         $applicationBlock = ApplicationBlock::create($request->all());
 
-        Mapplication::whereIn('id', $request->input('linkToApplications', []))
+        MApplication::whereIn('id', $request->input('linkToApplications', []))
             ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');
@@ -59,7 +59,7 @@ class ApplicationBlockController extends Controller
         MApplication::where('application_block_id', $applicationBlock->id)
             ->update(['application_block_id' => null]);
 
-        Mapplication::whereIn('id', $request->input('linkToApplications', []))
+        MApplication::whereIn('id', $request->input('linkToApplications', []))
             ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');

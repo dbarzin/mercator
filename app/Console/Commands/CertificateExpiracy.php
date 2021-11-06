@@ -23,63 +23,32 @@ class CertificateExpiracy extends Command
     protected $description = 'Check expired certificates';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-
-    // Log::debug("CertificateExpiracy - handle START");
-
-        $check_frequency = config('mercator-config.cert.check-frequency');
-
         // Log::debug("CertificateExpiracy - frequency ". $check_frequency);
         // Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
-        if (($check_frequency === null) || ($check_frequency === '0')) {
-            return;
-        }
-        if (
-            // Dayly
-            ($check_frequency === '1') ||
-            // Monday
-            (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
-            // 15 days
-            (($check_frequency === '15') && ((Carbon::now()->day === 1) || (Carbon::now()->day === 15))) ||
-            // Monthly
-            (($check_frequency === '30') && (Carbon::now()->day === 1)) ||
-            // 2 months
-            (($check_frequency === '60') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 2 === 0))) ||
-            // 3 month
-            (($check_frequency === '90') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 3 === 0)))
-        ) {
+        if (needCheck()) {
             // Check for old certificates
             //
             // Log::debug("CertificateExpiracy - check");
 
-            $certificates = Certificate::
-                select('name', 'type', 'end_validity')
-                    ->where(
-                    'end_validity',
-                    '<=',
-                    Carbon::now()
-                        ->addDays(intval(config('mercator-config.cert.expire-delay')))
-                        ->toDateString()
-                )
-                    ->get();
+            $certificates = Certificate::select('name', 'type', 'end_validity')
+                ->where('end_validity', '<=', Carbon::now()
+                ->addDays(intval(config('mercator-config.cert.expire-delay')))
+                ->toDateString())
+                ->get();
 
-            $this->info($certificates->count() . ' certificate(s) will expire in '. config('mercator-config.cert.expire-delay') . ' days.');
+            $this->info(
+                $certificates->count() .
+                ' certificate(s) will expire in '.
+                config('mercator-config.cert.expire-delay') .
+                ' days.'
+            );
 
             if ($certificates->count() > 0) {
                 // send email alert
@@ -107,5 +76,28 @@ class CertificateExpiracy extends Command
             }
         }
         // Log::debug("CertificateExpiracy - DONE.");
+    }
+
+    /**
+     * return true if check is needed
+     *
+     * @return bool
+     */
+    private function needCheck()
+    {
+        $check_frequency = config('mercator-config.cert.check-frequency');
+
+        return // Dayly
+            ($check_frequency === '1') ||
+            // Monday
+            (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
+            // 15 days
+            (($check_frequency === '15') && ((Carbon::now()->day === 1) || (Carbon::now()->day === 15))) ||
+            // Monthly
+            (($check_frequency === '30') && (Carbon::now()->day === 1)) ||
+            // 2 months
+            (($check_frequency === '60') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 2 === 0))) ||
+            // 3 month
+            (($check_frequency === '90') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 3 === 0)));
     }
 }

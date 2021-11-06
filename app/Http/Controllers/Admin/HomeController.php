@@ -83,6 +83,7 @@ class HomeController extends Controller
     {
         return $this->computeMaturity(view('home'));
     }
+    
     private function computeMaturity(View $view)
     {
         return $view
