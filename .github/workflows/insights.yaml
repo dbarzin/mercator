@@ -1,6 +1,9 @@
 name: PHP Insights
 
-on: push
+on: 
+  push:
+    branches: 
+      - develop
 
 jobs:
   phpinsights:
