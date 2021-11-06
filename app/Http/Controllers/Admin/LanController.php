@@ -30,7 +30,7 @@ class LanController extends Controller
 
     public function store(StoreLanRequest $request)
     {
-        $lan = Lan::create($request->all());
+        Lan::create($request->all());
 
         return redirect()->route('admin.lans.index');
     }

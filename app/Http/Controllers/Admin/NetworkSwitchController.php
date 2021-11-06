@@ -30,7 +30,7 @@ class NetworkSwitchController extends Controller
 
     public function store(StoreNetworkSwitchRequest $request)
     {
-        $networkSwitch = NetworkSwitch::create($request->all());
+        NetworkSwitch::create($request->all());
 
         return redirect()->route('admin.network-switches.index');
     }

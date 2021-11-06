@@ -31,7 +31,7 @@ class DomaineAdController extends Controller
 
     public function store(StoreDomaineAdRequest $request)
     {
-        $domaineAd = DomaineAd::create($request->all());
+        DomaineAd::create($request->all());
 
         return redirect()->route('admin.domaine-ads.index');
     }
