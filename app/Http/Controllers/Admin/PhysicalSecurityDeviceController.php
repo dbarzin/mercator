@@ -39,7 +39,7 @@ class PhysicalSecurityDeviceController extends Controller
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
-        $physicalSecurityDevice = PhysicalSecurityDevice::create($request->all());
+         PhysicalSecurityDevice::create($request->all());
 
         return redirect()->route('admin.physical-security-devices.index');
     }

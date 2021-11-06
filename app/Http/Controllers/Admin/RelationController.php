@@ -40,7 +40,7 @@ class RelationController extends Controller
 
     public function store(StoreRelationRequest $request)
     {
-        $relation = Relation::create($request->all());
+        Relation::create($request->all());
 
         return redirect()->route('admin.relations.index');
     }

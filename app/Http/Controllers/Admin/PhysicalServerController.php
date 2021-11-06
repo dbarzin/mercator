@@ -43,7 +43,7 @@ class PhysicalServerController extends Controller
 
     public function store(StorePhysicalServerRequest $request)
     {
-        $physicalServer = PhysicalServer::create($request->all());
+         PhysicalServer::create($request->all());
 
         return redirect()->route('admin.physical-servers.index');
     }

@@ -33,7 +33,7 @@ class NetworkController extends Controller
 
     public function store(StoreNetworkRequest $request)
     {
-        $network = Network::create($request->all());
+        Network::create($request->all());
         // $network->subnetworks()->sync($request->input('subnetworks', []));
 
         return redirect()->route('admin.networks.index');
