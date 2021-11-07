@@ -19,7 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-          composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
+          composer update --prefer-stable --prefer-dist --no-interaction 
 
     - name: Publish the configuration
       run: |
