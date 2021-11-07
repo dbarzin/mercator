@@ -13,6 +13,7 @@ class ActivityTest extends DuskTestCase
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
+                echo $admin->id . " " . $admin->name . "\n";
                 $browser->loginAs($admin);
                 $browser->visit(route('admin.activities.index'));
                 $browser->waitForText("Mercator");
