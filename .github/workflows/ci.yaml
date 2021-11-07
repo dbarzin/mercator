@@ -59,7 +59,7 @@ jobs:
         run: |
           php artisan config:clear
 
-      - name: Migrate database
+      - name: Migrate and seed the database
         run: |
           php artisan migrate --seed 
 
@@ -85,8 +85,6 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USER: root
         run: |
-          php --version
-          php artisan route:list
           php artisan dusk --stop-on-error --stop-on-failure
 
       - name: Upload Screenshots
