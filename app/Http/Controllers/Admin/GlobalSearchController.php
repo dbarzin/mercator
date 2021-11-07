@@ -96,9 +96,8 @@ class GlobalSearchController extends Controller
                 // TODO: Fix me please (XXXX)
                 $parsedData['url'] = '/admin/' .
                     ($model === 'MApplication' ? 'applications' : Str::plural(Str::snake($model, '-'))) .
-                    '/' . $result->id; 
+                    '/' . $result->id;
                 // to got to edit : . '/edit'
-
 
                 $searchableData[] = $parsedData;
             }

@@ -1559,7 +1559,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans("cruds.certificate.fields.end_validity"), $certificate->end_validity);
 
                     // Logical Servers
-                    if ($certificate->logical_servers->count()>0) {
+                    if ($certificate->logical_servers->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans("cruds.certificate.fields.logical_servers"));
                         foreach ($certificate->logical_servers as $logical_server) {
                             $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCYLINKSTYLE, null, true);
@@ -1570,7 +1570,7 @@ class CartographyController extends Controller
                     }
 
                     // Applications
-                    if ($certificate->applications->count()>0) {
+                    if ($certificate->applications->count() > 0) {
                         $textRun = $this->addTextRunRow($table, trans("cruds.certificate.fields.applications"));
                         foreach ($certificate->applications as $application) {
                             $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
