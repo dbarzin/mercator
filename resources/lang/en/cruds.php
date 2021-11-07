@@ -176,7 +176,7 @@ return [
             "physical_security_devices" => "Physical security devices",
             "physical_servers" => "Physical servers",
             "physical_switches" => "Physical switches",
-            "room" => "Building / Hall",
+            "room" => "Building / Room",
             "room_helper" => "",
             "storage_devices" => "Storage devices"
         ],
@@ -200,7 +200,7 @@ return [
             "site_helper" => "Site where this building / room is located"
         ],
         "title" => "Buildings / Rooms",
-        "title_singular" => "Building / Hall"
+        "title_singular" => "Building / Room"
     ],
     "certificate" => [
         "description" => "An electronic certificate (also called a digital certificate or public key certificate) can be thought of as a digital identity card. It is mainly used to identify and authenticate a natural or legal person, but also to encrypt exchanges.",
@@ -614,7 +614,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the ring road is located",
             "description" => "Description",
             "description_helper" => "",
@@ -638,7 +638,7 @@ return [
     "phone" => [
         "description" => "Fixed or mobile phone belonging to the organization.",
         "fields" => [
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the telephone is located",
             "description" => "Description",
             "description_helper" => "",
@@ -657,7 +657,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the router is located",
             "description" => "Description",
             "description_helper" => "Model, embedded software version",
@@ -679,7 +679,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the device is located",
             "description" => "Description",
             "description_helper" => "",
@@ -699,7 +699,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "Bay in which the server is located",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the server is located",
             "configuration" => "Configuration",
             "configuration_helper" => "Technical characteristics: configuration, OS and version",
@@ -727,7 +727,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the switch is located",
             "description" => "Description",
             "description_helper" => "Technical characteristics: level (L1, L2, L3, etc.), model, version of the embedded software",
@@ -876,7 +876,7 @@ return [
         "fields" => [
             "bay" => "Bay",
             "bay_helper" => "",
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the device is located",
             "description" => "Description",
             "description_helper" => "",
@@ -1015,7 +1015,7 @@ return [
     "workstation" => [
         "description" => "Physical machine allowing a user to access the information system.",
         "fields" => [
-            "building" => "Building / Hall",
+            "building" => "Building / Room",
             "building_helper" => "Building / Room in which the workstation is located",
             "description" => "Description",
             "description_helper" => "",
