@@ -13,7 +13,7 @@ return [
             "processes_helper" => "List of parent processes"
         ],
         "title" => "Activities",
-        "title_singular" => "activity"
+        "title_singular" => "Activity"
     ],
     "actor" => [
         "description" => "Representative of a business role that executes operations, uses applications and makes decisions in processes. This role can be carried by a person, a group of people or an entity.",
@@ -309,7 +309,7 @@ return [
             "user_count_helper" => ""
         ],
         "title" => "Active Directory / LDAP domains",
-        "title_short" => "areas",
+        "title_short" => "AD / LDAP",
         "title_singular" => "Active Directory / LDAP domain"
     ],
     "entity" => [
@@ -328,7 +328,7 @@ return [
             "name_helper" => "Name of entity or system",
             "processes" => "Supported processes",
             "processes_helper" => "List of processes supported by the entity",
-            "relations" => "relationships",
+            "relations" => "Relationships",
             "relations_helper" => "Relations with other entities",
             "security_level" => "Security Level",
             "security_level_helper" => "ex. : maturity, security measures in place or defined at the contractual level, degree of confidence, approval"
@@ -691,7 +691,7 @@ return [
             "type_helper" => ""
         ],
         "title" => "Physical security equipment",
-        "title_short" => "security",
+        "title_short" => "Security",
         "title_singular" => "Physical security equipment"
     ],
     "physicalServer" => [
@@ -787,7 +787,7 @@ return [
             "type" => "Nature",
             "type_helper" => "Nature (e.g. supply of goods, services, commercial partnership, etc.)"
         ],
-        "title" => "relationships",
+        "title" => "Relationships",
         "title_singular" => "Relationship"
     ],
     "report" => [
@@ -1026,8 +1026,8 @@ return [
             "type" => "Type",
             "type_helper" => "Type of workstation"
         ],
-        "title" => "Personal work places",
-        "title_singular" => "Workplace"
+        "title" => "Workstations",
+        "title_singular" => "Workstation"
     ],
     "zoneAdmin" => [
         "description" => "Set of resources (people, data, equipment) under the responsibility of one (or more) administrator (s).",
