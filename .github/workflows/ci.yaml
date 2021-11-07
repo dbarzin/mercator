@@ -86,6 +86,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USER: root
         run: |
+          php artisan route:list
           php artisan dusk --stop-on-error --stop-on-failure
 
       - name: Upload Screenshots

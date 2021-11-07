@@ -15,13 +15,8 @@ class ActivityTest extends DuskTestCase
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
-echo '----';
-echo $browser->driver->getPageSource();
                 $browser->visit(route('admin.activities.index'));
                 $browser->waitForText("Mercator");
-echo '----';
-echo $browser->driver->getPageSource();
-
                 $browser->assertRouteIs('admin.activities.index');
             });
         });
