@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;

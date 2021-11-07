@@ -1,5 +1,4 @@
 1<?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
