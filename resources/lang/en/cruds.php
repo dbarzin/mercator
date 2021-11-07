@@ -180,7 +180,7 @@ return [
             "room_helper" => "",
             "storage_devices" => "Storage devices"
         ],
-        "title" => "Berries",
+        "title" => "Bays",
         "title_singular" => "Bay"
     ],
     "building" => [
@@ -188,7 +188,7 @@ return [
         "fields" => [
             "badge" => "Badge",
             "badge_helper" => "Access is protected by a badge reader",
-            "bays" => "Berries",
+            "bays" => "Bays",
             "bays_helper" => "",
             "camera" => "Camera",
             "camera_helper" => "The room is equipped with a camera",
