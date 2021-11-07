@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches: 
-      - develop
+      - master
   pull_request:
     branches: [master, develop]
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-            composer update --no-interaction --no-suggest
+            composer update --no-progress --no-interaction --no-suggest --prefer-dist --optimize-autoloader
 
       - name: Create Database
         run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -67,23 +67,17 @@ jobs:
         run: |
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
+
       - name: Upgrade Chrome Driver
-        run: |
-          php artisan dusk:chrome-driver
+        run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
 
       - name: Start Chrome Driver
-        run: |
-          ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux &
 
       - name: Run Laravel Server
-        run: |
-          php artisan serve > /dev/null 2>&1 &
+        run: php artisan serve --no-reload &
 
       - name: Run Dusk Tests
-        run: |
-          cp .env .env.dusk.local
-          chmod -R 0755 vendor/laravel/dusk/bin/
-          php artisan dusk --stop-on-error --stop-on-failure
         env:
           APP_ENV: local
           APP_URL: "http://127.0.0.1:8000"
@@ -91,3 +85,20 @@ jobs:
           DB_DATABASE: mercator
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_USER: root
+        run: |
+          php artisan dusk --stop-on-error --stop-on-failure
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
+
+      - name: Upload Console Logs
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: console
+          path: tests/Browser/console
+
