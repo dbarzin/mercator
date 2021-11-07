@@ -61,12 +61,11 @@ jobs:
 
       - name: Migrate database
         run: |
-          php artisan migrate -v
+          php artisan migrate --seed 
 
       - name: Insert test data
         run: |
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
-
 
       - name: Upgrade Chrome Driver
         run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
