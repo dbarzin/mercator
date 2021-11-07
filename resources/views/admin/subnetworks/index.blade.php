@@ -70,7 +70,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">                                
                                 {{ $subnetwork->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $subnetwork->description ?? '' !!}
@@ -85,13 +87,21 @@
                                 {{ $subnetwork->default_gateway }}
                             </td>
                             <td>
-                                {{ $subnetwork->vlan->name ?? '' }}
+                                @if ($subnetwork->vlan!=null)
+                                    <a href="{{ route('admin.vlans.show', $subnetwork->vlan->id) }}">
+                                        {{ $subnetwork->vlan->name ?? '' }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 {{ $subnetwork->zone }}
                             </td>
                             <td>
-                                {{ $subnetwork->network->name ?? '' }}
+                                @if ($subnetwork->network!=null)
+                                    <a href="{{ route('admin.networks.show', $subnetwork->network->id) }}">
+                                        {{ $subnetwork->network->name ?? '' }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @can('subnetwork_show')

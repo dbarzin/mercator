@@ -97,9 +97,11 @@
                             {{ trans('cruds.network.fields.subnetworks') }}
                         </th>
                         <td>
-                            @foreach($network->subnetworks as $key => $subnetworks)
-                                <span class="label label-info">{{ $subnetworks->name }}</span>
-                                @if ($network->subnetworks->last()<>$subnetworks)
+                            @foreach($network->subnetworks as $subnetwork)
+                                <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
+                                    {{ $subnetwork->name }}
+                                </a>
+                                @if ($network->subnetworks->last()<>$subnetwork)
                                 ,
                                 @endif
                             @endforeach

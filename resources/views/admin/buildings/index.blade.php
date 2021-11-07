@@ -49,7 +49,7 @@
 
                             </td>
                             <td>
-                                {{ $building->name ?? '' }}
+                                <a href="{{ route('admin.buildings.show', $building->id) }}">{{ $building->name ?? '' }}</a>
                             </td>
                             <td>
                                 {!! $building->description ?? '' !!}
