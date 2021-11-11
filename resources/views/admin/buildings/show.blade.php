@@ -49,7 +49,10 @@
                             {{ trans('cruds.building.fields.site') }}
                         </th>
                         <td>
-                            {{ $building->site->name ?? '' }}
+                            @if ($building->site!=null)
+                                <a href="{{ route('admin.sites.show', $building->site->id) }}">
+                                {{ $building->site->name ?? '' }}
+                            @endif
                         </td>
                     </tr>
                 </tbody>

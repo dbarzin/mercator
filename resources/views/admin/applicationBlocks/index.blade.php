@@ -40,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($applicationBlocks as $key => $applicationBlock)
+                    @foreach($applicationBlocks as $applicationBlock)
                         <tr data-entry-id="{{ $applicationBlock->id }}"
                         @if (($applicationBlock->description==null)||
                             ($applicationBlock->responsible==null)||
@@ -53,7 +53,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.application-blocks.show', $applicationBlock->id) }}">
                                 {{ $applicationBlock->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $applicationBlock->description ?? '' !!}

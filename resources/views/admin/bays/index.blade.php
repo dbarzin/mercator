@@ -43,14 +43,16 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.bays.show', $bay->id) }}">
                                 {{ $bay->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $bay->description ?? '' !!}
                             </td>
                             <td>
                                 @if ($bay->room!=null)
-                                <a href="{{ route('admin.rooms.show', $bay->room->id) }}">
+                                <a href="{{ route('admin.buildings.show', $bay->room->id) }}">
                                     {{ $bay->room->name }}
                                 </a>
                                 @endif

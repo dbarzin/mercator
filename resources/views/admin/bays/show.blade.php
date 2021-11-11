@@ -49,7 +49,11 @@
                             {{ trans('cruds.bay.fields.room') }}
                         </th>
                         <td>
-                            {{ $bay->room->name ?? '' }}
+                            @if ($bay->room!=null)
+                                <a href="{{ route('admin.buildings.show', $bay->room->id) }}">
+                                {{ $bay->room->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

@@ -65,7 +65,10 @@
                             {{ trans('cruds.physicalServer.fields.site') }}
                         </th>
                         <td>
-                            {{ $physicalServer->site->name ?? '' }}
+                            @if ($physicalServer->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalServer->site->id) }}">
+                                {{ $physicalServer->site->name ?? '' }}
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +76,10 @@
                             {{ trans('cruds.physicalServer.fields.building') }}
                         </th>
                         <td>
-                            {{ $physicalServer->building->name ?? '' }}
+                            @if ($physicalServer->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalServer->building->id) }}">
+                                {{ $physicalServer->building->name ?? '' }}
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -81,7 +87,10 @@
                             {{ trans('cruds.physicalServer.fields.bay') }}
                         </th>
                         <td>
-                            {{ $physicalServer->bay->name ?? '' }}
+                            @if ($physicalServer->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalServer->bay->id) }}">
+                                {{ $physicalServer->bay->name ?? '' }}
+                            @endif
                         </td>
                     </tr>
                     <tr>

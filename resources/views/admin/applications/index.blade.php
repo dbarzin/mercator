@@ -70,7 +70,9 @@
 
                             </td>
                             <td>
-                                {{ $application->name ?? '' }} 
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name ?? '' }} 
+                                </a>
                             </td>
                             <td>
                                 {!! $application->description ?? '' !!}

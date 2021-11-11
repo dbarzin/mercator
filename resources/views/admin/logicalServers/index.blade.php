@@ -61,7 +61,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                                 {{ $logicalServer->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $logicalServer->description ?? '' !!}

@@ -46,7 +46,9 @@
 
                             </td>
                             <td>
-                                {{ $network->name ?? '' }}
+                                <a href="{{ route('admin.networks.show', $network->id) }}">
+                                    {{ $network->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $network->description ?? '' !!}
