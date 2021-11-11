@@ -50,8 +50,8 @@
                             </td>
                             <td>
                                 @if ($bay->room!=null)
-                                <a href="{{ route('admin.sites.show', $bay->room_id) }}">
-                                {{ $bay->room->name }}
+                                <a href="{{ route('admin.rooms.show', $bay->room->id) }}">
+                                    {{ $bay->room->name }}
                                 </a>
                                 @endif
                             </td>

@@ -309,7 +309,7 @@ return [
             "user_count_helper" => ""
         ],
         "title" => "Active Directory / LDAP domains",
-        "title_short" => "AD / LDAP",
+        "title_short" => "Active Directory",
         "title_singular" => "Active Directory / LDAP domain"
     ],
     "entity" => [
