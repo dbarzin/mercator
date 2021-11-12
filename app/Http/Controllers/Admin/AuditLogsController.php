@@ -8,6 +8,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class AuditLogsController extends Controller
 {
@@ -16,9 +17,13 @@ class AuditLogsController extends Controller
         abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AuditLog::query()->select(sprintf('%s.*', (new AuditLog())->table));
-            $table = DataTables::of($query);
+            
+            $query = DB::table('audit_logs');
+            // TODO: fixme
+            // ->join('users', 'audit_logs.user_id', '=', 'users.id');
 
+            $table = DataTables::of($query);
+            
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 

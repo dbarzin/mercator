@@ -17,7 +17,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.auditLog.fields.id') }}
+                            id
                         </th>
                         <td>
                             {{ $auditLog->id }}
@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.auditLog.fields.created_at') }}
+                            {{ trans('global.created_at') }}
                         </th>
                         <td>
                             {{ $auditLog->created_at }}
