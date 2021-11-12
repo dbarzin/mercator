@@ -815,7 +815,7 @@
                                 <tr>
                                     <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
                                     <td>
-                                        @if ($router->building!=null)
+                                        @if ($physicalSecurityDevice->building!=null)
                                             <a href="#BUILDING{{ $physicalSecurityDevice->building->id }}">{{ $physicalSecurityDevice->building->name }}</a><br>
                                         @endif                                        
                                     </td>
