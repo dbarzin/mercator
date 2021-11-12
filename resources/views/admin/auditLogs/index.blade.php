@@ -14,7 +14,7 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.auditLog.fields.id') }}
+                        id
                     </th>
                     <th>
                         {{ trans('cruds.auditLog.fields.description') }}
@@ -32,7 +32,7 @@
                         {{ trans('cruds.auditLog.fields.host') }}
                     </th>
                     <th>
-                        {{ trans('cruds.auditLog.fields.created_at') }}
+                        {{ trans('global.created_at') }}
                     </th>
                     <th>
                         &nbsp;
@@ -58,7 +58,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "/admin/audit-logs", /*"{{ route('admin.audit-logs.index') }}"*/
+    ajax: "{{ route('admin.audit-logs.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
@@ -79,6 +79,6 @@
             .columns.adjust();
     });
 });
-
 </script>
+
 @endsection

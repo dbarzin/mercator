@@ -20,6 +20,7 @@
         "laravel/ui": "^3.0",
         "phpoffice/phpspreadsheet": "^1.14",
         "phpoffice/phpword": "^0.18.0",
+        "yajra/laravel-datatables": "^1.5",
         "yajra/laravel-datatables-oracle": "^9.11"
     },
     "require-dev": {
