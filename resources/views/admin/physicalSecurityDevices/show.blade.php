@@ -58,7 +58,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.site') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->site->name ?? '' }}
+                                @if($physicalSecurityDevice->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">
+                                    {{ $physicalSecurityDevice->site->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +70,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.building') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->building->name ?? '' }}
+                                @if($physicalSecurityDevice->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">
+                                    {{ $physicalSecurityDevice->building->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +82,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.bay') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                @if($physicalSecurityDevice->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalSecurityDevice->bay->id) }}">
+                                    {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                 </tbody>
