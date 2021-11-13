@@ -29,12 +29,14 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.physicalSecurityDevices.create', compact('sites', 'buildings', 'bays'));
+        $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
+            ->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.physicalSecurityDevices.create', 
+            compact('sites', 'buildings', 'bays', 'type_list'));
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
@@ -49,14 +51,16 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
+            ->distinct()->orderBy('type')->pluck('type');
 
         $physicalSecurityDevice->load('site', 'building', 'bay');
 
-        return view('admin.physicalSecurityDevices.edit', compact('sites', 'buildings', 'bays', 'physicalSecurityDevice'));
+        return view('admin.physicalSecurityDevices.edit', 
+            compact('sites', 'buildings', 'bays', 'physicalSecurityDevice','type_list'));
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)

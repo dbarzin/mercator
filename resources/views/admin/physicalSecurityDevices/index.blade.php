@@ -44,7 +44,17 @@
                 </thead>
                 <tbody>
                     @foreach($physicalSecurityDevices as $key => $physicalSecurityDevice)
-                        <tr data-entry-id="{{ $physicalSecurityDevice->id }}">
+                        <tr data-entry-id="{{ $physicalSecurityDevice->id }}"
+
+                            @if (($physicalSecurityDevice->description==null)||
+                                ($physicalSecurityDevice->type==null)||
+                                ($physicalSecurityDevice->site_id==null)||
+                                ($physicalSecurityDevice->building_id==null)
+                                )
+                                    class="table-warning"
+                            @endif
+
+                            >
                             <td>
 
                             </td>

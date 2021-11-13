@@ -20,9 +20,17 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
-                <label for="type">{{ trans('cruds.physicalSecurityDevice.fields.type') }}</label>
-                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', $physicalSecurityDevice->type) }}">
+                <label class="recommended" for="type">{{ trans('cruds.physicalSecurityDevice.fields.type') }}</label>
+                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                    @if (!$type_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                    @endif
+                    @foreach($type_list as $t)
+                        <option {{ (old('type') ? old('type') : $physicalSecurityDevice->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('type'))
                     <div class="invalid-feedback">
                         {{ $errors->first('type') }}
@@ -30,8 +38,10 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.type_helper') }}</span>
             </div>
+
+
             <div class="form-group">
-                <label for="description">{{ trans('cruds.physicalSecurityDevice.fields.description') }}</label>
+                <label class="recommended" for="description">{{ trans('cruds.physicalSecurityDevice.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $physicalSecurityDevice->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -41,7 +51,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="site_id">{{ trans('cruds.physicalSecurityDevice.fields.site') }}</label>
+                <label class="recommended" for="site_id">{{ trans('cruds.physicalSecurityDevice.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
                     @foreach($sites as $id => $site)
                         <option value="{{ $id }}" {{ ($physicalSecurityDevice->site ? $physicalSecurityDevice->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
@@ -55,7 +65,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.site_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="building_id">{{ trans('cruds.physicalSecurityDevice.fields.building') }}</label>
+                <label class="recommended" for="building_id">{{ trans('cruds.physicalSecurityDevice.fields.building') }}</label>
                 <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
                     @foreach($buildings as $id => $building)
                         <option value="{{ $id }}" {{ ($physicalSecurityDevice->building ? $physicalSecurityDevice->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
