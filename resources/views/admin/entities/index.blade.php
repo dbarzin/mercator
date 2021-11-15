@@ -58,7 +58,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">
                                 {{ $entity->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $entity->description ?? '' !!}

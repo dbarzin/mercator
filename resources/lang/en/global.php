@@ -170,6 +170,7 @@ return [
     "note_text" => "Note (text)",
     "notifications" => "Notifications",
     "notify_user" => "Notify the user",
+    "none" => "None",
     "outbox" => "outbox",
     "pages" => "Pages",
     "parse_csv" => "Analyze CSV.",

@@ -62,7 +62,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.databases.show', $database->id) }}">
                                 {{ $database->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $database->description ?? '' !!}

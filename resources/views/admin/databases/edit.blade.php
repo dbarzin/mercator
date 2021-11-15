@@ -157,7 +157,8 @@
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
-                                <option value="0" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}></option>
+                                <option value="-1" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == -1 ? 'selected' : '' }}></option>
+                                <option value="0" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                 <option value="1" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                 <option value="2" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
                                 <option value="3" {{ ($database->security_need_c ? $database->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
@@ -169,7 +170,8 @@
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
-                                <option value="0" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}></option>
+                                <option value="-1" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == -1 ? 'selected' : '' }}></option>
+                                <option value="0" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                 <option value="1" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                 <option value="2" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
                                 <option value="3" {{ ($database->security_need_i ? $database->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
@@ -181,7 +183,8 @@
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
-                                <option value="0" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}></option>
+                                <option value="-1" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == -1 ? 'selected' : '' }}></option>
+                                <option value="0" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                 <option value="1" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                 <option value="2" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
                                 <option value="3" {{ ($database->security_need_a ? $database->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
@@ -193,7 +196,8 @@
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
-                                <option value="0" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}></option>
+                                <option value="-1" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == -1 ? 'selected' : '' }}></option>
+                                <option value="0" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                 <option value="1" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                 <option value="2" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
                                 <option value="3" {{ ($database->security_need_t ? $database->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>

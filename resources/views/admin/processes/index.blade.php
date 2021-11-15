@@ -67,7 +67,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.processes.show', $process->id) }}">
                                 {{ $process->identifiant ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $process->description ?? '' !!}

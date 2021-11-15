@@ -433,13 +433,13 @@ return [
             "owner" => "Propriétaire",
             "owner_helper" => "",
             "processes" => "Processus",
-            "processes_helper" => "Processus liés",
+            "processes_helper" => "Processus utilisant cette information",
             "security_need" => "Besoins de sécurité (CIDT)",
             "security_need_helper" => "Besoins de sécurité de l'information",
             "sensitivity" => "Sensibilité",
             "sensitivity_helper" => "Donnée à caractère personnel, donnée médicale, donnée classifiée, etc.",
             "storage" => "Stockage",
-            "storage_helper" => "Stockage (type, localisation)"
+            "storage_helper" => "Type de stockage de l'information (local, disque, papier...)"
         ],
         "title" => "Informations",
         "title_singular" => "Information"

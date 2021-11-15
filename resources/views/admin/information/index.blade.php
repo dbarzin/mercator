@@ -78,50 +78,58 @@
                                 {{ $information->sensitivity ?? '' }}
                             </td>
                             <td>                                
-                                @if ($information->security_need_c==1)
-                                    <span class="veryLowRisk"> 1 </span>
+                                @if ($information->security_need_c==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_c==1)
+                                    <span class="veryLowRisk">1</span>
                                 @elseif ($information->security_need_c==2)
-                                    <span class="lowRisk"> 2 </span>
+                                    <span class="lowRisk">2</span>
                                 @elseif ($information->security_need_c==3)
-                                    <span class="mediumRisk"> 3 </span>
+                                    <span class="mediumRisk">3</span>
                                 @elseif ($information->security_need_c==4)
-                                    <span class="highRisk"> 4 </span>
+                                    <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
                                 @endif                                    
                                 -
-                                @if ($information->security_need_i==1)
-                                    <span class="veryLowRisk"> 1 </span>
+                                @if ($information->security_need_i==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_i==1)
+                                    <span class="veryLowRisk">1</span>
                                 @elseif ($information->security_need_i==2)
-                                    <span class="lowRisk"> 2 </span>
+                                    <span class="lowRisk">2</span>
                                 @elseif ($information->security_need_i==3)
-                                    <span class="mediumRisk"> 3 </span>
+                                    <span class="mediumRisk">3</span>
                                 @elseif ($information->security_need_i==4)
-                                    <span class="highRisk"> 4 </span>
+                                    <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
                                 @endif                                    
                                 -
-                                @if ($information->security_need_a==1)
-                                    <span class="veryLowRisk"> 1 </span>
+                                @if ($information->security_need_a==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_a==1)
+                                    <span class="veryLowRisk">1</span>
                                 @elseif ($information->security_need_a==2)
-                                    <span class="lowRisk"> 2 </span>
+                                    <span class="lowRisk">2</span>
                                 @elseif ($information->security_need_a==3)
-                                    <span class="mediumRisk"> 3 </span>
+                                    <span class="mediumRisk">3</span>
                                 @elseif ($information->security_need_a==4)
-                                    <span class="highRisk"> 4 </span>
+                                    <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
                                 @endif                                    
                                 -
-                                @if ($information->security_need_t==1)
-                                    <span class="veryLowRisk"> 1 </span>
+                                @if ($information->security_need_t==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_t==1)
+                                    <span class="veryLowRisk">1</span>
                                 @elseif ($information->security_need_t==2)
-                                    <span class="lowRisk"> 2 </span>
+                                    <span class="lowRisk">2</span>
                                 @elseif ($information->security_need_t==3)
-                                    <span class="mediumRisk"> 3 </span>
+                                    <span class="mediumRisk">3</span>
                                 @elseif ($information->security_need_t==4)
-                                    <span class="highRisk"> 4 </span>
+                                    <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
                                 @endif                                    

@@ -101,19 +101,19 @@
                         </th>
                         <td>
                             {{ trans('global.confidentiality') }} :
-                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$database->security_need_c] ?? "" }}
                             <br>
                             {{ trans('global.integrity') }} :
-                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$database->security_need_i] ?? "" }}
                             <br>
                             {{ trans('global.availability') }} :
-                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$database->security_need_a] ?? "" }}
                             <br>
                             {{ trans('global.tracability') }} :
-                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$database->security_need_t] ?? "" }} 
                         </td>
                     </tr>

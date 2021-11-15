@@ -167,6 +167,7 @@ return [
     "no_results" => "Aucun résultat",
     "not_approved_p" => "Votre compte n'est toujours pas approuvé par l'administrateur. Veuillez patienter et réessayer plus tard.",
     "not_approved_title" => "Vous n'avez pas été approuvé",
+    "none" =>"Aucun",
     "note_text" => "Note (texte)",
     "notifications" => "Notifications",
     "notify_user" => "Notifier l'utilisateur",
