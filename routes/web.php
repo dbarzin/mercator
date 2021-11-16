@@ -253,7 +253,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory']);
     Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds']);
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography']);
-    Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp'])->name('report.view.logical-server-responsible');
+    Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp']);
 
     // Reporting
     Route::get('doc/report', function () {

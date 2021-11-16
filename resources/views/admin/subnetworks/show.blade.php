@@ -112,7 +112,11 @@
                             {{ trans('cruds.subnetwork.fields.gateway') }}
                         </th>
                         <td>
+                            @if ($subnetwork->gateway!=null)
+                            <a href="{{ route('admin.gateways.show', $subnetwork->gateway->id) }}">
                             {{ $subnetwork->gateway->name ?? '' }}
+                            </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>
