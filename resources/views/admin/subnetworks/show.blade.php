@@ -60,7 +60,11 @@
                             {{ trans('cruds.subnetwork.fields.vlan') }}
                         </th>
                         <td>
-                            {{ $subnetwork->vlan->name ?? '' }}
+                            @if ($subnetwork->vlan!=null)
+                            <a href="{{ route('admin.vlans.show', $subnetwork->vlan->id) }}">
+                                {{ $subnetwork->vlan->name ?? '' }}
+                            </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>

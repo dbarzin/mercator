@@ -43,14 +43,18 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.vlans.show', $vlan->id) }}">
                                 {{ $vlan->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $vlan->description ?? '' }}
                             </td>
                             <td>
                                 @foreach($vlan->subnetworks as $subnetwork) 
+                                    <a href="{{ route('admin.subnetworks.show', $vlan->id) }}">
                                     {{$subnetwork->name}}
+                                    </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif
