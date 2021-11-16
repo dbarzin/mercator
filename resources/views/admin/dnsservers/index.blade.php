@@ -37,13 +37,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($dnsservers as $key => $dnsserver)
-                        <tr data-entry-id="{{ $dnsserver->id }}">
+                    @foreach($dnsservers as $dnsserver)
+                        <tr data-entry-id="{{ $dnsserver->id }}"
+                        @if ($dnsserver->address_ip==null)
+                            class="table-warning"
+                        @endif
+                            >
                             <td>
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.dnsservers.show', $dnsserver->id) }}">
                                 {{ $dnsserver->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                               {!! $dnsserver->description !!}

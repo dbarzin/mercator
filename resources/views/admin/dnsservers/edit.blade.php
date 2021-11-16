@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.dnsserver.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="address_ip">{{ trans('cruds.dnsserver.fields.address_ip') }}</label>
+                <label class="recommended" for="address_ip">{{ trans('cruds.dnsserver.fields.address_ip') }}</label>
                 <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $dnsserver->address_ip) }}">
                 @if($errors->has('address_ip'))
                     <div class="invalid-feedback">
