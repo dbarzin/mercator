@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($certificates as $key => $certificate)
+                    @foreach($certificates as $certificate)
                         <tr data-entry-id="{{ $certificate->id }}"
                         @if(($certificate->description==null)||
                             ($certificate->type==null)||
@@ -59,7 +59,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.certificates.show', $certificate->id) }}">
                                 {{ $certificate->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $certificate->type ?? '' !!}

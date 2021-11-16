@@ -73,8 +73,13 @@
                             {{ trans('cruds.certificate.fields.logical_servers') }}
                         </th>
                         <td>
-                            @foreach($certificate->logical_servers as $key => $server)
-                                <span class="label label-info">{{ $server->name }}</span>
+                            @foreach($certificate->logical_servers as $server)
+                                <a href="{{ route('admin.logical-servers.show', $server->id) }}">
+                                    {{ $server->name }}
+                                </a>
+                                @if(!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -83,8 +88,13 @@
                             {{ trans('cruds.certificate.fields.applications') }}
                         </th>
                         <td>
-                            @foreach($certificate->applications as $key => $application)
-                                <span class="label label-info">{{ $application->name }}</span>
+                            @foreach($certificate->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name }}
+                                </a>
+                                @if(!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
