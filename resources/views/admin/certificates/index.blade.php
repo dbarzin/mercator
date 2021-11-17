@@ -71,12 +71,12 @@
                             </td>
                             <td>
                                 @if($certificate->start_validity!=null)
-                                    {!! Carbon\Carbon::createFromFormat('m/d/Y', $certificate->start_validity)->format('Y-m-d')  ?? '' !!}
+                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->start_validity)->format('Y-m-d')  ?? '' !!}
                                 @endif
                             </td>
                             <td>
                                 @if($certificate->end_validity!=null)
-                                    {!! Carbon\Carbon::createFromFormat('m/d/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
+                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
                                 @endif
                                 
                             </td>
