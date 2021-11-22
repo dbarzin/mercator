@@ -119,6 +119,18 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.network') }}
+                        </th>
+                        <td>
+                            @if ($subnetwork->network!=null)
+                            <a href="{{ route('admin.networks.show', $subnetwork->network->id) }}">
+                                {{ $subnetwork->network->name ?? '' }}
+                            </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
