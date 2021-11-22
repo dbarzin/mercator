@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 @foreach($vlan->subnetworks as $subnetwork) 
-                                    <a href="{{ route('admin.subnetworks.show', $vlan->id) }}">
+                                    <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
                                     {{$subnetwork->name}}
                                     </a>
                                     @if (!$loop->last)

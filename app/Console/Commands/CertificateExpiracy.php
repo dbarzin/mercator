@@ -32,7 +32,7 @@ class CertificateExpiracy extends Command
         // Log::debug("CertificateExpiracy - frequency ". $check_frequency);
         // Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
-        if (needCheck()) {
+	if ($this->needCheck()) {
             // Check for old certificates
             //
             // Log::debug("CertificateExpiracy - check");
@@ -52,6 +52,7 @@ class CertificateExpiracy extends Command
 
             if ($certificates->count() > 0) {
                 // send email alert
+                $mail_from = config('mercator-config.cert.mail-from');
                 $to_email = config('mercator-config.cert.mail-to');
                 $subject = config('mercator-config.cert.mail-subject');
                 $message = '<html><body>These certificates are about to exipre :<br><br>';
@@ -68,7 +69,7 @@ class CertificateExpiracy extends Command
                 ];
 
                 // Send mail
-                if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. config('mercator-config.cert.mail-from'))) {
+                if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $this->info('Mail sent to '.$to_email);
                 } else {
                     $this->info('Email sending fail.');
