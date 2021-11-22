@@ -63,7 +63,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.macro-processuses.show', $macroProcessus->id) }}">
                                 {{ $macroProcessus->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $macroProcessus->description ?? '' !!}
