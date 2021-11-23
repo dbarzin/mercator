@@ -89,7 +89,9 @@ return [
             "type" => "Type d'application",
             "type_helper" => "ex : dév. interne, logiciel, progiciel, script, EAI/ESB, etc.",
             "users" => "Utilisateurs",
-            "users_helper" => "Volume d’utilisateurs et profils"
+            "users_helper" => "Volume d’utilisateurs et profils",
+            "version" => "Version",
+            "version_helper" => "Version de l'application"
         ],
         "title" => "Applications",
         "title_short" => "Applications",

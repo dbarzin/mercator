@@ -31,26 +31,33 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th width="10%">
+                        <th width="1">
                             {{ trans('cruds.application.fields.name') }}
                         </th>
-                        <td>
+                        <td colspan="7">
                             {{ $application->name }}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.version') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $application->version }}
                         </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.application.fields.description') }}
                         </th>
-                        <td>
+                        <td colspan="11">
                             {!! $application->description !!}
                         </td>
                     </tr>
+
                     <tr>
-                        <th>
+                        <th colspan="1">
                             {{ trans('cruds.application.fields.entities') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             @foreach($application->entities as $entity)
                                 <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</span>
                                 @if(!$loop->last)
@@ -58,52 +65,57 @@
                                 @endif                                
                             @endforeach
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.entity_resp') }}
-                        </th>
-                        <td>
-                            {{ $application->entity_resp->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.responsible') }}
-                        </th>
-                        <td>
-                            {{ $application->responsible }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th colspan="1">
                             {{ trans('cruds.application.fields.technology') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             {{ $application->technology }}
                         </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.external') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $application->external }}
+                        </td>
                     </tr>
+
                     <tr>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.entity_resp') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $application->entity_resp->name ?? '' }}
+                        </td>
                         <th>
                             {{ trans('cruds.application.fields.type') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             {{ $application->type }}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.users') }}
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.documentation') }}
                         </th>
-                        <td>
-                            {{ $application->users }}
+                        <td colspan="3">
+                            {{ $application->documentation }}
                         </td>
                     </tr>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.responsible') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $application->responsible }}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.users') }}
+                        </th>
+                        <td colspan="5">
+                            {{ $application->users }}
+                        </td>
                     <tr>
                         <th>
                             {{ trans('cruds.application.fields.security_need') }}
                         </th>
-                        <td>
+                        <td colspan="11">
                             {{ trans('global.confidentiality') }} :
                                 {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$application->security_need_c] ?? "" }}
@@ -123,17 +135,9 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.application.fields.external') }}
-                        </th>
-                        <td>
-                            {{ $application->external }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.application.fields.processes') }}
                         </th>
-                        <td>
+                        <td colspan="5">
                             @foreach($application->processes as $process)
                                 <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</span>
                                 @if(!$loop->last)
@@ -141,25 +145,10 @@
                                 @endif                                
                             @endforeach
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.services') }}
-                        </th>
-                        <td>
-                            @foreach($application->services as $service)
-                                <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</span>
-                                @if(!$loop->last)
-                                ,
-                                @endif                                
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th colspan="1">
                             {{ trans('cruds.application.fields.databases') }}
                         </th>
-                        <td>
+                        <td colspan="5">
                             @foreach($application->databases as $database)
                                 <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</span>
                                 @if(!$loop->last)
@@ -169,10 +158,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.services') }}
+                        </th>
+                        <td colspan="5">
+                            @foreach($application->services as $service)
+                                <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</span>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
+                            @endforeach
+                        </td>
+                        <th colspan="1">
                             {{ trans('cruds.application.fields.logical_servers') }}
                         </th>
-                        <td>
+                        <td colspan="5">
                             @foreach($application->logical_servers as $logical_server)
                                 <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</span>
                                 @if(!$loop->last)
@@ -185,7 +185,7 @@
                         <th>
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
-                        <td>
+                        <td colspan="11">
                             @if ($application->application_block!=null)
                             <a href='{{ route("admin.application-blocks.show", $application->application_block->id) }}'>{{ $application->application_block->name }}</a>
                             @endif

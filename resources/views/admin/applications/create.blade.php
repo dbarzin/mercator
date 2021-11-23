@@ -9,16 +9,33 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.applications.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="text" name="version" id="version" value="{{ old('version', '') }}" required>
+                        @if($errors->has('version'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('version') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                    </div>
+                </div>
             </div>
+
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
@@ -189,7 +206,6 @@
                                 </td>
                                 <td width="120">
                                     <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
-                                        <option value="-1" {{ old('security_need_c') == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ old('security_need_c') == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                         <option value="1" {{ old('security_need_c') == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ old('security_need_c') == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -202,7 +218,6 @@
                                 </td>
                                 <td  width="120">
                                     <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
-                                        <option value="-1" {{ old('security_need_i') == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ old('security_need_i') == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                         <option value="1" {{ old('security_need_i') == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ old('security_need_i') == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -215,7 +230,6 @@
                                 </td>
                                 <td width="120">
                                     <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
-                                        <option value="-1" {{ old('security_need_a') == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ old('security_need_a') == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                         <option value="1" {{ old('security_need_a') == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ old('security_need_a') == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
@@ -228,7 +242,6 @@
                                 </td>
                                 <td width="120">
                                     <select class="form-control select2 risk {{ $errors->has('security_need_t') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
-                                        <option value="-1" {{ old('security_need_t') == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ old('security_need_t') == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
                                         <option value="1" {{ old('security_need_t') == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
                                         <option value="2" {{ old('security_need_t') == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>

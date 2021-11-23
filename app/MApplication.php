@@ -93,6 +93,7 @@ class MApplication extends Model
 
     protected $fillable = [
         'name',
+        'version',
         'description',
         'entity_resp_id',
         'responsible',

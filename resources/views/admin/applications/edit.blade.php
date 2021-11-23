@@ -10,15 +10,31 @@
         <form method="POST" action="{{ route("admin.applications.update", [$application->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="required" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="text" name="version" id="version" value="{{ old('version', $application->version) }}" required>
+                        @if($errors->has('version'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('version') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
