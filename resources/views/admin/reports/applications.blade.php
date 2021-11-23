@@ -131,6 +131,10 @@
                                         <th width="30%">{{ trans("cruds.application.fields.description") }}</th>
                                         <td>{!! $application->description !!}</td>
                                     </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.application.fields.version") }}</th>
+                                        <td>{{ $application->version }}</td>
+                                    </tr>
                                     @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>{{ trans("cruds.application.fields.entities_helper") }}</th>

@@ -683,6 +683,7 @@ class CartographyController extends Controller
                     $section->addBookmark('APPLICATION'.$application->id);
                     $table = $this->addTable($section, $application->name);
                     $this->addHTMLRow($table, trans("cruds.application.fields.description"), $application->description);
+                    $this->addTextRow($table, trans("cruds.application.fields.version"), $application->version);
 
                     $textRun = $this->addTextRunRow($table, trans("cruds.application.fields.entities"));
                     foreach ($application->entities as $entity) {
