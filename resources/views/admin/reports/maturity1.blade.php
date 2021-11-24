@@ -24,7 +24,7 @@
     <div class="col-sm-6">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-                <th>{{ trans("cruds.ecosystem.title_short") }}</th>
+                <th>{{ trans("cruds.menu.ecosystem.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ number_format( ($entities+$relations)>0 
@@ -45,7 +45,7 @@
                 </tr>
             </tbody>
             <thead>
-                <th>{{ trans("cruds.metier.title_short") }}</th>
+                <th>{{ trans("cruds.menu.metier.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ ($processes+$operations+$informations)>0 ?
@@ -74,7 +74,7 @@
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.application_view.title_short") }}</th>
+                <th>{{ trans("cruds.menu.application.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -107,7 +107,7 @@
 
 
             <thead>
-                <th>{{ trans("cruds.administration.title_short") }}</th>
+                <th>{{ trans("cruds.menu.administration.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -144,7 +144,7 @@
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.logical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.logical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th>
@@ -216,7 +216,7 @@
 
 
             <thead>
-                <th>{{ trans("cruds.physical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.physical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
