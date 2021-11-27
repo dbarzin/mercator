@@ -29,6 +29,6 @@ Chaque élément est sélectonnable et donne accès à la liste des objets de la
     * au bouton de déconnexion
 * Le menu supérieur donne accès:
     * Aux vues
-    * Aux préférence
+    * Aux préférences
     * A la documentation et aux rapports
 * Outil de recherche

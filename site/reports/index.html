@@ -68,8 +68,28 @@
     <li class="toctree-l2"><a class="reference internal" href="#rapport-de-cartographie">Rapport de cartographie</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#listes">Listes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#entites-et-application-supportees">Entités et application supportées</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#applications-par-groupe-applicatif">Applications par groupe applicatif</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serveurs-logiques">Serveurs logiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#analyse-des-besoins-de-securite">Analyse des besoins de sécurité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuration-des-serveurs-logiques">Configuration des serveurs logiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inventaire-de-linfrastructure-physique">Inventaire de l'infrastructure physique</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#audit">Audit</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#niveaux-de-maturite">Niveaux de maturité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mise-a-jour">Mise à jour</a>
+    </li>
+        </ul>
     </li>
     </ul>
                     </li>
@@ -121,52 +141,32 @@
 <p><a href="/mercator/images/report.png"><img src="/mercator/images/report.png" width="600"></a></p>
 <p>Ce un document au format Word qui contient les informations de tous les objets des vues sélectionnées au niveau de granularité souhaité.</p>
 <h3 id="listes">Listes</h3>
-<p>Mercator permet de générer un ensemble d’information de listes:</p>
-<ul>
-<li>
-<p>Entités et application supportées </p>
-<p>Génère la liste des entités du système d'information et de leurs applications supportées. 
-Cette liste permet de lister les entités responsables des différentes application du système d’information avec les responsables et leurs points de contactes.</p>
-</li>
-<li>
-<p>Applications par groupe applicatif 
-    Liste des applications par groupe applicatif 
-    Cette liste permet d’avoir une vue de toutes les applications du système d’information classés par groupe applicatif.Cette liste peut être utilisés pour mener une veille technologique sur les vulnérabilités des applications du système d’information.</p>
-</li>
-<li>
-<p>Serveurs logiques</p>
-</li>
-</ul>
-<p>Liste des serveurs logiques par applications et responsables.
-Cette liste permet de ... les responsables des serveurs logiques et les application qu’il servent.</p>
-<ul>
-<li>
-<p>Analyse des besoins de sécurité 
-Liste des besoins de sécurité entre macro-processus, processus, applications, base de données et informations. 
-Cette liste permet d’analyse la cohérence du plan de classification de l’information en termes de confidentialité, intégrité disponibilité et traçabilité entre les processus, les applications, les bases de données et les informations qu’elles contiennent.</p>
-</li>
-<li>
-<p>Configuration des serveurs logiques 
-Liste de la configuration des serveurs logiques 
-Cette liste permet d’analyse la configuration des serveurs logiques.
-Cette liste peut être utilisés pour effectuer l’analyse de la capacité nécessaire pour faire fonctionner le système d’information et d’effectuer des projections d’une année sur l’autre.</p>
-</li>
-<li>
-<p>Inventaire de l'infrastructure physique </p>
-</li>
-</ul>
+<p>Mercator permet d'extraire un ensemble d’informations sous forme de listes :</p>
+<h4 id="entites-et-application-supportees">Entités et application supportées</h4>
+<p>Génère la liste des entités du système d'information et de leurs applications supportées. </p>
+<p>Cette liste permet de lister les entités responsables des différentes application du système d’information avec les responsables et leurs points de contactes.</p>
+<h4 id="applications-par-groupe-applicatif">Applications par groupe applicatif</h4>
+<p>Liste des applications par groupe applicatif </p>
+<p>Cette liste permet d’avoir une vue de toutes les applications du système d’information classés par groupe applicatif.Cette liste peut être utilisés pour mener une veille technologique sur les vulnérabilités des applications du système d’information.</p>
+<h4 id="serveurs-logiques">Serveurs logiques</h4>
+<p>Liste des serveurs logiques par applications et responsables.</p>
+<p>Cette liste permet d'identifier les responsables des serveurs logiques et les application qu’ils servent.</p>
+<h4 id="analyse-des-besoins-de-securite">Analyse des besoins de sécurité</h4>
+<p>Liste des besoins de sécurité entre macro-processus, processus, applications, bases de données et informations. </p>
+<p>Cette liste permet d’analyse la cohérence du plan de classification de l’information en termes de confidentialité, intégrité disponibilité et traçabilité entre les processus, les applications, les bases de données et les informations qu’elles contiennent.</p>
+<h4 id="configuration-des-serveurs-logiques">Configuration des serveurs logiques</h4>
+<p>Liste de la configuration des serveurs logiques </p>
+<p>Cette liste permet d’analyse la configuration des serveurs logiques.</p>
+<p>Cette liste peut être utilisés pour effectuer l’analyse de la capacité nécessaire pour faire fonctionner le système d’information et d’effectuer des projections d’une année sur l’autre.</p>
+<h4 id="inventaire-de-linfrastructure-physique">Inventaire de l'infrastructure physique</h4>
 <p>Liste des équipements par site/local </p>
-<p>Cette liste permet de faire une revue de l’inventaire physique des équipement du système d’information.
-Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le matériel présent dans l’inventaire correspond à ce qui est réellement présent dans les locaux, site et baies correspondantes.</p>
+<p>Cette liste permet de faire une revue de l’inventaire physique des équipement du système d’information.</p>
+<p>Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le matériel présent dans l’inventaire correspond à ce qui est réellement présent dans les locaux, site et baies correspondantes.</p>
 <h3 id="audit">Audit</h3>
-<ul>
-<li>Niveaux de maturité</li>
-</ul>
+<h4 id="niveaux-de-maturite">Niveaux de maturité</h4>
 <p>Auditer le niveau de maturité de la cartographie du système d'information</p>
 <p>Auditer les changements réalisés sur le système d’information</p>
-<ul>
-<li>Mise à jour</li>
-</ul>
+<h4 id="mise-a-jour">Mise à jour</h4>
 <p>Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par tyoe d'obets réalisés sur la cartographie sur une année.</p>
               
             </div>
