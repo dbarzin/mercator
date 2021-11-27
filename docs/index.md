@@ -1,37 +1,17 @@
-## Welcome to GitHub Pages
+## Introduction
 
-You can use the [editor on GitHub](https://github.com/dbarzin/mercator/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le Guide pour la cartographie du Système d’information de l’ANSSI.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Objectif
 
-### Markdown
+L’objectif de Mercator est de pouvoir gérer en équipe une cartographie du système d’information complète et cohérente et générer automatiquement  différents rapport qui permettent de faciliter le maintient et la communication de cette cartographie.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Le maintient d’un cartographie à jour et complète est un travail long et complexe. Mercator permet de diviser ce travail entre plusieurs équipes (infrastructure, réseau, système, application...) et de générer automatiquement les schémas d’infrastructure, d’extraire les inventaires et de générer les rapports de cartographie.
 
-```markdown
-Syntax highlighted code block
+Mercator à l’avantage d’être simple à utiliser, à installer et à mettre en œuvre au sein d’une organisation.
 
-# Header 1
-## Header 2
-### Header 3
+### Limitations
 
-- Bulleted
-- List
+Le modèle de données utilise dans Mercator est basé sur celui proposé par l’ANSSI. Si le système d’information qui doit être modélisé est grand, complexe, comporte de nombreux systèmes hétéroclites, ce modèle peut s’avérer incomplet.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dbarzin/mercator/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Cependant en faisant quelques concessions sur la complétude de la cartographie, il est souvent possible de modéliser le système d’information avec le modèle proposé ici.

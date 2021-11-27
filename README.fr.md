@@ -66,14 +66,14 @@ Modèle de données
 - WebAssembly + Graphviz
 - ChartJS
 
-## TODO
-- documentation utilisateur
-- développer des REST API pour peupler la base de données
-
 ## Installation
 
 - Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md) 
 - Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.fr.md)
+
+## Documentation
+
+- Consultez la [documentation utilisateur](https://dbarzin.github.io/mercator/).
 
 ## Changelog
 
@@ -82,5 +82,4 @@ Tous les changements notables apportés à ce projet sont [documentés](https://
 ## License
 
 Mercator est un logiciel open source distribué sous [GPL](https://www.gnu.org/licenses/licenses.fr.html).
-
 
