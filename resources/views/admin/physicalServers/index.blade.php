@@ -63,7 +63,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.physical-servers.show', $physicalServer->id) }}">
                                 {{ $physicalServer->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $physicalServer->type ?? '' !!}
