@@ -35,5 +35,5 @@ Cette maturité est divisée en trois niveaux :
 
 * La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie;
 * La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie;
-* La granularité fine de niveau 3 qui contient informations utiles.
+* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du systèe d'information.
 
