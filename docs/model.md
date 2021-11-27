@@ -1,10 +1,12 @@
 ## Modèle de données
 
-[<img src="/mercator/images/model.png" width="600">](/mercator/images/model.png)
+[<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
 
 ### Vue de l’écosystème
 
 La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie.
+
+[<img src="/mercator/images/ecosystem.png" width="600">](/mercator/images/ecosystem.png)
 
 Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.
 
@@ -23,6 +25,8 @@ Les relations sont des contrats, accords de services, des obligations légales..
 ### Vue métier du système d’information
 
 La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. 
+
+[<img src="/mercator/images/information_system.png" width="600">](/mercator/images/information_system.png)
 
 La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.
 
@@ -58,7 +62,11 @@ Une information est une donnée faisant l’objet d’un traitement informatique
 
 ### La vue des applications
 
-La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.
+La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». 
+
+[<img src="/mercator/images/applications.png" width="600">](/mercator/images/applications.png)
+
+Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.
 
 #### Bloc applicatif 
 
@@ -100,6 +108,8 @@ Pas exemple, les requêtes DNS ou NTP ne devraient pas être représentées comm
 
 La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.
 
+[<img src="/mercator/images/administration.png" width="400">](/mercator/images/administration.png)
+
 Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les opérateurs d’importance vitale (OIV). 
 
 #### Zone d’administration
@@ -120,7 +130,11 @@ Ces objets représentent un regroupement organisé de domaines Active Directory 
 
 ### L’infrastructure logiques
 
-La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.
+La vue de l'infrastructure logique correspond à la répartition logique du réseau. 
+
+[<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
+
+Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.
 
 #### Réseaux
 
@@ -174,7 +188,11 @@ Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associé
 
 ### L’infrastructure physique
 
-La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.
+La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. 
+
+[<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
+
+Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.
 
 #### Sites
 
