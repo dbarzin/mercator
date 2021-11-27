@@ -35,3 +35,18 @@ Cette maturité est divisée en trois niveaux :
 * La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie;
 * La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
 
+### Besoins de sécurité
+
+Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et tracabilité avec l'échelle suivante :
+
+| Niveau   |      Description      |  Couleur |
+|:----------:|:-------------:|:------:|
+| 0| Insignifiant | Blanc |
+| 1 |    Faible   | <span style="color:green">Vert</span> |
+| 2 | Moyen | <span style="color:yellow;">Jaune</span> |
+| 3 | Fort | <span style="color:orange">Orange</span> |
+| 4 | Très fort | <span style="color:red">Rouge</span> |
+    
+
+
+

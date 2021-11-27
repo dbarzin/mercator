@@ -56,11 +56,12 @@ Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le 
 
 #### Niveaux de maturité
 
-Auditer le niveau de maturité de la cartographie du système d'information
+Cette liste contient le détail des niveaux de maturité de chaque type d'objet de la cartographie du système d'information
 
-Auditer les changements réalisés sur le système d’information
 
-#### Mise à jour
+#### Mises à jour
 
-Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par tyoe d'obets réalisés sur la cartographie sur une année.
+Cette liste permet d'auditer les changements réalisés sur la cartographie.
+
+Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par types d'objets réalisés sur la cartographie sur une année.
 
