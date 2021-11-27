@@ -582,6 +582,7 @@ return [
         "title_singular" => "Réseau"
     ],
     "networkSwitch" => [
+        "description" => "Composant gérant les connexions entre les différents serveurs au sein d’un réseau.",
         "fields" => [
             "description" => "Description",
             "description_helper" => "Caractéristiques techniques",
