@@ -66,7 +66,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.information.show', $information->id) }}">
                                 {{ $information->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $information->description ?? '' !!}

@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.application-modules.show', $applicationModule->id) }}">
                                 {{ $applicationModule->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $applicationModule->description !!}

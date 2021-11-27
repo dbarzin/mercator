@@ -73,7 +73,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.fluxes.show', $flux->id) }}">
                                 {{ $flux->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $flux->description ?? '' !!}

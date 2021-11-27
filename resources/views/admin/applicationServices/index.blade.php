@@ -58,7 +58,9 @@
 
                             </td>
                             <td>
-                                {{ $applicationService->name ?? '' }}
+                                <a href="{{ route('admin.application-services.show', $applicationService->id) }}">
+                                {{ $applicationService->name }}
+                                </a>
                             </td>
                             <td>
                                 {!! $applicationService->description !!}

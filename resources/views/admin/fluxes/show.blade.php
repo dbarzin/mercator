@@ -52,12 +52,28 @@
                             {{ trans('cruds.flux.fields.source') }}
                         </th>
                         <td>
-                            {{ $flux->application_source->name ?? '' }}
-                            @if (auth()->user()->granularity>=2)
-                                {{ $flux->service_source->name ?? '' }}
-                                {{ $flux->module_source->name ?? '' }}
+                            @if ($flux->application_source!=null)
+                                <a href="{{ route('admin.applications.show',$flux->application_source->id) }}">
+                                {{ $flux->application_source->name }}
+                                </a>
                             @endif
-                            {{ $flux->database_source->name ?? '' }}
+                            @if (auth()->user()->granularity>=2)
+                                @if($flux->service_source!=null)
+                                    <a href="{{ route('admin.application-services.show', $flux->service_source->id) }}">
+                                    {{ $flux->service_source->name }}
+                                    </a>
+                                @endif
+                                @if ($flux->module_source!=null)
+                                    <a href="{{ route('admin.application-modules.show', $flux->module_source->id) }}">
+                                    {{ $flux->module_source->name }}
+                                    </a>
+                                @endif
+                            @endif
+                            @if ($flux->database_source!=null)
+                                <a href="{{ route('admin.databases.show',$flux->database_source->id) }}">
+                                {{ $flux->database_source->name }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
 
@@ -66,12 +82,28 @@
                             {{ trans('cruds.flux.fields.destination') }}
                         </th>
                         <td>
-                            {{ $flux->application_dest->name ?? '' }}
-                            @if (auth()->user()->granularity>=2)
-                                {{ $flux->service_dest->name ?? '' }}
-                                {{ $flux->module_dest->name ?? '' }}
+                            @if ($flux->application_dest!=null)
+                                <a href="{{ route('admin.applications.show',$flux->application_dest->id) }}">
+                                {{ $flux->application_dest->name }}
+                                </a>
                             @endif
-                            {{ $flux->database_dest->name ?? '' }}
+                            @if (auth()->user()->granularity>=2)
+                                @if ($flux->service_dest!=null)
+                                    <a href="{{ route('admin.application-services.show', $flux->service_dest->id) }}">
+                                    {{ $flux->service_dest->name }}
+                                    </a>
+                                @endif
+                                @if ($flux->module_dest!=null)
+                                    <a href="{{ route('admin.application-modules.show', $flux->module_dest->id) }}">
+                                    {{ $flux->module_dest->name }}
+                                    </a>
+                                @endif
+                            @endif
+                            @if ($flux->database_dest!=null)
+                                <a href="{{ route('admin.databases.show',$flux->database_dest->id) }}">
+                                {{ $flux->database_dest->name }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>

@@ -50,7 +50,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.activities.show', $activity->id) }}">
                                 {{ $activity->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $activity->description !!}

@@ -53,7 +53,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.actors.show', $actor->id) }}">
                                 {{ $actor->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $actor->contact ?? '' }}

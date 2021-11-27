@@ -49,7 +49,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.operations.show', $operation->id) }}">
                                 {{ $operation->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $operation->description ?? '' !!}
