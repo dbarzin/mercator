@@ -14,7 +14,7 @@ Cette vue permet à la fois de délimiter le périmètre de la cartographie, mai
 
 Les entités sont une partie de l’organisme (ex. : filiale, département, etc.) ou en relation avec le système d’information qui vise à être cartographié.
 
-Les entités son des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.
+Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.
 
 #### Relations
 
