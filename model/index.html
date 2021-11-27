@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://dbarzin.githubs.io/mercator/model/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Modèle de données - Mercator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Mod\u00e8le de donn\u00e9es";
+    var mkdocs_page_input_path = "model.md";
+    var mkdocs_page_url = "/mercator/model/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Mercator</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../composition/">Composition</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Modèle de données</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#vue-de-lecosysteme">Vue de l’écosystème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#entites">Entités</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#relations">Relations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#vue-metier-du-systeme-dinformation">Vue métier du système d’information</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#macro-processus">Macro-processus</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#processus">Processus</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#activites">Activités</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operations">Opérations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#taches">Tâches</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#acteurs">Acteurs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#informations">Informations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#la-vue-des-applications">La vue des applications</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#bloc-applicatif">Bloc applicatif</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#service-applicatif">Service applicatif</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#module-applicatif">Module applicatif</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#base-de-donnees">Base de données</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flux">Flux</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ladministration">L’administration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#zone-dadministration">Zone d’administration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#service-dannuaire-dadministration">Service d’annuaire d’administration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linfrastructure-logiques">L’infrastructure logiques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#reseaux">Réseaux</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sous-reseaux">Sous-réseaux</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#entites-exterieures-connectees">Entités extérieures connectées</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#commutateurs-reseau">Commutateurs réseau</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#routeurs-logiques">Routeurs logiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#equipements-de-securite">Équipements de sécurité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serveurs-dhcp">Serveurs DHCP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serveurs-dns">Serveurs DNS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serveurs-logiques">Serveurs logiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#certificats">Certificats</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linfrastructure-physique">L’infrastructure physique</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#sites">Sites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#batiments-salles">Bâtiments / Salles</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#baies">Baies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serveurs-physiques">Serveurs physiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#postes-de-travail">Postes de travail</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#infrastructures-de-stockage">Infrastructures de stockage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#peripheriques">Périphériques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#telephones">Téléphones</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#commutateurs-physiques">Commutateurs physiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#routeurs-physiques">Routeurs physiques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bornes-wifi">Bornes WiFi</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#equipements-de-securite-physique">Équipements de sécurité physique</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wan">WAN</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#man">MAN</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lan">LAN</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vlan">VLAN</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reports/">Raports</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Mercator</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Modèle de données</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="modele-de-donnees">Modèle de données</h2>
+<p><a href="/mercator/images/model.png"><img src="/mercator/images/model.png" width="600"></a></p>
+<h3 id="vue-de-lecosysteme">Vue de l’écosystème</h3>
+<p>La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie.</p>
+<p>Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.</p>
+<h4 id="entites">Entités</h4>
+<p>Les entités sont une partie de l’organisme (ex. : filiale, département, etc.) ou en relation avec le système d’information qui vise à être cartographié.</p>
+<p>Les entités son des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.</p>
+<h4 id="relations">Relations</h4>
+<p>Les relation représentent un lien entre deux entités ou systèmes.</p>
+<p>Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système d’information.</p>
+<h3 id="vue-metier-du-systeme-dinformation">Vue métier du système d’information</h3>
+<p>La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. </p>
+<p>La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.</p>
+<h4 id="macro-processus">Macro-processus</h4>
+<p>Les macro-processus représentent des ensembles de processus.</p>
+<h4 id="processus">Processus</h4>
+<p>Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.</p>
+<p>Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par celui-ci.</p>
+<h4 id="activites">Activités</h4>
+<p>Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.</p>
+<h4 id="operations">Opérations</h4>
+<p>Une opération est composées d’acteurs et de tâches.</p>
+<h4 id="taches">Tâches</h4>
+<p>Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus.</p>
+<h4 id="acteurs">Acteurs</h4>
+<p>Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.</p>
+<h4 id="informations">Informations</h4>
+<p>Une information est une donnée faisant l’objet d’un traitement informatique.</p>
+<h3 id="la-vue-des-applications">La vue des applications</h3>
+<p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.</p>
+<h4 id="bloc-applicatif">Bloc applicatif</h4>
+<p>Un bloc applicatif représente un ensemble d’application.</p>
+<p>Un bloc applicatif peut être: les applications bureautique, de gestion, d’analyse, de développement, ...</p>
+<h4 id="application">Application</h4>
+<p>Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.</p>
+<p>Une application est peut être déployée sur un ou plusieurs serveurs logiques.</p>
+<p>Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logique par serveur physique mais il y a un serveur logique par serveur physique.</p>
+<h4 id="service-applicatif">Service applicatif</h4>
+<p>Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. </p>
+<p>Un service applicatif peut, une API, ...</p>
+<h4 id="module-applicatif">Module applicatif</h4>
+<p>Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.</p>
+<h4 id="base-de-donnees">Base de données</h4>
+<p>Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement. </p>
+<h4 id="flux">Flux</h4>
+<p>Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module applicatif ou base de données).</p>
+<p>Un flux représente un échange d’information entre deux élément du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.</p>
+<p>Pas exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. </p>
+<h3 id="ladministration">L’administration</h3>
+<p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.</p>
+<p>Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les opérateurs d’importance vitale (OIV). </p>
+<h4 id="zone-dadministration">Zone d’administration</h4>
+<p>Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).</p>
+<p>Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences LDAP.</p>
+<h4 id="service-dannuaire-dadministration">Service d’annuaire d’administration</h4>
+<p>Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.</p>
+<p>Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.</p>
+<h4 id="foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</h4>
+<p>Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.</p>
+<h3 id="linfrastructure-logiques">L’infrastructure logiques</h3>
+<p>La vue de l'infrastructure logique correspond à la répartition logique du réseau. Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.</p>
+<h4 id="reseaux">Réseaux</h4>
+<p>Les réseau sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.</p>
+<h4 id="sous-reseaux">Sous-réseaux</h4>
+<p>Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.</p>
+<h4 id="passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</h4>
+<p>Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.</p>
+<h4 id="entites-exterieures-connectees">Entités extérieures connectées</h4>
+<p>Les entités extérieurs connectées représentent les entités externes connectées au réseau.</p>
+<h4 id="commutateurs-reseau">Commutateurs réseau</h4>
+<p>Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<h4 id="routeurs-logiques">Routeurs logiques</h4>
+<p>Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.</p>
+<h4 id="equipements-de-securite">Équipements de sécurité</h4>
+<p>Les équipements de sécurité sont des composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
+<p>Les équipement de sécurité sont des  systèmes de détection d'intrusion (ou IDS : Intrusion detection System), des système de prévention d'intrusion (ou IPS : Intrustion Prevention System), des système de surveillance des équipements,. </p>
+<h4 id="serveurs-dhcp">Serveurs DHCP</h4>
+<p>Les serveurs DHCP sont des équipement physique ou virtuel permettant la gestion des adresses IP d’un réseau.</p>
+<h4 id="serveurs-dns">Serveurs DNS</h4>
+<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.</p>
+<h4 id="serveurs-logiques">Serveurs logiques</h4>
+<p>Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il est découpé en un seul serveur logique.</p>
+<p>Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physique du cluster au serveur logique.</p>
+<h4 id="certificats">Certificats</h4>
+<p>Les certificats électronique sont utilisés pour identifier et authentifier des services, des personne physiques ou morales, mais aussi pour chiffrer des échanges.  </p>
+<p>Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des applications.</p>
+<h3 id="linfrastructure-physique">L’infrastructure physique</h3>
+<p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.</p>
+<h4 id="sites">Sites</h4>
+<p>Les sites sont des emplacement géographique rassemblant un ensemble de personnes et/ou de ressources.</p>
+<h4 id="batiments-salles">Bâtiments / Salles</h4>
+<p>Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.</p>
+<h4 id="baies">Baies</h4>
+<p>Les baise sont des armoire technique rassemblant des équipements de réseau informatique ou de téléphonie.</p>
+<h4 id="serveurs-physiques">Serveurs physiques</h4>
+<p>Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.</p>
+<h4 id="postes-de-travail">Postes de travail</h4>
+<p>Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.</p>
+<h4 id="infrastructures-de-stockage">Infrastructures de stockage</h4>
+<p>Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…</p>
+<h4 id="peripheriques">Périphériques</h4>
+<p>Les périphériques sont des composant physique connecté à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
+<h4 id="telephones">Téléphones</h4>
+<p>Les téléphone fixe ou portable appartenant à l’organisation.</p>
+<h4 id="commutateurs-physiques">Commutateurs physiques</h4>
+<p>Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<h4 id="routeurs-physiques">Routeurs physiques</h4>
+<p>Les routeurs physiques sont des composant physiques gérant les connexions entre différents réseaux.</p>
+<h4 id="bornes-wifi">Bornes WiFi</h4>
+<p>Les Bornes WiFi sont des équipement matériel permettant l’accès au réseau sans fil wifi.</p>
+<h4 id="equipements-de-securite-physique">Équipements de sécurité physique</h4>
+<p>Les équipements de sécurité physique sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information</p>
+<p>Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...</p>
+<h4 id="wan">WAN</h4>
+<p>Les WAN (Wide Area Network) sont des réseau informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.</p>
+<h4 id="man">MAN</h4>
+<p>Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Il interconnecte généralement des LAN entre eux.</p>
+<h4 id="lan">LAN</h4>
+<p>Les LAN (Local Area Network) sonr des réseaux informatiques reliant des équipements sur une aire géographique réduite.</p>
+<h4 id="vlan">VLAN</h4>
+<p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../application/" class="btn btn-neutral float-right" title="Application">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../composition/" class="btn btn-neutral" title="Composition"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../composition/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../application/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
