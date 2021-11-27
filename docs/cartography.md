@@ -23,9 +23,9 @@ La vue des infrastructures logiques illustre le cloisonnement logique des résea
 
 La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou utilisés par celui-ci.
 
-### Les niveaus de maturité
+### Niveaux de maturité
 
-Les niveaux de maturité représentent le pourcentage de cohérence de la cartographie. C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
+Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
 
 [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
 
@@ -33,5 +33,5 @@ Cette maturité est divisée en trois niveaux :
 
 * La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie;
 * La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie;
-* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du systèe d'information.
+* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
 
