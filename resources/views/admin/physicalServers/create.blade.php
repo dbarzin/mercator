@@ -22,7 +22,14 @@
 
             <div class="form-group">
                 <label for="type">{{ trans('cruds.physicalServer.fields.type') }}</label>
-                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', '') }}">
+                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                    @if (!$responsible_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                    @endif
+                    @foreach($type_list as $t)
+                        <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('type'))
                     <div class="invalid-feedback">
                         {{ $errors->first('type') }}

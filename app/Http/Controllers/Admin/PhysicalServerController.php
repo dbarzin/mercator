@@ -34,10 +34,11 @@ class PhysicalServerController extends Controller
 
         // List
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalServers.create',
-            compact('sites', 'buildings', 'bays', 'responsible_list')
+            compact('sites', 'buildings', 'bays', 'responsible_list', 'type_list')
         );
     }
 
@@ -57,12 +58,14 @@ class PhysicalServerController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // List
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $physicalServer->load('site', 'building', 'bay');
 
         return view(
             'admin.physicalServers.edit',
-            compact('sites', 'buildings', 'bays', 'responsible_list', 'physicalServer')
+            compact('sites', 'buildings', 'bays', 
+                'responsible_list', 'type_list', 'physicalServer')
         );
     }
 

@@ -23,15 +23,22 @@
 
             <div class="form-group">
                 <label for="type">{{ trans('cruds.physicalServer.fields.type') }}</label>
-                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', $physicalServer->type) }}">
+                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                    @if (!$type_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                    @endif
+                    @foreach($type_list as $t)
+                        <option {{ (old('type') ? old('type') : $physicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
                 @if($errors->has('type'))
                     <div class="invalid-feedback">
                         {{ $errors->first('type') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.physicalServer.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.physicalServer.fields.type_helper') }}</span>
             </div>
-
+            
             <div class="form-group">
                 <label for="description">{{ trans('cruds.physicalServer.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $physicalServer->description) !!}</textarea>
