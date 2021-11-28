@@ -18,7 +18,7 @@ Les entités sont des départements, des fournisseurs, des partenaires avec lesq
 
 #### Relations
 
-Les relation représentent un lien entre deux entités ou systèmes.
+Les relations représentent un lien entre deux entités ou systèmes.
 
 Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système d’information.
 
@@ -46,7 +46,7 @@ Une activité est une étape nécessaire à la réalisation d’un processus. El
 
 #### Opérations
 
-Une opération est composées d’acteurs et de tâches.
+Une opération est composée d’acteurs et de tâches.
 
 #### Tâches
 
@@ -72,15 +72,15 @@ Cette vue décrit les solutions technologiques qui supportent les processus mét
 
 Un bloc applicatif représente un ensemble d’application.
 
-Un bloc applicatif peut être: les applications bureautique, de gestion, d’analyse, de développement, ...
+Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...
 
 #### Application
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.
 
-Une application est peut être déployée sur un ou plusieurs serveurs logiques.
+Une application peut être déployée sur un ou plusieurs serveurs logiques.
 
-Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logique par serveur physique mais il y a un serveur logique par serveur physique.
+Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y a un serveur logique par serveur physique.
 
 #### Service applicatif
 
@@ -100,7 +100,7 @@ Une base de données est un ensemble structuré et ordonné d’informations des
 
 Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module applicatif ou base de données).
 
-Un flux représente un échange d’information entre deux élément du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.
+Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.
 
 Pas exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. 
 
@@ -138,7 +138,7 @@ Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En 
 
 #### Réseaux
 
-Les réseau sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
+Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
 
 #### Sous-réseaux
 
@@ -150,7 +150,7 @@ Les passerelles sont des composants permettant de relier un réseau local avec l
 
 #### Entités extérieures connectées
 
-Les entités extérieurs connectées représentent les entités externes connectées au réseau.
+Les entités extérieures connectées représentent les entités externes connectées au réseau.
 
 #### Commutateurs réseau
 
@@ -162,13 +162,13 @@ Les routeurs logiques sont des composants logiques gérant les connexions entre 
 
 #### Équipements de sécurité 
 
-Les équipements de sécurité sont des composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.
+Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.
 
-Les équipement de sécurité sont des  systèmes de détection d'intrusion (ou IDS : Intrusion detection System), des système de prévention d'intrusion (ou IPS : Intrustion Prevention System), des système de surveillance des équipements,. 
+Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. 
 
 #### Serveurs DHCP
 
-Les serveurs DHCP sont des équipement physique ou virtuel permettant la gestion des adresses IP d’un réseau.
+Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.
 
 #### Serveurs DNS
 
@@ -178,11 +178,11 @@ Les serveurs de noms de domaine (Domain Name System) sont des équipements physi
 
 Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il est découpé en un seul serveur logique.
 
-Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physique du cluster au serveur logique.
+Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physiques du cluster au serveur logique.
 
 #### Certificats
 
-Les certificats électronique sont utilisés pour identifier et authentifier des services, des personne physiques ou morales, mais aussi pour chiffrer des échanges.  
+Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou morales, mais aussi pour chiffrer des échanges.  
 
 Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des applications.
 
@@ -196,7 +196,7 @@ Cette vue correspond à la répartition géographique des équipements réseaux 
 
 #### Sites
 
-Les sites sont des emplacement géographique rassemblant un ensemble de personnes et/ou de ressources.
+Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.
 
 #### Bâtiments / Salles
 
@@ -204,7 +204,7 @@ Les bâtiments ou salles représentent la localisation des personnes ou ressourc
 
 #### Baies
 
-Les baise sont des armoire technique rassemblant des équipements de réseau informatique ou de téléphonie.
+Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
 
 #### Serveurs physiques
 
@@ -220,11 +220,11 @@ Les infrastructures de stockage sont des supports physiques ou réseaux de stock
 
 #### Périphériques
 
-Les périphériques sont des composant physique connecté à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
+Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
 
 #### Téléphones
 
-Les téléphone fixe ou portable appartenant à l’organisation.
+Les téléphones fixe ou portable appartenant à l’organisation.
 
 #### Commutateurs physiques
 
@@ -232,11 +232,11 @@ Les commutateurs physiques sont des composants physiques gérant les connexions 
 
 #### Routeurs physiques
 
-Les routeurs physiques sont des composant physiques gérant les connexions entre différents réseaux.
+Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.
 
 #### Bornes WiFi
 
-Les Bornes WiFi sont des équipement matériel permettant l’accès au réseau sans fil wifi.
+Les Bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
 
 #### Équipements de sécurité physique
 
@@ -246,15 +246,15 @@ Les équipements de sécurité physique sont des sondes de températures, des ca
 
 #### WAN
 
-Les WAN (Wide Area Network) sont des réseau informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.
+Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.
 
 #### MAN
 
-Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Il interconnecte généralement des LAN entre eux.
+Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Ils interconnectent généralement des LAN entre eux.
 
 #### LAN
 
-Les LAN (Local Area Network) sonr des réseaux informatiques reliant des équipements sur une aire géographique réduite.
+Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
 
 #### VLAN
 
