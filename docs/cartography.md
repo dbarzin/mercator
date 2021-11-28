@@ -31,13 +31,13 @@ Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cart
 
 Cette maturité est divisée en trois niveaux :
 
-* La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie;
-* La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie;
+* La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;
+* La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;
 * La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
 
 ### Besoins de sécurité
 
-Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et tracabilité avec l'échelle suivante :
+Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et traçabilité avec l'échelle suivante :
 
 | Niveau   |      Description      |  Couleur |
 |:----------:|:-------------:|:------:|
