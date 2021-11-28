@@ -3,6 +3,8 @@
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information 
 comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
 
+La [documentation](https://dbarzin.github.io/mercator/) et les [sources de l'application](https://dbarzin.github.io/mercator/) sont disponisble sur GitHub.
+
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
 ![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
@@ -70,10 +72,6 @@ Modèle de données
 
 - Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md) 
 - Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.fr.md)
-
-## Documentation
-
-- Consultez la [documentation utilisateur](https://dbarzin.github.io/mercator/).
 
 ## Changelog
 
