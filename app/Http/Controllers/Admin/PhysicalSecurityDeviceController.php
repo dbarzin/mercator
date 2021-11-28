@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use App\PhysicalSecurityDevice;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSecurityDeviceController extends Controller
@@ -32,17 +29,19 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.physicalSecurityDevices.create', compact('sites', 'buildings', 'bays'));
+        $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
+            ->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.physicalSecurityDevices.create', 
+            compact('sites', 'buildings', 'bays', 'type_list'));
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
-        $physicalSecurityDevice = PhysicalSecurityDevice::create($request->all());
+         PhysicalSecurityDevice::create($request->all());
 
         return redirect()->route('admin.physical-security-devices.index');
     }
@@ -52,14 +51,16 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
+            ->distinct()->orderBy('type')->pluck('type');
 
         $physicalSecurityDevice->load('site', 'building', 'bay');
 
-        return view('admin.physicalSecurityDevices.edit', compact('sites', 'buildings', 'bays', 'physicalSecurityDevice'));
+        return view('admin.physicalSecurityDevices.edit', 
+            compact('sites', 'buildings', 'bays', 'physicalSecurityDevice','type_list'));
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
@@ -84,7 +85,7 @@ class PhysicalSecurityDeviceController extends Controller
 
         $physicalSecurityDevice->delete();
 
-        return back();
+        return redirect()->route('admin.physical-security-devices.index');
     }
 
     public function massDestroy(MassDestroyPhysicalSecurityDeviceRequest $request)
@@ -93,5 +94,4 @@ class PhysicalSecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

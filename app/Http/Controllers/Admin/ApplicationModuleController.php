@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\ApplicationModule;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationModuleController extends Controller
@@ -33,7 +30,7 @@ class ApplicationModuleController extends Controller
 
     public function store(StoreApplicationModuleRequest $request)
     {
-        $applicationModule = ApplicationModule::create($request->all());
+        ApplicationModule::create($request->all());
 
         return redirect()->route('admin.application-modules.index');
     }
@@ -56,7 +53,7 @@ class ApplicationModuleController extends Controller
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationModule->load('moduleSourceFluxes', 'moduleDestFluxes', 'modulesApplicationServices');
+        $applicationModule->load('moduleSourceFluxes', 'moduleDestFluxes', 'applicationServices');
 
         return view('admin.applicationModules.show', compact('applicationModule'));
     }
@@ -67,7 +64,7 @@ class ApplicationModuleController extends Controller
 
         $applicationModule->delete();
 
-        return back();
+        return redirect()->route('admin.application-modules.index');
     }
 
     public function massDestroy(MassDestroyApplicationModuleRequest $request)
@@ -76,5 +73,4 @@ class ApplicationModuleController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\DomaineAd;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +18,12 @@ class StoreDomaineAdRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'            => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:domaine_ads',
-                'unique:domain_ads,name,NULL,id,deleted_at,NULL',
+                'unique:domaine_ads,name,NULL,id,deleted_at,NULL',
             ],
             'domain_ctrl_cnt' => [
                 'nullable',
@@ -32,13 +31,13 @@ class StoreDomaineAdRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'user_count'      => [
+            'user_count' => [
                 'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'machine_count'   => [
+            'machine_count' => [
                 'nullable',
                 'integer',
                 'min:-2147483648',

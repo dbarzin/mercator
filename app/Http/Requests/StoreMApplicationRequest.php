@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\MApplication;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,47 +18,47 @@ class StoreMApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'              => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:m_applications',
                 'unique:m_applications,name,NULL,id,deleted_at,NULL',
             ],
-            'entities.*'        => [
+            'entities.*' => [
                 'integer',
             ],
-            'entities'          => [
+            'entities' => [
                 'array',
             ],
-            'security_need'     => [
+            'security_need' => [
                 'nullable',
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'processes.*'       => [
+            'processes.*' => [
                 'integer',
             ],
-            'processes'         => [
+            'processes' => [
                 'array',
             ],
-            'services.*'        => [
+            'services.*' => [
                 'integer',
             ],
-            'services'          => [
+            'services' => [
                 'array',
             ],
-            'databases.*'       => [
+            'databases.*' => [
                 'integer',
             ],
-            'databases'         => [
+            'databases' => [
                 'array',
             ],
             'logical_servers.*' => [
                 'integer',
             ],
-            'logical_servers'   => [
+            'logical_servers' => [
                 'array',
             ],
         ];

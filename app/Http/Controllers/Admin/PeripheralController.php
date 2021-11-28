@@ -5,21 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
 use App\Peripheral;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -44,11 +39,7 @@ class PeripheralController extends Controller
 
     public function store(StorePeripheralRequest $request)
     {
-        $peripheral = Peripheral::create($request->all());
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $peripheral->id]);
-        }
+        Peripheral::create($request->all());
 
         return redirect()->route('admin.peripherals.index');
     }
@@ -90,7 +81,7 @@ class PeripheralController extends Controller
 
         $peripheral->delete();
 
-        return back();
+        return redirect()->route('admin.peripherals.index');
     }
 
     public function massDestroy(MassDestroyPeripheralRequest $request)
@@ -99,5 +90,4 @@ class PeripheralController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

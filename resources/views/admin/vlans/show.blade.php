@@ -12,19 +12,24 @@
                 <a class="btn btn-default" href="{{ route('admin.vlans.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('vlan_edit')
+                    <a class="btn btn-info" href="{{ route('admin.vlans.edit', $vlan->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('vlan_delete')
+                    <form action="{{ route('admin.vlans.destroy', $vlan->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan                
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.vlan.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $vlan->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.vlan.fields.name') }}
                         </th>
                         <td>
@@ -41,26 +46,15 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.vlan.fields.address') }}
+                            {{ trans('cruds.vlan.fields.subnetworks') }}
                         </th>
                         <td>
-                            {{ $vlan->address }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vlan.fields.mask') }}
-                        </th>
-                        <td>
-                            {{ $vlan->mask }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.vlan.fields.gateway') }}
-                        </th>
-                        <td>
-                            {{ $vlan->gateway }}
+                            @foreach($vlan->subnetworks as $subnetwork)
+                                <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
+                                @if ($vlan->subnetworks->last()!=$subnetwork)
+                                    ,
+                                @endif
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>
@@ -70,24 +64,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#vlan_physical_routers" role="tab" data-toggle="tab">
-                {{ trans('cruds.physicalRouter.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="vlan_physical_routers">
-            @includeIf('admin.vlans.relationships.vlanPhysicalRouters', ['physicalRouters' => $vlan->vlanPhysicalRouters])
         </div>
     </div>
 </div>

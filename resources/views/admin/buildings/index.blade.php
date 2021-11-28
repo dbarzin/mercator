@@ -49,7 +49,7 @@
 
                             </td>
                             <td>
-                                {{ $building->name ?? '' }}
+                                <a href="{{ route('admin.buildings.show', $building->id) }}">{{ $building->name ?? '' }}</a>
                             </td>
                             <td>
                                 {!! $building->description ?? '' !!}
@@ -61,7 +61,11 @@
                                 {{ $building->badge ? trans('global.yes') : trans('global.no') }} 
                             </td>
                             <td>
-                                {{ $building->site->name ?? '' }}
+                                @if ($building->site!=null)
+                                <a href="{{ route('admin.sites.show', $building->site_id) }}">
+                                {{ $building->site->name ?? '' }}                                
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('building_show')

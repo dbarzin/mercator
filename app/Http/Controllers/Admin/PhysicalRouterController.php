@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
@@ -13,8 +12,6 @@ use App\PhysicalRouter;
 use App\Site;
 use App\Vlan;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends Controller
@@ -91,7 +88,7 @@ class PhysicalRouterController extends Controller
 
         $physicalRouter->delete();
 
-        return back();
+        return redirect()->route('admin.physical-routers.index');
     }
 
     public function massDestroy(MassDestroyPhysicalRouterRequest $request)
@@ -100,5 +97,4 @@ class PhysicalRouterController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -1,0 +1,107 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: [master, develop]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest 
+
+    services:
+      mysql:
+        image: mysql:8.0.21
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            php-version: '7.4'
+            extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
+
+      - name: Install dependencies
+        run: |
+            composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Create Database
+        run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+      - name: Configrue Storage Permission
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Prepare the application
+        run: |
+          php -r "file_exists('.env') || copy('.env.ci', '.env');"
+
+      - name: Set the application key
+        run: |
+          php artisan key:generate
+
+      - name: Publish any publishable assets from vendor packages
+        run: |
+          php artisan vendor:publish --all
+
+      - name: Remove the configuration cache file
+        run: |
+          php artisan config:clear
+
+      - name: Migrate and seed the database
+        run: |
+          php artisan migrate --seed 
+
+      - name: Insert test data
+        run: |
+          mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
+
+      - name: Check code quality
+        run: |
+          php artisan insights
+
+      - name: Upgrade Chrome Driver
+        run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+
+      - name: Start Chrome Driver
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+
+      - name: Run Laravel Server
+        run: php artisan serve --no-reload &
+
+      - name: Run Dusk Tests
+        env:
+          APP_ENV: local
+          APP_URL: "http://127.0.0.1:8000"
+          DB_CONNECTION: mysql
+          DB_DATABASE: mercator
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_USER: root
+        run: |
+          php artisan dusk --stop-on-error --stop-on-failure
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
+
+      - name: Upload Console Logs
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: console
+          path: tests/Browser/console
+

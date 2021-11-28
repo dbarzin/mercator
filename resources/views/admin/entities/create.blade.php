@@ -51,6 +51,37 @@
             </div>
 
             <div class="form-group">
+                <label for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
+                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    @foreach($applications as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('applications'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('applications') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.entity.fields.applications_resp_helper') }}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="databases">{{ trans('cruds.entity.fields.databases_resp') }}</label>
+                <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                    @foreach($databases as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('databases', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('databases'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('databases') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.entity.fields.databases_resp_helper') }}</span>
+            </div>
+
+
+            <div class="form-group">
                 <label class="recommended" for="processes">{{ trans('cruds.entity.fields.processes') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -78,74 +109,27 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/entities/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
-
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $entity->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
+$(document).ready(function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
+
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+
 });
 </script>
-
 @endsection

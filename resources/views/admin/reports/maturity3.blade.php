@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.maturity_level_3") }}
+                    {{ trans("panel.level_3.title_long") }}
                 </div>
                 <div class="card-body">
                     <div style="width: 350px; height: 180px;">
@@ -16,7 +16,7 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.cartography") }}
+                    {{ trans("panel.level_3.description") }}
                 </div>
                 <div class="card-body">
 
@@ -24,7 +24,7 @@
     <div class="col-sm-6">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-                <th>{{ trans("cruds.ecosystem.title_short") }}</th>
+                <th>{{ trans("cruds.menu.ecosystem.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ number_format( ($entities+$relations)>0 
@@ -45,26 +45,26 @@
                 </tr>
             </tbody>
             <thead>
-                <th>{{ trans("cruds.metier.title_short") }}</th>
+                <th>{{ trans("cruds.menu.metier.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ ($macroProcessuses+$processes+$activities+$operations+$actors+$informations)>0 ?
-                        number_format(($macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl1)*100/
+                        number_format(($macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl2)*100/
                             ($macroProcessuses+$processes+$activities+$operations+$actors+$informations),0) : 0 }} %</center></th>
             </thead>
             <tbody>
                <tr>
                     <td><a href="/admin/macro-processuses">{{ trans("cruds.macroProcessus.title") }}</a></td>
                     <td><center>{{ $macroProcessuses }}</center></td>
-                    <td><center>{{ $macroProcessuses_lvl2 }}</center></td>
-                    <td><center>{{ $macroProcessuses>0 ? number_format($macroProcessuses_lvl2*100/$macroProcessuses,0):0 }}%</center></td>
+                    <td><center>{{ $macroProcessuses_lvl3 }}</center></td>
+                    <td><center>{{ $macroProcessuses>0 ? number_format($macroProcessuses_lvl3*100/$macroProcessuses,0):0 }}%</center></td>
                 </tr>
 
                 <tr>
                     <td><a href="/admin/processes">{{ trans("cruds.process.title") }}</a></td>
                     <td><center>{{ $processes }}</center></td>
-                    <td><center>{{ $processes_lvl1 }}</center></td>
-                    <td><center>{{ $processes>0 ? number_format($processes_lvl1*100/$processes,0):0 }}%</center></td>
+                    <td><center>{{ $processes_lvl2 }}</center></td>
+                    <td><center>{{ $processes>0 ? number_format($processes_lvl2*100/$processes,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/activities">{{ trans("cruds.activity.title") }}</a></td>
@@ -93,18 +93,18 @@
                 <tr>
                     <td><a href="/admin/information">{{ trans("cruds.information.title") }}</a></td>
                     <td><center>{{ $informations }}</center></td>
-                    <td><center>{{ $informations_lvl1 }}</center></td>
-                    <td><center>{{ $informations>0 ? number_format($informations_lvl1*100/$informations,0):0 }}%</center></td>
+                    <td><center>{{ $informations_lvl2 }}</center></td>
+                    <td><center>{{ $informations>0 ? number_format($informations_lvl2*100/$informations,0):0 }}%</center></td>
                 </tr>
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.application_view.title_short") }}</th>
+                <th>{{ trans("cruds.menu.application.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
                     {{ ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes)>0 ?
-                       number_format(($applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl1+$fluxes_lvl1) *100 / ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes),0) : 0 }}%
+                       number_format(($applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1) *100 / ($applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes),0) : 0 }}%
                 </center></th>
             </thead>
 
@@ -136,8 +136,8 @@
                 <tr>
                     <td><a href="/admin/databases">{{ trans("cruds.database.title") }}</a></td>
                     <td><center>{{ $databases }}</center></td>
-                    <td><center>{{ $databases_lvl1 }}</center></td>
-                    <td><center>{{ $databases>0 ? number_format($databases_lvl1*100/$databases,0):0 }}%</center></td>
+                    <td><center>{{ $databases_lvl2 }}</center></td>
+                    <td><center>{{ $databases>0 ? number_format($databases_lvl2*100/$databases,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/fluxes">{{ trans("cruds.flux.title") }}</a></td>
@@ -149,7 +149,7 @@
 
 
             <thead>
-                <th>{{ trans("cruds.administration.title_short") }}</th>
+                <th>{{ trans("cruds.menu.administration.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -186,18 +186,18 @@
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.logical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.logical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th>
                     <center>
                     {{
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers)>0
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates)>0
                         ?
                         number_format(
-                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1) 
+                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1+$certificates_lvl2) 
                         *100 /
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$logicalServers),0)
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$logicalServers+$certificates),0)
                         : 0
                     }}
                     %
@@ -214,7 +214,7 @@
                 </tr>
 
                 <tr>
-                    <td><a href="/admin/subnetwords">{{ trans("cruds.subnetwork.title") }}</a></td>
+                    <td><a href="/admin/subnetworks">{{ trans("cruds.subnetwork.title") }}</a></td>
                     <td><center>{{ $subnetworks }}</center></td>
                     <td><center>{{ $subnetworks_lvl1 }}</center></td>
                     <td><center>{{ $subnetworks>0 ? number_format($subnetworks_lvl1*100/$subnetworks,0):0 }}%</center></td>
@@ -267,10 +267,16 @@
                     <td><center>{{ $logicalServers_lvl1 }}</center></td>
                     <td><center>{{ $logicalServers>0 ? number_format($logicalServers_lvl1*100/$logicalServers,0):0 }}%</center></td>
                 </tr>
+                <tr>
+                    <td><a href="/admin/certificates">{{ trans("cruds.certificate.title") }}</a></td>
+                    <td><center>{{ $certificates }}</center></td>
+                    <td><center>{{ $certificates_lvl2 }}</center></td>
+                    <td><center>{{ $certificates>0 ? number_format($certificates_lvl2*100/$certificates,0):0 }}%</center></td>
+                </tr>
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.physical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.physical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -406,7 +412,7 @@
 @section('scripts')
 
   <script src="/js/Chart.bundle.js"></script>
-  <script src="/js/chartjs-gauge.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
 
   <script type="text/javascript">
   var maturity3 = {{
@@ -421,7 +427,7 @@
             number_format ( 
             (
             $entities_lvl1+$relations_lvl2+
-            $macroProcessuses_lvl2+$processes_lvl1+$activities_lvl3+$tasks_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl1+
+            $macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$tasks_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl2+
             $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
             $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
             $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+

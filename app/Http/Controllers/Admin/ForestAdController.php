@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\DomaineAd;
 use App\ForestAd;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyForestAdRequest;
 use App\Http\Requests\StoreForestAdRequest;
 use App\Http\Requests\UpdateForestAdRequest;
 use App\ZoneAdmin;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class ForestAdController extends Controller
@@ -81,7 +78,7 @@ class ForestAdController extends Controller
 
         $forestAd->delete();
 
-        return back();
+        return redirect()->route('admin.forest-ads.index');
     }
 
     public function massDestroy(MassDestroyForestAdRequest $request)
@@ -90,5 +87,4 @@ class ForestAdController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

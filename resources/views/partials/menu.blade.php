@@ -22,7 +22,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.ecosystem.title') }}
+                        {{ trans('cruds.menu.ecosystem.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('entity_access')
@@ -54,7 +54,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.metier.title') }}
+                        {{ trans('cruds.menu.metier.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @if (auth()->user()->granularity>=2)
@@ -146,7 +146,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.application_view.title') }}
+                        {{ trans('cruds.menu.application.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @if (auth()->user()->granularity>=2)                        
@@ -274,7 +274,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.logical_infrastructure.title') }}
+                        {{ trans('cruds.menu.logical_infrastructure.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('network_access')
@@ -287,9 +287,9 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('subnetword_access')
+                        @can('subnetwork_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetwords') || request()->is('admin/subnetwords/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetworks') || request()->is('admin/subnetworks/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -381,6 +381,18 @@
                                 </a>
                             </li>
                         @endcan
+                        @if (auth()->user()->granularity>=2)
+                        @can('certificate_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificatess') || request()->is('admin/certificates/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.certificate.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @endif
                     </ul>
                 </li>
             @endcan
@@ -390,7 +402,7 @@
                         <i class="fa-fw fas fa-cogs nav-icon">
 
                         </i>
-                        {{ trans('cruds.physical_infrastructure.title') }}
+                        {{ trans('cruds.menu.physical_infrastructure.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('site_access')
@@ -566,7 +578,7 @@
                         <i class="fa-fw fas fa-users nav-icon">
 
                         </i>
-                        {{ trans('cruds.userManagement.title') }}
+                        {{ trans('cruds.menu.user_management.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
                         @can('permission_access')
@@ -612,19 +624,6 @@
                     </ul>
                 </li>
             @endcan
-            {{--
-            @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                @can('profile_password_edit')
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'active' : '' }}" href="{{ route('profile.password.edit') }}">
-                            <i class="fa-fw fas fa-key nav-icon">
-                            </i>
-                            {{ trans('global.change_password') }}
-                        </a>
-                    </li>
-                @endcan
-            @endif
-            --}}
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-fw fa-sign-out-alt">

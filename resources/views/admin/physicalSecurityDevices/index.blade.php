@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.physicalSecurityDevice.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
                         </th>
                         <th>
@@ -47,27 +44,48 @@
                 </thead>
                 <tbody>
                     @foreach($physicalSecurityDevices as $key => $physicalSecurityDevice)
-                        <tr data-entry-id="{{ $physicalSecurityDevice->id }}">
+                        <tr data-entry-id="{{ $physicalSecurityDevice->id }}"
+
+                            @if (($physicalSecurityDevice->description==null)||
+                                ($physicalSecurityDevice->type==null)||
+                                ($physicalSecurityDevice->site_id==null)||
+                                ($physicalSecurityDevice->building_id==null)
+                                )
+                                    class="table-warning"
+                            @endif
+
+                            >
                             <td>
 
                             </td>
                             <td>
-                                {{ $physicalSecurityDevice->id ?? '' }}
-                            </td>
-                            <td>
+                                <a href="{{ route('admin.physical-security-devices.show', $physicalSecurityDevice->id) }}">
                                 {{ $physicalSecurityDevice->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->type ?? '' }}
                             </td>
                             <td>
-                                {{ $physicalSecurityDevice->site->name ?? '' }}
+                                @if($physicalSecurityDevice->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">
+                                    {{ $physicalSecurityDevice->site->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $physicalSecurityDevice->building->name ?? '' }}
+                                @if($physicalSecurityDevice->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">
+                                    {{ $physicalSecurityDevice->building->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                @if($physicalSecurityDevice->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalSecurityDevice->bay->id) }}">
+                                    {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('physical_security_device_show')
@@ -139,7 +157,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   $('.datatable-PhysicalSecurityDevice:not(.ajaxTable)').DataTable({ buttons: dtButtons })

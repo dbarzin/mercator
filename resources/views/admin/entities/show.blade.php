@@ -11,7 +11,21 @@
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.entities.index') }}">
                     {{ trans('global.back_to_list') }}
-                </a>
+
+                @can('entity_edit')
+                    <a class="btn btn-info" href="{{ route('admin.entities.edit', $entity->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('entity_delete')
+                    <form action="{{ route('admin.entities.destroy', $entity->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped ">
                 <tbody>
@@ -56,64 +70,12 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $entity->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $entity->updated_at->format(trans('global.timestamp')) }} 
     </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#entity_resp_databases" role="tab" data-toggle="tab">
-                {{ trans('cruds.database.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#entity_resp_m_applications" role="tab" data-toggle="tab">
-                {{ trans('cruds.application.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#source_relations" role="tab" data-toggle="tab">
-                {{ trans('cruds.relation.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#destination_relations" role="tab" data-toggle="tab">
-                {{ trans('cruds.relation.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#entities_m_applications" role="tab" data-toggle="tab">
-                {{ trans('cruds.application.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#entities_processes" role="tab" data-toggle="tab">
-                {{ trans('cruds.process.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="entity_resp_databases">
-            @includeIf('admin.entities.relationships.entityRespDatabases', ['databases' => $entity->entityRespDatabases])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="entity_resp_m_applications">
-            @includeIf('admin.entities.relationships.entityRespMApplications', ['mApplications' => $entity->entityRespMApplications])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="source_relations">
-            @includeIf('admin.entities.relationships.sourceRelations', ['relations' => $entity->sourceRelations])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="destination_relations">
-            @includeIf('admin.entities.relationships.destinationRelations', ['relations' => $entity->destinationRelations])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="entities_m_applications">
-            @includeIf('admin.entities.relationships.entitiesMApplications', ['mApplications' => $entity->entitiesMApplications])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="entities_processes">
-            @includeIf('admin.entities.relationships.entitiesProcesses', ['processes' => $entity->entitiesProcesses])
-        </div>
-    </div>
+
 </div>
 
 @endsection

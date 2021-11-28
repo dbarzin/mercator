@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\DhcpServer;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDhcpServerRequest;
 use App\Http\Requests\StoreDhcpServerRequest;
 use App\Http\Requests\UpdateDhcpServerRequest;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class DhcpServerController extends Controller
@@ -33,7 +30,7 @@ class DhcpServerController extends Controller
 
     public function store(StoreDhcpServerRequest $request)
     {
-        $dhcpServer = DhcpServer::create($request->all());
+        DhcpServer::create($request->all());
 
         return redirect()->route('admin.dhcp-servers.index');
     }
@@ -65,7 +62,7 @@ class DhcpServerController extends Controller
 
         $dhcpServer->delete();
 
-        return back();
+        return redirect()->route('admin.dhcp-servers.index');
     }
 
     public function massDestroy(MassDestroyDhcpServerRequest $request)

@@ -35,6 +35,9 @@
                             {{ trans('cruds.entity.fields.security_level') }}
                         </th>
                         <th>
+                            {{ trans('cruds.entity.fields.exploits') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -42,20 +45,22 @@
                 <tbody>
                     @foreach($entities as $key => $entity)
                         <tr data-entry-id="{{ $entity->id }}"
-@if(($entity->description==null)||
-    ($entity->contact_point==null)||
-    ($entity->security_level==null)||
-    ($entity->contact_point==null)||
-    ($entity->entitiesProcesses->count()==0)
-    )
-                          class="table-warning"
-@endif
+                            @if(($entity->description==null)||
+                                ($entity->contact_point==null)||
+                                ($entity->security_level==null)||
+                                ($entity->contact_point==null)||
+                                ($entity->entitiesProcesses->count()==0)
+                                )
+                                class="table-warning"
+                            @endif
                           >
                             <td>
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">
                                 {{ $entity->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $entity->description ?? '' !!}
@@ -65,6 +70,27 @@
                             </td>                        
                             <td>
                                 {!! $entity->security_level ?? '' !!}
+                            </td>
+                            <td>
+                                @foreach($entity->applications as $application)
+                                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                                        {{ $application->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
+                                @if(($entity->applications->count()>0)&&($entity->databases->count()>0))
+                                    ,<br>
+                                @endif
+                                @foreach($entity->databases as $database)
+                                    <a href="{{ route('admin.databases.show', $database->id) }}">
+                                        {{ $database->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('entity_show')
@@ -145,7 +171,6 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
 })
 
 </script>

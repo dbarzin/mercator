@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
+use App\NetworkSwitch;
 use App\Router;
-use App\NetworkSwitches;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class RouterController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -31,15 +26,14 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitches::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.create',compact('NetworkSwitches'));
+        return view('admin.routers.create', compact('network_switches'));
     }
 
     public function store(StoreRouterRequest $request)
     {
-        $router = Router::create($request->all());
-        //$router->networkSwitches()->sync($request->input('networkSwitches', []));
+        Router::create($request->all());
 
         return redirect()->route('admin.routers.index');
     }
@@ -48,15 +42,14 @@ class RouterController extends Controller
     {
         abort_if(Gate::denies('router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network_switches = NetworkSwitches::all()->sortBy('name')->pluck('name', 'id');
+        $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.edit', compact('router','network_switches'));
+        return view('admin.routers.edit', compact('router', 'network_switches'));
     }
 
     public function update(UpdateRouterRequest $request, Router $router)
     {
         $router->update($request->all());
-        //$router->networkSwitches()->sync($request->input('networkSwitches', []));
 
         return redirect()->route('admin.routers.index');
     }
@@ -74,7 +67,7 @@ class RouterController extends Controller
 
         $router->delete();
 
-        return back();
+        return redirect()->route('admin.routers.index');
     }
 
     public function massDestroy(MassDestroyRouterRequest $request)
@@ -83,5 +76,4 @@ class RouterController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

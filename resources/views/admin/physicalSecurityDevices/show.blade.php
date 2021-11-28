@@ -12,19 +12,25 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-security-devices.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('physical_security_device_edit')
+                    <a class="btn btn-info" href="{{ route('admin.physical-security-devices.edit', $physicalSecurityDevice->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('physical_security_device_delete')
+                    <form action="{{ route('admin.physical-security-devices.destroy', $physicalSecurityDevice->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.physicalSecurityDevice.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $physicalSecurityDevice->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
                         </th>
                         <td>
@@ -52,7 +58,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.site') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->site->name ?? '' }}
+                                @if($physicalSecurityDevice->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site->id) }}">
+                                    {{ $physicalSecurityDevice->site->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +70,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.building') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->building->name ?? '' }}
+                                @if($physicalSecurityDevice->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building->id) }}">
+                                    {{ $physicalSecurityDevice->building->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +82,11 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.bay') }}
                         </th>
                         <td>
-                            {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                @if($physicalSecurityDevice->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalSecurityDevice->bay->id) }}">
+                                    {{ $physicalSecurityDevice->bay->name ?? '' }}
+                                </a>
+                                @endif
                         </td>
                     </tr>
                 </tbody>

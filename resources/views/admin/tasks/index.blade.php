@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.tasks.show', $task->id) }}">
                                 {{ $task->nom ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $task->description ?? '' }}

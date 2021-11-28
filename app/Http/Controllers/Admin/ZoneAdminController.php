@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyZoneAdminRequest;
 use App\Http\Requests\StoreZoneAdminRequest;
 use App\Http\Requests\UpdateZoneAdminRequest;
 use App\ZoneAdmin;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class ZoneAdminController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('zone_admin_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,7 +30,7 @@ class ZoneAdminController extends Controller
 
     public function store(StoreZoneAdminRequest $request)
     {
-        $zoneAdmin = ZoneAdmin::create($request->all());
+        ZoneAdmin::create($request->all());
 
         return redirect()->route('admin.zone-admins.index');
     }
@@ -69,7 +64,7 @@ class ZoneAdminController extends Controller
 
         $zoneAdmin->delete();
 
-        return back();
+        return redirect()->route('admin.zone-admins.index');
     }
 
     public function massDestroy(MassDestroyZoneAdminRequest $request)
@@ -78,5 +73,4 @@ class ZoneAdminController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

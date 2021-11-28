@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
 use App\MacroProcessus;
 use App\Process;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroProcessusController extends Controller
@@ -20,7 +17,7 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroProcessuses = MacroProcessus::all()->sortBy('name');
+        $macroProcessuses = MacroProcessus::orderBy('name')->get();
 
         return view('admin.macroProcessuses.index', compact('macroProcessuses'));
     }
@@ -29,11 +26,11 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
-        $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
-        return view('admin.macroProcessuses.create', compact('processes','owner_list'));
+        return view('admin.macroProcessuses.create', compact('processes', 'owner_list'));
     }
 
     public function store(StoreMacroProcessusRequest $request)
@@ -41,10 +38,10 @@ class MacroProcessusController extends Controller
         $macroProcessus = MacroProcessus::create($request->all());
 
         Process::where('macroprocess_id', $macroProcessus->id)
-              ->update(['macroprocess_id' => null]);
+            ->update(['macroprocess_id' => null]);
 
         Process::whereIn('id', $request->input('processes', []))
-              ->update(['macroprocess_id' => $macroProcessus->id]);
+            ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return redirect()->route('admin.macro-processuses.index');
     }
@@ -53,15 +50,16 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('idenifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         // lists
-        $owner_list = MacroProcessus::select('owner')->where("owner","<>",null)->distinct()->orderBy('owner')->pluck('owner');
+        $owner_list = MacroProcessus::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
         $macroProcessus->load('processes');
 
-        return view('admin.macroProcessuses.edit', 
-            compact('processes', 'macroProcessus','owner_list')
-            );
+        return view(
+            'admin.macroProcessuses.edit',
+            compact('processes', 'macroProcessus', 'owner_list')
+        );
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
@@ -70,10 +68,10 @@ class MacroProcessusController extends Controller
 
         // $macroProcessus->processes()->sync($request->input('processes', []));
         Process::where('macroprocess_id', $macroProcessus->id)
-              ->update(['macroprocess_id' => null]);
+            ->update(['macroprocess_id' => null]);
 
         Process::whereIn('id', $request->input('processes', []))
-              ->update(['macroprocess_id' => $macroProcessus->id]);
+            ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return redirect()->route('admin.macro-processuses.index');
     }
@@ -93,7 +91,7 @@ class MacroProcessusController extends Controller
 
         $macroProcessus->delete();
 
-        return back();
+        return redirect()->route('admin.macro-processuses.index');
     }
 
     public function massDestroy(MassDestroyMacroProcessusRequest $request)
@@ -102,5 +100,4 @@ class MacroProcessusController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

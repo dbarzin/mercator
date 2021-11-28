@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.man.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.man.fields.name') }}
                         </th>
                         <th>
@@ -41,9 +38,6 @@
                         <tr data-entry-id="{{ $man->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $man->id ?? '' }}
                             </td>
                             <td>
                                 {{ $man->name ?? '' }}
@@ -124,7 +118,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   let table = $('.datatable-Man:not(.ajaxTable)').DataTable({ buttons: dtButtons })

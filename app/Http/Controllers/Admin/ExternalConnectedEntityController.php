@@ -9,7 +9,6 @@ use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
 use App\Network;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExternalConnectedEntityController extends Controller
@@ -74,7 +73,7 @@ class ExternalConnectedEntityController extends Controller
 
         $externalConnectedEntity->delete();
 
-        return back();
+        return redirect()->route('admin.external-connected-entities.index');
     }
 
     public function massDestroy(MassDestroyExternalConnectedEntityRequest $request)

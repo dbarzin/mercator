@@ -12,19 +12,24 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-switches.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('physical_switch_edit')
+                    <a class="btn btn-info" href="{{ route('admin.physical-switches.edit', $physicalSwitch->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('physical_switch_delete')
+                    <form action="{{ route('admin.physical-switches.destroy', $physicalSwitch->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.physicalSwitch.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $physicalSwitch->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.physicalSwitch.fields.name') }}
                         </th>
                         <td>

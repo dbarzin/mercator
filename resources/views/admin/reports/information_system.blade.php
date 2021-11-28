@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Vue du Système d'information
+                    {{ trans('cruds.menu.metier.title') }}
                 </div>
 
                 <div class="card-body">
@@ -21,18 +21,18 @@
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <td>
-                                        Macro-processus :
-                                        <select name="macroprocess" onchange="this.form.process.value=-1;this.form.submit()">
-                                            <option value="-1">-- All --</option>
+                                        {{ trans('cruds.macroProcessus.title') }} :
+                                        <select name="macroprocess" onchange="this.form.process.value='';this.form.submit()">
+                                            <option value="">-- All --</option>
                                             @foreach ($all_macroprocess as $macroprocess)
                                                 <option value="{{$macroprocess->id}}" {{ Session::get('macroprocess')==$macroprocess->id ? "selected" : "" }}>{{ $macroprocess->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td>
-                                        Processus :
+                                        {{ trans('cruds.process.title') }} :
                                         <select name="process" onchange="this.form.submit()">
-                                            <option value="-1">-- All --</option>
+                                            <option value="">-- All --</option>
                                             @if ($all_process!=null)
                                                 @foreach ($all_process as $process)
                                                     <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>
@@ -49,41 +49,62 @@
                 </div>
             </div>
 
+            @can('macro_processus_access')
             @if ((auth()->user()->granularity>=2)&&($macroProcessuses->count()>0))
             <div class="card">
                 <div class="card-header">
-                    Macro-processus
+                    {{ trans('cruds.macroProcessus.title') }} :
                 </div>
                 <div class="card-body">
-                    <p>Ensemble des macrprocessus.</p>
+                    <p>{{ trans('cruds.macroProcessus.description') }}</p>
                       @foreach($macroProcessuses as $macroProcess)
                       <div class="row">
                         <div class="col-sm-6">                        
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                 <th colspan="2">
+                                    @can('macro_processus_edit')
                                     <a href="/admin/macro-processuses/{{ $macroProcess->id }}/edit">{{ $macroProcess->name }}</a>
+                                    @else
+                                    <a href="/admin/macro-processuses/{{ $macroProcess->id }}">{{ $macroProcess->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>Description</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.macroProcessus.fields.description') }}</b></td>
                                     <td>{!! $macroProcess->description !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Éléments entrants et sortants</b></td>
+                                    <td><b>{{ trans('cruds.macroProcessus.fields.io_elements') }}</b></td>
                                     <td>{!! $macroProcess->io_elements !!}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Besoin de sécurité</b></td>
-                                    <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$macroProcess->security_need] ?? "" }}</td>
+                                    <td><b>{{ trans('cruds.macroProcessus.fields.security_need') }}</b></td>
+                                    <td>
+                                        {{ trans('global.confidentiality') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_c] ?? "" }}
+                                        <br>
+                                        {{ trans('global.integrity') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_i] ?? "" }}
+                                        <br>
+                                        {{ trans('global.availability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_a] ?? "" }}
+                                        <br>
+                                        {{ trans('global.tracability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$macroProcess->security_need_t] ?? "" }} 
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Propritétaire</b></td>
+                                    <td><b>{{ trans('cruds.macroProcessus.fields.owner') }}</b></td>
                                     <td>{{ $macroProcess->owner }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Processus</b></td>
+                                    <td><b>{{ trans('cruds.macroProcessus.fields.processes') }}</b></td>
                                     <td>
                                     @foreach($macroProcess->processes as $process)
                                         <a href="#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
@@ -101,35 +122,40 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('process_access')
             @if ($processes->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Processus
+                    {{ trans('cruds.process.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.</p>
+                    <p>{{ trans('cruds.process.description') }}</p>
                         @foreach($processes as $process)
-
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PROCESS{{ $process->id }}">
                                     <th colspan="2">
+                                        @can('process_edit')
                                         <a href="/admin/processes/{{ $process->id }}/edit">{{ $process->identifiant }}</a>
+                                        @else
+                                        <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="20%"><b>Description</b></td>
+                                        <td width="20%"><b>{{ trans('cruds.process.fields.description') }}</b></td>
                                         <td>{!! $process->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Éléments entrants et sortants</b></td>
+                                        <td><b>{{ trans('cruds.process.fields.in_out') }}</b></td>
                                         <td>{!! $process->in_out !!}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Activités</b></td>
+                                        <td><b>{{ trans('cruds.process.fields.activities') }}</b></td>
                                         <td>
                                             @foreach($process->activities as $activity)
                                                 <a href="#ACTIVITY{{ $activity->id }}">{{ $activity->name }}</a>
@@ -140,7 +166,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Entité associées</b></td>
+                                        <td><b>{{ trans('cruds.process.fields.entities') }}</b></td>
                                         <td>
                                             @foreach($process->entities as $entity)
                                                 <a href="/admin/report/ecosystem#ENTITY{{$entity->id}}">{{$entity->name}}</a>
@@ -151,9 +177,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Applications qui le soutiennent</b></td>
+                                        <td><b>{{ trans('cruds.process.fields.applications') }}</b></td>
                                         <td>
-                                            @foreach($process->processesMApplications as $application)
+                                            @foreach($process->applications as $application)
                                                 <a href="/admin/report/applications#APPLICATION{{$application->id}}">{{$application->name}}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -162,11 +188,27 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Besoin de scurité</b></td>
-                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$process->security_need] ?? "" }}</td>
+                                        <td><b>{{ trans('cruds.process.fields.security_need') }}</b></td>
+                                        <td>
+                                        {{ trans('global.confidentiality') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_c] ?? "" }}
+                                        <br>
+                                        {{ trans('global.integrity') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_i] ?? "" }}
+                                        <br>
+                                        {{ trans('global.availability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_a] ?? "" }}
+                                        <br>
+                                        {{ trans('global.tracability') }} :
+                                            {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                            [$process->security_need_t] ?? "" }} 
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Propriétaire</b></td>
+                                        <td><b>{{ trans('cruds.process.fields.owner') }}</b></td>
                                         <td>{{ $process->owner }}</td>
                                     </tr>
                                 </tbody>
@@ -177,31 +219,37 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('activity_access')
             @if ($activities->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Activité
+                    {{ trans('cruds.acivity.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.</p>
+                    <p>{{ trans('cruds.acivity.description') }}</p>
                         @foreach($activities as $activity)
                       <div class="row">
                         <div class="col-sm-6">                        
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ACTIVITY{{ $activity->id }}">
                                 <th colspan="2">
+                                    @can('activity_edit')
                                     <a href="/admin/activities/{{ $activity->id }}/edit">{{ $activity->name }}</a>
+                                    @else
+                                    <a href="/admin/activities/{{ $activity->id }}">{{ $activity->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>Description</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.acivity.fields.description') }}</b></td>
                                     <td>{!! $activity->description !!}</td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <b>Liste des opérations</b>
+                                        <b>{{ trans('cruds.acivity.fields.operation') }}</b>
                                     </td>
                                     <td>
                                         @foreach($activity->operations as $operation)
@@ -220,31 +268,37 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('operation_access')
             @if ($operations->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Opérations
+                    {{ trans('cruds.operation.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Etape d’une procédure correspondant à l’intervention d’un acteur dans le cadre d’une activité.</p>
+                    <p>{{ trans('cruds.operation.description') }}</p>
                         @foreach($operations as $operation)
                       <div class="row">
                         <div class="col-sm-6">                        
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="OPERATION{{ $operation->id }}">
                                 <th colspan="2">
+                                    @can('operation_edit')
                                     <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
+                                    @else
+                                    <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
+                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>Description</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.operation.fields.description') }}</b></td>
                                     <td>{!! $operation->description !!}</td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <b>Liste des tâches qui la composent</b>
+                                        <b>{{ trans('cruds.operation.fields.tasks') }}</b>
                                     </td>
                                     <td>
                                         @foreach($operation->tasks as $task)                                
@@ -256,7 +310,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Liste des acteurs qui interviennent</b></td>
+                                    <td><b>{{ trans('cruds.operation.fields.actors') }}</b></td>
                                     <td>
                                         @foreach($operation->actors as $actor)
                                             <a href="#ACTOR{{$actor->id}}">{{$actor->name}}</a>
@@ -274,26 +328,32 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('task_access')
             @if ($tasks->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Tâche
+                    {{ trans('cruds.task.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus</p>
+                    <p>{{ trans('cruds.task.description') }}</p>
                         @foreach($tasks as $task)
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="TASK{{ $task->id }}">
                                     <th colspan="2">
+                                        @can('task_edit')
                                         <a href="/admin/tasks/{{ $task->id }}/edit">{{ $task->nom }}</a>
+                                        @else
+                                        <a href="/admin/tasks/{{ $task->id }}">{{ $task->nom }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="20%"><b>Description</b></td>
+                                        <td width="20%"><b>{{ trans('cruds.task.fields.description') }}</b></td>
                                         <td>{!! $task->description !!}</td>
                                     </tr>
                                 </tbody>
@@ -304,30 +364,40 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('actors_access')
             @if ($actors->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Acteurs
+                    {{ trans('cruds.actor.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité</p>
+                    <p>{{ trans('cruds.actor.description') }}</p>
                         @foreach($actors as $actor)
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ACTOR{{ $actor->id }}">
                                     <th colspan="2">
+                                        @can('actor_edit')
                                         <a href="/admin/actors/{{ $actor->id }}/edit">{{ $actor->name }}</a>
+                                        @else
+                                        <a href="/admin/actors/{{ $actor->id }}">{{ $actor->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="20%"><b>Nature</b></td>
+                                        <td width="20%"><b>{{ trans('cruds.actor.fields.contact') }}</b></td>
+                                        <td>{{ $actor->contact }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%"><b>{{ trans('cruds.actor.fields.nature') }}</b></td>
                                         <td>{{ $actor->nature }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Type</b></td>
+                                        <td><b>{{ trans('cruds.actor.fields.type') }}</b></td>
                                         <td>{{ $actor->type }}</td>
                                     </tr>
                                 </tbody>
@@ -338,43 +408,48 @@
                 </div>
             </div>
             @endif
+            @endcan
 
+            @can('information_access')
             @if ($informations->count()>0)
             <div class="card">
                 <div class="card-header">
-                    Informations
+                    {{ trans('cruds.information.title') }}
                 </div>
                 <div class="card-body">
-                    <p>Donnée faisant l’objet d’un traitement informatique.</p>
+                    <p>{{ trans('cruds.information.description') }}</p>
                         @foreach($informations as $information)
-
                           <div class="row">
                             <div class="col-sm-6">                        
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="INFORMATION{{ $information->id }}">
                                     <th colspan="2">
+                                        @can('information_edit')
                                         <a href="/admin/information/{{ $information->id }}/edit">{{ $information->name }}</a>
+                                        @else
+                                        <a href="/admin/information/{{ $information->id }}">{{ $information->name }}</a>
+                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="20%"><b>Description</b></td>
-                                        <td>{!! $information->descrition !!}</td>
+                                        <td width="20%"><b>{{ trans('cruds.information.fields.description') }}</b></td>
+                                        <td>{!! $information->description !!}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Propriétaire</b></td>
+                                        <td><b>{{ trans('cruds.information.fields.owner') }}</b></td>
                                         <td>{{ $information->owner }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Administrateur</b></td>
+                                        <td><b>{{ trans('cruds.information.fields.administrator') }}</b></td>
                                         <td>{{ $information->administrator }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Stockage</b></td>
+                                        <td><b>{{ trans('cruds.information.fields.storage') }}</b></td>
                                         <td>{{ $information->storage }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Processus liés</b></td>
+                                        <td><b>{{ trans('cruds.information.fields.processes') }}</b></td>
                                         <td>
                                             @foreach($information->processes as $process)
                                                 <a href="#PROCESS{{ $process->id}}">{{ $process->identifiant}}</a>
@@ -385,15 +460,31 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Besoins de sécurité</b></td>
-                                        <td>{{ array(1=>"Public",2=>"Interne",3=>"Confidentiel",4=>"Secret")[$information->security_need] ?? "" }}</td>
+                                        <td><b>{{ trans('cruds.information.fields.security_need') }}</b></td>
+                                        <td>
+                                            {{ trans('global.confidentiality') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_c] ?? "" }}
+                                            <br>
+                                            {{ trans('global.integrity') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_i] ?? "" }}
+                                            <br>
+                                            {{ trans('global.availability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_a] ?? "" }}
+                                            <br>
+                                            {{ trans('global.tracability') }} :
+                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                                [$information->security_need_t] ?? "" }} 
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Sensibilité</b></td>
-                                        <td>{{ $information->sensibility }}</td>
+                                        <td><b>{{ trans('cruds.information.fields.sensitivity') }}</b></td>
+                                        <td>{{ $information->sensitivity }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Contraintes règlementaires et normatives</b></td>
+                                        <td><b>{{ trans('cruds.information.fields.constraints') }}</b></td>
                                         <td>{!! $information->constraints !!}</td>
                                     </tr>
                                 </tbody>
@@ -404,6 +495,7 @@
                 </div>
             </div>
             @endif
+            @endcan
         </div>
     </div>
 </div>

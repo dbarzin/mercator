@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ApplicationBlock;
-use App\MApplication;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
+use App\MApplication;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
 
 class ApplicationBlockController extends Controller
 {
-
     public function index()
     {
         abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -40,8 +35,8 @@ class ApplicationBlockController extends Controller
     {
         $applicationBlock = ApplicationBlock::create($request->all());
 
-        Mapplication::whereIn('id', $request->input('linkToApplications', []))
-              ->update(['application_block_id' => $applicationBlock->id]);
+        MApplication::whereIn('id', $request->input('linkToApplications', []))
+            ->update(['application_block_id' => $applicationBlock->id]);
 
         return redirect()->route('admin.application-blocks.index');
     }
@@ -54,19 +49,19 @@ class ApplicationBlockController extends Controller
 
         $applicationBlock->load('applications');
 
-        return view('admin.applicationBlocks.edit', compact('applicationBlock','applications'));
+        return view('admin.applicationBlocks.edit', compact('applicationBlock', 'applications'));
     }
 
     public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationBlock)
     {
         $applicationBlock->update($request->all());
-        
-        MApplication::where('application_block_id', $applicationBlock->id)
-              ->update(['application_block_id' => null]);
 
-        Mapplication::whereIn('id', $request->input('linkToApplications', []))
-              ->update(['application_block_id' => $applicationBlock->id]);
-        
+        MApplication::where('application_block_id', $applicationBlock->id)
+            ->update(['application_block_id' => null]);
+
+        MApplication::whereIn('id', $request->input('linkToApplications', []))
+            ->update(['application_block_id' => $applicationBlock->id]);
+
         return redirect()->route('admin.application-blocks.index');
     }
 
@@ -85,7 +80,7 @@ class ApplicationBlockController extends Controller
 
         $applicationBlock->delete();
 
-        return back();
+        return redirect()->route('admin.application-blocks.index');
     }
 
     public function massDestroy(MassDestroyApplicationBlockRequest $request)
@@ -94,5 +89,4 @@ class ApplicationBlockController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

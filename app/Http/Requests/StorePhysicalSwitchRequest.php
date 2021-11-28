@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\PhysicalSwitch;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;

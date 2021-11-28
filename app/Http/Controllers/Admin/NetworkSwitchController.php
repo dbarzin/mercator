@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
 use App\NetworkSwitch;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class NetworkSwitchController extends Controller
@@ -33,7 +30,7 @@ class NetworkSwitchController extends Controller
 
     public function store(StoreNetworkSwitchRequest $request)
     {
-        $networkSwitch = NetworkSwitch::create($request->all());
+        NetworkSwitch::create($request->all());
 
         return redirect()->route('admin.network-switches.index');
     }
@@ -65,7 +62,7 @@ class NetworkSwitchController extends Controller
 
         $networkSwitch->delete();
 
-        return back();
+        return redirect()->route('admin.network-switches.index');
     }
 
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)
@@ -74,5 +71,4 @@ class NetworkSwitchController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -26,16 +26,16 @@
                             {{ trans('cruds.information.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.descrition') }}
+                            {{ trans('cruds.information.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.information.fields.owner') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.security_need') }}
+                            {{ trans('cruds.information.fields.sensitivity') }}
                         </th>
                         <th>
-                            {{ trans('cruds.information.fields.sensitivity') }}
+                            {{ trans('cruds.information.fields.security_need') }}
                         </th>
                         <th>
                             &nbsp;
@@ -45,43 +45,97 @@
                 <tbody>
                     @foreach($information as $key => $information)
                         <tr data-entry-id="{{ $information->id }}"
-
-@if(($information->descrition==null)||
-    ($information->owner==null)||
-    ($information->administrator==null)||
-    ($information->storage==null)||
-    ($information->security_need==null)||
-    ($information->sensitivity==null)
-    )
-                          class="table-warning"
-@endif
-
+                            @if(($information->description==null)||
+                                ($information->owner==null)||
+                                ($information->administrator==null)||
+                                ($information->storage==null)||                                
+                                ((auth()->user()->granularity>=2)&&                                
+                                    (
+                                    ($information->security_need_c==null)||
+                                    ($information->security_need_i==null)||
+                                    ($information->security_need_a==null)||
+                                    ($information->security_need_t==null)
+                                    )
+                                )||                                
+                                ($information->sensitivity==null)
+                                )
+                                                      class="table-warning"
+                            @endif
                             >
                             <td>
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.information.show', $information->id) }}">
                                 {{ $information->name ?? '' }}
+                                </a>
                             </td>
                             <td>
-                                {!! $information->descrition ?? '' !!}
+                                {!! $information->description ?? '' !!}
                             </td>
                             <td>
                                 {!! $information->owner ?? '' !!}
                             </td>
                             <td>
-                                @if ($information->security_need==1) 
-                                    Public
-                                @elseif ($information->security_need==2)
-                                    Internal
-                                @elseif ($information->security_need==3)
-                                    Confidential
-                                @elseif ($information->security_need==4)
-                                    Secret
-                                @endif                              
-                            </td>
-                            <td>
                                 {{ $information->sensitivity ?? '' }}
+                            </td>
+                            <td>                                
+                                @if ($information->security_need_c==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_c==1)
+                                    <span class="veryLowRisk">1</span>
+                                @elseif ($information->security_need_c==2)
+                                    <span class="lowRisk">2</span>
+                                @elseif ($information->security_need_c==3)
+                                    <span class="mediumRisk">3</span>
+                                @elseif ($information->security_need_c==4)
+                                    <span class="highRisk">4</span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($information->security_need_i==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_i==1)
+                                    <span class="veryLowRisk">1</span>
+                                @elseif ($information->security_need_i==2)
+                                    <span class="lowRisk">2</span>
+                                @elseif ($information->security_need_i==3)
+                                    <span class="mediumRisk">3</span>
+                                @elseif ($information->security_need_i==4)
+                                    <span class="highRisk">4</span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($information->security_need_a==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_a==1)
+                                    <span class="veryLowRisk">1</span>
+                                @elseif ($information->security_need_a==2)
+                                    <span class="lowRisk">2</span>
+                                @elseif ($information->security_need_a==3)
+                                    <span class="mediumRisk">3</span>
+                                @elseif ($information->security_need_a==4)
+                                    <span class="highRisk">4</span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($information->security_need_t==0)
+                                    <span class="noRisk">0</span>
+                                @elseif ($information->security_need_t==1)
+                                    <span class="veryLowRisk">1</span>
+                                @elseif ($information->security_need_t==2)
+                                    <span class="lowRisk">2</span>
+                                @elseif ($information->security_need_t==3)
+                                    <span class="mediumRisk">3</span>
+                                @elseif ($information->security_need_t==4)
+                                    <span class="highRisk">4</span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+
                             </td>
                             <td>
                                 @can('information_show')

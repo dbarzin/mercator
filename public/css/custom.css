@@ -173,3 +173,40 @@ table.dataTable thead .sorting_desc {
 .form-check.is-invalid ~ .invalid-feedback {
     display: block;
 }
+
+/* Fixed Headers, On-Page Links, and Overlapping Content, Oh My! */
+/* https://css-tricks.com/fixed-headers-on-page-links-and-overlapping-content-oh-my/ */
+html {
+  scroll-padding-top: 70px; /* height of sticky header */
+}
+
+/* Risks selest2 colors */
+.highRisk {
+  background: #E15759;
+  padding: 3px;
+  border-radius: 20% / 30%;  
+}
+
+.mediumRisk {
+  background: #F28E2B;
+  padding: 3px;
+  border-radius: 20% / 30%;  
+}
+
+.lowRisk {
+  background: #F1CE63;
+  padding: 3px;
+  border-radius: 20% / 30%;  
+}
+
+.veryLowRisk {
+  background: #8CD17D;
+  padding: 3px;
+  border-radius: 20% / 30%;  
+}
+
+.noRisk {
+  background: #FFFFFF;
+  padding: 3px;
+  border-radius: 20% / 30%;  
+}

@@ -2,28 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-
 use App\Bay;
 use App\Building;
-use App\PhysicalSwitch;
-use App\PhysicalServer;
-use App\Site;
-
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
+use App\PhysicalServer;
+use App\Site;
+use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -42,15 +33,18 @@ class PhysicalServerController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
-        $responsible_list = PhysicalServer::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.physicalServers.create', 
-            compact('sites', 'buildings', 'bays','responsible_list'));
+        return view(
+            'admin.physicalServers.create',
+            compact('sites', 'buildings', 'bays', 'responsible_list', 'type_list')
+        );
     }
 
     public function store(StorePhysicalServerRequest $request)
     {
-        $physicalServer = PhysicalServer::create($request->all());
+         PhysicalServer::create($request->all());
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -63,12 +57,16 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // List
-        $responsible_list = PhysicalServer::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $physicalServer->load('site', 'building', 'bay');
 
-        return view('admin.physicalServers.edit', 
-            compact('sites', 'buildings', 'bays', 'responsible_list','physicalServer'));
+        return view(
+            'admin.physicalServers.edit',
+            compact('sites', 'buildings', 'bays', 
+                'responsible_list', 'type_list', 'physicalServer')
+        );
     }
 
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
@@ -93,7 +91,7 @@ class PhysicalServerController extends Controller
 
         $physicalServer->delete();
 
-        return back();
+        return redirect()->route('admin.physical-servers.index');
     }
 
     public function massDestroy(MassDestroyPhysicalServerRequest $request)
@@ -102,5 +100,4 @@ class PhysicalServerController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -7,7 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Dnsserver extends Model 
+/**
+ * App\Dnsserver
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Dnsserver onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Dnsserver withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Dnsserver withoutTrashed()
+ * @mixin \Eloquent
+ */
+class Dnsserver extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -27,6 +50,7 @@ class Dnsserver extends Model
     protected $fillable = [
         'name',
         'description',
+        'address_ip',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -36,5 +60,4 @@ class Dnsserver extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 }

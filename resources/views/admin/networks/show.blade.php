@@ -12,11 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.networks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('network_edit')
+                    <a class="btn btn-info" href="{{ route('admin.networks.edit', $network->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('network_delete')
+                    <form action="{{ route('admin.networks.destroy', $network->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.network.fields.name') }}
                         </th>
                         <td>
@@ -60,15 +75,21 @@
                             {{ trans('cruds.network.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($network->security_need==1) 
-                                Public
-                            @elseif ($network->security_need==2)
-                                Internal
-                            @elseif ($network->security_need==3)
-                                Confidential
-                            @elseif ($network->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$network->security_need_t] ?? "" }}                                                        
                         </td>
                     </tr>
                     <tr>
@@ -76,8 +97,13 @@
                             {{ trans('cruds.network.fields.subnetworks') }}
                         </th>
                         <td>
-                            @foreach($network->subnetworks as $key => $subnetworks)
-                                <span class="label label-info">{{ $subnetworks->name }}</span>
+                            @foreach($network->subnetworks as $subnetwork)
+                                <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
+                                    {{ $subnetwork->name }}
+                                </a>
+                                @if ($network->subnetworks->last()<>$subnetwork)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -92,22 +118,5 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#connected_networks_external_connected_entities" role="tab" data-toggle="tab">
-                {{ trans('cruds.externalConnectedEntity.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="connected_networks_external_connected_entities">
-            @includeIf('admin.networks.relationships.connectedNetworksExternalConnectedEntities', ['externalConnectedEntities' => $network->connectedNetworksExternalConnectedEntities])
-        </div>
-    </div>
-</div>
 
 @endsection

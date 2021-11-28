@@ -3,17 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Gateway;
-use App\Subnetword;
-
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
-
+use App\Subnetwork;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class GatewayController extends Controller
@@ -31,7 +26,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.gateways.create', compact('subnetworks'));
     }
@@ -40,8 +35,8 @@ class GatewayController extends Controller
     {
         $gateway = Gateway::create($request->all());
 
-        Subnetword::whereIn('id', $request->input('subnetworks', []))
-              ->update(['gateway_id' => $gateway->id]);
+        Subnetwork::whereIn('id', $request->input('subnetworks', []))
+            ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }
@@ -50,20 +45,20 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.gateways.edit', compact('gateway','subnetworks'));
+        return view('admin.gateways.edit', compact('gateway', 'subnetworks'));
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)
     {
         $gateway->update($request->all());
 
-        Subnetword::where('gateway_id', $gateway->id)
-              ->update(['gateway_id' => null]);
+        Subnetwork::where('gateway_id', $gateway->id)
+            ->update(['gateway_id' => null]);
 
-        Subnetword::whereIn('id', $request->input('subnetworks', []))
-              ->update(['gateway_id' => $gateway->id]);
+        Subnetwork::whereIn('id', $request->input('subnetworks', []))
+            ->update(['gateway_id' => $gateway->id]);
 
         return redirect()->route('admin.gateways.index');
     }
@@ -72,7 +67,7 @@ class GatewayController extends Controller
     {
         abort_if(Gate::denies('gateway_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $gateway->load('gatewaySubnetwords');
+        $gateway->load('subnetworks');
 
         return view('admin.gateways.show', compact('gateway'));
     }
@@ -83,7 +78,7 @@ class GatewayController extends Controller
 
         $gateway->delete();
 
-        return back();
+        return redirect()->route('admin.gateways.index');
     }
 
     public function massDestroy(MassDestroyGatewayRequest $request)
@@ -92,5 +87,4 @@ class GatewayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

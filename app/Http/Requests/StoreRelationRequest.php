@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Relation;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,18 +18,18 @@ class StoreRelationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'           => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
             ],
-            'inportance'     => [
+            'importance' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:4',
             ],
-            'source_id'      => [
+            'source_id' => [
                 'required',
                 'integer',
             ],

@@ -1,5 +1,5 @@
 <?php
-
+/*
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
@@ -83,8 +83,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('networks', 'NetworkApiController');
 
     // Subnetwords
-    Route::post('subnetwords/media', 'SubnetwordApiController@storeMedia')->name('subnetwords.storeMedia');
-    Route::apiResource('subnetwords', 'SubnetwordApiController');
+    Route::post('subnetworks/media', 'SubnetwordApiController@storeMedia')->name('subnetworks.storeMedia');
+    Route::apiResource('subnetworks', 'SubnetwordApiController');
 
     // Gateways
     Route::post('gateways/media', 'GatewayApiController@storeMedia')->name('gateways.storeMedia');
@@ -185,3 +185,4 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('macro-processuses/media', 'MacroProcessusApiController@storeMedia')->name('macro-processuses.storeMedia');
     Route::apiResource('macro-processuses', 'MacroProcessusApiController');
 });
+*/

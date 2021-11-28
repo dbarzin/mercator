@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Information;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +18,17 @@ class UpdateInformationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
                 //'unique:information,name,' . request()->route('information')->id,
-                'unique:inforation,name,'.request()->route('information')->id.',id,deleted_at,NULL',
+                'unique:information,name,'.request()->route('information')->id.',id,deleted_at,NULL',
             ],
-            'processes.*'   => [
+            'processes.*' => [
                 'integer',
             ],
-            'processes'     => [
+            'processes' => [
                 'array',
             ],
             'security_need' => [

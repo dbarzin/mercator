@@ -5,21 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyStorageDeviceRequest;
 use App\Http\Requests\StoreStorageDeviceRequest;
 use App\Http\Requests\UpdateStorageDeviceRequest;
 use App\Site;
 use App\StorageDevice;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorageDeviceController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('storage_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -44,7 +39,7 @@ class StorageDeviceController extends Controller
 
     public function store(StoreStorageDeviceRequest $request)
     {
-        $storageDevice = StorageDevice::create($request->all());
+        StorageDevice::create($request->all());
 
         return redirect()->route('admin.storage-devices.index');
     }
@@ -86,7 +81,7 @@ class StorageDeviceController extends Controller
 
         $storageDevice->delete();
 
-        return back();
+        return redirect()->route('admin.storage-devices.index');
     }
 
     public function massDestroy(MassDestroyStorageDeviceRequest $request)
@@ -95,5 +90,4 @@ class StorageDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -29,7 +29,7 @@
                             {{ trans('cruds.relation.fields.type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.relation.fields.inportance') }}
+                            {{ trans('cruds.relation.fields.importance') }}
                         </th>
                         <th>
                             {{ trans('cruds.relation.fields.source') }}
@@ -46,14 +46,13 @@
                     @foreach($relations as $key => $relation)
                         <tr data-entry-id="{{ $relation->id }}"
 
-                        @if (($relation->description==null)||
-                            ($relation->inportance==null)||
+                        @if (
+                            ($relation->description==null)||
+                            ($relation->importance==null)||
                             ($relation->type==null)
                             )
                                 class="table-warning"
                         @endif
-
-
                           >
                             <td>
 
@@ -65,21 +64,29 @@
                                 {{ $relation->type ?? '' }}
                             </td>
                             <td>
-                              @if ($relation->inportance==1)
-                                  Faible
-                              @elseif ($relation->inportance==2)
-                                  Moyen
-                              @elseif ($relation->inportance==3)
-                                  Fort
-                              @elseif ($relation->inportance==4)
-                                  Critique
+                              @if ($relation->importance==1)
+                                  {{ trans('cruds.relation.fields.importance_level.low') }}
+                              @elseif ($relation->importance==2)
+                                  {{ trans('cruds.relation.fields.importance_level.medium') }}
+                              @elseif ($relation->importance==3)
+                                  {{ trans('cruds.relation.fields.importance_level.high') }}
+                              @elseif ($relation->importance==4)
+                                  {{ trans('cruds.relation.fields.importance_level.critical') }}
                               @endif
                             </td>
                             <td>
-                                {{ $relation->source->name ?? '' }}
+                                @if ($relation->source!=null)
+                                <a href="{{ route('admin.entities.show', $relation->source->id) }}">
+                                    {{ $relation->source->name }}        
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $relation->destination->name ?? '' }}
+                                @if ($relation->destination!=null)
+                                <a href="{{ route('admin.entities.show', $relation->destination->id) }}">
+                                    {{ $relation->destination->name }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('relation_show')
@@ -101,9 +108,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -111,9 +116,6 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
@@ -152,7 +154,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   let table = $('.datatable-Relation:not(.ajaxTable)').DataTable({ buttons: dtButtons })
@@ -160,8 +162,6 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
 })
-
 </script>
 @endsection

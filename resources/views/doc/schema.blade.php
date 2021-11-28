@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Schéma
+                    {{ trans('panel.menu.schema') }}
                 </div>
                 <div class="card-body">
 
@@ -28,7 +28,8 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
-d3.select("#graph").graphviz()
+    d3.select("#graph").graphviz()
+
     .addImage("/images/entity.png", "64px", "64px")
     .addImage("/images/relation.png", "64px", "64px")
 
@@ -61,80 +62,128 @@ d3.select("#graph").graphviz()
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
+    .addImage("/images/certificate.png", "64px", "64px")
+    .addImage("/images/security.png", "64px", "64px")
 
-    .renderDot("digraph  {\
-            <?php  $i=0; ?>\
-                  ENTITY -> RELATION  [label=\"  0-n\"]\
-                  ENTITY [label=\"Entité\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/entities\"]\
-                  RELATION [label=\"Relation\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/relation.png\" href=\"/admin/relations\"]\
-                  \
-                  MPROCESS [label=\"Macro-Processus\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/macroprocess.png\" href=\"/admin/macro-processuses\"]\
-                  PROCESS [label=\"Processus\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/process.png\" href=\"/admin/processes\"]\
-                  ACTIVITY [label=\"Activité\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/activity.png\" href=\"/admin/activities\"]\
-                  OPERATION [label=\"Opération\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/operation.png\" href=\"/admin/operations\"]\
-                  TASK [label=\"Tâche\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/task.png\" href=\"/admin/tasks\"]\
-                  ACTOR [label=\"Acteur\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/actor.png\" href=\"/admin/actors\"]\
-                  INFORMATION [label=\"Information\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/information.png\" href=\"/admin/information\"]\
-                  \
-                  MPROCESS -> PROCESS  [label=\"  0-n\"]\
-                  PROCESS -> ACTIVITY  [label=\"  0-n\"]\
-                  PROCESS -> ENTITY  [label=\"  0-n\"]\
-                  PROCESS -> APPLICATION  [label=\"  n-m\"]\
-                  PROCESS -> INFORMATION  [label=\"  0-n\"]\
-                  ACTIVITY -> OPERATION  [label=\"  0-n\"]\
-                  OPERATION -> TASK  [label=\"  0-n\"]\
-                  OPERATION -> ACTOR  [label=\"  0-n\"]\
-                  \
-                  APPLICBLOCK [label=\"Bloc applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"/admin/application-blocks\"]\
-                  APPLICATION [label=\"Application\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"/admin/m-applications\"]\
-                  APPLICSERV [label=\"Service Applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"/admin/application-services\"]\
-                  APPLICMODULE [label=\"Module Applicatif\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"/admin/application-modules\"]\
-                  DATABASE [label=\"Base de données\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"/admin/databases\"]\
-                  \
-                  APPLICBLOCK -> APPLICATION  [label=\"  0-n\"]\
-                  APPLICATION-> ENTITY  [label=\"  0-1\"]\
-                  APPLICATION-> APPLICSERV  [label=\"  0-n\"]\
-                  APPLICATION -> DATABASE   [label=\"  0-n\"]\
-                  APPLICSERV-> APPLICMODULE  [label=\"  0-n\"]\
-                  DATABASE -> INFORMATION [label=\"  0-n\"]\
-                  DATABASE -> ENTITY [label=\"  0-n\"]\
-                  \
-                  NETWORK [label=\"Réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
-                  SUBNETWORK [label=\"Sous-réseau\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetwords\"]\
-                  LOGICALSERVER [label=\"Serveur Logique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
-                  \
-                  NETWORK -> SUBNETWORK [label=\"  0-n\"]\
-                  SUBNETWORK -> LOGICALSERVER [label=\"  0-n\"]\
-                  LOGICALSERVER -> PHYSICALSERVER [label=\"  n-m\"]\
-                  APPLICATION -> LOGICALSERVER [label=\"  0-n\"]\
-                  \
-                  SITE [label=\"Site\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"/admin/sites\"]\
-                  BUILDING [label=\"Local\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"/admin/buildings\"]\
-                  BAY [label=\"Baie\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/bay.png\" href=\"/admin/bays\"]\
-                  PHYSICALSERVER [label=\"Serveur physique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/physical-servers\"]\
-                  WORKSTATION [label=\"Poste de travail\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/workstation.png\" href=\"/admin/workstations\"]\
-                  PERIPHERAL [label=\"Périphérique\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"/admin/peripherals\"]\
-                  WIFI [label=\"Borne Wifi\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"/admin/wifi-terminals\"]\
-                  PHONE [label=\"Téléphone\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"/admin/phones\"]\
-                  SWITCH [label=\"Switch\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/physical-switches\"]\
-                  STORAGE [label=\"Stockage\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"/admin/storage-devices\"]\
-                  ROUTER [label=\"Router\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/physical-routers\"]\
-                  \
-                  SITE -> BUILDING [label=\"  0-n\"]\
-                  BUILDING -> BAY [label=\"  0-n\"]\
-                  BUILDING -> WORKSTATION [label=\"  0-n\"]\
-                  BUILDING -> PERIPHERAL [label=\"  0-n\"]\
-                  BUILDING -> PHONE [label=\"  0-n\"]\
-                  BAY -> PHYSICALSERVER [label=\"  0-n\"]\
-                  BAY -> STORAGE [label=\"  0-n\"]\
-                  BAY -> SWITCH [label=\"  0-n\"]\
-                  BAY -> ROUTER [label=\"  0-n\"]\
-                  BUILDING -> WIFI [label=\"  0-n\"]\
-                  \
-        }");
+    .addImage("/images/vlan.png", "64px", "64px")
 
+    .width(window.innerWidth - 250)
+    .height(window.innerHeight - 250)
+    .renderDot("\
+        digraph {\
+        pencolor=\"#7c123e\"\
+        penwidth=2\
+        subgraph clusterA {\
+          label=\"{{ trans('cruds.report.cartography.ecosystem') }}\"\
+          fontsize=16 \
+          graph[style=dotted];\
+          href=\"/admin/report/ecosystem\" \
+          shape = \"Mrecord\"\
+          ENTITY [label=\"{{ trans('cruds.entity.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/entities\"]\
+          RELATION [label=\"{{ trans('cruds.relation.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/relation.png\" href=\"/admin/relations\"]\
+          }\
+        subgraph clusterB {\
+          label=\"{{ trans('cruds.report.cartography.information_system') }}\"\
+          fontsize=16 \
+          graph[style=dotted];\
+          href=\"/admin/report/information_system\" \
+          MPROCESS [label=\"{{ trans('cruds.macroProcessus.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/macroprocess.png\" href=\"/admin/macro-processuses\"]\
+          PROCESS [label=\"{{ trans('cruds.process.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/process.png\" href=\"/admin/processes\"]\
+          ACTIVITY [label=\"{{ trans('cruds.activity.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/activity.png\" href=\"/admin/activities\"]\
+          OPERATION [label=\"{{ trans('cruds.operation.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/operation.png\" href=\"/admin/operations\"]\
+          TASK [label=\"{{ trans('cruds.task.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/task.png\" href=\"/admin/tasks\"]\
+          ACTOR [label=\"{{ trans('cruds.actor.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/actor.png\" href=\"/admin/actors\"]\
+          INFORMATION [label=\"{{ trans('cruds.information.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/information.png\" href=\"/admin/information\"]\
+          \
+          }\
+        subgraph clusterC {\
+          label=\"{{ trans('cruds.report.cartography.applications') }}\"\
+          fontsize=16 \
+          graph[style=dotted];\
+          href=\"/admin/report/applications\" \
+          APPLICBLOCK [label=\"{{ trans('cruds.applicationBlock.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationblock.png\" href=\"/admin/application-blocks\"]\
+          APPLICATION [label=\"{{ trans('cruds.application.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"/admin/applications\"]\
+          APPLICSERV [label=\"{{ trans('cruds.applicationService.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"/admin/application-services\"]\
+          APPLICMODULE [label=\"{{ trans('cruds.applicationModule.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"/admin/application-modules\"]\
+          DATABASE [label=\"{{ trans('cruds.database.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"/admin/databases\"]\
+          \
+          }\
+        subgraph clusterD {\
+          label=\"{{ trans('cruds.report.cartography.logical_infrastructure') }}\" \
+          fontsize=16 \
+          graph[style=dotted];\
+          href=\"/admin/report/logical_infrastructure\" \
+          EXTERNAL [label=\"{{ trans('cruds.externalConnectedEntity.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"/admin/external-connected-entities\"]\
+          NETWORK [label=\"{{ trans('cruds.network.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
+          SUBNETWORK [label=\"{{ trans('cruds.subnetwork.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetworks\"]\
+          VLAN [label=\"vlan\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/vlan.png\" href=\"/admin/vlans\"]\
+          LOGICALSERVER [label=\"{{ trans('cruds.logicalServer.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
+          LOGICALROUTER [label=\"{{ trans('cruds.router.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/routers\"]\
+          NETWORKSWITCHES [label=\"{{ trans('cruds.networkSwitch.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/network-switches\"]\
+          CERTIFICATE [label=\"{{ trans('cruds.certificate.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"/admin/network-switches\"]\
+          \
+          }\
+        subgraph clusterE {\
+          label=\"{{ trans('cruds.report.cartography.physical_infrastructure') }}\"\
+          fontsize=16 \
+          graph[style=dotted];\
+          href=\"/admin/report/physical_infrastructure\" \
+          SITE [label=\"{{ trans('cruds.site.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"/admin/sites\"]\
+          BUILDING [label=\"{{ trans('cruds.building.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"/admin/buildings\"]\
+          BAY [label=\"{{ trans('cruds.bay.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/bay.png\" href=\"/admin/bays\"]\
+          PHYSICALSERVER [label=\"{{ trans('cruds.physicalServer.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/physical-servers\"]\
+          WORKSTATION [label=\"{{ trans('cruds.workstation.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/workstation.png\" href=\"/admin/workstations\"]\
+          PERIPHERAL [label=\"{{ trans('cruds.peripheral.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"/admin/peripherals\"]\
+          WIFI [label=\"{{ trans('cruds.wifiTerminal.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"/admin/wifi-terminals\"]\
+          PHONE [label=\"{{ trans('cruds.phone.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"/admin/phones\"]\
+          SWITCH [label=\"{{ trans('cruds.physicalSwitch.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/physical-switches\"]\
+          STORAGE [label=\"{{ trans('cruds.storageDevice.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"/admin/storage-devices\"]\
+          ROUTER [label=\"{{ trans('cruds.physicalRouter.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/physical-routers\"]\
+          SECURITY [label=\"{{ trans('cruds.physicalSecurityDevice.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/security.png\" href=\"/admin/physical-security-devices\"]\
+          }\
+          MPROCESS -> PROCESS  [label=\"  0-n\"]\
+          PROCESS -> ACTIVITY  [label=\"  0-n\"]\
+          ENTITY -> PROCESS [label=\"  0-n\"]\
+          PROCESS -> APPLICATION  [label=\"  n-m\"]\
+          PROCESS -> INFORMATION  [label=\"  0-n\"]\
+          ACTIVITY -> OPERATION  [label=\"  0-n\"]\
+          OPERATION -> TASK  [label=\"  0-n\"]\
+          OPERATION -> ACTOR  [label=\"  0-n\"]\
+\
+          APPLICBLOCK -> APPLICATION  [label=\"  0-n\"]\
+          ENTITY -> APPLICATION  [label=\"  0-n\"]\
+          APPLICATION -> APPLICSERV  [label=\"  0-n\"]\
+          APPLICSERV-> APPLICMODULE  [label=\"  0-n\"]\
+          INFORMATION -> DATABASE [label=\"  0-n\"]\
+          APPLICATION -> DATABASE   [label=\"  0-n\"]\
+          /* ENTITY -> DATABASE [label=\"  0-n\"] */\
+\
+          EXTERNAL -> NETWORK [label=\"  0-n\"]\
+          NETWORK -> SUBNETWORK [label=\"  0-n\"]\
+          SUBNETWORK -> LOGICALSERVER [label=\"  0-n\"]\
+          SUBNETWORK -> VLAN [label=\"  0-n\"]\
+          SUBNETWORK -> LOGICALROUTER [label=\"  0-n\"]\
+          SUBNETWORK -> NETWORKSWITCHES [label=\"  0-n\"]\
+          LOGICALSERVER -> PHYSICALSERVER [label=\"  n-m\"]\
+          APPLICATION -> LOGICALSERVER [label=\"  0-n\"]\
+          CERTIFICATE -> LOGICALSERVER [label=\"  0-n\"]\
+          CERTIFICATE -> APPLICATION [label=\"  0-n\"]\
+          \
+          ENTITY -> RELATION  [label=\"  0-n\"]\
+          \
+          SITE -> BUILDING [label=\"  0-n\"]\
+          BUILDING -> BAY [label=\"  0-n\"]\
+          BUILDING -> WORKSTATION [label=\"  0-n\"]\
+          BUILDING -> PERIPHERAL [label=\"  0-n\"]\
+          BUILDING -> PHONE [label=\"  0-n\"]\
+          BAY -> PHYSICALSERVER [label=\"  0-n\"]\
+          BAY -> STORAGE [label=\"  0-n\"]\
+          BAY -> SWITCH [label=\"  0-n\"]\
+          BAY -> ROUTER [label=\"  0-n\"]\
+          BAY -> SECURITY [label=\"  0-n\"]\
+          BUILDING -> WIFI [label=\"  0-n\"]\
+}")
+        .fit(true);
 </script>
-<!--
--->                  
 @parent
 @endsection

@@ -12,11 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.information.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('information_edit')
+                    <a class="btn btn-info" href="{{ route('admin.information.edit', $information->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('information_delete')
+                    <form action="{{ route('admin.information.destroy', $information->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.information.fields.name') }}
                         </th>
                         <td>
@@ -25,10 +40,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.information.fields.descrition') }}
+                            {{ trans('cruds.information.fields.description') }}
                         </th>
                         <td>
-                            {!! $information->descrition !!}
+                            {!! $information->description !!}
                         </td>
                     </tr>
                     <tr>
@@ -60,8 +75,13 @@
                             {{ trans('cruds.information.fields.process') }}
                         </th>
                         <td>
-                            @foreach($information->processes as $key => $process)
-                                <span class="label label-info">{{ $process->identifiant }}</span>
+                            @foreach($information->processes as $process)
+                                <a href="{{ route('admin.processes.show', $process->id) }}">
+                                {{ $process->identifiant }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -70,15 +90,21 @@
                             {{ trans('cruds.information.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($information->security_need==1) 
-                                Public
-                            @elseif ($information->security_need==2)
-                                Internal
-                            @elseif ($information->security_need==3)
-                                Confidential
-                            @elseif ($information->security_need==4)
-                                Secret
-                            @endif
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "" }}                                                        
                         </td>
                     </tr>
                     <tr>
@@ -104,24 +130,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#informations_databases" role="tab" data-toggle="tab">
-                {{ trans('cruds.database.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="informations_databases">
-            @includeIf('admin.information.relationships.informationsDatabases', ['databases' => $information->informationsDatabases])
         </div>
     </div>
 </div>

@@ -14,7 +14,7 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.auditLog.fields.id') }}
+                        id
                     </th>
                     <th>
                         {{ trans('cruds.auditLog.fields.description') }}
@@ -32,7 +32,7 @@
                         {{ trans('cruds.auditLog.fields.host') }}
                     </th>
                     <th>
-                        {{ trans('cruds.auditLog.fields.created_at') }}
+                        {{ trans('global.created_at') }}
                     </th>
                     <th>
                         &nbsp;
@@ -70,7 +70,7 @@
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   $('.datatable-AuditLog').DataTable(dtOverrideGlobals);
@@ -79,6 +79,6 @@
             .columns.adjust();
     });
 });
-
 </script>
+
 @endsection

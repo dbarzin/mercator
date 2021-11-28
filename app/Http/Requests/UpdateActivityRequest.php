@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Activity;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class UpdateActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
@@ -29,7 +28,7 @@ class UpdateActivityRequest extends FormRequest
             'operations.*' => [
                 'integer',
             ],
-            'operations'   => [
+            'operations' => [
                 'array',
             ],
         ];

@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
@@ -37,9 +34,9 @@ class BuildingController extends Controller
     public function store(StoreBuildingRequest $request)
     {
         $building = Building::create($request->all());
-        $building->camera = $request->has("camera");
-        $building->badge = $request->has("badge");
-        $building-> save();
+        $building->camera = $request->has('camera');
+        $building->badge = $request->has('badge');
+        $building->save();
 
         return redirect()->route('admin.buildings.index');
     }
@@ -57,8 +54,8 @@ class BuildingController extends Controller
 
     public function update(UpdateBuildingRequest $request, Building $building)
     {
-        $building->camera = $request->has("camera");
-        $building->badge = $request->has("badge");
+        $building->camera = $request->has('camera');
+        $building->badge = $request->has('badge');
         $building->update($request->all());
 
         return redirect()->route('admin.buildings.index');
@@ -79,7 +76,7 @@ class BuildingController extends Controller
 
         $building->delete();
 
-        return back();
+        return redirect()->route('admin.buildings.index');
     }
 
     public function massDestroy(MassDestroyBuildingRequest $request)
@@ -88,5 +85,4 @@ class BuildingController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

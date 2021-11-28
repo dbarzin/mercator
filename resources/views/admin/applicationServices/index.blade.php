@@ -32,6 +32,9 @@
                             {{ trans('cruds.applicationService.fields.exposition') }}
                         </th>
                         <th>
+                            {{ trans('cruds.applicationService.fields.applications') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.applicationService.fields.modules') }}
                         </th>
                         <th>
@@ -41,12 +44,23 @@
                 </thead>
                 <tbody>
                     @foreach($applicationServices as $key => $applicationService)
-                        <tr data-entry-id="{{ $applicationService->id }}">
+                        <tr data-entry-id="{{ $applicationService->id }}"
+
+                        @if (
+                                ($applicationService->description==null)||
+                                ($applicationService->servicesApplications->count()==0)
+                            )
+                                class="table-warning"
+                        @endif
+
+                            >
                             <td>
 
                             </td>
                             <td>
-                                {{ $applicationService->name ?? '' }}
+                                <a href="{{ route('admin.application-services.show', $applicationService->id) }}">
+                                {{ $applicationService->name }}
+                                </a>
                             </td>
                             <td>
                                 {!! $applicationService->description !!}
@@ -55,8 +69,23 @@
                                 {{ $applicationService->exposition ?? '' }}
                             </td>
                             <td>
-                                @foreach($applicationService->modules as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                @foreach($applicationService->servicesApplications as $application)
+                                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($applicationService->modules as $module)
+                                    <a href="{{ route('admin.application-modules.show', $module->id) }}">
+                                    {{ $module->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>

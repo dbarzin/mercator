@@ -7,7 +7,6 @@ use App\ApplicationService;
 use App\Database;
 use App\Entity;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMApplicationRequest;
 use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
@@ -15,8 +14,6 @@ use App\LogicalServer;
 use App\MApplication;
 use App\Process;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
@@ -42,16 +39,29 @@ class MApplicationController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // lists
-        $type_list = MApplication::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
-        $technology_list = MApplication::select('technology')->where("technology","<>",null)->distinct()->orderBy('technology')->pluck('technology');
-        $users_list = MApplication::select('users')->where("users","<>",null)->distinct()->orderBy('users')->pluck('users');
-        $external_list = MApplication::select('external')->where("external","<>",null)->distinct()->orderBy('external')->pluck('external');
-        $responsible_list = MApplication::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
+        $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
+        $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
+        $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
-        return view('admin.applications.create', 
-            compact('entities', 'entity_resps', 'processes', 'services', 'databases', 'logical_servers', 'application_blocks',
-                'type_list','technology_list', 'users_list','external_list','responsible_list'
-            ));
+        return view(
+            'admin.applications.create',
+            compact(
+                'entities',
+                'entity_resps',
+                'processes',
+                'services',
+                'databases',
+                'logical_servers',
+                'application_blocks',
+                'type_list',
+                'technology_list',
+                'users_list',
+                'external_list',
+                'responsible_list'
+            )
+        );
     }
 
     public function store(StoreMApplicationRequest $request)
@@ -79,18 +89,32 @@ class MApplicationController extends Controller
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // lists
-        $type_list = MApplication::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
-        $technology_list = MApplication::select('technology')->where("technology","<>",null)->distinct()->orderBy('technology')->pluck('technology');
-        $users_list = MApplication::select('users')->where("users","<>",null)->distinct()->orderBy('users')->pluck('users');
-        $external_list = MApplication::select('external')->where("external","<>",null)->distinct()->orderBy('external')->pluck('external');
-        $responsible_list = MApplication::select('responsible')->where("responsible","<>",null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
+        $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
+        $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
+        $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block');
 
-        return view('admin.applications.edit', 
-            compact('entities', 'entity_resps', 'processes', 'services', 'databases', 'logical_servers', 'application_blocks', 'application',
-                    'type_list','technology_list', 'users_list','external_list','responsible_list'
-            ));
+        return view(
+            'admin.applications.edit',
+            compact(
+                'entities',
+                'entity_resps',
+                'processes',
+                'services',
+                'databases',
+                'logical_servers',
+                'application_blocks',
+                'application',
+                'type_list',
+                'technology_list',
+                'users_list',
+                'external_list',
+                'responsible_list'
+            )
+        );
     }
 
     public function update(UpdateMApplicationRequest $request, MApplication $application)
@@ -105,13 +129,13 @@ class MApplicationController extends Controller
         return redirect()->route('admin.applications.index');
     }
 
-    public function show(MApplication $Application)
+    public function show(MApplication $application)
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $Application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
 
-        return view('admin.applications.show', compact('Application'));
+        return view('admin.applications.show', compact('application'));
     }
 
     public function destroy(MApplication $application)
@@ -120,7 +144,7 @@ class MApplicationController extends Controller
 
         $application->delete();
 
-        return back();
+        return redirect()->route('admin.applications.index');
     }
 
     public function massDestroy(MassDestroyMApplicationRequest $request)
@@ -129,5 +153,4 @@ class MApplicationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

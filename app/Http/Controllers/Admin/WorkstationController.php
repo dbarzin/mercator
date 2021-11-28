@@ -4,21 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
 use App\Site;
 use App\Workstation;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,7 +36,7 @@ class WorkstationController extends Controller
 
     public function store(StoreWorkstationRequest $request)
     {
-        $workstation = Workstation::create($request->all());
+        Workstation::create($request->all());
 
         return redirect()->route('admin.workstations.index');
     }
@@ -81,7 +76,7 @@ class WorkstationController extends Controller
 
         $workstation->delete();
 
-        return back();
+        return redirect()->route('admin.workstations.index');
     }
 
     public function massDestroy(MassDestroyWorkstationRequest $request)
@@ -90,5 +85,4 @@ class WorkstationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

@@ -1,18 +1,27 @@
 <?php
 return [
-    "cartography" => "Cartographie",
-    "level_1" => "Niveau 1",
-    "level_2" => "Niveau 2",
-    "level_3" => "Niveau 3",
-    "maturity_level_1" => "Niveau de maturité 1",
-    "maturity_level_2" => "Niveau de maturité 2",
-    "maturity_level_3" => "Niveau de maturité 3",
+    "level_1" => [
+        "description" => "Granularité minimale de niveau 1 : informations indispensables.",
+        "title_long" => "Niveau de maturité 1",
+        "title_short" => "Niveau 1"
+    ],
+    "level_2" => [
+        "description" => "Granularité intermédiaire de niveau 2 : informations importantes.",
+        "title_long" => "Niveau de maturité 2",
+        "title_short" => "Niveau 2"
+    ],
+    "level_3" => [
+        "description" => "Granularité intermédiaire de niveau 3 : informations utiles.",
+        "title_long" => "Niveau de maturité 3",
+        "title_short" => "Niveau 3"
+    ],
     "maturity_levels" => "Niveaux de maturité",
     "menu" => [
         "about" => "A propos",
         "administration" => "Administration",
         "application_flows" => "Flux applicatifs",
         "applications" => "Applications",
+        "config" => "Configuration",
         "documentation" => "Documentation",
         "ecosystem" => "Ecosystème",
         "guide" => "Guide",
@@ -23,9 +32,10 @@ return [
         "physical_infrastructure" => "Infrastructure physique",
         "preferences" => "Préferences",
         "reports" => "Rapports",
-        "schema" => "Schéma"
+        "schema" => "Modèle de données"
     ],
-    "repartition" => "Répartition",
+    "repartition" => "Répartition par domaine",
     "site_title" => "Mercator",
+    "treemap" => "Carte proportionnelle globale",
     "views" => "Vues"
 ];

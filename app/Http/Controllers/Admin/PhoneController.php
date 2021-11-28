@@ -4,21 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
 use App\Phone;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('phone_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -41,7 +36,7 @@ class PhoneController extends Controller
 
     public function store(StorePhoneRequest $request)
     {
-        $phone = Phone::create($request->all());
+        Phone::create($request->all());
 
         return redirect()->route('admin.phones.index');
     }
@@ -81,7 +76,7 @@ class PhoneController extends Controller
 
         $phone->delete();
 
-        return back();
+        return redirect()->route('admin.phones.index');
     }
 
     public function massDestroy(MassDestroyPhoneRequest $request)
@@ -90,5 +85,4 @@ class PhoneController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

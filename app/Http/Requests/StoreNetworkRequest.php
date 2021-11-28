@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Network;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,23 +18,40 @@ class StoreNetworkRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:networks',
                 'unique:networks,name,NULL,id,deleted_at,NULL',
             ],
-            'security_need' => [
+            'security_need_c' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_i' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_a' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
+            ],
+            'security_need_t' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:4',
             ],
             'subnetworks.*' => [
                 'integer',
             ],
-            'subnetworks'   => [
+            'subnetworks' => [
                 'array',
             ],
         ];

@@ -1,0 +1,12 @@
+site_name: Mercator
+site_url: https://dbarzin.githubs.io/mercator/
+nav:
+    - Introduction: index.md
+    - Cartographie: cartography.md
+    - Application: application.md
+    - Modèle de données: model.md
+    - Rapports: reports.md
+    - Administration: admin.md
+    - Références: references.md
+
+theme: readthedocs

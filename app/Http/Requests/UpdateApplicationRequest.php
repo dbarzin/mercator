@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Application;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +18,17 @@ class UpdateApplicationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'required',
             ],
-            'entities.*'    => [
+            'entities.*' => [
                 'integer',
             ],
-            'entities'      => [
+            'entities' => [
                 'array',
             ],
-            'responsible'   => [
+            'responsible' => [
                 'min:3',
             ],
             'security_need' => [

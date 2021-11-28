@@ -20,8 +20,8 @@
                 <span class="help-block">{{ trans('cruds.flux.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="recommended" for="description">{{ trans('cruds.flux.fields.description') }}</label>
-                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
+		<label class="recommended" for="description">{{ trans('cruds.flux.fields.description') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
                         {{ $errors->first('description') }}
@@ -157,21 +157,22 @@
             </div>
         </div>
 
+
             <div class="form-group">
                 <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
-                <select class="form-control select2 {{ $errors->has('crypted') ? 'is-invalid' : '' }}" name="crypted" id="crypted">
-                    <option value=""></option>
-                    <option value="1" {{ old('crypted')  == false ? 'selected' : '' }}>Oui</option>
-                    <option value="0" {{ old('crypted')  == true ? 'selected' : '' }}>Non</option>
-                </select>
-                @if($errors->has('crypted'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('crypted') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.flux.fields.crypted_helper') }}</span>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="crypted" name="crypted" value="1" {{ old('crypted') ? 'checked' : '' }}>
+                  <label class="form-check-label" for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
+                </div>
             </div>
 
+            <div class="form-group">
+                <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional" value="1" {{ old('bidirectional') ? 'checked' : '' }}>
+                  <label class="form-check-label" for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
+                </div>
+            </div>
 
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -185,3 +186,78 @@
 
 
 @endsection
+
+@section('scripts')
+<script>
+$(document).ready(function () {
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: []
+      }
+    );
+  }
+
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    });
+
+    $('#application_source_id').on("select2:selecting", function(e) { 
+       $('#service_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+    
+    $('#service_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+
+    $('#module_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#service_source_id').val(null).trigger('change');
+       $('#database_source_id').val(null).trigger('change');
+    });
+
+    $('#database_source_id').on("select2:selecting", function(e) { 
+       $('#application_source_id').val(null).trigger('change');
+       $('#service_source_id').val(null).trigger('change');
+       $('#module_source_id').val(null).trigger('change');
+    });
+
+
+    $('#application_dest_id').on("select2:selecting", function(e) { 
+       $('#service_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+    
+    $('#service_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+
+    $('#module_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#service_dest_id').val(null).trigger('change');
+       $('#database_dest_id').val(null).trigger('change');
+    });
+
+    $('#database_dest_id').on("select2:selecting", function(e) { 
+       $('#application_dest_id').val(null).trigger('change');
+       $('#service_dest_id').val(null).trigger('change');
+       $('#module_dest_id').val(null).trigger('change');
+    });
+
+});
+
+</script>
+@endsection
+
+

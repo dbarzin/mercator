@@ -476,23 +476,23 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => '117',
-                'title' => 'subnetword_create',
+                'title' => 'subnetwork_create',
             ],
             [
                 'id'    => '118',
-                'title' => 'subnetword_edit',
+                'title' => 'subnetwork_edit',
             ],
             [
                 'id'    => '119',
-                'title' => 'subnetword_show',
+                'title' => 'subnetwork_show',
             ],
             [
                 'id'    => '120',
-                'title' => 'subnetword_delete',
+                'title' => 'subnetwork_delete',
             ],
             [
                 'id'    => '121',
-                'title' => 'subnetword_access',
+                'title' => 'subnetwork_access',
             ],
             [
                 'id'    => '122',
@@ -1034,6 +1034,37 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '256',
                 'title' => 'profile_password_edit',
             ],
+
+            // Certificates
+            [
+                'id'    => '257',
+                'title' => 'certificate_create',
+            ],
+            [
+                'id'    => '258',
+                'title' => 'certificate_edit',
+            ],
+            [
+                'id'    => '259',
+                'title' => 'certificate_show',
+            ],
+            [
+                'id'    => '260',
+                'title' => 'certificate_delete',
+            ],
+            [
+                'id'    => '261',
+                'title' => 'certificate_access',
+            ],
+
+            // Configuration
+            /* Already in migration_08_08
+            [
+                'id'    => '262',
+                'title' => 'configure',
+            ],
+            */
+
         ];
 
         Permission::insert($permissions);

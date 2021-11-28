@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Annuaire;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
 use App\ZoneAdmin;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnnuaireController extends Controller
@@ -36,11 +33,7 @@ class AnnuaireController extends Controller
 
     public function store(StoreAnnuaireRequest $request)
     {
-        $annuaire = Annuaire::create($request->all());
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $annuaire->id]);
-        }
+        Annuaire::create($request->all());
 
         return redirect()->route('admin.annuaires.index');
     }
@@ -78,7 +71,7 @@ class AnnuaireController extends Controller
 
         $annuaire->delete();
 
-        return back();
+        return redirect()->route('admin.annuaires.index');
     }
 
     public function massDestroy(MassDestroyAnnuaireRequest $request)
@@ -87,5 +80,4 @@ class AnnuaireController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

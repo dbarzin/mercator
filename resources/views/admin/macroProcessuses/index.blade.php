@@ -28,10 +28,10 @@
                             {{ trans('cruds.macroProcessus.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.macroProcessus.fields.security_need') }}
+                            {{ trans('cruds.macroProcessus.fields.owner') }}
                         </th>
                         <th>
-                            {{ trans('cruds.macroProcessus.fields.owner') }}
+                            {{ trans('cruds.macroProcessus.fields.processes') }}
                         </th>
                         <th>
                             &nbsp;
@@ -41,40 +41,49 @@
                 <tbody>
                     @foreach($macroProcessuses as $key => $macroProcessus)
                         <tr data-entry-id="{{ $macroProcessus->id }}"
-@if(($macroProcessus->description==null)||
-    ($macroProcessus->io_elements==null)||
-    ($macroProcessus->security_need==null)||
-        (
-        (auth()->user()->granularity>=2) && 
-        ($macroProcessus->owner==null)
-        )
-    )
-                          class="table-warning"
-@endif
+                            @if(($macroProcessus->description==null)||
+                                ($macroProcessus->io_elements==null)||
+                                ((auth()->user()->granularity>=2)&&
+                                    (
+                                    ($macroProcessus->security_need_c==null)||
+                                    ($macroProcessus->security_need_i==null)||
+                                    ($macroProcessus->security_need_a==null)||
+                                    ($macroProcessus->security_need_t==null)
+                                    )
+                                )||
+                                    (
+                                    (auth()->user()->granularity>=2) && 
+                                    ($macroProcessus->owner==null)
+                                    )
+                                )
+                                    class="table-warning"
+                            @endif
                             >
                             <td>
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.macro-processuses.show', $macroProcessus->id) }}">
                                 {{ $macroProcessus->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $macroProcessus->description ?? '' !!}
                             </td>
 
                             <td>
-                                @if ($macroProcessus->security_need==1) 
-                                    Public
-                                @elseif ($macroProcessus->security_need==2)
-                                    Internal
-                                @elseif ($macroProcessus->security_need==3)
-                                    Confidential
-                                @elseif ($macroProcessus->security_need==4)
-                                    Secret
-                                @endif
-                            </td>
-                            <td>
                                 {{ $macroProcessus->owner }}
+                            </td>
+
+                            <td>
+                                @foreach($macroProcessus->processes as $process)
+                                    <a href="{{ route('admin.processes.show', $process->id) }}">
+                                        {{ $process->identifiant}}
+                                        @if(!$loop->last)
+                                        ,
+                                        @endif
+                                    </a>
+                                @endforeach
                             </td>
 
                             <td>

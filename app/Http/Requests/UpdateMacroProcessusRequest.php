@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\MacroProcessus;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,7 @@ class UpdateMacroProcessusRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
@@ -32,10 +31,10 @@ class UpdateMacroProcessusRequest extends FormRequest
                 'min:-2147483648',
                 'max:2147483647',
             ],
-            'processes.*'   => [
+            'processes.*' => [
                 'integer',
             ],
-            'processes'     => [
+            'processes' => [
                 'array',
             ],
         ];

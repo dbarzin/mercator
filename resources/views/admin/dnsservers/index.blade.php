@@ -29,22 +29,34 @@
                             {{ trans('cruds.dnsserver.fields.description') }}
                         </th>                        
                         <th>
+                            {{ trans('cruds.dnsserver.fields.address_ip') }}
+                        </th>                        
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($dnsservers as $key => $dnsserver)
-                        <tr data-entry-id="{{ $dnsserver->id }}">
+                    @foreach($dnsservers as $dnsserver)
+                        <tr data-entry-id="{{ $dnsserver->id }}"
+                        @if ($dnsserver->address_ip==null)
+                            class="table-warning"
+                        @endif
+                            >
                             <td>
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.dnsservers.show', $dnsserver->id) }}">
                                 {{ $dnsserver->name ?? '' }}
+                                </a>
                             </td>
-                          <td>
+                            <td>
                               {!! $dnsserver->description !!}
-                          </td>
+                            </td>
+                            <td>
+                                {{ $dnsserver->address_ip ?? '' }}
+                            </td>
                             <td>
                                 @can('dnsserver_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.dnsservers.show', $dnsserver->id) }}">

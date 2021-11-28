@@ -12,19 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.subnetworks.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('subnetwork_edit')
+                    <a class="btn btn-info" href="{{ route('admin.subnetworks.edit', $subnetwork->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('subnetwork_delete')
+                    <form action="{{ route('admin.subnetworks.destroy', $subnetwork->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.subnetwork.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $subnetwork->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.subnetwork.fields.name') }}
                         </th>
                         <td>
@@ -45,14 +52,27 @@
                         </th>
                         <td>
                             {{ $subnetwork->address }}
+                            ( {{ $subnetwork->ipRange() }} )
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.subnetwork.fields.ip_range') }}
+                            {{ trans('cruds.subnetwork.fields.vlan') }}
                         </th>
                         <td>
-                            {{ $subnetwork->ip_range }}
+                            @if ($subnetwork->vlan!=null)
+                            <a href="{{ route('admin.vlans.show', $subnetwork->vlan->id) }}">
+                                {{ $subnetwork->vlan->name ?? '' }}
+                            </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.subnetwork.fields.zone') }}
+                        </th>
+                        <td>
+                            {{ $subnetwork->zone }}
                         </td>
                     </tr>
                     <tr>
@@ -89,18 +109,26 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.subnetwork.fields.connected_subnets') }}
+                            {{ trans('cruds.subnetwork.fields.gateway') }}
                         </th>
                         <td>
-                            {{ $subnetwork->connected_subnets->name ?? '' }}
+                            @if ($subnetwork->gateway!=null)
+                            <a href="{{ route('admin.gateways.show', $subnetwork->gateway->id) }}">
+                            {{ $subnetwork->gateway->name ?? '' }}
+                            </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.subnetwork.fields.gateway') }}
+                            {{ trans('cruds.subnetwork.fields.network') }}
                         </th>
                         <td>
-                            {{ $subnetwork->gateway->name ?? '' }}
+                            @if ($subnetwork->network!=null)
+                            <a href="{{ route('admin.networks.show', $subnetwork->network->id) }}">
+                                {{ $subnetwork->network->name ?? '' }}
+                            </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>
@@ -114,30 +142,5 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#connected_subnets_subnetwords" role="tab" data-toggle="tab">
-                {{ trans('cruds.subnetwork.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#subnetworks_networks" role="tab" data-toggle="tab">
-                {{ trans('cruds.network.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="connected_subnets_subnetwords">
-            @includeIf('admin.subnetwords.relationships.connectedSubnetsSubnetwords', ['subnetwords' => $subnetwork->connectedSubnetsSubnetwords])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="subnetworks_networks">
-            @includeIf('admin.subnetwords.relationships.subnetworksNetworks', ['networks' => $subnetwork->subnetworksNetworks])
-        </div>
-    </div>
-</div>
 
 @endsection

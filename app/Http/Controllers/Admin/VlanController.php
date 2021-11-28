@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Requests\StoreVlanRequest;
 use App\Http\Requests\UpdateVlanRequest;
-
+use App\Subnetwork;
 use App\Vlan;
-use App\PhysicalRouter;
-
 use Gate;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class VlanController extends Controller
@@ -30,16 +27,22 @@ class VlanController extends Controller
     {
         abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalRouters = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.vlans.create',compact('physicalRouters'));
+        return view('admin.vlans.create', compact('subnetworks'));
     }
 
     public function store(StoreVlanRequest $request)
     {
         $vlan = Vlan::create($request->all());
 
-        $vlan->vlanPhysicalRouters()->sync($request->input('physicalRouters', []));
+        DB::table('subnetworks')
+            ->where('vlan_id', $vlan->id)
+            ->update(['vlan_id' => null]);
+
+        DB::table('subnetworks')
+            ->whereIn('id', $request->input('subnetworks', []))
+            ->update(['vlan_id' => $vlan->id]);
 
         return redirect()->route('admin.vlans.index');
     }
@@ -48,18 +51,24 @@ class VlanController extends Controller
     {
         abort_if(Gate::denies('vlan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $linkToPhysicalRouters = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
+        $vlan->load('subnetworks');
 
-        $vlan->load('vlanPhysicalRouters');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.vlans.edit', compact('vlan','linkToPhysicalRouters'));
+        return view('admin.vlans.edit', compact('vlan', 'subnetworks'));
     }
 
     public function update(UpdateVlanRequest $request, Vlan $vlan)
     {
         $vlan->update($request->all());
 
-        $vlan->vlanPhysicalRouters()->sync($request->input('linkToPhysicalRouters', []));
+        DB::table('subnetworks')
+            ->where('vlan_id', $vlan->id)
+            ->update(['vlan_id' => null]);
+
+        DB::table('subnetworks')
+            ->whereIn('id', $request->input('subnetworks', []))
+            ->update(['vlan_id' => $vlan->id]);
 
         return redirect()->route('admin.vlans.index');
     }
@@ -68,7 +77,7 @@ class VlanController extends Controller
     {
         abort_if(Gate::denies('vlan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vlan->load('vlanPhysicalRouters');
+        $vlan->load('subnetworks');
 
         return view('admin.vlans.show', compact('vlan'));
     }
@@ -79,7 +88,7 @@ class VlanController extends Controller
 
         $vlan->delete();
 
-        return back();
+        return redirect()->route('admin.vlans.index');
     }
 
     public function massDestroy(MassDestroyVlanRequest $request)

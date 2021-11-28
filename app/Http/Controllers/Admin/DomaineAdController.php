@@ -4,15 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\DomaineAd;
 use App\ForestAd;
-
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class DomaineAdController extends Controller
@@ -21,7 +17,7 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domaineAds = DomaineAd::all();
+        $domaineAds = DomaineAd::all()->sortBy('name');
 
         return view('admin.domaineAds.index', compact('domaineAds'));
     }
@@ -35,7 +31,7 @@ class DomaineAdController extends Controller
 
     public function store(StoreDomaineAdRequest $request)
     {
-        $domaineAd = DomaineAd::create($request->all());
+        DomaineAd::create($request->all());
 
         return redirect()->route('admin.domaine-ads.index');
     }
@@ -47,7 +43,7 @@ class DomaineAdController extends Controller
         $domainesForestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $domaineAd->load('domainesForestAds');
 
-        return view('admin.domaineAds.edit', compact('domaineAd','domainesForestAds'));
+        return view('admin.domaineAds.edit', compact('domaineAd', 'domainesForestAds'));
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
@@ -73,7 +69,7 @@ class DomaineAdController extends Controller
 
         $domaineAd->delete();
 
-        return back();
+        return redirect()->route('admin.domaine-ads.index');
     }
 
     public function massDestroy(MassDestroyDomaineAdRequest $request)
@@ -82,5 +78,4 @@ class DomaineAdController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

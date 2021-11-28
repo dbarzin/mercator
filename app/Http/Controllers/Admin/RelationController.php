@@ -4,20 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entity;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
 use App\Relation;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('relation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -31,20 +26,21 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $destinations = Entity::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sources = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
+        $destinations = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
         // lists
-        $name_list = Relation::select('name')->where("name","<>",null)->distinct()->orderBy('name')->pluck('name');
-        $type_list = Relation::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
+        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.relations.create', 
-                compact('sources', 'destinations','name_list','type_list'
-                ));
+        return view(
+            'admin.relations.create',
+            compact('sources', 'destinations', 'name_list', 'type_list')
+        );
     }
 
     public function store(StoreRelationRequest $request)
     {
-        $relation = Relation::create($request->all());
+        Relation::create($request->all());
 
         return redirect()->route('admin.relations.index');
     }
@@ -56,13 +52,15 @@ class RelationController extends Controller
         $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $destinations = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // lists
-        $name_list = Relation::select('name')->where("name","<>",null)->distinct()->orderBy('name')->pluck('name');
-        $type_list = Relation::select('type')->where("type","<>",null)->distinct()->orderBy('type')->pluck('type');
+        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
+        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $relation->load('source', 'destination');
 
-        return view('admin.relations.edit', 
-            compact('sources', 'destinations', 'relation','type_list','name_list'));
+        return view(
+            'admin.relations.edit',
+            compact('sources', 'destinations', 'relation', 'type_list', 'name_list')
+        );
     }
 
     public function update(UpdateRelationRequest $request, Relation $relation)
@@ -87,7 +85,7 @@ class RelationController extends Controller
 
         $relation->delete();
 
-        return back();
+        return redirect()->route('admin.relations.index');
     }
 
     public function massDestroy(MassDestroyRelationRequest $request)
@@ -96,5 +94,4 @@ class RelationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

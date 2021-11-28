@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Flux;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +18,7 @@ class StoreFluxRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'min:3',
-                'max:64',
-                'required',
-            ],
+            'name' => ['min:3','max:64','required'],
         ];
     }
 }

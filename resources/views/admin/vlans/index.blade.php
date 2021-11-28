@@ -29,16 +29,7 @@
                             {{ trans('cruds.vlan.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.vlan.fields.address') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.vlan.fields.mask') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.vlan.fields.gateway') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.vlan.fields.zone') }}
+                            {{ trans('cruds.vlan.fields.subnetworks') }}
                         </th>
                         <th>
                             &nbsp;
@@ -52,22 +43,22 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.vlans.show', $vlan->id) }}">
                                 {{ $vlan->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $vlan->description ?? '' }}
                             </td>
                             <td>
-                                {{ $vlan->address ?? '' }}
-                            </td>
-                            <td>
-                                {{ $vlan->mask ?? '' }}
-                            </td>
-                            <td>
-                                {{ $vlan->gateway ?? '' }}
-                            </td>
-                            <td>
-                                {{ $vlan->zone ?? '' }}
+                                @foreach($vlan->subnetworks as $subnetwork) 
+                                    <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
+                                    {{$subnetwork->name}}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach                                
                             </td>
                             <td>
                                 @can('vlan_show')

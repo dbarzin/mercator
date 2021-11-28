@@ -12,19 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.zone-admins.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('zone_admin_edit')
+                    <a class="btn btn-info" href="{{ route('admin.zone-admins.edit', $zoneAdmin->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('zone_admin_edit')
+                    <form action="{{ route('admin.zone-admins.destroy', $zoneAdmin->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.zoneAdmin.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $zoneAdmin->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.zoneAdmin.fields.name') }}
                         </th>
                         <td>
@@ -46,32 +53,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#zone_admin_annuaires" role="tab" data-toggle="tab">
-                {{ trans('cruds.annuaire.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#zone_admin_forest_ads" role="tab" data-toggle="tab">
-                {{ trans('cruds.forestAd.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="zone_admin_annuaires">
-            @includeIf('admin.zoneAdmins.relationships.zoneAdminAnnuaires', ['annuaires' => $zoneAdmin->zoneAdminAnnuaires])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="zone_admin_forest_ads">
-            @includeIf('admin.zoneAdmins.relationships.zoneAdminForestAds', ['forestAds' => $zoneAdmin->zoneAdminForestAds])
         </div>
     </div>
 </div>

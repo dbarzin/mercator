@@ -1,18 +1,27 @@
 <?php
 return [
-    "cartography" => "cartography",
-    "level_1" => "Level 1",
-    "level_2" => "Level 2",
-    "level_3" => "Level 3",
-    "maturity_level_1" => "Maturity level 1",
-    "maturity_level_2" => "Maturity level 2",
-    "maturity_level_3" => "Maturity level 3",
+    "level_1" => [
+        "description" => "Minimum level 1 granularity: essential information.",
+        "title_long" => "Maturity level 1",
+        "title_short" => "Level 1"
+    ],
+    "level_2" => [
+        "description" => "Intermediate level 2 granularity: important information.",
+        "title_long" => "Maturity level 2",
+        "title_short" => "Level 2"
+    ],
+    "level_3" => [
+        "description" => "Intermediate level 3 granularity: useful information.",
+        "title_long" => "Maturity level 3",
+        "title_short" => "Level 3"
+    ],
     "maturity_levels" => "Maturity Levels",
     "menu" => [
         "about" => "About",
         "administration" => "Administration",
         "application_flows" => "Application flows",
         "applications" => "Applications",
+        "config" => "Configuration",
         "documentation" => "Documentation",
         "ecosystem" => "Ecosystem",
         "guide" => "Guide",
@@ -22,10 +31,11 @@ return [
         "password" => "Password",
         "physical_infrastructure" => "Physical infrastructure",
         "preferences" => "Preferences",
-        "reports" => "reports",
-        "schema" => "Diagram"
+        "reports" => "Reporting",
+        "schema" => "Data model"
     ],
-    "repartition" => "Division",
+    "repartition" => "Breakdown by domain",
     "site_title" => "Mercator",
+    "treemap" => "Global proportional map",
     "views" => "Views"
 ];

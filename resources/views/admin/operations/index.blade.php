@@ -49,24 +49,41 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.operations.show', $operation->id) }}">
                                 {{ $operation->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $operation->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($operation->tasks as $key => $tasks)
-                                    <span class="label label-info">{{ $tasks->nom }}</span>
+                                @foreach($operation->tasks as $task)
+                                    <a href="{{ route('admin.tasks.show', $task->id) }}">
+                                    {{ $task->nom }}
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                    </a>
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($operation->actors as $key => $actors)
-                                    <span class="label label-info">{{ $actors->name }}</span>
+                                @foreach($operation->actors as $actor)
+                                    <a href="{{ route('admin.actors.show', $actor->id) }}">
+                                        {{ $actor->name }}
+                                        @if (!$loop->last)
+                                        ,
+                                        @endif
+                                    </a>
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($operation->operationsActivities as $key => $activity)
-                                    <span class="label label-info">{{ $activity->name }}</span>
+                                @foreach($operation->operationsActivities as $activity)
+                                    <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                    {{ $activity->name }}
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                    </a>
                                 @endforeach
                             </td>                            
                             <td>

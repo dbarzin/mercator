@@ -12,23 +12,36 @@
                 <a class="btn btn-default" href="{{ route('admin.workstations.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('workstation_edit')
+                    <a class="btn btn-info" href="{{ route('admin.workstations.edit', $workstation->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('workstation_delete')
+                    <form action="{{ route('admin.workstations.destroy', $workstation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.workstation.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $workstation->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.workstation.fields.name') }}
                         </th>
                         <td>
                             {{ $workstation->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.workstation.fields.type') }}
+                        </th>
+                        <td>
+                            {{ $workstation->type }}
                         </td>
                     </tr>
                     <tr>

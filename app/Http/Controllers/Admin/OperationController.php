@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Activity;
 use App\Actor;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
 use App\Operation;
 use App\Task;
-use App\Activity;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller
@@ -86,7 +83,7 @@ class OperationController extends Controller
 
         $operation->delete();
 
-        return back();
+        return redirect()->route('admin.operations.index');
     }
 
     public function massDestroy(MassDestroyOperationRequest $request)
@@ -95,5 +92,4 @@ class OperationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

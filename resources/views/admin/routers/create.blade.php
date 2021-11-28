@@ -30,6 +30,16 @@
                 <span class="help-block">{{ trans('cruds.router.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="ip_addresses">{{ trans('cruds.router.fields.ip_addresses') }}</label>
+                <input class="form-control {{ $errors->has('ip_addresses') ? 'is-invalid' : '' }}" type="text" name="ip_addresses" id="ip_addresses" value="{{ old('ip_addresses', '') }}">
+                @if($errors->has('ip_addresses'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('ip_addresses') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.router.fields.ip_adresses_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="rules">{{ trans('cruds.router.fields.rules') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('rules') ? 'is-invalid' : '' }}" name="rules" id="rules">{!! old('rules') !!}</textarea>
                 @if($errors->has('rules'))
@@ -54,67 +64,23 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/admin/routers/ckmedia', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
-
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
-
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
-
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
-
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
-                }
-
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', {{ $router->id ?? 0 }});
-                xhr.send(data);
-              });
-            })
-        }
-      };
-    }
-  }
+$(document).ready(function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
+        extraPlugins: []
       }
     );
   }
+
+  $(".select2-free").select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    }) 
+
 });
 </script>
-
 @endsection

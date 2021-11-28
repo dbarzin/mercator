@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Config;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Config;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Log;
 
 class LoginController extends Controller
 {
@@ -41,42 +42,48 @@ class LoginController extends Controller
     }
 
     // LDAP Login
-   protected function ldapLogin(string $userid, string $password) {
-
+    protected function ldapLogin(string $userid, string $password)
+    {
         $ldapserver = Config::get('app.ldap_url');
 
         putenv('LDAPTLS_REQCERT=require');
         putenv('LDAPTLS_CACERT='.Config::get('app.ldap_cert'));
 
         $ldapconn = ldap_connect($ldapserver);
-        if($ldapconn)
-            return ldap_bind($ldapconn, $userid . "@" . Config::get('app.ldap_domain'), $password);
-        else
-            return false;
+        if ($ldapconn) {
+            return ldap_bind($ldapconn, $userid . '@' . Config::get('app.ldap_domain'), $password);
+        }
+        return false;
     }
 
     protected function attemptLogin(Request $request)
     {
-        if (Config::get('app.ldap_domain')!=null) {
+        if (Config::get('app.ldap_domain') !== null) {
             $credentials = $request->only($this->username(), 'password');
             $username = $credentials[$this->username()];
             $password = $credentials['password'];
 
             try {
-                // if (true) {
-                if ($this->ldapLogin($username,$password)) {
+                //if (true) {
+                if ($this->ldapLogin($username, $password)) {
                     $user = \App\User::where('name', $username)->first();
-                    if (!$user) return false;
+                    if (! $user) {
+                        return false;
+                    }
                     $this->guard()->login($user, true);
                     return true;
                 }
                 return false;
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+            } finally {
+                return false;
             }
-            finally { return false; }
-        }
-        else {
+        } else {
             return $this->guard()->attempt(
-                $this->credentials($request), $request->filled('remember'));
+                $this->credentials($request),
+                $request->filled('remember')
+            );
         }
     }
 }

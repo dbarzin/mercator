@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Role;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +18,13 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'         => [
+            'title' => [
                 'required',
             ],
             'permissions.*' => [
                 'integer',
             ],
-            'permissions'   => [
+            'permissions' => [
                 'required',
                 'array',
             ],

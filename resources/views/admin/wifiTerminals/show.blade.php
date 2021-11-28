@@ -12,19 +12,25 @@
                 <a class="btn btn-default" href="{{ route('admin.wifi-terminals.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @can('wifi_terminal_edit')
+                    <a class="btn btn-info" href="{{ route('admin.wifi-terminals.edit', $wifiTerminal->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('wifi_terminal_delete')
+                    <form action="{{ route('admin.wifi-terminals.destroy', $wifiTerminal->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.wifiTerminal.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $wifiTerminal->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.wifiTerminal.fields.name') }}
                         </th>
                         <td>
@@ -61,16 +67,6 @@
                         </th>
                         <td>
                             {{ $wifiTerminal->building->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.wifiTerminal.fields.bay') }}
-                        </th>
-                        <td>
-                            @foreach($wifiTerminal->bays as $key => $bay)
-                                <span class="label label-info">{{ $bay->name }}</span>
-                            @endforeach
                         </td>
                     </tr>
                 </tbody>

@@ -29,6 +29,12 @@
                             {{ trans('cruds.network.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.network.fields.protocol_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.network.fields.security_need') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -40,11 +46,66 @@
 
                             </td>
                             <td>
-                                {{ $network->name ?? '' }}
+                                <a href="{{ route('admin.networks.show', $network->id) }}">
+                                    {{ $network->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $network->description ?? '' !!}
                             </td>
+                            <td>
+                                {!! $network->protocol_type ?? '' !!}
+                            </td>
+                            <td>                                
+                                @if ($network->security_need_c==1)
+                                    <span class="veryLowRisk"> 1 </span>
+                                @elseif ($network->security_need_c==2)
+                                    <span class="lowRisk"> 2 </span>
+                                @elseif ($network->security_need_c==3)
+                                    <span class="mediumRisk"> 3 </span>
+                                @elseif ($network->security_need_c==4)
+                                    <span class="highRisk"> 4 </span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($network->security_need_i==1)
+                                    <span class="veryLowRisk"> 1 </span>
+                                @elseif ($network->security_need_i==2)
+                                    <span class="lowRisk"> 2 </span>
+                                @elseif ($network->security_need_i==3)
+                                    <span class="mediumRisk"> 3 </span>
+                                @elseif ($network->security_need_i==4)
+                                    <span class="highRisk"> 4 </span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($network->security_need_a==1)
+                                    <span class="veryLowRisk"> 1 </span>
+                                @elseif ($network->security_need_a==2)
+                                    <span class="lowRisk"> 2 </span>
+                                @elseif ($network->security_need_a==3)
+                                    <span class="mediumRisk"> 3 </span>
+                                @elseif ($network->security_need_a==4)
+                                    <span class="highRisk"> 4 </span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+                                -
+                                @if ($network->security_need_t==1)
+                                    <span class="veryLowRisk"> 1 </span>
+                                @elseif ($network->security_need_t==2)
+                                    <span class="lowRisk"> 2 </span>
+                                @elseif ($network->security_need_t==3)
+                                    <span class="mediumRisk"> 3 </span>
+                                @elseif ($network->security_need_t==4)
+                                    <span class="highRisk"> 4 </span>
+                                @else
+                                    <span> * </span>
+                                @endif                                    
+
+                            </td>                            
                             <td>
                                 @can('network_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.networks.show', $network->id) }}">

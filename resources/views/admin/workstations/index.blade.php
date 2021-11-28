@@ -26,7 +26,7 @@
                             {{ trans('cruds.workstation.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.workstation.fields.description') }}
+                            {{ trans('cruds.workstation.fields.type') }}
                         </th>
                         <th>
                             {{ trans('cruds.workstation.fields.site') }}
@@ -46,16 +46,26 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.workstations.show', $workstation->id) }}">                                
                                 {{ $workstation->name ?? '' }}
+                                </a>
                             </td>
                             <td>
-                                {!! $workstation->description ?? '' !!}
+                                {!! $workstation->type ?? '' !!}
                             </td>
                             <td>
-                                {{ $workstation->site->name ?? '' }}
+                                @if ($workstation->site!=null)
+                                    <a href="{{ route('admin.sites.show', $workstation->site->id) }}">
+                                        {{ $workstation->site->name ?? '' }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $workstation->building->name ?? '' }}
+                                @if ($workstation->building!=null)
+                                <a href="{{ route('admin.buildings.show', $workstation->building->id) }}">
+                                    {{ $workstation->building->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('workstation_show')

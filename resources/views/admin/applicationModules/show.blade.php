@@ -5,26 +5,32 @@
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.applicationModule.title') }}
     </div>
-
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.application-modules.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('application_module_edit')
+                    <a class="btn btn-info" href="{{ route('admin.application-modules.edit', $applicationModule->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('application_module_delete')
+                    <form action="{{ route('admin.application-modules.destroy', $applicationModule->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+                
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.applicationModule.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $applicationModule->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.applicationModule.fields.name') }}
                         </th>
                         <td>
@@ -46,40 +52,6 @@
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#module_source_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#module_dest_fluxes" role="tab" data-toggle="tab">
-                {{ trans('cruds.flux.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#modules_application_services" role="tab" data-toggle="tab">
-                {{ trans('cruds.applicationService.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="module_source_fluxes">
-            @includeIf('admin.applicationModules.relationships.moduleSourceFluxes', ['fluxes' => $applicationModule->moduleSourceFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="module_dest_fluxes">
-            @includeIf('admin.applicationModules.relationships.moduleDestFluxes', ['fluxes' => $applicationModule->moduleDestFluxes])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="modules_application_services">
-            @includeIf('admin.applicationModules.relationships.modulesApplicationServices', ['applicationServices' => $applicationModule->modulesApplicationServices])
         </div>
     </div>
 </div>

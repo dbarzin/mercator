@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.maturity_level_1") }}
+                    {{ trans("panel.level_1.title_long") }}
                 </div>
                 <div class="card-body">
                     <div style="width: 350px; height: 180px;">
@@ -16,7 +16,7 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                    {{ trans("panel.cartography") }}
+                    {{ trans("panel.level_1.description") }}
                 </div>
                 <div class="card-body">
 
@@ -24,7 +24,7 @@
     <div class="col-sm-6">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-                <th>{{ trans("cruds.ecosystem.title_short") }}</th>
+                <th>{{ trans("cruds.menu.ecosystem.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ number_format( ($entities+$relations)>0 
@@ -45,7 +45,7 @@
                 </tr>
             </tbody>
             <thead>
-                <th>{{ trans("cruds.metier.title_short") }}</th>
+                <th>{{ trans("cruds.menu.metier.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>{{ ($processes+$operations+$informations)>0 ?
@@ -74,7 +74,7 @@
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.application_view.title_short") }}</th>
+                <th>{{ trans("cruds.menu.application.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -107,7 +107,7 @@
 
 
             <thead>
-                <th>{{ trans("cruds.administration.title_short") }}</th>
+                <th>{{ trans("cruds.menu.administration.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -144,7 +144,7 @@
             </tbody>
 
             <thead>
-                <th>{{ trans("cruds.logical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.logical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th>
@@ -172,7 +172,7 @@
                 </tr>
 
                 <tr>
-                    <td><a href="/admin/subnetwords">{{ trans("cruds.subnetwork.title") }}</a></td>
+                    <td><a href="/admin/subnetworks">{{ trans("cruds.subnetwork.title") }}</a></td>
                     <td><center>{{ $subnetworks }}</center></td>
                     <td><center>{{ $subnetworks_lvl1 }}</center></td>
                     <td><center>{{ $subnetworks>0 ? number_format($subnetworks_lvl1*100/$subnetworks,0):0 }}%</center></td>
@@ -216,7 +216,7 @@
 
 
             <thead>
-                <th>{{ trans("cruds.physical_infrastructure.title_short") }}</th>
+                <th>{{ trans("cruds.menu.physical_infrastructure.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
@@ -325,7 +325,7 @@
 @section('scripts')
 
   <script src="/js/Chart.bundle.js"></script>
-  <script src="/js/chartjs-gauge.js"></script>
+  <script src="/js/chartjs-gauge.min.js"></script>
 
   <script type="text/javascript">
 

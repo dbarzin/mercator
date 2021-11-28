@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyInformationRequest;
 use App\Http\Requests\StoreInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
 use App\Information;
 use App\Process;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class InformationController extends Controller
@@ -31,7 +28,19 @@ class InformationController extends Controller
 
         $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
 
-        return view('admin.information.create', compact('processes'));
+        // lists
+        $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $storage_list = Information::select('storage')->where('storage', '<>', null)->distinct()->orderBy('storage')->pluck('storage');
+        $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
+        $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
+
+        return view('admin.information.create', compact(
+            'processes',
+            'owner_list',
+            'storage_list',
+            'sensitivity_list',
+            'administrator_list'
+        ));
     }
 
     public function store(StoreInformationRequest $request)
@@ -46,11 +55,25 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
-
         $information->load('processes');
 
-        return view('admin.information.edit', compact('processes', 'information'));
+        // links
+        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+
+        // lists
+        $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
+        $storage_list = Information::select('storage')->where('storage', '<>', null)->distinct()->orderBy('storage')->pluck('storage');
+        $sensitivity_list = Information::select('sensitivity')->where('sensitivity', '<>', null)->distinct()->orderBy('sensitivity')->pluck('sensitivity');
+        $administrator_list = Information::select('administrator')->where('administrator', '<>', null)->distinct()->orderBy('administrator')->pluck('administrator');
+
+        return view('admin.information.edit', compact(
+            'processes',
+            'information',
+            'owner_list',
+            'storage_list',
+            'sensitivity_list',
+            'administrator_list'
+        ));
     }
 
     public function update(UpdateInformationRequest $request, Information $information)
@@ -76,7 +99,7 @@ class InformationController extends Controller
 
         $information->delete();
 
-        return back();
+        return redirect()->route('admin.information.index');
     }
 
     public function massDestroy(MassDestroyInformationRequest $request)
@@ -84,17 +107,5 @@ class InformationController extends Controller
         Information::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function storeCKEditorImages(Request $request)
-    {
-        abort_if(Gate::denies('information_create') && Gate::denies('information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $model         = new Information();
-        $model->id     = $request->input('crud_id', 0);
-        $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
-
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
 use App\SecurityDevice;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityDeviceController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,7 +30,7 @@ class SecurityDeviceController extends Controller
 
     public function store(StoreSecurityDeviceRequest $request)
     {
-        $securityDevice = SecurityDevice::create($request->all());
+        SecurityDevice::create($request->all());
 
         return redirect()->route('admin.security-devices.index');
     }
@@ -67,7 +62,7 @@ class SecurityDeviceController extends Controller
 
         $securityDevice->delete();
 
-        return back();
+        return redirect()->route('admin.security-devices.index');
     }
 
     public function massDestroy(MassDestroySecurityDeviceRequest $request)
@@ -76,5 +71,4 @@ class SecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

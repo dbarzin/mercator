@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\LogicalServer;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +18,26 @@ class StoreLogicalServerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:logical_servers',
                 'unique:logical_servers,name,NULL,id,deleted_at,NULL',
             ],
             'servers.*' => [
                 'integer',
             ],
-            'servers'   => [
+            'disk' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:2147483647',
+            ],
+            'address_ip' => [
+                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
+                'nullable',
+            ],
+            'servers' => [
                 'array',
             ],
         ];

@@ -12,19 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.logical-servers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('logical_server_edit')
+                    <a class="btn btn-info" href="{{ route('admin.logical-servers.edit', $logicalServer->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('logical_server_delete')
+                    <form action="{{ route('admin.logical-servers.destroy', $logicalServer->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+                
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $logicalServer->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.logicalServer.fields.name') }}
                         </th>
                         <td>
@@ -108,8 +115,13 @@
                             {{ trans('cruds.logicalServer.fields.applications') }}
                         </th>
                         <td>
-                            @foreach($logicalServer->applications as $key => $applications)
-                                <span class="label label-info">{{ $applications->name }}</span>
+                            @foreach($logicalServer->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name }}
+                                </a>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -118,8 +130,13 @@
                             {{ trans('cruds.logicalServer.fields.servers') }}
                         </th>
                         <td>
-                            @foreach($logicalServer->servers as $key => $servers)
-                                <span class="label label-info">{{ $servers->name }}</span>
+                            @foreach($logicalServer->servers as $server)
+                                <a href="{{ route('admin.physical-servers.show', $server->id) }}">
+                                    {{ $server->name }}
+                                </a>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>

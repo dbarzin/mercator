@@ -23,22 +23,22 @@
 
                         </th>
                         <th>
-                            {{ __('cruds.physicalServer.fields.name') }}
+                            {{ trans('cruds.physicalServer.fields.name') }}
                         </th>
                         <th>
-                            {{ __('cruds.physicalServer.fields.descrition') }}
+                            {{ trans('cruds.physicalServer.fields.type') }}
                         </th>                        
                         <th>
-                            {{ __('cruds.physicalServer.fields.responsible') }}
+                            {{ trans('cruds.physicalServer.fields.responsible') }}
                         </th>                        
                         <th>
-                            {{ __('cruds.physicalServer.fields.site') }}
+                            {{ trans('cruds.physicalServer.fields.site') }}
                         </th>
                         <th>
-                            {{ __('cruds.physicalServer.fields.building') }}
+                            {{ trans('cruds.physicalServer.fields.building') }}
                         </th>
                         <th>
-                            {{ __('cruds.physicalServer.fields.bay') }}
+                            {{ trans('cruds.physicalServer.fields.bay') }}
                         </th>
                         <th>
                             &nbsp;
@@ -49,8 +49,7 @@
                     @foreach($physicalServers as $key => $physicalServer)
                         <tr data-entry-id="{{ $physicalServer->id }}"
 
-
-                        @if (($physicalServer->descrition==null)||
+                        @if (($physicalServer->description==null)||
                             ($physicalServer->configuration==null)||
                             ($physicalServer->site_id==null)||
                             ($physicalServer->building_id==null)||
@@ -64,22 +63,36 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.physical-servers.show', $physicalServer->id) }}">
                                 {{ $physicalServer->name ?? '' }}
+                                </a>
                             </td>
                             <td>
-                                {!! $physicalServer->descrition ?? '' !!}
+                                {!! $physicalServer->type ?? '' !!}
                             </td>
                             <td>
                                 {{ $physicalServer->responsible }}
                             </td>
                             <td>
-                                {{ $physicalServer->site->name ?? '' }}
+                                @if ($physicalServer->site!=null)
+                                    <a href="{{ route('admin.sites.show', $physicalServer->site->id) }}">
+                                        {{ $physicalServer->site->name ?? '' }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $physicalServer->building->name ?? '' }}
+                                @if ($physicalServer->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalServer->building->id) }}">
+                                    {{ $physicalServer->building->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $physicalServer->bay->name ?? '' }}
+                                @if ($physicalServer->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalServer->bay->id) }}">
+                                    {{ $physicalServer->bay->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('physical_server_show')

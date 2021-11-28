@@ -8,7 +8,6 @@ use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
 use App\Lan;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class LanController extends Controller
@@ -31,7 +30,7 @@ class LanController extends Controller
 
     public function store(StoreLanRequest $request)
     {
-        $lan = Lan::create($request->all());
+        Lan::create($request->all());
 
         return redirect()->route('admin.lans.index');
     }
@@ -65,7 +64,7 @@ class LanController extends Controller
 
         $lan->delete();
 
-        return back();
+        return redirect()->route('admin.lans.index');
     }
 
     public function massDestroy(MassDestroyLanRequest $request)

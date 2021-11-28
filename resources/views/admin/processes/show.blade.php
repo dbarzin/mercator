@@ -12,11 +12,26 @@
                 <a class="btn btn-default" href="{{ route('admin.processes.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                @can('process_edit')
+                    <a class="btn btn-info" href="{{ route('admin.processes.edit', $process->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endcan
+
+                @can('process_delete')
+                    <form action="{{ route('admin.processes.destroy', $process->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+                    </form>
+                @endcan
+
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th>
+                        <th width="10%">
                             {{ trans('cruds.process.fields.identifiant') }}
                         </th>
                         <td>
@@ -44,8 +59,13 @@
                             {{ trans('cruds.process.fields.activities') }}
                         </th>
                         <td>
-                            @foreach($process->activities as $key => $activities)
-                                <span class="label label-info">{{ $activities->name }}</span>
+                            @foreach($process->activities as $activity)
+                                <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                {{ $activity->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -54,8 +74,13 @@
                             {{ trans('cruds.process.fields.entities') }}
                         </th>
                         <td>
-                            @foreach($process->entities as $key => $entities)
-                                <span class="label label-info">{{ $entities->name }}</span>
+                            @foreach($process->entities as $entity)
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">
+                                {{ $entity->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif                                
                             @endforeach
                         </td>
                     </tr>
@@ -64,15 +89,21 @@
                             {{ trans('cruds.process.fields.security_need') }}
                         </th>
                         <td>
-                            @if ($process->security_need==1) 
-                                Public
-                            @elseif ($process->security_need==2)
-                                Internal
-                            @elseif ($process->security_need==3)
-                                Confidential
-                            @elseif ($process->security_need==4)
-                                Secret
-                            @endif                            
+                            {{ trans('global.confidentiality') }} :
+                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_c] ?? "" }}
+                            <br>
+                            {{ trans('global.integrity') }} :
+                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_i] ?? "" }}
+                            <br>
+                            {{ trans('global.availability') }} :
+                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_a] ?? "" }}
+                            <br>
+                            {{ trans('global.tracability') }} :
+                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
+                                [$process->security_need_t] ?? "" }}                            
                         </td>
                     </tr>
                     <tr>
@@ -83,6 +114,18 @@
                             {{ $process->owner }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.process.fields.macroprocessus') }}
+                        </th>
+                        <td>
+                            @if($process->macroProcess!=null)
+                                <a href="{{ route('admin.macro-processuses.show', $process->macroProcess->id) }}">
+                                    {{ $process->macroProcess->name }}
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -91,6 +134,10 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $process->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $process->updated_at->format(trans('global.timestamp')) }} 
     </div>
 </div>
 

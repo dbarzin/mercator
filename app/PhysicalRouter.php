@@ -3,11 +3,50 @@
 namespace App;
 
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 
-class PhysicalRouter extends Model 
+/**
+ * App\PhysicalRouter
+ *
+ * @property int $id
+ * @property string|null $description
+ * @property string|null $type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $site_id
+ * @property int|null $building_id
+ * @property int|null $bay_id
+ * @property string|null $name
+ *
+ * @property-read \App\Bay|null $bay
+ * @property-read \App\Building|null $building
+ * @property-read \App\Site|null $site
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Vlan> $vlans
+ * @property-read int|null $vlans_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter newQuery()
+ * @method static \Illuminate\Database\Query\Builder|PhysicalRouter onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereBayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereBuildingId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereSiteId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PhysicalRouter whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|PhysicalRouter withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|PhysicalRouter withoutTrashed()
+ *
+ * @mixin \Eloquent
+ */
+class PhysicalRouter extends Model
 {
     use SoftDeletes, Auditable;
 
@@ -37,11 +76,6 @@ class PhysicalRouter extends Model
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function site()
     {
         return $this->belongsTo(Site::class, 'site_id');
@@ -59,6 +93,11 @@ class PhysicalRouter extends Model
 
     public function vlans()
     {
-        return $this->belongsToMany(Vlan::class);
+        return $this->belongsToMany(Vlan::class)->orderBy('name');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

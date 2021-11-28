@@ -2,24 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyWifiTerminalRequest;
 use App\Http\Requests\StoreWifiTerminalRequest;
 use App\Http\Requests\UpdateWifiTerminalRequest;
 use App\Site;
 use App\WifiTerminal;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('wifi_terminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -37,15 +31,12 @@ class WifiTerminalController extends Controller
 
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
-
-        return view('admin.wifiTerminals.create', compact('sites', 'buildings', 'bays'));
+        return view('admin.wifiTerminals.create', compact('sites', 'buildings'));
     }
 
     public function store(StoreWifiTerminalRequest $request)
     {
-        $wifiTerminal = WifiTerminal::create($request->all());
-        $wifiTerminal->bays()->sync($request->input('bays', []));
+        WifiTerminal::create($request->all());
 
         return redirect()->route('admin.wifi-terminals.index');
     }
@@ -58,17 +49,14 @@ class WifiTerminalController extends Controller
 
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $wifiTerminal->load('site', 'building');
 
-        $wifiTerminal->load('site', 'building', 'bays');
-
-        return view('admin.wifiTerminals.edit', compact('sites', 'buildings', 'bays', 'wifiTerminal'));
+        return view('admin.wifiTerminals.edit', compact('sites', 'buildings', 'wifiTerminal'));
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
     {
         $wifiTerminal->update($request->all());
-        $wifiTerminal->bays()->sync($request->input('bays', []));
 
         return redirect()->route('admin.wifi-terminals.index');
     }
@@ -77,7 +65,7 @@ class WifiTerminalController extends Controller
     {
         abort_if(Gate::denies('wifi_terminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wifiTerminal->load('site', 'building', 'bays');
+        $wifiTerminal->load('site', 'building');
 
         return view('admin.wifiTerminals.show', compact('wifiTerminal'));
     }
@@ -88,7 +76,7 @@ class WifiTerminalController extends Controller
 
         $wifiTerminal->delete();
 
-        return back();
+        return redirect()->route('admin.wifi-terminals.index');
     }
 
     public function massDestroy(MassDestroyWifiTerminalRequest $request)
@@ -97,5 +85,4 @@ class WifiTerminalController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

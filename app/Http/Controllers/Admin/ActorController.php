@@ -8,7 +8,6 @@ use App\Http\Requests\MassDestroyActorRequest;
 use App\Http\Requests\StoreActorRequest;
 use App\Http\Requests\UpdateActorRequest;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ActorController extends Controller
@@ -31,7 +30,7 @@ class ActorController extends Controller
 
     public function store(StoreActorRequest $request)
     {
-        $actor = Actor::create($request->all());
+        Actor::create($request->all());
 
         return redirect()->route('admin.actors.index');
     }
@@ -63,7 +62,7 @@ class ActorController extends Controller
 
         $actor->delete();
 
-        return back();
+        return redirect()->route('admin.actors.index');
     }
 
     public function massDestroy(MassDestroyActorRequest $request)

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
 use App\Network;
-use App\Subnetword;
+use App\Subnetwork;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class NetworkController extends Controller
@@ -29,15 +26,15 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.networks.create', compact('subnetworks'));
     }
 
     public function store(StoreNetworkRequest $request)
     {
-        $network = Network::create($request->all());
-        $network->subnetworks()->sync($request->input('subnetworks', []));
+        Network::create($request->all());
+        // $network->subnetworks()->sync($request->input('subnetworks', []));
 
         return redirect()->route('admin.networks.index');
     }
@@ -46,7 +43,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetword::all()->sortBy('name')->pluck('name', 'id');
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
 
         $network->load('subnetworks');
 
@@ -56,7 +53,9 @@ class NetworkController extends Controller
     public function update(UpdateNetworkRequest $request, Network $network)
     {
         $network->update($request->all());
-        $network->subnetworks()->sync($request->input('subnetworks', []));
+
+        // Subnetwork::where('network_id', $network->id)->update(['network_id' => null]);
+        // Subnetwork::whereIn('id', $request->input('subnetworks', []))->update(['network_id' => $network->id]);
 
         return redirect()->route('admin.networks.index');
     }
@@ -65,7 +64,7 @@ class NetworkController extends Controller
     {
         abort_if(Gate::denies('network_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $network->load('subnetworks', 'connectedNetworksExternalConnectedEntities');
+        $network->load('subnetworks', 'externalConnectedEntities');
 
         return view('admin.networks.show', compact('network'));
     }
@@ -76,7 +75,7 @@ class NetworkController extends Controller
 
         $network->delete();
 
-        return back();
+        return redirect()->route('admin.networks.index');
     }
 
     public function massDestroy(MassDestroyNetworkRequest $request)
@@ -85,5 +84,4 @@ class NetworkController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

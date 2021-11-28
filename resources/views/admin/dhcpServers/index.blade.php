@@ -29,6 +29,9 @@
                             {{ trans('cruds.dhcpServer.fields.description') }}
                         </th>                        
                         <th>
+                            {{ trans('cruds.dhcpServer.fields.address_ip') }}
+                        </th>                        
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -45,6 +48,9 @@
                             <td>
                                 {!! $dhcpServer->description !!}
                             </td>                            
+                            <td>
+                                {{ $dhcpServer->address_ip ?? '' }}
+                            </td>
                             <td>
                                 @can('dhcp_server_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.dhcp-servers.show', $dhcpServer->id) }}">

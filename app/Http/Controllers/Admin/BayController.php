@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
@@ -36,7 +33,7 @@ class BayController extends Controller
 
     public function store(StoreBayRequest $request)
     {
-        $bay = Bay::create($request->all());
+        Bay::create($request->all());
 
         return redirect()->route('admin.bays.index');
     }
@@ -74,7 +71,7 @@ class BayController extends Controller
 
         $bay->delete();
 
-        return back();
+        return redirect()->route('admin.bays.index');
     }
 
     public function massDestroy(MassDestroyBayRequest $request)
@@ -83,5 +80,4 @@ class BayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

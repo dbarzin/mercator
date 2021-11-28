@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Site;
 use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,7 +30,7 @@ class SiteController extends Controller
 
     public function store(StoreSiteRequest $request)
     {
-        $site = Site::create($request->all());
+        Site::create($request->all());
 
         return redirect()->route('admin.sites.index');
     }
@@ -69,7 +64,7 @@ class SiteController extends Controller
 
         $site->delete();
 
-        return back();
+        return redirect()->route('admin.sites.index');
     }
 
     public function massDestroy(MassDestroySiteRequest $request)
@@ -78,5 +73,4 @@ class SiteController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
