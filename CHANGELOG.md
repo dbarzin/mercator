@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add certificates management
 - Filter on network and subnetworks in logical infrastructure view
 - Filter on application blocks and applications in flows view
+- Add User manual in French
 
 ### Fixed
 
