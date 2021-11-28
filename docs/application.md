@@ -27,7 +27,7 @@ Chaque élément est sélectonnable et donne accès à la liste des objets de la
     * au travers des vue, aux différents écrans de gestion des objets de la cartographie
     * aux écrans de gestion des rôles et des utilisateurs
     * au bouton de déconnexion
-* Le menu supérieur donne accès:
+* Le menu supérieur donne accès :
     * Aux vues
     * Aux préférences
     * A la documentation et aux rapports
