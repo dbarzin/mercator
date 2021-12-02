@@ -1558,12 +1558,210 @@
 </table>
 <h4 id="passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</h4>
 <p>Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.</p>
+<p>Table <em>gateways</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la passerelle</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la passerelle</td>
+</tr>
+<tr>
+<td align="left">ip</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adress IP de la passerelle</td>
+</tr>
+<tr>
+<td align="left">authentification</td>
+<td align="left">varchar(255)</td>
+<td align="left">Mode d'authentification</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="entites-exterieures-connectees">Entités extérieures connectées</h4>
 <p>Les entités extérieures connectées représentent les entités externes connectées au réseau.</p>
+<p>Table <em>external_connected_entities</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'entité</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'entié</td>
+</tr>
+<tr>
+<td align="left">responsible_sec</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de la sécurité de l'entité</td>
+</tr>
+<tr>
+<td align="left">contacts</td>
+<td align="left">varchar(255)</td>
+<td align="left">Contactes de l'entité</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="commutateurs-reseau">Commutateurs réseau</h4>
 <p>Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<p>Table <em>network_switches</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du commutateur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du commutateur</td>
+</tr>
+<tr>
+<td align="left">ip</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adresse IP du commutateur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="routeurs-logiques">Routeurs logiques</h4>
 <p>Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.</p>
+<p>Table <em>routers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du routeur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du routeur</td>
+</tr>
+<tr>
+<td align="left">rules</td>
+<td align="left">longtext</td>
+<td align="left">Règles de filtrage</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="equipements-de-securite">Équipements de sécurité</h4>
 <p>Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
 <p>Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. </p>
