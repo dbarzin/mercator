@@ -4,7 +4,7 @@ Mercator est une application Web permettant de gérer la cartographie d’un sys
 
 ### Objectif
 
-L’objectif de Mercator est de pouvoir gérer en équipe la cartographie d'un système d’information de manière complète et cohérente et de générer automatiquement les différents rapport qui permettent de faciliter le maintient et la communication de cette cartographie.
+L’objectif de Mercator est de pouvoir gérer en équipe la cartographie d'un système d’information de manière complète et cohérente et de générer automatiquement les différents rapports qui permettent de faciliter le maintient et la communication de cette cartographie.
 
 Le maintient d’une cartographie à jour et complète est un travail long et complexe. Mercator permet de diviser ce travail entre plusieurs équipes (infrastructure, réseau, système, application...) et de générer automatiquement les schémas d’infrastructure, d’extraire les inventaires et de générer les rapports de cartographie.
 

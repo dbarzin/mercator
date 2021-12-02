@@ -64,10 +64,6 @@ Data model
 - WebAssembly + Graphviz
 - ChartJS
 
-## TODO
-- user documentation
-- develop REST APIs to populate the database
-
 ## Installation
 
 - [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) 
