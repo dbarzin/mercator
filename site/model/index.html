@@ -789,21 +789,438 @@
 <h4 id="bloc-applicatif">Bloc applicatif</h4>
 <p>Un bloc applicatif représente un ensemble d’application.</p>
 <p>Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...</p>
+<p>Table <em>application_blocks</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'information</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du block applicatif</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable du bloc applicatif</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="application">Application</h4>
 <p>Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.</p>
 <p>Une application peut être déployée sur un ou plusieurs serveurs logiques.</p>
 <p>Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y a un serveur logique par serveur physique.</p>
+<p>Table <em>m_applications</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'application</td>
+</tr>
+<tr>
+<td align="left">version</td>
+<td align="left">varchar(255)</td>
+<td align="left">Version de l'application</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'application</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de l'application</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type d'application</td>
+</tr>
+<tr>
+<td align="left">technology</td>
+<td align="left">varchar(255)</td>
+<td align="left">Technologie</td>
+</tr>
+<tr>
+<td align="left">external</td>
+<td align="left">varchar(255)</td>
+<td align="left">Externe</td>
+</tr>
+<tr>
+<td align="left">users</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nombre d'utilisateurs et type</td>
+</tr>
+<tr>
+<td align="left">documentation</td>
+<td align="left">varchar(255)</td>
+<td align="left">Lien vers la documentation</td>
+</tr>
+<tr>
+<td align="left">entity_resp_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Entité responsable de l'exploitation</td>
+</tr>
+<tr>
+<td align="left">application_block_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers la bloc applicatif</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="service-applicatif">Service applicatif</h4>
 <p>Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. </p>
 <p>Un service applicatif peut, une API, ...</p>
+<p>Table <em>application_services</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du service applicatif</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du service applicatif</td>
+</tr>
+<tr>
+<td align="left">exposition</td>
+<td align="left">varchar(255)</td>
+<td align="left">Exposition du service applicatif</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="module-applicatif">Module applicatif</h4>
 <p>Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.</p>
+<p>Table <em>application_modules</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du service applicatif</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du module applicatif</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="base-de-donnees">Base de données</h4>
 <p>Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement. </p>
+<p>Table <em>databases</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du service applicatif</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du module applicatif</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de l'application</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de l'application</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">external</td>
+<td align="left">varchar(255)</td>
+<td align="left">Externe</td>
+</tr>
+<tr>
+<td align="left">entity_resp_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Entité responsable</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="flux">Flux</h4>
 <p>Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module applicatif ou base de données).</p>
 <p>Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.</p>
-<p>Pas exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. </p>
+<p>Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. </p>
+<p>Table <em>fluxes</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du flux</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du flux</td>
+</tr>
+<tr>
+<td align="left">application_source_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers l'application source</td>
+</tr>
+<tr>
+<td align="left">service_source_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le service source</td>
+</tr>
+<tr>
+<td align="left">module_source_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le module source</td>
+</tr>
+<tr>
+<td align="left">database_source_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vars la base de données source</td>
+</tr>
+<tr>
+<td align="left">application_dest_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers l'application destinataire</td>
+</tr>
+<tr>
+<td align="left">service_dest_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le service destinataire</td>
+</tr>
+<tr>
+<td align="left">module_dest_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le module destinataire</td>
+</tr>
+<tr>
+<td align="left">database_dest_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers la basede données destinataire</td>
+</tr>
+<tr>
+<td align="left">crypted</td>
+<td align="left">tinyint(1)</td>
+<td align="left">Le flux est chiffré (1=oui, O=non)</td>
+</tr>
+<tr>
+<td align="left">bidirectional</td>
+<td align="left">tinyint(1)</td>
+<td align="left">Le flux est bidirectionnel (1=oui, O=non)</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h3 id="ladministration">L’administration</h3>
 <p>La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.</p>
 <p><a href="/mercator/images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
@@ -811,27 +1228,540 @@
 <h4 id="zone-dadministration">Zone d’administration</h4>
 <p>Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).</p>
 <p>Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences LDAP.</p>
+<p>Table <em>zone_admins</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la zone</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la zone</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="service-dannuaire-dadministration">Service d’annuaire d’administration</h4>
 <p>Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.</p>
 <p>Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.</p>
+<p>Table <em>annuaires</em>;</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'annuaire</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'annuaire</td>
+</tr>
+<tr>
+<td align="left">solution</td>
+<td align="left">varchar(255)</td>
+<td align="left">Solution technique</td>
+</tr>
+<tr>
+<td align="left">zone_admin_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers la zone d'administration</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="foret-active-directory-arborescence-ldap">Forêt Active Directory / Arborescence LDAP</h4>
 <p>Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.</p>
+<p>Table <em>forest_ads</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la forêt Active Directory ou de l'arborescence LDAP</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la forêt Active Directory ou de l'arborescence LDAP</td>
+</tr>
+<tr>
+<td align="left">zone_admin_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers la zone d'administration</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h3 id="linfrastructure-logiques">L’infrastructure logiques</h3>
 <p>La vue de l'infrastructure logique correspond à la répartition logique du réseau. </p>
 <p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
 <p>Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.</p>
 <h4 id="reseaux">Réseaux</h4>
 <p>Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.</p>
+<p>Table <em>networks</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du réseau</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du réseau</td>
+</tr>
+<tr>
+<td align="left">protocol_type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Protocoles utilisés</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de l'exploitation</td>
+</tr>
+<tr>
+<td align="left">responsible_sec</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de la sécurité</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="sous-reseaux">Sous-réseaux</h4>
 <p>Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.</p>
+<p>table <em>subnetworks</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du réseau</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du réseau</td>
+</tr>
+<tr>
+<td align="left">address</td>
+<td align="left">varchar(255)</td>
+<td align="left">Range d'adresse du sous-réseau</td>
+</tr>
+<tr>
+<td align="left">default_gateway</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adresse de la passerelle par défaut</td>
+</tr>
+<tr>
+<td align="left">ip_allocation_type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type d'allocation des adresses</td>
+</tr>
+<tr>
+<td align="left">responsible_exp</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de l'exploitation</td>
+</tr>
+<tr>
+<td align="left">zone</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la zone firewall associée</td>
+</tr>
+<tr>
+<td align="left">dmz</td>
+<td align="left">varchar(255)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">wifi</td>
+<td align="left">varchar(255)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">connected_subnets_id</td>
+<td align="left">int unsigned</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">gateway_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vars la passerelle</td>
+</tr>
+<tr>
+<td align="left">vlan_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le VLAN associé</td>
+</tr>
+<tr>
+<td align="left">network_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Lien vers le réseau associé</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="passerelles-dentrees-depuis-lexterieur">Passerelles d’entrées depuis l’extérieur</h4>
 <p>Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.</p>
+<p>Table <em>gateways</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la passerelle</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la passerelle</td>
+</tr>
+<tr>
+<td align="left">ip</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adress IP de la passerelle</td>
+</tr>
+<tr>
+<td align="left">authentification</td>
+<td align="left">varchar(255)</td>
+<td align="left">Mode d'authentification</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="entites-exterieures-connectees">Entités extérieures connectées</h4>
 <p>Les entités extérieures connectées représentent les entités externes connectées au réseau.</p>
+<p>Table <em>external_connected_entities</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'entité</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'entié</td>
+</tr>
+<tr>
+<td align="left">responsible_sec</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de la sécurité de l'entité</td>
+</tr>
+<tr>
+<td align="left">contacts</td>
+<td align="left">varchar(255)</td>
+<td align="left">Contactes de l'entité</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="commutateurs-reseau">Commutateurs réseau</h4>
 <p>Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<p>Table <em>network_switches</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du commutateur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du commutateur</td>
+</tr>
+<tr>
+<td align="left">ip</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adresse IP du commutateur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="routeurs-logiques">Routeurs logiques</h4>
 <p>Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.</p>
+<p>Table <em>routers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du routeur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du routeur</td>
+</tr>
+<tr>
+<td align="left">rules</td>
+<td align="left">longtext</td>
+<td align="left">Règles de filtrage</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="equipements-de-securite">Équipements de sécurité</h4>
 <p>Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
 <p>Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. </p>

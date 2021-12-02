@@ -456,17 +456,69 @@ table *subnetworks* :
 
 Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.
 
+Table *gateways* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de la passerelle |
+| description          | longtext     | Description de la passerelle |
+| ip                   | varchar(255) | Adress IP de la passerelle |
+| authentification     | varchar(255) | Mode d'authentification |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+
 #### Entités extérieures connectées
 
 Les entités extérieures connectées représentent les entités externes connectées au réseau.
+
+Table *external_connected_entities* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de l'entité |
+| description          | longtext     | Description de l'entié |
+| responsible_sec      | varchar(255) | Responsable de la sécurité de l'entité |
+| contacts             | varchar(255) | Contactes de l'entité|
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 
 #### Commutateurs réseau
 
 Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.
 
+Table *network_switches* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du commutateur |
+| description          | longtext     | Description du commutateur |
+| ip                   | varchar(255) | Adresse IP du commutateur |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Routeurs logiques
 
 Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.
+
+Table *routers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du routeur |
+| description          | longtext     | Description du routeur |
+| rules                | longtext     | Règles de filtrage |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Équipements de sécurité 
 
