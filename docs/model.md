@@ -16,11 +16,40 @@ Les entités sont une partie de l’organisme (ex. : filiale, département, etc.
 
 Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.
 
+Table *entities* :
+
+| Champ          | Type         | Description      |
+|:---------------|:-------------|:-----------------|
+| id             | int unsigned | auto_increment |
+| name           | varchar(255) | Nom de l'entité |
+| security_level | longtext     | Niveau de sécurité |
+| contact_point  | longtext     | Point de contact |
+| description    | longtext     | Description de l'entité |
+| created_at     | timestamp    | Date de création |
+| updated_at     | timestamp    | Date de mise à jour |
+| deleted_at     | timestamp    | Date de suppression |
+
+
 #### Relations
 
 Les relations représentent un lien entre deux entités ou systèmes.
 
 Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système d’information.
+
+Table *relations* :
+
+| Champ          | Type         | Description      |
+|:---------------|:-------------|:-----------------|
+| id             | int unsigned | auto_increment |
+| name           | varchar(255) | Nom de la relation |
+| description    | longtext     | Description de la relation |
+| type           | varchar(255) | Type de la relation |
+| importance     | int          | Importance de la relation |
+| source_id      | int unsigned | Référence vers l'entité source |
+| destination_id | int unsigned | Référence vers l'entité destinataire |
+| created_at     | timestamp    | Date de création |
+| updated_at     | timestamp    | Date de mise à jour |
+| deleted_at     | timestamp    | Date de suppression |
 
 ### Vue métier du système d’information
 
@@ -34,31 +63,132 @@ La vue métier est essentielle, car elle permet de repositionner les éléments 
 
 Les macro-processus représentent des ensembles de processus.
 
+Table *macro_processuses* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du macro processus |
+| description     | longtext     | Description du macro-processus |
+| io_elements     | longtext     | Elements entrant et sortants |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| owner           | varchar(255) | Propriétaire |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Processus
 
 Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.
 
 Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par celui-ci.
 
+Table *processes* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| identifiant     | varchar(255) | Nom du processus |
+| description     | longtext     | Description du processus  |
+| owner           | varchar(255) | Propriétaire du processus  |
+| in_out          | longtext     | Elements entrant et sortants |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| macroprocess_id | int unsigned | Référence vers le macro-processus |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Activités
 
 Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.
+
+Table *activities* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'activité |
+| description     | longtext     | Description de l'activité |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
 #### Opérations
 
 Une opération est composée d’acteurs et de tâches.
 
+Table *operations* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'opération |
+| description     | longtext     | Description de l'opération |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Tâches
 
 Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus.
+
+Table *tasks* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de la tâche |
+| description     | longtext     | Description de tâche |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
 #### Acteurs
 
 Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.
 
+Table *actors* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'acteur |
+| nature          | varchar(255) | Nature de l'acteur |
+| type            | varchar(255) | Type d'acteur |
+| contact         | varchar(255) | Contact de l'acteur |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Informations
 
 Une information est une donnée faisant l’objet d’un traitement informatique.
+
+Table *information* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'information |
+| description     | longtext     | Description de l'information |
+| owner           | varchar(255) | Propriétaire de l'information |
+| administrator   | varchar(255) | Administrateur de l'information |
+| storage         | varchar(255) | Stockage de l'information |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| sensitivity     | varchar(255) | Sensibilité de l'information |
+| constraints     | longtext     | Contraintes légales et réglementaires |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
 ### La vue des applications
 
@@ -74,6 +204,18 @@ Un bloc applicatif représente un ensemble d’application.
 
 Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...
 
+Table *application_blocks* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'information |
+| description     | longtext     | Description du block applicatif |
+| responsible     | varchar(255) | Responsable du bloc applicatif |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Application
 
 Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.
@@ -82,19 +224,88 @@ Une application peut être déployée sur un ou plusieurs serveurs logiques.
 
 Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y a un serveur logique par serveur physique.
 
+Table *m_applications* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id                  | int unsigned | auto_increment |
+| name                | varchar(255) | Nom de l'application |
+| version             | varchar(255) | Version de l'application |        
+| description         | longtext     | Description de l'application |
+| security_need_c     | int          | Confidentialité |
+| security_need_i     | int          | Intégrité |
+| security_need_a     | int          | Disponibilité |
+| security_need_t     | int          | Traçabilité |
+| responsible         | varchar(255) | Responsable de l'application |
+| type            | varchar(255) | Type d'application |
+| technology      | varchar(255) | Technologie |
+| external        | varchar(255) | Externe |
+| users           | varchar(255) | Nombre d'utilisateurs et type |
+| documentation   | varchar(255) | Lien vers la documentation |
+| entity_resp_id  | int unsigned | Entité responsable de l'exploitation  |
+| application_block_id | int unsigned | Lien vers la bloc applicatif |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
+
 #### Service applicatif
 
 Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. 
 
 Un service applicatif peut, une API, ...
 
+Table *application_services* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du service applicatif |
+| description     | longtext     | Description du service applicatif |
+| exposition      | varchar(255) | Exposition du service applicatif |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
+
 #### Module applicatif
 
 Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.
 
+Table *application_modules* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du service applicatif |
+| description     | longtext     | Description du module applicatif |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
+
 #### Base de données
 
 Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement. 
+
+Table *databases* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du service applicatif |
+| description     | longtext     | Description du module applicatif |
+| responsible     | varchar(255) | Responsable de l'application |
+| type            | varchar(255) | Responsable de l'application |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| external        | varchar(255) | Externe |
+| entity_resp_id  | int unsigned | Entité responsable  |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
 #### Flux
 
@@ -102,7 +313,28 @@ Un flux est un échange d’informations entre un émetteur ou un récepteur (ap
 
 Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.
 
-Pas exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. 
+Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. 
+
+Table *fluxes* :
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| name                  | varchar(255) | Nom du flux |
+| description           | longtext     | Description du flux |
+| application_source_id | int unsigned | Lien vers l'application source |
+| service_source_id     | int unsigned | Lien vers le service source |
+| module_source_id      | int unsigned | Lien vers le module source |
+| database_source_id    | int unsigned | Lien vars la base de données source |
+| application_dest_id   | int unsigned | Lien vers l'application destinataire  |
+| service_dest_id       | int unsigned | Lien vers le service destinataire |
+| module_dest_id        | int unsigned | Lien vers le module destinataire |
+| database_dest_id      | int unsigned | Lien vers la basede données destinataire |
+| crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non) |
+| bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non)|
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
 
 ### L’administration
 
@@ -118,15 +350,51 @@ Une zone d’administration est un ensemble de ressources (personnes, données, 
 
 Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences LDAP.
 
+Table *zone_admins* :
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| name                  | varchar(255) | Nom de la zone |
+| description           | longtext     | Description de la zone |
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
+
 #### Service d’annuaire d’administration
 
 Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.
 
 Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.
 
+Table *annuaires*;
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| name                  | varchar(255) | Nom de l'annuaire |
+| description           | longtext     | Description de l'annuaire |
+| solution              | varchar(255) | Solution technique |
+| zone_admin_id         | int unsigned | Référence vers la zone d'administration |
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
+
 #### Forêt Active Directory / Arborescence LDAP
 
 Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.
+
+Table *forest_ads* :
+
+| Champ                 | Type         | Description      |
+|:----------------------|:-------------|:-----------------|
+| id                    | int unsigned | auto_increment |
+| name                  | varchar(255) | Nom de la forêt Active Directory ou de l'arborescence LDAP |
+| description           | longtext     | Description de la forêt Active Directory ou de l'arborescence LDAP |
+| zone_admin_id         | int unsigned | Référence vers la zone d'administration |
+| created_at            | timestamp    | Date de création |
+| updated_at            | timestamp    | Date de mise à jour |
+| deleted_at            | timestamp    | Date de suppression |
 
 ### L’infrastructure logiques
 
@@ -140,9 +408,49 @@ Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En 
 
 Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
 
+Table *networks* :
+
+| Champ           | Type         | Description      |
+|:----------------|:-------------|:-----------------|
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du réseau |
+| description     | longtext     | Description du réseau |
+| protocol_type   | varchar(255) | Protocoles utilisés |
+| responsible     | varchar(255) | Responsable de l'exploitation |
+| responsible_sec | varchar(255) | Responsable de la sécurité |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
+
 #### Sous-réseaux
 
 Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.
+
+table *subnetworks* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du réseau |
+| description          | longtext     | Description du réseau |
+| address              | varchar(255) | Range d'adresse du sous-réseau |
+| default_gateway      | varchar(255) | Adresse de la passerelle par défaut |
+| ip_allocation_type   | varchar(255) | Type d'allocation des adresses |
+| responsible_exp      | varchar(255) | Responsable de l'exploitation |
+| zone                 | varchar(255) | Nom de la zone firewall associée |
+| dmz                  | varchar(255) | |
+| wifi                 | varchar(255) | |
+| connected_subnets_id | int unsigned | |
+| gateway_id           | int unsigned | Lien vars la passerelle |
+| vlan_id              | int unsigned | Lien vers le VLAN associé |
+| network_id           | int unsigned | Lien vers le réseau associé |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Passerelles d’entrées depuis l’extérieur
 
