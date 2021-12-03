@@ -526,13 +526,46 @@ Les équipements de sécurité sont des composants permettant la supervision du 
 
 Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. 
 
+Table *security_devices* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de l'équipement |
+| description          | longtext     | Description de l'équipement |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Serveurs DHCP
 
 Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.
 
+Table *dhcp_servers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du serveur |
+| description          | longtext     | Description du serveur |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Serveurs DNS
 
 Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.
+
+Table *dnsservers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du serveur |
+| description          | longtext     | Description du serveur |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Serveurs logiques
 
@@ -540,11 +573,44 @@ Les serveurs logiques sont un découpage logique d’un serveur physique. Si le 
 
 Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physiques du cluster au serveur logique.
 
+Table *logical_servers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du serveur |
+| description          | longtext     | Description du serveur |
+| net_services         | varchar(255) | Services réseau actifs |
+| configuration        | longtext     | Configuration du serveur |
+| operating_system     | varchar(255) | Operating Système |
+| address_ip           | varchar(255) | Adresses IP du serveur |
+| cpu                  | varchar(255) | Nombre de CPU |
+| memory               | varchar(255) | Quantité de mémémoire |
+| environment          | varchar(255) | Environnement (prod, dev, test, ...) |
+| disk                 | int          | Espace disque alloué |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Certificats
 
 Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou morales, mais aussi pour chiffrer des échanges.  
 
 Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des applications.
+
+Table *certificates* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du certificat |
+| description          | longtext     | Description du certificat |
+| type                 | varchar(255) | Type de certificat (SSL, HTTPS ...) |
+| start_validity       | date         | Date de début de validité |
+| end_validity         | date         | Date de fin de validité |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 ### L’infrastructure physique
 
@@ -558,45 +624,196 @@ Cette vue correspond à la répartition géographique des équipements réseaux 
 
 Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.
 
+Table *dnsservers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du site |
+| description          | longtext     | Description du site |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Bâtiments / Salles
 
 Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.
+
+Table *buildings* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du site |
+| description          | longtext     | Description du site |
+| site_id              | int unsigned | Référence vers le site |
+| camera               | tinyint(1)   | Le building / salle est protégé par une caméra |
+| badge                | tinyint(1)   | Le building / salle nécessite un accès par badge |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Baies
 
 Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
 
+Table *bays* : 
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de la baie |
+| description          | longtext     | Description de la baie |
+| room_id              | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Serveurs physiques
 
 Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.
+
+Table *physical_servers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du serveur |
+| description          | longtext     | Description du serveur |
+| type                 | varchar(255) | Type / modèle du serveur |
+| responsible          | varchar(255) | Responsable du serveur |
+| configuration        | longtext     | Configuration du serveur |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Postes de travail
 
 Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.
 
+Table *workstations* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du poste de travail |
+| description          | longtext     | Description du poste de travail |
+| type                 | varchar(255) | Type / modèle du poste de travail |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+
 #### Infrastructures de stockage
 
 Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…
+
+Table *storage_devices* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de l'infrastructure de stockage |
+| description          | longtext     | Description de l'infrastructure de stockage |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Périphériques
 
 Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
 
+Table *peripherals* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du périphérique |
+| description          | longtext     | Description du périphérique |
+| type                 | varchar(255) | Type / modèle du périphériques |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| bay_id               | int unsigned | Référence vers la baie |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Téléphones
 
 Les téléphones fixe ou portable appartenant à l’organisation.
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du téléphone |
+| description          | longtext     | Description du téléphone |
+| type                 | varchar(255) | Type / modèle du téléphone |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Commutateurs physiques
 
 Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein d’un réseau.
 
+Table *physical_switches* : 
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du commutateur physique |
+| description          | longtext     | Description du commutateur physique |
+| type                 | varchar(255) | Type / modèle du commutateur physique |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Routeurs physiques
 
 Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.
 
+Table *physical_routers* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du routeur physique |
+| description          | longtext     | Description du routeur physique |
+| type                 | varchar(255) | Type / modèle du routeur physique |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### Bornes WiFi
 
-Les Bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
+Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
+
+Table *wifi_terminals* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de la borne wifi |
+| description          | longtext     | Description de la bornes wifi |
+| type                 | varchar(255) | Type / modèle de la bornes wifi |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
 #### Équipements de sécurité physique
 
@@ -604,18 +821,77 @@ Les équipements de sécurité physique sont des composants permettant la superv
 
 Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...
 
+Table *physical_security_devices* : 
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom de l'équipement de sécurité |
+| description          | longtext     | Description de l'équipement de sécurité |
+| type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
+| site_id              | int unsigned | Référence vers le site |
+| building_id          | int unsigned | Référence vers le building / salle |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### WAN
 
 Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.
+
+Table *wans* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du WAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 
 #### MAN
 
 Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Ils interconnectent généralement des LAN entre eux.
 
+Table *mans* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du MAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
 #### LAN
 
 Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
 
+Table *lans* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du LAN |
+| description          | longtext     | Description du LAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+
 #### VLAN
 
 Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.
+
+Table *vlans* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du VLAN |
+| description          | longtext     | Description du VLAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+

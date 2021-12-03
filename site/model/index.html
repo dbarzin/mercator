@@ -1765,53 +1765,1149 @@
 <h4 id="equipements-de-securite">Équipements de sécurité</h4>
 <p>Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.</p>
 <p>Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. </p>
+<p>Table <em>security_devices</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'équipement</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'équipement</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
 <p>Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.</p>
+<p>Table <em>dhcp_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du serveur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du serveur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
 <p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.</p>
+<p>Table <em>dnsservers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du serveur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du serveur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="serveurs-logiques">Serveurs logiques</h4>
 <p>Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il est découpé en un seul serveur logique.</p>
 <p>Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physiques du cluster au serveur logique.</p>
+<p>Table <em>logical_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du serveur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du serveur</td>
+</tr>
+<tr>
+<td align="left">net_services</td>
+<td align="left">varchar(255)</td>
+<td align="left">Services réseau actifs</td>
+</tr>
+<tr>
+<td align="left">configuration</td>
+<td align="left">longtext</td>
+<td align="left">Configuration du serveur</td>
+</tr>
+<tr>
+<td align="left">operating_system</td>
+<td align="left">varchar(255)</td>
+<td align="left">Operating Système</td>
+</tr>
+<tr>
+<td align="left">address_ip</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adresses IP du serveur</td>
+</tr>
+<tr>
+<td align="left">cpu</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nombre de CPU</td>
+</tr>
+<tr>
+<td align="left">memory</td>
+<td align="left">varchar(255)</td>
+<td align="left">Quantité de mémémoire</td>
+</tr>
+<tr>
+<td align="left">environment</td>
+<td align="left">varchar(255)</td>
+<td align="left">Environnement (prod, dev, test, ...)</td>
+</tr>
+<tr>
+<td align="left">disk</td>
+<td align="left">int</td>
+<td align="left">Espace disque alloué</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="certificats">Certificats</h4>
 <p>Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou morales, mais aussi pour chiffrer des échanges.  </p>
 <p>Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des applications.</p>
+<p>Table <em>certificates</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du certificat</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du certificat</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type de certificat (SSL, HTTPS ...)</td>
+</tr>
+<tr>
+<td align="left">start_validity</td>
+<td align="left">date</td>
+<td align="left">Date de début de validité</td>
+</tr>
+<tr>
+<td align="left">end_validity</td>
+<td align="left">date</td>
+<td align="left">Date de fin de validité</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h3 id="linfrastructure-physique">L’infrastructure physique</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. </p>
 <p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>
 <p>Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.</p>
 <h4 id="sites">Sites</h4>
 <p>Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.</p>
+<p>Table <em>dnsservers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du site</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du site</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="batiments-salles">Bâtiments / Salles</h4>
 <p>Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.</p>
+<p>Table <em>buildings</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du site</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du site</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">camera</td>
+<td align="left">tinyint(1)</td>
+<td align="left">Le building / salle est protégé par une caméra</td>
+</tr>
+<tr>
+<td align="left">badge</td>
+<td align="left">tinyint(1)</td>
+<td align="left">Le building / salle nécessite un accès par badge</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="baies">Baies</h4>
 <p>Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.</p>
+<p>Table <em>bays</em> : </p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la baie</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la baie</td>
+</tr>
+<tr>
+<td align="left">room_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="serveurs-physiques">Serveurs physiques</h4>
 <p>Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.</p>
+<p>Table <em>physical_servers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du serveur</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du serveur</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du serveur</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable du serveur</td>
+</tr>
+<tr>
+<td align="left">configuration</td>
+<td align="left">longtext</td>
+<td align="left">Configuration du serveur</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">bay_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers la baie</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="postes-de-travail">Postes de travail</h4>
 <p>Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.</p>
+<p>Table <em>workstations</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du poste de travail</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du poste de travail</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du poste de travail</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="infrastructures-de-stockage">Infrastructures de stockage</h4>
 <p>Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…</p>
+<p>Table <em>storage_devices</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'infrastructure de stockage</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'infrastructure de stockage</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="peripheriques">Périphériques</h4>
 <p>Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
+<p>Table <em>peripherals</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du périphérique</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du périphérique</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du périphériques</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">bay_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers la baie</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="telephones">Téléphones</h4>
 <p>Les téléphones fixe ou portable appartenant à l’organisation.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du téléphone</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du téléphone</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du téléphone</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="commutateurs-physiques">Commutateurs physiques</h4>
 <p>Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<p>Table <em>physical_switches</em> : </p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du commutateur physique</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du commutateur physique</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du commutateur physique</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="routeurs-physiques">Routeurs physiques</h4>
 <p>Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.</p>
+<p>Table <em>physical_routers</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du routeur physique</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du routeur physique</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle du routeur physique</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="bornes-wifi">Bornes WiFi</h4>
-<p>Les Bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.</p>
+<p>Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.</p>
+<p>Table <em>wifi_terminals</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la borne wifi</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la bornes wifi</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle de la bornes wifi</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="equipements-de-securite-physique">Équipements de sécurité physique</h4>
 <p>Les équipements de sécurité physique sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information</p>
 <p>Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...</p>
+<p>Table <em>physical_security_devices</em> : </p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'équipement de sécurité</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'équipement de sécurité</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type / modèle de l'équipement de sécurité</td>
+</tr>
+<tr>
+<td align="left">site_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le site</td>
+</tr>
+<tr>
+<td align="left">building_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le building / salle</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="wan">WAN</h4>
 <p>Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.</p>
+<p>Table <em>wans</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du WAN</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="man">MAN</h4>
 <p>Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Ils interconnectent généralement des LAN entre eux.</p>
+<p>Table <em>mans</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du MAN</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="lan">LAN</h4>
 <p>Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.</p>
+<p>Table <em>lans</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du LAN</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du LAN</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h4 id="vlan">VLAN</h4>
 <p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+<p>Table <em>vlans</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du VLAN</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du VLAN</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div>
