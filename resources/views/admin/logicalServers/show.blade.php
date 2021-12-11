@@ -31,10 +31,10 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th width="10%">
+                        <th width='10%'>
                             {{ trans('cruds.logicalServer.fields.name') }}
                         </th>
-                        <td>
+                        <td colspan='11'>
                             {{ $logicalServer->name }}
                         </td>
                     </tr>
@@ -42,79 +42,73 @@
                         <th>
                             {{ trans('cruds.logicalServer.fields.description') }}
                         </th>
-                        <td>
+                        <td colspan='11'>
                             {!! $logicalServer->description !!}
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.cpu') }}
-                        </th>
-                        <td>
-                            {!! $logicalServer->cpu !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th colspan='1'>
                             {{ trans('cruds.logicalServer.fields.operating_system') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             {!! $logicalServer->operating_system !!}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.address_ip') }}
+
+                        <th colspan='1'>
+                            {{ trans('cruds.logicalServer.fields.cpu') }}
                         </th>
-                        <td>
-                            {!! $logicalServer->address_ip !!}
+                        <td colspan="3">
+                            {!! $logicalServer->cpu !!}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.memory') }}
-                        </th>
-                        <td>
-                            {!! $logicalServer->memory !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.disk') }}
-                        </th>
-                        <td>
-                            {!! $logicalServer->disk !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th colspan="1">
                             {{ trans('cruds.logicalServer.fields.environment') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             {!! $logicalServer->environment !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.address_ip') }}
+                        </th>
+                        <td colspan="3">
+                            {!! $logicalServer->address_ip !!}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.memory') }}
+                        </th>
+                        <td colspan="3">
+                            {!! $logicalServer->memory !!}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.net_services') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $logicalServer->net_services }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.disk') }}
+                        </th>
+                        <td colspan="3">
+                            {!! $logicalServer->disk !!}
                         </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.logicalServer.fields.configuration') }}
                         </th>
-                        <td>
+                        <td colspan="10">
                             {!! $logicalServer->configuration !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.logicalServer.fields.net_services') }}
-                        </th>
-                        <td>
-                            {{ $logicalServer->net_services }}
                         </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.logicalServer.fields.applications') }}
                         </th>
-                        <td>
+                        <td colspan="10">
                             @foreach($logicalServer->applications as $application)
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
                                     {{ $application->name }}
@@ -129,7 +123,7 @@
                         <th>
                             {{ trans('cruds.logicalServer.fields.servers') }}
                         </th>
-                        <td>
+                        <td colspan="10">
                             @foreach($logicalServer->servers as $server)
                                 <a href="{{ route('admin.physical-servers.show', $server->id) }}">
                                     {{ $server->name }}

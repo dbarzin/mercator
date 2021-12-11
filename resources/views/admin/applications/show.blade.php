@@ -31,7 +31,7 @@
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <th width="1">
+                        <th width='10%' colspan='1'>
                             {{ trans('cruds.application.fields.name') }}
                         </th>
                         <td colspan="7">
