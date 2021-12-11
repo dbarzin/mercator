@@ -25,8 +25,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="required" for="version">{{ trans('cruds.application.fields.version') }}</label>
-                        <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="text" name="version" id="version" value="{{ old('version', $application->version) }}" required>
+                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="text" name="version" id="version" value="{{ old('version', $application->version) }}">
                         @if($errors->has('version'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('version') }}
