@@ -117,8 +117,97 @@
               
                 <h2 id="administration">Administration</h2>
 <h3 id="gestion-des-utilisateurs">Gestion des utilisateurs</h3>
+<p>Les utilisateurs de l'application Mercator sont renseignés dans la base de données de l'application.</p>
+<p>Table <em>users</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'utilisateur</td>
+</tr>
+<tr>
+<td align="left">email</td>
+<td align="left">varchar(255)</td>
+<td align="left">Adresse mail de l'utilisateur</td>
+</tr>
+<tr>
+<td align="left">email_verified_at</td>
+<td align="left">datetime</td>
+<td align="left">Date de vérification de l'adresse email</td>
+</tr>
+<tr>
+<td align="left">password</td>
+<td align="left">varchar(255)</td>
+<td align="left">Mot de passe de l'utilisateur</td>
+</tr>
+<tr>
+<td align="left">remember_token</td>
+<td align="left">varchar(255)</td>
+<td align="left">Token de session</td>
+</tr>
+<tr>
+<td align="left">granularity</td>
+<td align="left">int</td>
+<td align="left">Niveau de granularité utilisé</td>
+</tr>
+<tr>
+<td align="left">language</td>
+<td align="left">varchar(2)</td>
+<td align="left">Langue de l'utilisateur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<p>Les mots de passes sont hashés par la fonction fournie en standard dans Laravel.</p>
+<p>Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php). </p>
 <h3 id="gestion-des-roles">Gestion des rôles</h3>
+<p>Pour chaque objet de la cartographie, il existe un droit en :</p>
+<ul>
+<li>accès</li>
+<li>création</li>
+<li>édition</li>
+<li>affichage</li>
+<li>suppression</li>
+</ul>
+<p>Trois rôles sont encodés par défaut :</p>
+<ul>
+<li>Utilisateur : les utilisateur ont tous les droits sur tous les object à l'exception des utilisateurs et de la configuation.</li>
+<li>Auditeur : l'auditeur à le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.</li>
+<li>Administrateur : l'administrateur a tous les droits sans exception.</li>
+</ul>
+<p>Il est possible de créer de nouveaux rôles selon les besoins. </p>
 <h3 id="gestion-des-certificats">Gestion des certificats</h3>
+<p>Des notifications d'expiration des certificats peuvent être envoyés à des pérides définies.</p>
+<p>L'écran de configuration est accessible via le menu "Préférences" -&gt; "Configuration".</p>
+<p><a href="/mercator/images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
+<p>Le bouton "Test"permet d'nvoyer un mail de test à l'adresse de notification spécifiées.</p>
               
             </div>
           </div>
