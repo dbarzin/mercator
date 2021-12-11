@@ -58,7 +58,11 @@
                             {{ trans('cruds.physicalRouter.fields.site') }}
                         </th>
                         <td>
-                            {{ $physicalRouter->site->name ?? '' }}
+                            @if ($physicalRouter->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalRouter->site->id) }}">
+                                {{ $physicalRouter->site->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +70,11 @@
                             {{ trans('cruds.physicalRouter.fields.building') }}
                         </th>
                         <td>
-                            {{ $physicalRouter->building->name ?? '' }}
+                            @if ($physicalRouter->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalRouter->building->id) }}">
+                                {{ $physicalRouter->building->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +82,11 @@
                             {{ trans('cruds.physicalRouter.fields.bay') }}
                         </th>
                         <td>
-                            {{ $physicalRouter->bay->name ?? '' }}
+                            @if ($physicalRouter->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalRouter->bay->id) }}">
+                                {{ $physicalRouter->bay->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -82,8 +94,13 @@
                             {{ trans('cruds.physicalRouter.fields.vlan') }}
                         </th>
                         <td>
-                            @foreach($physicalRouter->vlans as $key => $vlan)
-                                <span class="label label-info">{{ $vlan->name }}</span>
+                            @foreach($physicalRouter->vlans as $vlan)
+                                <a href="{{ route('admin.vlans.show', $vlan->id) }}">
+                                {{ $vlan->name }}
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
+                                </a>
                             @endforeach
                         </td>
                     </tr>

@@ -52,7 +52,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.physical-routers.show', $physicalRouter->id) }}">
                                 {{ $physicalRouter->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $physicalRouter->description ?? '' !!}
