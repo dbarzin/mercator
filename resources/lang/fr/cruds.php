@@ -79,7 +79,7 @@ return [
             "processes" => "Processus",
             "processes_helper" => "Liste des processus soutenus par l'application",
             "responsible" => "Responsable",
-            "responsible_helper" => "Responsable de la sécurité",
+            "responsible_helper" => "Equipe ou personnes responsables de l'application",
             "security_need" => "Besoins de sécurité",
             "security_need_helper" => "Besoins de sécurité de l'application",
             "services" => "Services",

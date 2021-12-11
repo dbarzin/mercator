@@ -79,7 +79,7 @@ return [
             "processes" => "Process",
             "processes_helper" => "List of processes supported by the application",
             "responsible" => "Responsible",
-            "responsible_helper" => "Security officer",
+            "responsible_helper" => "Team or persons responsible for the application",
             "security_need" => "Security needs",
             "security_need_helper" => "Application security needs",
             "services" => "Services",
