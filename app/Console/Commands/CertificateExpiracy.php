@@ -88,17 +88,12 @@ class CertificateExpiracy extends Command
     {
         $check_frequency = config('mercator-config.cert.check-frequency');
 
-        return // Dayly
+        return 
+            // Daily
             ($check_frequency === '1') ||
-            // Monday
+            // Weekly
             (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
-            // 15 days
-            (($check_frequency === '15') && ((Carbon::now()->day === 1) || (Carbon::now()->day === 15))) ||
             // Monthly
-            (($check_frequency === '30') && (Carbon::now()->day === 1)) ||
-            // 2 months
-            (($check_frequency === '60') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 2 === 0))) ||
-            // 3 month
-            (($check_frequency === '90') && ((Carbon::now()->day === 1) && (Carbon::now()->month % 3 === 0)));
+            (($check_frequency === '30') && (Carbon::now()->day === 1))
     }
 }

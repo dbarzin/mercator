@@ -46,8 +46,8 @@
             <select class="form-control select2" name="check_frequency" id="check_frequency">
                 <option value="0" {{ $check_frequency=="0" ? 'selected' : '' }}>{{ trans("global.never") }}</option>
                 <option value="1" {{ $check_frequency=="1" ? 'selected' : '' }}>{{ trans("global.day") }}</option>
-                <option value="2" {{ $check_frequency=="2" ? 'selected' : '' }}>{{ trans("global.week") }}</option>
-                <option value="3" {{ $check_frequency=="3" ? 'selected' : '' }}>{{ trans("global.month") }}</option>
+                <option value="7" {{ $check_frequency=="7" ? 'selected' : '' }}>{{ trans("global.week") }}</option>
+                <option value="30" {{ $check_frequency=="30" ? 'selected' : '' }}>{{ trans("global.month") }}</option>
             </select>
             </div>
 
