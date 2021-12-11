@@ -94,6 +94,6 @@ class CertificateExpiracy extends Command
             // Weekly
             (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
             // Monthly
-            (($check_frequency === '30') && (Carbon::now()->day === 1))
+            (($check_frequency === '30') && (Carbon::now()->day === 1));
     }
 }
