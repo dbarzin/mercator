@@ -236,13 +236,13 @@ Table *m_applications* :
 | security_need_i     | int          | Intégrité |
 | security_need_a     | int          | Disponibilité |
 | security_need_t     | int          | Traçabilité |
-| responsible         | varchar(255) | Responsable de l'application |
 | type            | varchar(255) | Type d'application |
 | technology      | varchar(255) | Technologie |
 | external        | varchar(255) | Externe |
 | users           | varchar(255) | Nombre d'utilisateurs et type |
 | documentation   | varchar(255) | Lien vers la documentation |
 | entity_resp_id  | int unsigned | Entité responsable de l'exploitation  |
+| responsible         | varchar(255) | Responsable de l'application |
 | application_block_id | int unsigned | Lien vers la bloc applicatif |
 | created_at      | timestamp    | Date de création |
 | updated_at      | timestamp    | Date de mise à jour |
