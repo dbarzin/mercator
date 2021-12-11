@@ -29,6 +29,9 @@
                             {{ trans('cruds.application.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.application.fields.responsible') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.application.fields.entity_resp') }}
                         </th>
                         <th>
@@ -78,7 +81,14 @@
                                 {!! $application->description ?? '' !!}
                             </td>
                             <td>
+                                {{ $application->responsible ?? '' }}
+                            </td>
+                            <td>
+                                @if ($application->entity_resp!=null)
+                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">                                
                                 {{ $application->entity_resp->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @if ($application->application_block!=null)
