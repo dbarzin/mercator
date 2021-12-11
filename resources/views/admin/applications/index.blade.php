@@ -159,8 +159,7 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 100,
-    stateSave: true,
+    pageLength: 100, stateSave: true, stateSave: true,
     "lengthMenu": [ 10, 50, 100, 500 ],
   });
   let table = $('.datatable-MApplication:not(.ajaxTable)').DataTable({ buttons: dtButtons })

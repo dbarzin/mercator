@@ -163,7 +163,7 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 100,
+    pageLength: 100, stateSave: true,
     "lengthMenu": [ 10, 50, 100, 500 ],
   });
   let table = $('.datatable-LogicalServer:not(.ajaxTable)').DataTable({ buttons: dtButtons })

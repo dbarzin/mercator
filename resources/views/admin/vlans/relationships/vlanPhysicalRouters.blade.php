@@ -107,7 +107,7 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 100,
+    pageLength: 100, stateSave: true,
   });
   let table = $('.datatable-vlanPhysicalRouters:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){

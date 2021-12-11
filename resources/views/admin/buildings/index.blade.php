@@ -138,7 +138,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     order: [[ 1, 'asc' ]],
-    pageLength: 100,
+    pageLength: 100, stateSave: true,
   });
   $('.datatable-Building:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
