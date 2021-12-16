@@ -256,7 +256,7 @@
                     <td><center>{{ $DHCPServers>0 ? number_format($DHCPServers_lvl2*100/$DHCPServers,0):0 }}%</center></td>
                 </tr>
                 <tr>
-                    <td><a href="/admin/dhcp-servers">{{ trans("cruds.dhcpServer.title") }}</a></td>
+                    <td><a href="/admin/dhcp-servers">{{ trans("cruds.dnsserver.title") }}</a></td>
                     <td><center>{{ $DNSServers }}</center></td>
                     <td><center>{{ $DNSServers_lvl2 }}</center></td>
                     <td><center>{{ $DNSServers>0 ? number_format($DNSServers_lvl2*100/$DNSServers,0):0 }}%</center></td>
