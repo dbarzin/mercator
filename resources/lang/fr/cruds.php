@@ -820,7 +820,12 @@ return [
             "physical_inventory_helper" => "Liste des équipements par site/local",
             "security_needs" => "Analyse des besoins de sécurité",
             "security_needs_helper" => "Liste des besoins de sécurité entre macro-processus, processus, applications, base de données et informations.",
-            "title" => "Listes"
+            "title" => "Listes",
+            "audit" => "Audit",
+            "maturity" => "Niveaux de maturité",
+            "maturity_helper" => "Liste les niveaux de maturité atteints par les différents objets de la cartographie",
+            "changes" => "Mise à jour / changements",
+            "changes_helper" => "Trace les changements realisés sur la cartographie les 12 derniers mois"
         ]
     ],
     "role" => [

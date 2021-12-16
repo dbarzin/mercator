@@ -1462,7 +1462,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
-        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+        // $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
         // Populate the Timesheet
         $row = 2;

@@ -415,34 +415,6 @@
   <script src="/js/chartjs-gauge.min.js"></script>
 
   <script type="text/javascript">
-  var maturity3 = {{
-            (
-            $entities+$relations+
-            $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
-            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
-            $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
-            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
-            ) > 0 ?
-            number_format ( 
-            (
-            $entities_lvl1+$relations_lvl2+
-            $macroProcessuses_lvl3+$processes_lvl2+$activities_lvl3+$tasks_lvl3+$operations_lvl3+$actors_lvl2+$informations_lvl2+
-            $applicationBlocks_lvl2+$applications_lvl2+$applicationServices_lvl2+$applicationModules_lvl2+$databases_lvl2+$fluxes_lvl1+
-            $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
-            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$DHCPServers_lvl2+$DNSServers_lvl2+$logicalServers_lvl1+
-            $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
-            ) * 100 /
-            (
-            $entities+$relations+
-            $macroProcessuses+$processes+$activities+$tasks+$operations+$actors+$informations+
-            $applicationBlocks+$applications+$applicationServices+$applicationModules+$databases+$fluxes+
-            $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+
-            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
-            )
-            ,0) : 0 }};  
-
 
     window.onload = function() {
 
@@ -452,7 +424,7 @@
         type: 'gauge',
         data: {
           datasets: [{
-            value: maturity3,
+            value: {{ $maturity3 }},
             data: [40, 80,100],
             backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
           }]
@@ -467,7 +439,7 @@
           valueLabel: {
             display: true,
             formatter: (value) => {
-              return  maturity3 + '%';
+              return  {{ $maturity3 }} + '%';
             },
             color: 'rgba(255, 255, 255, 1)',
             backgroundColor: 'rgba(0, 0, 0, 1)',

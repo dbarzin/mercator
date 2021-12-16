@@ -50,10 +50,9 @@
                     </div>
                   </form>
                 </div>
-
               </div>
-              <div class="card">
 
+              <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.title") }}
                 </div>
@@ -100,8 +99,31 @@
                   </ul>
                 </div>
               </div>
+
+              <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.report.lists.audit") }}
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>
+                        <a href="/admin/audit/maturity" target="_new">{{ trans("cruds.report.lists.maturity") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.maturity_helper") }}
+                        <br>                    
+                        <br>
+                    </li>
+                    <li>
+                        <a href="/admin/audit/changes" target="_new">{{ trans("cruds.report.lists.changes") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.changes_helper") }}
+                    </li>
+                </ul>
+                </div>
+              </div>
           </div>
         </div>
+        <br><br><br>
     </div>
 </div>
 @endsection

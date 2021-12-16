@@ -255,6 +255,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography']);
     Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp']);
 
+    // Auditing
+    Route::get('audit/maturity', [Admin\AuditController::class,'maturity']);
+    Route::get('audit/changes', [Admin\AuditController::class,'changes']);
+
     // Reporting
     Route::get('doc/report', function () {
         return view('doc/report');

@@ -6,6 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
+                    {!! trans("panel.maturity_levels") !!}
                     {{ trans("panel.level_1.title_long") }}
                 </div>
                 <div class="card-body">
@@ -329,34 +330,6 @@
 
   <script type="text/javascript">
 
-  var maturity1 = {{
-            (
-            $entities+$relations+
-            $processes+$operations+$informations+
-            $applications+$databases+$fluxes+
-            $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$logicalServers+
-            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
-            ) > 0 ?
-            number_format ( 
-            (
-            $entities_lvl1+$relations_lvl1+
-            $processes_lvl1+$operations_lvl1+$informations_lvl1+
-            $applications_lvl1+$databases_lvl1+$fluxes_lvl1+
-            $zones_lvl1+$annuaires_lvl1+$forests_lvl1+$domaines_lvl1+
-            $networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1+
-            $sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +  $physicalSecurityDevices_lvl1 + $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1 
-            ) * 100 /
-            (
-            $entities+$relations+
-            $processes+$operations+$informations+
-            $applications+$databases+$fluxes+
-            $zones+$annuaires+$forests+$domaines+
-            $networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$logicalServers+
-            $sites + $buildings + $bays + $physicalServers + $physicalRouters + $physicalSwitchs +  $physicalSecurityDevices + $wans + $mans + $lans + $vlans 
-            )
-            ,0) : 0 }}; 
-
     window.onload = function() {
 
       var ctx1 = document.getElementById('gauge_chart1_div').getContext('2d');
@@ -365,7 +338,7 @@
         type: 'gauge',
         data: {
           datasets: [{
-            value: maturity1,
+            value: {{ $maturity1 }},
             data: [40, 80,100],
             backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
           }]
@@ -380,7 +353,7 @@
           valueLabel: {
             display: true,
             formatter: (value) => {
-              return  maturity1 + '%';
+              return  {{ $maturity1 }} + '%';
             },
             color: 'rgba(255, 255, 255, 1)',
             backgroundColor: 'rgba(0, 0, 0, 1)',
