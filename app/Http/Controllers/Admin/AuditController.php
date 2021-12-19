@@ -80,7 +80,8 @@ class AuditController extends HomeController
         $sheet->fromArray([$header], null, 'A1');
 
         // bold title
-        $sheet->getStyle('1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -158,6 +159,7 @@ class AuditController extends HomeController
         $auditLogs = DB::table('audit_logs')
              ->select(DB::raw('subject_type, description, YEAR(created_at), MONTH(created_at), count(*) as count'))
              ->where('created_at', '>=', Carbon::now()->startOfMonth()->addMonth(-12))
+             // ->where('subject_type','=','App\\Relation')
              ->groupBy('subject_type', 'description', 'YEAR(created_at)', 'MONTH(created_at)')
              ->get();
 
@@ -178,6 +180,7 @@ class AuditController extends HomeController
             Carbon::now()->startOfMonth()->addMonth(-3)->format('m/Y'),
             Carbon::now()->startOfMonth()->addMonth(-2)->format('m/Y'),
             Carbon::now()->startOfMonth()->addMonth(-1)->format('m/Y'),
+            Carbon::now()->startOfMonth()->format('m/Y'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -186,6 +189,15 @@ class AuditController extends HomeController
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // background color
+        $sheet->getStyle('A1:O1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A2:O2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A9:O9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A31:O31')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A50:O50')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A63:O63')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A93:O93')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -272,10 +284,16 @@ class AuditController extends HomeController
             $sheet->setCellValue("A{$idx}", $row['title']);
             if (str_starts_with($key,'App\\')) {
                 $sheet->setCellValue("B{$idx}", 'created');
+                $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF59A14F');
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'updated');
+                $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF28E2B');
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'deleted');
+                $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFE15759');
+
+                // backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+
             }
             else {
                 $sheet->getStyle("A{$idx}")->getFont()->setBold(true);                
@@ -299,11 +317,13 @@ class AuditController extends HomeController
                 $month=$auditLog->{'MONTH(created_at)'};
 
                 // compute column
-                $delta=13-($tMonths-($year*12+$month));
+                $delta=14-($tMonths-($year*12+$month));
                 $column = chr(ord('A') + $delta);
 
                 // Place value
                 $sheet->setCellValue("{$column}{$row}", $auditLog->count);
+
+                \Log::info("{$column}{$row}" . " -> ". $auditLog->subject_type. ", " . $year . ", " . $month . ", " . $auditLog->count);
             }
         }
 
