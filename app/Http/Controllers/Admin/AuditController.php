@@ -299,6 +299,26 @@ class AuditController extends HomeController
         $row++;
 
 
+        // Block applicatif
+        $sheet->setCellValue("A{$row}", trans("cruds.applicationBlock.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['applicationBlocks']);
+        $sheet->setCellValue("E{$row}", $levels['applicationBlocks']>0 ? $levels['applicationBlocks_lvl2']  / $levels['applicationBlocks'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['applicationBlocks']);
+        $sheet->setCellValue("G{$row}", $levels['applicationBlocks']>0 ? $levels['applicationBlocks_lvl2']  / $levels['applicationBlocks'] : 0);
+        $row++;
+
+        // Applications
+        $sheet->setCellValue("A{$row}", trans("cruds.application.title"));
+        $sheet->setCellValue("B{$row}", $levels['applications']);
+        $sheet->setCellValue("C{$row}", $levels['applications']>0 ? $levels['applications_lvl1']  / $levels['applications'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['applications']);
+        $sheet->setCellValue("E{$row}", $levels['applications']>0 ? $levels['applications_lvl2']  / $levels['applications'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['applications']);
+        $sheet->setCellValue("G{$row}", $levels['applications']>0 ? $levels['applications_lvl2']  / $levels['applications'] : 0);
+        $row++;
+
         // Save sheet        
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($path);
