@@ -319,6 +319,47 @@ class AuditController extends HomeController
         $sheet->setCellValue("G{$row}", $levels['applications']>0 ? $levels['applications_lvl2']  / $levels['applications'] : 0);
         $row++;
 
+        // applicationService
+        $sheet->setCellValue("A{$row}", trans("cruds.applicationService.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['applicationServices']);
+        $sheet->setCellValue("E{$row}", $levels['applicationServices']>0 ? $levels['applicationServices_lvl2']  / $levels['applicationServices'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['applicationServices']);
+        $sheet->setCellValue("G{$row}", $levels['applicationServices']>0 ? $levels['applicationServices_lvl2']  / $levels['applicationServices'] : 0);
+        $row++;
+
+        // applicationModule
+        $sheet->setCellValue("A{$row}", trans("cruds.applicationModule.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['applicationModules']);
+        $sheet->setCellValue("E{$row}", $levels['applicationModules']>0 ? $levels['applicationModules_lvl2']  / $levels['applicationModules'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['applicationModules']);
+        $sheet->setCellValue("G{$row}", $levels['applicationModules']>0 ? $levels['applicationModules_lvl2']  / $levels['applicationModules'] : 0);
+        $row++;
+
+        // database
+        $sheet->setCellValue("A{$row}", trans("cruds.database.title"));
+        $sheet->setCellValue("B{$row}", $levels['databases']);
+        $sheet->setCellValue("C{$row}", $levels['databases']>0 ? $levels['databases_lvl1']  / $levels['databases'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['databases']);
+        $sheet->setCellValue("E{$row}", $levels['databases']>0 ? $levels['databases_lvl2']  / $levels['databases'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['databases']);
+        $sheet->setCellValue("G{$row}", $levels['databases']>0 ? $levels['databases_lvl2']  / $levels['databases'] : 0);
+        $row++;
+
+        // flux
+        $sheet->setCellValue("A{$row}", trans("cruds.flux.title"));
+        $sheet->setCellValue("B{$row}", $levels['fluxes']);
+        $sheet->setCellValue("C{$row}", $levels['fluxes']>0 ? $levels['fluxes_lvl1']  / $levels['fluxes'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['fluxes']);
+        $sheet->setCellValue("E{$row}", $levels['fluxes']>0 ? $levels['fluxes_lvl1']  / $levels['fluxes'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['fluxes']);
+        $sheet->setCellValue("G{$row}", $levels['fluxes']>0 ? $levels['fluxes_lvl1']  / $levels['fluxes'] : 0);
+        $row++;
+
+
         // Save sheet        
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($path);
