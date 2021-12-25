@@ -359,7 +359,130 @@ class AuditController extends HomeController
         $sheet->setCellValue("G{$row}", $levels['fluxes']>0 ? $levels['fluxes_lvl1']  / $levels['fluxes'] : 0);
         $row++;
 
+        // ===============
+        // Administration
+        // ===============
+        $sheet->setCellValue("A{$row}", trans("cruds.menu.administration.title_short"));
+        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
 
+        // L1
+        $denominator = $levels['zones']+$levels['annuaires']+$levels['forests']+$levels['domaines'];
+        $sheet->setCellValue("B{$row}", $denominator);
+        $sheet->setCellValue("C{$row}", 
+            $denominator>0 ? 
+            ( 
+                $levels['zones_lvl1']+$levels['annuaires_lvl1']+$levels['forests_lvl1']+$levels['domaines_lvl1']
+            ) / $denominator 
+            : 0 );
+
+        // L2
+        $denominator = $levels['zones']+$levels['annuaires']+$levels['forests']+$levels['domaines'];
+        $sheet->setCellValue("D{$row}", $denominator);
+        $sheet->setCellValue("E{$row}", 
+            $denominator>0 ? 
+            (  
+                $levels['zones_lvl1']+$levels['annuaires_lvl1']+$levels['forests_lvl1']+$levels['domaines_lvl1']
+            ) / $denominator 
+            : 0 );
+
+        // L3
+        $denominator = $levels['zones']+$levels['annuaires']+$levels['forests']+$levels['domaines'];
+        $sheet->setCellValue("F{$row}", $denominator);
+        $sheet->setCellValue("G{$row}", 
+            $denominator>0 ? 
+            (
+                $levels['zones_lvl1']+$levels['annuaires_lvl1']+$levels['forests_lvl1']+$levels['domaines_lvl1']
+            ) / $denominator 
+            : 0 );
+        $row++;
+
+        // Zone
+        $sheet->setCellValue("A{$row}", trans("cruds.zoneAdmin.title"));
+        $sheet->setCellValue("B{$row}", $levels['zones']);
+        $sheet->setCellValue("C{$row}", $levels['zones']>0 ? $levels['zones_lvl1']  / $levels['zones'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['zones']);
+        $sheet->setCellValue("E{$row}", $levels['zones']>0 ? $levels['zones_lvl1']  / $levels['zones'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['zones']);
+        $sheet->setCellValue("G{$row}", $levels['zones']>0 ? $levels['zones_lvl1']  / $levels['zones'] : 0);
+        $row++;
+
+        // Annuaire
+        $sheet->setCellValue("A{$row}", trans("cruds.annuaire.title"));
+        $sheet->setCellValue("B{$row}", $levels['annuaires']);
+        $sheet->setCellValue("C{$row}", $levels['annuaires']>0 ? $levels['annuaires_lvl1']  / $levels['annuaires'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['annuaires']);
+        $sheet->setCellValue("E{$row}", $levels['annuaires']>0 ? $levels['annuaires_lvl1']  / $levels['annuaires'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['annuaires']);
+        $sheet->setCellValue("G{$row}", $levels['annuaires']>0 ? $levels['annuaires_lvl1']  / $levels['annuaires'] : 0);
+        $row++;
+
+        // Forest
+        $sheet->setCellValue("A{$row}", trans("cruds.forestAd.title"));
+        $sheet->setCellValue("B{$row}", $levels['forests']);
+        $sheet->setCellValue("C{$row}", $levels['forests']>0 ? $levels['forests_lvl1']  / $levels['forests'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['forests']);
+        $sheet->setCellValue("E{$row}", $levels['forests']>0 ? $levels['forests_lvl1']  / $levels['forests'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['forests']);
+        $sheet->setCellValue("G{$row}", $levels['forests']>0 ? $levels['forests_lvl1']  / $levels['forests'] : 0);
+        $row++;
+
+        // Forest
+        $sheet->setCellValue("A{$row}", trans("cruds.domaineAd.title"));
+        $sheet->setCellValue("B{$row}", $levels['domaines']);
+        $sheet->setCellValue("C{$row}", $levels['domaines']>0 ? $levels['domaines_lvl1']  / $levels['domaines'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['domaines']);
+        $sheet->setCellValue("E{$row}", $levels['domaines']>0 ? $levels['domaines_lvl1']  / $levels['domaines'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['domaines']);
+        $sheet->setCellValue("G{$row}", $levels['domaines']>0 ? $levels['domaines_lvl1']  / $levels['domaines'] : 0);
+        $row++;
+
+
+        // ======================
+        // Infrastructure logique
+        // ======================
+        $sheet->setCellValue("A{$row}", trans("cruds.menu.logical_infrastructure.title_short"));
+        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+
+        // L1
+        $denominator = $levels['networks']+$levels['subnetworks']+$levels['gateways']+$levels['switches']+$levels['routers']+$levels['securityDevices']+$levels['logicalServers'];
+        $sheet->setCellValue("B{$row}", $denominator);
+        $sheet->setCellValue("C{$row}", 
+            $denominator>0 ? 
+            ( 
+                $levels['zones_lvl1']+$levels['annuaires_lvl1']+$levels['forests_lvl1']+$levels['domaines_lvl1']
+            ) / $denominator 
+            : 0 );
+
+        // L2
+        $denominator = $levels['networks']+$levels['subnetworks']+$levels['gateways']+$levels['externalConnectedEntities']
+            +$levels['switches']+$levels['routers']+$levels['securityDevices']
+            +$levels['DHCPServers']+$levels['DNSServers']+$levels['logicalServers']
+            +$levels['certificates'];
+        $sheet->setCellValue("D{$row}", $denominator);
+        $sheet->setCellValue("E{$row}", 
+            $denominator>0 ? 
+            (  
+                $levels['networks_lvl1']+$levels['subnetworks_lvl1']+$levels['gateways_lvl1']+$levels['externalConnectedEntities_lvl2']+$levels['DHCPServers_lvl2']+$levels['DNSServers_lvl2']+$levels['switches_lvl1']+$levels['routers_lvl1']+$levels['securityDevices_lvl1']+$levels['logicalServers_lvl1']+$levels['certificates_lvl2']
+            ) / $denominator 
+            : 0 );
+
+        // L3
+        $denominator = $levels['networks']+$levels['subnetworks']+$levels['gateways']+$levels['externalConnectedEntities']
+            +$levels['switches']+$levels['routers']+$levels['securityDevices']
+            +$levels['DHCPServers']+$levels['DNSServers']+$levels['logicalServers']
+            +$levels['certificates'];
+        $sheet->setCellValue("F{$row}", $denominator);
+        $sheet->setCellValue("G{$row}", 
+            $denominator>0 ? 
+            (  
+                $levels['networks_lvl1']+$levels['subnetworks_lvl1']+$levels['gateways_lvl1']+$levels['externalConnectedEntities_lvl2']+$levels['DHCPServers_lvl2']+$levels['DNSServers_lvl2']+$levels['switches_lvl1']+$levels['routers_lvl1']+$levels['securityDevices_lvl1']+$levels['logicalServers_lvl1']+$levels['certificates_lvl2']
+            ) / $denominator 
+            : 0 );
+
+
+
+
+        // =============================================================
         // Save sheet        
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($path);
