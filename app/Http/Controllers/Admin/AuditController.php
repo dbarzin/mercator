@@ -436,7 +436,6 @@ class AuditController extends HomeController
         $sheet->setCellValue("G{$row}", $levels['domaines']>0 ? $levels['domaines_lvl1']  / $levels['domaines'] : 0);
         $row++;
 
-
         // ======================
         // Infrastructure logique
         // ======================
@@ -449,7 +448,7 @@ class AuditController extends HomeController
         $sheet->setCellValue("C{$row}", 
             $denominator>0 ? 
             ( 
-                $levels['zones_lvl1']+$levels['annuaires_lvl1']+$levels['forests_lvl1']+$levels['domaines_lvl1']
+                $levels['networks_lvl1']+$levels['subnetworks_lvl1']+$levels['gateways_lvl1']+$levels['switches_lvl1']+$levels['routers_lvl1']+$levels['securityDevices_lvl1']+$levels['logicalServers_lvl1']
             ) / $denominator 
             : 0 );
 
@@ -478,9 +477,97 @@ class AuditController extends HomeController
                 $levels['networks_lvl1']+$levels['subnetworks_lvl1']+$levels['gateways_lvl1']+$levels['externalConnectedEntities_lvl2']+$levels['DHCPServers_lvl2']+$levels['DNSServers_lvl2']+$levels['switches_lvl1']+$levels['routers_lvl1']+$levels['securityDevices_lvl1']+$levels['logicalServers_lvl1']+$levels['certificates_lvl2']
             ) / $denominator 
             : 0 );
+        $row++;
 
+        // Network
+        $sheet->setCellValue("A{$row}", trans("cruds.network.title"));
+        $sheet->setCellValue("B{$row}", $levels['networks']);
+        $sheet->setCellValue("C{$row}", $levels['networks']>0 ? $levels['networks_lvl1']  / $levels['networks'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['networks']);
+        $sheet->setCellValue("E{$row}", $levels['networks']>0 ? $levels['networks_lvl1']  / $levels['networks'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['networks']);
+        $sheet->setCellValue("G{$row}", $levels['networks']>0 ? $levels['networks_lvl1']  / $levels['networks'] : 0);
+        $row++;
 
+        // SubNetwork
+        $sheet->setCellValue("A{$row}", trans("cruds.subnetwork.title"));
+        $sheet->setCellValue("B{$row}", $levels['subnetworks']);
+        $sheet->setCellValue("C{$row}", $levels['subnetworks']>0 ? $levels['subnetworks_lvl1']  / $levels['subnetworks'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['subnetworks']);
+        $sheet->setCellValue("E{$row}", $levels['subnetworks']>0 ? $levels['subnetworks_lvl1']  / $levels['subnetworks'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['subnetworks']);
+        $sheet->setCellValue("G{$row}", $levels['subnetworks']>0 ? $levels['subnetworks_lvl1']  / $levels['subnetworks'] : 0);
+        $row++;
 
+        // Gateway
+        $sheet->setCellValue("A{$row}", trans("cruds.gateway.title"));
+        $sheet->setCellValue("B{$row}", $levels['gateways']);
+        $sheet->setCellValue("C{$row}", $levels['gateways']>0 ? $levels['gateways_lvl1']  / $levels['gateways'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['gateways']);
+        $sheet->setCellValue("E{$row}", $levels['gateways']>0 ? $levels['gateways_lvl1']  / $levels['gateways'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['gateways']);
+        $sheet->setCellValue("G{$row}", $levels['gateways']>0 ? $levels['gateways_lvl1']  / $levels['gateways'] : 0);
+        $row++;
+
+        // ExternalConnectedEntity
+        $sheet->setCellValue("A{$row}", trans("cruds.externalConnectedEntity.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['externalConnectedEntities']);
+        $sheet->setCellValue("E{$row}", $levels['externalConnectedEntities']>0 ? $levels['externalConnectedEntities_lvl2']  / $levels['externalConnectedEntities'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['externalConnectedEntities']);
+        $sheet->setCellValue("G{$row}", $levels['externalConnectedEntities']>0 ? $levels['externalConnectedEntities_lvl2']  / $levels['externalConnectedEntities'] : 0);
+        $row++;
+
+        // NetworkSwitch
+        $sheet->setCellValue("A{$row}", trans("cruds.networkSwitch.title"));
+        $sheet->setCellValue("B{$row}", $levels['switches']);
+        $sheet->setCellValue("C{$row}", $levels['switches']>0 ? $levels['switches_lvl1']  / $levels['switches'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['switches']);
+        $sheet->setCellValue("E{$row}", $levels['switches']>0 ? $levels['switches_lvl1']  / $levels['switches'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['switches']);
+        $sheet->setCellValue("G{$row}", $levels['switches']>0 ? $levels['switches_lvl1']  / $levels['switches'] : 0);
+        $row++;
+
+        // Router
+        $sheet->setCellValue("A{$row}", trans("cruds.router.title"));
+        $sheet->setCellValue("B{$row}", $levels['routers']);
+        $sheet->setCellValue("C{$row}", $levels['routers']>0 ? $levels['routers_lvl1']  / $levels['routers'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['routers']);
+        $sheet->setCellValue("E{$row}", $levels['routers']>0 ? $levels['routers_lvl1']  / $levels['routers'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['routers']);
+        $sheet->setCellValue("G{$row}", $levels['routers']>0 ? $levels['routers_lvl1']  / $levels['routers'] : 0);
+        $row++;
+
+        // SecurityDevice
+        $sheet->setCellValue("A{$row}", trans("cruds.securityDevice.title"));
+        $sheet->setCellValue("B{$row}", $levels['securityDevices']);
+        $sheet->setCellValue("C{$row}", $levels['securityDevices']>0 ? $levels['securityDevices_lvl1']  / $levels['securityDevices'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['securityDevices']);
+        $sheet->setCellValue("E{$row}", $levels['securityDevices']>0 ? $levels['securityDevices_lvl1']  / $levels['securityDevices'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['securityDevices']);
+        $sheet->setCellValue("G{$row}", $levels['securityDevices']>0 ? $levels['securityDevices_lvl1']  / $levels['securityDevices'] : 0);
+        $row++;
+
+        // DHCPServer
+        $sheet->setCellValue("A{$row}", trans("cruds.dhcpServer.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['DHCPServers']);
+        $sheet->setCellValue("E{$row}", $levels['DHCPServers']>0 ? $levels['DHCPServers_lvl2']  / $levels['DHCPServers'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['DHCPServers']);
+        $sheet->setCellValue("G{$row}", $levels['DHCPServers']>0 ? $levels['DHCPServers_lvl2']  / $levels['DHCPServers'] : 0);
+        $row++;
+
+        // LogicalServer
+        $sheet->setCellValue("A{$row}", trans("cruds.logicalServer.title"));
+        $sheet->setCellValue("B{$row}", $levels['logicalServers']);
+        $sheet->setCellValue("C{$row}", $levels['logicalServers']>0 ? $levels['logicalServers_lvl1']  / $levels['logicalServers'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['logicalServers']);
+        $sheet->setCellValue("E{$row}", $levels['logicalServers']>0 ? $levels['logicalServers_lvl1']  / $levels['logicalServers'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['logicalServers']);
+        $sheet->setCellValue("G{$row}", $levels['logicalServers']>0 ? $levels['logicalServers_lvl1']  / $levels['logicalServers'] : 0);
+        $row++;
 
         // =============================================================
         // Save sheet        
