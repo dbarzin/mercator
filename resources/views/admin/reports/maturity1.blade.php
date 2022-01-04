@@ -222,24 +222,23 @@
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
                         {{                             
-                            ($sites + $buildings + $bays + $physicalServers +
+                            ($sites + $buildings + $bays + $physicalServers + $workstations +
                             $phones + $physicalRouters + $physicalSwitchs + 
-                            $physicalSecurityDevices +
+                            $physicalSecurityDevices + 
                             $wans + $mans + $lans + $vlans)>0
                             ?
                             number_format (
-                            ($sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 +
-                             $phones + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 + 
+                            ($sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $workstations_lvl1 +
+                             $phones_lvl1 + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 + $wifiTerminals_lvl1 +
                              $physicalSecurityDevices_lvl1 +
                             $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1) * 100 /
-                            ($sites + $buildings + $bays + $physicalServers +
+                            ($sites + $buildings + $bays + $physicalServers + $workstations +
                              $phones + $physicalRouters + $physicalSwitchs + 
                             $wifiTerminals + $physicalSecurityDevices +
                             $wans + $mans + $lans + $vlans) 
                             ,0):0
                         }} 
-
-                    %
+                        %
                     </center>
                 </td>
             </thead>
@@ -269,6 +268,18 @@
                 <td><center>{{ $physicalServers>0 ? number_format($physicalServers_lvl1*100/$physicalServers,0):0 }}%</center></td>
             </tr>
             <tr>
+                <td><a href="/admin/workstations">{{ trans("cruds.workstation.title") }}</a></td>
+                <td><center>{{ $workstations }}</center></td>
+                <td><center>{{ $workstations_lvl1 }}</center></td>
+                <td><center>{{ $workstations>0 ? number_format($workstations_lvl1*100/$workstations,0):0 }}%</center></td>
+            </tr>
+            <tr>
+                <td><a href="/admin/phones">{{ trans("cruds.phone.title") }}</a></td>
+                <td><center>{{ $phones }}</center></td>
+                <td><center>{{ $phones_lvl1 }}</center></td>
+                <td><center>{{ $phones>0 ? number_format($phones_lvl1*100/$phones,0):0 }}%</center></td>
+            </tr>
+            <tr>
                 <td><a href="/admin/physical-routers">{{ trans("cruds.physicalRouter.title") }}</a></td>
                 <td><center>{{ $physicalRouters }}</center></td>
                 <td><center>{{ $physicalRouters_lvl1 }}</center></td>
@@ -279,6 +290,12 @@
                 <td><center>{{ $physicalSwitchs }}</center></td>
                 <td><center>{{ $physicalSwitchs_lvl1 }}</center></td>
                 <td><center>{{ $physicalSwitchs>0 ? number_format($physicalSwitchs_lvl1*100/$physicalSwitchs,0):0 }}%</center></td>
+            </tr>
+            <tr>
+                <td><a href="/admin/wifi-terminals">{{ trans("cruds.wifiTerminal.title") }}</a></td>
+                <td><center>{{ $wifiTerminals }}</center></td>
+                <td><center>{{ $wifiTerminals_lvl1 }}</center></td>
+                <td><center>{{ $wifiTerminals>0 ? number_format($wifiTerminals_lvl1*100/$wifiTerminals,0):0 }}%</center></td>
             </tr>
             <tr>
                 <td><a href="/admin/physical-security-devices">{{ trans("cruds.physicalSecurityDevice.title") }}</a></td>

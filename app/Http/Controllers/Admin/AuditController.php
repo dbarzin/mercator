@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-// ecosystem
+// Ccosystem
 use App\Activity;
 use App\Actor;
-// information system
+// Information System
 use App\Annuaire;
 use App\ApplicationBlock;
 use App\ApplicationModule;
@@ -83,7 +83,7 @@ class AuditController extends HomeController
 
         // bold title
         $sheet->getStyle('A1:G1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -109,7 +109,9 @@ class AuditController extends HomeController
         // Ecosystem
         // ============
         $sheet->setCellValue("A{$row}", trans("cruds.menu.ecosystem.title_short"));
-        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+
         // L1
         $denominator = $levels['entities']+$levels['relations'];
         $sheet->setCellValue("B{$row}", $denominator); 
@@ -117,6 +119,7 @@ class AuditController extends HomeController
             $denominator>0 ? 
             ($levels['entities_lvl1']+$levels['relations_lvl1']) / $denominator 
             : 0 );
+
         // L2
         $denominator = $levels['entities']+$levels['relations'];
         $sheet->setCellValue("D{$row}", $denominator); 
@@ -124,6 +127,7 @@ class AuditController extends HomeController
             $denominator>0 ? 
             ($levels['entities_lvl1']+$levels['relations_lvl1']) / $denominator 
             : 0 );
+
         // L3
         $denominator = $levels['entities']+$levels['relations'];
         $sheet->setCellValue("F{$row}", $denominator); 
@@ -157,7 +161,8 @@ class AuditController extends HomeController
         // Metier
         // ============
         $sheet->setCellValue("A{$row}", trans("cruds.menu.metier.title_short"));
-        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
         $denominator = $levels['processes']+$levels['operations']+$levels['informations'];
@@ -265,7 +270,8 @@ class AuditController extends HomeController
         // Application
         // ============
         $sheet->setCellValue("A{$row}", trans("cruds.menu.application.title_short"));
-        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
         $denominator = $levels['applications']+$levels['databases']+$levels['databases'];
@@ -363,7 +369,8 @@ class AuditController extends HomeController
         // Administration
         // ===============
         $sheet->setCellValue("A{$row}", trans("cruds.menu.administration.title_short"));
-        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
         $denominator = $levels['zones']+$levels['annuaires']+$levels['forests']+$levels['domaines'];
@@ -440,7 +447,8 @@ class AuditController extends HomeController
         // Infrastructure logique
         // ======================
         $sheet->setCellValue("A{$row}", trans("cruds.menu.logical_infrastructure.title_short"));
-        $sheet->getStyle("A{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
         $denominator = $levels['networks']+$levels['subnetworks']+$levels['gateways']+$levels['switches']+$levels['routers']+$levels['securityDevices']+$levels['logicalServers'];
@@ -567,6 +575,187 @@ class AuditController extends HomeController
         $sheet->setCellValue("E{$row}", $levels['logicalServers']>0 ? $levels['logicalServers_lvl1']  / $levels['logicalServers'] : 0);
         $sheet->setCellValue("F{$row}", $levels['logicalServers']);
         $sheet->setCellValue("G{$row}", $levels['logicalServers']>0 ? $levels['logicalServers_lvl1']  / $levels['logicalServers'] : 0);
+        $row++;
+
+        // certificates
+        $sheet->setCellValue("A{$row}", trans("cruds.certificate.title"));
+        $sheet->setCellValue("B{$row}", "");
+        $sheet->setCellValue("C{$row}", "");
+        $sheet->setCellValue("D{$row}", $levels['certificates']);
+        $sheet->setCellValue("E{$row}", $levels['certificates']>0 ? $levels['certificates_lvl2']  / $levels['certificates'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['certificates']);
+        $sheet->setCellValue("G{$row}", $levels['certificates']>0 ? $levels['certificates_lvl2']  / $levels['certificates'] : 0);
+        $row++;
+
+        // =========================
+        // Infrastructure physique
+        // =========================
+        $sheet->setCellValue("A{$row}", trans("cruds.menu.physical_infrastructure.title_short"));
+        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+
+        // L1
+        $denominator = 
+            $levels['sites'] + $levels['buildings'] + $levels['bays'] + $levels['physicalServers'] +
+            $levels['phones'] + $levels['physicalRouters'] + $levels['physicalSwitchs'] + 
+            $levels['physicalSecurityDevices'] +
+            $levels['wans'] + $levels['mans'] + $levels['lans'] + $levels['vlans'];
+        $sheet->setCellValue("B{$row}", $denominator);
+        $sheet->setCellValue("C{$row}", 
+            $denominator>0 ? 
+            ( 
+            $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
+            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + 
+            $levels['physicalSecurityDevices_lvl1'] +
+            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']
+            ) / $denominator 
+            : 0 );
+
+        // L2
+        // $denominator=...
+        $sheet->setCellValue("D{$row}", $denominator);
+        $sheet->setCellValue("E{$row}", 
+            $denominator>0 ? 
+            (  
+            $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
+            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + 
+            $levels['physicalSecurityDevices_lvl1'] +
+            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']                
+            ) / $denominator 
+            : 0 );
+
+        // L3
+        // $denominator=...
+        $sheet->setCellValue("F{$row}", $denominator);
+        $sheet->setCellValue("G{$row}", 
+            $denominator>0 ? 
+            (  
+            $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
+            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + 
+            $levels['physicalSecurityDevices_lvl1'] +
+            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']                
+            ) / $denominator 
+            : 0 );
+        $row++;
+
+        // Site
+        $sheet->setCellValue("A{$row}", trans("cruds.site.title"));
+        $sheet->setCellValue("B{$row}", $levels['sites']);
+        $sheet->setCellValue("C{$row}", $levels['sites']>0 ? $levels['sites_lvl1']  / $levels['sites'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['sites']);
+        $sheet->setCellValue("E{$row}", $levels['sites']>0 ? $levels['sites_lvl1']  / $levels['sites'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['sites']);
+        $sheet->setCellValue("G{$row}", $levels['sites']>0 ? $levels['sites_lvl1']  / $levels['sites'] : 0);
+        $row++;
+
+        // Building
+        $sheet->setCellValue("A{$row}", trans("cruds.building.title"));
+        $sheet->setCellValue("B{$row}", $levels['buildings']);
+        $sheet->setCellValue("C{$row}", $levels['buildings']>0 ? $levels['buildings_lvl1']  / $levels['buildings'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['buildings']);
+        $sheet->setCellValue("E{$row}", $levels['buildings']>0 ? $levels['buildings_lvl1']  / $levels['buildings'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['buildings']);
+        $sheet->setCellValue("G{$row}", $levels['buildings']>0 ? $levels['buildings_lvl1']  / $levels['buildings'] : 0);
+        $row++;
+
+        // Bay
+        $sheet->setCellValue("A{$row}", trans("cruds.bay.title"));
+        $sheet->setCellValue("B{$row}", $levels['bays']);
+        $sheet->setCellValue("C{$row}", $levels['bays']>0 ? $levels['bays_lvl1']  / $levels['bays'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['bays']);
+        $sheet->setCellValue("E{$row}", $levels['bays']>0 ? $levels['bays_lvl1']  / $levels['bays'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['bays']);
+        $sheet->setCellValue("G{$row}", $levels['bays']>0 ? $levels['bays_lvl1']  / $levels['bays'] : 0);
+        $row++;
+
+        // PhysicalServer
+        $sheet->setCellValue("A{$row}", trans("cruds.physicalServer.title"));
+        $sheet->setCellValue("B{$row}", $levels['physicalServers']);
+        $sheet->setCellValue("C{$row}", $levels['physicalServers']>0 ? $levels['physicalServers_lvl1']  / $levels['physicalServers'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['physicalServers']);
+        $sheet->setCellValue("E{$row}", $levels['physicalServers']>0 ? $levels['physicalServers_lvl1']  / $levels['physicalServers'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['physicalServers']);
+        $sheet->setCellValue("G{$row}", $levels['physicalServers']>0 ? $levels['physicalServers_lvl1']  / $levels['physicalServers'] : 0);
+        $row++;
+
+        // Phone
+        $sheet->setCellValue("A{$row}", trans("cruds.phone.title"));
+        $sheet->setCellValue("B{$row}", $levels['phones']);
+        $sheet->setCellValue("C{$row}", $levels['phones']>0 ? $levels['phones_lvl1']  / $levels['phones'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['phones']);
+        $sheet->setCellValue("E{$row}", $levels['phones']>0 ? $levels['phones_lvl1']  / $levels['phones'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['phones']);
+        $sheet->setCellValue("G{$row}", $levels['phones']>0 ? $levels['phones_lvl1']  / $levels['phones'] : 0);
+        $row++;
+
+        // PhysicalRouter
+        $sheet->setCellValue("A{$row}", trans("cruds.physicalRouter.title"));
+        $sheet->setCellValue("B{$row}", $levels['physicalRouters']);
+        $sheet->setCellValue("C{$row}", $levels['physicalRouters']>0 ? $levels['physicalRouters_lvl1']  / $levels['physicalRouters'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['physicalRouters']);
+        $sheet->setCellValue("E{$row}", $levels['physicalRouters']>0 ? $levels['physicalRouters_lvl1']  / $levels['physicalRouters'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['physicalRouters']);
+        $sheet->setCellValue("G{$row}", $levels['physicalRouters']>0 ? $levels['physicalRouters_lvl1']  / $levels['physicalRouters'] : 0);
+        $row++;
+
+        // PhysicalSwitch
+        $sheet->setCellValue("A{$row}", trans("cruds.physicalSwitch.title"));
+        $sheet->setCellValue("B{$row}", $levels['physicalSwitchs']);
+        $sheet->setCellValue("C{$row}", $levels['physicalSwitchs']>0 ? $levels['physicalSwitchs_lvl1']  / $levels['physicalSwitchs'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['physicalSwitchs']);
+        $sheet->setCellValue("E{$row}", $levels['physicalSwitchs']>0 ? $levels['physicalSwitchs_lvl1']  / $levels['physicalSwitchs'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['physicalSwitchs']);
+        $sheet->setCellValue("G{$row}", $levels['physicalSwitchs']>0 ? $levels['physicalSwitchs_lvl1']  / $levels['physicalSwitchs'] : 0);
+        $row++;
+
+        // PhysicalSecurityDevice
+        $sheet->setCellValue("A{$row}", trans("cruds.physicalSecurityDevice.title"));
+        $sheet->setCellValue("B{$row}", $levels['physicalSecurityDevices']);
+        $sheet->setCellValue("C{$row}", $levels['physicalSecurityDevices']>0 ? $levels['physicalSecurityDevices_lvl1']  / $levels['physicalSecurityDevices'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['physicalSecurityDevices']);
+        $sheet->setCellValue("E{$row}", $levels['physicalSecurityDevices']>0 ? $levels['physicalSecurityDevices_lvl1']  / $levels['physicalSecurityDevices'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['physicalSecurityDevices']);
+        $sheet->setCellValue("G{$row}", $levels['physicalSecurityDevices']>0 ? $levels['physicalSecurityDevices_lvl1']  / $levels['physicalSecurityDevices'] : 0);
+        $row++;
+
+        // WAN
+        $sheet->setCellValue("A{$row}", trans("cruds.wan.title"));
+        $sheet->setCellValue("B{$row}", $levels['wans']);
+        $sheet->setCellValue("C{$row}", $levels['wans']>0 ? $levels['wans_lvl1']  / $levels['wans'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['wans']);
+        $sheet->setCellValue("E{$row}", $levels['wans']>0 ? $levels['wans_lvl1']  / $levels['wans'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['wans']);
+        $sheet->setCellValue("G{$row}", $levels['wans']>0 ? $levels['wans_lvl1']  / $levels['wans'] : 0);
+        $row++;
+
+        // MAN
+        $sheet->setCellValue("A{$row}", trans("cruds.man.title"));
+        $sheet->setCellValue("B{$row}", $levels['mans']);
+        $sheet->setCellValue("C{$row}", $levels['mans']>0 ? $levels['mans_lvl1']  / $levels['mans'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['mans']);
+        $sheet->setCellValue("E{$row}", $levels['mans']>0 ? $levels['mans_lvl1']  / $levels['mans'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['mans']);
+        $sheet->setCellValue("G{$row}", $levels['mans']>0 ? $levels['mans_lvl1']  / $levels['mans'] : 0);
+        $row++;
+
+        // LAN
+        $sheet->setCellValue("A{$row}", trans("cruds.lan.title"));
+        $sheet->setCellValue("B{$row}", $levels['lans']);
+        $sheet->setCellValue("C{$row}", $levels['lans']>0 ? $levels['lans_lvl1']  / $levels['lans'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['lans']);
+        $sheet->setCellValue("E{$row}", $levels['lans']>0 ? $levels['lans_lvl1']  / $levels['lans'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['lans']);
+        $sheet->setCellValue("G{$row}", $levels['lans']>0 ? $levels['lans_lvl1']  / $levels['lans'] : 0);
+        $row++;
+
+        // VLAN
+        $sheet->setCellValue("A{$row}", trans("cruds.vlan.title"));
+        $sheet->setCellValue("B{$row}", $levels['vlans']);
+        $sheet->setCellValue("C{$row}", $levels['vlans']>0 ? $levels['vlans_lvl1']  / $levels['vlans'] : 0);
+        $sheet->setCellValue("D{$row}", $levels['vlans']);
+        $sheet->setCellValue("E{$row}", $levels['vlans']>0 ? $levels['vlans_lvl1']  / $levels['vlans'] : 0);
+        $sheet->setCellValue("F{$row}", $levels['vlans']);
+        $sheet->setCellValue("G{$row}", $levels['vlans']>0 ? $levels['vlans_lvl1']  / $levels['vlans'] : 0);
         $row++;
 
         // =============================================================
