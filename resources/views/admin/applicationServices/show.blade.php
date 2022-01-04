@@ -26,7 +26,6 @@
                         <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
                     </form>
                 @endcan
-
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -73,6 +72,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $applicationService->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $applicationService->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
 @endsection

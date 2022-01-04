@@ -63,8 +63,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $dnsserver->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $dnsserver->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
-
 @endsection

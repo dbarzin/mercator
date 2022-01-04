@@ -97,7 +97,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $domaineAd->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $domaineAd->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
 @endsection

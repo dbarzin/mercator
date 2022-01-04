@@ -140,7 +140,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $subnetwork->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $subnetwork->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
 @endsection

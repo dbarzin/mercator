@@ -127,8 +127,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $flux->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $flux->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
-
 @endsection

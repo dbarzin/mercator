@@ -113,8 +113,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $physicalRouter->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $physicalRouter->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
-
 @endsection

@@ -104,7 +104,4 @@
         {{ trans('global.updated_at') }} {{ $relation->updated_at->format(trans('global.timestamp')) }} 
     </div>
 </div>
-
-
-
 @endsection

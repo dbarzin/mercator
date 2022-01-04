@@ -140,6 +140,4 @@
         {{ trans('global.updated_at') }} {{ $process->updated_at->format(trans('global.timestamp')) }} 
     </div>
 </div>
-
-
 @endsection

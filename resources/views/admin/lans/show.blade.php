@@ -53,6 +53,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $lan->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $lan->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
 @endsection

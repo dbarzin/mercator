@@ -61,8 +61,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $dhcpServer->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $dhcpServer->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
-
 @endsection

@@ -77,5 +77,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $phone->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $phone->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
 @endsection

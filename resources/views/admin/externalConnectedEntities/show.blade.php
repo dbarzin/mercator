@@ -73,8 +73,9 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $externalConnectedEntity->created_at->format(trans('global.timestamp')) }} |
+        {{ trans('global.updated_at') }} {{ $externalConnectedEntity->updated_at->format(trans('global.timestamp')) }} 
+    </div>
 </div>
-
-
-
 @endsection
