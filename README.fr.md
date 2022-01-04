@@ -75,6 +75,10 @@ Modèle de données
 
 Tous les changements notables apportés à ce projet sont [documentés](https://github.com/dbarzin/mercator/blob/master/CHANGELOG.md).
 
+## Feuille de route
+
+Une [feuille de route](https://github.com/dbarzin/mercator/blob/master/ROADMAP.md) reprend les évolutions prévues de l'application.
+
 ## License
 
 Mercator est un logiciel open source distribué sous [GPL](https://www.gnu.org/licenses/licenses.fr.html).

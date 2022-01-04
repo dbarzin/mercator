@@ -1,6 +1,6 @@
-# Mercator roadmap
+# Feuille de route
 
-Ce document reprend les évolutions prévues sur Mercator dans les jours, mois, années à venir.
+Ce document reprend les évolutions prévues sur Mercator dans les jours, mois et années à venir.
 
 ## Evolutions majeures
 
@@ -15,17 +15,13 @@ Ce document reprend les évolutions prévues sur Mercator dans les jours, mois, 
 - Améliorer la page des logs (nom de l'utilisateur / action / lien vers l'objet concerné)
 - Packaging des librairies javascript avec npm
 - Dessihner un nouveu jeu d'icônes
-- Revoir la page de gestion des droits d'accès
-- Améliorer la documentation (les niveau de maturité pour chaque objet)
+- Revoir les pages de gestion des droits d'accès
+- Améliorer la documentation (les niveaux de maturité pour chaque objet)
 
-## Petits changements
+## Petites évolutions
 
 - Améliorer les tests Dusk
 - Publier une VM Docker sur [dockerHub](https://hub.docker.com/) 
 - Documenter une procédure de déploiement sous Debian
-
-## Déjà réalisé 
-
-- Audit des changements sur une année et export des niveaux de conformité
 
 
