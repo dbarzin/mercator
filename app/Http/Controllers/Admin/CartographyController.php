@@ -79,7 +79,7 @@ class CartographyController extends Controller
         $image_paths = [];
 
         // get parameters
-        $granularity = $request->granularity;
+        $granularity = (int)$request->granularity;
         $vues = $request->input('vues', []);
 
         // get template
@@ -275,7 +275,7 @@ class CartographyController extends Controller
 
             foreach ($processes as $process) {
                 $graph .= ' P'.$process->id . ' [label="' . $process->identifiant . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
-                if ($granularity === 3) {
+                if ($granularity == 3) {
                     foreach ($process->activities as $activity) {
                         $graph .= ' P'.$process->id . '->A'. $activity->id;
                     }
@@ -284,7 +284,7 @@ class CartographyController extends Controller
                     $graph .= ' P'. $process->id .'->I'. $information->id;
                 }
             }
-            if ($granularity === 3) {
+            if ($granularity == 3) {
                 foreach ($activities as $activity) {
                     $graph .= ' A' . $activity->id .' [label="'. $activity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/activity.png').'"]';
                     foreach ($activity->operations as $operation) {
@@ -294,7 +294,7 @@ class CartographyController extends Controller
             }
             foreach ($operations as $operation) {
                 $graph .= ' O'. $operation->id .' [label="'. $operation->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/operation.png').'"]';
-                if ($granularity === 3) {
+                if ($granularity == 3) {
                     foreach ($operation->tasks as $task) {
                         $graph .= ' O' . $operation->id . '->T'. $task->id;
                     }
@@ -305,7 +305,7 @@ class CartographyController extends Controller
                     }
                 }
             }
-            if ($granularity === 3) {
+            if ($granularity == 3) {
                 foreach ($tasks as $task) {
                     $graph .= ' T'. $task->id . ' [label="'. $task->nom . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
                 }
