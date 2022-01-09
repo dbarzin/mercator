@@ -1,12 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "dbarzin/mercator",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Cartographie du systeme d'information / Mapping the information system",
     "keywords": [
-        "framework",
-        "laravel"
+        "information system",
+        "cartography",
+        "oiv",
+        "security tool",
+        "anssi",
+        "urbanisation",
     ],
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^7.2.5",
         "bugsnag/bugsnag-laravel": "^2.18",
