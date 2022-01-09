@@ -32,7 +32,7 @@ class CertificateExpiracy extends Command
         // Log::debug("CertificateExpiracy - frequency ". $check_frequency);
         // Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
-	if ($this->needCheck()) {
+        if ($this->needCheck()) {
             // Check for old certificates
             //
             // Log::debug("CertificateExpiracy - check");
@@ -88,8 +88,7 @@ class CertificateExpiracy extends Command
     {
         $check_frequency = config('mercator-config.cert.check-frequency');
 
-        return 
-            // Daily
+        return // Daily
             ($check_frequency === '1') ||
             // Weekly
             (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||

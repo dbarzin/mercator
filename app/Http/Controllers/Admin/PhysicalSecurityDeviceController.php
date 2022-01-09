@@ -35,13 +35,15 @@ class PhysicalSecurityDeviceController extends Controller
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.physicalSecurityDevices.create', 
-            compact('sites', 'buildings', 'bays', 'type_list'));
+        return view(
+            'admin.physicalSecurityDevices.create',
+            compact('sites', 'buildings', 'bays', 'type_list')
+        );
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
-         PhysicalSecurityDevice::create($request->all());
+        PhysicalSecurityDevice::create($request->all());
 
         return redirect()->route('admin.physical-security-devices.index');
     }
@@ -59,8 +61,10 @@ class PhysicalSecurityDeviceController extends Controller
 
         $physicalSecurityDevice->load('site', 'building', 'bay');
 
-        return view('admin.physicalSecurityDevices.edit', 
-            compact('sites', 'buildings', 'bays', 'physicalSecurityDevice','type_list'));
+        return view(
+            'admin.physicalSecurityDevices.edit',
+            compact('sites', 'buildings', 'bays', 'physicalSecurityDevice', 'type_list')
+        );
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)

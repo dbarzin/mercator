@@ -44,7 +44,7 @@ class PhysicalServerController extends Controller
 
     public function store(StorePhysicalServerRequest $request)
     {
-         PhysicalServer::create($request->all());
+        PhysicalServer::create($request->all());
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -64,8 +64,14 @@ class PhysicalServerController extends Controller
 
         return view(
             'admin.physicalServers.edit',
-            compact('sites', 'buildings', 'bays', 
-                'responsible_list', 'type_list', 'physicalServer')
+            compact(
+                'sites',
+                'buildings',
+                'bays',
+                'responsible_list',
+                'type_list',
+                'physicalServer'
+            )
         );
     }
 
