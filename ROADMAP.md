@@ -1,6 +1,6 @@
 # Feuille de route
 
-Ce document reprend les évolutions prévues sur Mercator dans les jours, mois et années à venir.
+Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 
 ## Evolutions majeures
 
@@ -18,6 +18,7 @@ Ce document reprend les évolutions prévues sur Mercator dans les jours, mois e
 - Dessiner un nouveu jeu d'icônes
 - Revoir les pages de gestion des droits d'accès
 - Améliorer la documentation, notemment les niveaux de maturité pour chaque objet.
+- Mise à jour du framework Laravel vers la version suivnate 
 
 ## Petites évolutions
 
