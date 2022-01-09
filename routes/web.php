@@ -247,22 +247,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/maturity3', [Admin\HomeController::class,'maturity3'])->name('report.maturity3');
 
     // Reporting
-    Route::get('report/entities', [Admin\ReportController::class,'entities']);
-    Route::get('report/applicationsByBlocks', [Admin\ReportController::class,'applicationsByBlocks']);
-    Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs']);
-    Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory']);
-    Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds']);
-    Route::put('report/cartography', [Admin\CartographyController::class, 'cartography']);
-    Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp']);
+    Route::get('report/entities', [Admin\ReportController::class,'entities'])->name('report.entities');
+    Route::get('report/applicationsByBlocks', [Admin\ReportController::class,'applicationsByBlocks'])->name('report.applicationsByBlocks');
+    Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs'])->name('report.logicalServerConfigs');
+    Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory'])->name('report.physicalInventory');
+    Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
+    Route::put('report/cartography', [Admin\CartographyController::class, 'cartography'])->name('report.cartography');
+    Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp'])->name('report.logicalServerResp');
 
     // Auditing
-    Route::get('audit/maturity', [Admin\AuditController::class,'maturity']);
-    Route::get('audit/changes', [Admin\AuditController::class,'changes']);
+    Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
+    Route::get('audit/changes', [Admin\AuditController::class,'changes'])->name('audit.changes');
 
     // Reporting
     Route::get('doc/report', function () {
         return view('doc/report');
-    });
+    })->name('doc.report');
 
     // Doc
     Route::get('doc/schema', function () {
