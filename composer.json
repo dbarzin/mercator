@@ -12,7 +12,7 @@
     ],
     "license": "GPL-3.0-or-later",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "bugsnag/bugsnag-laravel": "^2.18",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
