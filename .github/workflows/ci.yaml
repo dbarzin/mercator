@@ -30,7 +30,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-            php-version: '7.4'
+            php-version: '8.0'
             extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
 
       - name: Install dependencies
