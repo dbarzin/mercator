@@ -13,9 +13,17 @@ Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
 
-Insatller PHP et quelques librairies
+Installer les certificats
 
-    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install  ca-certificates apt-transport-https software-properties-common
+
+Ajouter le répository de PHP v8
+
+    sudo add-apt-repository ppa:ondrej/php
+
+Installer PHP v8.0 and quelques libraries
+
+    sudo apt install php8.0 libapache2-mod-php8.0 php8.0-zip php8.0-curl php8.0-mbstring php8.0-dom php8.0-ldap php8.0-soap php8.0-xdebug php8.0-mysql php8.0-gd
 
 Installer Graphviz
 
