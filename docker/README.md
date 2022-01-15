@@ -10,10 +10,6 @@ copier le dépot source
 
     git clone https://github.com/dbarzin/mercator
 
-recopier le fichier docker-compose.yml.tmp afin d'apporter vos propres adaptations
-
-    cp docker-compose.yml.tmpl docker-compose.yml
-
 Aller dans le répertoire mercator
 
     cd mercator/docker
