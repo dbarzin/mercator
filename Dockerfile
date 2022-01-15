@@ -1,5 +1,5 @@
-# ubuntu / focal (20.04-LTS)
-FROM ubuntu:focal
+# ubuntu / impish (21.10)
+FROM ubuntu:impish
 
 ENV DEBIAN_FRONTEND noninteractive
 
