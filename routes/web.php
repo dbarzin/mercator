@@ -226,7 +226,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('macro-processuses-destroy', [Admin\MacroProcessusController::class,'massDestroy'])->name('macro-processuses.massDestroy');
 
     // Global Search engine !
-    Route::get('global-search', [Admin\GlobalSearchController::class,'search'])->name('globalSearch');
+    Route::post('global-search', [Admin\GlobalSearchController::class,'search'])->name('globalSearch');
 
     // Configuration page
     Route::get('configuration', [Admin\ConfigurationController::class,'index'])->name('configuration');

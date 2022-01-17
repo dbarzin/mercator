@@ -279,23 +279,21 @@
       }
     ]
   });
-
   $.fn.dataTable.ext.classes.sPageButton = '';
 });
 
-    </script>
-    <script>
-        $(document).ready(function() {
+$(document).ready(function() {
     $('.searchable-field').select2({
         minimumInputLength: 3,
         ajax: {
             url: '{{ route("admin.globalSearch") }}',
             dataType: 'json',
-            type: 'GET',
+            type: 'POST',
             delay: 200,
             data: function (term) {
                 return {
-                    search: term
+                    "_token": "{{ csrf_token() }}",
+                     search: term
                 };
             },
             results: function (data) {
@@ -325,7 +323,6 @@
                 return '{{ trans('global.no_results') }}';
             },
         }
-
     });
     function formatItem (item) {
         if (item.loading) {
