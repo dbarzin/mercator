@@ -288,12 +288,11 @@ $(document).ready(function() {
         ajax: {
             url: '{{ route("admin.globalSearch") }}',
             dataType: 'json',
-            type: 'POST',
+            type: 'GET',
             delay: 200,
-            data: function (term) {
+            data: function (param) {
                 return {
-                    "_token": "{{ csrf_token() }}",
-                     search: term
+                     search: param.term
                 };
             },
             results: function (data) {

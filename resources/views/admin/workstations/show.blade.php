@@ -78,8 +78,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $workstation->created_at->format(trans('global.timestamp')) }} |
-        {{ trans('global.updated_at') }} {{ $workstation->updated_at->format(trans('global.timestamp')) }} 
+        {{ trans('global.created_at') }} {{ $workstation->created_at->format(trans('global.timestamp')) ?? '' }} |
+        {{ trans('global.updated_at') }} {{ $workstation->updated_at->format(trans('global.timestamp')) ?? '' }} 
     </div>
 </div>
 @endsection

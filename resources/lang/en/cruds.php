@@ -909,6 +909,7 @@ return [
             "gateway_helper" => "",
             "ip_allocation_type" => "Type of IP address allocation",
             "ip_allocation_type_helper" => "",
+            "ip_range" => "IP Range",
             "name" => "Name",
             "name_helper" => "",
             "network" => "Network",

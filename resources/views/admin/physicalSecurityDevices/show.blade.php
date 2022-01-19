@@ -99,8 +99,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $physicalSecurityDevice->created_at->format(trans('global.timestamp')) }} |
-        {{ trans('global.updated_at') }} {{ $physicalSecurityDevice->updated_at->format(trans('global.timestamp')) }} 
+        {{ trans('global.created_at') }} {{ $physicalSecurityDevice->created_at->format(trans('global.timestamp')) ?? '' }} |
+        {{ trans('global.updated_at') }} {{ $physicalSecurityDevice->updated_at->format(trans('global.timestamp')) ?? '' }} 
     </div>
 </div>
 @endsection
