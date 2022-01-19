@@ -21,7 +21,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
+                <label for="description" class="recommended">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $physicalSwitch->description) !!}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
@@ -31,7 +31,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="type">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
+                <label for="type" class="recommended">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
                 <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', $physicalSwitch->type) }}">
                 @if($errors->has('type'))
                     <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.type_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="site_id">{{ trans('cruds.physicalSwitch.fields.site') }}</label>
+                <label for="site_id" class="recommended">{{ trans('cruds.physicalSwitch.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
                     @foreach($sites as $id => $site)
                         <option value="{{ $id }}" {{ ($physicalSwitch->site ? $physicalSwitch->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
@@ -55,7 +55,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.site_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="building_id">{{ trans('cruds.physicalSwitch.fields.building') }}</label>
+                <label for="building_id" class="recommended">{{ trans('cruds.physicalSwitch.fields.building') }}</label>
                 <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
                     @foreach($buildings as $id => $building)
                         <option value="{{ $id }}" {{ ($physicalSwitch->building ? $physicalSwitch->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
@@ -69,7 +69,7 @@
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.building_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="bay_id">{{ trans('cruds.physicalSwitch.fields.bay') }}</label>
+                <label for="bay_id" class="recommended">{{ trans('cruds.physicalSwitch.fields.bay') }}</label>
                 <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
                     @foreach($bays as $id => $bay)
                         <option value="{{ $id }}" {{ ($physicalSwitch->bay ? $physicalSwitch->bay->id : old('bay_id')) == $id ? 'selected' : '' }}>{{ $bay }}</option>
