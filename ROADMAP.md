@@ -25,5 +25,5 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - Améliorer les tests Dusk
 - Publier une VM Docker sur [dockerHub](https://hub.docker.com/) 
 - Documenter une procédure de déploiement sous Debian
-
+- Dark Theme
 
