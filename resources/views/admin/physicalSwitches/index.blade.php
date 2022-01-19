@@ -47,12 +47,24 @@
                 </thead>
                 <tbody>
                     @foreach($physicalSwitches as $key => $physicalSwitch)
-                        <tr data-entry-id="{{ $physicalSwitch->id }}">
+                        <tr data-entry-id="{{ $physicalSwitch->id }}"
+                        @if (
+                            ($physicalSwitch->description==null)||
+                            ($physicalSwitch->type==null)||
+                            ($physicalSwitch->site==null)||
+                            ($physicalSwitch->building==null)||
+                            ($physicalSwitch->bay==null)
+                            )
+                                class="table-warning"
+                        @endif
+                          >                            
                             <td>
 
                             </td>
                             <td>
-                                {{ $physicalSwitch->name ?? '' }}
+                                <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">
+                                    {{ $physicalSwitch->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $physicalSwitch->description ?? '' !!}
