@@ -58,6 +58,16 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
+//        $credentials = [
+//            'mail' => $request->get('email'),
+//            'password' => $request->get('password')
+//            ];
+//
+//        if (Auth::attempt($credentials)) {
+//            $user = Auth::user();
+//
+//            return true;
+//        } else return false;
         if (Config::get('app.ldap_domain') !== null) {
             $credentials = $request->only($this->username(), 'password');
             $username = $credentials[$this->username()];
