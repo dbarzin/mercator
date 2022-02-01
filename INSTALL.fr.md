@@ -81,7 +81,6 @@ Créer la base de données _mercator_ et l'utilisateur _mercator_user_
 Créer un fichier .env dans le répertoire racine du projet :
 
     cd /var/www/mercator
-
     cp .env.example .env
 
 Mettre les paramètre de connexion à la base de données :
@@ -121,7 +120,12 @@ Démarrer l'application avec php
 
     php artisan serve
 
+ou pour y accéder à l'application depuis un autre serveur
+
+    php artisan serve --host 0.0.0.0 --port 8000
+
 L'application est accessible à l'URL [http://127.0.0.1:8000]
+
     utilisateur : admin@admin.com
     mot de passe : password
 
@@ -155,12 +159,12 @@ ajouter cette ligne dans le crontab
 
 Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
 
-    chown -R www-data:www-data /var/www/mercator
-    chmod -R 775 /var/www/mercator/storage
+    sudo chown -R www-data:www-data /var/www/mercator
+    sudo chmod -R 775 /var/www/mercator/storage
 
 Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour servir l'application Mercator :
 
-    vi /etc/apache2/sites-available/mercator.conf
+    sudo vi /etc/apache2/sites-available/mercator.conf
 
 Ajouter les lignes suivantes :
 
@@ -177,12 +181,13 @@ Ajouter les lignes suivantes :
 
 Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de réécriture avec la commande suivante :
 
-    a2ensite mercator.conf
-    a2enmod rewrite
+    sudo a2enmod rewrite
+    sudo a2dissite 000-default.conf
+    sudo a2ensite mercator.conf
 
 Enfin, redémarrez le service Apache pour activer les modifications :
 
-    systemctl restart apache2
+    sudo systemctl restart apache2
 
 ## Problèmes
 
