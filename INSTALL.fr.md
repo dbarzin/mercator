@@ -149,7 +149,7 @@ Envoyer un mail de test avec
 
 Modifier le crontab
 
-    crontab -e
+    sudo crontab -e
 
 ajouter cette ligne dans le crontab
 
