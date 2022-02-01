@@ -120,6 +120,10 @@ To import the test database (optional)
 Start the application with php
 
     php artisan serve
+    
+or to access the application there from another server
+
+    php artisan serve --host 0.0.0.0 --port 8000
 
 The application is accessible at the URL [http://127.0.0.1:8000]
     user : admin@admin.com
@@ -145,7 +149,7 @@ Send a test mail with
 
 Modify the crontab
 
-    crontab -e
+    sudo crontab -e
 
 add this line in the crontab
 
@@ -155,12 +159,12 @@ add this line in the crontab
 
 To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command
 
-    chown -R www-data:www-data /var/www/mercator
-    chmod -R 775 /var/www/mercator/storage
+    sudo chown -R www-data:www-data /var/www/mercator
+    sudo chmod -R 775 /var/www/mercator/storage
 
 Next, create a new Apache virtual host configuration file to serve the Mercator application:
 
-    vi /etc/apache2/sites-available/mercator.conf
+    sudo vi /etc/apache2/sites-available/mercator.conf
 
 Add the following lines:
 
@@ -177,12 +181,13 @@ Add the following lines:
 
 Save and close the file when you are done. Next, enable the Apache virtual host and the rewrite module with the following command:
 
-    a2ensite mercator.conf
-    a2enmod rewrite
+    sudo a2enmod rewrite
+    sudo a2dissite 000-default.conf
+    sudo a2ensite mercator.conf
 
 Finally, restart the Apache service to activate the changes:
 
-    systemctl restart apache2
+    sudo systemctl restart apache2
 
 ## Problems
 
