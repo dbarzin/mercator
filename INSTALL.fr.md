@@ -210,20 +210,19 @@ Avant de mettre à jour l'application prenez un backup de la base de données et
 Récupérer les sources de GIT
 
     cd /var/www/mercator
-    git pull
+    sudo -u www-data git pull
 
 Migrer la base de données
 
-    php artisan migrate
+    sudo -u www-data php artisan migrate
 
 Mettre à jour les librairies
 
-    composer update
+    sudo -u www-data composer update
 
 Vider les caches
 
-    php artisan config:clear &&  php artisan view:clear
-
+    sudo -u www-data php artisan config:clear &&  php artisan view:clear
 
 ## Tests de non-régression
 
@@ -233,29 +232,29 @@ Pour exécuter les tests de non-régression de Mercator, vous devez d'abord inst
 
 Installer le pluggin dusk
 
-    php artisan dusk:chrome-driver
+    sudo www-data php artisan dusk:chrome-driver
 
 Configurer l'environement
 
-    cp .env .env.dusk.local
+    sudo -u www-data cp .env .env.dusk.local
 
 Lancer l'application
 
-    php artisan serve
+    sudo -u www-data php artisan serve
 
 Dans un autre terminal, lancer les tests
 
-    php artisan dusk
+    sudo -u www-data php artisan dusk
 
 ## Réparer les problèmes de migraton
 
 Mettre à jour les librairies
 
-    composer update
+    sudo -u www-data composer update
 
 Sauvegarder la base de données
 
-    mysqldump mercator \
+    sudo mysqldump mercator \
         --ignore-table=mercator.users \
         --ignore-table=mercator.roles \
         --ignore-table=mercator.permissions \
@@ -268,7 +267,7 @@ Sauvegarder la base de données
 
 Then backup database users
 
-    mysqldump mercator \
+    sudo mysqldump mercator \
         --tables users roles role_user \
         --add-drop-table \
         > backup_mercator_users.sql
@@ -283,18 +282,18 @@ Créer une nouvelle base de données
 
 Exécuter les migrations
 
-    php artisan migrate --seed
+    sudo -u www-data php artisan migrate --seed
 
 Générer la clé
 
-    php artisan key:generate
+    sudo -u www-data php artisan key:generate
 
 Restaurer les données
 
-    mysql mercator < backup_mercator_data.sql
+    sudo mysql mercator < backup_mercator_data.sql
 
 Restaurer les utilisateurs
 
-    mysql mercator < backup_mercator_users.sql
+    sudo mysql mercator < backup_mercator_users.sql
 
 Tous les problèmes de migration devraient être résolus.
