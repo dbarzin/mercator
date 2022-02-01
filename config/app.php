@@ -164,7 +164,7 @@ return [
 
         /*
          * Package Service Providers...
-         */        
+         */
 
         /*
          * Application Service Providers...
@@ -173,8 +173,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
+        App\Providers\RouteServiceProvider::class
     ],
 
     /*
@@ -228,18 +227,4 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | LDAP Parameters
-    |--------------------------------------------------------------------------
-    |
-    | read from .env files
-    |
-    */
-    'ldap_url' => env('LDAP_URL'),
-    'ldap_domain' => env('LDAP_DOMAIN'),
-    'ldap_cert' => env('LDAP_CERT'),
-
 ];

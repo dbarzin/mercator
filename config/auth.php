@@ -38,7 +38,6 @@ return [
     'guards' => [
         'web' => [
             'driver'   => 'session',
-//            'provider' => 'ldap',
             'provider' => 'users',
         ],
 
@@ -67,36 +66,27 @@ return [
     */
 
     'providers' => [
+
         'users' => [
-            'driver' => 'eloquent',
-            'model'  => App\User::class,
+            'driver' => 'ldap',
+            'model' => LdapRecord\Models\OpenLDAP\User::class,
+            'rules' => [],
+            'database' => [
+                'model' => App\User::class,
+                'sync_passwords' => true,
+                'sync_attributes' => [
+                    'email' => 'mail',
+                    'name' => 'cn',
+                ],
+                'sync_existing' => [
+                    'email' => [
+                        'attribute' => 'mail',
+                        'operator' => 'like',
+                    ],
+                ],
+                'password_column' => 'password',
+            ],
         ],
-
-//        'ldap' => [
-//            'driver' => 'ldap',
-//            'model' => LdapRecord\Models\OpenLDAP\User::class,
-//            'rules' => [],
-//            'database' => [
-//                'model' => App\User::class,
-//                'sync_passwords' => true,
-//                'sync_attributes' => [
-//                    'email' => 'mail',
-//                    'name' => 'cn',
-//                ],
-//                'sync_existing' => [
-//                    'email' => [
-//                        'attribute' => 'mail',
-//                        'operator' => 'like',
-//                    ],
-//                ],
-//                'password_column' => 'password',
-//            ],
-//        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

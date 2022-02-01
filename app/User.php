@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 
@@ -60,7 +61,7 @@ use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
  */
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, AuthenticatesWithLdap;
+    use SoftDeletes, Notifiable, HasApiTokens, AuthenticatesWithLdap, HasLdapUser;
 
     public $table = 'users';
 
