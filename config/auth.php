@@ -70,7 +70,9 @@ return [
         'users' => [
             'driver' => 'ldap',
             'model' => LdapRecord\Models\OpenLDAP\User::class,
-            'rules' => [],
+            'rules' => [
+                App\Ldap\Rules\OnlySpecificUsers::class
+            ],
             'database' => [
                 'model' => App\User::class,
                 'sync_passwords' => true,
