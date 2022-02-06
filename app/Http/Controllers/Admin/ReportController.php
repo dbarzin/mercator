@@ -1089,9 +1089,9 @@ class ReportController extends Controller
         $sheet->getStyle('P')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->getColumnDimension('Q')->setAutoSize(true);
-        $sheet->getColumnDimension('R')->setWidth(60, 'pt');
-        $sheet->getColumnDimension('S')->setWidth(60, 'pt');
-        $sheet->getColumnDimension('T')->setWidth(60, 'pt');
+        $sheet->getColumnDimension('R')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('S')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('T')->setWidth(200, 'pt');
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -1134,10 +1134,10 @@ class ReportController extends Controller
 
                 // TODO: improve me with select, join and unique
                 foreach($application->logical_servers as $logical_server) {
-                    foreach($logical_server->servers as $logical_servers) {
+                    foreach($logical_server->servers as $physical_server) {
                         if ($res != null)
                             $res .= ", ";
-                        $res .= $server->name;
+                        $res .= $physical_server->name;
                     }
                 }
                 
