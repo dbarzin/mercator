@@ -11,6 +11,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - Développer une REST API pour peupler la cartographie
 - Créer une vue multi-domaine
+- Intégration des données de la cartographie dans syslog
 
 ## Evolutions mineurs
 
