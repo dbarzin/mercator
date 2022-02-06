@@ -10,6 +10,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
 - Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - Développer une REST API pour peupler la cartographie
+- Créer une vue multi-domaine
 
 ## Evolutions mineurs
 
