@@ -220,7 +220,12 @@ return [
             "start_validity" => "Date de début",
             "start_validity_helper" => "Date de début de validité du certificat",
             "type" => "Type",
-            "type_helper" => "Type de certificat"
+            "type_helper" => "Type de certificat",
+            "status" => "Status",
+            "status_helper" => "Etat du certificat",
+            "status_good" => "Bon",
+            "status_revoked" => "Révoqué",
+            "status_unknown" => "Inconnu",
         ],
         "title" => "Certificats",
         "title_short" => "Certificats",

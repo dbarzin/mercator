@@ -219,6 +219,11 @@ return [
             "name_helper" => "Certificate name",
             "start_validity" => "Start date",
             "start_validity_helper" => "Certificate validity start date",
+            "status" => "Status",
+            "status_helper" => "Certificate status",
+            "status_good" => "Good",
+            "status_revoked" => "Revoked",
+            "status_unknown" => "Unknown",
             "type" => "Type",
             "type_helper" => "Certificate Type"
         ],

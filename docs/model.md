@@ -608,9 +608,15 @@ Table *certificates* :
 | type                 | varchar(255) | Type de certificat (SSL, HTTPS ...) |
 | start_validity       | date         | Date de début de validité |
 | end_validity         | date         | Date de fin de validité |
+| status               | int          | Etat du certificat (RFC 6960) |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
+
+* Note :
+    * status = 0 : "Bon"
+    * status = 1 : "Révoqué"
+    * status = 2 : "Inconnu"
 
 ### L’infrastructure physique
 

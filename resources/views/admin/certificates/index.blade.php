@@ -38,6 +38,9 @@
                             {{ trans('cruds.certificate.fields.end_validity') }}
                         </th>
                         <th>
+                            {{ trans('cruds.certificate.fields.status') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -77,9 +80,17 @@
                             <td>
                                 @if($certificate->end_validity!=null)
                                     {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
-                                @endif
-                                
+                                @endif                                
                             </td>
+                            <td>
+                                @if (($certificate->status==null) || ($certificate->status==0))
+                                    {{ trans('cruds.certificate.fields.status_good') }}
+                                @elseif ($certificate->status==1)
+                                    {{ trans('cruds.certificate.fields.status_revoked') }}
+                                @elseif ($certificate->status==2)
+                                    {{ trans('cruds.certificate.fields.status_unknown') }}
+                                @endif
+                            </td>                            
                             <td>
                                 @can('certificate_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.certificates.show', $certificate->id) }}">
