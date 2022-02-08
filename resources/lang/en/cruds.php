@@ -58,6 +58,8 @@ return [
         "fields" => [
             "application_block" => "Application block",
             "application_block_helper" => "Application block of which this application is part",
+	        "cartographers" => "Cartographer(s)",
+	        "cartographers_helper" => "Application's Cartographer(s)",
             "databases" => "Data base",
             "databases_helper" => "List of databases used by the application",
             "description" => "Description",

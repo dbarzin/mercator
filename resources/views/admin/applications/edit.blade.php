@@ -190,6 +190,23 @@
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
                 @endif
+{{--                <div class="form-group">--}}
+{{--                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>--}}
+{{--                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">--}}
+{{--                        @if (!$cartographers_list->contains(old('cartographers')))--}}
+{{--                            <option> {{ old('cartographers') }}</option>'--}}
+{{--                        @endif--}}
+{{--                        @foreach($cartographers_list as $key => $t)--}}
+{{--                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                    @if($errors->has('cartographers'))--}}
+{{--                        <div class="invalid-feedback">--}}
+{{--                            {{ $errors->first('cartographer') }}--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>--}}
+{{--                </div>--}}
 
             </div>
         </div>
@@ -202,9 +219,9 @@
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
+                                    <label
                                         @if (auth()->user()->granularity>=2)
-                                        class="recommended" 
+                                        class="recommended"
                                         @endif
                                         for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                                 </td>
@@ -318,7 +335,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
             </div>
             @endif
-        
+
         </div>
         <div class="col-sm">
 
@@ -360,7 +377,7 @@
             </div>
 
             </div>
-        </div>            
+        </div>
         <div class="form-group">
             @if (auth()->user()->granularity>=2)
                 <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
@@ -403,9 +420,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-function template(data, container) {      
+function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {
@@ -425,7 +442,7 @@ function template(data, container) {
           return m;
       }
     });
-          
-  }); 
+
+  });
 </script>
 @endsection

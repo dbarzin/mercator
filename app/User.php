@@ -126,4 +126,9 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+	public function m_applications()
+	{
+		return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
+	}
 }

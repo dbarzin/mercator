@@ -58,6 +58,8 @@ return [
         "fields" => [
             "application_block" => "Bloc applicatif",
             "application_block_helper" => "Bloc applicatif dont fait partie cette application",
+            "cartographers" => "Cartographe(s)",
+            "cartographers_helper" => "Cartographe(s) de l'application",
             "databases" => "Bases de données",
             "databases_helper" => "Liste des bases de données utilisées par l’application",
             "description" => "Description",

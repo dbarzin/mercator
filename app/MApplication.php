@@ -161,4 +161,9 @@ class MApplication extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+	public function cartographers()
+	{
+		return $this->belongsToMany(User::class, 'cartographer_m_application');
+	}
 }

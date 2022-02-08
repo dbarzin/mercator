@@ -79,7 +79,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.entity_resp_helper') }}</span>
                 </div>
                 @endif
-                
+
                 <div class="form-group">
                     <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                     <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
@@ -138,7 +138,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.type_helper') }}</span>
                 </div>
-                @if (auth()->user()->granularity>=2)                
+                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
                     <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
@@ -185,7 +185,23 @@
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
                 @endif
-
+                <div class="form-group">
+                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
+                        @if (!$cartographers_list->contains(old('cartographers')))
+                            <option> {{ old('cartographers') }}</option>'
+                        @endif
+                        @foreach($cartographers_list as $key => $t)
+                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cartographers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cartographer') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
+                </div>
             </div>
           </div>
 
@@ -195,9 +211,9 @@
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
-                                        @if (auth()->user()->granularity>=2)                                    
-                                            class="recommended" 
+                                    <label
+                                        @if (auth()->user()->granularity>=2)
+                                            class="recommended"
                                         @endif
                                         for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                                 </td>
@@ -393,9 +409,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }); 
+    });
 
-    function template(data, container) {      
+    function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {

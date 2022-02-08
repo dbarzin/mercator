@@ -62,7 +62,7 @@
                                 <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</span>
                                 @if(!$loop->last)
                                 ,
-                                @endif                                
+                                @endif
                             @endforeach
                         </td>
                         <th colspan="1">
@@ -108,8 +108,16 @@
                         <th colspan="1">
                             {{ trans('cruds.application.fields.users') }}
                         </th>
-                        <td colspan="5">
+                        <td colspan="2">
                             {{ $application->users }}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.cartographers') }}
+                        </th>
+                        <td colspan="4">
+                            @foreach($application->cartographers as $cartographer)
+                                    {{ $cartographer->name }} @if(!$loop->last)-@endif
+                            @endforeach
                         </td>
                     <tr>
                         <th>
@@ -130,7 +138,7 @@
                             <br>
                             {{ trans('global.tracability') }} :
                                 {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$application->security_need_t] ?? "" }} 
+                                [$application->security_need_t] ?? "" }}
                         </td>
                     </tr>
                     <tr>
@@ -142,7 +150,7 @@
                                 <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</span>
                                 @if(!$loop->last)
                                 ,
-                                @endif                                
+                                @endif
                             @endforeach
                         </td>
                         <th colspan="1">
@@ -153,7 +161,7 @@
                                 <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</span>
                                 @if(!$loop->last)
                                 ,
-                                @endif                                
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -166,7 +174,7 @@
                                 <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</span>
                                 @if(!$loop->last)
                                 ,
-                                @endif                                
+                                @endif
                             @endforeach
                         </td>
                         <th colspan="1">
@@ -177,7 +185,7 @@
                                 <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</span>
                                 @if(!$loop->last)
                                 ,
-                                @endif                                
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -202,7 +210,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $application->created_at->format(trans('global.timestamp')) ?? '' }} |
-        {{ trans('global.updated_at') }} {{ $application->updated_at->format(trans('global.timestamp')) ?? '' }} 
+        {{ trans('global.updated_at') }} {{ $application->updated_at->format(trans('global.timestamp')) ?? '' }}
     </div>
 </div>
 @endsection

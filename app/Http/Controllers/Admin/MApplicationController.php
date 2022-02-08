@@ -12,6 +12,7 @@ use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
+use App\User;
 use App\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,7 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
             'admin.applications.create',
@@ -59,7 +61,8 @@ class MApplicationController extends Controller
                 'technology_list',
                 'users_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+                'cartographers_list'
             )
         );
     }
@@ -71,6 +74,7 @@ class MApplicationController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
+        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
 
         return redirect()->route('admin.applications.index');
@@ -94,8 +98,9 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+	    $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
 
         return view(
             'admin.applications.edit',
@@ -112,7 +117,8 @@ class MApplicationController extends Controller
                 'technology_list',
                 'users_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+	            'cartographers_list'
             )
         );
     }
@@ -124,6 +130,7 @@ class MApplicationController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
+	    $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
 
         return redirect()->route('admin.applications.index');
@@ -133,7 +140,7 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
 
         return view('admin.applications.show', compact('application'));
     }
