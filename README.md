@@ -16,7 +16,7 @@ Read this in other languages: [French](README.fr.md)
 Computer attacks occur in a constantly changing environment. 
 To meet these challenges, it is necessary to implement a global approach to risk management within the organization. 
 
-The mapping of the Information System allows to have a global view of all the elements which constitute the information 
+The mapping of the Information System allows to have a global view of all the elements which compose the information 
 system to obtain a better readability, and thus a better control. 
 
 The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. 
@@ -24,10 +24,10 @@ It is an essential tool for the control of its information system (IS) and is an
 and is part of a global risk management and a global risk management approach.
 
 ## Major functions
-- View management (ecosystem, information system, administration, logical, applications, and physical)
-- Generation of the Information System Architecture report
-- Drawing of mapping diagrams
-- Calculation of compliance levels
+- Graphical views of the ecosystem, information system, administration, logical, applications, and physical infrastructure
+- Generate information system architecture report
+- Draw mapping diagrams
+- Compute compliance levels
 - Extraction in Excel, CSV, PDF ... of all lists
 - Multi-user with role management
 - Multilingual

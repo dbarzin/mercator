@@ -2024,6 +2024,11 @@
 <td align="left">Date de fin de validité</td>
 </tr>
 <tr>
+<td align="left">status</td>
+<td align="left">int</td>
+<td align="left">Etat du certificat (RFC 6960)</td>
+</tr>
+<tr>
 <td align="left">created_at</td>
 <td align="left">timestamp</td>
 <td align="left">Date de création</td>
@@ -2040,6 +2045,14 @@
 </tr>
 </tbody>
 </table>
+<ul>
+<li>Note :<ul>
+<li>status = 0 : "Bon"</li>
+<li>status = 1 : "Révoqué"</li>
+<li>status = 2 : "Inconnu"</li>
+</ul>
+</li>
+</ul>
 <h3 id="linfrastructure-physique">L’infrastructure physique</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. </p>
 <p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>

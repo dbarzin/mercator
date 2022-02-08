@@ -613,6 +613,11 @@ Table *certificates* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+* Note :
+    * status = 0 : "Bon"
+    * status = 1 : "Révoqué"
+    * status = 2 : "Inconnu"
+
 ### L’infrastructure physique
 
 La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. 
