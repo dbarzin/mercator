@@ -67,6 +67,18 @@
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
+                <div class="col-sm">
+                     <div class="form-group">
+                        <label for="logical_servers">{{ trans('cruds.certificate.fields.status') }}</label> 
+                        <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
+                            <option></option>
+                            <option value="0" {{ old('status', $certificate->status)==0 ? 'selected' : '' }}>{{ trans('cruds.certificate.fields.status_good') }}</option>
+                            <option value="1" {{ old('status', $certificate->status)==1 ? 'selected' : '' }}>{{ trans('cruds.certificate.fields.status_revoked') }}</option>
+                            <option value="2" {{ old('status', $certificate->status)==2 ? 'selected' : '' }}>{{ trans('cruds.certificate.fields.status_unknown') }}</option>
+                        </select>
+                        <span class="help-block">{{ trans('cruds.certificate.fields.status_helper') }}</span>
+                    </div>
+                </div>
             </div>
 
 

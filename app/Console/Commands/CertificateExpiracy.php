@@ -38,9 +38,9 @@ class CertificateExpiracy extends Command
             Log::debug("CertificateExpiracy - check");
 
             $certificates = Certificate::select('name', 'type', 'end_validity')
+                ->where('status', 0)
                 ->where('end_validity', '<=', Carbon::now()
-                ->addDays(intval(config('mercator-config.cert.expire-delay')))
-                ->toDateString())
+                ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
                 ->orderBy('end_validity')
                 ->get();
 
