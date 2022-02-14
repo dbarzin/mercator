@@ -61,6 +61,9 @@ class StoreMApplicationRequest extends FormRequest
             'logical_servers' => [
                 'array',
             ],
+            'cartographers' => [
+                'array',
+            ],
         ];
     }
 }

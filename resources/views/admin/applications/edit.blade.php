@@ -190,23 +190,28 @@
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
                 @endif
-{{--                <div class="form-group">--}}
-{{--                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>--}}
-{{--                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">--}}
-{{--                        @if (!$cartographers_list->contains(old('cartographers')))--}}
-{{--                            <option> {{ old('cartographers') }}</option>'--}}
-{{--                        @endif--}}
-{{--                        @foreach($cartographers_list as $key => $t)--}}
-{{--                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                    @if($errors->has('cartographers'))--}}
-{{--                        <div class="invalid-feedback">--}}
-{{--                            {{ $errors->first('cartographer') }}--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>--}}
-{{--                </div>--}}
+                <div class="form-group">
+                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
+                        @if (is_array(old('cartographers')))
+                            @foreach (old('cartographers') as $cartographer)
+                                <option value="{{ $cartographer }}" selected="selected">{{ $cartographer }}</option>
+                            @endforeach
+                        @endif
+                        @foreach($cartographers_list as $key => $t)
+                            @foreach($application->cartographers as $appplication_cartographer)
+                                <option {{ $appplication_cartographer->id == $key ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
+                            @endforeach
+                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cartographers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cartographer') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
+                </div>
 
             </div>
         </div>
