@@ -23,12 +23,12 @@
                 <label class="required mb-4" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
                 <div class="row">
 
-                @foreach($permissions_sorted as $id => $permissions)
+                @foreach($permissions_sorted as $permissions)
                     <div class="col-md-4 mb-4">
                         <h2>{{ $permissions['name'] }}</h2>
                         @foreach($permissions['actions'] as $action)
                             <div class="form-check form-switch form-switch-lg">
-                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="flexSwitchCheckChecked">
+                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="flexSwitchCheckChecked" {{ (in_array($action[0], old('permissions', []))) ? 'checked' : ''}} >
                                 <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action[1] }}</label>
                             </div>
                         @endforeach

@@ -22,15 +22,21 @@
             </div>
             <div class="form-group">
                 <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('permissions') ? 'is-invalid' : '' }}" name="permissions[]" id="permissions" multiple required>
-                    @foreach($permissions as $id => $permissions)
-                        <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || $role->permissions->contains($id)) ? 'selected' : '' }}>{{ $permissions }}</option>
+
+                <div class="row">
+
+                    @foreach($permissions_sorted as $permissions)
+                        <div class="col-md-4 mb-4">
+                            <h2>{{ $permissions['name'] }}</h2>
+                            @foreach($permissions['actions'] as $action)
+                                <div class="form-check form-switch form-switch-lg">
+                                    <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="flexSwitchCheckChecked" {{ (in_array($action[0], old('permissions', [])) || $role->permissions->contains($action[0])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action[1] }}</label>
+                                </div>
+                            @endforeach
+                        </div>
                     @endforeach
-                </select>
+                </div>
                 @if($errors->has('permissions'))
                     <div class="invalid-feedback">
                         {{ $errors->first('permissions') }}

@@ -66,10 +66,32 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
+	    $permissions_sorted = [];
+
+	    foreach ($permissions as $id => $permission) {
+
+		    $explode = explode('_', $permission);
+		    if (count($explode) >= 2) {
+			    $sliced = array_slice($explode, 0, -1);
+			    $name = implode(" ", $sliced);
+			    $action = $explode[count($explode)-1];
+		    } else {
+			    $name = $explode[0];
+			    $action = $name;
+		    }
+
+		    $actionTab = [$id, $action];
+		    if(!isset($permissions_sorted[$name])) {
+			    $permissions_sorted[$name] = ['name' => $name, 'actions' => []];
+			    array_push($permissions_sorted[$name]['actions'], $actionTab);
+		    } else {
+			    array_push($permissions_sorted[$name]['actions'], $actionTab);
+		    }
+	    }
 
         $role->load('permissions');
 
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        return view('admin.roles.edit', compact('permissions_sorted', 'role'));
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
