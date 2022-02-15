@@ -20,15 +20,11 @@
                 <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
+                <label class="required mb-4" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
                 <div class="row">
 
                 @foreach($permissions_sorted as $id => $permissions)
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-4">
                         <h2>{{ $permissions['name'] }}</h2>
                         @foreach($permissions['actions'] as $action)
                             <div class="form-check form-switch form-switch-lg">
