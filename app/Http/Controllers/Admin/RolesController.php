@@ -27,8 +27,28 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
+		$permissions_sorted = [];
 
-        return view('admin.roles.create', compact('permissions'));
+		foreach ($permissions as $id => $permission) {
+
+			$explode = explode('_', $permission);
+			if (count($explode) >= 2) {
+				$sliced = array_slice($explode, 0, -1);
+				$name = implode(" ", $sliced);
+				$action = $explode[count($explode)-1];
+			} else {
+				$name = $explode[0];
+				$action = $name;
+			}
+
+			if(!isset($permissions_sorted[$name])) {
+				$permissions_sorted[$name] = ['id' => $id, 'name' =>$name, 'action' => [$action]];
+			} else {
+				array_push($permissions_sorted[$name]['action'], $action);
+			}
+		}
+
+        return view('admin.roles.create', compact('permissions_sorted'));
     }
 
     public function store(StoreRoleRequest $request)

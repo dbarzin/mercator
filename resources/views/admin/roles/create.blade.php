@@ -25,11 +25,20 @@
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                <select class="form-control select2 {{ $errors->has('permissions') ? 'is-invalid' : '' }}" name="permissions[]" id="permissions" multiple required>
-                    @foreach($permissions as $id => $permissions)
-                        <option value="{{ $id }}" {{ in_array($id, old('permissions', [])) ? 'selected' : '' }}>{{ $permissions }}</option>
-                    @endforeach
-                </select>
+                <div class="row">
+
+                @foreach($permissions_sorted as $id => $permissions)
+                    <div class="col-md-4">
+                        <h2>{{ $permissions['name'] }}</h2>
+                        @foreach($permissions['action'] as $action)
+                            <div class="form-check form-switch form-switch-lg">
+                                <input class="form-check-input" type="checkbox" value="{{ $id }}" id="flexSwitchCheckChecked">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+                </div>
                 @if($errors->has('permissions'))
                     <div class="invalid-feedback">
                         {{ $errors->first('permissions') }}
