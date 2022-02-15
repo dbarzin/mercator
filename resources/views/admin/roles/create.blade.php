@@ -30,10 +30,10 @@
                 @foreach($permissions_sorted as $id => $permissions)
                     <div class="col-md-4">
                         <h2>{{ $permissions['name'] }}</h2>
-                        @foreach($permissions['action'] as $action)
+                        @foreach($permissions['actions'] as $action)
                             <div class="form-check form-switch form-switch-lg">
-                                <input class="form-check-input" type="checkbox" value="{{ $id }}" id="flexSwitchCheckChecked">
-                                <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action }}</label>
+                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="flexSwitchCheckChecked">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action[1] }}</label>
                             </div>
                         @endforeach
                     </div>
