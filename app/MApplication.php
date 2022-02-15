@@ -45,6 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $processes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $services
  * @property-read int|null $services_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\CartographerMApplication> $cartographers
  *
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newQuery()

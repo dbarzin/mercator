@@ -14,7 +14,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}" required>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}">
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
@@ -191,18 +191,26 @@
                 </div>
                 @endif
                 <div class="form-group">
+                     @php
+                         $currentCartographers = array();
+                         $cartographers = array();
+                         foreach ($application->cartographers as $cartographer) {
+                             $currentCartographers[] = $cartographer->id;
+                         }
+
+                         foreach ($cartographers_list as $key => $user) {
+                             // S'il se trouve dans old ou qu'il se trouve dans les cartographers de base (sans erreurs de formulaire)
+                             if((old('cartographers') !== null && in_array($key, old('cartographers', []))) || (in_array($key, $currentCartographers) && !$errors->any())) {
+                                 $cartographers[] = [$key, $user, true]; // true = selected
+                             } else {
+                                 $cartographers[] = [$key, $user, false];
+                             }
+                         }
+                    @endphp
                     <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
                     <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
-                        @if (is_array(old('cartographers')))
-                            @foreach (old('cartographers') as $cartographer)
-                                <option value="{{ $cartographer }}" selected="selected">{{ $cartographer }}</option>
-                            @endforeach
-                        @endif
-                        @foreach($cartographers_list as $key => $t)
-                            @foreach($application->cartographers as $appplication_cartographer)
-                                <option {{ $appplication_cartographer->id == $key ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
-                            @endforeach
-                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
+                        @foreach($cartographers as $cartographer)
+                            <option value="{{ $cartographer[0] }}" {{ $cartographer[2] ? 'selected' : '' }}>{{ $cartographer[1] }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('cartographers'))

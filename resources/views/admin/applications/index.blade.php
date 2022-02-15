@@ -38,7 +38,7 @@
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
                         <th>
-                            &nbsp;
+                            {{ trans('cruds.application.fields.cartographers') }}
                         </th>
                     </tr>
                 </thead>
@@ -63,7 +63,7 @@
                                 ($application->application_block==null)
                                 )
                             )||
-                            ($application->processes->count()==0)                            
+                            ($application->processes->count()==0)
                             )
                                 class="table-warning"
                         @endif
@@ -74,7 +74,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
-                                    {{ $application->name ?? '' }} 
+                                    {{ $application->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -85,7 +85,7 @@
                             </td>
                             <td>
                                 @if ($application->entity_resp!=null)
-                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">                                
+                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">
                                 {{ $application->entity_resp->name ?? '' }}
                                 </a>
                                 @endif
@@ -95,6 +95,13 @@
                                 <a href="{{ route('admin.application-blocks.show', $application->application_block->id) }}">
                                 {{ $application->application_block->name ?? '' }}
                                 </a>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($application->cartographers !== null)
+                                    @foreach($application->cartographers as $cartographer)
+                                        {{ $cartographer->name }} @if(!$loop->last)-@endif
+                                    @endforeach
                                 @endif
                             </td>
                             <td>
@@ -177,7 +184,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
