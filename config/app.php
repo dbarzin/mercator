@@ -227,4 +227,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'cartographers' => env('CARTOGRAPHERS', false),
 ];

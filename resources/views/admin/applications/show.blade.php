@@ -13,19 +13,19 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
-                @can('application_edit')
+                @if(auth()->user()->can('application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
                     <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                         {{ trans('global.edit') }}
                     </a>
-                @endcan
+                @endif
 
-                @can('application_delete')
+                @if(auth()->user()->can('application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
                     <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
                     </form>
-                @endcan
+                @endif
 
             </div>
             <table class="table table-bordered table-striped">

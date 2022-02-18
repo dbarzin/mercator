@@ -123,6 +123,18 @@ class MApplication extends Model
         return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
     }
 
+    /**
+     * Vérifie que l'utilisateur passé en paramètre est cartographe de cette application.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function hasCartographer(User $user) {
+        return $this->cartographers()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
+
     public function entities()
     {
         return $this->belongsToMany(Entity::class)->orderBy('name');

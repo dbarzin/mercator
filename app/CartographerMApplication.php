@@ -20,6 +20,7 @@ class CartographerMApplication extends Model
 
 	protected $fillable = [
 		'user_id',
+        'm_application_id',
 		'created_at',
 		'updated_at',
 		'deleted_at',

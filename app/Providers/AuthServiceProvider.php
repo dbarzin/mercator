@@ -3,9 +3,12 @@
 namespace App\Providers;
 
 use App\Ldap\Scopes\OnlyOrgUnitUser;
+use LdapRecord\Models\OpenLDAP\User as LDAPUser;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
-use LdapRecord\Models\OpenLDAP\User;
+use Illuminate\Support\Facades\Gate;
+use App\MApplication;
+use App\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        //MApplication::class => MApplicationPolicy::class,
     ];
 
     /**
@@ -31,8 +35,28 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
-        User::addGlobalScope(
+        // LDAP Restrictions on connection
+        LDAPUser::addGlobalScope(
             new OnlyOrgUnitUser
         );
+
+        /********************************************************
+         *  Register one Gate per model for cartographers.
+         * ******************************************************/
+        /**
+         * Before check
+         */
+        Gate::before(function (User $user, $ability) {
+            if (/*$user->getIsAdminAttribute() || */!config('app.cartographers', false)) {
+                return true;
+            }
+        });
+
+        /**
+         * MApplication
+         */
+        Gate::define('is-cartographer-m-application', function (User $user, MApplication $application) {
+            return $application->hasCartographer($user);
+        });
     }
 }
