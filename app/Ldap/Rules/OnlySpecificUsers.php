@@ -13,10 +13,9 @@ class OnlySpecificUsers extends Rule
      */
     public function isValid()
     {
-        //dd($this->user->getDn());
         return true;
-        /*return $this->user->groups()->contains([
-            'John A. Zoidberg'
-        ]);*/
+//        return $this->user->groups()->recursive()->exists(
+//            'cn=admin_staff,ou=people,dc=planetexpress,dc=com'
+//        );
     }
 }

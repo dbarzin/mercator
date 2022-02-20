@@ -229,4 +229,5 @@ return [
     ],
 
     'cartographers' => env('CARTOGRAPHERS', false),
+    'ldap_type' => env('LDAP_TYPE', 'AD'),
 ];

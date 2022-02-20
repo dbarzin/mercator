@@ -18,6 +18,10 @@ class OnlyOrgUnitUser implements Scope
      */
     public function apply(Builder $query, Model $model)
     {
+        if(!env('LDAP_SCOPE')) {
+            return;
+        }
+
         $query->in(env('LDAP_SCOPE'));
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Ldap\Scopes\OnlyOrgUnitUser;
-use LdapRecord\Models\OpenLDAP\User as LDAPUser;
+use App\Ldap\LdapUser;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
@@ -19,7 +19,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        //MApplication::class => MApplicationPolicy::class,
     ];
 
     /**
@@ -36,9 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         // LDAP Restrictions on connection
-        LDAPUser::addGlobalScope(
-            new OnlyOrgUnitUser
-        );
+        LDAPuser::addGlobalScope(new OnlyOrgUnitUser);
 
         /********************************************************
          *  Register one Gate per model for cartographers.
