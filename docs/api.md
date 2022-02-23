@@ -1,6 +1,6 @@
 ## API
 
-La cartographie peut être modifiés ou mise à jour via une REST API.
+La cartographie peut être modifiée ou mise à jour via une REST API.
 
 Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer)) 
 est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
