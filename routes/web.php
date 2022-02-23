@@ -2,6 +2,7 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\API;
 
 Route::redirect('/', '/login');
 
@@ -278,6 +279,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('doc/about', function () {
         return view('doc/about');
     });
+
 });
 
 // Profile

@@ -42,7 +42,6 @@ class CertificateController extends Controller
     public function store(StoreCertificateRequest $request)
     {
         $certificate = Certificate::create($request->all());
-
         $certificate->logical_servers()->sync($request->input('logical_servers', []));
         $certificate->applications()->sync($request->input('applications', []));
 
@@ -68,7 +67,6 @@ class CertificateController extends Controller
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
         $certificate->update($request->all());
-
         $certificate->logical_servers()->sync($request->input('logical_servers', []));
         $certificate->applications()->sync($request->input('applications', []));
 

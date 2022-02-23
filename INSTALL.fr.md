@@ -129,6 +129,21 @@ L'application est accessible à l'URL [http://127.0.0.1:8000]
     utilisateur : admin@admin.com
     mot de passe : password
 
+## Configurer Passport
+
+Pour l'API JSON, il faut installer Laravel Passport
+
+    php artisan passport:install
+
+Générer les clés de l'API
+
+    php artisan passport:keys
+
+Changer les permission d'accès à la clé
+
+    sudo chown www-data:www-data storage/oauth-*.key
+    sudo chmod 600 storage/oauth-*.key
+
 ## Configuration du mail
 
 Si vous souhaitez envoyer des mails de notification depuis Mercator.

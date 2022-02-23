@@ -39,4 +39,18 @@ class Handler extends ExceptionHandler
     {
         parent::report($exception);
     }
+
+    /**
+     * Register new exceptions
+     */
+    public function register()
+    {
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is("api/*")) {
+                return response()->json([
+                    "message" => "Ressource not found"
+                ], 404);
+            }
+        });
+    }    
 }

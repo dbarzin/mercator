@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\WifiTerminal;
+
+use App\Http\Requests\StoreWifiTerminalRequest;
+use App\Http\Requests\UpdateWifiTerminalRequest;
+use App\Http\Requests\MassDestroyWifiTerminalRequest;
+use App\Http\Resources\Admin\WifiTerminalResource;
+
+use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
+
+class WifiTerminalController extends Controller
+{
+    public function index()
+    {
+    abort_if(Gate::denies('wifiterminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+    $wifiterminals = WifiTerminal::all();
+
+    return response()->json($wifiterminals);
+    }
+
+    public function store(StoreWifiTerminalRequest $request)
+    {
+        abort_if(Gate::denies('wifiterminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $wifiterminal = WifiTerminal::create($request->all());
+        // syncs
+        // $wifiterminal->roles()->sync($request->input('roles', []));
+
+        return response()->json($wifiterminal, 201);
+    }
+
+    public function show(WifiTerminal $wifiterminal)
+    {
+        abort_if(Gate::denies('wifiterminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return new WifiTerminalResource($wifiterminal);
+    }
+
+    public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiterminal)
+    {     
+        abort_if(Gate::denies('wifiterminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $wifiterminal->update($request->all());
+        // syncs
+        // $wifiterminal->roles()->sync($request->input('roles', []));
+
+        return response()->json();
+    }
+
+    public function destroy(WifiTerminal $wifiterminal)
+    {
+        abort_if(Gate::denies('wifiterminal_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $wifiterminal->delete();
+
+        return response()->json();
+    }
+
+    public function massDestroy(MassDestroyWifiTerminalRequest $request)
+    {
+        WifiTerminal::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+}
+

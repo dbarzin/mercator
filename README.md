@@ -29,6 +29,7 @@ and is part of a global risk management and a global risk management approach.
 - Draw mapping diagrams
 - Compute compliance levels
 - Extraction in Excel, CSV, PDF ... of all lists
+- REST API with JSON
 - Multi-user with role management
 - Multilingual
 
