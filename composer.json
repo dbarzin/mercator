@@ -19,7 +19,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
-        "laravel/passport": "^10.0",
+        "laravel/passport": "^10.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "phpoffice/phpspreadsheet": "^1.14",
