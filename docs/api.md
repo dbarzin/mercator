@@ -95,6 +95,15 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
+### Droits d'accès
+
+Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
+accédés par l'API. 
+
+Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+l'entête "Authorization" de la requête de l'API.
+
 ### Exemples
 
 Voici quelques exemples d'utilisation de l'API avec PHP :
@@ -113,8 +122,8 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => http_build_query(
-            array("email"=>"admin@admin.com",
-                "password" => "password")),
+            array("email" => "admin@admin.com",
+                  "password" => "password")),
         CURLOPT_HTTPHEADER => array(
             "accept: application/json",
             "content-type: application/x-www-form-urlencoded",
