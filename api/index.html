@@ -77,6 +77,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
@@ -245,6 +247,12 @@ et permet d'interagir avec les services web RESTful. </p>
 </tbody>
 </table>
 <p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
+<h3 id="droits-dacces">Droits d'accès</h3>
+<p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
+accédés par l'API. </p>
+<p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+l'entête "Authorization" de la requête de l'API.</p>
 <h3 id="exemples">Exemples</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
 <h4 id="authentification">Authentification</h4>
@@ -259,8 +267,8 @@ et permet d'interagir avec les services web RESTful. </p>
         CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST =&gt; &quot;POST&quot;,
         CURLOPT_POSTFIELDS =&gt; http_build_query(
-            array(&quot;email&quot;=&gt;&quot;admin@admin.com&quot;,
-                &quot;password&quot; =&gt; &quot;password&quot;)),
+            array(&quot;email&quot; =&gt; &quot;admin@admin.com&quot;,
+                  &quot;password&quot; =&gt; &quot;password&quot;)),
         CURLOPT_HTTPHEADER =&gt; array(
             &quot;accept: application/json&quot;,
             &quot;content-type: application/x-www-form-urlencoded&quot;,
