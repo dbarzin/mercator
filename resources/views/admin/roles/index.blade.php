@@ -49,8 +49,13 @@
                                 {{ $role->title ?? '' }}
                             </td>
                             <td>
-                                @foreach($role->permissions as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                @foreach($role->sortedPerms as $perm)
+                                    <div class="d-inline-block col-sm-12 col-lg-5">
+                                        <span class="font-weight-bold">{{ ucwords($perm['name']) }} - </span>
+                                        @foreach($perm['actions'] as $action)
+                                            <span class="badge badge-info">{{ ucfirst($action[1]) }}@if(!$loop->last), @endif</span>
+                                        @endforeach
+                                    </div>
                                 @endforeach
                             </td>
                             <td>

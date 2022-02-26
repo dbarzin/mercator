@@ -10,17 +10,19 @@ use App\Permission;
 use App\Role;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Collection;
 
 class RolesController extends Controller
 {
     /**
      * Triage des permissions pour un meilleur affichage dans la vue Blade
      *
+     * @param Collection $permissions Tableau des permissions sur lesquelles le triage sera effectué
+     *
      * @return array Tableau avec les permissions triées
      */
-    public function getSortedPerms() : array
+    public function getSortedPerms(Collection $permissions) : array
     {
-        $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
         $permissions_sorted = [];
 
         foreach ($permissions as $id => $permission) {
@@ -48,6 +50,10 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->sortBy('title');
+        // Triage des permissions pour chaque rôles
+        foreach ($roles as $role) {
+            $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
+        }
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -56,7 +62,9 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-		$permissions_sorted = $this->getSortedPerms();
+        // Chargement de toutes les permissions et triage
+        $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
+		$permissions_sorted = $this->getSortedPerms($permissions);
 
         return view('admin.roles.create', compact('permissions_sorted'));
     }
@@ -73,7 +81,10 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-	    $permissions_sorted = $this->getSortedPerms();
+        // Chargement de toutes les permissions et triage
+        $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
+	    $permissions_sorted = $this->getSortedPerms($permissions);
+        // Chargement des permissions du rôle
         $role->load('permissions');
 
         return view('admin.roles.edit', compact('permissions_sorted', 'role'));
@@ -92,6 +103,7 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role->load('permissions');
+        $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
 
         return view('admin.roles.show', compact('role'));
     }
