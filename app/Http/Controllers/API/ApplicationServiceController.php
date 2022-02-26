@@ -31,7 +31,7 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('applicationservice_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservice = ApplicationService::create($request->all());
+        $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
 
@@ -49,7 +49,7 @@ class ApplicationServiceController extends Controller
     {     
         abort_if(Gate::denies('applicationservice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservice->update($request->all());
+        $applicationService->update($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
 

@@ -21,6 +21,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - Revoir les pages de gestion des droits d'accès
 - Améliorer la documentation, notemment les niveaux de maturité pour chaque objet.
 - Mise à jour du framework Laravel vers la version suivnate 
+- Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 
 ## Petites évolutions
 
