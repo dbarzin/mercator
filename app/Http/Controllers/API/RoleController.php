@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Roles;
+use App\Role;
 
-use App\Http\Requests\StoreRolesRequest;
-use App\Http\Requests\UpdateRolesRequest;
-use App\Http\Requests\MassDestroyRolesRequest;
-use App\Http\Resources\Admin\RolesResource;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
+use App\Http\Requests\MassDestroyRoleRequest;
+use App\Http\Resources\Admin\RoleResource;
 
 use Gate;
 use App\Http\Controllers\Controller;
@@ -16,60 +16,53 @@ use Illuminate\Http\Response;
 
 use Illuminate\Support\Facades\Log;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     public function index()
     {
     abort_if(Gate::denies('roles_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $roless = Roles::all();
+    $roless = Role::all();
 
     return response()->json($roless);
     }
 
-    public function store(StoreRolesRequest $request)
+    public function store(StoreRoleRequest $request)
     {
         abort_if(Gate::denies('roles_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Roles::create($request->all());
+        $roles = Role::create($request->all());
         // syncs
         // $roles->roles()->sync($request->input('roles', []));
 
         return response()->json($roles, 201);
     }
 
-    public function show(Roles $roles)
+    public function show(Role $role)
     {
         abort_if(Gate::denies('roles_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RolesResource($roles);
+        return new RoleResource($role);
     }
 
-    public function update(UpdateRolesRequest $request, Roles $roles)
+    public function update(UpdateRoleRequest $request, Role $role)
     {     
         abort_if(Gate::denies('roles_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles->update($request->all());
+        $role->update($request->all());
         // syncs
         // $roles->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(Roles $roles)
+    public function destroy(Role $role)
     {
         abort_if(Gate::denies('roles_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles->delete();
+        $role->delete();
 
         return response()->json();
-    }
-
-    public function massDestroy(MassDestroyRolesRequest $request)
-    {
-        Roles::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
     }
 
 }

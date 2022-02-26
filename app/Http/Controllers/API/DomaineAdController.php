@@ -22,43 +22,43 @@ class DomaineAdController extends Controller
     {
     abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $domaineads = DomaineAd::all();
+    $domaineAd = DomaineAd::all();
 
-    return response()->json($domaineads);
+    return response()->json($domaineAd);
     }
 
     public function store(StoreDomaineAdRequest $request)
     {
         abort_if(Gate::denies('domaine_ad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domainead = DomaineAd::create($request->all());
+        $domaineAd = DomaineAd::create($request->all());
         $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
 
-        return response()->json($domainead, 201);
+        return response()->json($domaineAd, 201);
     }
 
-    public function show(DomaineAd $domainead)
+    public function show(DomaineAd $domaineAd)
     {
         abort_if(Gate::denies('domaine_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DomaineAdResource($domainead);
+        return new DomaineAdResource($domaineAd);
     }
 
-    public function update(UpdateDomaineAdRequest $request, DomaineAd $domainead)
+    public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
     {     
         abort_if(Gate::denies('domaine_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domainead->update($request->all());
+        $domaineAd->update($request->all());
         $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
 
         return response()->json();
     }
 
-    public function destroy(DomaineAd $domainead)
+    public function destroy(DomaineAd $domaineAd)
     {
         abort_if(Gate::denies('domaine_ad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domainead->delete();
+        $domaineAd->delete();
 
         return response()->json();
     }

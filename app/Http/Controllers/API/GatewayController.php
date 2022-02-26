@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Gateway;
+use App\Subnetwork;
 
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;

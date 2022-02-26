@@ -31,11 +31,11 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalserver = LogicalServer::create($request->all());
+        $logicalServer = LogicalServer::create($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
 
-        return response()->json($logicalserver, 201);
+        return response()->json($logicalServer, 201);
     }
 
     public function show(LogicalServer $logicalserver)
@@ -45,11 +45,11 @@ class LogicalServerController extends Controller
         return new LogicalServerResource($logicalserver);
     }
 
-    public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalserver)
+    public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)
     {     
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalserver->update($request->all());
+        $logicalServer->update($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
 
