@@ -22,18 +22,25 @@
             </div>
             <div class="form-group">
                 <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
-
                 <div class="row">
-
                     @foreach($permissions_sorted as $permissions)
                         <div class="col-md-4 mb-4">
-                            <h2>{{ $permissions['name'] }}</h2>
-                            @foreach($permissions['actions'] as $action)
-                                <div class="form-check form-switch form-switch-lg">
-                                    <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="flexSwitchCheckChecked" {{ (in_array($action[0], old('permissions', [])) || $role->permissions->contains($action[0])) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">{{ $action[1] }}</label>
+                            <h3 class="accordion">{{ ucwords($permissions['name']) }}</h3>
+                            <div class="panel">
+                                <div class="permission-list">
+                                    @foreach($permissions['actions'] as $action)
+                                        <div class="form-check form-switch form-switch-lg">
+                                            <input class="form-check-input" data-check="{{ $permissions['name'] }}" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="{{ 'perm_'.$action[0] }}" {{ (in_array($action[0], old('permissions', [])) || $role->permissions->contains($action[0])) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="{{ 'perm_'.$action[0] }}">{{ ucfirst($action[1]) }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
+                                @if(count($permissions['actions']) > 1)
+                                    <div class="check-all-wrapper">
+                                        <button class="btn btn-primary" id="{{ $permissions['name'] }}">{{ trans('cruds.role.check_all') }}</button>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>

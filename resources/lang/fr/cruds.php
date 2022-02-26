@@ -835,10 +835,12 @@ return [
             "permissions" => "Permissions",
             "permissions_helper" => "",
             "title" => "Title",
-            "title_helper" => ""
+            "title_helper" => "",
+            "id" => "Id"
         ],
         "title" => "Rôles",
-        "title_singular" => "Rôle"
+        "title_singular" => "Rôle",
+        "check_all" => "Tout cocher"
     ],
     "router" => [
         "description" => "Composant gérant les connexions entre différents réseaux.",

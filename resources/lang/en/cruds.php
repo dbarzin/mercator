@@ -830,10 +830,12 @@ return [
             "permissions" => "Permissions",
             "permissions_helper" => "",
             "title" => "title",
-            "title_helper" => ""
+            "title_helper" => "",
+            "id" => "Id"
         ],
         "title" => "Roles",
-        "title_singular" => "Role"
+        "title_singular" => "Role",
+        "check_all" => "Check all"
     ],
     "router" => [
         "description" => "Component managing connections between different networks.",
