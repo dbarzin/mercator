@@ -30,14 +30,14 @@
                                 <div class="permission-list">
                                     @foreach($permissions['actions'] as $action)
                                         <div class="form-check form-switch form-switch-lg">
-                                            <input class="form-check-input" data-check="{{ $permissions['name'] }}" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="{{ 'perm_'.$action[0] }}" {{ (in_array($action[0], old('permissions', [])) || $role->permissions->contains($action[0])) ? 'checked' : '' }}>
+                                            <input class="form-check-input" data-check="{{ str_replace(' ', '_', $permissions['name']) }}" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="{{ 'perm_'.$action[0] }}" {{ (in_array($action[0], old('permissions', [])) || $role->permissions->contains($action[0])) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="{{ 'perm_'.$action[0] }}">{{ ucfirst($action[1]) }}</label>
                                         </div>
                                     @endforeach
                                 </div>
                                 @if(count($permissions['actions']) > 1)
                                     <div class="check-all-wrapper">
-                                        <button class="btn btn-primary" id="{{ $permissions['name'] }}">{{ trans('cruds.role.check_all') }}</button>
+                                        <button class="btn btn-primary" id="{{ str_replace(' ', '_', $permissions['name']) }}">{{ trans('cruds.role.check_all') }}</button>
                                     </div>
                                 @endif
                             </div>
