@@ -64,6 +64,10 @@ class StoreMApplicationRequest extends FormRequest
             'cartographers' => [
                 'array',
             ],
+            'update_date' => [
+                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'after:install_date',
+            ]
         ];
     }
 }

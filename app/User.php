@@ -90,7 +90,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
-    public function isAdmin(): bool
+    public function getIsAdminAttribute(): bool
     {
         return $this->roles()->where('id', 1)->exists();
     }

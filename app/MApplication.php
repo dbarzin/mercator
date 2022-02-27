@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Auditable;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -93,6 +94,8 @@ class MApplication extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'install_date',
+        'update_date'
     ];
 
     protected $fillable = [
@@ -116,17 +119,9 @@ class MApplication extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'install_date',
+        'update_date'
     ];
-
-    public function applicationSourceFluxes()
-    {
-        return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
-    }
-
-    public function applicationDestFluxes()
-    {
-        return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
-    }
 
     /**
      * Vérifie que l'utilisateur passé en paramètre est cartographe de cette application.
@@ -138,6 +133,42 @@ class MApplication extends Model
         return $this->cartographers()
             ->where('user_id', $user->id)
             ->exists();
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getInstallDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setInstallDateAttribute($value)
+    {
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getUpdateDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setUpdateDateAttribute($value)
+    {
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function applicationSourceFluxes()
+    {
+        return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
+    }
+
+    public function applicationDestFluxes()
+    {
+        return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
     }
 
     public function entities()

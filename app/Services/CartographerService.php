@@ -33,7 +33,7 @@ class CartographerService {
         // Maybe there's a way to TypeHint the authenticated user ? (\Illuminate\Contracts\Auth\Authenticatable user)
         $currentUser = Auth::user();
         // On ne filtre pas pour les admins
-        if(!$this->active || $currentUser->isAdmin()) {
+        if(!$this->active || $currentUser->getIsAdminAttribute()) {
             return $applications->sortBy('name')->pluck('name', 'id');
         }
 
@@ -67,7 +67,7 @@ class CartographerService {
         foreach ($application->cartographers as $cartographer)
         {
             // Pas besoin de le mettre sur les utilisateurs étant administrateurs
-            if ($cartographer->isAdmin())
+            if ($cartographer->getIsAdminAttribute())
                 continue;
 
             $cartographer->addRole($role);

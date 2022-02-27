@@ -97,7 +97,11 @@ return [
             "functional_referent" => "Functional referent",
             "functional_referent_helper" => "",
             "editor" => "Editor",
-            "editor_helper" => "Application's editor"
+            "editor_helper" => "Application's editor",
+            "install_date" => "Installation date",
+            "install_date_helper" => "",
+            "update_date" => "Last update",
+            "update_date_helper" => "",
         ],
         "title" => "Applications",
         "title_short" => "Applications",

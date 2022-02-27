@@ -97,7 +97,11 @@ return [
             "functional_referent" => "Référent fonctionnel",
             "functional_referent_helper" => "",
             "editor" => "Éditeur",
-            "editor_helper" => "L'éditeur de l'application"
+            "editor_helper" => "L'éditeur de l'application",
+            "install_date" => "Date d'installation",
+            "install_date_helper" => "",
+            "update_date" => "Dernière de dernière mise à jour",
+            "update_date_helper" => "",
         ],
         "title" => "Applications",
         "title_short" => "Applications",

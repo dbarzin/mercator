@@ -61,6 +61,13 @@ class UpdateMApplicationRequest extends FormRequest
             'logical_servers' => [
                 'array',
             ],
+            'cartographers' => [
+                'array',
+            ],
+            'update_date' => [
+                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'after:install_date',
+            ]
         ];
     }
 }

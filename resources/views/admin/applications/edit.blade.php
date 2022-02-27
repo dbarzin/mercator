@@ -255,14 +255,27 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="form-group">
+                    <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
+                    <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $application->install_date) }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
+                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('end_validity', $application->update_date) }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
+                </div>
             </div>
         </div>
 
-
           <div class="row">
             <div class="col-sm">
-
                     <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
