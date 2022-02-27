@@ -259,3 +259,8 @@ html {
 .permission-list, .check-all-wrapper {
     width: 50%;
 }
+
+.help-block {
+    color: #7C123E;
+    font-size: 0.7rem;
+}
