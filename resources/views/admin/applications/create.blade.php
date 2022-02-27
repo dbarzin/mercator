@@ -187,12 +187,9 @@
                 @endif
                 <div class="form-group">
                     <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
-                        @if (!$cartographers_list->contains(old('cartographers')))
-                            <option> {{ old('cartographers') }}</option>'
-                        @endif
-                        @foreach($cartographers_list as $key => $t)
-                            <option {{ old('cartographer') == $t ? 'selected' : '' }} value="{{$key}}">{{$t}}</option>
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
+                        @foreach($cartographers_list as $key => $cartographer)
+                            <option value="{{ $key }}" {{ in_array($key, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('cartographers'))
