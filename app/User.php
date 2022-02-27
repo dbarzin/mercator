@@ -90,9 +90,40 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
-    public function getIsAdminAttribute()
+    public function isAdmin(): bool
     {
         return $this->roles()->where('id', 1)->exists();
+    }
+
+    /**
+     * Permet de check si un utilisateur a un role
+     *
+     * @param String|Role $role
+     * @return bool
+     */
+    public function hasRole(mixed $role) : bool
+    {
+        if ($role instanceof Role) {
+            return $this->roles()->get()->contains($role);
+        }
+        if (is_string($role)) {
+            return $this->roles()->get()->contains(Role::whereTitle($role)->first());
+        }
+        return false;
+    }
+
+    /**
+     * Permet d'ajouter un role à l'utilisateur courant
+     *
+     * @param Role $role
+     * @return void
+     */
+    public function addRole(Role $role) : void
+    {
+        if ($this->hasRole($role))
+            return;
+
+        $this->roles()->save($role);
     }
 
     public function getEmailVerifiedAtAttribute($value)
