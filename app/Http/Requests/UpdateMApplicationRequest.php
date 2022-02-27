@@ -64,8 +64,13 @@ class UpdateMApplicationRequest extends FormRequest
             'cartographers' => [
                 'array',
             ],
+            'install_date' => [
+                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'nullable',
+            ],
             'update_date' => [
                 'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'nullable',
                 'after:install_date',
             ]
         ];

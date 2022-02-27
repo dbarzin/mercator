@@ -93,9 +93,7 @@ class MApplication extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
-        'install_date',
-        'update_date'
+        'deleted_at'
     ];
 
     protected $fillable = [

@@ -99,7 +99,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended" for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
+                    <label for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
                     <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
                         @if (!$referent_list->contains(old('functional_referent')))
                             <option> {{ old('functional_referent') }}</option>'
@@ -176,7 +176,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label class="recommended" for="editor">{{ trans('cruds.application.fields.editor') }}</label>
+                    <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
                     <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
                         @if (!$editor_list->contains(old('editor')))
                             <option> {{ old('editor') }}</option>'

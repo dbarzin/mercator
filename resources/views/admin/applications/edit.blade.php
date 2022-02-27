@@ -100,7 +100,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended" for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
+                    <label for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
                     <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
                         @if (!$referent_list->contains(old('functional_referent')))
                             <option> {{ old('functional_referent') }}</option>'
@@ -176,7 +176,7 @@
                 @endif
 
                 <div class="form-group">
-                    <label class="recommended" for="editor">{{ trans('cruds.application.fields.editor') }}</label>
+                    <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
                     <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="referent">
                         @if (!$editor_list->contains(old('editor')))
                             <option> {{ old('editor') }}</option>'
@@ -268,7 +268,7 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('end_validity', $application->update_date) }}">
+                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $application->update_date) }}">
                     <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
                 </div>
             </div>
