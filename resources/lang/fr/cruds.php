@@ -93,7 +93,11 @@ return [
             "users" => "Utilisateurs",
             "users_helper" => "Volume d’utilisateurs et profils",
             "version" => "Version",
-            "version_helper" => "Version de l'application"
+            "version_helper" => "Version de l'application",
+            "functional_referent" => "Référent fonctionnel",
+            "functional_referent_helper" => "",
+            "editor" => "Éditeur",
+            "editor_helper" => "L'éditeur de l'application"
         ],
         "title" => "Applications",
         "title_short" => "Applications",

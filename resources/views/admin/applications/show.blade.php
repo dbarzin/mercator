@@ -86,7 +86,7 @@
                         <td colspan="3">
                             {{ $application->entity_resp->name ?? '' }}
                         </td>
-                        <th>
+                        <th colspan="1">
                             {{ trans('cruds.application.fields.type') }}
                         </th>
                         <td colspan="3">
@@ -108,17 +108,31 @@
                         <th colspan="1">
                             {{ trans('cruds.application.fields.users') }}
                         </th>
-                        <td colspan="2">
+                        <td colspan="3">
                             {{ $application->users }}
                         </td>
                         <th colspan="1">
                             {{ trans('cruds.application.fields.cartographers') }}
                         </th>
-                        <td colspan="4">
+                        <td colspan="3">
                             @foreach($application->cartographers as $cartographer)
                                     {{ $cartographer->name }} @if(!$loop->last)-@endif
                             @endforeach
                         </td>
+                    <tr>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.functional_referent') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $application->functional_referent }}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.editor') }}
+                        </th>
+                        <td colspan="7">
+                            {{ $application->editor }}
+                        </td>
+                    </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.application.fields.security_need') }}

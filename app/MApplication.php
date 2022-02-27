@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $description
  * @property int|null $security_need_c
  * @property string|null $responsible
+ * @property string|null $functional_referent
+ * @property string|null $editor
  * @property string|null $type
  * @property string|null $technology
  * @property string|null $external
@@ -84,6 +86,7 @@ class MApplication extends Model
         'name',
         'description',
         'responsible',
+        'functional_referent'
     ];
 
     protected $dates = [
@@ -98,6 +101,8 @@ class MApplication extends Model
         'description',
         'entity_resp_id',
         'responsible',
+        'functional_referent',
+        'editor',
         'technology',
         'documentation',
         'type',
