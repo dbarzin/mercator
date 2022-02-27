@@ -98,6 +98,23 @@
                     <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                 </div>
 
+                <div class="form-group">
+                    <label class="recommended" for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
+                        @if (!$referent_list->contains(old('functional_referent')))
+                            <option> {{ old('functional_referent') }}</option>'
+                        @endif
+                        @foreach($referent_list as $t)
+                            <option {{ old('functional_referent') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('functional_referent'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('functional_referent') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.functional_referent_helper') }}</span>
+                </div>
             </div>
             <div class="col-sm">
                 <div class="form-group">
@@ -157,9 +174,26 @@
                     <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
                 </div>
                 @endif
+
+                <div class="form-group">
+                    <label class="recommended" for="editor">{{ trans('cruds.application.fields.editor') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
+                        @if (!$editor_list->contains(old('editor')))
+                            <option> {{ old('editor') }}</option>'
+                        @endif
+                        @foreach($editor_list as $t)
+                            <option {{ old('editor') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('editor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('editor') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
+                </div>
             </div>
             <div class="col-sm">
-
                 <div class="form-group">
                     <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
                     <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">

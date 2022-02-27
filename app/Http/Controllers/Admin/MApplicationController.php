@@ -60,6 +60,8 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
@@ -77,6 +79,8 @@ class MApplicationController extends Controller
                 'users_list',
                 'external_list',
                 'responsible_list',
+                'referent_list',
+                'editor_list',
                 'cartographers_list'
             )
         );
@@ -118,7 +122,9 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
-	    $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
+        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
+        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
 
@@ -138,6 +144,8 @@ class MApplicationController extends Controller
                 'users_list',
                 'external_list',
                 'responsible_list',
+                'referent_list',
+                'editor_list',
 	            'cartographers_list'
             )
         );
