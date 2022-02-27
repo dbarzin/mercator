@@ -45,7 +45,7 @@ class AuthServiceProvider extends ServiceProvider
          */
         Gate::before(function (User $user, $ability) {
             // Si c'est un admin, on lui autorise toutes les applications
-            if ($user->getIsAdminAttribute() || !config('app.cartographers', false)) {
+            if ($user->isAdmin() || !config('app.cartographers', false)) {
                 return true;
             }
         });

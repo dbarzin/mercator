@@ -12,6 +12,7 @@ use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
+use App\Services\CartographerService;
 use App\User;
 use App\Process;
 // CoreUI Gates
@@ -22,6 +23,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
 {
+    protected CartographerService $cartographerService;
+
+    /**
+     * Automatic Injection for Service
+     *
+     * @return void
+     */
+    public function __construct(CartographerService $cartographerService) {
+        $this->cartographerService = $cartographerService;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -35,7 +47,6 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Pour le cartographe : filtrer sur ceux qui l'a créé ?
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
@@ -80,6 +91,9 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
+
+        // Attribution du role pour les nouveaux cartographes
+        $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
@@ -138,6 +152,9 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
 	    $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
+
+        // Attribution du role pour les nouveaux cartographes
+        $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
