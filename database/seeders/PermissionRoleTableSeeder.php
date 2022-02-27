@@ -30,5 +30,17 @@ class PermissionRoleTableSeeder extends Seeder
                     );
         });
         Role::findOrFail(3)->permissions()->sync($auditor_permissions);
+
+        $cartographer_permissions = $admin_permissions->filter(function ($permission) {
+           return
+               str_starts_with($permission->title, 'papplication_') ||
+               str_starts_with($permission->title, 'm_application_') ||
+               str_starts_with($permission->title, 'application_service_') ||
+               str_starts_with($permission->title, 'database_') ||
+               str_starts_with($permission->title, 'flux_') ||
+               str_starts_with($permission->title, 'application_block_') ||
+               str_starts_with($permission->title, 'application_module_');
+        });
+        Role::findOrFail(4)->permissions()->sync($cartographer_permissions);
     }
 }

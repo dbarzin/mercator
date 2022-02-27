@@ -59,6 +59,7 @@ class CartographerService {
             return false;
         }
 
+        // On ne veut pas le créer s'il existe pas
         if (!($role = Role::getRoleByTitle('Cartographer')) && !($role = Role::getRoleByTitle('Cartographe'))) {
             return false;
         }
