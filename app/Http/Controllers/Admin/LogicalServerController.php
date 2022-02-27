@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Flux;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
@@ -9,11 +10,23 @@ use App\Http\Requests\UpdateLogicalServerRequest;
 use App\LogicalServer;
 use App\MApplication;
 use App\PhysicalServer;
+use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
 {
+    protected CartographerService $cartographerService;
+
+    /**
+     * Automatic Injection for Service
+     *
+     * @return void
+     */
+    public function __construct(CartographerService $cartographerService) {
+        $this->cartographerService = $cartographerService;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -28,7 +41,9 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::with('cartographers')->get();
+        // Filtre sur les cartographes si nécessaire
+        $applications = $this->cartographerService->filterOnCartographers($applications);
 
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
@@ -53,7 +68,9 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::with('cartographers')->get();
+        // Filtre sur les cartographes si nécessaire
+        $applications = $this->cartographerService->filterOnCartographers($applications);
 
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
