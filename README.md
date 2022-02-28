@@ -76,5 +76,5 @@ All notable changes to this project are [documented](https://github.com/dbarzin/
 
 ## License
 
-Mercator is an open source software distributed under [GPL](https://www.gnu.org/licenses/licenses.fr.html).
+Mercator is an open source software distributed under [GPL](https://www.gnu.org/licenses/licenses.html).
 
