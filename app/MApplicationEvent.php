@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MApplicationLog extends Model
+class MApplicationEvent extends Model
 {
     use HasFactory, SoftDeletes;
 
-	public $table = 'm_application_logs';
+	public $table = 'm_application_events';
 
 	protected $dates = [
 		'created_at',

@@ -255,6 +255,29 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
+                <div class="form-group">
+                    <label class="recommended" for="major_event">{{ trans('cruds.application.fields.major_events') }}</label>
+
+                    <div class="row">
+                        <div class="col-md-12"><strong>{{ trans('cruds.application.fields.major_events_last') }}</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid autem beatae doloribus et iure officia quas recusandae. Commodi culpa debitis id inventore natus nesciunt nostrum numquam quaerat rerum unde?</div>
+                    </div>
+                    <button class="btn btn-info my-3">
+                        {{ trans('cruds.application.fields.major_events_button') }}
+                    </button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea placeholder="{{ trans('cruds.application.fields.major_events_placeholder') }}" class="form-control {{ $errors->has('major_event') ? 'is-invalid' : '' }}" type="text" name="major_event" id="major_event" value="{{ old('major_event', $application->major_event) }}"></textarea>
+                            <button class="btn btn-danger my-2">{{ trans('cruds.application.fields.major_events_add') }}</button>
+                        </div>
+
+                    </div>
+                    @if($errors->has('major_events'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('major_event') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.major_events_helper') }}</span>
+                </div>
             </div>
         </div>
         <div class="row">
