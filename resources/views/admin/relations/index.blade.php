@@ -57,8 +57,10 @@
                             <td>
 
                             </td>
-                            <td>
-                                {{ $relation->name ?? '' }}
+			    <td>
+				<a href="{{ route('admin.relations.show', $relation->id) }}">
+				{{ $relation->name ?? '' }}
+				</a>
                             </td>
                             <td>
                                 {{ $relation->type ?? '' }}
