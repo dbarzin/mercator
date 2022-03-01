@@ -261,7 +261,7 @@
                     <div class="row">
                         <div class="col-md-12"><strong>{{ trans('cruds.application.fields.major_events_last') }}</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid autem beatae doloribus et iure officia quas recusandae. Commodi culpa debitis id inventore natus nesciunt nostrum numquam quaerat rerum unde?</div>
                     </div>
-                    <button class="btn btn-info my-3">
+                    <button class="btn btn-info my-3 major_events_button">
                         {{ trans('cruds.application.fields.major_events_button') }}
                     </button>
                     <div class="row">
@@ -491,6 +491,27 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+    $('.major_events_button').click(function(e) {
+        e.preventDefault()
+        Swal.fire({
+            title: 'Évènements',
+            icon: 'info',
+            html:
+                '<ul>' +
+                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
+                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
+                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
+                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
+                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
+                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
+                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
+                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
+                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
+                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
+                '</ul>',
+            showCloseButton: true,
+        })
+    })
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
