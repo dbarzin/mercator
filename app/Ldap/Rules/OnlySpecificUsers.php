@@ -13,9 +13,9 @@ class OnlySpecificUsers extends Rule
      */
     public function isValid()
     {
-        return true;
-//        return $this->user->groups()->recursive()->exists(
-//            'cn=admin_staff,ou=people,dc=planetexpress,dc=com'
-//        );
+//        return true;
+        return $this->user->groups()->recursive()->exists(
+            'GG_MERCATOR'
+        );
     }
 }
