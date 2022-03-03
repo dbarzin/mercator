@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Admin\MApplicationLogController;
 use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -212,5 +213,10 @@ class MApplication extends Model
 	public function cartographers()
 	{
 		return $this->belongsToMany(User::class, 'cartographer_m_application');
+	}
+
+	public function events()
+	{
+		return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');
 	}
 }

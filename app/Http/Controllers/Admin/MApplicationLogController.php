@@ -12,7 +12,6 @@ use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
-use App\MApplicationEvent;
 use App\Services\CartographerService;
 use App\User;
 use App\Process;
@@ -22,19 +21,8 @@ use Gate;
 use Illuminate\Support\Facades\Gate as LaravelGate;
 use Symfony\Component\HttpFoundation\Response;
 
-class MApplicationController extends Controller
+class MApplicationLogController extends Controller
 {
-    protected CartographerService $cartographerService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService) {
-        $this->cartographerService = $cartographerService;
-    }
-
     public function index()
     {
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -127,7 +115,7 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers', 'events');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
 
         return view(
             'admin.applications.edit',

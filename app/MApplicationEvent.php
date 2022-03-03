@@ -26,4 +26,9 @@ class MApplicationEvent extends Model
 		'updated_at',
 		'deleted_at',
 	];
+
+	public function application()
+	{
+		return $this->belongsTo(MApplication::class, 'm_application_id');
+	}
 }

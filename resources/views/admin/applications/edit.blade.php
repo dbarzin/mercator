@@ -261,6 +261,11 @@
                     <div class="row">
                         <div class="col-md-12"><strong>{{ trans('cruds.application.fields.major_events_last') }}</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid autem beatae doloribus et iure officia quas recusandae. Commodi culpa debitis id inventore natus nesciunt nostrum numquam quaerat rerum unde?</div>
                     </div>
+                    @foreach($application->events as $event)
+                        @php
+                            var_dump($event->message)
+                        @endphp
+                    @endforeach
                     <button class="btn btn-info my-3 major_events_button">
                         {{ trans('cruds.application.fields.major_events_button') }}
                     </button>
