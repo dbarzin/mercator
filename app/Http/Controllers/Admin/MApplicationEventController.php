@@ -97,10 +97,11 @@ class MApplicationEventController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\MApplicationEvent  $mApplicationEvent
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(MApplicationEvent $mApplicationEvent)
     {
-        //
+	    $mApplicationEvent->delete();
+	    return response()->json();
     }
 }

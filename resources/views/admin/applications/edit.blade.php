@@ -486,7 +486,7 @@ $(document).ready(function () {
         var events = swalHtml;
         let ret = '<ul>';
         events.forEach (function(event) {
-            ret += '<li style="text-align: left; margin-bottom: 20px;">'+event.message+'</br>';
+            ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
             ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
         });
         ret += '</ul>';
@@ -500,6 +500,39 @@ $(document).ready(function () {
             icon: 'info',
             html: makeHtmlForSwal(),
             showCloseButton: true,
+            didOpen(popup) {
+                $('.delete_event').on('click', function(e) {
+                    e.preventDefault();
+                    let event_id = $(this).parent().data('id');
+                    var that = $(this);
+                    if (event_id) {
+
+                        var getUrl = window.location;
+                        var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+                        $.ajax({
+                            url: baseUrl + "/application-events/" + event_id,
+                            type: "delete",
+                            dataType: 'json',
+                            data: {
+                                "event_id": event_id,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(data){
+                                console.log(data);
+                                that.parent().remove();
+                                alert('Evènement supprimé !');
+                            },
+                            error: function(){
+                                alert('Une erreur est survenue');
+                            }
+                        })
+
+                    } else {
+                        return;
+                    }
+                });
+            }
         })
     })
 
