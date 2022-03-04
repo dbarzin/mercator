@@ -78,6 +78,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('application-services', Admin\ApplicationServiceController::class);
     Route::delete('application-services-destroy', [Admin\ApplicationServiceController::class,'massDestroy'])->name('application-services.massDestroy');
 
+    // Application Events
+    Route::resource('application-events', Admin\MApplicationEventController::class);
+
     // Databases
     Route::resource('databases', Admin\DatabaseController::class);
     Route::delete('databases-destroy', [Admin\DatabaseController::class,'massDestroy'])->name('databases.massDestroy');

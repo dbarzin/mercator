@@ -256,31 +256,16 @@
                     <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="recommended" for="major_event">{{ trans('cruds.application.fields.major_events') }}</label>
-
-                    <div class="row">
-                        <div class="col-md-12"><strong>{{ trans('cruds.application.fields.major_events_last') }}</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid autem beatae doloribus et iure officia quas recusandae. Commodi culpa debitis id inventore natus nesciunt nostrum numquam quaerat rerum unde?</div>
-                    </div>
-                    @foreach($application->events as $event)
-                        @php
-                            var_dump($event->message)
-                        @endphp
-                    @endforeach
-                    <button class="btn btn-info my-3 major_events_button">
-                        {{ trans('cruds.application.fields.major_events_button') }}
-                    </button>
+                    <label for="major_event">{{ trans('cruds.application.fields.major_events') }}</label>
                     <div class="row">
                         <div class="col-md-12">
-                            <textarea placeholder="{{ trans('cruds.application.fields.major_events_placeholder') }}" class="form-control {{ $errors->has('major_event') ? 'is-invalid' : '' }}" type="text" name="major_event" id="major_event" value="{{ old('major_event', $application->major_event) }}"></textarea>
-                            <button class="btn btn-danger my-2">{{ trans('cruds.application.fields.major_events_add') }}</button>
+                            <textarea id="eventMessage" class="textarea-custom-size" rows="2" placeholder="{{ trans('cruds.application.fields.major_events_placeholder') }}" class="form-control" type="text" id="major_event" value=""></textarea>
+                            <a href="#" id="addEventBtn" class="btn btn-danger my-2">{{ trans('cruds.application.fields.major_events_add') }}</a>
+                            <button class="btn btn-info my-3 major_events_button">
+                                {{ trans('cruds.application.fields.major_events_button') }}
+                            </button>
                         </div>
-
                     </div>
-                    @if($errors->has('major_events'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('major_event') }}
-                        </div>
-                    @endif
                     <span class="help-block">{{ trans('cruds.application.fields.major_events_helper') }}</span>
                 </div>
             </div>
@@ -496,27 +481,53 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+    var swalHtml = @json($application->events);
+    function makeHtmlForSwal() {
+        var events = swalHtml;
+        let ret = '<ul>';
+        events.forEach (function(event) {
+            ret += '<li style="text-align: left; margin-bottom: 20px;">'+event.message+'</br>';
+            ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+        });
+        ret += '</ul>';
+        return ret;
+    }
+
     $('.major_events_button').click(function(e) {
         e.preventDefault()
         Swal.fire({
             title: 'Évènements',
             icon: 'info',
-            html:
-                '<ul>' +
-                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
-                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
-                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
-                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
-                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
-                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
-                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
-                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
-                    '<li style="text-align: left; margin-bottom: 20px;">Evenement 1<br>' +
-                    '<span style="font-size: 12px;">Date : 19/10/22 | Utilisateur : User 1</span>' +
-                '</ul>',
+            html: makeHtmlForSwal(),
             showCloseButton: true,
         })
     })
+
+    $('#addEventBtn').on('click', function(e) {
+        e.preventDefault();
+        let app_id = {{ $application->id }};
+        let user_id = {{ auth()->id() }};
+        let message = $('#eventMessage').val();
+        if(message !== '' && user_id && app_id) {
+            $.post( "{{ route("admin.application-events.store") }}", {
+                m_application_id: app_id,
+                user_id: user_id,
+                message: message,
+                _token: "{{ csrf_token() }}"
+            }, "json")
+                .done(function(data) {
+                    swalHtml = data.events;
+                    alert('Evènement ajouté !');
+                    $('#eventMessage').val('');
+                })
+                .fail(function(msg) {
+                    alert('Une erreur est survenue');
+                })
+        } else {
+            return;
+        }
+    });
+
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(

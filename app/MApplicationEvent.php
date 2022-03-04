@@ -19,7 +19,7 @@ class MApplicationEvent extends Model
 	];
 
 	protected $fillable = [
-		'cartographer_id',
+		'user_id',
         'm_application_id',
         'message',
 		'created_at',
@@ -31,4 +31,9 @@ class MApplicationEvent extends Model
 	{
 		return $this->belongsTo(MApplication::class, 'm_application_id');
 	}
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

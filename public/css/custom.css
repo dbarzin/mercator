@@ -212,6 +212,14 @@ html {
 }
 
 /**
+ * Admin application edit - Evènements
+ */
+.textarea-custom-size {
+    min-height: auto;
+    width: 100%;
+}
+
+/**
  * Accordéons : utilisés pour les permissions
  */
 .accordion {

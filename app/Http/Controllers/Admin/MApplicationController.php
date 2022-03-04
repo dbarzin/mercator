@@ -127,7 +127,16 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers', 'events');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
+        $application->load(['events' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }]);
+        // On veut le nom utilisateur pour chaque évènements
+        foreach($application->events as $event) {
+            $event->load(['user' => function($query) {
+                $query->select('id', 'name');
+            }]);
+        }
 
         return view(
             'admin.applications.edit',
