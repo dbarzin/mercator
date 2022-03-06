@@ -515,9 +515,8 @@ $(document).ready(function () {
                     let event_id = $(this).parent().data('id');
                     var that = $(this);
                     if (event_id) {
-                        var baseUrl = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
                         $.ajax({
-                            url: baseUrl + "/application-events/" + event_id,
+                            url: '/admin/application-events/' + event_id,
                             type: "DELETE",
                             data: {
                                 m_application_id: {{ $application->id }},
