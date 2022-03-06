@@ -129,8 +129,16 @@
                         <th colspan="1">
                             {{ trans('cruds.application.fields.editor') }}
                         </th>
-                        <td colspan="7">
+                        <td colspan="3">
                             {{ $application->editor }}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.application.fields.events') }}
+                        </th>
+                        <td colspan="3">
+                            <button class="btn btn-info my-3 events_list_button">
+                                {{ trans('cruds.application.fields.events_list_button') }}
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -241,4 +249,40 @@
         {{ trans('global.updated_at') }} {{ $application->updated_at->format(trans('global.timestamp')) ?? '' }}
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function () {
+        // Variable contenant la liste des évènements affichés sur la popup
+        var swalHtml = @json($application->events);
+
+        /**
+         * Contruction de la liste des évènements
+         * @returns {string}
+         */
+        function makeHtmlForSwalEvents() {
+            let events = swalHtml;
+            let ret = '<ul>';
+            events.forEach (function(event) {
+                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px;">'+event.message+'</br>';
+                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+            });
+            ret += '</ul>';
+            return ret;
+        }
+
+        /**
+         * Fire the popup
+         */
+        $('.events_list_button').click(function(e) {
+            e.preventDefault()
+            Swal.fire({
+                title: 'Évènements',
+                icon: 'info',
+                html: makeHtmlForSwalEvents(),
+                showCloseButton: true
+            });
+        });
+    });
+</script>
 @endsection

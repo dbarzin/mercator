@@ -488,8 +488,8 @@ $(document).ready(function () {
      * Contruction de la liste des évènements
      * @returns {string}
      */
-    function makeHtmlForSwal() {
-        var events = swalHtml;
+    function makeHtmlForSwalEvents() {
+        let events = swalHtml;
         let ret = '<ul>';
         events.forEach (function(event) {
             ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
@@ -499,12 +499,15 @@ $(document).ready(function () {
         return ret;
     }
 
+    /**
+     * Fire the popup
+     */
     $('.events_list_button').click(function(e) {
         e.preventDefault()
         Swal.fire({
             title: 'Évènements',
             icon: 'info',
-                html: makeHtmlForSwal(),
+                html: makeHtmlForSwalEvents(),
             showCloseButton: true,
             didOpen(popup) {
                 $('.delete_event').on('click', function(e) {
@@ -536,6 +539,9 @@ $(document).ready(function () {
         })
     })
 
+    /**
+     * Send AJAX for adding an event
+     */
     $('#addEventBtn').on('click', function(e) {
         e.preventDefault();
         let app_id = {{ $application->id }};
@@ -595,7 +601,6 @@ function template(data, container) {
           return m;
       }
     });
-
   });
 </script>
 @endsection
