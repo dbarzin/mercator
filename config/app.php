@@ -228,6 +228,13 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom config
+    |--------------------------------------------------------------------------
+    */
     'cartographers' => env('CARTOGRAPHERS', false),
     'ldap_type' => env('LDAP_TYPE', 'AD'),
+    'ldap_scope' => env('LDAP_SCOPE', null),
+    'ldap_groups' => env('LDAP_GROUPS', null),
 ];

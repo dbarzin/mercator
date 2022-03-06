@@ -13,9 +13,12 @@ class OnlySpecificUsers extends Rule
      */
     public function isValid()
     {
-//        return true;
+        if(!config('app.ldap_groups')) {
+            return true;
+        }
+
         return $this->user->groups()->recursive()->exists(
-            'GG_MERCATOR'
+            explode(",", config('app.ldap_groups'))
         );
     }
 }

@@ -127,6 +127,7 @@
             {{ csrf_field() }}
         </form>
     </div>
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="/js/sweetalert2.all.min.js"></script>
     <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script -->
     <script src="{{ asset ('/js/jquery.min.js') }}"></script>
