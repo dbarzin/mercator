@@ -136,7 +136,7 @@
                             {{ trans('cruds.application.fields.events') }}
                         </th>
                         <td colspan="3">
-                            <button class="btn btn-info my-3 events_list_button">
+                            <button class="btn btn-info events_list_button">
                                 {{ trans('cruds.application.fields.events_list_button') }}
                             </button>
                         </td>
