@@ -14,6 +14,7 @@ use App\LogicalServer;
 use App\MApplication;
 use App\MApplicationEvent;
 use App\Services\CartographerService;
+use App\Services\EventService;
 use App\User;
 use App\Process;
 // CoreUI Gates
@@ -24,15 +25,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
 {
+    /**
+     * Services
+     */
     protected CartographerService $cartographerService;
+    protected EventService $eventService;
 
     /**
      * Automatic Injection for Service
      *
      * @return void
      */
-    public function __construct(CartographerService $cartographerService) {
+    public function __construct(CartographerService $cartographerService, EventService $eventService) {
         $this->cartographerService = $cartographerService;
+        $this->eventService = $eventService;
     }
 
     public function index()
@@ -128,15 +134,8 @@ class MApplicationController extends Controller
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
-        $application->load(['events' => function($query) {
-            $query->orderBy('created_at', 'desc');
-        }]);
-        // On veut le nom utilisateur pour chaque évènements
-        foreach($application->events as $event) {
-            $event->load(['user' => function($query) {
-                $query->select('id', 'name');
-            }]);
-        }
+        // Chargement des évènements
+        $this->eventService->getLoadAppEvents($application);
 
         return view(
             'admin.applications.edit',

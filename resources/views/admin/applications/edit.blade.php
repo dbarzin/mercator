@@ -256,17 +256,16 @@
                     <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="major_event">{{ trans('cruds.application.fields.major_events') }}</label>
+                    <label for="event_desc">{{ trans('cruds.application.fields.events') }}</label>
                     <div class="row">
                         <div class="col-md-12">
-                            <textarea id="eventMessage" class="textarea-custom-size" rows="2" placeholder="{{ trans('cruds.application.fields.major_events_placeholder') }}" class="form-control" type="text" id="major_event" value=""></textarea>
-                            <a href="#" id="addEventBtn" class="btn btn-danger my-2">{{ trans('cruds.application.fields.major_events_add') }}</a>
-                            <button class="btn btn-info my-3 major_events_button">
-                                {{ trans('cruds.application.fields.major_events_button') }}
+                            <textarea id="eventMessage" class="textarea-custom-size" rows="2" placeholder="{{ trans('cruds.application.fields.events_placeholder') }}" class="form-control" type="text" id="event_desc" value=""></textarea>
+                            <a href="#" id="addEventBtn" class="btn btn-danger my-2">{{ trans('cruds.application.fields.events_add') }}</a>
+                            <button class="btn btn-info my-3 events_list_button">
+                                {{ trans('cruds.application.fields.events_list_button') }}
                             </button>
                         </div>
                     </div>
-                    <span class="help-block">{{ trans('cruds.application.fields.major_events_helper') }}</span>
                 </div>
             </div>
         </div>
@@ -481,7 +480,14 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+
+    // Variable contenant la liste des évènements affichés sur la popup
     var swalHtml = @json($application->events);
+
+    /**
+     * Contruction de la liste des évènements
+     * @returns {string}
+     */
     function makeHtmlForSwal() {
         var events = swalHtml;
         let ret = '<ul>';
@@ -493,12 +499,12 @@ $(document).ready(function () {
         return ret;
     }
 
-    $('.major_events_button').click(function(e) {
+    $('.events_list_button').click(function(e) {
         e.preventDefault()
         Swal.fire({
             title: 'Évènements',
             icon: 'info',
-            html: makeHtmlForSwal(),
+                html: makeHtmlForSwal(),
             showCloseButton: true,
             didOpen(popup) {
                 $('.delete_event').on('click', function(e) {
@@ -506,30 +512,24 @@ $(document).ready(function () {
                     let event_id = $(this).parent().data('id');
                     var that = $(this);
                     if (event_id) {
-
-                        var getUrl = window.location;
-                        var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
+                        var baseUrl = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
                         $.ajax({
                             url: baseUrl + "/application-events/" + event_id,
-                            type: "delete",
-                            dataType: 'json',
+                            type: "DELETE",
                             data: {
-                                "event_id": event_id,
+                                m_application_id: {{ $application->id }},
                                 _token: "{{ csrf_token() }}"
                             },
                             success: function(data){
-                                console.log(data);
                                 that.parent().remove();
+                                // Mise à jour des évènements pour la popup
+                                swalHtml = data.events;
                                 alert('Evènement supprimé !');
                             },
                             error: function(){
                                 alert('Une erreur est survenue');
                             }
                         })
-
-                    } else {
-                        return;
                     }
                 });
             }
@@ -542,22 +542,21 @@ $(document).ready(function () {
         let user_id = {{ auth()->id() }};
         let message = $('#eventMessage').val();
         if(message !== '' && user_id && app_id) {
-            $.post( "{{ route("admin.application-events.store") }}", {
+            $.post("{{ route("admin.application-events.store") }}", {
                 m_application_id: app_id,
                 user_id: user_id,
                 message: message,
                 _token: "{{ csrf_token() }}"
             }, "json")
-                .done(function(data) {
+                .done(function (data) {
+                    // Mise à jour des évènements pour la popup
                     swalHtml = data.events;
                     alert('Evènement ajouté !');
                     $('#eventMessage').val('');
                 })
-                .fail(function(msg) {
+                .fail(function (msg) {
                     alert('Une erreur est survenue');
                 })
-        } else {
-            return;
         }
     });
 

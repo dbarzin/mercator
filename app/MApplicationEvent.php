@@ -4,18 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MApplicationEvent extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
 	public $table = 'm_application_events';
 
 	protected $dates = [
 		'created_at',
-		'updated_at',
-		'deleted_at',
+		'updated_at'
 	];
 
 	protected $fillable = [
@@ -23,8 +21,7 @@ class MApplicationEvent extends Model
         'm_application_id',
         'message',
 		'created_at',
-		'updated_at',
-		'deleted_at',
+		'updated_at'
 	];
 
 	public function application()

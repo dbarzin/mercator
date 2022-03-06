@@ -4,13 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\MApplicationEvent;
+use App\Services\EventService;
 use App\User;
 use App\MApplication;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class MApplicationEventController extends Controller
 {
+    protected EventService $eventService;
+
+    /**
+     * Automatic Injection for Service
+     *
+     * @return void
+     */
+    public function __construct(EventService $eventService) {
+        $this->eventService = $eventService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +45,7 @@ class MApplicationEventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -46,15 +57,8 @@ class MApplicationEventController extends Controller
         $event->user()->associate($user);
         $event->message = $request->get('message');
         $event->saveOrFail();
-        $application->load(['events' => function($query) {
-            $query->orderBy('created_at', 'desc');
-        }]);
-        // On veut le nom utilisateur pour chaque évènements
-        foreach($application->events as $event) {
-            $event->load(['user' => function($query) {
-                $query->select('id', 'name');
-            }]);
-        }
+        // Chargement des évènements
+       $this->eventService->getLoadAppEvents($application);
 
         return response()->json(['events' => $application->events]);
     }
@@ -96,12 +100,17 @@ class MApplicationEventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\MApplicationEvent  $mApplicationEvent
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id Id de l'évènement
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(MApplicationEvent $mApplicationEvent)
+    public function destroy(Request $request, int $id)
     {
-	    $mApplicationEvent->delete();
-	    return response()->json();
+        $application = MApplication::findOrFail($request->get('m_application_id'));
+        MApplicationEvent::findOrFail($id)->delete();
+        // Mis à jour des évènements
+        $this->eventService->getLoadAppEvents($application);
+
+        return response()->json(['events' => $application->events]);
     }
 }

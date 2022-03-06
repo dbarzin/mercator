@@ -19,7 +19,6 @@ class CreateMApplicationEventTable extends Migration
 	        $table->unsignedInteger('m_application_id');
 	        $table->longText('message');
 	        $table->timestamps();
-	        $table->softDeletes();
 	        $table->foreign('user_id')->references('id')->on('users');
 	        $table->foreign('m_application_id')->references('id')->on('m_applications')->onDelete('cascade');
         });

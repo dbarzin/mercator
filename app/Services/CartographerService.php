@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Wrapper pour la logique des catographes au sein de l'appli.
+ * Wrapper pour la logique des cartographes au sein de l'appli.
  */
 class CartographerService {
 
