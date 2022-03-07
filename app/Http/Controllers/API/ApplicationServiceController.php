@@ -31,11 +31,11 @@ class ApplicationServiceController extends Controller
     {
         abort_if(Gate::denies('applicationservice_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservice = ApplicationService::create($request->all());
+        $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
 
-        return response()->json($applicationservice, 201);
+        return response()->json($applicationService, 201);
     }
 
     public function show(ApplicationService $applicationservice)
@@ -45,22 +45,22 @@ class ApplicationServiceController extends Controller
         return new ApplicationServiceResource($applicationservice);
     }
 
-    public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationservice)
+    public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)
     {     
         abort_if(Gate::denies('applicationservice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservice->update($request->all());
+        $applicationService->update($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
         $applicationService->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
 
-    public function destroy(ApplicationService $applicationservice)
+    public function destroy(ApplicationService $applicationService)
     {
         abort_if(Gate::denies('applicationservice_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationservice->delete();
+        $applicationService->delete();
 
         return response()->json();
     }

@@ -74,8 +74,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('vlans', API\VlanController::class);
 
     Route::resource('users',API\UserController::class);
-    Route::resource('permissions', API\PermissionsController::class);
-    Route::resource('roles', API\RolesController::class);
+    Route::resource('permission', API\PermissionController::class);
+    Route::resource('role', API\RoleController::class);
 
 });
 

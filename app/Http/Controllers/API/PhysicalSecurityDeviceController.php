@@ -56,7 +56,7 @@ class PhysicalSecurityDeviceController extends Controller
         return response()->json();
     }
 
-    public function destroy(PhysicalSecurityDevice $physicalsecuritydevice)
+    public function destroy(PhysicalSecurityDevice $device)
     {
         abort_if(Gate::denies('physical_security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

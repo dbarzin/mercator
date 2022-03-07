@@ -52,8 +52,10 @@ use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -1821,5 +1823,13 @@ class ReportController extends Controller
                 }
             }
         }
+    }
+
+    public function zones()
+    {
+        $subnetworks = Subnetwork::All()->sortBy('name');
+
+        return view('admin/reports/zones')
+            ->with('subnetworks', $subnetworks);
     }
 }
