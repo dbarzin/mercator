@@ -102,8 +102,8 @@ class AuditController extends HomeController
         $sheet->setCellValue("B{$row}", $levels['entities']);
         $sheet->setCellValue("C{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
         $sheet->setCellValue("D{$row}", $levels['entities']);
-        $sheet->setCellValue("F{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
-        $sheet->setCellValue("E{$row}", $levels['entities']);
+        $sheet->setCellValue("E{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
+        $sheet->setCellValue("F{$row}", $levels['entities']);
         $sheet->setCellValue("G{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
         $row++;
 
