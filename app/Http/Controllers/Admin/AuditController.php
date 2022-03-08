@@ -102,8 +102,8 @@ class AuditController extends HomeController
         $sheet->setCellValue("B{$row}", $levels['entities']);
         $sheet->setCellValue("C{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
         $sheet->setCellValue("D{$row}", $levels['entities']);
-        $sheet->setCellValue("F{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
-        $sheet->setCellValue("E{$row}", $levels['entities']);
+        $sheet->setCellValue("E{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
+        $sheet->setCellValue("F{$row}", $levels['entities']);
         $sheet->setCellValue("G{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
         $row++;
 
@@ -762,34 +762,50 @@ class AuditController extends HomeController
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
+        // freeze top rows
+        $sheet->freezePane('C2');
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
+        // white font
+        $sheet->getStyle('1') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A2') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A9') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A31') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A50') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A63') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A93') ->getFont()->getColor()->setRGB('FFFFFF');
 
         // background color
         $sheet->getStyle('A1:O1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A2:O2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A9:O9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A31:O31')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A50:O50')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A63:O63')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A93:O93')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A2:O2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A3:A8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A9:O9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A9:O9')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A10:A30')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A31:O31')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A31:O31')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A32:A49')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A50:O50')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A50:O50')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A51:A62')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A63:O63')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A63:O63')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A64:A92')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle('A93:O93')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A93:O93')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A94:A141')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
-        // column size
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setAutoSize(true);
-        $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
-        $sheet->getColumnDimension('H')->setAutoSize(true);
-        $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setAutoSize(true);
-        $sheet->getColumnDimension('M')->setAutoSize(true);
-        $sheet->getColumnDimension('N')->setAutoSize(true);
+        // column size and border
+        for ($i = 0; $i <=14; $i++) {
+            $col=chr(ord('A') + $i);
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+            $sheet->getStyle("{$col}1")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            $sheet->getStyle("{$col}2")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        }
+
+        // Center
+        $sheet->getStyle("B1:O141")->getAlignment()->setHorizontal('center');
 
         // Total months
         $tMonths = Carbon::now()->year * 12 + Carbon::now()->month;
@@ -861,12 +877,18 @@ class AuditController extends HomeController
             if (str_starts_with($key, 'App\\')) {
                 $sheet->setCellValue("B{$idx}", 'created');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF59A14F');
+                $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'updated');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF28E2B');
+                $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'deleted');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFE15759');
+                $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
             // backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
             } else {
@@ -897,6 +919,16 @@ class AuditController extends HomeController
 
                 // Place value
                 $sheet->setCellValue("{$column}{$row}", $auditLog->count);
+                $sheet->getStyle("{$column}{$row}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+                // set the color of the cell
+                if ($auditLog->description === 'updated') 
+                    $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF28E2B');
+                elseif ($auditLog->description === 'deleted') 
+                    $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFE15759');
+                else 
+                    $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF59A14F');
+                
 
                 // \Log::info("{$column}{$row} ->". $auditLog->subject_type. ', ' . $year . ', ' . $month . ', ' . $auditLog->count);
             }

@@ -52,8 +52,10 @@ use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -1058,6 +1060,7 @@ class ReportController extends Controller
             'T',
             trans('cruds.application.fields.documentation'),
             trans('cruds.application.fields.logical_servers'),
+            trans('cruds.physicalServer.title'),
             trans('cruds.application.fields.databases'),
         ];
 
@@ -1078,18 +1081,19 @@ class ReportController extends Controller
         $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         // CIAT
-        $sheet->getColumnDimension('M')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('M')->setWidth(10, 'pt');
         $sheet->getStyle('M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('N')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('N')->setWidth(10, 'pt');
         $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('O')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('O')->setWidth(10, 'pt');
         $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('P')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('P')->setWidth(10, 'pt');
         $sheet->getStyle('P')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->getColumnDimension('Q')->setAutoSize(true);
-        $sheet->getColumnDimension('R')->setAutoSize(true);
-        $sheet->getColumnDimension('S')->setAutoSize(true);
+        $sheet->getColumnDimension('R')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('S')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('T')->setWidth(200, 'pt');
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -1128,7 +1132,19 @@ class ReportController extends Controller
 
                 $sheet->setCellValue("Q{$row}", $application->documentation);
                 $sheet->setCellValue("R{$row}", $application->logical_servers->implode('name', ', '));
-                $sheet->setCellValue("S{$row}", $application->databases->implode('name', ', '));
+                $res=null;
+
+                // TODO: improve me with select, join and unique
+                foreach($application->logical_servers as $logical_server) {
+                    foreach($logical_server->servers as $physical_server) {
+                        if ($res != null)
+                            $res .= ", ";
+                        $res .= $physical_server->name;
+                    }
+                }
+                
+                $sheet->setCellValue("S{$row}", $res);
+                $sheet->setCellValue("T{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
@@ -1310,30 +1326,30 @@ class ReportController extends Controller
 
         // Widths
         $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('C')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('D')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('E')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('B')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('C')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('E')->setWidth(10, 'pt');
         $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('H')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('I')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('J')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('G')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('H')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('I')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('J')->setWidth(10, 'pt');
         $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('M')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('N')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('O')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('L')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('M')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('N')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('O')->setWidth(10, 'pt');
         $sheet->getColumnDimension('P')->setAutoSize(true);
-        $sheet->getColumnDimension('Q')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('R')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('S')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('T')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('Q')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('R')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('S')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('T')->setWidth(10, 'pt');
         $sheet->getColumnDimension('U')->setAutoSize(true);
-        $sheet->getColumnDimension('V')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('W')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('X')->setWidth(5, 'pt');
-        $sheet->getColumnDimension('Y')->setWidth(5, 'pt');
+        $sheet->getColumnDimension('V')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('W')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('X')->setWidth(10, 'pt');
+        $sheet->getColumnDimension('Y')->setWidth(10, 'pt');
 
         // Center
         $sheet->getStyle('B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -1807,5 +1823,13 @@ class ReportController extends Controller
                 }
             }
         }
+    }
+
+    public function zones()
+    {
+        $subnetworks = Subnetwork::All()->sortBy('zone, address');
+
+        return view('admin/reports/zones')
+            ->with('subnetworks', $subnetworks);
     }
 }

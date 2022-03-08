@@ -24,7 +24,7 @@
                             </span>
                         </div>
 
-                        <input id="email" name="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="User" value="{{ old('email', null) }}">
+                        <input id="email" name="email" type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="User" value="{{ old('email', null) }}">
 
                         @if($errors->has('email'))
                             <div class="invalid-feedback">
@@ -68,7 +68,6 @@
                                     {{ trans('global.forgot_password') }}
                                 </a><br>
                             @endif
-
                         </div>
                     </div>
                 </form>

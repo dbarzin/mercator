@@ -31,6 +31,7 @@ démarche globale de gestion des risques.
 - Dessin des schémas de cartographie
 - Calcul des niveaux de conformité
 - Extraction en Excel, CSV, PDF … de toutes les listes
+- REST API avec JSON
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
 - Connexion LDAP

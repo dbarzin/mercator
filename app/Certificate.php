@@ -32,6 +32,7 @@ class Certificate extends Model
         'type',
         'start_validity',
         'end_validity',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',

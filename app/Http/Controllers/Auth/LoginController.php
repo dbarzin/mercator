@@ -59,4 +59,5 @@ class LoginController extends Controller
     {
         return Auth::attempt($this->credentials($request), $request->filled('remember'));
     }
+
 }
