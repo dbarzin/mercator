@@ -1827,7 +1827,7 @@ class ReportController extends Controller
 
     public function zones()
     {
-        $subnetworks = Subnetwork::All()->sortBy('name');
+        $subnetworks = Subnetwork::All()->sortBy('zone, address');
 
         return view('admin/reports/zones')
             ->with('subnetworks', $subnetworks);

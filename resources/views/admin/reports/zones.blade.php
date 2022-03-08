@@ -69,10 +69,10 @@ d3.select("#graph").graphviz()
               <table width='80' border='0' cellborder='0' cellspacing='0'>\
                 <tr>\
                     <td width='60' align='left'>{{ $subnet->name }}</td>\
-                    <td width='20' align='left'><font color='green'>{{ $subnet->vlan->name }}</font></td>\
+			    <td width='20' align='left'><font color='green'>{{ $subnet->vlan->name ?? "" }}</font></td>\
                 </tr>\
-                <tr><td align='left'>{{ explode('/',$subnet->address)[0] }}/<font color='red'>{{ explode('/',$subnet->address)[1] }}</font></td></tr>\
-                <tr><td align='left'>{{ $subnet->default_gateway }}</td></tr>\
+                <tr><td colspan='2' align='left'>{{ explode('/',$subnet->address)[0] }}/<font color='red'>{{ explode('/',$subnet->address)[1] }}</font></td></tr>\
+                <tr><td colspan='2' align='left'>{{ $subnet->default_gateway }}</td></tr>\
               </table>\
             >];\
         }\
