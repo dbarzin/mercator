@@ -33,6 +33,7 @@ démarche globale de gestion des risques.
 - Extraction en Excel, CSV, PDF … de toutes les listes
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
+- Connexion LDAP
 
 ## Ecrans
 

@@ -13,16 +13,16 @@ class CartographerMApplication extends Model
 	public $table = 'cartographer_m_application';
 
 	protected $dates = [
-		'created_at',
-		'updated_at',
-		'deleted_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
 	];
 
 	protected $fillable = [
-		'user_id',
+        'user_id',
         'm_application_id',
-		'created_at',
-		'updated_at',
-		'deleted_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
 	];
 }

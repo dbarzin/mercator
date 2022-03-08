@@ -151,6 +151,31 @@ ajouter cette ligne dans le crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
+## Configuration de la connexion LDAP
+
+Dans le fichier .env, mettre les paramètres de connexion à votre LDAP en décommentant les lignes :
+    
+    # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
+    LDAP_TYPE="AD"
+    # If true, LDAP actions will be written to the application's default log file
+    LDAP_LOGGING=true
+    LDAP_CONNECTION=default
+    LDAP_HOST=127.0.0.1
+    # Identifiers of the user who will connect to the LDAP in order to perform queries
+    LDAP_USERNAME="cn=user,dc=local,dc=com"
+    LDAP_PASSWORD=secret
+    LDAP_PORT=389
+    LDAP_BASE_DN="dc=local,dc=com"
+    LDAP_TIMEOUT=5
+    LDAP_SSL=false
+    LDAP_TLS=false
+    # Allows you to restrict access to a tree structure
+    LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
+    # Allows you to restrict access to groups
+    LDAP_GROUPS="Delivering,Help Desk"
+
+Find more complete documentation on LDAP configuration here.
+
 ## Apache
 
 Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante

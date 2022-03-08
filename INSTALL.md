@@ -151,6 +151,31 @@ add this line in the crontab
 
     * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
+## LDAP Configuration
+
+Modify .env file, and uncomment LDAP configuration :
+
+    # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer
+    LDAP_TYPE="AD"
+    # If true, LDAP's actions will be log into
+    LDAP_LOGGING=true
+    LDAP_CONNECTION=default
+    LDAP_HOST=127.0.0.1
+    # Identifiants de l'utilisateur qui se connectera au LDAP afin d'effectuer les requêtes
+    LDAP_USERNAME="cn=user,dc=local,dc=com"
+    LDAP_PASSWORD=secret
+    LDAP_PORT=389
+    LDAP_BASE_DN="dc=local,dc=com"
+    LDAP_TIMEOUT=5
+    LDAP_SSL=false
+    LDAP_TLS=false
+    # Permet de restreindre l'accès à une arborescence
+    LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
+    # Permet de restreindre l'accès à des groupes
+    LDAP_GROUPS="Delivering,Help Desk"
+
+Retrouvez une documentation plus complète sur le paramétrage du LDAP ici.
+
 ## Apache
 
 To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command
