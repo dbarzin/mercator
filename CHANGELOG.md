@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 
 
+- Explore cartography
 - Add default gateway address to subnetworks
 - Add colors for security needs in forms
 - Cleanup unused columns in database
