@@ -13,9 +13,9 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
-Install Composer, git, Graphviz
+Install Apache2, Composer, git, Graphviz
 
-    sudo apt install git graphviz composer
+    sudo apt install apache2 git graphviz composer
 
 Install some PHP libraries
 
