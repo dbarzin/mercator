@@ -67,10 +67,6 @@ jobs:
         run: |
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
-      - name: Check code quality
-        run: |
-          php artisan insights
-
       - name: Upgrade Chrome Driver
         run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
 
