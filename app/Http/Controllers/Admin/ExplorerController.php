@@ -121,8 +121,9 @@ class ExplorerController extends Controller
             array_push($nodes, [ "id" => "VLAN_" . $vlan->id, "label" => $vlan->name, "image" => "/images/vlan.png" ]);
         }
 
-        // subnetworks
-        $subnetworks = DB::table("subnetworks")->select("id","name","network_id","vlan_id")->get();
+        // Subnetworks
+        // $subnetworks = DB::table("subnetworks")->select("id","name","network_id","vlan_id")->get();
+        $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
             array_push($nodes, [ "id" => "SUBNETWORK_" . $subnetwork->id, "label" => $subnetwork->name, "image" => "/images/network.png" ]);
             if ($subnetwork->network_id!=null)
@@ -130,14 +131,23 @@ class ExplorerController extends Controller
             if ($subnetwork->vlan_id!=null)
                 array_push($edges, [ "from" => "SUBNETWORK_" . $subnetwork->id, "to" => "VLAN_" . $subnetwork->vlan_id ]);
         }
-        
+
         // Logical Servers
-        $logicalServers = DB::table("logical_servers")->select("id","name")->get();
+        $logicalServers = DB::table("logical_servers")->select("id","name","address_ip")->get();
         foreach ($logicalServers as $logicalServer) {
             array_push($nodes, [ "id" => "LSERVER_" . $logicalServer->id, "label" => $logicalServer->name, "image" => "/images/server.png" ]);
+
+            if ($logicalServer->address_ip!=null) {
+                foreach($subnetworks as $subnetwork) {
+                    foreach(explode(',',$logicalServer->address_ip) as $address) {
+                        if ($subnetwork->contains($address)) {
+                            array_push($edges, [ "from" => "SUBNETWORK_" . $subnetwork->id, "to" => "LSERVER_" . $logicalServer->id ]);
+                            break;
+                            }
+                    }
+                }
+            }
         }
-
-
 
         // Logical Servers - Physical Servers
         $joins = DB::table('logical_server_physical_server')->select("physical_server_id","logical_server_id")->get();
