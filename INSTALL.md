@@ -13,17 +13,13 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
+Install Composer, git, Graphviz
+
+    sudo apt install git graphviz composer
+
 Install some PHP libraries
 
     sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
-
-Install Graphviz
-
-    sudo apt install graphviz
-
-Install GIT
-
-    sudo apt install git
 
 ## Project
 
@@ -38,10 +34,6 @@ Clone the project from Github
     git clone https://www.github.com/dbarzin/mercator
 
 ## Composer
-
-Install Composer: [Install Composer globally](https://getcomposer.org/download/).
-
-    sudo mv composer.phar /usr/local/bin/composer
 
 Install the packages with composer :
 
