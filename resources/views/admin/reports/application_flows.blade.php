@@ -65,11 +65,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="FLOW{{$flux->id}}">
                                     <th colspan="2">
-                                        @can('flux_edit')
-                                        <a href="/admin/fluxes/{{ $flux->id }}/edit">{{ $flux->name }}</a>
-                                        @else
                                         <a href="/admin/fluxes/{{ $flux->id }}">{{ $flux->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -169,11 +165,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATION{{$application->id}}">
                                     <th colspan="2">
-                                        @can('application_edit')
-                                        <a href="/admin/applications/{{ $application->id }}/edit">{{ $application->name }}</a>
-                                        @else
                                         <a href="/admin/applications/{{ $application->id }}">{{ $application->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -331,11 +323,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SERVICE{{$applicationService->id}}">
                                     <th colspan="2">
-                                        @can('application_service_edit')
-                                        <a href="/admin/application-services/{{ $applicationService->id }}/edit">{{ $applicationService->name }}</a>
-                                        @else
                                         <a href="/admin/application-services/{{ $applicationService->id }}">{{ $applicationService->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -412,11 +400,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="MODULE{{$applicationModule->id}}">
                                         <th colspan="2">
-                                            @can('application_module_edit')
-                                            <a href="/admin/application-modules/{{ $applicationModule->id }}/edit">{{ $applicationModule->name }}</a>
-                                            @else
                                             <a href="/admin/application-modules/{{ $applicationModule->id }}">{{ $applicationModule->name }}</a>
-                                            @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -477,11 +461,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="DATABASE{{$database->id}}">
                                     <th colspan="2">
-                                        @can('database_edit')
-                                        <a href="/admin/databases/{{ $database->id }}/edit">{{ $database->name }}</a>
-                                        @else
                                         <a href="/admin/databases/{{ $database->id }}">{{ $database->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>

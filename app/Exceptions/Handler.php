@@ -40,7 +40,6 @@ class Handler extends ExceptionHandler
         parent::report($exception);
     }
 
-
     /**
      * Register new exceptions
      */

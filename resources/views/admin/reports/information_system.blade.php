@@ -63,11 +63,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                 <th colspan="2">
-                                    @can('macro_processus_edit')
-                                    <a href="/admin/macro-processuses/{{ $macroProcess->id }}/edit">{{ $macroProcess->name }}</a>
-                                    @else
                                     <a href="/admin/macro-processuses/{{ $macroProcess->id }}">{{ $macroProcess->name }}</a>
-                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -138,11 +134,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PROCESS{{ $process->id }}">
                                     <th colspan="2">
-                                        @can('process_edit')
-                                        <a href="/admin/processes/{{ $process->id }}/edit">{{ $process->identifiant }}</a>
-                                        @else
                                         <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -235,11 +227,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ACTIVITY{{ $activity->id }}">
                                 <th colspan="2">
-                                    @can('activity_edit')
-                                    <a href="/admin/activities/{{ $activity->id }}/edit">{{ $activity->name }}</a>
-                                    @else
                                     <a href="/admin/activities/{{ $activity->id }}">{{ $activity->name }}</a>
-                                    @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -284,11 +272,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="OPERATION{{ $operation->id }}">
                                 <th colspan="2">
-                                    @can('operation_edit')
-                                    <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
-                                    @else
-                                    <a href="/admin/operations/{{ $operation->id }}/edit">{{ $operation->name }}</a>
-                                    @endcan
+                                    <a href="/admin/operations/{{ $operation->id }}">{{ $operation->name }}</a>
                                 </th>
                             </thead>
                             <tbody>
@@ -344,11 +328,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="TASK{{ $task->id }}">
                                     <th colspan="2">
-                                        @can('task_edit')
-                                        <a href="/admin/tasks/{{ $task->id }}/edit">{{ $task->nom }}</a>
-                                        @else
                                         <a href="/admin/tasks/{{ $task->id }}">{{ $task->nom }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -380,11 +360,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ACTOR{{ $actor->id }}">
                                     <th colspan="2">
-                                        @can('actor_edit')
-                                        <a href="/admin/actors/{{ $actor->id }}/edit">{{ $actor->name }}</a>
-                                        @else
                                         <a href="/admin/actors/{{ $actor->id }}">{{ $actor->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -424,11 +400,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="INFORMATION{{ $information->id }}">
                                     <th colspan="2">
-                                        @can('information_edit')
-                                        <a href="/admin/information/{{ $information->id }}/edit">{{ $information->name }}</a>
-                                        @else
                                         <a href="/admin/information/{{ $information->id }}">{{ $information->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>

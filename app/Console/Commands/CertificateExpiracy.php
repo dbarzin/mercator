@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-
 use Illuminate\Support\Facades\Log;
 
 class CertificateExpiracy extends Command
@@ -31,11 +30,11 @@ class CertificateExpiracy extends Command
      */
     public function handle()
     {
-        Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
+        Log::debug('CertificateExpiracy - day '. Carbon::now()->day);
 
         if ($this->needCheck()) {
             // Check for old certificates
-            Log::debug("CertificateExpiracy - check");
+            Log::debug('CertificateExpiracy - check');
 
             $certificates = Certificate::select('name', 'type', 'end_validity')
                 ->where('status', 0)
@@ -80,7 +79,7 @@ class CertificateExpiracy extends Command
                 }
             }
         }
-        Log::debug("CertificateExpiracy - DONE.");
+        Log::debug('CertificateExpiracy - DONE.');
     }
 
     /**

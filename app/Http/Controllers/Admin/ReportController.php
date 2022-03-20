@@ -5,29 +5,28 @@ namespace App\Http\Controllers\Admin;
 // ecosystem
 use App\Activity;
 use App\Actor;
-use App\Task;
-// information system
 use App\Annuaire;
+// information system
 use App\ApplicationBlock;
 use App\ApplicationModule;
 use App\ApplicationService;
 use App\Bay;
 use App\Building;
 use App\Certificate;
-// Applications
 use App\Database;
+// Applications
 use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
 use App\ExternalConnectedEntity;
-// Administration
 use App\Flux;
+// Administration
 use App\ForestAd;
 use App\Gateway;
 use App\Http\Controllers\Controller;
-// Logique
 use App\Information;
+// Logique
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\MApplication;
@@ -38,8 +37,8 @@ use App\Peripheral;
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
-// Physique
 use App\PhysicalServer;
+// Physique
 use App\PhysicalSwitch;
 use App\Process;
 use App\Relation;
@@ -48,14 +47,13 @@ use App\SecurityDevice;
 use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
+use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -569,9 +567,9 @@ class ReportController extends Controller
 
             $externalConnectedEntities = ExternalConnectedEntity::
                 join('external_connected_entity_network', 'external_connected_entities.id', '=', 'external_connected_entity_network.external_connected_entity_id')
-                ->where('external_connected_entity_network.network_id', '=', $network)
-                ->orderBy('name')->get();
-            
+                    ->where('external_connected_entity_network.network_id', '=', $network)
+                    ->orderBy('name')->get();
+
             if ($subnetwork !== null) {
                 $subnetworks = Subnetwork::All()->sortBy('name')
                     ->where('id', '=', $subnetwork);
@@ -1132,17 +1130,18 @@ class ReportController extends Controller
 
                 $sheet->setCellValue("Q{$row}", $application->documentation);
                 $sheet->setCellValue("R{$row}", $application->logical_servers->implode('name', ', '));
-                $res=null;
+                $res = null;
 
                 // TODO: improve me with select, join and unique
-                foreach($application->logical_servers as $logical_server) {
-                    foreach($logical_server->servers as $physical_server) {
-                        if ($res != null)
-                            $res .= ", ";
+                foreach ($application->logical_servers as $logical_server) {
+                    foreach ($logical_server->servers as $physical_server) {
+                        if ($res !== null) {
+                            $res .= ', ';
+                        }
                         $res .= $physical_server->name;
                     }
                 }
-                
+
                 $sheet->setCellValue("S{$row}", $res);
                 $sheet->setCellValue("T{$row}", $application->databases->implode('name', ', '));
 
@@ -1498,6 +1497,14 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+    public function zones()
+    {
+        $subnetworks = Subnetwork::All()->sortBy('zone, address');
+
+        return view('admin/reports/zones')
+            ->with('subnetworks');
+    }
+
     private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null)
     {
 
@@ -1824,13 +1831,4 @@ class ReportController extends Controller
             }
         }
     }
-
-    public function zones()
-    {
-        $subnetworks = Subnetwork::All()->sortBy('zone, address');
-
-        return view('admin/reports/zones')
-            ->with('subnetworks');
-    }
-
 }

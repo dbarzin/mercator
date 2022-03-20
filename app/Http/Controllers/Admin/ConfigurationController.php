@@ -74,7 +74,7 @@ class ConfigurationController extends Controller
                 }
                 break;
             default:
-                $msg = "no actions made.";
+                $msg = 'no actions made.';
         }
         return view(
             'admin.configuration',
