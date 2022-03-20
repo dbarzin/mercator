@@ -907,6 +907,7 @@ return [
             "dmz_helper" => "Demilitarized Zone (Yes / No)",
             "gateway" => "Bridge",
             "gateway_helper" => "",
+            "ip_range" => "IP address range",
             "ip_allocation_type" => "Type of IP address allocation",
             "ip_allocation_type_helper" => "",
             "name" => "Name",

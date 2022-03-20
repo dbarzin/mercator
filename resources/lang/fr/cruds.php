@@ -914,6 +914,7 @@ return [
             "gateway_helper" => "",
             "ip_allocation_type" => "Type d'allocation d'adresse IP",
             "ip_allocation_type_helper" => "",
+            "ip_range" => "Range d'addressage IP",
             "name" => "Nom",
             "name_helper" => "",
             "network" => "Réseau",
