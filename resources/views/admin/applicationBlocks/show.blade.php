@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=BLOCK_{{$applicationBlock->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('application_block_edit')
                     <a class="btn btn-info" href="{{ route('admin.application-blocks.edit', $applicationBlock->id) }}">
                         {{ trans('global.edit') }}
@@ -77,8 +81,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $applicationBlock->created_at->format(trans('global.timestamp')) }} |
-        {{ trans('global.updated_at') }} {{ $applicationBlock->updated_at->format(trans('global.timestamp')) }} 
+        {{ trans('global.created_at') }} {{ $applicationBlock->created_at->format(trans('global.timestamp')) ?? '' }} |
+        {{ trans('global.updated_at') }} {{ $applicationBlock->updated_at->format(trans('global.timestamp')) ?? '' }} 
     </div>
 </div>
 @endsection

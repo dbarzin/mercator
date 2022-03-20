@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.sites.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SITE_{{$site->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('site_edit')
                     <a class="btn btn-info" href="{{ route('admin.sites.edit', $site->id) }}">
                         {{ trans('global.edit') }}
@@ -44,6 +49,21 @@
                             {!! $site->description !!}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.site.fields.buildings') }}
+                        </th>
+                        <td>
+                            @foreach($site->siteBuildings as $building)
+                                <a href="{{ route('admin.buildings.show', $building->id) }}">
+                                {{ $building->name ?? '' }}
+                                </a>
+                                @if ($site->siteBuildings->last()!=$building)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -54,8 +74,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $site->created_at->format(trans('global.timestamp')) }} |
-        {{ trans('global.updated_at') }} {{ $site->updated_at->format(trans('global.timestamp')) }} 
+        {{ trans('global.created_at') }} {{ $site->created_at->format(trans('global.timestamp')) ?? '' }} |
+        {{ trans('global.updated_at') }} {{ $site->updated_at->format(trans('global.timestamp')) ?? '' }} 
     </div>
 </div>
 @endsection

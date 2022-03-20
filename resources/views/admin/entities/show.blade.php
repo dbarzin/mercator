@@ -10,7 +10,8 @@
         <div class="form-group">
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.entities.index') }}">
-                    {{ trans('global.back_to_list') }}
+		    {{ trans('global.back_to_list') }}
+		</a>
 
                 @can('entity_edit')
                     <a class="btn btn-info" href="{{ route('admin.entities.edit', $entity->id) }}">
@@ -60,6 +61,72 @@
                             {!! $entity->contact_point !!}
                         </td>
                     </tr>
+
+
+
+                                <tr>
+                                    <td><b>{{ trans('cruds.entity.fields.relations') }}</b></td>
+                                    <td>
+                                        @foreach ($entity->sourceRelations as $relation)
+                                            <a href="/admin/relations/{{ $relation->id }}">{{ $relation->name }}</a>
+                                            -> 
+                                            <a href="/admin/entities/{{ $relation->destination_id }}">{{ $relation->destination->name ?? '' }}</a>
+                                            @if (!$loop->last)
+                                            <br>
+                                            @endif
+                                        @endforeach
+                                        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0)) 
+                                        <br>
+                                        @endif
+                                        @foreach ($entity->destinationRelations as $relation)
+                                            <a href="/admin/entities/{{ $relation->source_id }}">{{ $relation->source->name ?? '' }}</a>
+                                            <-
+                                            <a href="/admin/relations/{{ $relation->id }}">{{ $relation->name }}</a>
+                                            @if (!$loop->last)
+                                            <br>
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ trans('cruds.entity.fields.processes') }}</b></td>
+                                    <td>
+                                        @foreach ($entity->entitiesProcesses as $process)
+                                            <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ trans('cruds.entity.fields.exploits') }}</b></td>
+                                    <td>
+                                        @foreach($entity->applications as $application)
+                                            <a href="/admin/applications/{{$application->id}}">{{$application->name}}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                        @if (
+                                            ($entity->applications->count()>0)&&
+                                            ($entity->databases->count()>0)
+                                            )
+                                            ,<br>
+                                        @endif
+                                        @foreach($entity->databases as $database)
+                                            <a href="/admin/databases/{{$database->id}}">{{$database->name}}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+
+
+
+
+
                 </tbody>
             </table>
             <div class="form-group">
@@ -70,8 +137,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $entity->created_at->format(trans('global.timestamp')) }} |
-        {{ trans('global.updated_at') }} {{ $entity->updated_at->format(trans('global.timestamp')) }} 
+        {{ trans('global.created_at') }} {{ $entity->created_at->format(trans('global.timestamp')) ?? '' }} |
+        {{ trans('global.updated_at') }} {{ $entity->updated_at->format(trans('global.timestamp')) ?? '' }} 
     </div>
 </div>
 @endsection

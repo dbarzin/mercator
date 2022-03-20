@@ -6,6 +6,8 @@ use App\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
+use Illuminate\Support\Facades\Log;
+
 class CertificateExpiracy extends Command
 {
     /**
@@ -29,18 +31,17 @@ class CertificateExpiracy extends Command
      */
     public function handle()
     {
-        // Log::debug("CertificateExpiracy - frequency ". $check_frequency);
-        // Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
+        Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
         if ($this->needCheck()) {
             // Check for old certificates
-            //
-            // Log::debug("CertificateExpiracy - check");
+            Log::debug("CertificateExpiracy - check");
 
             $certificates = Certificate::select('name', 'type', 'end_validity')
+                ->where('status', 0)
                 ->where('end_validity', '<=', Carbon::now()
-                ->addDays(intval(config('mercator-config.cert.expire-delay')))
-                ->toDateString())
+                ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
+                ->orderBy('end_validity')
                 ->get();
 
             $this->info(
@@ -57,9 +58,12 @@ class CertificateExpiracy extends Command
                 $subject = config('mercator-config.cert.mail-subject');
                 $message = '<html><body>These certificates are about to exipre :<br><br>';
                 foreach ($certificates as $cert) {
-                    $message .= $cert->name . ' - ' . $cert->type . ' - '. $cert->end_validity .'<br>';
+                    $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
                 }
                 $message .= '</body></html>';
+
+                // print message
+                // $this->info($message);
 
                 // Define the header
                 $headers = [
@@ -76,7 +80,7 @@ class CertificateExpiracy extends Command
                 }
             }
         }
-        // Log::debug("CertificateExpiracy - DONE.");
+        Log::debug("CertificateExpiracy - DONE.");
     }
 
     /**

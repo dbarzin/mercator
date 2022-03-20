@@ -114,6 +114,7 @@ return [
     "end_time" => "End Time",
     "entries" => "Entrances",
     "entry_date" => "Date of entry",
+    "explore" => "Explore",
     "excerpt" => "Extract",
     "faq_management" => "Faq Management",
     "featured_image" => "Featured Image",

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\API;
 
 Route::redirect('/', '/login');
 
@@ -240,6 +241,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/application_flows', [Admin\ReportController::class,'applicationFlows'])->name('report.view.application-flows');
     Route::get('report/logical_infrastructure', [Admin\ReportController::class,'logicalInfrastructure'])->name('report.view.logical-infrastructure');
     Route::get('report/physical_infrastructure', [Admin\ReportController::class,'physicalInfrastructure'])->name('report.view.physical-infrastructure');
+    // Experimental views
+    Route::get('report/zones', [Admin\ReportController::class,'zones'])->name('report.view.zones');
+    Route::get('report/explore', [Admin\ExplorerController::class,'explore'])->name('report.explore');
 
     // Maturity levels
     Route::get('report/maturity1', [Admin\HomeController::class,'maturity1'])->name('report.maturity1');
@@ -278,6 +282,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('doc/about', function () {
         return view('doc/about');
     });
+
 });
 
 // Profile

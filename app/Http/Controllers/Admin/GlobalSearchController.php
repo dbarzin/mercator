@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Log;
+
 class GlobalSearchController extends Controller
 {
     private $models = [
@@ -59,13 +61,12 @@ class GlobalSearchController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $term = $request->input('search');
 
-        if ($search === null || ! isset($search['term'])) {
-            abort(400);
+        if ($term === null) {
+            return;
         }
 
-        $term = $search['term'];
         $searchableData = [];
 
         foreach ($this->models as $model => $translation) {

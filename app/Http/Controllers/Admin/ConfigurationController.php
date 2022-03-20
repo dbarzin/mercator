@@ -72,6 +72,9 @@ class ConfigurationController extends Controller
                 } else {
                     $msg = 'Email sending fail.';
                 }
+                break;
+            default:
+                $msg = "no actions made.";
         }
         return view(
             'admin.configuration',

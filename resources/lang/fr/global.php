@@ -15,6 +15,7 @@ return [
     "delete" => "Supprimer",
     "deleted_at" => "Supprimé le",
     "edit" => "Modifier",
+    "explore" => "Explorer",
     "forgot_password" => "Mot de passe oublié ?",
     "integrity" => "Intégrité",
     "list" => "Liste",

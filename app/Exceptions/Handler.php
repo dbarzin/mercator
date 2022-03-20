@@ -39,4 +39,19 @@ class Handler extends ExceptionHandler
     {
         parent::report($exception);
     }
+
+
+    /**
+     * Register new exceptions
+     */
+    /*
+    public function register()
+    {
+        // reportable
+        $this->renderable(function (Throwable $e) {
+            //
+            return response(['error' => $e->getMessage()], $e->getCode() ?: 400);
+        });
+    }
+    */
 }
