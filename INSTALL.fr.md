@@ -13,9 +13,9 @@ Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
 
-Installer quelques libraries PHP
+Install Apache2, Composer, git, Graphviz
 
-    sudo apt install libapache2-mod-php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install apache2 git graphviz composer
 
 Installer Apache2, GIT, Graphviz et Composer
 

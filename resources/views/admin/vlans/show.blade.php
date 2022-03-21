@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.vlans.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=VLAN_{{$vlan->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('vlan_edit')
                     <a class="btn btn-info" href="{{ route('admin.vlans.edit', $vlan->id) }}">
                         {{ trans('global.edit') }}

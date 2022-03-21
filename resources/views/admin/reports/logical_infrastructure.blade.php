@@ -65,11 +65,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="NETWORK{{ $network->id }}">
                                     <th colspan="2">
-                                    @can('network_edit')
-                                    <a href="/admin/networks/{{ $network->id }}/edit">{{ $network->name }}</a>
-                                    @else
                                     <a href="/admin/networks/{{ $network->id }}">{{ $network->name }}</a>
-                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -156,11 +152,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SUBNET{{ $subnetwork->id }}">
                                     <th colspan="2">
-                                    @can('subnetwork_edit')
-                                    <a href="/admin/subnetworks/{{ $subnetwork->id }}/edit">{{ $subnetwork->name }}</a>
-                                    @else
                                     <a href="/admin/subnetworks/{{ $subnetwork->id }}">{{ $subnetwork->name }}</a>
-                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -243,11 +235,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="GATEWAY{{ $gateway->id }}">
                                         <th colspan="2">
-                                        @can("gateway_edit")
-                                        <a href="/admin/gateways/{{ $gateway->id }}/edit">{{ $gateway->name }}</a>
-                                        @else
                                         <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tr>
@@ -297,11 +285,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="EXTENTITY{{ $entity->id }}">
                                         <th colspan="2">
-                                        @can('external_connected_entity_edit')
-                                        <a href="/admin/external-connected-entities/{{ $entity->id }}/edit">{{ $entity->name }}</a>
-                                        @else
                                         <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tr>
@@ -347,11 +331,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ROUTER{{ $router->id }}">
                                         <th colspan="2">
-                                        @can("router_access_edit")
-                                        <a href="/admin/routers/{{ $router->id }}/edit">{{ $router->name }}</a>
-                                        @else
                                         <a href="/admin/routers/{{ $router->id }}">{{ $router->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -391,11 +371,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="LOGICAL_SERVER{{ $logicalServer->id }}">
                                         <th colspan="2">
-                                        @can('logical_server_edit')
-                                        <a href="/admin/logical-servers/{{ $logicalServer->id }}/edit">{{ $logicalServer->name }}</a>
-                                        @else
                                         <a href="/admin/logical-servers/{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -468,7 +444,7 @@
                                             </th>
                                             <td>
                                                 @foreach($logicalServer->certificates as $certificate)
-                                                    <a href="/admin/certificates/{{ $certificate->id}}/edit">{{ $certificate->name }}</a>
+                                                    <a href="/admin/certificates/{{ $certificate->id}}">{{ $certificate->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
@@ -500,11 +476,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="DHCP_SERVER{{ $dhcpServer->id }}">
                                         <th colspan="2">
-                                        @can('logical_server_edit')
-                                        <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}/edit">{{ $dhcpServer->name }}</a>
-                                        @else
                                         <a href="/admin/dhcp-servers/{{ $dhcpServer->id }}">{{ $dhcpServer->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -540,11 +512,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="DNS_SERVER{{ $dnsserver->id }}">
                                         <th colspan="2">
-                                        @can('dnsserver_edit')
-                                        <a href="/admin/dnsservers/{{ $dnsserver->id }}/edit">{{ $dnsserver->name }}</a>
-                                        @else
                                         <a href="/admin/dnsservers/{{ $dnsserver->id }}">{{ $dnsserver->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -580,11 +548,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="CERT{{ $certificate->id }}">
                                         <th colspan="2">
-                                        @can('certificate_edit')
-                                        <a href="/admin/certificates/{{ $certificate->id }}/edit">{{ $certificate->name }}</a>
-                                        @else
                                         <a href="/admin/certificates/{{ $certificate->id }}">{{ $certificate->name }}</a>
-                                        @endcan
                                         </th>
                                     </thead>
                                     <tbody>
@@ -657,11 +621,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="VLAN{{ $vlan->id }}">
                                     <th colspan="2">
-                                        @can('vlan_edit') 
-                                        <a href="/admin/vlans/{{ $vlan->id }}/edit">{{ $vlan->name }}</a>
-                                        @else
                                         <a href="/admin/vlans/{{ $vlan->id }}">{{ $vlan->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>

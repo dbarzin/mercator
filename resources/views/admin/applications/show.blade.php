@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('application_edit')
                     <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                         {{ trans('global.edit') }}

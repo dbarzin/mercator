@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.buildings.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=BUILDING_{{$building->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('building_edit')
                     <a class="btn btn-info" href="{{ route('admin.buildings.edit', $building->id) }}">
                         {{ trans('global.edit') }}
@@ -52,9 +57,26 @@
                             @if ($building->site!=null)
                                 <a href="{{ route('admin.sites.show', $building->site->id) }}">
                                 {{ $building->site->name ?? '' }}
+                                </a>
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.building.fields.bays') }}
+                        </th>
+                        <td>
+                            @foreach($building->roomBays as $bay)
+                                <a href="{{ route('admin.bays.show', $bay->id) }}">
+                                {{ $bay->name ?? '' }}
+                                </a>
+                                @if ($building->roomBays->last()!=$bay)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             <div class="form-group">

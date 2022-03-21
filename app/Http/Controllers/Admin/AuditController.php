@@ -119,7 +119,7 @@ class AuditController extends HomeController
 
         // ============
         // Metier
-        // ============
+	// ============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.metier.title_short'));
         $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
         $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
@@ -330,7 +330,7 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
         $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
-        // L1
+	// L1
         $denominator = $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'];
         $sheet->setCellValue("B{$row}", $denominator);
         $sheet->setCellValue(
@@ -922,13 +922,13 @@ class AuditController extends HomeController
                 $sheet->getStyle("{$column}{$row}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
                 // set the color of the cell
-                if ($auditLog->description === 'updated') 
+                if ($auditLog->description === 'updated') {
                     $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF28E2B');
-                elseif ($auditLog->description === 'deleted') 
+                } elseif ($auditLog->description === 'deleted') {
                     $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFE15759');
-                else 
+                } else {
                     $sheet->getStyle("{$column}{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF59A14F');
-                
+                }
 
                 // \Log::info("{$column}{$row} ->". $auditLog->subject_type. ', ' . $year . ', ' . $month . ', ' . $auditLog->count);
             }

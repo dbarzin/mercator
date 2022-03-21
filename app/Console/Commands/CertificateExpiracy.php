@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Log;
 
