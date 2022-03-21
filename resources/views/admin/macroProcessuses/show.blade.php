@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=MACROPROCESS_{{$macroProcessus->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('macro_processus_edit')
                     <a class="btn btn-info" href="{{ route('admin.macro-processuses.edit', $macroProcessus->id) }}">
                         {{ trans('global.edit') }}

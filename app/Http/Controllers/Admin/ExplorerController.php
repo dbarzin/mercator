@@ -161,6 +161,77 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'DATABASE_' . $join->database_id ]);
         }
 
+        // ---------------------------------------------------
+        // Information System
+        // ---------------------------------------------------
+        // Information
+        $informations = DB::table('information')->select('id', 'name')->get();
+        foreach ($informations as $information) {
+            array_push($nodes, [ 'id' => 'INFO_' . $information->id, 'label' => $information->name, 'image' => '/images/information.png' ]);
+        }
+        // database_information
+        $joins = DB::table('database_information')->select('information_id', 'database_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'INFO_' . $join->information_id, 'to' => 'DATABASE_' . $join->database_id ]);
+        }
+        // process
+        $processes = DB::table('processes')->select('id', 'identifiant','macroprocess_id')->get();
+        foreach ($processes as $process) {
+            array_push($nodes, [ 'id' => 'PROCESS_' . $process->id, 'label' => $process->identifiant, 'image' => '/images/process.png' ]);
+            array_push($edges, [ 'from' => 'PROCESS_' . $process->id, 'to' => 'MACROPROCESS_' . $process->macroprocess_id ]);
+        }
+        // information_process
+        $joins = DB::table('information_process')->select('information_id', 'process_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'INFO_' . $join->information_id, 'to' => 'PROCESS_' . $join->process_id ]);
+        }
+        // macro_processuses
+        $macro_processuses = DB::table('macro_processuses')->select('id', 'name')->get();
+        foreach ($macro_processuses as $macro_process) {
+            array_push($nodes, [ 'id' => 'MACROPROCESS_' . $macro_process->id, 'label' => $macro_process->name, 'image' => '/images/macroprocess.png' ]);
+        }
+
+        // Activities
+        $activities = DB::table('activities')->select('id', 'name')->get();
+        foreach ($activities as $activity) {
+            array_push($nodes, [ 'id' => 'ACTIVITY_' . $activity->id, 'label' => $activity->name, 'image' => '/images/activity.png' ]);
+        }
+        // activity_process
+        $joins = DB::table('activity_process')->select('activity_id', 'process_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'ACTIVITY_' . $join->activity_id, 'to' => 'PROCESS_' . $join->process_id ]);
+        }
+
+        // Operations
+        $operations = DB::table('operations')->select('id', 'name')->get();
+        foreach ($operations as $operation) {
+            array_push($nodes, [ 'id' => 'OPERATION_' . $operation->id, 'label' => $operation->name, 'image' => '/images/operation.png' ]);
+        }
+
+        // activity_operation
+        $joins = DB::table('activity_operation')->select('activity_id', 'operation_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'ACTIVITY_' . $join->activity_id, 'to' => 'OPERATION_' . $join->operation_id ]);
+        }
+
+        // Tasks
+        $operations = DB::table('operations')->select('id', 'name')->get();
+        foreach ($operations as $operation) {
+            array_push($nodes, [ 'id' => 'OPERATION_' . $operation->id, 'label' => $operation->name, 'image' => '/images/operation.png' ]);
+        }
+
+        // Actors
+        $actors = DB::table('actors')->select('id', 'name')->get();
+        foreach ($actors as $actor) {
+            array_push($nodes, [ 'id' => 'ACTOR_' . $actor->id, 'label' => $actor->name, 'image' => '/images/actor.png' ]);
+        }
+
+        // actor_operation
+        $joins = DB::table('actor_operation')->select('actor_id', 'operation_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'ACTOR_' . $join->actor_id, 'to' => 'OPERATION_' . $join->operation_id ]);
+        }
+
         return view('admin/reports/explore', compact('nodes', 'edges'));
     }
 }
