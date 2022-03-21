@@ -94,7 +94,7 @@ class ExplorerController extends Controller
         // Logical Servers
         $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip')->get();
         foreach ($logicalServers as $logicalServer) {
-            array_push($nodes, [ 'id' => 'LSERVER_' . $logicalServer->id, 'label' => $logicalServer->name, 'image' => '/images/server.png' ]);
+            array_push($nodes, [ 'id' => 'LSERVER_' . $logicalServer->id, 'label' => $logicalServer->name, 'image' => '/images/lserver.png' ]);
 
             if ($logicalServer->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {

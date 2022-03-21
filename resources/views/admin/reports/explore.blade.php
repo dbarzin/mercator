@@ -8,7 +8,7 @@
                 <div class="card-header">
                     Exploration de la cartographie
                 </div>
-                <div id="mynetwork" style="height:600px;"></div>
+                <div id="mynetwork" style="height:800px;"></div>
               </div>
         </div>
     </div>
