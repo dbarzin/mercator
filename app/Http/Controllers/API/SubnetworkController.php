@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroySubnetworkRequest;
+use App\Subnetwork;
+
 use App\Http\Requests\StoreSubnetworkRequest;
 use App\Http\Requests\UpdateSubnetworkRequest;
+use App\Http\Requests\MassDestroySubnetworkRequest;
 use App\Http\Resources\Admin\SubnetworkResource;
-use App\Subnetwork;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class SubnetworkController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('subnetwork_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('subnetwork_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subnetworks = Subnetwork::all();
+    $subnetworks = Subnetwork::all();
 
-        return response()->json($subnetworks);
+    return response()->json($subnetworks);
     }
 
     public function store(StoreSubnetworkRequest $request)
@@ -41,7 +46,7 @@ class SubnetworkController extends Controller
     }
 
     public function update(UpdateSubnetworkRequest $request, Subnetwork $subnetwork)
-    {
+    {     
         abort_if(Gate::denies('subnetwork_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetwork->update($request->all());
@@ -66,4 +71,6 @@ class SubnetworkController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

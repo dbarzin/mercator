@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyWanRequest;
+use App\Wan;
+
 use App\Http\Requests\StoreWanRequest;
 use App\Http\Requests\UpdateWanRequest;
+use App\Http\Requests\MassDestroyWanRequest;
 use App\Http\Resources\Admin\WanResource;
-use App\Wan;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class WanController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('wan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('wan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wans = Wan::all();
+    $wans = Wan::all();
 
-        return response()->json($wans);
+    return response()->json($wans);
     }
 
     public function store(StoreWanRequest $request)
@@ -41,7 +46,7 @@ class WanController extends Controller
     }
 
     public function update(UpdateWanRequest $request, Wan $wan)
-    {
+    {     
         abort_if(Gate::denies('wan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wan->update($request->all());
@@ -66,4 +71,6 @@ class WanController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

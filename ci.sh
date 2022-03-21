@@ -74,7 +74,7 @@ sleep 3
 tput setaf 2; echo "Dusk test"; tput setaf 7
 
 php artisan dusk:chrome-driver
-php artisan dusk
+php artisan dusk --stop-on-error --stop-on-failure
 
 # kill server
 kill $(lsof -t -i:8000)

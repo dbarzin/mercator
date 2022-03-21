@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyNetworkSwitchRequest;
+use App\NetworkSwitch;
+
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
+use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Resources\Admin\NetworkSwitchResource;
-use App\NetworkSwitch;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class NetworkSwitchController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('networkswitch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('networkswitch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networkswitchs = NetworkSwitch::all();
+    $networkswitchs = NetworkSwitch::all();
 
-        return response()->json($networkswitchs);
+    return response()->json($networkswitchs);
     }
 
     public function store(StoreNetworkSwitchRequest $request)
@@ -41,7 +46,7 @@ class NetworkSwitchController extends Controller
     }
 
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkswitch)
-    {
+    {     
         abort_if(Gate::denies('networkswitch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkswitch->update($request->all());
@@ -66,4 +71,6 @@ class NetworkSwitchController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

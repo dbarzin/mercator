@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPhysicalRouterRequest;
+use App\PhysicalRouter;
+
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
+use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Resources\Admin\PhysicalRouterResource;
-use App\PhysicalRouter;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class PhysicalRouterController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('physical_router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('physical_router_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalrouters = PhysicalRouter::all();
+    $physicalrouters = PhysicalRouter::all();
 
-        return response()->json($physicalrouters);
+    return response()->json($physicalrouters);
     }
 
     public function store(StorePhysicalRouterRequest $request)
@@ -41,7 +46,7 @@ class PhysicalRouterController extends Controller
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalrouter)
-    {
+    {     
         abort_if(Gate::denies('physical_router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalrouter->update($request->all());
@@ -66,4 +71,6 @@ class PhysicalRouterController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

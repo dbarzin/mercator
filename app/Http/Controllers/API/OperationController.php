@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyOperationRequest;
+use App\Operation;
+
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
+use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Resources\Admin\OperationResource;
-use App\Operation;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class OperationController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('operation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('operation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operations = Operation::all();
+    $operations = Operation::all();
 
-        return response()->json($operations);
+    return response()->json($operations);
     }
 
     public function store(StoreOperationRequest $request)
@@ -41,7 +46,7 @@ class OperationController extends Controller
     }
 
     public function update(UpdateOperationRequest $request, Operation $operation)
-    {
+    {     
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation->update($request->all());
@@ -66,4 +71,6 @@ class OperationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

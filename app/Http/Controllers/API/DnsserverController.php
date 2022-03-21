@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\API;
 
 use App\Dnsserver;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyDnsserverRequest;
+
 use App\Http\Requests\StoreDnsserverRequest;
 use App\Http\Requests\UpdateDnsserverRequest;
+use App\Http\Requests\MassDestroyDnsserverRequest;
 use App\Http\Resources\Admin\DnsserverResource;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class DnsserverController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('dnsserver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('dnsserver_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dnsservers = Dnsserver::all();
+    $dnsservers = Dnsserver::all();
 
-        return response()->json($dnsservers);
+    return response()->json($dnsservers);
     }
 
     public function store(StoreDnsserverRequest $request)
@@ -41,7 +46,7 @@ class DnsserverController extends Controller
     }
 
     public function update(UpdateDnsserverRequest $request, Dnsserver $dnsserver)
-    {
+    {     
         abort_if(Gate::denies('dnsserver_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dnsserver->update($request->all());
@@ -66,4 +71,6 @@ class DnsserverController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

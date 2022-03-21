@@ -13,13 +13,13 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
-Install Apache2, Composer, git, Graphviz
-
-    sudo apt install apache2 git graphviz composer
-
 Install some PHP libraries
 
     sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+
+Installer Apache2, GIT, Graphviz et Composer
+
+    sudo apt install apache2 git graphviz composer
 
 ## Project
 
@@ -35,7 +35,7 @@ Clone the project from Github
 
 ## Composer
 
-Install the packages with composer :
+Install packages with composer :
 
     cd /var/www/mercator
     composer update
@@ -112,6 +112,10 @@ To import the test database (optional)
 Start the application with php
 
     php artisan serve
+    
+or to access the application there from another server
+
+    php artisan serve --host 0.0.0.0 --port 8000
 
 The application is accessible at the URL [http://127.0.0.1:8000]
     user : admin@admin.com
@@ -137,7 +141,7 @@ Send a test mail with
 
 Modify the crontab
 
-    crontab -e
+    sudo crontab -e
 
 add this line in the crontab
 
@@ -147,12 +151,12 @@ add this line in the crontab
 
 To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command
 
-    chown -R www-data:www-data /var/www/mercator
-    chmod -R 775 /var/www/mercator/storage
+    sudo chown -R www-data:www-data /var/www/mercator
+    sudo chmod -R 775 /var/www/mercator/storage
 
 Next, create a new Apache virtual host configuration file to serve the Mercator application:
 
-    vi /etc/apache2/sites-available/mercator.conf
+    sudo vi /etc/apache2/sites-available/mercator.conf
 
 Add the following lines:
 
@@ -169,12 +173,13 @@ Add the following lines:
 
 Save and close the file when you are done. Next, enable the Apache virtual host and the rewrite module with the following command:
 
-    a2ensite mercator.conf
-    a2enmod rewrite
+    sudo a2enmod rewrite
+    sudo a2dissite 000-default.conf
+    sudo a2ensite mercator.conf
 
 Finally, restart the Apache service to activate the changes:
 
-    systemctl restart apache2
+    sudo systemctl restart apache2
 
 ## Problems
 

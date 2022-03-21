@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\API;
 
 use App\Activity;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyActivityRequest;
+
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
+use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Resources\Admin\ActivityResource;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class ActivityController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::all();
+    $activities = Activity::all();
 
-        return response()->json($activities);
+    return response()->json($activities);
     }
 
     public function store(StoreActivityRequest $request)
@@ -41,7 +46,7 @@ class ActivityController extends Controller
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)
-    {
+    {     
         abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $activity->update($request->all());
@@ -66,4 +71,6 @@ class ActivityController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

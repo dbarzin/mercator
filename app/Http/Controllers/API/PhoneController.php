@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPhoneRequest;
+use App\Phone;
+
 use App\Http\Requests\StorePhoneRequest;
 use App\Http\Requests\UpdatePhoneRequest;
+use App\Http\Requests\MassDestroyPhoneRequest;
 use App\Http\Resources\Admin\PhoneResource;
-use App\Phone;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class PhoneController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('phone_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('phone_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $phones = Phone::all();
+    $phones = Phone::all();
 
-        return response()->json($phones);
+    return response()->json($phones);
     }
 
     public function store(StorePhoneRequest $request)
@@ -41,7 +46,7 @@ class PhoneController extends Controller
     }
 
     public function update(UpdatePhoneRequest $request, Phone $phone)
-    {
+    {     
         abort_if(Gate::denies('phone_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $phone->update($request->all());
@@ -66,4 +71,6 @@ class PhoneController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

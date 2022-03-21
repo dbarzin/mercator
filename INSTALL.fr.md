@@ -17,9 +17,9 @@ Install Apache2, Composer, git, Graphviz
 
     sudo apt install apache2 git graphviz composer
 
-Install some PHP libraries
+Installer Apache2, GIT, Graphviz et Composer
 
-    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install apache2 git graphviz composer
 
 ## Project
 
@@ -73,7 +73,6 @@ Créer la base de données _mercator_ et l'utilisateur _mercator_user_
 Créer un fichier .env dans le répertoire racine du projet :
 
     cd /var/www/mercator
-
     cp .env.example .env
 
 Mettre les paramètre de connexion à la base de données :
@@ -113,9 +112,29 @@ Démarrer l'application avec php
 
     php artisan serve
 
+ou pour y accéder à l'application depuis un autre serveur
+
+    php artisan serve --host 0.0.0.0 --port 8000
+
 L'application est accessible à l'URL [http://127.0.0.1:8000]
+
     utilisateur : admin@admin.com
     mot de passe : password
+
+## Configurer Passport
+
+Pour l'API JSON, il faut installer Laravel Passport
+
+    php artisan passport:install
+
+Générer les clés de l'API
+
+    php artisan passport:keys
+
+Changer les permission d'accès à la clé
+
+    sudo chown www-data:www-data storage/oauth-*.key
+    sudo chmod 600 storage/oauth-*.key
 
 ## Configuration du mail
 
@@ -137,7 +156,7 @@ Envoyer un mail de test avec
 
 Modifier le crontab
 
-    crontab -e
+    sudo crontab -e
 
 ajouter cette ligne dans le crontab
 
@@ -147,12 +166,12 @@ ajouter cette ligne dans le crontab
 
 Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
 
-    chown -R www-data:www-data /var/www/mercator
-    chmod -R 775 /var/www/mercator/storage
+    sudo chown -R www-data:www-data /var/www/mercator
+    sudo chmod -R 775 /var/www/mercator/storage
 
 Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour servir l'application Mercator :
 
-    vi /etc/apache2/sites-available/mercator.conf
+    sudo vi /etc/apache2/sites-available/mercator.conf
 
 Ajouter les lignes suivantes :
 
@@ -169,12 +188,13 @@ Ajouter les lignes suivantes :
 
 Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de réécriture avec la commande suivante :
 
-    a2ensite mercator.conf
-    a2enmod rewrite
+    sudo a2enmod rewrite
+    sudo a2dissite 000-default.conf
+    sudo a2ensite mercator.conf
 
 Enfin, redémarrez le service Apache pour activer les modifications :
 
-    systemctl restart apache2
+    sudo systemctl restart apache2
 
 ## Problèmes
 
@@ -197,20 +217,19 @@ Avant de mettre à jour l'application prenez un backup de la base de données et
 Récupérer les sources de GIT
 
     cd /var/www/mercator
-    git pull
+    sudo -u www-data git pull
 
 Migrer la base de données
 
-    php artisan migrate
+    sudo -u www-data php artisan migrate
 
 Mettre à jour les librairies
 
-    composer update
+    sudo -u www-data composer update
 
 Vider les caches
 
-    php artisan config:clear &&  php artisan view:clear
-
+    sudo -u www-data php artisan config:clear &&  php artisan view:clear
 
 ## Tests de non-régression
 
@@ -220,29 +239,29 @@ Pour exécuter les tests de non-régression de Mercator, vous devez d'abord inst
 
 Installer le pluggin dusk
 
-    php artisan dusk:chrome-driver
+    sudo www-data php artisan dusk:chrome-driver
 
 Configurer l'environement
 
-    cp .env .env.dusk.local
+    sudo -u www-data cp .env .env.dusk.local
 
 Lancer l'application
 
-    php artisan serve
+    sudo -u www-data php artisan serve
 
 Dans un autre terminal, lancer les tests
 
-    php artisan dusk
+    sudo -u www-data php artisan dusk
 
 ## Réparer les problèmes de migraton
 
 Mettre à jour les librairies
 
-    composer update
+    sudo -u www-data composer update
 
 Sauvegarder la base de données
 
-    mysqldump mercator \
+    sudo mysqldump mercator \
         --ignore-table=mercator.users \
         --ignore-table=mercator.roles \
         --ignore-table=mercator.permissions \
@@ -255,7 +274,7 @@ Sauvegarder la base de données
 
 Then backup database users
 
-    mysqldump mercator \
+    sudo mysqldump mercator \
         --tables users roles role_user \
         --add-drop-table \
         > backup_mercator_users.sql
@@ -270,18 +289,18 @@ Créer une nouvelle base de données
 
 Exécuter les migrations
 
-    php artisan migrate --seed
+    sudo -u www-data php artisan migrate --seed
 
 Générer la clé
 
-    php artisan key:generate
+    sudo -u www-data php artisan key:generate
 
 Restaurer les données
 
-    mysql mercator < backup_mercator_data.sql
+    sudo mysql mercator < backup_mercator_data.sql
 
 Restaurer les utilisateurs
 
-    mysql mercator < backup_mercator_users.sql
+    sudo mysql mercator < backup_mercator_users.sql
 
 Tous les problèmes de migration devraient être résolus.

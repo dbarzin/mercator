@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyLogicalServerRequest;
+use App\LogicalServer;
+
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
+use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Resources\Admin\LogicalServerResource;
-use App\LogicalServer;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class LogicalServerController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalservers = LogicalServer::all();
+    $logicalservers = LogicalServer::all();
 
-        return response()->json($logicalservers);
+    return response()->json($logicalservers);
     }
 
     public function store(StoreLogicalServerRequest $request)
@@ -41,7 +46,7 @@ class LogicalServerController extends Controller
     }
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)
-    {
+    {     
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer->update($request->all());
@@ -66,4 +71,6 @@ class LogicalServerController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

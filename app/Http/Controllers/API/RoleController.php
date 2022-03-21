@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Role;
+
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use App\Http\Requests\MassDestroyRoleRequest;
 use App\Http\Resources\Admin\RoleResource;
-use App\Role;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('roles_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('roles_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roless = Role::all();
+    $roless = Role::all();
 
-        return response()->json($roless);
+    return response()->json($roless);
     }
 
     public function store(StoreRoleRequest $request)
@@ -40,7 +46,7 @@ class RoleController extends Controller
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
-    {
+    {     
         abort_if(Gate::denies('roles_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role->update($request->all());
@@ -58,4 +64,6 @@ class RoleController extends Controller
 
         return response()->json();
     }
+
 }
+

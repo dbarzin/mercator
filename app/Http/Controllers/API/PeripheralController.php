@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPeripheralRequest;
+use App\Peripheral;
+
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
+use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Resources\Admin\PeripheralResource;
-use App\Peripheral;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class PeripheralController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $peripherals = Peripheral::all();
+    $peripherals = Peripheral::all();
 
-        return response()->json($peripherals);
+    return response()->json($peripherals);
     }
 
     public function store(StorePeripheralRequest $request)
@@ -41,7 +46,7 @@ class PeripheralController extends Controller
     }
 
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
-    {
+    {     
         abort_if(Gate::denies('peripheral_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $peripheral->update($request->all());
@@ -66,4 +71,6 @@ class PeripheralController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

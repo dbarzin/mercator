@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyLanRequest;
+use App\Lan;
+
 use App\Http\Requests\StoreLanRequest;
 use App\Http\Requests\UpdateLanRequest;
+use App\Http\Requests\MassDestroyLanRequest;
 use App\Http\Resources\Admin\LanResource;
-use App\Lan;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class LanController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('lan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('lan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lans = Lan::all();
+    $lans = Lan::all();
 
-        return response()->json($lans);
+    return response()->json($lans);
     }
 
     public function store(StoreLanRequest $request)
@@ -41,7 +46,7 @@ class LanController extends Controller
     }
 
     public function update(UpdateLanRequest $request, Lan $lan)
-    {
+    {     
         abort_if(Gate::denies('lan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $lan->update($request->all());
@@ -66,4 +71,6 @@ class LanController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

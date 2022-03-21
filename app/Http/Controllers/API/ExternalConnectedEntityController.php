@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\API;
 
 use App\ExternalConnectedEntity;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
+
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
+use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Resources\Admin\ExternalConnectedEntityResource;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class ExternalConnectedEntityController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('external_connected_entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('external_connected_entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = ExternalConnectedEntity::all();
+    $entities = ExternalConnectedEntity::all();
 
-        return response()->json($entities);
+    return response()->json($entities);
     }
 
     public function store(StoreExternalConnectedEntityRequest $request)
@@ -41,7 +46,7 @@ class ExternalConnectedEntityController extends Controller
     }
 
     public function update(UpdateExternalConnectedEntityRequest $request, ExternalConnectedEntity $externalconnectedentity)
-    {
+    {     
         abort_if(Gate::denies('external_connected_entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $externalconnectedentity->update($request->all());
@@ -66,4 +71,6 @@ class ExternalConnectedEntityController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+

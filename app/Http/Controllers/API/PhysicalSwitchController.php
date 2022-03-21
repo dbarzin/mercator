@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
+use App\PhysicalSwitch;
+
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
+use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Resources\Admin\PhysicalSwitchResource;
-use App\PhysicalSwitch;
+
 use Gate;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Log;
 
 class PhysicalSwitchController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('physical_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    abort_if(Gate::denies('physical_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalswitchs = PhysicalSwitch::all();
+    $physicalswitchs = PhysicalSwitch::all();
 
-        return response()->json($physicalswitchs);
+    return response()->json($physicalswitchs);
     }
 
     public function store(StorePhysicalSwitchRequest $request)
@@ -41,7 +46,7 @@ class PhysicalSwitchController extends Controller
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalswitch)
-    {
+    {     
         abort_if(Gate::denies('physical_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalswitch->update($request->all());
@@ -66,4 +71,6 @@ class PhysicalSwitchController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
+
