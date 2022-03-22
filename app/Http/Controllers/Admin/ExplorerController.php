@@ -178,6 +178,27 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'LSERVER_' . $join->logical_server_id ]);
         }
+        // Application Services
+        $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
+        foreach ($services as $service) {
+            array_push($nodes, [ 'id' => 'SERV_' . $service->id, 'label' => $service->name, 'image' => '/images/service.png' ]);
+        }
+        // application_service_m_application
+        $joins = DB::table('application_service_m_application')->select('m_application_id', 'application_service_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'SERV_' . $join->application_service_id ]);
+        }
+        // Application Modules
+        $modules = DB::table('application_modules')->select('id', 'name')->whereNull('deleted_at')->get();
+        foreach ($modules as $module) {
+            array_push($nodes, [ 'id' => 'MOD_' . $module->id, 'label' => $module->name, 'image' => '/images/applicationmodule.png' ]);
+        }
+        // application_module_application_service
+        $joins = DB::table('application_module_application_service')->select('application_module_id', 'application_service_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'MOD_' . $join->application_module_id, 'to' => 'SERV_' . $join->application_service_id ]);
+        }
+
         // certificate_m_application
         $joins = DB::table('certificate_m_application')->select('m_application_id', 'certificate_id')->get();
         foreach ($joins as $join) {
