@@ -43,13 +43,17 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
                                 {{ $annuaire->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $annuaire->solution ?? '' }}
                             </td>
                             <td>
-                                {{ $annuaire->zone_admin->name ?? '' }}
+                                <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
+                                    {{ $annuaire->zone_admin->name ?? '' }}
+                                </a>
                             </td>
 
                             <td>

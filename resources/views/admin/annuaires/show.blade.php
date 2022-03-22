@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=ANNUAIRE_{{$annuaire->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('annuaire_edit')
                     <a class="btn btn-info" href="{{ route('admin.annuaires.edit', $annuaire->id) }}">
                         {{ trans('global.edit') }}
@@ -59,7 +63,9 @@
                             {{ trans('cruds.annuaire.fields.zone_admin') }}
                         </th>
                         <td>
+                            <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
                             {{ $annuaire->zone_admin->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
                 </tbody>

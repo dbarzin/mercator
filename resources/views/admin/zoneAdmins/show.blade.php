@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=ZONE_{{$zoneAdmin->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('zone_admin_edit')
                     <a class="btn btn-info" href="{{ route('admin.zone-admins.edit', $zoneAdmin->id) }}">
                         {{ trans('global.edit') }}
@@ -44,6 +48,36 @@
                         </th>
                         <td>
                             {!! $zoneAdmin->description !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.zoneAdmin.fields.annuaires') }}
+                        </th>
+                        <td>
+                            @foreach($zoneAdmin->zoneAdminAnnuaires as $annuaire)
+                            <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
+                                {{ $annuaire->name }}
+                            </a>
+                            @if ($zoneAdmin->zoneAdminAnnuaires->last()!=$annuaire)
+                                ,
+                            @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.zoneAdmin.fields.forests') }}
+                        </th>
+                        <td>
+                            @foreach($zoneAdmin->zoneAdminforestAds as $forestAd)
+                            <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
+                                {{ $forestAd->name ?? '' }}
+                            </a>
+                            @if ($zoneAdmin->zoneAdminforestAds->last()!=$forestAd)
+                                ,
+                            @endif
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

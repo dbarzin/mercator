@@ -46,17 +46,26 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                 {{ $forestAd->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $forestAd->description ?? '' !!}
                             </td>
                             <td>
-                                {{ $forestAd->zone_admin->name ?? '' }}
+                                <a href="{{ route('admin.zone-admins.show', $forestAd->zone_admin->id) }}">
+                                    {{ $forestAd->zone_admin->name ?? '' }}
+                                </a>
                             </td>
                             <td>
-                                @foreach($forestAd->domaines as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                @foreach($forestAd->domaines as $domain)
+                                    <a href="{{ route('admin.domaine-ads.show', $domain->id) }}">
+                                        {{ $domain->name }}
+                                    </a>
+                                    @if ($forestAd->domaines->last()!=$domain)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>

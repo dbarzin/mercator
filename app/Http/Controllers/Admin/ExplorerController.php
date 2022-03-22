@@ -125,6 +125,39 @@ class ExplorerController extends Controller
         }
 
         // ---------------------------------------------------
+        // Administration view
+        // ---------------------------------------------------
+        // Zones
+        $zoneAdmins = DB::table('zone_admins')->select('id', 'name')->get();
+        foreach ($zoneAdmins as $zone) {
+            array_push($nodes, [ 'id' => 'ZONE_' . $zone->id, 'label' => $zone->name, 'image' => '/images/zoneadmin.png' ]);
+        }
+        // Annuaires
+        $annuaires = DB::table('annuaires')->select('id', 'name','zone_admin_id')->get();
+        foreach ($annuaires as $annuaire) {
+            array_push($nodes, [ 'id' => 'ANNUAIRE_' . $annuaire->id, 'label' => $annuaire->name, 'image' => '/images/annuaire.png' ]);
+            if ($annuaire->zone_admin_id!=null)
+                array_push($edges, [ 'from' => 'ANNUAIRE_' . $annuaire->id, 'to' => 'ZONE_' . $annuaire->zone_admin_id ]);
+        }
+        // Forest
+        $forests = DB::table('forest_ads')->select('id', 'name','zone_admin_id')->get();
+        foreach ($forests as $forest) {
+            array_push($nodes, [ 'id' => 'FOREST_' . $forest->id, 'label' => $forest->name, 'image' => '/images/ldap.png' ]);
+            if ($annuaire->zone_admin_id!=null)
+                array_push($edges, [ 'from' => 'FOREST_' . $forest->id, 'to' => 'ZONE_' . $forest->zone_admin_id ]);
+        }
+        // Domain
+        $domains = DB::table('domaine_ads')->select('id', 'name')->get();
+        foreach ($domains as $domain) {
+            array_push($nodes, [ 'id' => 'DOMAIN_' . $domain->id, 'label' => $domain->name, 'image' => '/images/domain.png' ]);
+        }
+        // domaine_ad_forest_ad
+        $joins = DB::table('domaine_ad_forest_ad')->select('forest_ad_id', 'domaine_ad_id')->get();
+        foreach ($joins as $join) {
+            array_push($edges, [ 'from' => 'FOREST_' . $join->forest_ad_id, 'to' => 'DOMAIN_' . $join->domaine_ad_id ]);
+        }
+
+        // ---------------------------------------------------
         // Application view
         // ---------------------------------------------------
         // Application Blocks

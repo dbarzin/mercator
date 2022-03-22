@@ -49,7 +49,9 @@
 
                             </td>
                             <td>
-                                {{ $domaineAd->name ?? '' }}
+                                <a href="{{ route('admin.domaine-ads.show', $domaineAd->id) }}">
+                                    {{ $domaineAd->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $domaineAd->domain_ctrl_cnt ?? '' }}
