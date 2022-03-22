@@ -58,8 +58,13 @@
                             {{ trans('cruds.applicationService.fields.modules') }}
                         </th>
                         <td>
-                            @foreach($applicationService->modules as $key => $modules)
-                                <span class="label label-info">{{ $modules->name }}</span>
+                            @foreach($applicationService->modules as $module)
+                                <a href="{{ route('admin.application-modules.show', $module->id) }}">                                
+                                {{ $module->name }}
+                                </a>
+                                @if ($applicationService->modules->last()!=$module)
+                                ,
+                                @endif
                             @endforeach
                         </td>
                     </tr>
