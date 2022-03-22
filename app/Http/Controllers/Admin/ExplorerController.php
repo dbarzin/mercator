@@ -298,11 +298,11 @@ class ExplorerController extends Controller
         // Relations
         $relations = DB::table('relations')->select('id', 'name','source_id','destination_id')->whereNull('deleted_at')->get();
         foreach ($relations as $relation) {
-            array_push($nodes, [ 'id' => 'RELATION_' . $relation->id, 'label' => $relation->name, 'image' => '/images/relation.png' ]);
+            array_push($nodes, [ 'id' => 'REL_' . $relation->id, 'label' => $relation->name, 'image' => '/images/relation.png' ]);
             if ($relation->source_id!=null)
-                array_push($edges, [ 'from' => 'RELATION_' . $relation->id, 'to' => 'ENTITY_' . $relation->source_id ]);
+                array_push($edges, [ 'from' => 'REL_' . $relation->id, 'to' => 'ENTITY_' . $relation->source_id ]);
             if ($relation->destination_id!=null)
-                array_push($edges, [ 'from' => 'RELATION_' . $relation->id, 'to' => 'ENTITY_' . $relation->destination_id ]);
+                array_push($edges, [ 'from' => 'REL_' . $relation->id, 'to' => 'ENTITY_' . $relation->destination_id ]);
         }
         // entity_process
         $joins = DB::table('entity_process')->select('entity_id', 'process_id')->get();
