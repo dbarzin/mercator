@@ -10,8 +10,12 @@
         <div class="form-group">
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.entities.index') }}">
-		    {{ trans('global.back_to_list') }}
-		</a>
+        		    {{ trans('global.back_to_list') }}
+	           	</a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=ENTITY_{{$entity->id}}">
+                    {{ trans('global.explore') }}
+                </a>
 
                 @can('entity_edit')
                     <a class="btn btn-info" href="{{ route('admin.entities.edit', $entity->id) }}">

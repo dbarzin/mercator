@@ -83,7 +83,7 @@
                                 @endif                                
                             </td>
                             <td>
-                                @if (($certificate->status==null) || ($certificate->status==0))
+                                @if ($certificate->status==0)
                                     {{ trans('cruds.certificate.fields.status_good') }}
                                 @elseif ($certificate->status==1)
                                     {{ trans('cruds.certificate.fields.status_revoked') }}

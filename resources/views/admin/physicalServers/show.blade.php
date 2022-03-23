@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-servers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PSERVER_{{$physicalServer->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('physical_server_edit')
                     <a class="btn btn-info" href="{{ route('admin.physical-servers.edit', $physicalServer->id) }}">
                         {{ trans('global.edit') }}

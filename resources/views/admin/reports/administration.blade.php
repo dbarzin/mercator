@@ -34,11 +34,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ZONE{{ $zone->id }}">
                                         <th colspan="2">
-                                            @can('zone_admin_edit')
-                                            <a href="/admin/zone-admins/{{ $zone->id }}/edit">{{ $zone->name }}</a>
-                                            @else
                                             <a href="/admin/zone-admins/{{ $zone->id }}">{{ $zone->name }}</a>
-                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -96,11 +92,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ANNUAIRE{{ $annuaire->id }}">
                                         <th colspan="2">
-                                            @can('annuaire_edit')
-                                            <a href="/admin/annuaires/{{ $annuaire->id }}/edit">{{ $annuaire->name }}</a>
-                                            @else
                                             <a href="/admin/annuaires/{{ $annuaire->id }}">{{ $annuaire->name }}</a>
-                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -148,11 +140,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="FOREST{{ $forest->id }}">
                                         <th colspan="2">
-                                            @can('forest_ad_edit')
-                                            <a href="/admin/forest-ads/{{ $forest->id }}/edit">{{ $forest->name }}</a>
-                                            @else
                                             <a href="/admin/forest-ads/{{ $forest->id }}">{{ $forest->name }}</a>
-                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>
@@ -205,11 +193,7 @@
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="DOMAIN{{ $domain->id }}">
                                         <th colspan="2">
-                                            @can('domaine_ad_edit')
-                                            <a href="/admin/domaine-ads/{{ $domain->id }}/edit">{{ $domain->name }}</a>
-                                            @else
                                             <a href="/admin/domaine-ads/{{ $domain->id }}">{{ $domain->name }}</a>
-                                            @endcan
                                         </th>
                                     </thead>                                    
                                 <tbody>

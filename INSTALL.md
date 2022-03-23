@@ -17,13 +17,9 @@ Install some PHP libraries
 
     sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
-Install Graphviz
+Installer Apache2, GIT, Graphviz et Composer
 
-    sudo apt install graphviz
-
-Install GIT
-
-    sudo apt install git
+    sudo apt install apache2 git graphviz composer
 
 ## Project
 
@@ -39,11 +35,7 @@ Clone the project from Github
 
 ## Composer
 
-Install Composer: [Install Composer globally](https://getcomposer.org/download/).
-
-    sudo mv composer.phar /usr/local/bin/composer
-
-Install the packages with composer :
+Install packages with composer :
 
     cd /var/www/mercator
     composer update

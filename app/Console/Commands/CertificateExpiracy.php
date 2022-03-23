@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-
 use Illuminate\Support\Facades\Log;
 
 class CertificateExpiracy extends Command
@@ -44,7 +43,7 @@ class CertificateExpiracy extends Command
                 ->orderBy('end_validity')
                 ->get();
 
-            $this->info(
+            Log::debug(
                 $certificates->count() .
                 ' certificate(s) will expire in '.
                 config('mercator-config.cert.expire-delay') .
@@ -56,27 +55,40 @@ class CertificateExpiracy extends Command
                 $mail_from = config('mercator-config.cert.mail-from');
                 $to_email = config('mercator-config.cert.mail-to');
                 $subject = config('mercator-config.cert.mail-subject');
-                $message = '<html><body>These certificates are about to exipre :<br><br>';
-                foreach ($certificates as $cert) {
-                    $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
-                }
-                $message .= '</body></html>';
+                $group = config('mercator-config.cert.group');
 
-                // print message
-                // $this->info($message);
-
-                // Define the header
+                // set mail header
                 $headers = [
                     'MIME-Version: 1.0',
                     'Content-type: text/html;charset=iso-8859-1',
                     'From: '. $mail_from,
                 ];
 
-                // Send mail
-                if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-                    $this->info('Mail sent to '.$to_email);
-                } else {
-                    $this->info('Email sending fail.');
+                if ($group==null || $group==='1') {
+                    $message = '<html><body>These certificates are about to exipre :<br><br>';
+                    foreach ($certificates as $cert) {
+                        $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
+                    }
+                    $message .= '</body></html>';
+
+                    // Send mail
+                    if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                        Log::debug('Mail sent to '.$to_email);
+                    } else {
+                        Log::debug('Email sending fail.');
+                    }
+                }
+                else {
+                    foreach ($certificates as $cert) {
+                        $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
+                        $message = '<html><body>' . $cert->description . '</body></html>';
+                        // Send mail
+                        if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                            Log::debug('Mail sent to '.$to_email);
+                        } else {
+                            Log::debug('Email sending fail.');
+                        }                        
+                    }
                 }
             }
         }

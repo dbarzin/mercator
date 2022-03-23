@@ -12,6 +12,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=MOD_{{$applicationModule->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('application_module_edit')
                     <a class="btn btn-info" href="{{ route('admin.application-modules.edit', $applicationModule->id) }}">
                         {{ trans('global.edit') }}

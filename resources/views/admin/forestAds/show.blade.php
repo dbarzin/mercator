@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=FOREST_{{$forestAd->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('entity_edit')
                     <a class="btn btn-info" href="{{ route('admin.forest-ads.edit', $forestAd->id) }}">
                         {{ trans('global.edit') }}
@@ -51,7 +55,9 @@
                             {{ trans('cruds.forestAd.fields.zone_admin') }}
                         </th>
                         <td>
+                            <a href="{{ route('admin.zone-admins.show', $forestAd->zone_admin->id) }}">
                             {{ $forestAd->zone_admin->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -59,8 +65,13 @@
                             {{ trans('cruds.forestAd.fields.domaines') }}
                         </th>
                         <td>
-                            @foreach($forestAd->domaines as $key => $domaines)
-                                <span class="label label-info">{{ $domaines->name }}</span>
+                            @foreach($forestAd->domaines as $domaine)
+                            <a href="{{ route('admin.domaine-ads.show', $domaine->id) }}">
+                            {{ $domaine->name }}
+                            </a>
+                            @if ($forestAd->domaines->last()!=$domaine)
+                            ,
+                            @endif
                             @endforeach
                         </td>
                     </tr>

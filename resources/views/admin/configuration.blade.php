@@ -52,6 +52,21 @@
             </div>
 
             <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="group" id="certRadios1" value="1" {{ $group==='1' ? 'checked' : '' }}>
+                  <label class="form-check-label" for="certRadios1">
+                    {{ trans("cruds.configuration.certificate.one_mail") }}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="group" id="certRadios2" value="0" {{ $group==='0' ? 'checked' : '' }}>
+                  <label class="form-check-label" for="certRadios2">
+                    {{ trans("cruds.configuration.certificate.multiple_mails") }}
+                  </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit" name="action" value="save">
                     {{ trans('global.save') }}
                 </button>
@@ -59,10 +74,8 @@
                     {{ trans('global.test') }}
                 </button>
             </div>
-
+        </form>
     </div>
-
-
 </div>
 
 @endsection

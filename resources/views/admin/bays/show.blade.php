@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.bays.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=BAY_{{$bay->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('bay_edit')
                     <a class="btn btn-info" href="{{ route('admin.bays.edit', $bay->id) }}">
                         {{ trans('global.edit') }}

@@ -61,11 +61,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SITE{{ $site->id }}">
                                 <th colspan="2">
-                                    @can('site_edit')
-                                    <a href="/admin/sites/{{ $site->id }}/edit">{{ $site->name }}</a>
-                                    @else
                                     <a href="/admin/sites/{{ $site->id }}">{{ $site->name }}</a>
-                                    @endcan
                                 </th>
                                 </thead>
                                 <tbody>
@@ -115,11 +111,7 @@
                             <table id="BUILDING{{ $building->id }}" class="table table-bordered table-striped table-hover">                                
                                 <thead >
                                 <th colspan="2">
-                                    @can('building_edit')
-                                    <a href="/admin/buildings/{{ $building->id }}/edit">{{ $building->name }}</a>
-                                    @else
                                     <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
-                                    @endcan
                                 </th>
                                 </thead>
                                 <tbody>
@@ -162,11 +154,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="BAY{{ $bay->id }}">
                                     <th colspan="2">
-                                    @can('bay_edit')
-                                    <a href="/admin/bays/{{ $bay->id }}/edit">{{ $bay->name }}</a>
-                                    @else
                                     <a href="/admin/bays/{{ $bay->id }}">{{ $bay->name }}</a>
-                                    @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -281,11 +269,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PSERVER{{ $pserver->id }}">
                                     <th colspan="2">
-                                        @can('physical_server_edit')
-                                        <a href="/admin/physical-servers/{{ $pserver->id }}/edit">{{ $pserver->name }}</a>
-                                        @else
                                         <a href="/admin/physical-servers/{{ $pserver->id }}">{{ $pserver->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -364,11 +348,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="WORKSTATION{{ $workstation->id }}">
                                     <th colspan="2">
-                                        @can('workstation_edit')
-                                        <a href="/admin/workstations/{{ $workstation->id }}/edit">{{ $workstation->name }}</a>
-                                        @else
                                         <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -420,11 +400,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="STORAGEDEVICE{{ $storageDevice->id }}">
                                     <th colspan="2">
-                                        @can('storage_device_edit')
-                                        <a href="/admin/storage-devices/{{ $storageDevice->id }}/edit">{{ $storageDevice->name }}</a>
-                                        @else
                                         <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -480,11 +456,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PERIPHERAL{{ $peripheral->id }}">
                                     <th colspan="2">
-                                        @can('peripheral_edit')
-                                        <a href="/admin/peripherals/{{ $peripheral->id }}/edit">{{ $peripheral->name }}</a>
-                                        @else
                                         <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -548,11 +520,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PHONE{{ $phone->id }}">
                                     <th colspan="2">
-                                        @can('phone_edit')
-                                        <a href="/admin/phones/{{ $phone->id }}/edit">{{ $phone->name }}</a>
-                                        @else
                                         <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -604,11 +572,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="SWITCH{{ $switch->id }}">
                                     <th colspan="2">
-                                        @can('physical_switch_edit')
-                                        <a href="/admin/physical-switches/{{ $switch->id }}/edit">{{ $switch->name }}</a>
-                                        @else
                                         <a href="/admin/physical-switches/{{ $switch->id }}">{{ $switch->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -668,11 +632,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ROUTER{{ $router->id }}">
                                     <th colspan="2">
-                                        @can('physical_router_edit')
-                                        <a href="/admin/physical-routers/{{ $router->id }}/edit">{{ $router->name }}</a>
-                                        @else
                                         <a href="/admin/physical-routers/{{ $router->id }}">{{ $router->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -732,11 +692,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="WIFI{{ $wifiTerminal->id }}">
                                     <th colspan="2">
-                                        @can('wifi_terminal_edit')
-                                        <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}/edit">{{ $wifiTerminal->name }}</a>
-                                        @else
                                         <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>
@@ -788,11 +744,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PSD{{ $physicalSecurityDevice->id }}">
                                     <th colspan="2">
-                                        @can('physical_security_device_edit')
-                                        <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}/edit">{{ $physicalSecurityDevice->name }}</a>
-                                        @else
                                         <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
-                                        @endcan
                                     </th>
                                 </thead>
                                 <tbody>

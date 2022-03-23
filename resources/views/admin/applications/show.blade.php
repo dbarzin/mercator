@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
                     <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                         {{ trans('global.edit') }}
