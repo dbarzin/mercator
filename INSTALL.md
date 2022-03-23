@@ -170,7 +170,7 @@ Modify .env file, and uncomment LDAP configuration :
     # Permet de restreindre l'accès à des groupes
     LDAP_GROUPS="Delivering,Help Desk"
 
-Retrouvez une documentation plus complète sur le paramétrage du LDAP ici.
+Find more complete documentation on LDAP configuration here.
 
 ## Apache
 

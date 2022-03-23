@@ -185,7 +185,7 @@ Dans le fichier .env, mettre les paramètres de connexion à votre LDAP en déco
     # Allows you to restrict access to groups
     LDAP_GROUPS="Delivering,Help Desk"
 
-Find more complete documentation on LDAP configuration here.
+Retrouvez une documentation plus complète sur le paramétrage du LDAP ici.
 
 ## Apache
 
