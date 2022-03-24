@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.activities.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=ACTIVITY_{{$activity->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('activity_edit')
                     <a class="btn btn-info" href="{{ route('admin.activities.edit', $activity->id) }}">
                         {{ trans('global.edit') }}

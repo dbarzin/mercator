@@ -19,13 +19,14 @@ class ConfigurationController extends Controller
         $mail_subject = config('mercator-config.cert.mail-subject');
         $check_frequency = config('mercator-config.cert.check-frequency');
         $expire_delay = config('mercator-config.cert.expire-delay');
+        $group = config('mercator-config.cert.group');
 
         // dd($mail_from);
 
         // Return
         return view(
             'admin.configuration',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay')
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay', 'group')
         );
     }
 
@@ -39,6 +40,8 @@ class ConfigurationController extends Controller
         $mail_subject = request('mail_subject');
         $check_frequency = request('check_frequency');
         $expire_delay = request('expire_delay');
+        $group = request('group');
+
         switch ($request->input('action')) {
             case 'save':
                 // put in config file
@@ -47,6 +50,7 @@ class ConfigurationController extends Controller
                 config(['mercator-config.cert.mail-subject' => $mail_subject]);
                 config(['mercator-config.cert.check-frequency' => $check_frequency]);
                 config(['mercator-config.cert.expire-delay' => $expire_delay]);
+                config(['mercator-config.cert.group' => $group]);
 
                 // Save configuration
                 $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
@@ -78,7 +82,7 @@ class ConfigurationController extends Controller
         }
         return view(
             'admin.configuration',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay')
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay','group')
         )
             ->withErrors($msg);
     }

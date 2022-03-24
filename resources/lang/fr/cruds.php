@@ -239,6 +239,8 @@ return [
             'sent_from' => 'Envoyé depuis',
             'title' => 'Expiration des certificats',
             'to' => 'à',
+            'one_mail' => 'Envoyer un mail par certificat expiré',
+            'multiple_mails' => 'Envoyer un mail avec tous les certificats expirés',
         ],
         'title' => 'Configuration',
         'title_singular' => 'Configuration',

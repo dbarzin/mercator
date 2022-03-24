@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PROCESS_{{$process->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('process_edit')
                     <a class="btn btn-info" href="{{ route('admin.processes.edit', $process->id) }}">
                         {{ trans('global.edit') }}

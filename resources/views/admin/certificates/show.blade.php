@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.certificates.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=CERT_{{$certificate->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('certificate_edit')
                     <a class="btn btn-info" href="{{ route('admin.certificates.edit', $certificate->id) }}">
                         {{ trans('global.edit') }}

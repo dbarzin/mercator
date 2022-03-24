@@ -239,6 +239,8 @@ return [
             'sent_from' => 'Sent from',
             'title' => 'Certificate expiration',
             'to' => 'to',
+            'one_mail' => 'Send one mail per expired certificate',
+            'multiple_mails' => 'Send one mail with all expired certificates',
         ],
         'title' => 'Configuration',
         'title_singular' => 'Configuration',

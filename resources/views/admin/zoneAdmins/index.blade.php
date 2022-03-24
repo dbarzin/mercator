@@ -29,6 +29,12 @@
                             {{ trans('cruds.zoneAdmin.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.zoneAdmin.fields.annuaires') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.zoneAdmin.fields.forests') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -40,10 +46,32 @@
 
                             </td>
                             <td>
-                                {{ $zoneAdmin->name ?? '' }}
+                                <a href="{{ route('admin.zone-admins.show', $zoneAdmin->id) }}">
+                                    {{ $zoneAdmin->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $zoneAdmin->description ?? '' !!}
+                            </td>
+                            <td>
+                                @foreach($zoneAdmin->zoneAdminAnnuaires as $annuaire)
+                                <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
+                                    {{ $annuaire->name }}
+                                </a>
+                                @if ($zoneAdmin->zoneAdminAnnuaires->last()!=$annuaire)
+                                    ,
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($zoneAdmin->zoneAdminforestAds as $forestAd)
+                                <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
+                                    {{ $forestAd->name ?? '' }}
+                                </a>
+                                @if ($zoneAdmin->zoneAdminforestAds->last()!=$forestAd)
+                                    ,
+                                @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('zone_admin_show')
