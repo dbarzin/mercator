@@ -31,7 +31,7 @@
       var _nodes = new Map();
       var _edges = new Map();
       @foreach($nodes as $node) 
-        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", label: "{{ $node["label"]}}", image: "{{ $node["image"] }}", shape: IMG });
+        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", label: "{{ $node["label"]}}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG });
         _edges.set( "{{ $node["id"] }}", [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])

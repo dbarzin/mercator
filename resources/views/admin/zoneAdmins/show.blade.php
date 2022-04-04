@@ -90,8 +90,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $zoneAdmin->created_at->format(trans('global.timestamp')) ?? '' }} |
-        {{ trans('global.updated_at') }} {{ $zoneAdmin->updated_at->format(trans('global.timestamp')) ?? '' }} 
+        {{ trans('global.created_at') }} {{ $zoneAdmin->created_at ? $zoneAdmin->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $zoneAdmin->updated_at ? $zoneAdmin->updated_at->format(trans('global.timestamp')) : '' }} 
     </div>
 </div>
 @endsection

@@ -62,6 +62,11 @@
             </div>
         </div>
     </div>
+    <div class="card-footer">
+        {{ trans('global.created_at') }} {{ $router->created_at ? $router->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $router->updated_at ? $router->updated_at->format(trans('global.timestamp')) : '' }} 
+    </div>
+
 </div>
 
 

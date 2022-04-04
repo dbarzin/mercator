@@ -205,8 +205,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $application->created_at->format(trans('global.timestamp')) ?? '' }} |
-        {{ trans('global.updated_at') }} {{ $application->updated_at->format(trans('global.timestamp')) ?? '' }} 
+        {{ trans('global.created_at') }} {{ $application->created_at ? $application->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $application->updated_at ? $application->updated_at->format(trans('global.timestamp')) : '' }} 
     </div>
 </div>
 @endsection

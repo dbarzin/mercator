@@ -82,7 +82,11 @@ class ExplorerController extends Controller
         // $subnetworks = DB::table("subnetworks")->select("id","name","network_id","vlan_id")->whereNull('deleted_at')->get();
         $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
-            array_push($nodes, [ 'id' => 'SUBNETWORK_' . $subnetwork->id, 'label' => $subnetwork->name, 'image' => '/images/network.png' ]);
+            array_push($nodes, [ 
+                'id' => 'SUBNETWORK_' . $subnetwork->id, 
+                'label' => $subnetwork->name, 
+                'title' => $subnetwork->address,
+                'image' => '/images/network.png' ]);
             if ($subnetwork->network_id !== null) {
                 array_push($edges, [ 'from' => 'SUBNETWORK_' . $subnetwork->id, 'to' => 'NETWORK_' . $subnetwork->network_id ]);
             }

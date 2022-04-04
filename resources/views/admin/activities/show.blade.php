@@ -85,8 +85,8 @@
         </div>
     </div>
     <div class="card-footer">
-        {{ trans('global.created_at') }} {{ $activity->created_at->format(trans('global.timestamp')) ?? '' }} |
-        {{ trans('global.updated_at') }} {{ $activity->updated_at->format(trans('global.timestamp')) ?? '' }} 
+        {{ trans('global.created_at') }} {{ $activity->created_at ? $activity->created_at->format(trans('global.timestamp')) : '' }} |
+        {{ trans('global.updated_at') }} {{ $activity->updated_at ? $activity->updated_at->format(trans('global.timestamp')) : '' }} 
     </div>
 </div>
 
