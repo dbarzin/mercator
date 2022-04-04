@@ -32,7 +32,7 @@ class CertificateExpiracy extends Command
     {
         Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
 
-        if ($this->needCheck()) {
+	if ($this->needCheck()) {
             // Check for old certificates
             Log::debug("CertificateExpiracy - check");
 
@@ -81,9 +81,10 @@ class CertificateExpiracy extends Command
                 else {
                     foreach ($certificates as $cert) {
                         $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
-                        $message = '<html><body>' . $cert->description . '</body></html>';
+                        //$message = '<html><body>' . $cert->description . '</body></html>';
+                        $message = $cert->description;
                         // Send mail
-                        if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                        if (mail($to_email, $mailSubject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                             Log::debug('Mail sent to '.$to_email);
                         } else {
                             Log::debug('Email sending fail.');
