@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                'unique:users,name,'.request()->route('user')->id.',id,deleted_at,NULL',
+                'unique:users,email,NULL,id,deleted_at,NULL',
             ],
             'roles.*' => [
                 'integer',
