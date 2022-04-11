@@ -859,6 +859,7 @@ return [
         ],
         'title' => 'Rôles',
         'title_singular' => 'Rôle',
+        "check_all" => "Tout cocher"
     ],
     'router' => [
         'description' => 'Composant gérant les connexions entre différents réseaux.',

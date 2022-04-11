@@ -854,6 +854,7 @@ return [
         ],
         'title' => 'Roles',
         'title_singular' => 'Role',
+        "check_all" => "Check all"
     ],
     'router' => [
         'description' => 'Component managing connections between different networks.',
