@@ -28,8 +28,13 @@
                             {{ trans('cruds.role.fields.permissions') }}
                         </th>
                         <td>
-                            @foreach($role->permissions as $key => $permissions)
-                                <span class="label label-info">{{ $permissions->title }}</span>
+                            @foreach($role->sortedPerms as $perm)
+                                <div class="d-inline-block col-sm-12 col-lg-5">
+                                    <span class="font-weight-bold">{{ ucwords($perm['name']) }} - </span>
+                                    @foreach($perm['actions'] as $action)
+                                        {{ ucfirst($action[1]) }}@if(!$loop->last), @endif
+                                    @endforeach
+                                </div>
                             @endforeach
                         </td>
                     </tr>

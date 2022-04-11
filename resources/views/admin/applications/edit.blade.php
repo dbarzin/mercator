@@ -14,7 +14,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}" required>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}">
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
@@ -99,6 +99,23 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                 </div>
+                <div class="form-group">
+                    <label for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
+                        @if (!$referent_list->contains(old('functional_referent')))
+                            <option> {{ old('functional_referent') }}</option>'
+                        @endif
+                        @foreach($referent_list as $t)
+                            <option {{ (old('functional_referent') ? old('functional_referent') : $application->functional_referent) == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('functional_referent'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('functional_referent') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.functional_referent_helper') }}</span>
+                </div>
 
             </div>
             <div class="col-sm">
@@ -158,6 +175,24 @@
                 </div>
                 @endif
 
+                <div class="form-group">
+                    <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="referent">
+                        @if (!$editor_list->contains(old('editor')))
+                            <option> {{ old('editor') }}</option>'
+                        @endif
+                        @foreach($editor_list as $t)
+                            <option {{ (old('editor') ? old('editor') : $application->editor) == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('editor'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('editor') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
+                </div>
+
             </div>
             <div class="col-sm">
 
@@ -190,21 +225,76 @@
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
                 @endif
+                <div class="form-group">
+                     @php
+                         $currentCartographers = array();
+                         $cartographers = array();
+                         foreach ($application->cartographers as $cartographer) {
+                             $currentCartographers[] = $cartographer->id;
+                         }
 
+                         foreach ($cartographers_list as $key => $user) {
+                             // S'il se trouve dans old ou qu'il se trouve dans les cartographers de base (sans erreurs de formulaire)
+                             if((old('cartographers') !== null && in_array($key, old('cartographers', []))) || (in_array($key, $currentCartographers) && !$errors->any())) {
+                                 $cartographers[] = [$key, $user, true]; // true = selected
+                             } else {
+                                 $cartographers[] = [$key, $user, false];
+                             }
+                         }
+                    @endphp
+                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
+                        @foreach($cartographers as $cartographer)
+                            <option value="{{ $cartographer[0] }}" {{ $cartographer[2] ? 'selected' : '' }}>{{ $cartographer[1] }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cartographers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cartographer') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="event_desc">{{ trans('cruds.application.fields.events') }}</label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea id="eventMessage" class="textarea-custom-size" rows="2" placeholder="{{ trans('cruds.application.fields.events_placeholder') }}" class="form-control" type="text" id="event_desc" value=""></textarea>
+                            <a href="#" id="addEventBtn" class="btn btn-danger my-2">{{ trans('cruds.application.fields.events_add') }}</a>
+                            <button class="btn btn-info my-3 events_list_button">
+                                {{ trans('cruds.application.fields.events_list_button') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="form-group">
+                    <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
+                    <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $application->install_date) }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
+                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $application->update_date) }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
+                </div>
             </div>
         </div>
 
-
           <div class="row">
             <div class="col-sm">
-
                     <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
+                                    <label
                                         @if (auth()->user()->granularity>=2)
-                                        class="recommended" 
+                                        class="recommended"
                                         @endif
                                         for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                                 </td>
@@ -318,7 +408,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
             </div>
             @endif
-        
+
         </div>
         <div class="col-sm">
 
@@ -360,7 +450,7 @@
             </div>
 
             </div>
-        </div>            
+        </div>
         <div class="form-group">
             @if (auth()->user()->granularity>=2)
                 <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
@@ -390,6 +480,91 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+
+    // Variable contenant la liste des évènements affichés sur la popup
+    var swalHtml = @json($application->events);
+
+    /**
+     * Contruction de la liste des évènements
+     * @returns {string}
+     */
+    function makeHtmlForSwalEvents() {
+        let events = swalHtml;
+        let ret = '<ul>';
+        events.forEach (function(event) {
+            ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
+            ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+        });
+        ret += '</ul>';
+        return ret;
+    }
+
+    /**
+     * Fire the popup
+     */
+    $('.events_list_button').click(function(e) {
+        e.preventDefault()
+        Swal.fire({
+            title: 'Évènements',
+            icon: 'info',
+                html: makeHtmlForSwalEvents(),
+            showCloseButton: true,
+            didOpen(popup) {
+                $('.delete_event').on('click', function(e) {
+                    e.preventDefault();
+                    let event_id = $(this).parent().data('id');
+                    var that = $(this);
+                    if (event_id) {
+                        $.ajax({
+                            url: '/admin/application-events/' + event_id,
+                            type: "DELETE",
+                            data: {
+                                m_application_id: {{ $application->id }},
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(data){
+                                that.parent().remove();
+                                // Mise à jour des évènements pour la popup
+                                swalHtml = data.events;
+                                alert('Evènement supprimé !');
+                            },
+                            error: function(){
+                                alert('Une erreur est survenue');
+                            }
+                        })
+                    }
+                });
+            }
+        })
+    })
+
+    /**
+     * Send AJAX for adding an event
+     */
+    $('#addEventBtn').on('click', function(e) {
+        e.preventDefault();
+        let app_id = {{ $application->id }};
+        let user_id = {{ auth()->id() }};
+        let message = $('#eventMessage').val();
+        if(message !== '' && user_id && app_id) {
+            $.post("{{ route("admin.application-events.store") }}", {
+                m_application_id: app_id,
+                user_id: user_id,
+                message: message,
+                _token: "{{ csrf_token() }}"
+            }, "json")
+                .done(function (data) {
+                    // Mise à jour des évènements pour la popup
+                    swalHtml = data.events;
+                    alert('Evènement ajouté !');
+                    $('#eventMessage').val('');
+                })
+                .fail(function (msg) {
+                    alert('Une erreur est survenue');
+                })
+        }
+    });
+
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
@@ -403,9 +578,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-function template(data, container) {      
+function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {
@@ -425,7 +600,6 @@ function template(data, container) {
           return m;
       }
     });
-          
-  }); 
+  });
 </script>
 @endsection

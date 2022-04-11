@@ -34,6 +34,7 @@ démarche globale de gestion des risques.
 - REST API avec JSON
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
+- Connexion LDAP
 
 ## Ecrans
 

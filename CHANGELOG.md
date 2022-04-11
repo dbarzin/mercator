@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Filter on application blocks and applications in flows view
 - Add User manual in French
 - REST API with JSON
+- Add LDAP connection
 
 ### Fixed
 

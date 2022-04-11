@@ -20,16 +20,29 @@
                 <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('permissions') ? 'is-invalid' : '' }}" name="permissions[]" id="permissions" multiple required>
-                    @foreach($permissions as $id => $permissions)
-                        <option value="{{ $id }}" {{ in_array($id, old('permissions', [])) ? 'selected' : '' }}>{{ $permissions }}</option>
+                <label class="required mb-4" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
+                <div class="row">
+                    @foreach($permissions_sorted as $permissions)
+                        <div class="col-md-4 mb-4">
+                            <h3 class="accordion">{{ ucwords($permissions['name']) }}</h3>
+                            <div class="panel">
+                                <div class="permission-list">
+                                    @foreach($permissions['actions'] as $action)
+                                        <div class="form-check form-switch form-switch-lg">
+                                            <input class="form-check-input" data-check="{{ str_replace(' ', '_', $permissions['name']) }}" name="permissions[]" type="checkbox" value="{{ $action[0] }}" id="{{ 'perm_'.$action[0] }}" {{ (in_array($action[0], old('permissions', []))) ? 'checked' : ''}}>
+                                            <label class="form-check-label" for="{{ 'perm_'.$action[0] }}">{{ ucfirst($action[1]) }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if(count($permissions['actions']) > 1)
+                                    <div class="check-all-wrapper">
+                                        <button class="btn btn-primary" id="{{ str_replace(' ', '_', $permissions['name']) }}">{{ trans('cruds.role.check_all') }}</button>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                     @endforeach
-                </select>
+                </div>
                 @if($errors->has('permissions'))
                     <div class="invalid-feedback">
                         {{ $errors->first('permissions') }}

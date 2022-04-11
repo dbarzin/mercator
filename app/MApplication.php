@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Http\Controllers\Admin\MApplicationLogController;
 use App\Traits\Auditable;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $description
  * @property int|null $security_need_c
  * @property string|null $responsible
+ * @property string|null $functional_referent
+ * @property string|null $editor
  * @property string|null $type
  * @property string|null $technology
  * @property string|null $external
@@ -45,6 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $processes_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\ApplicationService> $services
  * @property-read int|null $services_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\CartographerMApplication> $cartographers
  *
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MApplication newQuery()
@@ -83,12 +88,13 @@ class MApplication extends Model
         'name',
         'description',
         'responsible',
+        'functional_referent'
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
+        'deleted_at'
     ];
 
     protected $fillable = [
@@ -97,6 +103,8 @@ class MApplication extends Model
         'description',
         'entity_resp_id',
         'responsible',
+        'functional_referent',
+        'editor',
         'technology',
         'documentation',
         'type',
@@ -110,7 +118,47 @@ class MApplication extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'install_date',
+        'update_date'
     ];
+
+    /**
+     * Vérifie que l'utilisateur passé en paramètre est cartographe de cette application.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function hasCartographer(User $user) {
+        return $this->cartographers()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getInstallDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setInstallDateAttribute($value)
+    {
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getUpdateDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setUpdateDateAttribute($value)
+    {
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
 
     public function applicationSourceFluxes()
     {
@@ -161,4 +209,14 @@ class MApplication extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+	public function cartographers()
+	{
+		return $this->belongsToMany(User::class, 'cartographer_m_application');
+	}
+
+	public function events()
+	{
+		return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');
+	}
 }

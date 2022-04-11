@@ -27,10 +27,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Dashboard
     Route::get('/', [Admin\HomeController::class,'index'])->name('home');
 
-    // Permissions
-    Route::resource('permissions', Admin\PermissionsController::class);
-    Route::delete('permissions-destroy', [Admin\PermissionsController::class,'massDestroy'])->name('permissions.massDestroy');
-
     // Roles
     Route::resource('roles', Admin\RolesController::class);
     Route::delete('roles-destroy', [Admin\RolesController::class,'massDestroy'])->name('roles.massDestroy');
@@ -82,6 +78,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Application Services
     Route::resource('application-services', Admin\ApplicationServiceController::class);
     Route::delete('application-services-destroy', [Admin\ApplicationServiceController::class,'massDestroy'])->name('application-services.massDestroy');
+
+    // Application Events
+    Route::resource('application-events', Admin\MApplicationEventController::class);
 
     // Databases
     Route::resource('databases', Admin\DatabaseController::class);

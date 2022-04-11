@@ -12,12 +12,35 @@ use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
+use App\MApplicationEvent;
+use App\Services\CartographerService;
+use App\Services\EventService;
+use App\User;
 use App\Process;
+// CoreUI Gates
 use Gate;
+// Laravel Gate
+use Illuminate\Support\Facades\Gate as LaravelGate;
 use Symfony\Component\HttpFoundation\Response;
 
 class MApplicationController extends Controller
 {
+    /**
+     * Services
+     */
+    protected CartographerService $cartographerService;
+    protected EventService $eventService;
+
+    /**
+     * Automatic Injection for Service
+     *
+     * @return void
+     */
+    public function __construct(CartographerService $cartographerService, EventService $eventService) {
+        $this->cartographerService = $cartographerService;
+        $this->eventService = $eventService;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -44,6 +67,9 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
+        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
             'admin.applications.create',
@@ -59,7 +85,10 @@ class MApplicationController extends Controller
                 'technology_list',
                 'users_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+                'referent_list',
+                'editor_list',
+                'cartographers_list'
             )
         );
     }
@@ -71,7 +100,11 @@ class MApplicationController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
+        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
+
+        // Attribution du role pour les nouveaux cartographes
+        $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
@@ -79,6 +112,8 @@ class MApplicationController extends Controller
     public function edit(MApplication $application)
     {
         abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Check for cartographers
+        LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -94,8 +129,13 @@ class MApplicationController extends Controller
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
+        $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
+        $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
+        // Chargement des évènements
+        $this->eventService->getLoadAppEvents($application);
 
         return view(
             'admin.applications.edit',
@@ -112,7 +152,10 @@ class MApplicationController extends Controller
                 'technology_list',
                 'users_list',
                 'external_list',
-                'responsible_list'
+                'responsible_list',
+                'referent_list',
+                'editor_list',
+	            'cartographers_list'
             )
         );
     }
@@ -124,7 +167,11 @@ class MApplicationController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
+	    $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
+
+        // Attribution du role pour les nouveaux cartographes
+        $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
@@ -133,7 +180,9 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
+        // Chargement des évènements
+        $this->eventService->getLoadAppEvents($application);
 
         return view('admin.applications.show', compact('application'));
     }
@@ -141,6 +190,8 @@ class MApplicationController extends Controller
     public function destroy(MApplication $application)
     {
         abort_if(Gate::denies('m_application_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Check for cartographers
+        LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $application->delete();
 
