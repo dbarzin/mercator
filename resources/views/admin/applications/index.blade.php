@@ -40,6 +40,8 @@
                         <th>
                             {{ trans('cruds.application.fields.cartographers') }}
                         </th>
+                        <th>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
