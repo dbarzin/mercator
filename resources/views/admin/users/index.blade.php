@@ -46,7 +46,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.users.show', $user->id) }}">
                                 {{ $user->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $user->email ?? '' }}

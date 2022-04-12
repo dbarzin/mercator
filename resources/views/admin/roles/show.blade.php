@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.roles.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                @if(auth()->user()->can('roles_edit'))
+                    <a class="btn btn-info" href="{{ route('admin.roles.edit', $role->id) }}">
+                        {{ trans('global.edit') }}
+                    </a>
+                @endif
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>

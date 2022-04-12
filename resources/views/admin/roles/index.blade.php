@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.roles.show', $role->id) }}">
                                 {{ $role->title ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 @foreach($role->sortedPerms as $perm)
