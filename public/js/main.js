@@ -63,9 +63,24 @@ $(document).ready(function () {
     }
   })
 
-$('button.sidebar-toggler').click(function () {
-    setTimeout(function() {
-      $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-    }, 275);
+  $('button.sidebar-toggler').click(function () {
+      setTimeout(function() {
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+      }, 275);
   })
+
+  /**
+   * Accordion JS toggle
+   */
+  $('.accordion').click(function () {
+      $(this).toggleClass('active');
+      $(this).next('.panel').toggleClass('active');
+  })
+
+  $('.check-all-wrapper button').click(function (e) {
+      e.preventDefault();
+      $('input[data-check='+$(this).prop('id')+']:not(:checked)').each(function (){
+         $(this).prop('checked', true);
+      });
+  });
 })

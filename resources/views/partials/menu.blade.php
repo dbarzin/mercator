@@ -149,7 +149,7 @@
                         {{ trans('cruds.menu.application.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                        @if (auth()->user()->granularity>=2)                        
+                        @if (auth()->user()->granularity>=2)
                         @can('application_block_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.application-blocks.index") }}" class="nav-link {{ request()->is('admin/application-blocks') || request()->is('admin/application-blocks/*') ? 'active' : '' }}">
@@ -181,7 +181,7 @@
                                     {{ trans('cruds.applicationService.title') }}
                                 </a>
                             </li>
-                        @endcan                        
+                        @endcan
                         @can('application_module_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.application-modules.index") }}" class="nav-link {{ request()->is('admin/application-modules') || request()->is('admin/application-modules/*') ? 'active' : '' }}">
@@ -192,7 +192,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @endif                        
+                        @endif
                         @can('database_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.databases.index") }}" class="nav-link {{ request()->is('admin/databases') || request()->is('admin/databases/*') ? 'active' : '' }}">
@@ -349,7 +349,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @if (auth()->user()->granularity>=2)                        
+                        @if (auth()->user()->granularity>=2)
                         @can('dhcp_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.dhcp-servers.index") }}" class="nav-link {{ request()->is('admin/dhcp-servers') || request()->is('admin/dhcp-servers/*') ? 'active' : '' }}">
@@ -445,7 +445,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @if (auth()->user()->granularity>=2)                        
+                        @if (auth()->user()->granularity>=2)
                         @can('workstation_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.workstations.index") }}" class="nav-link {{ request()->is('admin/workstations') || request()->is('admin/workstations/*') ? 'active' : '' }}">
@@ -507,7 +507,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @if (auth()->user()->granularity>=2)                        
+                        @if (auth()->user()->granularity>=2)
                         @can('wifi_terminal_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.wifi-terminals.index") }}" class="nav-link {{ request()->is('admin/wifi-terminals') || request()->is('admin/wifi-terminals/*') ? 'active' : '' }}">
@@ -581,16 +581,6 @@
                         {{ trans('cruds.menu.user_management.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                        @can('permission_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-unlock-alt nav-icon">
-
-                                    </i>
-                                    {{ trans('cruds.permission.title') }}
-                                </a>
-                            </li>
-                        @endcan
                         @can('role_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">

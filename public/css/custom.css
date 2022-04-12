@@ -69,11 +69,11 @@ table.dataTable thead .sorting_desc {
 }
 
 .sidebar {
-    background-color: #FFFFFF;    
+    background-color: #FFFFFF;
 }
 
 .sidebar-minimizer {
-    background-color: #FFFFFF;       
+    background-color: #FFFFFF;
 }
 
 .sidebar .nav-item {
@@ -184,29 +184,91 @@ html {
 .highRisk {
   background: #E15759;
   padding: 3px;
-  border-radius: 20% / 30%;  
+  border-radius: 20% / 30%;
 }
 
 .mediumRisk {
   background: #F28E2B;
   padding: 3px;
-  border-radius: 20% / 30%;  
+  border-radius: 20% / 30%;
 }
 
 .lowRisk {
   background: #F1CE63;
   padding: 3px;
-  border-radius: 20% / 30%;  
+  border-radius: 20% / 30%;
 }
 
 .veryLowRisk {
   background: #8CD17D;
   padding: 3px;
-  border-radius: 20% / 30%;  
+  border-radius: 20% / 30%;
 }
 
 .noRisk {
   background: #FFFFFF;
   padding: 3px;
-  border-radius: 20% / 30%;  
+  border-radius: 20% / 30%;
+}
+
+/**
+ * Admin application edit - Evènements
+ */
+.textarea-custom-size {
+    min-height: auto;
+    width: 100%;
+}
+
+/**
+ * Accordéons : utilisés pour les permissions
+ */
+.accordion {
+    cursor: pointer;
+    border-radius: 0 10px 10px 0;
+    padding: 5px 5px 5px 30px;
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0;
+    transition: all 0.3s;
+    margin-bottom: 0;
+}
+
+.accordion:hover, .accordion.active {
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+}
+
+.accordion:before {
+    position: absolute;
+    content: '\003e';
+    font-size: 18px;
+    left: 20px;
+    top: 10px;
+}
+
+/*.accordion.active:before {*/
+/*    content: 'v';*/
+/*}*/
+
+.panel {
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
+    background-color: white;
+    overflow: hidden;
+    opacity:0;
+    max-height: 0;
+    border: 0.5px solid #eee;
+    transition: all ease-in-out 0.2s;
+}
+
+.panel.active {
+    opacity: 1;
+    max-height: 150px;
+}
+
+.permission-list, .check-all-wrapper {
+    width: 50%;
+}
+
+.help-block {
+    color: #7C123E;
+    font-size: 0.7rem;
 }

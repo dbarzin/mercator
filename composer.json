@@ -14,6 +14,7 @@
     "require": {
         "php": "^8.0",
         "bugsnag/bugsnag-laravel": "^2.18",
+        "directorytree/ldaprecord-laravel": "^2.5",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",

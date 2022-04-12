@@ -51,6 +51,17 @@ class Role extends Model
         'deleted_at',
     ];
 
+    /**
+     * Permet de récupérer un role avec son nom
+     *
+     * @param string $title
+     * @return Role|null
+     */
+    public static function getRoleByTitle(string $title) : Role|null
+    {
+        return Role::whereTitle($title)->first();
+    }
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);

@@ -10,11 +10,23 @@ use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
 use App\Information;
 use App\MApplication;
+use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseController extends Controller
 {
+    protected CartographerService $cartographerService;
+
+    /**
+     * Automatic Injection for Service
+     *
+     * @return void
+     */
+    public function __construct(CartographerService $cartographerService) {
+        $this->cartographerService = $cartographerService;
+    }
+
     public function index()
     {
         abort_if(Gate::denies('database_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -31,7 +43,9 @@ class DatabaseController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::with('cartographers')->get();
+        // Filtre sur les cartographes si nécessaire
+        $applications = $this->cartographerService->filterOnCartographers($applications);
         // lists
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
@@ -68,7 +82,9 @@ class DatabaseController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $informations = Information::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::with('cartographers')->get();
+        // Filtre sur les cartographes si nécessaire
+        $applications = $this->cartographerService->filterOnCartographers($applications);
         // lists
         $type_list = Database::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $external_list = Database::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');

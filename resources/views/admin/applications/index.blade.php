@@ -38,7 +38,7 @@
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
                         <th>
-                            &nbsp;
+                            {{ trans('cruds.application.fields.cartographers') }}
                         </th>
                     </tr>
                 </thead>
@@ -63,7 +63,7 @@
                                 ($application->application_block==null)
                                 )
                             )||
-                            ($application->processes->count()==0)                            
+                            ($application->processes->count()==0)
                             )
                                 class="table-warning"
                         @endif
@@ -74,7 +74,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
-                                    {{ $application->name ?? '' }} 
+                                    {{ $application->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -85,7 +85,7 @@
                             </td>
                             <td>
                                 @if ($application->entity_resp!=null)
-                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">                                
+                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">
                                 {{ $application->entity_resp->name ?? '' }}
                                 </a>
                                 @endif
@@ -98,25 +98,32 @@
                                 @endif
                             </td>
                             <td>
+                                @if ($application->cartographers !== null)
+                                    @foreach($application->cartographers as $cartographer)
+                                        {{ $cartographer->name }} @if(!$loop->last)-@endif
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td>
                                 @can('m_application_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.applications.show', $application->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('m_application_edit')
+                                @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
+                                @endif
 
-                                @can('m_application_delete')
+                                @if(auth()->user()->can('m_application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
                                     <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
+                                @endif
 
                             </td>
 
@@ -177,7 +184,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

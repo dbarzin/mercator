@@ -20,6 +20,7 @@ return [
     'integrity' => 'Intégrité',
     'list' => 'Liste',
     'login' => 'Connexion',
+    'login_id' => 'Adresse mail',
     'login_email' => 'eMail',
     'login_password' => 'Mot de passe',
     'login_password_confirmation' => 'Confirmation du mot de passe',

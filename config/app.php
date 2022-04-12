@@ -174,8 +174,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
+        App\Providers\RouteServiceProvider::class
     ],
 
     /*
@@ -230,17 +229,13 @@ return [
 
     ],
 
-
     /*
     |--------------------------------------------------------------------------
-    | LDAP Parameters
+    | Custom config
     |--------------------------------------------------------------------------
-    |
-    | read from .env files
-    |
     */
-    'ldap_url' => env('LDAP_URL'),
-    'ldap_domain' => env('LDAP_DOMAIN'),
-    'ldap_cert' => env('LDAP_CERT'),
-
+    'cartographers' => env('CARTOGRAPHERS', false),
+    'ldap_type' => env('LDAP_TYPE', 'AD'),
+    'ldap_scope' => env('LDAP_SCOPE', null),
+    'ldap_groups' => env('LDAP_GROUPS', null),
 ];
