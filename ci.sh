@@ -56,7 +56,7 @@ php artisan migrate --seed
 
 # Insert test data
 tput setaf 2; echo "Insert test data"; tput setaf 7
-pv ./mercator_data.sql | mysql mercator_test
+cat ./mercator_data.sql | mysql mercator_test
 
 # Check code quality
 tput setaf 2; echo "Check code quality"; tput setaf 7
