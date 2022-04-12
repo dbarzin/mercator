@@ -15,7 +15,7 @@ rm -rf /tmp/mercator
 
 # Project
 tput setaf 2; echo "Clone git"; tput setaf 7
-git clone https://github.com/dbarzin/mercator.git/
+git clone https://github.com/dbarzin/mercator
 
 # Composer
 tput setaf 2; echo "Composer update"; tput setaf 7

@@ -18,3 +18,4 @@ mercator.sublime-workspace
 composer.lock
 docker/data/
 docker/.env
+database/migrate/*add_ldap_columns_to_users_table.php
