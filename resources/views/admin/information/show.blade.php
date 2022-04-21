@@ -76,7 +76,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.information.fields.process') }}
+                            {{ trans('cruds.information.fields.processes') }}
                         </th>
                         <td>
                             @foreach($information->processes as $process)
