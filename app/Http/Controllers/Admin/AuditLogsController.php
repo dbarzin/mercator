@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\AuditLog;
 use App\Http\Controllers\Controller;
+
 use Gate;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AuditLogsController extends Controller
 {

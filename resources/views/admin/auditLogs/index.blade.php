@@ -68,7 +68,9 @@
                 @endforeach
             </thead>
         </table>
-        {{ $logs->links() }}        
+        <p>
+        {{ $logs->links() }}
+        </p>        
     </div>
 </div>
 @endsection
@@ -85,6 +87,8 @@
     pageLength: 100, 
     stateSave: true,
     bSort:false,
+    bLengthChange:false,
+    bInfo:false,
   });
   let table = $('.datatable-Entity:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
