@@ -16,52 +16,9 @@ class AuditLogsController extends Controller
     {
         abort_if(Gate::denies('audit_log_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = DB::table('audit_logs');
-            // TODO: join with users table
-            // ->join('users', 'audit_logs.user_id', '=', 'users.id');
+        $logs = DB::table('audit_logs')->orderBy('id','desc')->paginate(100);
 
-            $table = DataTables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'audit_log_show';
-                $crudRoutePart = 'audit-logs';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('subject_id', function ($row) {
-                return $row->subject_id ? $row->subject_id : '';
-            });
-            $table->editColumn('subject_type', function ($row) {
-                return $row->subject_type ? $row->subject_type : '';
-            });
-            $table->editColumn('user_id', function ($row) {
-                return $row->user_id ? $row->user_id : '';
-            });
-            $table->editColumn('host', function ($row) {
-                return $row->host ? $row->host : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.auditLogs.index');
+        return view('admin.auditLogs.index', ['logs' => $logs]);
     }
 
     public function show(AuditLog $auditLog)
