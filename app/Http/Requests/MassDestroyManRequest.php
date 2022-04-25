@@ -19,7 +19,7 @@ class MassDestroyManRequest extends FormRequest
     {
         return [
             'ids' => 'required|array',
-            'ids.*' => 'exists:men,id',
+            'ids.*' => 'exists:mans,id',
         ];
     }
 }
