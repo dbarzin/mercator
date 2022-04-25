@@ -369,7 +369,7 @@
                                         <th>{{ trans('cruds.applicationService.fields.applications') }}</th>
                                         <td>
                                             @foreach($applicationService->applications as $application)
-                                                <a href="APPLICATION{{ $application->id }}">{{ $application->name }}</a>
+                                                <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif                                                
