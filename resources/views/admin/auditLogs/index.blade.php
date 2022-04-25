@@ -48,14 +48,16 @@
                         {{ $log->description }}
                     </td>
                     <td>
-                        {{ $log->subject_type }}
+                        {{ $log->subject_type }}                        
                     </td>
                     <td>
-                        {{ $log->subject_id }}
+                        <a href="{{ \App\AuditLog::subject_url($log->subject_type) }}/{{ $log->subject_id }}">
+                            {{ $log->subject_id }}
+                        </a>
                     </td>
                     <td>
                         <a href="{{ route('admin.users.show', $log->user_id) }}">
-                        {{ $log->user_id }}
+                        {{ $log->name }}
                         </a>
                     </td>
                     <td>

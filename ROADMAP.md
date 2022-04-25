@@ -15,7 +15,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 
 ## Evolutions mineurs
 
-- [ ] Améliorer la page des logs (nom de l'utilisateur / action / lien vers l'objet concerné)
+- [x] Améliorer la page des logs (nom de l'utilisateur / action / lien vers l'objet concerné)
 - [ ] Packaging des librairies javascript avec npm
 - [ ] Dessiner un nouveu jeu d'icônes en SVG
 - [x] Revoir les pages de gestion des droits d'accès
