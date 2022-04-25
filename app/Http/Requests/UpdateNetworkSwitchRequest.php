@@ -23,7 +23,7 @@ class UpdateNetworkSwitchRequest extends FormRequest
                 'max:32',
                 'required',
                 //'unique:network_switches,name,' . request()->route('network_switch')->id,
-                'unique:network_switches,name,'.request()->route('network_switche')->id.',id,deleted_at,NULL',
+                'unique:network_switches,name,'.request()->route('network_switch')->id.',id,deleted_at,NULL',
             ],
         ];
     }
