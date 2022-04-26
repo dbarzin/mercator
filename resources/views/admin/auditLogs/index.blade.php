@@ -33,6 +33,8 @@
                     <th>
                         {{ trans('global.created_at') }}
                     </th>
+                    <th>
+                    </th>
                 </tr>
             </thead>
                 @foreach($logs as $log) 
@@ -65,6 +67,11 @@
                     </td>
                     <td>
                         {{ $log->created_at }}
+                    </td>
+                    <td>
+                        <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
+                            {{ trans('global.view') }}
+                        </a>
                     </td>
                 </tr>
                 @endforeach
