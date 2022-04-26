@@ -13,10 +13,6 @@ Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
 
-Install Apache2, Composer, git, Graphviz
-
-    sudo apt install apache2 git graphviz composer
-
 Installer Apache2, GIT, Graphviz et Composer
 
     sudo apt install apache2 git graphviz composer
