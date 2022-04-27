@@ -20,7 +20,7 @@ Table *users* :
 | updated_at        | timestamp    | Date de mise à jour |
 | deleted_at        | timestamp    | Date de suppression |
 
-Les mots de passes sont hashés par la fonction fournie en standard dans Laravel.
+Les mots de passe sont hashés par la fonction fournie en standard dans Laravel.
 
 Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php). 
 
@@ -36,19 +36,19 @@ Pour chaque objet de la cartographie, il existe un droit en :
 
 Trois rôles sont encodés par défaut :
 
-- Utilisateur : les utilisateur ont tous les droits sur tous les object à l'exception des utilisateurs et de la configuation.
-- Auditeur : l'auditeur à le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.
+- Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la configuation.
+- Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.
 - Administrateur : l'administrateur a tous les droits sans exception.
 
 Il est possible de créer de nouveaux rôles selon les besoins. 
 
 ### Gestion des certificats
 
-Des notifications d'expiration des certificats peuvent être envoyés à des pérides définies.
+Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.
 
 L'écran de configuration est accessible via le menu "Préférences" -> "Configuration".
 
    [<img src="/mercator/images/certificates.png" width="600">](/mercator/images/certificates.png)
 
-Le bouton "Test"permet d'nvoyer un mail de test à l'adresse de notification spécifiées.
+Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.
 
