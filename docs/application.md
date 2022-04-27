@@ -18,7 +18,7 @@ La page principale est divisée en trois parties :
 
    [<img src="/mercator/images/treemap.png" width="600">](/mercator/images/treemap.png)
 
-Chaque élément est sélectonnable et donne accès à la liste des objets de la cartographie sélectionnés.
+Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnées.
 
 ### Les menus
 

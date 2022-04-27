@@ -22,7 +22,7 @@ Cette liste permet de dresser l'inventaire les entités responsables des différ
 
 Liste des applications par groupe applicatif 
 
-Cette liste permet d’avoir une vue de toutes les applications du système d’information classées par groupe applicatif. Cette liste peut être utilisé pour mener une veille technologique sur les vulnérabilités des applications du système d’information.
+Cette liste permet d’avoir une vue de toutes les applications du système d’information classées par groupe applicatif. Cette liste peut être utilisée pour mener une veille technologique sur les vulnérabilités des applications du système d’information.
 
 #### Serveurs logiques
 
