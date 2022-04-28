@@ -230,7 +230,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Configuration page
     Route::get('configuration', [Admin\ConfigurationController::class,'index'])->name('configuration');
-    Route::put('configuration', [Admin\ConfigurationController::class,'save'])->name('configuration');
+    Route::put('configuration/save', [Admin\ConfigurationController::class,'save'])->name('configuration.save');
 
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');

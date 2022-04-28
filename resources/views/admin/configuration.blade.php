@@ -9,7 +9,7 @@
 
     <div class="card-body">
 
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.configuration.save') }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <label><b>{{ trans("cruds.configuration.certificate.title") }}</b></label>

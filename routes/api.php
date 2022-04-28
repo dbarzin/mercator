@@ -24,7 +24,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('entities', API\EntityController::class);
     Route::resource('relations', API\RelationController::class);
 
-    Route::resource('macro-processuses', API\MacroProcessusController::class);
+    // TODO: fix me
+    // Route::resource('macro-processuses', API\MacroProcessusController::class);
     Route::resource('processes', API\ProcessController::class);
     Route::resource('operations', API\OperationController::class);
     Route::resource('actors', API\ActorController::class);
@@ -32,7 +33,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('tasks', API\TaskController::class);
     Route::resource('information', API\InformationController::class);
 
-    Route::resource('applications', API\MApplicationController::class);
+    Route::resource('applications', API\ApplicationController::class);
     Route::resource('application-blocks', API\ApplicationBlockController::class);
     Route::resource('application-modules', API\ApplicationModuleController::class);
     Route::resource('application-services', API\ApplicationServiceController::class);
