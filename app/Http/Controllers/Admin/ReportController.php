@@ -56,6 +56,8 @@ use App\ZoneAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -980,7 +982,7 @@ class ReportController extends Controller
 
     public function entities()
     {
-        $path = storage_path('app/entities.xlsx');
+        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $entities = Entity::All()->sortBy('name');
 
@@ -1036,7 +1038,7 @@ class ReportController extends Controller
 
     public function applicationsByBlocks()
     {
-        $path = storage_path('app/applications.xlsx');
+        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $applicationBlocks = ApplicationBlock::All()->sortBy('name');
         $applicationBlocks->load('applications');
@@ -1158,7 +1160,7 @@ class ReportController extends Controller
 
     public function logicalServerResp()
     {
-        $path = storage_path('app/logicalServersResp.xlsx');
+        $path = storage_path('app/logicalServersResp-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.application_block');
@@ -1231,23 +1233,25 @@ class ReportController extends Controller
 
     public function logicalServerConfigs()
     {
-        $path = storage_path('app/logicalServers.xlsx');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'servers');
 
         $header = [
-            trans('cruds.logicalServer.fields.name'),
-            trans('cruds.logicalServer.fields.operating_system'),
-            trans('cruds.logicalServer.fields.address_ip'),
-            trans('cruds.logicalServer.fields.cpu'),
-            trans('cruds.logicalServer.fields.memory'),
-            trans('cruds.logicalServer.fields.disk'),
-            trans('cruds.logicalServer.fields.environment'),
-            trans('cruds.logicalServer.fields.net_services'),
-            trans('cruds.logicalServer.fields.configuration'),
-            trans('cruds.logicalServer.fields.applications'),
-            trans('cruds.logicalServer.fields.servers'),
+            trans('cruds.logicalServer.fields.name'),               // A
+            trans('cruds.logicalServer.fields.operating_system'),   // B
+            trans('cruds.logicalServer.fields.environment'),        // C
+            trans('cruds.logicalServer.fields.install_date'),       // D
+            trans('cruds.logicalServer.fields.update_date'),        // E
+            trans('cruds.logicalServer.fields.cpu'),                // F
+            trans('cruds.logicalServer.fields.memory'),             // G
+            trans('cruds.logicalServer.fields.disk'),               // H
+            trans('cruds.logicalServer.fields.net_services'),       // I
+            trans('cruds.logicalServer.fields.address_ip'),         // J
+            trans('cruds.logicalServer.fields.configuration'),      // K
+            trans('cruds.logicalServer.fields.applications'),       // L
+            trans('cruds.logicalServer.fields.servers'),            // M
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1269,11 +1273,13 @@ class ReportController extends Controller
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
         $sheet->getColumnDimension('K')->setAutoSize(true);
+        $sheet->getColumnDimension('L')->setAutoSize(true);
+        $sheet->getColumnDimension('M')->setAutoSize(true);
 
-        // center
-        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        // center (CPU, Men, Disk)
         $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('G')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('H')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -1283,15 +1289,17 @@ class ReportController extends Controller
         foreach ($logicalServers as $logicalServer) {
             $sheet->setCellValue("A{$row}", $logicalServer->name);
             $sheet->setCellValue("B{$row}", $logicalServer->operating_system);
-            $sheet->setCellValue("C{$row}", $logicalServer->address_ip);
-            $sheet->setCellValue("D{$row}", $logicalServer->cpu);
-            $sheet->setCellValue("E{$row}", $logicalServer->memory);
-            $sheet->setCellValue("F{$row}", $logicalServer->disk);
-            $sheet->setCellValue("G{$row}", $logicalServer->environment);
-            $sheet->setCellValue("H{$row}", $logicalServer->net_services);
-            $sheet->setCellValue("I{$row}", $html->toRichTextObject($logicalServer->configuration));
-            $sheet->setCellValue("J{$row}", $logicalServer->applications->implode('name', ', '));
-            $sheet->setCellValue("K{$row}", $logicalServer->servers->implode('name', ', '));
+            $sheet->setCellValue("C{$row}", $logicalServer->environment);
+            $sheet->setCellValue("D{$row}", $logicalServer->install_date);
+            $sheet->setCellValue("E{$row}", $logicalServer->update_date);
+            $sheet->setCellValue("F{$row}", $logicalServer->cpu);
+            $sheet->setCellValue("G{$row}", $logicalServer->memory);
+            $sheet->setCellValue("H{$row}", $logicalServer->disk);
+            $sheet->setCellValue("I{$row}", $logicalServer->net_services);
+            $sheet->setCellValue("J{$row}", $logicalServer->address_ip);
+            $sheet->setCellValue("K{$row}", $html->toRichTextObject($logicalServer->configuration));
+            $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
+            $sheet->setCellValue("M{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
         }
@@ -1304,7 +1312,7 @@ class ReportController extends Controller
 
     public function securityNeeds()
     {
-        $path = storage_path('app/securityNeeds.xlsx');
+        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         // macroprocess - process - application - base de données - information
         $header = [
@@ -1425,7 +1433,7 @@ class ReportController extends Controller
 
     public function physicalInventory()
     {
-        $path = storage_path('app/physicalInventory.xlsx');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $inventory = [];
 

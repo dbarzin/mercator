@@ -53,14 +53,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="recommended" for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
-                    <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $logicalServer->address_ip) }}">
-                    @if($errors->has('address_ip'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('address_ip') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.logicalServer.fields.address_ip_helper') }}</span>
+                    <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
+                    <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $logicalServer->install_date) }}">
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
+                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $logicalServer->update_date) }}">
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                 </div>
 
             </div>
@@ -118,6 +119,17 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="recommended" for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
+                    <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $logicalServer->address_ip) }}">
+                    @if($errors->has('address_ip'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('address_ip') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.address_ip_helper') }}</span>
                 </div>
 
                 <div class="form-group">                

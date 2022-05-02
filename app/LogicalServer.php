@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\Auditable;
 use DateTimeInterface;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -86,7 +87,35 @@ class LogicalServer extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'install_date',
+        'update_date'
     ];
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getInstallDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setInstallDateAttribute($value)
+    {
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getUpdateDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setUpdateDateAttribute($value)
+    {
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
 
     public function applications()
     {
