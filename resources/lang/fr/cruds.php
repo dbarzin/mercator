@@ -106,7 +106,7 @@ return [
             "install_date" => "Date d'installation",
             "install_date_helper" => "Date d'installation de l'application",
             "update_date" => "Date de mise à jour",
-            "update_date_helper" => "Date de dernière mise-à-jour",
+            "update_date_helper" => "Date de dernière mise à jour",
         ],
         'title' => 'Applications',
         'title_short' => 'Applications',
