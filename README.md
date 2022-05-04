@@ -1,8 +1,6 @@
 # Mercator
 
-Mercator is a web application allowing to manage the mapping of an information system as described in the 
-[Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) 
-of the [ANSSI](https://www.ssi.gouv.fr/en/). 
+Mercator is a web application allowing to manage the mapping of an information system as described in the [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) of the [ANSSI](https://www.ssi.gouv.fr/en/). 
 
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
@@ -13,15 +11,11 @@ Read this in other languages: [French](README.fr.md)
 
 ## Introduction
 
-Computer attacks occur in a constantly changing environment. 
-To meet these challenges, it is necessary to implement a global approach to risk management within the organization. 
+Computer attacks occur in a constantly changing environment. To meet these challenges, it is necessary to implement a global approach to risk management within the organization. 
 
-The mapping of the Information System allows to have a global view of all the elements which compose the information 
-system to obtain a better readability, and thus a better control. 
+The mapping of the Information System allows to have a global view of all the elements which compose the information system to obtain a better readability, and thus a better control. 
 
-The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. 
-It is an essential tool for the control of its information system (IS) and is an obligation for Operators of Vital Importance (OVI) 
-and is part of a global risk management and a global risk management approach.
+The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. It is an essential tool for the control of its information system (IS) and is an obligation for Operators of Vital Importance (OVI) and is part of a global risk management and a global risk management approach.
 
 ## Major functions
 - Graphical views of the ecosystem, information system, administration, logical, applications, and physical infrastructure
@@ -37,8 +31,7 @@ and is part of a global risk management and a global risk management approach.
 
 Main page
 
-[<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png)
-[<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
+[<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png) [<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
 
 Compliance Levels
 
@@ -46,13 +39,11 @@ Compliance Levels
 
 Input screen
 
-[<img src="public/screenshots/mercator4.png" width="400" height="200">](public/screenshots/mercator4.png)
-[<img src="public/screenshots/mercator5.png" width="400" height="200">](public/screenshots/mercator5.png)
+[<img src="public/screenshots/mercator4.png" width="400" height="200">](public/screenshots/mercator4.png) [<img src="public/screenshots/mercator5.png" width="400" height="200">](public/screenshots/mercator5.png)
 
 Drawing of the cartography
 
-[<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png)
-[<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
+[<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png) [<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
 
 Data model
 
