@@ -16,7 +16,7 @@ L’élaboration d’une cartographie participe à la protection, à la défense
 
 ## Fonctions majeures
 - Gestion des vues (écosystème, système d’information, administration, logique, applications, et physique)
-- Génération du rapport d'Architecture du Système d'Informtion
+- Génération du rapport d'Architecture du Système d'Information
 - Dessin des schémas de cartographie
 - Calcul des niveaux de conformité
 - Extraction en Excel, CSV, PDF … de toutes les listes
