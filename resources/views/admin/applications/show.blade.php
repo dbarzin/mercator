@@ -149,14 +149,16 @@
                         <th colspan="1">
                             {{ trans('cruds.application.fields.install_date') }}
                         </th>
-                        <td colspan="5">
+                        <td colspan="3">
                             {{ $application->install_date }}
                         </td>
                         <th colspan="1">
                             {{ trans('cruds.application.fields.update_date') }}
                         </th>
-                        <td colspan="5">
+                        <td colspan="3">
                             {{ $application->update_date }}
+                        </td>
+                        <td colspan="4">
                         </td>
                     </tr>
                     <tr>

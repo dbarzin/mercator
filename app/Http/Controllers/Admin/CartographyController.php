@@ -683,8 +683,9 @@ class CartographyController extends Controller
                 foreach ($applications as $application) {
                     $section->addBookmark('APPLICATION'.$application->id);
                     $table = $this->addTable($section, $application->name);
-                    $this->addHTMLRow($table, trans('cruds.application.fields.description'), $application->description);
                     $this->addTextRow($table, trans('cruds.application.fields.version'), $application->version);
+
+                    $this->addHTMLRow($table, trans('cruds.application.fields.description'), $application->description);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.entities'));
                     foreach ($application->entities as $entity) {
@@ -701,6 +702,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.application.fields.technology'), $application->technology);
                     $this->addTextRow($table, trans('cruds.application.fields.type'), $application->type);
                     $this->addTextRow($table, trans('cruds.application.fields.users'), $application->users);
+
                     $this->addTextRow($table, trans('cruds.application.fields.documentation'), $application->documentation);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.flux'));
@@ -719,6 +721,9 @@ class CartographyController extends Controller
                             $textRun->addText(', ');
                         }
                     }
+                    
+                    $this->addTextRow($table, trans('cruds.application.fields.install_date'), $application->install_date);
+                    $this->addTextRow($table, trans('cruds.application.fields.update_date'), $application->update_date);
 
                     // Security Needs
                     $textRun = $this->addHTMLRow(
@@ -1472,10 +1477,13 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.logicalServer.fields.description'), $logicalServer->description);
 
                     $this->addTextRow($table, trans('cruds.logicalServer.fields.operating_system'), $logicalServer->operating_system);
-                    $this->addTextRow($table, trans('cruds.logicalServer.fields.address_ip'), $logicalServer->address_ip);
+                    $this->addTextRow($table, trans('cruds.logicalServer.fields.install_date'), $logicalServer->install_date);
+                    $this->addTextRow($table, trans('cruds.logicalServer.fields.update_date'), $logicalServer->update_date);
                     $this->addTextRow($table, trans('cruds.logicalServer.fields.cpu'), $logicalServer->cpu);
                     $this->addTextRow($table, trans('cruds.logicalServer.fields.memory'), $logicalServer->memory);
                     $this->addTextRow($table, trans('cruds.logicalServer.fields.disk'), strval($logicalServer->disk));
+                    $this->addTextRow($table, trans('cruds.logicalServer.fields.address_ip'), $logicalServer->address_ip);
+                    $this->addTextRow($table, trans('cruds.logicalServer.fields.environment'), $logicalServer->environment);
                     $this->addTextRow($table, trans('cruds.logicalServer.fields.net_services'), $logicalServer->net_services);
 
                     $this->addHTMLRow($table, trans('cruds.logicalServer.fields.configuration'), $logicalServer->configuration);

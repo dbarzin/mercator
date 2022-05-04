@@ -73,10 +73,10 @@
                     </tr>
                     <tr>
                         <th colspan="1">
-                            {{ trans('cruds.logicalServer.fields.address_ip') }}
+                            {{ trans('cruds.logicalServer.fields.install_date') }}
                         </th>
                         <td colspan="3">
-                            {!! $logicalServer->address_ip !!}
+                            {!! $logicalServer->install_date !!}
                         </td>
                         <th colspan="1">
                             {{ trans('cruds.logicalServer.fields.memory') }}
@@ -85,19 +85,30 @@
                             {!! $logicalServer->memory !!}
                         </td>
                         <th colspan="1">
-                            {{ trans('cruds.logicalServer.fields.net_services') }}
+                            {{ trans('cruds.logicalServer.fields.address_ip') }}
                         </th>
                         <td colspan="3">
-                            {{ $logicalServer->net_services }}
+                            {!! $logicalServer->address_ip !!}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"></td>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.update_date') }}
+                        </th>
+                        <td colspan="3">
+                            {!! $logicalServer->update_date !!}
+                        </td>
                         <th colspan="1">
                             {{ trans('cruds.logicalServer.fields.disk') }}
                         </th>
                         <td colspan="3">
                             {!! $logicalServer->disk !!}
+                        </td>
+                        <th colspan="1">
+                            {{ trans('cruds.logicalServer.fields.net_services') }}
+                        </th>
+                        <td colspan="3">
+                            {{ $logicalServer->net_services }}
                         </td>
                     </tr>
                     <tr>
