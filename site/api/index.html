@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://dbarzin.githubs.io/mercator/api/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>API - Mercator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "API";
+    var mkdocs_page_input_path = "api.md";
+    var mkdocs_page_url = "/mercator/api/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Mercator</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">API</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#les-apis">Les APIs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#liste-des-utilisateurs">Liste des utilisateurs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#recuperer-un-utilisateur">Récupérer un utilisateur</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Mercator</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="api">API</h2>
+<p>La cartographie peut être modifiée ou mise à jour via une REST API.</p>
+<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>) 
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
+et permet d'interagir avec les services web RESTful. </p>
+<h3 id="les-apis">Les APIs</h3>
+<p>Pour chaque objet du modèle de données de la cartographie, il existe une API.</p>
+<p><strong>Vues de l'écosystème</strong></p>
+<ul>
+<li>/api/entities</li>
+<li>/api/relations</li>
+</ul>
+<p><strong>Vue métier du système d'information</strong></p>
+<ul>
+<li>/api/macro-processuses</li>
+<li>/api/processes</li>
+<li>/api/operations</li>
+<li>/api/actors</li>
+<li>/api/activities</li>
+<li>/api/tasks</li>
+<li>/api/information</li>
+</ul>
+<p><strong>Vue des applications</strong></p>
+<ul>
+<li>/api/application-blocks</li>
+<li>/api/applications</li>
+<li>/api/application-modules</li>
+<li>/api/application-services</li>
+<li>/api/databases</li>
+<li>/api/fluxes</li>
+</ul>
+<p><strong>Vue de l'administration</strong></p>
+<ul>
+<li>/api/zone-admins</li>
+<li>/api/annuaires</li>
+<li>/api/forest-ads</li>
+<li>/api/domaine-ads</li>
+</ul>
+<p><strong>Vue de l'infrastructure logique</strong></p>
+<ul>
+<li>/api/networks</li>
+<li>/api/subnetworks</li>
+<li>/api/gateways</li>
+<li>/api/external-connected-entities</li>
+<li>/api/network-switches</li>
+<li>/api/routers</li>
+<li>/api/security-devices</li>
+<li>/api/dhcp-servers</li>
+<li>/api/dnsservers</li>
+<li>/api/logical-servers</li>
+<li>/api/certificates</li>
+</ul>
+<p><strong>Vue de l'infrastructure physique</strong></p>
+<ul>
+<li>/api/sites</li>
+<li>/api/buildings</li>
+<li>/api/bays</li>
+<li>/api/physical-servers</li>
+<li>/api/workstations</li>
+<li>/api/storage-devices</li>
+<li>/api/peripherals</li>
+<li>/api/phones</li>
+<li>/api/physical-switches</li>
+<li>/api/physical-routers</li>
+<li>/api/wifi-terminals</li>
+<li>/api/physical-security-devices</li>
+<li>/api/wans</li>
+<li>/api/mans</li>
+<li>/api/lans</li>
+<li>/api/vlans</li>
+</ul>
+<p><strong>Administration</strong></p>
+<ul>
+<li>/api/users</li>
+<li>/api/permissions</li>
+<li>/api/roles</li>
+</ul>
+<h3 id="actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</h3>
+<p>Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.</p>
+<table>
+<thead>
+<tr>
+<th>Requête</th>
+<th>URI</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/api/objets</td>
+<td>renvoie la liste des objets</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/api/objets/{id}</td>
+<td>renvoie l'objet {id}</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/api/objets</td>
+<td>sauve un nouvel objet</td>
+</tr>
+<tr>
+<td>PUT/PATCH</td>
+<td>/api/objets/{id}</td>
+<td>met à jour l'objet {id}</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/api/objets/{id}</td>
+<td>supprimer l'objet {id}</td>
+</tr>
+</tbody>
+</table>
+<p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
+<h3 id="droits-dacces">Droits d'accès</h3>
+<p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
+accédés par l'API. </p>
+<p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+l'entête "Authorization" de la requête de l'API.</p>
+<h3 id="exemples">Exemples</h3>
+<p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
+<h4 id="authentification">Authentification</h4>
+<pre><code class="language-php">&lt;?php
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/login&quot;,
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_MAXREDIRS =&gt; 10,
+        CURLOPT_TIMEOUT =&gt; 30,
+        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;POST&quot;,
+        CURLOPT_POSTFIELDS =&gt; http_build_query(
+            array(&quot;email&quot; =&gt; &quot;admin@admin.com&quot;,
+                  &quot;password&quot; =&gt; &quot;password&quot;)),
+        CURLOPT_HTTPHEADER =&gt; array(
+            &quot;accept: application/json&quot;,
+            &quot;content-type: application/x-www-form-urlencoded&quot;,
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    $info = curl_getinfo($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        set_error_handler($err);
+    } else {
+        if ($info['http_code'] == 200) {
+            $access_token = json_decode($response)-&gt;access_token;
+
+        } else {
+            set_error_handler(&quot;Login to api faild status 403&quot;);
+            error_log($responseInfo['http_code']);
+            error_log(&quot;No login api status 403&quot;);
+
+        }
+    }
+
+    var_dump($response);
+</code></pre>
+<h4 id="liste-des-utilisateurs">Liste des utilisateurs</h4>
+<pre><code class="language-php">&lt;?php
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users&quot;,
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_MAXREDIRS =&gt; 10,
+        CURLOPT_TIMEOUT =&gt; 30,
+        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
+        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
+        CURLOPT_HTTPHEADER =&gt; array(
+            &quot;accept: application/json&quot;,
+            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/json&quot;,
+        ),
+    ));
+
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    var_dump($response);
+
+</code></pre>
+<h4 id="recuperer-un-utilisateur">Récupérer un utilisateur</h4>
+<pre><code class="language-php">&lt;?php
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/1&quot;,
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_MAXREDIRS =&gt; 10,
+        CURLOPT_TIMEOUT =&gt; 30,
+        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;GET&quot;,
+        CURLOPT_POSTFIELDS =&gt; null, // here you can send parameters
+        CURLOPT_HTTPHEADER =&gt; array(
+            &quot;accept: application/json&quot;,
+            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;cache-control: no-cache&quot;,
+            &quot;content-type: application/json&quot;,
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    var_dump($response);
+</code></pre>
+<h4 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h4>
+<pre><code class="language-php">&lt;?php
+   $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL =&gt; &quot;http://127.0.0.1:8000/api/users/8&quot;,
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_MAXREDIRS =&gt; 10,
+        CURLOPT_TIMEOUT =&gt; 30,
+        CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,
+        CURLOPT_POST =&gt; true,
+        CURLOPT_CUSTOMREQUEST =&gt; &quot;PUT&quot;,
+        CURLOPT_POSTFIELDS =&gt; http_build_query(
+            array(
+                'name' =&gt; 'Henri',
+                'email' =&gt; 'henri@test.fr',
+                'language' =&gt; 'fr',
+                'roles[0]' =&gt; 1,
+                'roles[1]' =&gt; 3,
+                'granularity' =&gt; '3')
+            ),
+        CURLOPT_HTTPHEADER =&gt; array(
+            &quot;accept: application/json&quot;,
+            &quot;Authorization: &quot; . &quot;Bearer&quot; . &quot; &quot; . $access_token . &quot;&quot;,
+            &quot;cache-control: no-cache&quot;,
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    var_dump($response);
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../references/" class="btn btn-neutral float-right" title="Références">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../admin/" class="btn btn-neutral" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../admin/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
