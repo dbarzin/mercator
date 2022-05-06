@@ -39,3 +39,4 @@ public/vendor/
 resources/views/vendor/
 storage/*.key
 storage/logs
+stubs/
