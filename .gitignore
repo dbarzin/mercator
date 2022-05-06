@@ -3,7 +3,6 @@
 .phpunit.result.cache
 .editorconfig
 node_modules
-vendor
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -40,3 +39,4 @@ resources/views/vendor/
 storage/*.key
 storage/logs
 stubs/
+vendor/

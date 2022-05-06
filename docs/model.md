@@ -244,6 +244,8 @@ Table *m_applications* :
 | entity_resp_id  | int unsigned | Entité responsable de l'exploitation  |
 | responsible         | varchar(255) | Responsable de l'application |
 | application_block_id | int unsigned | Lien vers la bloc applicatif |
+| install_date    | datetime    | Date d'installation de l'application |
+| update_date     | datetime    | Date de mise à jour de l'application |
 | created_at      | timestamp    | Date de création |
 | updated_at      | timestamp    | Date de mise à jour |
 | deleted_at      | timestamp    | Date de suppression |
@@ -582,12 +584,14 @@ Table *logical_servers* :
 | description          | longtext     | Description du serveur |
 | net_services         | varchar(255) | Services réseau actifs |
 | configuration        | longtext     | Configuration du serveur |
-| operating_system     | varchar(255) | Operating Système |
+| operating_system     | varchar(255) | Système d'exploitation |
 | address_ip           | varchar(255) | Adresses IP du serveur |
 | cpu                  | varchar(255) | Nombre de CPU |
 | memory               | varchar(255) | Quantité de mémémoire |
 | environment          | varchar(255) | Environnement (prod, dev, test, ...) |
 | disk                 | int          | Espace disque alloué |
+| install_date         | datetime     | Date d'installation du serveur |
+| update_date          | datetime     | Date de mise à jour du serveur |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
