@@ -96,19 +96,19 @@
                         <td>
                             {{ trans('global.confidentiality') }} :
                                 {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$process->security_need_c] ?? "" }}
+                                [$information->security_need_c] ?? "" }}
                             <br>
                             {{ trans('global.integrity') }} :
                                 {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$process->security_need_i] ?? "" }}
+                                [$information->security_need_i] ?? "" }}
                             <br>
                             {{ trans('global.availability') }} :
                                 {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$process->security_need_a] ?? "" }}
+                                [$information->security_need_a] ?? "" }}
                             <br>
                             {{ trans('global.tracability') }} :
                                 {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$process->security_need_t] ?? "" }}                                                        
+                                [$information->security_need_t] ?? "" }}                                                        
                         </td>
                     </tr>
                     <tr>

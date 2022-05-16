@@ -16,4 +16,4 @@ Mercator à l’avantage d’être simple à utiliser, à installer et à mettre
 
 Le modèle de données utilisé dans Mercator est basé sur celui proposé par l’ANSSI. Si le système d’information qui doit être modélisé est grand, complexe, comporte de nombreux systèmes hétéroclites, ce modèle peut s’avérer incomplet.
 
-Cependant en faisant quelques concessions sur la complétude de la cartographie, il est souvent possible de modéliser le système d’information avec le modèle proposé par Mercator.
+Cependant en faisant quelques concessions sur la complétude de la cartographie, il est souvent possible de modéliser le système d’information avec le modèle proposé ici.
