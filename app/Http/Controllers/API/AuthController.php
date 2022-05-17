@@ -3,53 +3,49 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
+class AuthController extends Controller
+{
+    /*
+        public function register(Request $request) {
+            error_log("REGISTER");
+            $validatedData = $request->validate([
+               "name" => "required|max:55",
+                "email" => "email|required|unique:users",
+                "password" => "required|confirmed"
+            ]);
+            error_log("REGISTER - validated");
+            $validatedData["password"] = bcrypt($request->password);
 
-class AuthController extends Controller {
-/*
-    public function register(Request $request) {
-        error_log("REGISTER");
-        $validatedData = $request->validate([
-           "name" => "required|max:55",
-            "email" => "email|required|unique:users",
-            "password" => "required|confirmed"
-        ]);
-        error_log("REGISTER - validated");
-        $validatedData["password"] = bcrypt($request->password);
-        
-        $user = User::create($validatedData);
-        
-        $accessToken = $user->createToken("authToken")->accessToken;
-        error_log("REGISTER CALLED Token: ".$accessToken);
-        return response(["message" => "you are now registered", "user" => $user, "access_token" => $accessToken], 201);
-    }
-*/  
-    public function login (Request $request) {
-        error_log("LOGIN");
-        $loginData = $request->validate([
-           "email" => "email|required",
-            "password" => "required"
-        ]);
-                
-        if (!auth()->attempt($loginData)) {
-            return response(["message" => "This user does not exist, check your details"], 400);
+            $user = User::create($validatedData);
+
+            $accessToken = $user->createToken("authToken")->accessToken;
+            error_log("REGISTER CALLED Token: ".$accessToken);
+            return response(["message" => "you are now registered", "user" => $user, "access_token" => $accessToken], 201);
         }
-        error_log("LOGIN - User: ". json_encode(auth()->user()));
-        
-        $accessToken = auth()->user()->createToken(auth()->user()->email." authToken ".now())->accessToken;
-        error_log("LOGIN - Token: ".$accessToken);
-        
-        return response(["user" => auth()->user(), "access_token" => $accessToken]);
+    */
+    public function login(Request $request)
+    {
+        error_log('LOGIN');
+        $loginData = $request->validate([
+            'email' => 'email|required',
+            'password' => 'required',
+        ]);
+
+        if (! auth()->attempt($loginData)) {
+            return response(['message' => 'This user does not exist, check your details'], 400);
+        }
+        error_log('LOGIN - User: '. json_encode(auth()->user()));
+
+        $accessToken = auth()->user()->createToken(auth()->user()->email.' authToken '.now())->accessToken;
+        error_log('LOGIN - Token: '.$accessToken);
+
+        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 }
 
-
-/*        
+/*
 class AuthController extends Controller
 {
     public function login (Request $request) {
@@ -80,4 +76,3 @@ class AuthController extends Controller
     }
 }
 */
-

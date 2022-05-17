@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Task;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Resources\Admin\TaskResource;
-
+use App\Task;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $tasks = Task::all();
+        $tasks = Task::all();
 
-    return response()->json($tasks);
+        return response()->json($tasks);
     }
 
     public function store(StoreTaskRequest $request)
@@ -44,7 +39,7 @@ class TaskController extends Controller
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
-    {     
+    {
         abort_if(Gate::denies('task_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $task->update($request->all());
@@ -67,6 +62,4 @@ class TaskController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

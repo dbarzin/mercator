@@ -18,7 +18,7 @@ class OnlyOrgUnitUser implements Scope
      */
     public function apply(Builder $query, Model $model)
     {
-        if(!config('app.ldap_scope')) {
+        if (! config('app.ldap_scope')) {
             return;
         }
 

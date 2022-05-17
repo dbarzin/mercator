@@ -78,11 +78,11 @@ class ConfigurationController extends Controller
                 }
                 break;
             default:
-                $msg = "no actions made.";
+                $msg = 'no actions made.';
         }
         return view(
             'admin.configuration',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay','group')
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay', 'group')
         )
             ->withErrors($msg);
     }

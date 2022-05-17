@@ -55,9 +55,10 @@ class Role extends Model
      * Permet de récupérer un role avec son nom
      *
      * @param string $title
+     *
      * @return Role|null
      */
-    public static function getRoleByTitle(string $title) : Role|null
+    public static function getRoleByTitle(string $title): Role|null
     {
         return Role::whereTitle($title)->first();
     }

@@ -30,11 +30,11 @@ class CertificateExpiracy extends Command
      */
     public function handle()
     {
-        Log::debug("CertificateExpiracy - day ". Carbon::now()->day);
+        Log::debug('CertificateExpiracy - day '. Carbon::now()->day);
 
-	if ($this->needCheck()) {
+        if ($this->needCheck()) {
             // Check for old certificates
-            Log::debug("CertificateExpiracy - check");
+            Log::debug('CertificateExpiracy - check');
 
             $certificates = Certificate::select('name', 'type', 'end_validity')
                 ->where('status', 0)
@@ -64,7 +64,7 @@ class CertificateExpiracy extends Command
                     'From: '. $mail_from,
                 ];
 
-                if ($group==null || $group==='1') {
+                if ($group === null || $group === '1') {
                     $message = '<html><body>These certificates are about to exipre :<br><br>';
                     foreach ($certificates as $cert) {
                         $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
@@ -77,8 +77,7 @@ class CertificateExpiracy extends Command
                     } else {
                         Log::debug('Email sending fail.');
                     }
-                }
-                else {
+                } else {
                     foreach ($certificates as $cert) {
                         $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
                         //$message = '<html><body>' . $cert->description . '</body></html>';
@@ -88,12 +87,12 @@ class CertificateExpiracy extends Command
                             Log::debug('Mail sent to '.$to_email);
                         } else {
                             Log::debug('Email sending fail.');
-                        }                        
+                        }
                     }
                 }
             }
         }
-        Log::debug("CertificateExpiracy - DONE.");
+        Log::debug('CertificateExpiracy - DONE.');
     }
 
     /**

@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\PhysicalSecurityDevice;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
-use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Resources\Admin\PhysicalSecurityDeviceResource;
-
+use App\PhysicalSecurityDevice;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class PhysicalSecurityDeviceController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('physical_security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('physical_security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $devices = PhysicalSecurityDevice::all();
+        $devices = PhysicalSecurityDevice::all();
 
-    return response()->json($devices);
+        return response()->json($devices);
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
@@ -46,7 +41,7 @@ class PhysicalSecurityDeviceController extends Controller
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $device)
-    {     
+    {
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $device->update($request->all());
@@ -71,6 +66,4 @@ class PhysicalSecurityDeviceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

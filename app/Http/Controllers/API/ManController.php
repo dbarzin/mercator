@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Man;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Requests\StoreManRequest;
 use App\Http\Requests\UpdateManRequest;
-use App\Http\Requests\MassDestroyManRequest;
 use App\Http\Resources\Admin\ManResource;
-
+use App\Man;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ManController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('man_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('man_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $mans = Man::all();
+        $mans = Man::all();
 
-    return response()->json($mans);
+        return response()->json($mans);
     }
 
     public function store(StoreManRequest $request)
@@ -46,7 +41,7 @@ class ManController extends Controller
     }
 
     public function update(UpdateManRequest $request, Man $man)
-    {     
+    {
         abort_if(Gate::denies('man_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $man->update($request->all());
@@ -71,6 +66,4 @@ class ManController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

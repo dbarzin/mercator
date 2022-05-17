@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\ApplicationService;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Requests\StoreApplicationServiceRequest;
 use App\Http\Requests\UpdateApplicationServiceRequest;
-use App\Http\Requests\MassDestroyApplicationServiceRequest;
 use App\Http\Resources\Admin\ApplicationServiceResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ApplicationServiceController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('applicationservice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('applicationservice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $applicationservices = ApplicationService::all();
+        $applicationservices = ApplicationService::all();
 
-    return response()->json($applicationservices);
+        return response()->json($applicationservices);
     }
 
     public function store(StoreApplicationServiceRequest $request)
@@ -46,7 +41,7 @@ class ApplicationServiceController extends Controller
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)
-    {     
+    {
         abort_if(Gate::denies('applicationservice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationService->update($request->all());
@@ -71,6 +66,4 @@ class ApplicationServiceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

@@ -9,8 +9,8 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Permission;
 use App\Role;
 use Gate;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
@@ -21,7 +21,7 @@ class RolesController extends Controller
      *
      * @return array Tableau avec les permissions triées
      */
-    public function getSortedPerms(Collection $permissions) : array
+    public function getSortedPerms(Collection $permissions): array
     {
         $permissions_sorted = [];
 
@@ -29,14 +29,14 @@ class RolesController extends Controller
             $explode = explode('_', $permission);
             if (count($explode) >= 2) {
                 $sliced = array_slice($explode, 0, -1);
-                $name = implode(" ", $sliced);
-                $action = $explode[count($explode)-1];
+                $name = implode(' ', $sliced);
+                $action = $explode[count($explode) - 1];
             } else {
                 $name = $explode[0];
                 $action = $name;
             }
             $actionTab = [$id, $action];
-            if(!isset($permissions_sorted[$name])) {
+            if (! isset($permissions_sorted[$name])) {
                 $permissions_sorted[$name] = ['name' => $name, 'actions' => []];
             }
             array_push($permissions_sorted[$name]['actions'], $actionTab);
@@ -64,7 +64,7 @@ class RolesController extends Controller
 
         // Chargement de toutes les permissions et triage
         $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
-		$permissions_sorted = $this->getSortedPerms($permissions);
+        $permissions_sorted = $this->getSortedPerms($permissions);
 
         return view('admin.roles.create', compact('permissions_sorted'));
     }
@@ -83,7 +83,7 @@ class RolesController extends Controller
 
         // Chargement de toutes les permissions et triage
         $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
-	    $permissions_sorted = $this->getSortedPerms($permissions);
+        $permissions_sorted = $this->getSortedPerms($permissions);
         // Chargement des permissions du rôle
         $role->load('permissions');
 

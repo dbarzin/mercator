@@ -7,13 +7,12 @@ use DateTimeInterface;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
-use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 
 /**
  * App\User
@@ -100,9 +99,10 @@ class User extends Authenticatable implements LdapAuthenticatable
      * Permet de check si un utilisateur a un role
      *
      * @param String|Role $role
+     *
      * @return bool
      */
-    public function hasRole(mixed $role) : bool
+    public function hasRole(mixed $role): bool
     {
         if ($role instanceof Role) {
             return $this->roles()->get()->contains($role);
@@ -117,12 +117,14 @@ class User extends Authenticatable implements LdapAuthenticatable
      * Permet d'ajouter un role à l'utilisateur courant
      *
      * @param Role $role
+     *
      * @return void
      */
-    public function addRole(Role $role) : void
+    public function addRole(Role $role): void
     {
-        if ($this->hasRole($role))
+        if ($this->hasRole($role)) {
             return;
+        }
 
         $this->roles()->save($role);
     }
@@ -154,13 +156,13 @@ class User extends Authenticatable implements LdapAuthenticatable
         return $this->belongsToMany(Role::class)->orderBy('title');
     }
 
+    public function m_applications()
+    {
+        return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
-
-	public function m_applications()
-	{
-		return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
-	}
 }

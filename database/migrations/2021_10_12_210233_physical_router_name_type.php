@@ -13,13 +13,11 @@ class PhysicalRouterNameType extends Migration
      */
     public function up()
     {
-        /*
         Schema::table('physical_routers', function (Blueprint $table) {
             $table->string('name')->change();
-        });    
-        */
+        });
         // For PostgresSQL : ALTER TABLE physical_routers ALTER COLUMN name TYPE varchar(255);
-        DB::statement("ALTER TABLE physical_routers CHANGE name name varchar(255)");
+        // DB::statement("ALTER TABLE physical_routers CHANGE name name varchar(255)");
     }
 
     /**
@@ -29,10 +27,9 @@ class PhysicalRouterNameType extends Migration
      */
     public function down()
     {
-        // not working 
-        // Schema::table('physical_routers', function (Blueprint $table) {
-        //     $table->char('name')->change();
-        // });    
-        DB::statement("ALTER TABLE physical_routers CHANGE name name char(255)");
+        Schema::table('physical_routers', function (Blueprint $table) {
+             $table->char('name')->change();
+        });    
+        // DB::statement("ALTER TABLE physical_routers CHANGE name name char(255)");
     }
 }

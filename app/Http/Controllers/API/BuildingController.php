@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Building;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
-use App\Http\Requests\MassDestroyBuildingRequest;
 use App\Http\Resources\Admin\BuildingResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class BuildingController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $buildings = Building::all();
+        $buildings = Building::all();
 
-    return response()->json($buildings);
+        return response()->json($buildings);
     }
 
     public function store(StoreBuildingRequest $request)
@@ -44,7 +39,7 @@ class BuildingController extends Controller
     }
 
     public function update(UpdateBuildingRequest $request, Building $building)
-    {     
+    {
         abort_if(Gate::denies('building_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $building->update($request->all());
@@ -67,6 +62,4 @@ class BuildingController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

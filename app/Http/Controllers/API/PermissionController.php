@@ -2,29 +2,23 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Permission;
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
-use App\Http\Requests\MassDestroyPermissionRequest;
 use App\Http\Resources\Admin\PermissionResource;
-
+use App\Permission;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $permissions = Permission::all();
+        $permissions = Permission::all();
 
-    return response()->json($permissions);
+        return response()->json($permissions);
     }
 
     public function store(StorePermissionRequest $request)
@@ -46,7 +40,7 @@ class PermissionController extends Controller
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)
-    {     
+    {
         abort_if(Gate::denies('permission_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permission->update($request->all());
@@ -64,6 +58,4 @@ class PermissionController extends Controller
 
         return response()->json();
     }
-
 }
-

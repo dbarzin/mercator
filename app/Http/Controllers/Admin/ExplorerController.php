@@ -82,11 +82,12 @@ class ExplorerController extends Controller
         // $subnetworks = DB::table("subnetworks")->select("id","name","network_id","vlan_id")->whereNull('deleted_at')->get();
         $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
-            array_push($nodes, [ 
-                'id' => 'SUBNETWORK_' . $subnetwork->id, 
-                'label' => $subnetwork->name, 
+            array_push($nodes, [
+                'id' => 'SUBNETWORK_' . $subnetwork->id,
+                'label' => $subnetwork->name,
                 'title' => $subnetwork->address,
-                'image' => '/images/network.png' ]);
+                'image' => '/images/network.png',
+            ]);
             if ($subnetwork->network_id !== null) {
                 array_push($edges, [ 'from' => 'SUBNETWORK_' . $subnetwork->id, 'to' => 'NETWORK_' . $subnetwork->network_id ]);
             }
@@ -137,18 +138,20 @@ class ExplorerController extends Controller
             array_push($nodes, [ 'id' => 'ZONE_' . $zone->id, 'label' => $zone->name, 'image' => '/images/zoneadmin.png' ]);
         }
         // Annuaires
-        $annuaires = DB::table('annuaires')->select('id', 'name','zone_admin_id')->whereNull('deleted_at')->get();
+        $annuaires = DB::table('annuaires')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
         foreach ($annuaires as $annuaire) {
             array_push($nodes, [ 'id' => 'ANNUAIRE_' . $annuaire->id, 'label' => $annuaire->name, 'image' => '/images/annuaire.png' ]);
-            if ($annuaire->zone_admin_id!=null)
+            if ($annuaire->zone_admin_id !== null) {
                 array_push($edges, [ 'from' => 'ANNUAIRE_' . $annuaire->id, 'to' => 'ZONE_' . $annuaire->zone_admin_id ]);
+            }
         }
         // Forest
-        $forests = DB::table('forest_ads')->select('id', 'name','zone_admin_id')->whereNull('deleted_at')->get();
+        $forests = DB::table('forest_ads')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
         foreach ($forests as $forest) {
             array_push($nodes, [ 'id' => 'FOREST_' . $forest->id, 'label' => $forest->name, 'image' => '/images/ldap.png' ]);
-            if ($annuaire->zone_admin_id!=null)
+            if ($annuaire->zone_admin_id !== null) {
                 array_push($edges, [ 'from' => 'FOREST_' . $forest->id, 'to' => 'ZONE_' . $forest->zone_admin_id ]);
+            }
         }
         // Domain
         $domains = DB::table('domaine_ads')->select('id', 'name')->whereNull('deleted_at')->get();
@@ -233,11 +236,12 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'INFO_' . $join->information_id, 'to' => 'DATABASE_' . $join->database_id ]);
         }
         // process
-        $processes = DB::table('processes')->select('id', 'identifiant','macroprocess_id')->get();
+        $processes = DB::table('processes')->select('id', 'identifiant', 'macroprocess_id')->get();
         foreach ($processes as $process) {
             array_push($nodes, [ 'id' => 'PROCESS_' . $process->id, 'label' => $process->identifiant, 'image' => '/images/process.png' ]);
-            if ($process->macroprocess_id!=null)
+            if ($process->macroprocess_id !== null) {
                 array_push($edges, [ 'from' => 'PROCESS_' . $process->id, 'to' => 'MACROPROCESS_' . $process->macroprocess_id ]);
+            }
         }
         // information_process
         $joins = DB::table('information_process')->select('information_id', 'process_id')->get();
@@ -300,13 +304,15 @@ class ExplorerController extends Controller
         }
 
         // Relations
-        $relations = DB::table('relations')->select('id', 'name','source_id','destination_id')->whereNull('deleted_at')->get();
+        $relations = DB::table('relations')->select('id', 'name', 'source_id', 'destination_id')->whereNull('deleted_at')->get();
         foreach ($relations as $relation) {
             array_push($nodes, [ 'id' => 'REL_' . $relation->id, 'label' => $relation->name, 'image' => '/images/relation.png' ]);
-            if ($relation->source_id!=null)
+            if ($relation->source_id !== null) {
                 array_push($edges, [ 'from' => 'REL_' . $relation->id, 'to' => 'ENTITY_' . $relation->source_id ]);
-            if ($relation->destination_id!=null)
+            }
+            if ($relation->destination_id !== null) {
                 array_push($edges, [ 'from' => 'REL_' . $relation->id, 'to' => 'ENTITY_' . $relation->destination_id ]);
+            }
         }
         // entity_process
         $joins = DB::table('entity_process')->select('entity_id', 'process_id')->get();
@@ -318,7 +324,6 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             array_push($edges, [ 'from' => 'ENTITY_' . $join->entity_id, 'to' => 'APP_' . $join->m_application_id ]);
         }
-
 
         return view('admin/reports/explore', compact('nodes', 'edges'));
     }

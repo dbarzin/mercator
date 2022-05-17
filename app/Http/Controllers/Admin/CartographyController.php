@@ -721,7 +721,7 @@ class CartographyController extends Controller
                             $textRun->addText(', ');
                         }
                     }
-                    
+
                     $this->addTextRow($table, trans('cruds.application.fields.install_date'), $application->install_date);
                     $this->addTextRow($table, trans('cruds.application.fields.update_date'), $application->update_date);
 

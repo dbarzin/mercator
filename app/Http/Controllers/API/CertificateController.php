@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Certificate;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-use App\Http\Requests\MassDestroyCertificateRequest;
 use App\Http\Resources\Admin\CertificateResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class CertificateController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('certificate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('certificate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $certificates = Certificate::all();
+        $certificates = Certificate::all();
 
-    return response()->json($certificates);
+        return response()->json($certificates);
     }
 
     public function store(StoreCertificateRequest $request)
@@ -46,7 +41,7 @@ class CertificateController extends Controller
     }
 
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
-    {     
+    {
         abort_if(Gate::denies('certificate_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $certificate->update($request->all());
@@ -71,6 +66,4 @@ class CertificateController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

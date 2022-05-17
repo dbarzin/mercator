@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Relation;
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Resources\Admin\RelationResource;
-
+use App\Relation;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class RelationController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('relation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('relation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $relations = Relation::all();
+        $relations = Relation::all();
 
-    return response()->json($relations);
+        return response()->json($relations);
     }
 
     public function store(StoreRelationRequest $request)
@@ -44,7 +39,7 @@ class RelationController extends Controller
     }
 
     public function update(StoreRelationRequest $request, Relation $relation)
-    {     
+    {
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $relation->update($request->all());
@@ -62,6 +57,4 @@ class RelationController extends Controller
 
         return response()->json();
     }
-
 }
-

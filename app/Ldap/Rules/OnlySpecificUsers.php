@@ -13,12 +13,12 @@ class OnlySpecificUsers extends Rule
      */
     public function isValid()
     {
-        if(!config('app.ldap_groups')) {
+        if (! config('app.ldap_groups')) {
             return true;
         }
 
         return $this->user->groups()->recursive()->exists(
-            explode(",", config('app.ldap_groups'))
+            explode(',', config('app.ldap_groups'))
         );
     }
 }
