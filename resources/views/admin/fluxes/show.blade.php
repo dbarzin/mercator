@@ -118,6 +118,18 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.flux.fields.bidirectional') }}
+                        </th>
+                        <td>
+                            @if ($flux->bidirectional==0)
+                                Non
+                            @elseif ($flux->bidirectional==1)
+                                Oui
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
