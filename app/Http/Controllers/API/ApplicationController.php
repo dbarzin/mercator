@@ -2,29 +2,23 @@
 
 namespace App\Http\Controllers\API;
 
-use App\MApplication;
-
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
-use App\Http\Requests\MassDestroyApplicationRequest;
 use App\Http\Resources\Admin\ApplicationResource;
-
+use App\MApplication;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $applications = MApplication::all();
+        $applications = MApplication::all();
 
-    return response()->json($applications);
+        return response()->json($applications);
     }
 
     public function store(StoreApplicationRequest $request)
@@ -49,7 +43,7 @@ class ApplicationController extends Controller
     }
 
     public function update(UpdateApplicationRequest $request, MApplication $application)
-    {     
+    {
         abort_if(Gate::denies('application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->update($request->all());
@@ -70,6 +64,4 @@ class ApplicationController extends Controller
 
         return response()->json();
     }
-
 }
-

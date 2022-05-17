@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Annuaire;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Requests\StoreAnnuaireRequest;
 use App\Http\Requests\UpdateAnnuaireRequest;
-use App\Http\Requests\MassDestroyAnnuaireRequest;
 use App\Http\Resources\Admin\AnnuaireResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class AnnuaireController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('annuaire_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('annuaire_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $annuaires = Annuaire::all();
+        $annuaires = Annuaire::all();
 
-    return response()->json($annuaires);
+        return response()->json($annuaires);
     }
 
     public function store(StoreAnnuaireRequest $request)
@@ -44,7 +39,7 @@ class AnnuaireController extends Controller
     }
 
     public function update(UpdateAnnuaireRequest $request, Annuaire $annuaire)
-    {     
+    {
         abort_if(Gate::denies('annuaire_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $annuaire->update($request->all());
@@ -67,6 +62,4 @@ class AnnuaireController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

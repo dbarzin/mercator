@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\DomaineAd;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
-use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Resources\Admin\DomaineAdResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class DomaineAdController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('domaine_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $domaineAd = DomaineAd::all();
+        $domaineAd = DomaineAd::all();
 
-    return response()->json($domaineAd);
+        return response()->json($domaineAd);
     }
 
     public function store(StoreDomaineAdRequest $request)
@@ -45,7 +40,7 @@ class DomaineAdController extends Controller
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
-    {     
+    {
         abort_if(Gate::denies('domaine_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $domaineAd->update($request->all());
@@ -69,6 +64,4 @@ class DomaineAdController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

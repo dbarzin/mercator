@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Process;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
-use App\Http\Requests\MassDestroyProcessRequest;
 use App\Http\Resources\Admin\ProcessResource;
-
+use App\Process;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ProcessController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $processs = Process::all();
+        $processs = Process::all();
 
-    return response()->json($processs);
+        return response()->json($processs);
     }
 
     public function store(StoreProcessRequest $request)
@@ -48,7 +43,7 @@ class ProcessController extends Controller
     }
 
     public function update(UpdateProcessRequest $request, Process $process)
-    {     
+    {
         abort_if(Gate::denies('process_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $process->update($request->all());
@@ -75,6 +70,4 @@ class ProcessController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\MApplication;
 use App\MApplicationEvent;
 use App\Services\EventService;
 use App\User;
-use App\MApplication;
 use Illuminate\Http\Request;
 
 class MApplicationEventController extends Controller
@@ -18,7 +18,8 @@ class MApplicationEventController extends Controller
      *
      * @return void
      */
-    public function __construct(EventService $eventService) {
+    public function __construct(EventService $eventService)
+    {
         $this->eventService = $eventService;
     }
 
@@ -29,7 +30,7 @@ class MApplicationEventController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -39,13 +40,14 @@ class MApplicationEventController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -58,7 +60,7 @@ class MApplicationEventController extends Controller
         $event->message = $request->get('message');
         $event->saveOrFail();
         // Chargement des évènements
-       $this->eventService->getLoadAppEvents($application);
+        $this->eventService->getLoadAppEvents($application);
 
         return response()->json(['events' => $application->events]);
     }
@@ -67,22 +69,24 @@ class MApplicationEventController extends Controller
      * Display the specified resource.
      *
      * @param  \App\MApplicationEvent  $mApplicationEvent
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(MApplicationEvent $mApplicationEvent)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\MApplicationEvent  $mApplicationEvent
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(MApplicationEvent $mApplicationEvent)
     {
-        //
+        
     }
 
     /**
@@ -90,11 +94,12 @@ class MApplicationEventController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\MApplicationEvent  $mApplicationEvent
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, MApplicationEvent $mApplicationEvent)
     {
-        //
+        
     }
 
     /**
@@ -102,6 +107,7 @@ class MApplicationEventController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int $id Id de l'évènement
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, int $id)

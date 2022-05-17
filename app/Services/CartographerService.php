@@ -11,34 +11,36 @@ use Illuminate\Support\Facades\Config;
 /**
  * Wrapper pour la logique des cartographes au sein de l'appli.
  */
-class CartographerService {
-
+class CartographerService
+{
     protected bool $active;
 
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->active = (bool)Config::get('app.cartographers');
+    public function __construct()
+    {
+        $this->active = (bool) Config::get('app.cartographers');
     }
 
     /**
      * Permet de retirer de la collection les applications où l'utilisateur connecté n'est pas cartographe, si souhaité
      *
      * @param Collection $applications
+     *
      * @return Collection
      */
-    public function filterOnCartographers(Collection $applications) : Collection
+    public function filterOnCartographers(Collection $applications): Collection
     {
         // Maybe there's a way to TypeHint the authenticated user ? (\Illuminate\Contracts\Auth\Authenticatable user)
         $currentUser = Auth::user();
         // On ne filtre pas pour les admins
-        if(!$this->active || $currentUser->getIsAdminAttribute()) {
+        if (! $this->active || $currentUser->getIsAdminAttribute()) {
             return $applications->sortBy('name')->pluck('name', 'id');
         }
 
         foreach ($applications as $key => $application) {
-            if(!$application->hasCartographer($currentUser)) {
+            if (! $application->hasCartographer($currentUser)) {
                 $applications->forget($key);
             }
         }
@@ -53,22 +55,22 @@ class CartographerService {
      *
      * @return bool
      */
-    public function attributeCartographerRole(MApplication $application) : bool
+    public function attributeCartographerRole(MApplication $application): bool
     {
-        if(!$this->active) {
+        if (! $this->active) {
             return false;
         }
 
         // On ne veut pas le créer s'il existe pas
-        if (!($role = Role::getRoleByTitle('Cartographer')) && !($role = Role::getRoleByTitle('Cartographe'))) {
+        if (! ($role = Role::getRoleByTitle('Cartographer')) && ! ($role = Role::getRoleByTitle('Cartographe'))) {
             return false;
         }
 
-        foreach ($application->cartographers as $cartographer)
-        {
+        foreach ($application->cartographers as $cartographer) {
             // Pas besoin de le mettre sur les utilisateurs étant administrateurs
-            if ($cartographer->getIsAdminAttribute())
+            if ($cartographer->getIsAdminAttribute()) {
                 continue;
+            }
 
             $cartographer->addRole($role);
         }

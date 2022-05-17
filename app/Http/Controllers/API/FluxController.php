@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Flux;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Requests\StoreFluxRequest;
 use App\Http\Requests\UpdateFluxRequest;
-use App\Http\Requests\MassDestroyFluxRequest;
 use App\Http\Resources\Admin\FluxResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class FluxController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('flux_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('flux_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $fluxs = Flux::all();
+        $fluxs = Flux::all();
 
-    return response()->json($fluxs);
+        return response()->json($fluxs);
     }
 
     public function store(StoreFluxRequest $request)
@@ -44,7 +39,7 @@ class FluxController extends Controller
     }
 
     public function update(UpdateFluxRequest $request, Flux $flux)
-    {     
+    {
         abort_if(Gate::denies('flux_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $flux->update($request->all());
@@ -67,6 +62,4 @@ class FluxController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

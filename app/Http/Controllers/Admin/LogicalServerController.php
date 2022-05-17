@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Flux;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
@@ -23,7 +22,8 @@ class LogicalServerController extends Controller
      *
      * @return void
      */
-    public function __construct(CartographerService $cartographerService) {
+    public function __construct(CartographerService $cartographerService)
+    {
         $this->cartographerService = $cartographerService;
     }
 

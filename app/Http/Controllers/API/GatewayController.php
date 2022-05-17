@@ -3,29 +3,24 @@
 namespace App\Http\Controllers\API;
 
 use App\Gateway;
-use App\Subnetwork;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Requests\StoreGatewayRequest;
 use App\Http\Requests\UpdateGatewayRequest;
-use App\Http\Requests\MassDestroyGatewayRequest;
 use App\Http\Resources\Admin\GatewayResource;
-
+use App\Subnetwork;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class GatewayController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('gateway_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('gateway_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $gateways = Gateway::all();
+        $gateways = Gateway::all();
 
-    return response()->json($gateways);
+        return response()->json($gateways);
     }
 
     public function store(StoreGatewayRequest $request)
@@ -48,11 +43,11 @@ class GatewayController extends Controller
     }
 
     public function update(UpdateGatewayRequest $request, Gateway $gateway)
-    {     
+    {
         abort_if(Gate::denies('gateway_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $gateway->update($request->all());
-        
+
         Subnetwork::where('gateway_id', $gateway->id)
             ->update(['gateway_id' => null]);
 
@@ -77,6 +72,4 @@ class GatewayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

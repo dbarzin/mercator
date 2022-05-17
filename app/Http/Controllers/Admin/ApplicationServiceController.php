@@ -22,7 +22,8 @@ class ApplicationServiceController extends Controller
      *
      * @return void
      */
-    public function __construct(CartographerService $cartographerService) {
+    public function __construct(CartographerService $cartographerService)
+    {
         $this->cartographerService = $cartographerService;
     }
 

@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\ApplicationModule;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Requests\StoreApplicationModuleRequest;
 use App\Http\Requests\UpdateApplicationModuleRequest;
-use App\Http\Requests\MassDestroyApplicationModuleRequest;
 use App\Http\Resources\Admin\ApplicationModuleResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ApplicationModuleController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('application_module_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_module_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $applicationmodules = ApplicationModule::all();
+        $applicationmodules = ApplicationModule::all();
 
-    return response()->json($applicationmodules);
+        return response()->json($applicationmodules);
     }
 
     public function store(StoreApplicationModuleRequest $request)
@@ -46,7 +41,7 @@ class ApplicationModuleController extends Controller
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationmodule)
-    {     
+    {
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationmodule->update($request->all());
@@ -71,6 +66,4 @@ class ApplicationModuleController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Network;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Requests\StoreNetworkRequest;
 use App\Http\Requests\UpdateNetworkRequest;
-use App\Http\Requests\MassDestroyNetworkRequest;
 use App\Http\Resources\Admin\NetworkResource;
-
+use App\Network;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class NetworkController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('network_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $networks = Network::all();
+        $networks = Network::all();
 
-    return response()->json($networks);
+        return response()->json($networks);
     }
 
     public function store(StoreNetworkRequest $request)
@@ -46,7 +41,7 @@ class NetworkController extends Controller
     }
 
     public function update(UpdateNetworkRequest $request, Network $network)
-    {     
+    {
         abort_if(Gate::denies('network_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $network->update($request->all());
@@ -71,6 +66,4 @@ class NetworkController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

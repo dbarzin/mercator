@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Workstation;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Resources\Admin\WorkstationResource;
-
+use App\Workstation;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class WorkstationController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $workstations = Workstation::all();
+        $workstations = Workstation::all();
 
-    return response()->json($workstations);
+        return response()->json($workstations);
     }
 
     public function store(StoreWorkstationRequest $request)
@@ -46,7 +41,7 @@ class WorkstationController extends Controller
     }
 
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)
-    {     
+    {
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $workstation->update($request->all());
@@ -71,6 +66,4 @@ class WorkstationController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

@@ -10,19 +10,19 @@ class CartographerMApplication extends Model
 {
     use HasFactory, SoftDeletes;
 
-	public $table = 'cartographer_m_application';
+    public $table = 'cartographer_m_application';
 
-	protected $dates = [
+    protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
-	];
+    ];
 
-	protected $fillable = [
+    protected $fillable = [
         'user_id',
         'm_application_id',
         'created_at',
         'updated_at',
         'deleted_at',
-	];
+    ];
 }

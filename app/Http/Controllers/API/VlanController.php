@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Vlan;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Requests\StoreVlanRequest;
 use App\Http\Requests\UpdateVlanRequest;
-use App\Http\Requests\MassDestroyVlanRequest;
 use App\Http\Resources\Admin\VlanResource;
-
+use App\Vlan;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 class VlanController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('vlan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('vlan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $vlans = Vlan::all();
+        $vlans = Vlan::all();
 
-    return response()->json($vlans);
+        return response()->json($vlans);
     }
 
     public function store(StoreVlanRequest $request)
@@ -53,7 +48,7 @@ class VlanController extends Controller
     }
 
     public function update(UpdateVlanRequest $request, Vlan $vlan)
-    {     
+    {
         abort_if(Gate::denies('vlan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vlan->update($request->all());
@@ -84,6 +79,4 @@ class VlanController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\User;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Resources\Admin\UserResource;
-
+use App\User;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $users = User::all();
+        $users = User::all();
 
-    return response()->json($users);
+        return response()->json($users);
     }
 
     public function store(StoreUserRequest $request)
@@ -46,7 +41,7 @@ class UserController extends Controller
     }
 
     public function update(UpdateUserRequest $request, User $user)
-    {     
+    {
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->update($request->all());
@@ -71,6 +66,4 @@ class UserController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

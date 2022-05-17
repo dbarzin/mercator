@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Site;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
-use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Resources\Admin\SiteResource;
-
+use App\Site;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class SiteController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $sites = Site::all();
+        $sites = Site::all();
 
-    return response()->json($sites);
+        return response()->json($sites);
     }
 
     public function store(StoreSiteRequest $request)
@@ -46,7 +41,7 @@ class SiteController extends Controller
     }
 
     public function update(UpdateSiteRequest $request, Site $site)
-    {     
+    {
         abort_if(Gate::denies('site_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $site->update($request->all());
@@ -71,6 +66,4 @@ class SiteController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

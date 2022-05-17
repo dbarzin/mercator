@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Bay;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
-use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Resources\Admin\BayResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class BayController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('bay_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bay_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $bays = Bay::all();
+        $bays = Bay::all();
 
-    return response()->json($bays);
+        return response()->json($bays);
     }
 
     public function store(StoreBayRequest $request)
@@ -44,7 +39,7 @@ class BayController extends Controller
     }
 
     public function update(UpdateBayRequest $request, Bay $bay)
-    {     
+    {
         abort_if(Gate::denies('bay_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $bay->update($request->all());
@@ -67,6 +62,4 @@ class BayController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

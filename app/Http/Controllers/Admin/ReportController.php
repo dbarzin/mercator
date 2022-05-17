@@ -52,12 +52,9 @@ use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use Carbon\Carbon;
-
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -1134,17 +1131,18 @@ class ReportController extends Controller
 
                 $sheet->setCellValue("Q{$row}", $application->documentation);
                 $sheet->setCellValue("R{$row}", $application->logical_servers->implode('name', ', '));
-                $res=null;
+                $res = null;
 
                 // TODO: improve me with select, join and unique
-                foreach($application->logical_servers as $logical_server) {
-                    foreach($logical_server->servers as $physical_server) {
-                        if ($res != null)
-                            $res .= ", ";
+                foreach ($application->logical_servers as $logical_server) {
+                    foreach ($logical_server->servers as $physical_server) {
+                        if ($res !== null) {
+                            $res .= ', ';
+                        }
                         $res .= $physical_server->name;
                     }
                 }
-                
+
                 $sheet->setCellValue("S{$row}", $res);
                 $sheet->setCellValue("T{$row}", $application->databases->implode('name', ', '));
 
@@ -1840,5 +1838,4 @@ class ReportController extends Controller
             }
         }
     }
-
 }

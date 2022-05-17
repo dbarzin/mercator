@@ -119,7 +119,7 @@ class AuditController extends HomeController
 
         // ============
         // Metier
-	// ============
+        // ============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.metier.title_short'));
         $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
         $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
@@ -330,7 +330,7 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
         $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
-	// L1
+        // L1
         $denominator = $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'];
         $sheet->setCellValue("B{$row}", $denominator);
         $sheet->setCellValue(
@@ -768,13 +768,13 @@ class AuditController extends HomeController
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
         // white font
-        $sheet->getStyle('1') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A2') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A9') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A31') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A50') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A63') ->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A93') ->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('1')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A2')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A9')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A31')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A50')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A63')->getFont()->getColor()->setRGB('FFFFFF');
+        $sheet->getStyle('A93')->getFont()->getColor()->setRGB('FFFFFF');
 
         // background color
         $sheet->getStyle('A1:O1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
@@ -797,15 +797,15 @@ class AuditController extends HomeController
         $sheet->getStyle('A94:A141')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // column size and border
-        for ($i = 0; $i <=14; $i++) {
-            $col=chr(ord('A') + $i);
+        for ($i = 0; $i <= 14; $i++) {
+            $col = chr(ord('A') + $i);
             $sheet->getColumnDimension($col)->setAutoSize(true);
             $sheet->getStyle("{$col}1")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
             $sheet->getStyle("{$col}2")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         }
 
         // Center
-        $sheet->getStyle("B1:O141")->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('B1:O141')->getAlignment()->setHorizontal('center');
 
         // Total months
         $tMonths = Carbon::now()->year * 12 + Carbon::now()->month;

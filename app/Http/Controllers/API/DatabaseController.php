@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Database;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Http\Requests\UpdateDatabaseRequest;
-use App\Http\Requests\MassDestroyDatabaseRequest;
 use App\Http\Resources\Admin\DatabaseResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class DatabaseController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('database_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('database_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $databases = Database::all();
+        $databases = Database::all();
 
-    return response()->json($databases);
+        return response()->json($databases);
     }
 
     public function store(StoreDatabaseRequest $request)
@@ -46,7 +41,7 @@ class DatabaseController extends Controller
     }
 
     public function update(UpdateDatabaseRequest $request, Database $database)
-    {     
+    {
         abort_if(Gate::denies('database_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $database->update($request->all());
@@ -71,6 +66,4 @@ class DatabaseController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

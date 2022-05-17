@@ -12,9 +12,8 @@ use App\Http\Requests\StoreMApplicationRequest;
 use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
-use App\Services\CartographerService;
-use App\User;
 use App\Process;
+use App\User;
 // CoreUI Gates
 use Gate;
 // Laravel Gate
@@ -135,7 +134,7 @@ class MApplicationLogController extends Controller
                 'responsible_list',
                 'referent_list',
                 'editor_list',
-	            'cartographers_list'
+                'cartographers_list'
             )
         );
     }
@@ -147,7 +146,7 @@ class MApplicationLogController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-	    $application->cartographers()->sync($request->input('cartographers', []));
+        $application->cartographers()->sync($request->input('cartographers', []));
         $application->logical_servers()->sync($request->input('logical_servers', []));
 
         // Attribution du role pour les nouveaux cartographes

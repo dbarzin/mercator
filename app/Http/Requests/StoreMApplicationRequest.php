@@ -72,7 +72,7 @@ class StoreMApplicationRequest extends FormRequest
                 'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
                 'nullable',
                 'after:install_date',
-            ]
+            ],
         ];
     }
 }

@@ -3,28 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\ApplicationBlock;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
-use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Resources\Admin\ApplicationBlockResource;
-
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class ApplicationBlockController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_block_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $applicationblocks = ApplicationBlock::all();
+        $applicationblocks = ApplicationBlock::all();
 
-    return response()->json($applicationblocks);
+        return response()->json($applicationblocks);
     }
 
     public function store(StoreApplicationBlockRequest $request)
@@ -44,7 +39,7 @@ class ApplicationBlockController extends Controller
     }
 
     public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationblock)
-    {     
+    {
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationblock->update($request->all());
@@ -67,6 +62,4 @@ class ApplicationBlockController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-
