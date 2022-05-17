@@ -19,7 +19,7 @@ class AuditController extends HomeController
     {
         $levels = $this->computeMaturity();
 
-        $path = storage_path('app/levels.xlsx');
+        $path = storage_path('app/levels-' . Carbon::today()->format('Ymd') . '.xlsx');
 
         $header = [
             'Objet',
@@ -726,7 +726,7 @@ class AuditController extends HomeController
 
     public function changes()
     {
-        $path = storage_path('app/changes.xlsx');
+        $path = storage_path('app/changes-' . Carbon::today()->format('Ymd') . '.xlsx');
 
         /*
         select subject_type, description, YEAR(created_at) as year, MONTH(created_at) as month, count(*) as count
