@@ -233,21 +233,25 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
+ let dotSrc = `
+  digraph  {
+  @can('entity_show')
+  @foreach($entities as $entity)    
+    E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]
+  @endforEach
+  @endcan
+  
+  @can('relation_show')
+  @foreach($relations as $relation)
+    E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]
+  @endforEach
+  @endcan
+}
+ `;
+ 
 d3.select("#graph").graphviz()
     .addImage("/images/entity.png", "64px", "64px")
-    .renderDot("digraph  {\
-        @can('entity_show')\
-            @foreach($entities as $entity) \
-                E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]\
-            @endforEach\
-        @endcan\
-        @can('relation_show')\
-            @foreach($relations as $relation) \
-                E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]\
-            @endforEach\
-        @endcan\
-        }");
-
+    .renderDot(dotSrc);
 </script>
 @parent
 @endsection
