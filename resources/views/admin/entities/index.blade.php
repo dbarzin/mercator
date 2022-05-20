@@ -70,7 +70,7 @@
                                 {!! $entity->description ?? '' !!}
                             </td>
                             <td>
-                                'tata'{!!  $entity->is_external  == null ? '' : ($entity->is_external ? 'Oui' : 'Non')  !!}
+                                {!!  $entity->is_external  == null ? '' : trans('global.'.($entity->is_external ? 'yes' : 'no'))  !!}
                             </td>  
                             <td>
                                 {!! $entity->contact_point  ?? '' !!}

@@ -359,6 +359,14 @@ return [
             'security_level' => 'Niveau de sécurité',
             'security_level_helper' => 'ex. : maturité, mesures de sécurité en place ou définies au niveau contractuel, degré de confiance, homologation',
         ],
+        'filters' => [
+                'internes' => "Internes",
+                'externes' => "Externes",
+                'all'     => "Toutes",
+		'title'   => [
+			'int/ext' => "Filtrer les entités",
+		]
+        ],
         'title' => 'Entités',
         'title_singular' => 'Entité',
     ],

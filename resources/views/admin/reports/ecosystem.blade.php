@@ -20,17 +20,20 @@
 			<form action="/admin/report/ecosystem">
 			    <table class="table table-bordered table-striped">
 				<tr>
-				    <td>externe à l'organisme
+				    <td>{{ trans('cruds.entity.filters.title.int/ext') }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
 					<select name="perimeter" onchange="this.form.submit()">
 					    @if (Session::get('perimeter')==null)
-						<option value="All" selected >All</option>
+						<option value="All" selected >trans('cruds.entity.filters.all')</option>
 					    @else
-						@foreach (["All", "Internes", "Externes"] as $choice)
-						    <option value="{{ $choice }}" {{ Session::get('perimeter')==$choice? "selected" : "" }}
+						@foreach ([
+						    "All"      => trans('cruds.entity.filters.all'),
+						    "Externes" => trans('cruds.entity.filters.externes'),
+						    "Internes" => trans('cruds.entity.filters.internes')] as $key=>$choice)
+						    <option value="{{ $key }}" {{ Session::get('perimeter')==$key? "selected" : "" }}
 						    >{{ $choice }}</option>
 					    @endforeach
 					    @endif
