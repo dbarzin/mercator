@@ -51,6 +51,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.entity.fields.is_external') }}
+                        </th>
+                        <td>
+                            {!! $entity->is_external ? 'Oui' : 'Non' !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.entity.fields.security_level') }}
                         </th>
                         <td>

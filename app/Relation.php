@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string|null $type
  * @property string|null $description
+ * @property string|false $is_hierarchical
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -68,6 +69,7 @@ class Relation extends Model
         'importance',
         'source_id',
         'destination_id',
+        'is_hierarchical',
         'created_at',
         'updated_at',
         'deleted_at',

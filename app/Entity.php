@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $security_level
  * @property string|null $contact_point
  * @property string|null $description
+ * @property boolean|false $is_external
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -73,6 +74,7 @@ class Entity extends Model
         'description',
         'security_level',
         'contact_point',
+        'is_external',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -29,6 +29,9 @@
                             {{ trans('cruds.entity.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.entity.fields.is_external') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.entity.fields.contact_point') }}
                         </th>
                         <th>
@@ -46,6 +49,7 @@
                     @foreach($entities as $key => $entity)
                         <tr data-entry-id="{{ $entity->id }}"
                             @if(($entity->description==null)||
+                                ($entity->is_external==null)||
                                 ($entity->contact_point==null)||
                                 ($entity->security_level==null)||
                                 ($entity->contact_point==null)||
@@ -65,6 +69,9 @@
                             <td>
                                 {!! $entity->description ?? '' !!}
                             </td>
+                            <td>
+                                'tata'{!!  $entity->is_external  == null ? '' : ($entity->is_external ? 'Oui' : 'Non')  !!}
+                            </td>  
                             <td>
                                 {!! $entity->contact_point  ?? '' !!}
                             </td>                        

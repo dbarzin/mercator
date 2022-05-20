@@ -50,7 +50,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
             </div>
-
+	    
+	    <div class="form-group">
+		<label class="recommended" for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
+		<input name="is_external" id='is_external' type="checkbox" value="1" class="form-control" {{ old('is_external',$entity->is_external) ? 'checked="checked"' : '' }}>
+		@if($errors->has('is_external'))
+		    <div class="invalid-feedback">
+			{{ $errors->first('is_external') }}
+		    </div>
+		@endif
+		<span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
+	    </div>
+	    
             <div class="form-group">
                 <label for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
                 <div style="padding-bottom: 4px">

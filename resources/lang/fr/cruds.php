@@ -343,6 +343,8 @@ return [
             'applications_resp_helper' => "Responsable de l'exploitation des applications",
             'contact_point' => 'Point de contact',
             'contact_point_helper' => '',
+            'is_external' => 'Externe à l\'organisme',
+            'is_external_helper' => '',
             'databases_resp' => 'Bases de données',
             'databases_resp_helper' => "Responsable de l'exploitation des bases de données",
             'description' => 'Description',

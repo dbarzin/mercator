@@ -15,6 +15,31 @@
                             {{ session('status') }}
                         </div>
                     @endif
+		    
+		    <div class="col-sm-5">
+			<form action="/admin/report/ecosystem">
+			    <table class="table table-bordered table-striped">
+				<tr>
+				    <td>externe à l'organisme
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+					<select name="perimeter" onchange="this.form.submit()">
+					    @if (Session::get('perimeter')==null)
+						<option value="All" selected >All</option>
+					    @else
+						@foreach (["All", "Internes", "Externes"] as $choice)
+						    <option value="{{ $choice }}" {{ Session::get('perimeter')==$choice? "selected" : "" }}
+						    >{{ $choice }}</option>
+					    @endforeach
+					    @endif
+					</select>
+				    </td>
+				</tr>
+			    </table>
+			</form>
+		    </div>
                     <div id="graph"></div>
                 </div>
             </div>
@@ -44,6 +69,10 @@
                                 <tr>
                                     <td width="20%"><b>{{ trans('cruds.entity.fields.description') }}</b></td>
                                     <td>{!! $entity->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ trans('cruds.entity.fields.is_external') }}</b></td>
+                                    <td>{!! $entity->is_external !!}</td>
                                 </tr>
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.security_level') }}</b></td>
