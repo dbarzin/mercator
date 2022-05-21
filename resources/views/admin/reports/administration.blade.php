@@ -252,36 +252,37 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
+let dotSrc=`
+digraph  {
+    @foreach($zones as $zone) 
+        Z{{ $zone->id }} [label="{{ $zone->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/zoneadmin.png" href="#ZONE{{$zone->id}}"]
+        @foreach($zone->zoneAdminAnnuaires as $annuaire) 
+            Z{{ $zone->id }} -> A{{$annuaire->id}}
+        @endforeach
+        @foreach($zone->zoneAdminForestAds as $forest) 
+            Z{{ $zone->id }} -> F{{$forest->id}}
+        @endforeach
+    @endforEach
+    @foreach($annuaires as $annuaire) 
+        A{{ $annuaire->id }} [label="{{ $annuaire->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/annuaire.png" href="#ANNUAIRE{{$annuaire->id}}"]
+    @endforEach
+    @foreach($forests as $forest)
+        F{{ $forest->id }} [label="{{ $forest->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/ldap.png" href="#FOREST{{$forest->id}}"]
+        @foreach($forest->domaines as $domain) 
+        F{{ $forest->id }} -> D{{ $domain->id }} 
+        @endforeach
+    @endforeach
+    @foreach($domains as $domain)
+        D{{ $domain->id }} [label="{{ $domain->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/domain.png" href="#DOMAIN{{$domain->id}}"]
+    @endforeach
+}`;
 
 d3.select("#graph").graphviz()
     .addImage("/images/zoneadmin.png", "64px", "64px")
     .addImage("/images/annuaire.png", "64px", "64px")
     .addImage("/images/ldap.png", "64px", "64px")
     .addImage("/images/domain.png", "64px", "64px")
-    .renderDot("digraph  {\
-            <?php  $i=0; ?>\
-            @foreach($zones as $zone) \
-                Z{{ $zone->id }} [label=\"{{ $zone->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/zoneadmin.png\" href=\"#ZONE{{$zone->id}}\"]\
-                @foreach($zone->zoneAdminAnnuaires as $annuaire) \
-                    Z{{ $zone->id }} -> A{{$annuaire->id}}\
-                @endforeach\
-                @foreach($zone->zoneAdminForestAds as $forest) \
-                    Z{{ $zone->id }} -> F{{$forest->id}}\
-                @endforeach\
-            @endforEach\
-            @foreach($annuaires as $annuaire) \
-                A{{ $annuaire->id }} [label=\"{{ $annuaire->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/annuaire.png\" href=\"#ANNUAIRE{{$annuaire->id}}\"]\
-            @endforEach\
-            @foreach($forests as $forest)\
-                F{{ $forest->id }} [label=\"{{ $forest->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/ldap.png\" href=\"#FOREST{{$forest->id}}\"]\
-                @foreach($forest->domaines as $domain) \
-                F{{ $forest->id }} -> D{{ $domain->id }} \
-                @endforeach\
-            @endforeach\
-            @foreach($domains as $domain)\
-                D{{ $domain->id }} [label=\"{{ $domain->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/domain.png\" href=\"#DOMAIN{{$domain->id}}\"]\
-            @endforeach\
-        }");
+    .renderDot(dotSrc);
 
 </script>
 @parent

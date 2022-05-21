@@ -572,64 +572,67 @@
 <script src="/js/d3-graphviz.js"></script> 
 
 <script>
+let dotSrc=`
+digraph  {
+    @can('application_access')
+    @foreach($applications as $application) 
+            A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/application.png" href="#APPLICATION{{$application->id}}"] 
+    @endforEach
+    @endcan
+    @can('application_service_access')
+    @foreach($applicationServices as $service) 
+            S{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#SERVICE{{$service->id}}"]
+    @endforeach
+    @endcan
+    @can('application_module_access')
+    @foreach($applicationModules as $module) 
+            M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#MODULE{{$module->id}}"]
+    @endforeach
+    @endcan
+    @can('database_access')
+    @foreach($databases as $database) 
+        DB{{ $database->id }} [label="{{ $database->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/database.png" href="#DATABASE{{$database->id}}"]
+    @endforeach
+    @endcan
+    @can('flux_access')
+    @foreach($flows as $flow) 
+        @if ((($flow->database_source_id!=null)||($flow->module_source_id!=null)||($flow->service_source_id!=null)||($flow->application_source_id!=null))&&(($flow->database_dest_id!=null)||($flow->module_dest_id!=null)||($flow->service_dest_id!=null)||($flow->application_dest_id!=null)))
+                @if ($flow->database_source_id!=null) 
+                DB{{ $flow->database_source_id }} 
+                @elseif ($flow->module_source_id!=null) 
+                M{{ $flow->module_source_id }} 
+                @elseif ($flow->service_source_id!=null) 
+                S{{ $flow->service_source_id }} 
+                @elseif ($flow->application_source_id!=null) 
+                A{{ $flow->application_source_id }} 
+                @endif
+                -> 
+                @if ($flow->database_dest_id!=null) 
+                DB{{ $flow->database_dest_id }} 
+                @elseif ($flow->module_dest_id!=null) 
+                M{{ $flow->module_dest_id }} 
+                @elseif ($flow->service_dest_id!=null) 
+                S{{ $flow->service_dest_id }} 
+                @elseif ($flow->application_dest_id!=null) 
+                A{{ $flow->application_dest_id }} 
+                @endif
+        [ label="{{ $flow->name }}" 
+        @if ($flow->bidirectional)
+            dir="both"
+        @endif
+        href="#FLOW{{$flow->id}}"]
+        @endif
+    @endforEach
+    @endcan
+}`;
+
 d3.select("#graph").graphviz()
     .addImage("/images/application.png", "64px", "64px")
     .addImage("/images/applicationservice.png", "64px", "64px")
     .addImage("/images/applicationmodule.png", "64px", "64px")
     .addImage("/images/database.png", "64px", "64px")
     .engine("circo")
-    .renderDot("digraph  {\
-            @can('application_access')\
-            @foreach($applications as $application) \
-                    A{{ $application->id }} [label=\"{{ $application->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/application.png\" href=\"#APPLICATION{{$application->id}}\"] \
-            @endforEach\
-            @endcan\
-            @can('application_service_access')\
-            @foreach($applicationServices as $service) \
-                    S{{ $service->id }} [label=\"{{ $service->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationservice.png\" href=\"#SERVICE{{$service->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('application_module_access')\
-            @foreach($applicationModules as $module) \
-                    M{{ $module->id }} [label=\"{{ $module->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/applicationmodule.png\" href=\"#MODULE{{$module->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('database_access')\
-            @foreach($databases as $database) \
-                DB{{ $database->id }} [label=\"{{ $database->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/database.png\" href=\"#DATABASE{{$database->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('flux_access')\
-            @foreach($flows as $flow) \
-                @if ((($flow->database_source_id!=null)||($flow->module_source_id!=null)||($flow->service_source_id!=null)||($flow->application_source_id!=null))&&(($flow->database_dest_id!=null)||($flow->module_dest_id!=null)||($flow->service_dest_id!=null)||($flow->application_dest_id!=null)))\
-                        @if ($flow->database_source_id!=null) \
-                        DB{{ $flow->database_source_id }} \
-                        @elseif ($flow->module_source_id!=null) \
-                        M{{ $flow->module_source_id }} \
-                        @elseif ($flow->service_source_id!=null) \
-                        S{{ $flow->service_source_id }} \
-                        @elseif ($flow->application_source_id!=null) \
-                        A{{ $flow->application_source_id }} \
-                        @endif\
-                        -> \
-                        @if ($flow->database_dest_id!=null) \
-                        DB{{ $flow->database_dest_id }} \
-                        @elseif ($flow->module_dest_id!=null) \
-                        M{{ $flow->module_dest_id }} \
-                        @elseif ($flow->service_dest_id!=null) \
-                        S{{ $flow->service_dest_id }} \
-                        @elseif ($flow->application_dest_id!=null) \
-                        A{{ $flow->application_dest_id }} \
-                        @endif\
-                [ label=\"{{ $flow->name }}\" \
-                @if ($flow->bidirectional)\
-                    dir=\"both\"\
-                @endif\
-                href=\"#FLOW{{$flow->id}}\"]\
-                @endif\
-            @endforEach\
-            @endcan\
-        }");
+    .renderDot(dotSrc);
 </script>
 @parent
 @endsection

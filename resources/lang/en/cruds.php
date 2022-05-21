@@ -363,9 +363,10 @@ return [
                 'internes' => "Internal",
                 'externes' => "External",
                 'all'     => "All",
+        ],
 		'title'   => [
 			'int/ext' => "Filter entities",
-		]
+		],
         'title' => 'Entities',
         'title_singular' => 'Entity',
     ],
