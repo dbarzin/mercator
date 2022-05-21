@@ -37,7 +37,7 @@
                         {{ $errors->first('ip_addresses') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.router.fields.ip_adresses_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.router.fields.ip_addresses_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="rules">{{ trans('cruds.router.fields.rules') }}</label>
