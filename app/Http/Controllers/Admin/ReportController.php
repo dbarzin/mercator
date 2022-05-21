@@ -61,14 +61,32 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReportController extends Controller
 {
-    public function ecosystem()
+    public function ecosystem(Request $request)
     {
-        $entities = Entity::All()->sortBy('name');
-        $relations = Relation::All()->sortBy('name');
-
-        return view('admin/reports/ecosystem')
-            ->with('entities', $entities)
+        if (($request->perimeter === null) || ($request->perimeter === 'all')) {
+            $request->session()->put('perimeter','all');
+            $entities = Entity::All()->sortBy('name');
+            $relations = Relation::All()->sortBy('name');
+            return view('admin/reports/ecosystem')
+                ->with('entities', $entities)
             ->with('relations', $relations);
+        } else {
+            $perimeter = $request->perimeter;
+            $entities = Entity::All()->sortBy('name')->filter(function ($item)  use ($perimeter){
+                if ($perimeter == 'Externes' ) {
+                    return $item->is_external == 'true';
+                } else {
+                    return  !($item->is_external == 'true');
+                }
+            });
+            $relations = Relation::All()->sortBy('name') ->filter(function ($item)  use ($entities){
+                return $entities->contains($item->source_id) && $entities->contains($item->destination_id);
+            });
+            $request->session()->put('perimeter', $request->perimeter);
+            return view('admin/reports/ecosystem')
+                ->with('entities',  $entities)
+                ->with('relations', $relations);
+	    }
     }
 
     public function informationSystem(Request $request)
@@ -986,6 +1004,7 @@ class ReportController extends Controller
         $header = [
             trans('cruds.entity.fields.name'),
             trans('cruds.entity.fields.description'),
+            trans('cruds.entity.fields.is_external'),
             trans('cruds.entity.fields.security_level'),
             trans('cruds.entity.fields.contact_point'),
             trans('cruds.entity.fields.applications_resp'),
@@ -1004,6 +1023,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -1013,8 +1033,9 @@ class ReportController extends Controller
         foreach ($entities as $entity) {
             $sheet->setCellValue("A{$row}", $entity->name);
             $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
-            $sheet->setCellValue("C{$row}", $html->toRichTextObject($entity->security_level));
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->contact_point));
+            $sheet->setCellValue("C{$row}", $entity->is_external);
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->security_level));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->contact_point));
             $txt = '';
             foreach ($entity->applications as $application) {
                 $txt .= $application->name;
@@ -1022,7 +1043,7 @@ class ReportController extends Controller
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("E{$row}", $txt);
+            $sheet->setCellValue("F{$row}", $txt);
 
             $row++;
         }

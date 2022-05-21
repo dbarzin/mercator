@@ -343,6 +343,8 @@ return [
             'applications_resp_helper' => 'Responsible for application operations',
             'contact_point' => 'Point-of-contact',
             'contact_point_helper' => '',
+            'is_external' => 'External to enterprise',
+            'is_external_helper' => '',
             'databases_resp' => 'Data base',
             'databases_resp_helper' => 'Responsible for database operations',
             'description' => 'Description',
@@ -357,6 +359,13 @@ return [
             'security_level' => 'Security Level',
             'security_level_helper' => 'ex. : maturity, security measures in place or defined at the contractual level, degree of confidence, approval',
         ],
+        'filters' => [
+                'internes' => "Internal",
+                'externes' => "External",
+                'all'     => "All",
+		'title'   => [
+			'int/ext' => "Filter entities",
+		]
         'title' => 'Entities',
         'title_singular' => 'Entity',
     ],

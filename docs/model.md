@@ -22,6 +22,7 @@ Table *entities* :
 |:---------------|:-------------|:-----------------|
 | id             | int unsigned | auto_increment |
 | name           | varchar(255) | Nom de l'entité |
+| is_external    | boolean      | Entité externe |
 | security_level | longtext     | Niveau de sécurité |
 | contact_point  | longtext     | Point de contact |
 | description    | longtext     | Description de l'entité |
