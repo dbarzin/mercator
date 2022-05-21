@@ -632,7 +632,7 @@
 <!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
 <script src="/js/d3-graphviz.js"></script>
 
-<script>
+<script> 
 let dotSrc=`
 digraph  {
     @can('application_block_access')
