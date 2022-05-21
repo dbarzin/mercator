@@ -157,7 +157,6 @@
             </div>
         </div>
 
-
             <div class="form-group">
                 <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
                 <div class="form-check form-switch">
