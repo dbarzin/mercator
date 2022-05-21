@@ -59,8 +59,7 @@ class RouterTest extends DuskTestCase
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
                 $browser->visit("/admin/routers/create");
-                // TODO : fixme
-                // $browser->waitForText("Mercator");
+                $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/routers/create");
             });        
         });

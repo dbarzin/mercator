@@ -482,6 +482,53 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
+let dotSrc=`
+digraph  {
+    @if (auth()->user()->granularity>=2)
+    @foreach($macroProcessuses as $macroProcess) 
+        MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#MACROPROCESS{{ $macroProcess->id }}"]
+    @endforeach
+    @endif
+    @foreach($processes as $process)
+        P{{ $process->id }} [label="{{ $process->identifiant }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
+        @foreach($process->activities as $activity)
+            P{{$process->id}} -> A{{$activity->id}}
+        @endforeach
+        @foreach($process->processInformation as $information)
+            P{{ $process->id }} -> I{{ $information->id }}
+        @endforeach
+        @if (auth()->user()->granularity>=2)
+        @if ($process->macroprocess_id!=null) 
+            MP{{ $process->macroprocess_id }} -> P{{$process->id}}
+        @endif
+        @endif
+    @endforeach
+    @foreach($activities as $activity)
+        A{{ $activity->id }} [label="{{ $activity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/activity.png"  href="#ACTIVITY{{ $activity->id }}"]
+        @foreach($activity->operations as $operation)
+            A{{ $activity->id }} -> O{{ $operation->id }}
+        @endforeach
+    @endforeach
+    @foreach($operations as $operation)
+        O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
+        @foreach($operation->tasks as $task)
+            O{{ $operation->id }} -> T{{ $task->id }}
+        @endforeach
+        @foreach($operation->actors as $actor)
+            O{{ $operation->id }} -> ACT{{ $actor->id }}
+        @endforeach
+    @endforeach
+    @foreach($tasks as $task)
+        T{{ $task->id }} [label="{{ $task->nom }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#TASK{{ $task->id }}"]
+    @endforeach
+    @foreach($actors as $actor)
+        ACT{{ $actor->id }} [label="{{ $actor->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png"  href="#ACTOR{{ $actor->id }}"]
+    @endforeach
+    @foreach($informations as $information)
+        I{{ $information->id }} [label="{{ $information->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png"  href="#INFORMATION{{ $information->id }}"]
+    @endforeach
+}`;
+
 d3.select("#graph").graphviz()
     .addImage("/images/macroprocess.png", "64px", "64px")
     .addImage("/images/process.png", "64px", "64px")
@@ -490,52 +537,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/task.png", "64px", "64px")
     .addImage("/images/actor.png", "64px", "64px")
     .addImage("/images/information.png", "64px", "64px")
-        .renderDot("digraph  {\
-            <?php  $i=0; ?>\
-            @if (auth()->user()->granularity>=2)\
-            @foreach($macroProcessuses as $macroProcess) \
-                MP{{ $macroProcess->id }} [label=\"{{ $macroProcess->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/macroprocess.png\"  href=\"#MACROPROCESS{{ $macroProcess->id }}\"]\
-            @endforeach\
-            @endif\
-            @foreach($processes as $process)\
-                P{{ $process->id }} [label=\"{{ $process->identifiant }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/process.png\"  href=\"#PROCESS{{ $process->id }}\"]\
-                @foreach($process->activities as $activity)\
-                    P{{$process->id}} -> A{{$activity->id}}\
-                @endforeach\
-                @foreach($process->processInformation as $information)\
-                    P{{ $process->id }} -> I{{ $information->id }}\
-                @endforeach\
-                @if (auth()->user()->granularity>=2)\
-                @if ($process->macroprocess_id!=null) \
-                    MP{{ $process->macroprocess_id }} -> P{{$process->id}}\
-                @endif\
-                @endif\
-            @endforeach\
-            @foreach($activities as $activity)\
-                A{{ $activity->id }} [label=\"{{ $activity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/activity.png\"  href=\"#ACTIVITY{{ $activity->id }}\"]\
-                @foreach($activity->operations as $operation)\
-                    A{{ $activity->id }} -> O{{ $operation->id }}\
-                @endforeach\
-            @endforeach\
-            @foreach($operations as $operation)\
-                O{{ $operation->id }} [label=\"{{ $operation->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/operation.png\"  href=\"#OPERATION{{ $operation->id }}\"]\
-                @foreach($operation->tasks as $task)\
-                    O{{ $operation->id }} -> T{{ $task->id }}\
-                @endforeach\
-                @foreach($operation->actors as $actor)\
-                    O{{ $operation->id }} -> ACT{{ $actor->id }}\
-                @endforeach\
-            @endforeach\
-            @foreach($tasks as $task)\
-                T{{ $task->id }} [label=\"{{ $task->nom }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/task.png\"  href=\"#TASK{{ $task->id }}\"]\
-            @endforeach\
-            @foreach($actors as $actor)\
-                ACT{{ $actor->id }} [label=\"{{ $actor->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/actor.png\"  href=\"#ACTOR{{ $actor->id }}\"]\
-            @endforeach\
-            @foreach($informations as $information)\
-                I{{ $information->id }} [label=\"{{ $information->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/information.png\"  href=\"#INFORMATION{{ $information->id }}\"]\
-            @endforeach\
-        }");
+        .renderDot(dotSrc);
 </script>
 @parent
 @endsection

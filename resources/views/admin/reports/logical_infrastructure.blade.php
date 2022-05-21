@@ -663,6 +663,109 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
+let dotSrc=`
+digraph  {
+    @can('network_access')
+    @foreach($networks as $network) 
+        NET{{ $network->id }} [label="{{ $network->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cloud.png" href="#NETWORK{{$network->id}}"]
+    @endforeach
+    @endcan
+    @can('gateway_access')
+    @foreach($gateways as $gateway) 
+        GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
+    @endforeach
+    @endcan
+    @can('subnetwork_access')
+    @foreach($subnetworks as $subnetwork) 
+        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
+        @if ($subnetwork->vlan_id!=null) 
+            SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
+        @endif
+        @if ($subnetwork->network_id!=null) 
+            NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}
+        @endif
+        @if ($subnetwork->gateway_id!=null) 
+            SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('external_connected_entity_access')
+    @foreach($externalConnectedEntities as $entity) 
+        E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
+        @foreach($entity->connected_networks as $network)
+            E{{ $entity->id }} -> NET{{ $network->id }} 
+        @endforeach
+    @endforeach
+    @endcan
+    @can('logical_server_access')
+    @foreach($logicalServers as $logicalServer) 
+        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
+        @if ($logicalServer->address_ip!=null)
+            @foreach($subnetworks as $subnetwork) 
+                @foreach(explode(',',$logicalServer->address_ip) as $address) 
+                    @if ($subnetwork->contains($address))
+                        SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }} 
+                        @break
+                    @endif
+                @endforeach
+            @endforeach
+        @endif
+        @foreach($logicalServer->certificates as $certificate)
+            LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}
+        @endforeach
+    @endforeach
+    @endcan
+    @can('dhcp_server_access')
+    @foreach($dhcpServers as $dhcpServer) 
+        DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
+        @if ($dhcpServer->address_ip!=null)
+            @foreach($subnetworks as $subnetwork) 
+                @if ($subnetwork->contains($dhcpServer->address_ip))
+                    SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }} 
+                    @break
+                @endif
+            @endforeach
+        @endif
+    @endforeach
+    @endcan
+    @can('dnsserver_access')
+    @foreach($dnsservers as $dnsserver) 
+        DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#DNS_SERVER{{$dnsserver->id}}"]
+        @if ($dnsserver->address_ip!=null)
+            @foreach($subnetworks as $subnetwork) 
+                @if ($subnetwork->contains($dnsserver->address_ip))
+                    SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }} 
+                    @break
+                @endif
+            @endforeach
+        @endif
+    @endforeach
+    @endcan
+    @can('certificate_access')
+    @foreach($certificates as $certificate) 
+        @if ($certificate->logical_servers->count()>0)
+            CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#CERT{{$certificate->id}}"]
+        @endif
+    @endforeach
+    @foreach($routers as $router) 
+        R{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        @foreach($subnetworks as $subnetwork) 
+            @if (($router->ip_addresses!=null)&&($subnetwork->address!=null))
+                @foreach(explode(',',$router->ip_addresses) as $address) 
+                    @if ($subnetwork->contains($address))
+                        SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}
+                    @endif
+                @endforeach
+            @endif
+        @endforeach
+    @endforeach
+    @endcan
+    @can('vlan_access')
+    @foreach($vlans as $vlan) 
+        VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#VLAN{{$vlan->id}}"]
+    @endforeach
+    @endcan
+}`;
 
 d3.select("#graph").graphviz()
     .addImage("/images/cloud.png", "64px", "64px")
@@ -673,108 +776,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")    
     .addImage("/images/vlan.png", "64px", "64px")    
-    .renderDot("digraph  {\
-            @can('network_access')\
-            @foreach($networks as $network) \
-                NET{{ $network->id }} [label=\"{{ $network->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"#NETWORK{{$network->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('gateway_access')\
-            @foreach($gateways as $gateway) \
-                GATEWAY{{ $gateway->id }} [label=\"{{ $gateway->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/gateway.png\" href=\"#GATEWAY{{$gateway->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('subnetwork_access')\
-            @foreach($subnetworks as $subnetwork) \
-                SUBNET{{ $subnetwork->id }} [label=\"{{ $subnetwork->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"#SUBNET{{$subnetwork->id}}\"]\
-                @if ($subnetwork->vlan_id!=null) \
-                    SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}\
-                @endif\
-                @if ($subnetwork->network_id!=null) \
-                    NET{{ $subnetwork->network_id }} -> SUBNET{{ $subnetwork->id }}\
-                @endif\
-                @if ($subnetwork->gateway_id!=null) \
-                    SUBNET{{ $subnetwork->id }} -> GATEWAY{{ $subnetwork->gateway_id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('external_connected_entity_access')\
-            @foreach($externalConnectedEntities as $entity) \
-                E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#EXTENTITY{{$entity->id}}\"]\
-                @foreach($entity->connected_networks as $network)\
-                    E{{ $entity->id }} -> NET{{ $network->id }} \
-                @endforeach\
-            @endforeach\
-            @endcan\
-            @can('logical_server_access')\
-            @foreach($logicalServers as $logicalServer) \
-                LOGICAL_SERVER{{ $logicalServer->id }} [label=\"{{ $logicalServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#LOGICAL_SERVER{{$logicalServer->id}}\"]\
-                @if ($logicalServer->address_ip!=null)\
-                    @foreach($subnetworks as $subnetwork) \
-                        @foreach(explode(',',$logicalServer->address_ip) as $address) \
-                            @if ($subnetwork->contains($address))\
-                                SUBNET{{ $subnetwork->id }} -> LOGICAL_SERVER{{ $logicalServer->id }} \
-                                @break\
-                            @endif\
-                        @endforeach\
-                    @endforeach\
-                @endif\
-                @foreach($logicalServer->certificates as $certificate)\
-                    LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}\
-                @endforeach\
-            @endforeach\
-            @endcan\
-            @can('dhcp_server_access')\
-            @foreach($dhcpServers as $dhcpServer) \
-                DHCP_SERVER{{ $dhcpServer->id }} [label=\"{{ $dhcpServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#DHCP_SERVER{{$dhcpServer->id}}\"]\
-                @if ($dhcpServer->address_ip!=null)\
-                    @foreach($subnetworks as $subnetwork) \
-                        @if ($subnetwork->contains($dhcpServer->address_ip))\
-                            SUBNET{{ $subnetwork->id }} -> DHCP_SERVER{{ $dhcpServer->id }} \
-                            @break\
-                        @endif\
-                    @endforeach\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('dnsserver_access')\
-            @foreach($dnsservers as $dnsserver) \
-                DNS_SERVER{{ $dnsserver->id }} [label=\"{{ $dnsserver->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#DNS_SERVER{{$dnsserver->id}}\"]\
-                @if ($dnsserver->address_ip!=null)\
-                    @foreach($subnetworks as $subnetwork) \
-                        @if ($subnetwork->contains($dnsserver->address_ip))\
-                            SUBNET{{ $subnetwork->id }} -> DNS_SERVER{{ $dnsserver->id }} \
-                            @break\
-                        @endif\
-                    @endforeach\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('certificate_access')\
-            @foreach($certificates as $certificate) \
-                @if ($certificate->logical_servers->count()>0)\
-                    CERT{{ $certificate->id }} [label=\"{{ $certificate->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"#CERT{{$certificate->id}}\"]\
-                @endif\
-            @endforeach\
-            @foreach($routers as $router) \
-                R{{ $router->id }} [label=\"{{ $router->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"#ROUTER{{$router->id}}\"]\
-                @foreach($subnetworks as $subnetwork) \
-                    @if (($router->ip_addresses!=null)&&($subnetwork->address!=null))\
-                        @foreach(explode(',',$router->ip_addresses) as $address) \
-                            @if ($subnetwork->contains($address))\
-                                SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}\
-                            @endif\
-                        @endforeach\
-                    @endif\
-                @endforeach\
-            @endforeach\
-            @endcan\
-            @can('vlan_access')\
-            @foreach($vlans as $vlan) \
-                VLAN{{ $vlan->id }} [label=\"{{ $vlan->name }}\" shape=none labelloc=\"b\" width=1 height=1.1 image=\"/images/vlan.png\" href=\"#VLAN{{$vlan->id}}\"]\
-            @endforeach\
-            @endcan\
-        }");
+    .renderDot(dotSrc);
 
 </script>
 @parent

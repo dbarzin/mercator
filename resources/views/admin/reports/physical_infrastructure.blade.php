@@ -803,6 +803,130 @@
 <script src="/js/d3-graphviz.js"></script>
 
 <script>
+let dotSrc=`
+digraph  {
+    @can('site_access')
+    @foreach($sites as $site) 
+        S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/site.png" href="#SITE{{$site->id}}"]
+    @endforEach
+    @endcan
+    @can('building_access')
+    @foreach($buildings as $building) 
+        B{{ $building->id }} [label="{{ $building->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/building.png" href="#BUILDING{{$building->id}}"]
+        S{{ $building->site_id }} -> B{{ $building->id }} 
+        @foreach($building->roomBays as $bay) 
+            B{{ $building->id }} -> BAY{{ $bay->id }}
+        @endforeach
+    @endforEach
+    @endcan
+    @can('bay_access')
+    @foreach($bays as $bay) 
+        BAY{{ $bay->id }} [label="{{ $bay->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/bay.png" href="#BAY{{$bay->id}}"]
+    @endforeach
+    @endcan
+    @can('physical_server_access')
+    @foreach($physicalServers as $pServer) 
+        PSERVER{{ $pServer->id }} [label="{{ $pServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#PSERVER{{$pServer->id}}"]
+        @if ($pServer->bay!=null)
+             BAY{{ $pServer->bay->id }} -> PSERVER{{ $pServer->id }}
+        @elseif ($pServer->building!=null)
+             B{{ $pServer->building->id }} -> PSERVER{{ $pServer->id }}
+        @elseif ($pServer->site!=null)
+             S{{ $pServer->site->id }} -> PSERVER{{ $pServer->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('workstation_access')
+    @foreach($workstations as $workstation) 
+        W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+        @if ($workstation->building!=null)
+             B{{ $workstation->building->id }} -> W{{ $workstation->id }}
+        @elseif ($workstation->site!=null)
+             S{{ $workstation->site->id }} -> W{{ $workstation->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('storage_device_access')
+    @foreach($storageDevices as $storageDevice) 
+        SD{{ $storageDevice->id }} [label="{{ $storageDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/storage.png" href="#STORAGEDEVICE{{$storageDevice->id}}"]
+        @if ($storageDevice->bay!=null)
+             BAY{{ $storageDevice->bay->id }} -> SD{{ $storageDevice->id }}
+        @elseif ($storageDevice->building!=null)
+             B{{ $storageDevice->building->id }} -> SD{{ $storageDevice->id }}
+        @elseif ($storageDevice->site!=null)
+             S{{ $storageDevice->site->id }} -> SD{{ $storageDevice->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('peripheral_access')
+    @foreach($peripherals as $peripheral) 
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        @if ($peripheral->bay!=null)
+             BAY{{ $peripheral->bay->id }} -> PER{{ $peripheral->id }}
+        @elseif ($peripheral->building!=null)
+             B{{ $peripheral->building->id }} -> PER{{ $peripheral->id }}
+        @elseif ($peripheral->site!=null)
+             S{{ $peripheral->site->id }} -> PER{{ $peripheral->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('phone_access')
+    @foreach($phones as $phone) 
+        PHONE{{ $phone->id }} [label="{{ $phone->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+        @if ($phone->building!=null)
+             B{{ $phone->building->id }} -> PHONE{{ $phone->id }}
+        @elseif ($phone->site!=null)
+             S{{ $phone->site->id }} -> PHONE{{ $phone->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('physical_switch_access')
+    @foreach($physicalSwitches as $switch) 
+        SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="#SWITCH{{$switch->id}}"]
+        @if ($switch->bay!=null)
+             BAY{{ $switch->bay->id }} -> SWITCH{{ $switch->id }}
+        @elseif ($switch->building!=null)
+             B{{ $switch->building->id }} -> SWITCH{{ $switch->id }}
+        @elseif ($switch->site!=null)
+             S{{ $switch->site->id }} -> SWITCH{{ $switch->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('physical_router_access')
+    @foreach($physicalRouters as $router) 
+        ROUTER{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        @if ($router->bay!=null)
+             BAY{{ $router->bay->id }} -> ROUTER{{ $router->id }}
+        @elseif ($router->building!=null)
+             B{{ $router->building->id }} -> ROUTER{{ $router->id }}
+        @elseif ($router->site!=null)
+             S{{ $router->site->id }} -> ROUTER{{ $router->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('wifi_terminal_access')
+    @foreach($wifiTerminals as $wifiTerminal) 
+        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
+        @if ($wifiTerminal->building!=null)
+             B{{ $wifiTerminal->building->id }} -> WIFI{{ $wifiTerminal->id }}
+        @elseif ($wifiTerminal->site!=null)
+             S{{ $wifiTerminal->site->id }} -> WIFI{{ $wifiTerminal->id }}
+        @endif
+    @endforeach
+    @endcan
+    @can('physical_security_device_access')
+    @foreach($physicalSecurityDevices as $physicalSecurityDevice) 
+        PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="#PSD{{$physicalSecurityDevice->id}}"]
+        @if ($physicalSecurityDevice->bay!=null)
+             BAY{{ $physicalSecurityDevice->bay->id }} -> PSD{{ $physicalSecurityDevice->id }}
+        @elseif ($physicalSecurityDevice->building!=null)
+             B{{ $physicalSecurityDevice->building->id }} -> PSD{{ $physicalSecurityDevice->id }}
+        @elseif ($physicalSecurityDevice->site!=null)
+             S{{ $physicalSecurityDevice->site->id }} -> PSD{{ $physicalSecurityDevice->id }}
+        @endif
+    @endforeach
+    @endcan
+}`;
 
 d3.select("#graph").graphviz()
     .addImage("/images/site.png", "64px", "64px")
@@ -817,130 +941,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
-    .renderDot("digraph  {\
-            <?php  $i=0; ?>\
-            @can('site_access')\
-            @foreach($sites as $site) \
-                S{{ $site->id }} [label=\"{{ $site->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/site.png\" href=\"#SITE{{$site->id}}\"]\
-            @endforEach\
-            @endcan\
-            @can('building_access')\
-            @foreach($buildings as $building) \
-                B{{ $building->id }} [label=\"{{ $building->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/building.png\" href=\"#BUILDING{{$building->id}}\"]\
-                S{{ $building->site_id }} -> B{{ $building->id }} \
-                @foreach($building->roomBays as $bay) \
-                    B{{ $building->id }} -> BAY{{ $bay->id }}\
-                @endforeach\
-            @endforEach\
-            @endcan\
-            @can('bay_access')\
-            @foreach($bays as $bay) \
-                BAY{{ $bay->id }} [label=\"{{ $bay->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/bay.png\" href=\"#BAY{{$bay->id}}\"]\
-            @endforeach\
-            @endcan\
-            @can('physical_server_access')\
-            @foreach($physicalServers as $pServer) \
-                PSERVER{{ $pServer->id }} [label=\"{{ $pServer->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"#PSERVER{{$pServer->id}}\"]\
-                @if ($pServer->bay!=null)\
-                     BAY{{ $pServer->bay->id }}\ -> PSERVER{{ $pServer->id }}\
-                @elseif ($pServer->building!=null)\
-                     B{{ $pServer->building->id }}\ -> PSERVER{{ $pServer->id }}\
-                @elseif ($pServer->site!=null)\
-                     S{{ $pServer->site->id }}\ -> PSERVER{{ $pServer->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('workstation_access')\
-            @foreach($workstations as $workstation) \
-                W{{ $workstation->id }} [label=\"{{ $workstation->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/workstation.png\" href=\"#WORKSTATION{{$workstation->id}}\"]\
-                @if ($workstation->building!=null)\
-                     B{{ $workstation->building->id }}\ -> W{{ $workstation->id }}\
-                @elseif ($workstation->site!=null)\
-                     S{{ $workstation->site->id }}\ -> W{{ $workstation->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('storage_device_access')\
-            @foreach($storageDevices as $storageDevice) \
-                SD{{ $storageDevice->id }} [label=\"{{ $storageDevice->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/storage.png\" href=\"#STORAGEDEVICE{{$storageDevice->id}}\"]\
-                @if ($storageDevice->bay!=null)\
-                     BAY{{ $storageDevice->bay->id }}\ -> SD{{ $storageDevice->id }}\
-                @elseif ($storageDevice->building!=null)\
-                     B{{ $storageDevice->building->id }}\ -> SD{{ $storageDevice->id }}\
-                @elseif ($storageDevice->site!=null)\
-                     S{{ $storageDevice->site->id }}\ -> SD{{ $storageDevice->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('peripheral_access')\
-            @foreach($peripherals as $peripheral) \
-                PER{{ $peripheral->id }} [label=\"{{ $peripheral->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/peripheral.png\" href=\"#PERIPHERAL{{$peripheral->id}}\"]\
-                @if ($peripheral->bay!=null)\
-                     BAY{{ $peripheral->bay->id }}\ -> PER{{ $peripheral->id }}\
-                @elseif ($peripheral->building!=null)\
-                     B{{ $peripheral->building->id }}\ -> PER{{ $peripheral->id }}\
-                @elseif ($peripheral->site!=null)\
-                     S{{ $peripheral->site->id }}\ -> PER{{ $peripheral->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('phone_access')\
-            @foreach($phones as $phone) \
-                PHONE{{ $phone->id }} [label=\"{{ $phone->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/phone.png\" href=\"#PHONE{{$phone->id}}\"]\
-                @if ($phone->building!=null)\
-                     B{{ $phone->building->id }}\ -> PHONE{{ $phone->id }}\
-                @elseif ($phone->site!=null)\
-                     S{{ $phone->site->id }}\ -> PHONE{{ $phone->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('physical_switch_access')\
-            @foreach($physicalSwitches as $switch) \
-                SWITCH{{ $switch->id }} [label=\"{{ $switch->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"#SWITCH{{$switch->id}}\"]\
-                @if ($switch->bay!=null)\
-                     BAY{{ $switch->bay->id }}\ -> SWITCH{{ $switch->id }}\
-                @elseif ($switch->building!=null)\
-                     B{{ $switch->building->id }}\ -> SWITCH{{ $switch->id }}\
-                @elseif ($switch->site!=null)\
-                     S{{ $switch->site->id }}\ -> SWITCH{{ $switch->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('physical_router_access')\
-            @foreach($physicalRouters as $router) \
-                ROUTER{{ $router->id }} [label=\"{{ $router->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"#ROUTER{{$router->id}}\"]\
-                @if ($router->bay!=null)\
-                     BAY{{ $router->bay->id }}\ -> ROUTER{{ $router->id }}\
-                @elseif ($router->building!=null)\
-                     B{{ $router->building->id }}\ -> ROUTER{{ $router->id }}\
-                @elseif ($router->site!=null)\
-                     S{{ $router->site->id }}\ -> ROUTER{{ $router->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('wifi_terminal_access')\
-            @foreach($wifiTerminals as $wifiTerminal) \
-                WIFI{{ $wifiTerminal->id }} [label=\"{{ $wifiTerminal->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/wifi.png\" href=\"#WIFI{{$wifiTerminal->id}}\"]\
-                @if ($wifiTerminal->building!=null)\
-                     B{{ $wifiTerminal->building->id }}\ -> WIFI{{ $wifiTerminal->id }}\
-                @elseif ($wifiTerminal->site!=null)\
-                     S{{ $wifiTerminal->site->id }}\ -> WIFI{{ $wifiTerminal->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-            @can('physical_security_device_access')\
-            @foreach($physicalSecurityDevices as $physicalSecurityDevice) \
-                PSD{{ $physicalSecurityDevice->id }} [label=\"{{ $physicalSecurityDevice->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/security.png\" href=\"#PSD{{$physicalSecurityDevice->id}}\"]\
-                @if ($physicalSecurityDevice->bay!=null)\
-                     BAY{{ $physicalSecurityDevice->bay->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
-                @elseif ($physicalSecurityDevice->building!=null)\
-                     B{{ $physicalSecurityDevice->building->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
-                @elseif ($physicalSecurityDevice->site!=null)\
-                     S{{ $physicalSecurityDevice->site->id }}\ -> PSD{{ $physicalSecurityDevice->id }}\
-                @endif\
-            @endforeach\
-            @endcan\
-        }");
+    .renderDot(dotSrc);
 </script>
 @parent
 @endsection

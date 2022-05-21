@@ -52,14 +52,16 @@
             </div>
 	    
 	    <div class="form-group">
-		<label class="recommended" for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
-		<input name="is_external" id='is_external' type="checkbox" value="1" class="form-control" {{ old('is_external',$entity->is_external) ? 'checked="checked"' : '' }}>
-		@if($errors->has('is_external'))
-		    <div class="invalid-feedback">
-			{{ $errors->first('is_external') }}
-		    </div>
-		@endif
-		<span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
+            <div class="form-check form-switch">
+                <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked="checked"' : '' }}>
+	           	<label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
+            </div>
+    		@if($errors->has('is_external'))
+    		    <div class="invalid-feedback">
+    			{{ $errors->first('is_external') }}
+    		    </div>
+    		@endif
+            <span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
 	    </div>
 	    
             <div class="form-group">

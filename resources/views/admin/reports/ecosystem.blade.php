@@ -16,15 +16,11 @@
                         </div>
                     @endif
 		    
-		    <div class="col-sm-5">
+		    <div class="col-sm-2">
 			<form action="/admin/report/ecosystem">
 			    <table class="table table-bordered table-striped">
 				<tr>
 				    <td>{{ trans('cruds.entity.filters.title.int/ext') }}
-				    </td>
-				</tr>
-				<tr>
-				    <td>
 					<select name="perimeter" onchange="this.form.submit()">
 					    @if (Session::get('perimeter')==null)
 						<option value="All" selected >trans('cruds.entity.filters.all')</option>
