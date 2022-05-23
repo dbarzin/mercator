@@ -1035,6 +1035,7 @@ class ReportController extends Controller
             trans('cruds.entity.fields.name'),
             trans('cruds.entity.fields.description'),
             trans('cruds.entity.fields.is_external'),
+            trans('cruds.entity.fields.entity_type'),
             trans('cruds.entity.fields.security_level'),
             trans('cruds.entity.fields.contact_point'),
             trans('cruds.entity.fields.applications_resp'),
@@ -1049,11 +1050,12 @@ class ReportController extends Controller
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setWidth(60, 'pt');
+        $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -1063,9 +1065,10 @@ class ReportController extends Controller
         foreach ($entities as $entity) {
             $sheet->setCellValue("A{$row}", $entity->name);
             $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
-            $sheet->setCellValue("C{$row}", $entity->is_external);
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($entity->security_level));
-            $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->contact_point));
+            $sheet->setCellValue("C{$row}", $entity->is_external ? trans('global.yes') : trans('global.no') );
+            $sheet->setCellValue("D{$row}", $entity->entity_type);
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->security_level));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($entity->contact_point));
             $txt = '';
             foreach ($entity->applications as $application) {
                 $txt .= $application->name;
@@ -1073,7 +1076,7 @@ class ReportController extends Controller
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("F{$row}", $txt);
+            $sheet->setCellValue("G{$row}", $txt);
 
             $row++;
         }
