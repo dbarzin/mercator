@@ -61,32 +61,62 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReportController extends Controller
 {
+    const ALLOWED_PERIMETERS  = ['All','Internes','Externes'];
+    const SANITIZED_PERIMETER = 'All';
+
     public function ecosystem(Request $request)
     {
-        if (($request->perimeter === null) || ($request->perimeter === 'all')) {
-            $request->session()->put('perimeter','all');
-            $entities = Entity::All()->sortBy('name');
-            $relations = Relation::All()->sortBy('name');
-            return view('admin/reports/ecosystem')
-                ->with('entities', $entities)
-            ->with('relations', $relations);
-        } else {
-            $perimeter = $request->perimeter;
-            $entities = Entity::All()->sortBy('name')->filter(function ($item)  use ($perimeter){
-                if ($perimeter == 'Externes' ) {
-                    return $item->is_external == 'true';
-                } else {
-                    return  !($item->is_external == 'true');
-                }
-            });
-            $relations = Relation::All()->sortBy('name') ->filter(function ($item)  use ($entities){
-                return $entities->contains($item->source_id) && $entities->contains($item->destination_id);
-            });
-            $request->session()->put('perimeter', $request->perimeter);
-            return view('admin/reports/ecosystem')
-                ->with('entities',  $entities)
-                ->with('relations', $relations);
+        $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ? 
+                   $request->perimeter : $this::SANITIZED_PERIMETER;
+        $typefilter = $request->entity_type ??= 'All';
+        
+        $entitiesGroups  = Entity::All()->groupBy('entity_type');
+        $entities = collect([]);
+        $entityTypes =  collect([]);
+        $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités*/
+        foreach($entitiesGroups as $entity_type => $entOfGroup)
+        {
+            $entities = $entities->concat($entOfGroup);
+            if ($entity_type != null) {
+                $isTypeExists = $isTypeExists ||  ($entity_type ==  $typefilter);
+                $entityTypes->push($entity_type);
+            }
+        }
+
+        $has_filter = false;
+        if ($typefilter != 'All'  ) {
+            $has_filter = true;
+            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);                  
+        }
+        
+        if ($perimeter != 'All') {
+            $has_filter = true;
+            $entities = $entities
+                      ->filter(function ($item)  use ($perimeter){
+                          return ('Externes' == $perimeter) ?
+                                             $item->is_external : (! $item->is_external);
+                      });
+        }
+        
+        $relations = Relation::All()->sortBy('name');
+        if ($has_filter){
+            /**
+             * Le "group by" semble résoudre les entités on doit travailler avec les ids ..
+             */
+            $ids = $entities->map(function ($item) {return $item->id;});
+            $relations = $relations
+                       ->filter(function ($item)  use ($ids){
+                           return $ids->contains($item->source_id) &&
+                               $ids->contains($item->destination_id);
+                       });
 	    }
+        
+        $request->session()->put('perimeter', $perimeter);
+        $request->session()->put('entity_type', $typefilter);
+        return view('admin/reports/ecosystem')
+            ->with('entityTypes', $entityTypes)
+            ->with('entities', $entities)
+            ->with('relations', $relations);
     }
 
     public function informationSystem(Request $request)

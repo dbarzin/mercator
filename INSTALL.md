@@ -82,8 +82,10 @@ Put the connection parameters to the database :
 
     ## .env file
     DB_CONNECTION=mysql
+    # DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
     DB_PORT=3306
+    # Comment DB_PORT for pgsql
     DB_DATABASE=mercator
     DB_USERNAME=mercator_user
     DB_PASSWORD=s3cr3t
@@ -109,6 +111,10 @@ To import the test database (optional)
 
     sudo mysql mercator < mercator_data.sql
 
+or (Postgres)
+
+   psql mercator < pg_mercator_data.sql
+   
 Start the application with php
 
     php artisan serve
@@ -224,6 +230,10 @@ Before updating the application take a backup of the database and the project.
 
     mysqldump mercator > mercator_backup.sql
 
+or (Postgres)
+
+   pg_dump mercator > mercator_backup.sql
+
 Get the sources from GIT
 
     cd /var/www/mercator
@@ -287,6 +297,16 @@ Backup the database
         --ignore-table=mercator.migrations \
         > backup_mercator_data.sql
 
+or (Postgres)
+
+   pg_dump --exclude-table=users \
+   --exclude-table=roles \
+   --exclude-table=permissions \
+   --exclude-table=permission_role \
+   --exclude-table=role_user  \
+   --exclude-table=migrations  \
+   mercator > backup_mercator_data.sql
+
 Then backup database users
 
     mysqldump mercator \
@@ -294,6 +314,12 @@ Then backup database users
         --tables users roles role_user
         --add-drop-table \
         > backup_mercator_users.sql
+
+or (Postgres):
+
+   pg_dump --clean \
+   -t users -t roles -t role_user \
+   > backup_mercator_users.sql
 
 Delete the Mercator database
 
@@ -315,9 +341,17 @@ Restore the data and fix errors
 
     mysql mercator < backup_mercator_data.sql
 
+or (Postgres)
+
+   psql mercator < backup_mercator_data.sql
+
 Restore users
 
     mysql mercator < backup_mercator_users.sql
+
+or (Postgres)
+
+   psql mercator < backup_mercator_users.sql
 
 All migration issues should be resolved.
 

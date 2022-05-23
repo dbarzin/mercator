@@ -51,16 +51,37 @@
             </div>
 
 	    <div class="form-group">
-            <div class="form-check form-switch">
-                <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external') ? 'checked="checked"' : '' }}>
-        		<label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
-            </div>
+		<div class="form-check form-switch">
+                    <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external') ? 'checked="checked"' : '' }}>
+        	    <label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
+		</div>
     		@if($errors->has('is_external'))
     		    <div class="invalid-feedback">
     			{{ $errors->first('is_external') }}
     		    </div>
     		@endif
     		<span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
+	    </div>
+
+	    <div class="form-group">
+		<label for="entity_type">{{ trans('cruds.entity.fields.entity_type') }}</label>
+		<select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
+			name="entity_type" id="entity_type">
+		    <option></option>
+                    @foreach($entityTypes as $t)
+                        <option {{ old('entity_type') == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+		    @if (!$entityTypes->contains(old('entity_type')))
+                        <option {{ old('entity_type') ? 'selected' : ''}}> {{ old('entity_type') }}</option>'
+		    @endif
+		</select>
+
+                @if($errors->has('entity_type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('entity_type') }}
+                    </div>
+                @endif
+		<span class="help-block">{{ trans('cruds.entity.fields.entity_type_helper') }}</span>
 	    </div>
 	    
             <div class="form-group">
