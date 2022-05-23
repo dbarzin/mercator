@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.routers.show', $router->id) }}">
                                 {{ $router->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $router->description ?? '' !!}
