@@ -21,6 +21,12 @@
 			    <table class="table table-bordered table-striped">
 				<tr>
 				    <td>{{ trans('cruds.entity.filters.title.int/ext') }}
+				    </td>
+				    <td>{{ trans('cruds.entity.filters.title.type') }}
+				    </td>
+				</tr>
+				<tr>
+				    <td>
 					<select name="perimeter" onchange="this.form.submit()">
 					    @if (Session::get('perimeter')==null)
 						<option value="All" selected >trans('cruds.entity.filters.all')</option>
@@ -33,6 +39,15 @@
 						    >{{ $choice }}</option>
 					    @endforeach
 					    @endif
+					</select>
+				    </td>
+				    <td>
+					<select name="entity_type" onchange="this.form.submit()">
+						<option value="All" {{ Session::get('entity_type')== null ? "selected" : "" }} >{{ trans('cruds.entity.filters.all_types') }}</option>
+						@foreach ($entityTypes as $type)
+						    <option value="{{ $type }}" {{ Session::get('entity_type')==$type? "selected" : "" }}
+						    >{{ $type }}</option>
+						@endforeach
 					</select>
 				    </td>
 				</tr>
@@ -228,7 +243,7 @@
 <!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
 <script src="/js/d3-graphviz.js"></script>
 
-<script>
+<script id="dot-input">
  let dotSrc = `
   digraph  {
   @can('entity_show')

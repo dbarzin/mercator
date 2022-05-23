@@ -59,6 +59,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.entity.fields.entity_type') }}
+                        </th>
+                        <td>
+                            {!! $entity->entity_type !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.entity.fields.security_level') }}
                         </th>
                         <td>

@@ -41,3 +41,5 @@ storage/*.key
 storage/logs
 stubs/
 vendor/
+*.xlsx
+tests/Browser/console/*.log
