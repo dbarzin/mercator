@@ -360,13 +360,15 @@ return [
             'security_level_helper' => 'ex. : maturity, security measures in place or defined at the contractual level, degree of confidence, approval',
         ],
         'filters' => [
-                'internes' => "Internal",
-                'externes' => "External",
-                'all'     => "All",
-        		'title'   => [
-			        'int/ext' => "Filter entities",
-		        ],
+            'internes' => "Internal",
+            'externes' => "External",
+            'all'     => "All",
+            'all_types' => "All types",
         ],
+		'title'   => [
+			'int/ext' => "Internal/External",
+			'type' => "Entity type",
+		],
         'title' => 'Entities',
         'title_singular' => 'Entity',
     ],

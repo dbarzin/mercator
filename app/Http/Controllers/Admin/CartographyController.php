@@ -181,6 +181,7 @@ class CartographyController extends Controller
                 $this->addHTMLRow($table, trans('cruds.entity.fields.security_level'), $entity->security_level);
                 $this->addHTMLRow($table, trans('cruds.entity.fields.contact_point'), $entity->contact_point);
                 $this->addHTMLRow($table, trans('cruds.entity.fields.is_external'), $entity->is_external);
+                $this->addHTMLRow($table, trans('cruds.entity.fields.entity_type'), $entity->entity_type);
 
                 // Relations
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.relations'));

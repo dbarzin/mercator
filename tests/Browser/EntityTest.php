@@ -24,7 +24,7 @@ class EntityTest extends DuskTestCase
     public function testView()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('entities')->first();
+		$data = \DB::table('entities')->whereNull('deleted_at')->first();
 		if ($data!=null) 
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
@@ -40,7 +40,7 @@ class EntityTest extends DuskTestCase
     public function testEdit()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('entities')->first();
+		$data = \DB::table('entities')->whereNull('deleted_at')->first();
 		if ($data!=null) 
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {

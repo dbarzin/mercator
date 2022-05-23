@@ -7,7 +7,7 @@
 - Disque : 50G
 - VCPU 2
 
-## Installation 
+## Installation 1
 
 Mettre à jour la distribution linux
 
@@ -77,8 +77,10 @@ Mettre les paramètre de connexion à la base de données :
 
     ## .env file
     DB_CONNECTION=mysql
+    # DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
     DB_PORT=3306
+    # Commenter DB_PORT pour pgsql
     DB_DATABASE=mercator
     DB_USERNAME=mercator_user
     DB_PASSWORD=s3cr3t
@@ -103,6 +105,10 @@ Vider la cache
 Pour importer la base de données de test (facultatif)
 
     sudo mysql mercator < mercator_data.sql
+
+ou (Postgres):
+
+   psql mercator < pg_mercator_data.sql
 
 Démarrer l'application avec php
 
@@ -235,6 +241,10 @@ Avant de mettre à jour l'application prenez un backup de la base de données et
 
     mysqldump mercator > mercator_backup.sql
 
+ou (Postgres)
+
+   pg_dump mercator > mercator_backup.sql
+
 Récupérer les sources de GIT
 
     cd /var/www/mercator
@@ -293,6 +303,16 @@ Sauvegarder la base de données
         --no-create-info \
         > backup_mercator_data.sql
 
+ou (Postgres) :
+
+   pg_dump --exclude-table=users \
+   --exclude-table=roles \
+   --exclude-table=permissions \
+   --exclude-table=permission_role \
+   --exclude-table=role_user  \
+   --exclude-table=migrations  \
+   mercator > backup_mercator_data.sql
+
 Then backup database users
 
     sudo mysqldump mercator \
@@ -300,13 +320,27 @@ Then backup database users
         --add-drop-table \
         > backup_mercator_users.sql
 
+ou (Postgres):
+
+   pg_dump --clean \
+   -t users -t roles -t role_user \
+   > backup_mercator_users.sql
+   
 Supprimer la base de données de Mercator
 
     sudo mysql -e "drop database mercator;"
 
+ou (Postgres)
+
+   dropdb mercator
+   
 Créer une nouvelle base de données
 
     sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+ou (Postgres)
+
+   createdb mercator
 
 Exécuter les migrations
 
@@ -320,8 +354,16 @@ Restaurer les données
 
     sudo mysql mercator < backup_mercator_data.sql
 
+ou (Postgres)
+
+   psql mercator < backup_mercator_data.sql
+
 Restaurer les utilisateurs
 
     sudo mysql mercator < backup_mercator_users.sql
+
+ou (Postgres)
+
+   psql mercator < backup_mercator_users.sql
 
 Tous les problèmes de migration devraient être résolus.

@@ -343,6 +343,8 @@ return [
             'applications_resp_helper' => "Responsable de l'exploitation des applications",
             'contact_point' => 'Point de contact',
             'contact_point_helper' => '',
+            'entity_type' => "Type d'entité",
+            'entity_type_helper' => '',
             'is_external' => 'Externe à l\'organisme',
             'is_external_helper' => '',
             'databases_resp' => 'Bases de données',
@@ -363,9 +365,11 @@ return [
                 'internes' => "Internes",
                 'externes' => "Externes",
                 'all'     => "Toutes",
-		        'title'   => [
-		               'int/ext' => "Filtrer les entités",
-		        ]
+                'all_types' => "Tous les types",
+                'title'   => [
+                    'int/ext' => "Situation",
+                    'type' => "Type",
+                ]
         ],
         'title' => 'Entités',
         'title_singular' => 'Entité',
