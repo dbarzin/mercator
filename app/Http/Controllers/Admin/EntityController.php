@@ -40,6 +40,7 @@ class EntityController extends Controller
 
     public function store(StoreEntityRequest $request)
     {
+        $entity->is_external = $request->has('is_external');
         $entity = Entity::create($request->all());
 
         $entity->entitiesProcesses()->sync($request->input('processes', []));
@@ -81,6 +82,7 @@ class EntityController extends Controller
 
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
+        $entity->is_external = $request->has('is_external');
         $entity->update($request->all());
 
         $entity->entitiesProcesses()->sync($request->input('processes', []));

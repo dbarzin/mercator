@@ -49,7 +49,6 @@
                     @foreach($entities as $key => $entity)
                         <tr data-entry-id="{{ $entity->id }}"
                             @if(($entity->description==null)||
-                                ($entity->is_external==null)||
                                 ($entity->contact_point==null)||
                                 ($entity->security_level==null)||
                                 ($entity->contact_point==null)||
