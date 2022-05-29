@@ -1201,9 +1201,12 @@ class ReportController extends Controller
                 $res = DB::Table("physical_servers")
                     ->distinct()
                     ->select('physical_servers.name')
-                    ->leftJoin('logical_server_physical_server','physical_servers.id','=','logical_server_physical_server.physical_server_id')
-                    ->leftJoin('logical_servers', 'logical_servers.id', '=', 'logical_server_physical_server.logical_server_id')
-                    ->leftJoin('logical_server_m_application','logical_server_m_application.logical_server_id','=','logical_servers.id')
+                    ->leftJoin('logical_server_physical_server',
+                        'physical_servers.id','=','logical_server_physical_server.physical_server_id')
+                    ->leftJoin('logical_servers', 
+                        'logical_servers.id', '=', 'logical_server_physical_server.logical_server_id')
+                    ->leftJoin('logical_server_m_application',
+                        'logical_server_m_application.logical_server_id','=','logical_servers.id')
                     ->where('logical_server_m_application.m_application_id','=',$application->id)
                     ->orderBy('physical_servers.name')
                     ->get()
