@@ -86,7 +86,7 @@ class ReportController extends Controller
         $has_filter = false;
         if ($typefilter != 'All'  ) {
             $has_filter = true;
-            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);                  
+            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);
         }
         
         if ($perimeter != 'All') {
