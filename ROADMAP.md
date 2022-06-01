@@ -23,6 +23,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Mise à jour du framework Laravel vers la version suivante
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
+- [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 
 ## Petites évolutions
 
