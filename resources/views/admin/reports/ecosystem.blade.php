@@ -86,7 +86,11 @@
                                 </tr>
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.is_external') }}</b></td>
-                                    <td>{!! $entity->is_external !!}</td>
+                                    <td>{{ $entity->is_external ? trans('global.yes') : trans('global.yes') }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>{{ trans('cruds.entity.fields.entity_type') }}</b></td>
+                                    <td>{{ $entity->entity_type }}</td>
                                 </tr>
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.security_level') }}</b></td>

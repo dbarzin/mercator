@@ -54,7 +54,7 @@
                             {{ trans('cruds.entity.fields.is_external') }}
                         </th>
                         <td>
-                            {!! trans('global.'.($entity->is_external ? 'yes' : 'no')) !!}
+                            {!! $entity->is_external ? trans('global.yes') : trans('global.yes') !!}
                         </td>
                     </tr>
                     <tr>

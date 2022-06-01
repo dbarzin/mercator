@@ -86,7 +86,7 @@ class ReportController extends Controller
         $has_filter = false;
         if ($typefilter != 'All'  ) {
             $has_filter = true;
-            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);                  
+            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);
         }
         
         if ($perimeter != 'All') {
@@ -1187,7 +1187,8 @@ class ReportController extends Controller
                 $sheet->setCellValue("R{$row}", $application->logical_servers->implode('name', ', '));
                 $res = null;
 
-                // TODO: improve me with select, join and unique
+                // Done: improve me with select, join and unique
+                /*
                 foreach ($application->logical_servers as $logical_server) {
                     foreach ($logical_server->servers as $physical_server) {
                         if ($res !== null) {
@@ -1196,6 +1197,20 @@ class ReportController extends Controller
                         $res .= $physical_server->name;
                     }
                 }
+                */
+                $res = DB::Table("physical_servers")
+                    ->distinct()
+                    ->select('physical_servers.name')
+                    ->leftJoin('logical_server_physical_server',
+                        'physical_servers.id','=','logical_server_physical_server.physical_server_id')
+                    ->leftJoin('logical_servers', 
+                        'logical_servers.id', '=', 'logical_server_physical_server.logical_server_id')
+                    ->leftJoin('logical_server_m_application',
+                        'logical_server_m_application.logical_server_id','=','logical_servers.id')
+                    ->where('logical_server_m_application.m_application_id','=',$application->id)
+                    ->orderBy('physical_servers.name')
+                    ->get()
+                    ->implode('name', ', ');
 
                 $sheet->setCellValue("S{$row}", $res);
                 $sheet->setCellValue("T{$row}", $application->databases->implode('name', ', '));
