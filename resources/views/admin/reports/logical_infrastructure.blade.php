@@ -42,9 +42,12 @@
                                     </td>
                                 </tr>
                             </table>
+                        <div class="col-sm-8">
+                            <input name="show_ip" id='show_ip' type="checkbox" value="1" class="form-check-input" {{ Session::get('show_ip') ? 'checked' : '' }} onchange="this.form.subnetwork.value='';this.form.submit()">
+                            <label for="is_external">Afficher les adresses IP</label>
+                        </div>
                         </form>
                     </div>
-
                     <div id="graph"></div>
                 </div>
             </div>
@@ -671,13 +674,13 @@ digraph  {
     @endforeach
     @endcan
     @can('gateway_access')
-    @foreach($gateways as $gateway) 
-        GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
+    @foreach($gateways as $gateway)
+        GATEWAY{{ $gateway->id }} [label="{{ $gateway->name }} {{ Session::get('show_ip') ? chr(13) . $gateway->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($gateway->ip!=null) ? '1.5' :'1.1' }} image="/images/gateway.png" href="#GATEWAY{{$gateway->id}}"]
     @endforeach
     @endcan
     @can('subnetwork_access')
     @foreach($subnetworks as $subnetwork) 
-        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
+        SUBNET{{ $subnetwork->id }} [label="{{ $subnetwork->name }} {{ Session::get('show_ip') ? chr(13) . $subnetwork->address : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip')&&($subnetwork->address!=null) ? '1.5' :'1.1' }} image="/images/network.png" href="#SUBNET{{$subnetwork->id}}"]
         @if ($subnetwork->vlan_id!=null) 
             SUBNET{{ $subnetwork->id }} -> VLAN{{ $subnetwork->vlan_id }}
         @endif
@@ -699,7 +702,7 @@ digraph  {
     @endcan
     @can('logical_server_access')
     @foreach($logicalServers as $logicalServer) 
-        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
+        LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
         @if ($logicalServer->address_ip!=null)
             @foreach($subnetworks as $subnetwork) 
                 @foreach(explode(',',$logicalServer->address_ip) as $address) 
@@ -717,7 +720,7 @@ digraph  {
     @endcan
     @can('dhcp_server_access')
     @foreach($dhcpServers as $dhcpServer) 
-        DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
+        DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
         @if ($dhcpServer->address_ip!=null)
             @foreach($subnetworks as $subnetwork) 
                 @if ($subnetwork->contains($dhcpServer->address_ip))
@@ -730,7 +733,7 @@ digraph  {
     @endcan
     @can('dnsserver_access')
     @foreach($dnsservers as $dnsserver) 
-        DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#DNS_SERVER{{$dnsserver->id}}"]
+        DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#DNS_SERVER{{$dnsserver->id}}"]
         @if ($dnsserver->address_ip!=null)
             @foreach($subnetworks as $subnetwork) 
                 @if ($subnetwork->contains($dnsserver->address_ip))
@@ -748,7 +751,7 @@ digraph  {
         @endif
     @endforeach
     @foreach($routers as $router) 
-        R{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
+        R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
         @foreach($subnetworks as $subnetwork) 
             @if (($router->ip_addresses!=null)&&($subnetwork->address!=null))
                 @foreach(explode(',',$router->ip_addresses) as $address) 
