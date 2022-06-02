@@ -606,6 +606,10 @@ class ReportController extends Controller
                 $subnetwork = $request->session()->get('subnetwork');
             }
         }
+        if ($request->has("show_ip")) 
+            $request->session()->put("show_ip",true);
+        else
+            $request->session()->put("show_ip", null);
 
         $all_networks = Network::All()->sortBy('name')->pluck('name', 'id');
         if ($network !== null) {
