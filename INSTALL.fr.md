@@ -7,7 +7,7 @@
 - Disque : 10G
 - VCPU 2
 
-## Installation 1
+## Installation
 
 Mettre à jour la distribution linux
 
