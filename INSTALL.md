@@ -50,7 +50,7 @@ Install MySQL
 
     sudo apt install mysql-server
 
-Make sure you are using MySQL and not MariaDB.
+Make sure you are using MySQL
 
     sudo mysql --version
 
