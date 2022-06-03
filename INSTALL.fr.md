@@ -2,9 +2,9 @@
 
 ## Configuration recommandée
 
-- OS : Ubuntu 21.10
+- OS : Ubuntu 22.04 LTS - Server - Small user footprint
 - RAM : 2G
-- Disque : 50G
+- Disque : 10G
 - VCPU 2
 
 ## Installation 1
@@ -15,7 +15,11 @@ Mettre à jour la distribution linux
 
 Installer Apache2, GIT, Graphviz et Composer
 
-    sudo apt install apache2 git graphviz composer
+    sudo apt install vim apache2 git graphviz composer
+
+Installer PHP et les librairies
+
+    sudo apt install php php-curl php-ldap php-dom php-gd php-zip php-mysql
 
 ## Project
 
