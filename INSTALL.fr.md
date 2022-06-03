@@ -170,7 +170,8 @@ ajouter cette ligne dans le crontab
 
 ## Configuration de la connexion LDAP
 
-Dans le fichier .env, mettre les paramètres de connexion à votre LDAP en décommentant les lignes :
+Si vous souhaitez connecter Mercator avec un Active Diretory ou un serveur LDAP,
+dans le fichier .env, mettez les paramètres de connexion en décommentant les lignes :
     
     # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
     LDAP_TYPE="AD"
