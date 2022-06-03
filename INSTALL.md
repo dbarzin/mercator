@@ -2,9 +2,9 @@
 
 ## Recommended configuration
 
-- OS : Ubuntu 21.10
+- OS : Ubuntu 22.04 LTS - Server - Small user footprint
 - RAM : 2G
-- Disk : 50G
+- Disk : 10G
 - VCPU 2
 
 ## Installation 
@@ -13,13 +13,13 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
-Install some PHP libraries
+Install Apache2, mod_PHP, GIT, Graphviz et Composer
 
-    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
-
-Installer Apache2, mod_PHP, GIT, Graphviz et Composer
-
-    sudo apt install apache2 mod_php git graphviz composer
+    sudo apt install vim apache2 mod_php git graphviz composer
+ 
+Install PHP and PHP libraries
+ 
+     sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
 ## Project
 
