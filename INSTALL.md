@@ -13,13 +13,13 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
-Install Apache2, mod_PHP, GIT, Graphviz et Composer
+Install some PHP and PHP libraries
 
-    sudo apt install vim apache2 mod_php git graphviz composer
- 
-Install PHP and PHP libraries
- 
-     sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+
+Installer Apache2, mod_PHP, GIT, Graphviz et Composer
+
+    sudo apt install apache2 mod_php git graphviz composer
 
 ## Project
 
