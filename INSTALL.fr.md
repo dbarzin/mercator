@@ -2,12 +2,12 @@
 
 ## Configuration recommandée
 
-- OS : Ubuntu 21.10
+- OS : Ubuntu 22.04 LTS - Server - Small user footprint
 - RAM : 2G
-- Disque : 50G
+- Disque : 10G
 - VCPU 2
 
-## Installation 1
+## Installation
 
 Mettre à jour la distribution linux
 
@@ -15,7 +15,11 @@ Mettre à jour la distribution linux
 
 Installer Apache2, GIT, Graphviz et Composer
 
-    sudo apt install apache2 git graphviz composer
+    sudo apt install vim apache2 git graphviz composer
+
+Installer PHP et les librairies
+
+    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
 Installer PHP et quelques libraries
 
@@ -50,7 +54,7 @@ Installer MySQL
 
     sudo apt install mysql-server
 
-Vérifier que vous utilisez MySQL et pas MariaDB (Mercator ne fonctionne pas avec MariaDB).
+Vérifier que vous utilisez MySQL
 
     sudo mysql --version
 
@@ -170,7 +174,8 @@ ajouter cette ligne dans le crontab
 
 ## Configuration de la connexion LDAP
 
-Dans le fichier .env, mettre les paramètres de connexion à votre LDAP en décommentant les lignes :
+Si vous souhaitez connecter Mercator avec un Active Diretory ou un serveur LDAP,
+dans le fichier .env, mettez les paramètres de connexion en décommentant les lignes :
     
     # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
     LDAP_TYPE="AD"
