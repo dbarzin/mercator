@@ -17,6 +17,10 @@ Installer Apache2, GIT, Graphviz et Composer
 
     sudo apt install apache2 git graphviz composer
 
+Installer PHP et quelques libraries
+
+    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+
 ## Project
 
 Créer le répertoire du projet

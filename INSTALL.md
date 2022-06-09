@@ -13,9 +13,9 @@ Update the linux distribution
 
     sudo apt update && sudo apt upgrade
 
-Install some PHP libraries
+Install some PHP and PHP libraries
 
-    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
 Installer Apache2, mod_PHP, GIT, Graphviz et Composer
 
