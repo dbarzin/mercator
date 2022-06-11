@@ -2,9 +2,9 @@
 
 ## Recommended configuration
 
-- OS : Ubuntu 21.10
+- OS : Ubuntu 22.04 LTS - Server - Small user footprint
 - RAM : 2G
-- Disk : 50G
+- Disk : 10G
 - VCPU 2
 
 ## Installation 
@@ -50,7 +50,7 @@ Install MySQL
 
     sudo apt install mysql-server
 
-Make sure you are using MySQL and not MariaDB.
+Make sure you are using MySQL
 
     sudo mysql --version
 
