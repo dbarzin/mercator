@@ -83,13 +83,11 @@
                 @endif
 
                 <div class="form-group">
+                    {{ $application->responsible }}
                     <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
-                        @if (!$responsible_list->contains(old('responsible')))
-                            <option> {{ old('responsible') }}</option>'
-                        @endif
-                        @foreach($responsible_list as $t)
-                            <option {{ (old('responsible') ? old('responsible') : $application->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
+                        @foreach($responsible_list as $resp)
+                            <option {{ str_contains($application->responsible ,$resp) ? 'selected' : '' }}>{{$resp}}</option>
                         @endforeach
                     </select>
                     @if($errors->has('responsible'))
@@ -253,7 +251,7 @@
                          }
                     @endphp
                     <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple="multiple">
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
                         @foreach($cartographers as $cartographer)
                             <option value="{{ $cartographer[0] }}" {{ $cartographer[2] ? 'selected' : '' }}>{{ $cartographer[1] }}</option>
                         @endforeach

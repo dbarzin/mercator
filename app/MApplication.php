@@ -101,7 +101,6 @@ class MApplication extends Model
         'version',
         'description',
         'entity_resp_id',
-        'responsible',
         'functional_referent',
         'editor',
         'technology',
