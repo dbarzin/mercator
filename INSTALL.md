@@ -245,7 +245,7 @@ Migrate the database
 
 Update the libraries
 
-    compose update
+    composer update
 
 Empty caches
 
@@ -281,7 +281,7 @@ or to stop on first error
 
 Update the libraries
 
-    compose update
+    composer update
 
 Backup the database
 
