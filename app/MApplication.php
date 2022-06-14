@@ -107,6 +107,7 @@ class MApplication extends Model
         'documentation',
         'type',
         'users',
+        'responsible',
         'security_need_c',
         'security_need_i',
         'security_need_a',
@@ -117,7 +118,7 @@ class MApplication extends Model
         'updated_at',
         'deleted_at',
         'install_date',
-        'update_date',
+        'update_date'
     ];
 
     /**
