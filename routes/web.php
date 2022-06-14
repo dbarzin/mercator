@@ -227,9 +227,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Global Search engine !
     Route::get('global-search', [Admin\GlobalSearchController::class,'search'])->name('globalSearch');
 
-    // Configuration page
-    Route::get('configuration', [Admin\ConfigurationController::class,'index'])->name('configuration');
-    Route::put('configuration/save', [Admin\ConfigurationController::class,'save'])->name('configuration.save');
+    // Certificate Configuration page
+    Route::get('certificate', [Admin\ConfigurationController::class,'index'])->name('certificate');
+    Route::put('certificate/save', [Admin\ConfigurationController::class,'save'])->name('certificate.save');
 
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');

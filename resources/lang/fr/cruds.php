@@ -246,6 +246,9 @@ return [
         'title_short' => 'Certificats',
         'title_singular' => 'Certificat',
     ],
+    'cve' => [
+        'title' => 'CVE',
+    ],
     'configuration' => [
         'certificate' => [
             'delay' => 'les certificats qui expirent dans',
@@ -596,6 +599,7 @@ return [
             'title_short' => 'Infrastructure Physique',
         ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
+        'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
     'network' => [
         'description' => 'Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.',

@@ -246,6 +246,9 @@ return [
         'title_short' => 'Certificates',
         'title_singular' => 'Certificate',
     ],
+    'cve' => [
+        'title' => 'CVE',
+    ],
     'configuration' => [
         'certificate' => [
             'delay' => 'certificates that expire in',
@@ -594,6 +597,7 @@ return [
             'title_short' => 'Physical infrastructure',
         ],
         'user_management' => ['title' => 'User management', 'title_short' => 'Users'],
+        'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
     'network' => [
         'description' => 'Set of equipment logically linked to each other and which exchange information.',
