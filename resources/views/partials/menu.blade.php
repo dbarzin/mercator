@@ -581,15 +581,27 @@
                         {{ trans('cruds.menu.configuration.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                      @can('configure')
+                        @can('user_access')
                             <li class="nav-item">
-                                <a href="/admin" class="nav-link {{ request()->is('admin/certificate') || request()->is('admin/certificate/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-bug nav-icon">
+                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-user nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.cve.title') }}
+                                    {{ trans('cruds.user.title') }}
                                 </a>
                             </li>
+                        @endcan
+                        @can('role_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-group nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.role.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('configure')
                             <li class="nav-item">
                                 <a href="{{ route("admin.certificate") }}" class="nav-link {{ request()->is('admin/certificate') || request()->is('admin/certificate/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-lock nav-icon">
@@ -598,24 +610,12 @@
                                     {{ trans('cruds.certificate.title') }}
                                 </a>
                             </li>
-                      @endcan
-                        @can('role_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-briefcase nav-icon">
+                                <a href="/" class="nav-link">
+                                    <i class="fa-fw fas fa-bug nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.role.title') }}
-                                </a>
-                            </li>
-                        @endcan
-                        @can('user_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-user nav-icon">
-
-                                    </i>
-                                    {{ trans('cruds.user.title') }}
+                                    {{ trans('cruds.cve.title') }}
                                 </a>
                             </li>
                         @endcan

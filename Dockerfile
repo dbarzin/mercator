@@ -17,6 +17,7 @@ RUN set -x ; \
     php-xdebug \
     php-mysql \
     php-gd \
+    graphviz \
     curl less ca-certificates netcat-traditional ; \
     apt-get autoremove --yes ; rm -fr /var/cache/apt
 
