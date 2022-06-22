@@ -603,19 +603,19 @@
                         @endcan
                         @can('configure')
                             <li class="nav-item">
-                                <a href="{{ route("admin.certificate") }}" class="nav-link {{ request()->is('admin/certificate') || request()->is('admin/certificate/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.config.cert") }}" class="nav-link {{ request()->is('admin/config/certificate') || request()->is('admin/config/certificate/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-lock nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.certificate.title') }}
+                                    {{ trans('cruds.configuration.certificate.title_short') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/" class="nav-link">
+                                <a href="{{ route("admin.config.cve") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/cve') || request()->is('admin/config/cve/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-bug nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.cve.title') }}
+                                    {{ trans('cruds.configuration.cve.title_short') }}
                                 </a>
                             </li>
                         @endcan

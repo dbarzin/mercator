@@ -246,11 +246,10 @@ return [
         'title_short' => 'Certificats',
         'title_singular' => 'Certificat',
     ],
-    'cve' => [
-        'title' => 'CVE',
-    ],
     'configuration' => [
         'certificate' => [
+            'title' => "Configuration des alertes d'expiration des certificats",
+            'title_short' => 'Certificats',
             'delay' => 'les certificats qui expirent dans',
             'message_subject' => 'Sujet du message',
             'recurence' => 'tous les',
@@ -260,8 +259,17 @@ return [
             'one_mail' => 'Envoyer un mail par certificat expiré',
             'multiple_mails' => 'Envoyer un mail avec tous les certificats expirés',
         ],
+        'cve' => [
+            'title' => 'Configuration de la recherche de CVE',
+            'title_short' => 'CVE',
+            'message_subject' => 'Sujet du message',
+            'sent_from' => 'Envoyé depuis',
+            'to' => 'à',
+            'recurence' => 'tous les',
+            'provider' => 'Founisseur de CVE',
+            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.cirl.lu)',
+        ],
         'title' => 'Configuration',
-        'title_singular' => 'Configuration',
     ],
     'database' => [
         'description' => 'Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.',

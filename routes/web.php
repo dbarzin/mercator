@@ -228,8 +228,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('global-search', [Admin\GlobalSearchController::class,'search'])->name('globalSearch');
 
     // Certificate Configuration page
-    Route::get('certificate', [Admin\ConfigurationController::class,'index'])->name('certificate');
-    Route::put('certificate/save', [Admin\ConfigurationController::class,'save'])->name('certificate.save');
+    Route::get('config/cert', [Admin\ConfigurationController::class,'getCertConfig'])->name('config.cert');
+    Route::put('config/cert/save', [Admin\ConfigurationController::class,'saveCertConfig'])->name('config.cert.save');
+
+    // CVE Configuration page
+    Route::get('config/cve', [Admin\ConfigurationController::class,'getCVEConfig'])->name('config.cve');
+    Route::put('config/cve/save', [Admin\ConfigurationController::class,'saveCVEConfig'])->name('config.cve.save');
 
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');
