@@ -250,6 +250,7 @@ return [
         'certificate' => [
             'title' => "Configuration des alertes d'expiration des certificats",
             'title_short' => 'Certificats',
+            'help' => "This screen allows you to configure the sending of notification by email when certificates expire.",
             'delay' => 'Certificates that expire in',
             'message_subject' => 'Subject',
             'recurence' => 'Every',

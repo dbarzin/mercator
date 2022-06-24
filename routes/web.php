@@ -235,6 +235,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('config/cve', [Admin\ConfigurationController::class,'getCVEConfig'])->name('config.cve');
     Route::put('config/cve/save', [Admin\ConfigurationController::class,'saveCVEConfig'])->name('config.cve.save');
 
+    // CVE
+    Route::get('cve', [Admin\CVEController::class,'show'])->name('cve');
+
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');
     Route::get('report/information_system', [Admin\ReportController::class,'informationSystem'])->name('report.view.informaton-system');
@@ -243,6 +246,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/application_flows', [Admin\ReportController::class,'applicationFlows'])->name('report.view.application-flows');
     Route::get('report/logical_infrastructure', [Admin\ReportController::class,'logicalInfrastructure'])->name('report.view.logical-infrastructure');
     Route::get('report/physical_infrastructure', [Admin\ReportController::class,'physicalInfrastructure'])->name('report.view.physical-infrastructure');
+
     // Experimental views
     Route::get('report/zones', [Admin\ReportController::class,'zones'])->name('report.view.zones');
     Route::get('report/explore', [Admin\ExplorerController::class,'explore'])->name('report.explore');
