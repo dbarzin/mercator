@@ -263,6 +263,7 @@ return [
         'cve' => [
             'title' => 'Configuration de la recherche de CVE',
             'title_short' => 'CVE',
+            'help' => "Cet écran permet de configurer l'envoi de notification par mail lorsque de la détection de CVE sur les applications.",
             'message_subject' => 'Sujet du message',
             'sent_from' => 'Envoyé depuis',
             'to' => 'à',

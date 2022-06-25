@@ -12,6 +12,10 @@
         <form method="POST" action="{{ route('admin.config.cve.save') }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+
+            <div class="form-group">
+            <label for="name">{{ trans("cruds.configuration.cve.help") }}</label>
+            </div>
             
             <div class="form-group">
             <label class="required" for="name">{{ trans("cruds.configuration.cve.message_subject") }}</label>
@@ -49,7 +53,10 @@
                     {{ trans('global.save') }}
                 </button>
                 <button class="btn btn-success" type="submit" name="action" value="test">
-                    {{ trans('global.test') }}
+                    {{ trans('global.test') }} Mail
+                </button>
+                <button class="btn btn-success" type="submit" name="action" value="test_provider">
+                    {{ trans('global.test') }} Provider
                 </button>
             </div>
         </form>

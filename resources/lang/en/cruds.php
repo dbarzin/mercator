@@ -262,6 +262,7 @@ return [
         'cve' => [
             'title' => 'CVE Search Configuration',
             'title_short' => 'CVE',
+            'help' => 'This screen allows you to configure the sending of notification by email when CVEs are detected on applications.',
             'message_subject' => 'Message sujet',
             'sent_from' => 'Sent from',
             'to' => 'to',
