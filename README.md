@@ -22,6 +22,7 @@ The elaboration of a cartography participates in the protection, the defense and
 - Generate information system architecture report
 - Draw mapping diagrams
 - Compute compliance levels
+- CVE Search
 - Extraction in Excel, CSV, PDF ... of all lists
 - REST API with JSON
 - Multi-user with role management
