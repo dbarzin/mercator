@@ -248,6 +248,9 @@ return [
     ],
     'configuration' => [
         'certificate' => [
+            'title' => "Configuration des alertes d'expiration des certificats",
+            'title_short' => 'Certificats',
+            'help' => "Cet écran permet de configurer l'envoi de notification par mail lorsque des certificats arrivent à expiration.",
             'delay' => 'les certificats qui expirent dans',
             'message_subject' => 'Sujet du message',
             'recurence' => 'tous les',
@@ -257,8 +260,18 @@ return [
             'one_mail' => 'Envoyer un mail par certificat expiré',
             'multiple_mails' => 'Envoyer un mail avec tous les certificats expirés',
         ],
+        'cve' => [
+            'title' => 'Configuration de la recherche de CVE',
+            'title_short' => 'CVE',
+            'help' => "Cet écran permet de configurer l'envoi de notification par mail lorsque de la détection de CVE sur les applications.",
+            'message_subject' => 'Sujet du message',
+            'sent_from' => 'Envoyé depuis',
+            'to' => 'à',
+            'recurence' => 'tous les',
+            'provider' => 'Founisseur de CVE',
+            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.cirl.lu)',
+        ],
         'title' => 'Configuration',
-        'title_singular' => 'Configuration',
     ],
     'database' => [
         'description' => 'Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.',
@@ -596,6 +609,7 @@ return [
             'title_short' => 'Infrastructure Physique',
         ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
+        'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
     'network' => [
         'description' => 'Ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.',

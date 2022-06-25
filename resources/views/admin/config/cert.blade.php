@@ -4,16 +4,17 @@
 <div class="card">
 
     <div class="card-header">
-        Configuration
+        {{ trans("cruds.configuration.certificate.title") }}
     </div>
 
     <div class="card-body">
 
-        <form method="POST" action="{{ route('admin.configuration.save') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.config.cert.save') }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <label><b>{{ trans("cruds.configuration.certificate.title") }}</b></label>
-            
+            <div class="form-group">
+            <label for="name">{{ trans("cruds.configuration.certificate.help") }}</label>
+            </div>
             <div class="form-group">
             <label class="required" for="name">{{ trans("cruds.configuration.certificate.message_subject") }}</label>
             <input class="form-control" type="text" name="mail_subject" id="mail_subject" value="{{ $mail_subject }}" required/>

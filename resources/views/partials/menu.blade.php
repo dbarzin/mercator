@@ -19,7 +19,7 @@
             @can('ecosystem_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.menu.ecosystem.title') }}
@@ -51,7 +51,7 @@
             @can('metier_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.menu.metier.title') }}
@@ -143,7 +143,7 @@
             @can('papplication_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.menu.application.title') }}
@@ -219,7 +219,7 @@
             @can('administration_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.administration.title') }}
@@ -271,7 +271,7 @@
             @can('infrastructure_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.menu.logical_infrastructure.title') }}
@@ -399,7 +399,7 @@
             @can('physicalinfrastructure_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs nav-icon">
+                        <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
                         {{ trans('cruds.menu.physical_infrastructure.title') }}
@@ -575,22 +575,12 @@
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-users nav-icon">
+                        <i class="fa-fw fas fa-gear nav-icon">
 
                         </i>
-                        {{ trans('cruds.menu.user_management.title') }}
+                        {{ trans('cruds.menu.configuration.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                        @can('role_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-briefcase nav-icon">
-
-                                    </i>
-                                    {{ trans('cruds.role.title') }}
-                                </a>
-                            </li>
-                        @endcan
                         @can('user_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
@@ -598,6 +588,34 @@
 
                                     </i>
                                     {{ trans('cruds.user.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('role_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-group nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.role.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('configure')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.config.cert") }}" class="nav-link {{ request()->is('admin/config/certificate') || request()->is('admin/config/certificate/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-lock nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.configuration.certificate.title_short') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route("admin.config.cve") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/cve') || request()->is('admin/config/cve/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-bug nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.configuration.cve.title_short') }}
                                 </a>
                             </li>
                         @endcan

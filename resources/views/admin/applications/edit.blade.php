@@ -83,7 +83,6 @@
                 @endif
 
                 <div class="form-group">
-                    {{ $application->responsible }}
                     <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                     <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
                         @foreach($responsible_list as $resp)

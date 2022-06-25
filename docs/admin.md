@@ -46,9 +46,24 @@ Il est possible de créer de nouveaux rôles selon les besoins.
 
 Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.
 
-L'écran de configuration est accessible via le menu "Préférences" -> "Configuration".
+L'écran de configuration est accessible via le menu "Configuration" -> "Certificats".
 
    [<img src="/mercator/images/certificates.png" width="600">](/mercator/images/certificates.png)
 
 Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.
+
+### Gestion des CVE
+
+Des notifications de détection de CVE sur base du nom des applications peuvent être envoyées à des périodes définies.
+
+Les CVE sont récupérées avec le projet [CVE-Search](https://github.com/cve-search/cve-search). La rechecrhe est faite localement.
+
+L'écran de configuration est accessible via le menu "Configuration" -> "CVE"
+
+   [<img src="/mercator/images/cve.png" width="600">](/mercator/images/certificates.png)
+
+
+Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au provider de CVE.
+
+Le bouton "Test Provider" permet de tester l'accès au provider du projet CVE-Search.
 
