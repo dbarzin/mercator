@@ -4,7 +4,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 
 ## Evolutions majeures
 
-- [ ] Croiser les noms et versions des applications avec des flux d'informations sur les CVE
+- [x] Croiser les noms et versions des applications avec des flux d'informations sur les CVE
 - [x] Authentifier les utilisateurs via un active directory avec [LDAPRecord](https://ldaprecord.com/)
 - [ ] Revoir le modèle des pages web
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
