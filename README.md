@@ -22,11 +22,12 @@ The elaboration of a cartography participates in the protection, the defense and
 - Generate information system architecture report
 - Draw mapping diagrams
 - Compute compliance levels
-- CVE Search
+- Search for CVE with [CVE-Search](https://github.com/cve-search/cve-search)
 - Extraction in Excel, CSV, PDF ... of all lists
 - REST API with JSON
 - Multi-user with role management
 - Multilingual
+- Connection to LDAP or Active Directory
 
 ## Screens
 
