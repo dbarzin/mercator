@@ -19,6 +19,7 @@ L’élaboration d’une cartographie participe à la protection, à la défense
 - Génération du rapport d'Architecture du Système d'Information
 - Dessin des schémas de cartographie
 - Calcul des niveaux de conformité
+- Recherche de CVE avec [CVE-Search](https://github.com/cve-search/cve-search)
 - Extraction en Excel, CSV, PDF … de toutes les listes
 - REST API avec JSON
 - Multi utilisateurs avec gestion de rôles
