@@ -60,7 +60,7 @@ Les CVE sont récupérées avec le projet [CVE-Search](https://github.com/cve-se
 
 L'écran de configuration est accessible via le menu "Configuration" -> "CVE"
 
-   [<img src="/mercator/images/cve.png" width="600">](/mercator/images/certificates.png)
+   [<img src="/mercator/images/cve.png" width="600">](/mercator/images/cve.png)
 
 
 Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au provider de CVE.
