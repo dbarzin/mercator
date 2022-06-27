@@ -24,7 +24,7 @@ L’élaboration d’une cartographie participe à la protection, à la défense
 - REST API avec JSON
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
-- Connexion LDAP
+- Connexion LDAP / Active Directory
 
 ## Ecrans
 

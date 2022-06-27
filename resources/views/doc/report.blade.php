@@ -96,6 +96,12 @@
                         {{ trans("cruds.report.lists.physical_inventory_helper") }}
                         <br><br>
                     </li>
+                    <li>
+                        <a href="/admin/report/workstations" target="_new">{{ trans("cruds.report.lists.workstation_inventory") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.workstation_inventory_helper") }}
+                        <br><br>
+                    </li>
                   </ul>
                 </div>
               </div>
