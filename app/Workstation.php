@@ -67,6 +67,11 @@ class Workstation extends Model
         'description',
         'site_id',
         'building_id',
+        'cpu',
+        'memory',
+        'disk',
+        'operating_system',
+        'address_ip',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -82,8 +87,14 @@ class Workstation extends Model
         return $this->belongsTo(Building::class, 'building_id');
     }
 
+    public function applications()
+    {
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
+
 }

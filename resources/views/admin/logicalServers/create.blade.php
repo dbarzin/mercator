@@ -67,8 +67,7 @@
 
             </div>
             <div class="col-sm">
-
-
+                
                 <div class="form-group">
                     <label for="cpu">{{ trans('cruds.logicalServer.fields.cpu') }}</label>
                     <input class="form-control {{ $errors->has('cpu') ? 'is-invalid' : '' }}" type="text" name="cpu" id="cpu" value="{{ old('cpu', '') }}">

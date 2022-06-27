@@ -9,7 +9,7 @@
                     {{ trans('panel.menu.schema') }}
                 </div>
                 <div class="card-body">
-                    <div id="graph" style="width: 100%;height: 600px;"></div>
+                    <div id="graph" style="width: 100%;height: 800px;"></div>
                 </div>
             </div>
         </div>
