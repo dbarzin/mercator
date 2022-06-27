@@ -46,6 +46,7 @@ class LogicalServerController extends Controller
         $applications = $this->cartographerService->filterOnCartographers($applications);
 
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
 
         return view(
             'admin.logicalServers.create',
