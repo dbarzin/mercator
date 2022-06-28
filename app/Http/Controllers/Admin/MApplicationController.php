@@ -102,7 +102,7 @@ class MApplicationController extends Controller
 
     public function store(StoreMApplicationRequest $request)
     {
-        $request->merge(['responsible' => implode(", ",$request->responsibles)]);
+        $request->merge(['responsible' => implode(", ",$request->responsibles!=null ? $request->responsibles : array())]);
         $application = MApplication::create($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
@@ -177,7 +177,7 @@ class MApplicationController extends Controller
 
     public function update(UpdateMApplicationRequest $request, MApplication $application)
     { 
-        $application->responsible=implode(", ",$request->responsibles);
+        $application->responsible=implode(", ",$request->responsibles!=null ? $request->responsibles : array());
         $application->update($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
