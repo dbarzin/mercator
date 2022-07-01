@@ -35,7 +35,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 
 ## Evolution 2023
 
-- [ ] Regsitre de traitements
+- [ ] Maintenir le registre des traitements
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Ajouter des fonctions de manipulation des graphes d'objets
