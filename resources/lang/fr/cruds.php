@@ -269,7 +269,7 @@ return [
             'to' => 'à',
             'recurence' => 'tous les',
             'provider' => 'Founisseur de CVE',
-            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.cirl.lu)',
+            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.circl.lu)',
         ],
         'title' => 'Configuration',
     ],
