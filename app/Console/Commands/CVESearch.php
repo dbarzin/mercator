@@ -42,6 +42,7 @@ class CVESearch extends Command
             Log::debug('CVESearch - check');
 
             $provider = config('mercator-config.cve.provider');
+            $check_frequency = config('mercator-config.cve.check-frequency');
 
             $client = curl_init($provider . "/api/dbInfo");
             curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
@@ -93,14 +94,11 @@ class CVESearch extends Command
                     // Log::debug('CVESearch - CVE summary ' . $cve->summary);
                     foreach ($names as $name) {
                         // Log::debug('CVESearch - check ' . $name);
-                        if (str_contains($cve->summary,$name)) {
-                            $found=true;
-                            break;
+			    if (str_contains($cve->summary,$name)) {
+                            $cve->application = $name;
+			    $cve_match[] = $cve;
                             }
                         }
-                    if ($found) {
-                        $cve_match[] = $cve;
-                    }
                 }
             }
 
@@ -123,7 +121,7 @@ class CVESearch extends Command
 
                 $message = '<html><body>';
                 foreach ($cve_match as $cve) {
-                    $message .= $cve->id . ' - ' . $cve->summary . '<br>';
+                    $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
                 }
                 $message .= '</body></html>';
 
