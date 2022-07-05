@@ -42,7 +42,6 @@ class CVESearch extends Command
             Log::debug('CVESearch - check');
 
             $provider = config('mercator-config.cve.provider');
-            $check_frequency = config('mercator-config.cve.check-frequency');
 
             $client = curl_init($provider . "/api/dbInfo");
             curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
@@ -151,11 +150,13 @@ class CVESearch extends Command
     {
         $check_frequency = config('mercator-config.cve.check-frequency');
 
+	Log::debug('CVESearch - check-frequency '. $check_frequency);
+
         return // Daily
-            ($check_frequency === '1') ||
+            ($check_frequency === 1) ||
             // Weekly
-            (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
+            (($check_frequency === 7) && (Carbon::now()->dayOfWeek === 1)) ||
             // Monthly
-            (($check_frequency === '30') && (Carbon::now()->day === 1));
+            (($check_frequency === 30) && (Carbon::now()->day === 1));
     }
 }
