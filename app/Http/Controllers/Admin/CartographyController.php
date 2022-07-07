@@ -61,6 +61,8 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
+// Log
+use Illuminate\Support\Facades\Log;
 
 class CartographyController extends Controller
 {
@@ -2286,7 +2288,12 @@ class CartographyController extends Controller
     {
         $table->addRow();
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
-        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
+        try {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
+        }
+        catch (\Exception $e) {
+            Log::error("CartographyController - Invalid HTML " . $value);
+        }
     }
 
     private static function addTextRunRow(Table $table, string $title)
