@@ -268,7 +268,7 @@ return [
             'to' => 'to',
             'recurence' => 'every',
             'provider' => 'Provider',
-            'provider_helper' => 'CVE-Search provder (ex: https://cve.cirl.lu)',
+            'provider_helper' => 'CVE-Search provder (ex: https://cve.circl.lu)',
         ],
         'title' => 'Configuration',
     ],

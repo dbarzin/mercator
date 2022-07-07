@@ -94,14 +94,11 @@ class CVESearch extends Command
                     // Log::debug('CVESearch - CVE summary ' . $cve->summary);
                     foreach ($names as $name) {
                         // Log::debug('CVESearch - check ' . $name);
-                        if (str_contains($cve->summary,$name)) {
-                            $found=true;
-                            break;
+			    if (str_contains($cve->summary,$name)) {
+                            $cve->application = $name;
+			    $cve_match[] = $cve;
                             }
                         }
-                    if ($found) {
-                        $cve_match[] = $cve;
-                    }
                 }
             }
 
@@ -124,7 +121,7 @@ class CVESearch extends Command
 
                 $message = '<html><body>';
                 foreach ($cve_match as $cve) {
-                    $message .= $cve->id . ' - ' . $cve->summary . '<br>';
+                    $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
                 }
                 $message .= '</body></html>';
 
@@ -151,11 +148,13 @@ class CVESearch extends Command
     {
         $check_frequency = config('mercator-config.cve.check-frequency');
 
+	Log::debug('CVESearch - check-frequency '. $check_frequency);
+
         return // Daily
-            ($check_frequency === '1') ||
+            ($check_frequency === 1) ||
             // Weekly
-            (($check_frequency === '7') && (Carbon::now()->dayOfWeek === 1)) ||
+            (($check_frequency === 7) && (Carbon::now()->dayOfWeek === 1)) ||
             // Monthly
-            (($check_frequency === '30') && (Carbon::now()->day === 1));
+            (($check_frequency === 30) && (Carbon::now()->day === 1));
     }
 }
