@@ -77,7 +77,7 @@ class ConfigurationController extends Controller
                 ];
 
                 // En-têtes additionnels
-                if (mail($mail_to, 'Test: ' . $mail_subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                if (mail($mail_to, "=?UTF-8?B?" . base64_encode($mail_subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
                 } else {
                     $msg = 'Email sending fail.';
@@ -156,7 +156,7 @@ class ConfigurationController extends Controller
                 ];
 
                 // En-têtes additionnels
-                if (mail($mail_to, 'Test: ' . $mail_subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                if (mail($mail_to, "=?UTF-8?B?" . base64_encode($mail_subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
                 } else {
                     $msg = 'Email sending fail.';
