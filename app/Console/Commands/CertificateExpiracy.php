@@ -72,7 +72,7 @@ class CertificateExpiracy extends Command
                     $message .= '</body></html>';
 
                     // Send mail
-                    if (mail($to_email, $subject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                    if (mail($to_email, "=?UTF-8?B?" . base64_encode($subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                         Log::debug('Mail sent to '.$to_email);
                     } else {
                         Log::debug('Email sending fail.');
@@ -83,7 +83,7 @@ class CertificateExpiracy extends Command
                         //$message = '<html><body>' . $cert->description . '</body></html>';
                         $message = $cert->description;
                         // Send mail
-                        if (mail($to_email, $mailSubject, $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                        if (mail($to_email, "=?UTF-8?B?" . base64_encode($mailSubject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                             Log::debug('Mail sent to '.$to_email);
                         } else {
                             Log::debug('Email sending fail.');
