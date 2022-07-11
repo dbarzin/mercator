@@ -51,22 +51,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.entity.fields.is_external') }}
-                        </th>
-                        <td>
-                            {!! $entity->is_external ? trans('global.yes') : trans('global.yes') !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.entity.fields.entity_type') }}
-                        </th>
-                        <td>
-                            {!! $entity->entity_type !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.entity.fields.security_level') }}
                         </th>
                         <td>
@@ -82,6 +66,22 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <th>
+                            {{ trans('cruds.entity.fields.is_external') }}
+                        </th>
+                        <td>
+                            {!! $entity->is_external ? trans('global.yes') : trans('global.yes') !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.entity.fields.entity_type') }}
+                        </th>
+                        <td>
+                            {!! $entity->entity_type !!}
+                        </td>
+                    </tr>
 
 
                                 <tr>
