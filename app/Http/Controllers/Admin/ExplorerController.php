@@ -196,7 +196,7 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'SERV_' . $join->application_service_id ]);
         }
         // Application Modules
-        $modules = DB::table('application_modules')->select('id', 'name')->whereNull('deleted_at')->get();
+        $modules = DB::table('application_modules')->select('id', 'name')->whereNull('deleted_at')->whereNull('deleted_at')->get();
         foreach ($modules as $module) {
             array_push($nodes, [ 'id' => 'MOD_' . $module->id, 'label' => $module->name, 'image' => '/images/applicationmodule.png' ]);
         }
@@ -212,7 +212,7 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'CERT_' . $join->certificate_id ]);
         }
         // Databases
-        $databases = DB::table('databases')->select('id', 'name')->whereNull('deleted_at')->get();
+        $databases = DB::table('databases')->select('id', 'name')->whereNull('deleted_at')->whereNull('deleted_at')->get();
         foreach ($databases as $database) {
             array_push($nodes, [ 'id' => 'DATABASE_' . $database->id, 'label' => $database->name, 'image' => '/images/database.png' ]);
         }
@@ -226,7 +226,7 @@ class ExplorerController extends Controller
         // Information System
         // ---------------------------------------------------
         // Information
-        $informations = DB::table('information')->select('id', 'name')->whereNull('deleted_at')->get();
+        $informations = DB::table('information')->select('id', 'name')->whereNull('deleted_at')->whereNull('deleted_at')->get();
         foreach ($informations as $information) {
             array_push($nodes, [ 'id' => 'INFO_' . $information->id, 'label' => $information->name, 'image' => '/images/information.png' ]);
         }
@@ -236,7 +236,7 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'INFO_' . $join->information_id, 'to' => 'DATABASE_' . $join->database_id ]);
         }
         // process
-        $processes = DB::table('processes')->select('id', 'identifiant', 'macroprocess_id')->get();
+        $processes = DB::table('processes')->select('id', 'identifiant', 'macroprocess_id')->whereNull('deleted_at')->get();
         foreach ($processes as $process) {
             array_push($nodes, [ 'id' => 'PROCESS_' . $process->id, 'label' => $process->identifiant, 'image' => '/images/process.png' ]);
             if ($process->macroprocess_id !== null) {
@@ -278,13 +278,13 @@ class ExplorerController extends Controller
         }
 
         // Tasks
-        $operations = DB::table('operations')->select('id', 'name')->whereNull('deleted_at')->get();
+        $operations = DB::table('operations')->select('id', 'name')->whereNull('deleted_at')->whereNull('deleted_at')->get();
         foreach ($operations as $operation) {
             array_push($nodes, [ 'id' => 'OPERATION_' . $operation->id, 'label' => $operation->name, 'image' => '/images/operation.png' ]);
         }
 
         // Actors
-        $actors = DB::table('actors')->select('id', 'name')->whereNull('deleted_at')->get();
+        $actors = DB::table('actors')->select('id', 'name')->whereNull('deleted_at')->whereNull('deleted_at')->get();
         foreach ($actors as $actor) {
             array_push($nodes, [ 'id' => 'ACTOR_' . $actor->id, 'label' => $actor->name, 'image' => '/images/actor.png' ]);
         }
