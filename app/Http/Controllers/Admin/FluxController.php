@@ -61,9 +61,9 @@ class FluxController extends Controller
     {
         $flux = Flux::create($request->all());
         // TODO: fixme
-        $flux->crypted = $request->has('crypted');
-        $flux->bidirectional = $request->has('bidirectional');
-        $flux->update(); 
+        // $flux->crypted = $request->has('crypted');
+        // $flux->bidirectional = $request->has('bidirectional');
+        // $flux->update(); 
 
         return redirect()->route('admin.fluxes.index');
     }
