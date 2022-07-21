@@ -172,8 +172,7 @@ class ConfigurationController extends Controller
                 }
                 else {
                     $json = json_decode($response);
-                    $msg = "Provider last update: " . $json->cwe->last_update . " size=" . $json->cwe->size;
-                    // $msg = $response;
+                    $msg = "Provider last update : " . $json->cves->last_update . " size = " . $json->cves->size;
                     }
                 break;
 
