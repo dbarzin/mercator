@@ -7,24 +7,18 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /*
-        public function register(Request $request) {
-            error_log("REGISTER");
-            $validatedData = $request->validate([
-               "name" => "required|max:55",
-                "email" => "email|required|unique:users",
-                "password" => "required|confirmed"
-            ]);
-            error_log("REGISTER - validated");
-            $validatedData["password"] = bcrypt($request->password);
+    public function credentials(Request $request)
+    {
+        return [
+            'mail' => $request->email,
+            'password' => $request->password,
+            'fallback' => [
+                'email' => $request->email,
+                'password' => $request->password,
+            ],
+        ];
+    }
 
-            $user = User::create($validatedData);
-
-            $accessToken = $user->createToken("authToken")->accessToken;
-            error_log("REGISTER CALLED Token: ".$accessToken);
-            return response(["message" => "you are now registered", "user" => $user, "access_token" => $accessToken], 201);
-        }
-    */
     public function login(Request $request)
     {
         error_log('LOGIN');
@@ -33,7 +27,8 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (! auth()->attempt($loginData)) {
+        // if (! auth()->attempt($loginData)) {
+        if (!auth()->attempt($this->credentials($request))) {
             return response(['message' => 'This user does not exist, check your details'], 400);
         }
         error_log('LOGIN - User: '. json_encode(auth()->user()));
@@ -44,35 +39,3 @@ class AuthController extends Controller
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 }
-
-/*
-class AuthController extends Controller
-{
-    public function login (Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
-        }
-
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $access_token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = ['token_type'=> 'Bearer', 'access_token' => $access_token];
-
-                return response($response, 200);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
-        } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
-        }
-    }
-}
-*/
