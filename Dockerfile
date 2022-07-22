@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN set -x ; \
   apt update ; apt upgrade ; \
   apt install -y --no-install-recommends \
+    ssmtp \
+    mailutils \
     php php-zip \
     php-curl \
     php-mbstring \

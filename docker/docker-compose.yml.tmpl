@@ -7,11 +7,14 @@ services:
     restart: unless-stopped
     # working_dir: /var/www/
     volumes:
-     - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
-     # ne peut pas être read-only (commande php artisan key:generate le modifie)
-     - ./.env:/var/www/mercator/.env
-    # entrypoint: /bin/sleep 3600 # pour debug
-    #   - ./:/var/www
+      # SMTP conf
+      - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      # Mercator entry point
+      - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
+      # ne peut pas être read-only (commande php artisan key:generate le modifie)
+      - ./.env:/var/www/mercator/.env
+      # entrypoint: /bin/sleep 3600 # pour debug
+      #   - ./:/var/www
     ports:
       - 8000:8000
     networks:
