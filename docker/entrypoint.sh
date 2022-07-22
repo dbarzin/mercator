@@ -27,5 +27,8 @@ php artisan key:generate
 # vider le cache
 php artisan config:clear
 
+# configurer Passport
+php artisan passport:install
+
 # start application
 php artisan serve --host=0.0.0.0
