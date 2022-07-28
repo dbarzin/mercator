@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Actor> $actors
  * @property-read int|null $actors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Activity> $operationsActivities
+ * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Activity> $activities
  * @property-read int|null $operations_activities_count
  * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Task> $tasks
  * @property-read int|null $tasks_count
@@ -59,12 +59,18 @@ class Operation extends Model
     protected $fillable = [
         'name',
         'description',
+        'process_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function operationsActivities()
+    public function process()
+    {
+        return $this->belongsTo(Process::class, 'process_id');
+    }
+
+    public function activities()
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Activity;
 use App\Actor;
+use App\Operation;
+use App\Process;
+use App\Task;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
-use App\Operation;
-use App\Task;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,11 +30,13 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('nom')->pluck('nom', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.operations.create', compact('actors', 'tasks', 'activities'));
+        return view('admin.operations.create', 
+            compact('processes', 'actors', 'tasks', 'activities'));
     }
 
     public function store(StoreOperationRequest $request)
@@ -40,7 +44,7 @@ class OperationController extends Controller
         $operation = Operation::create($request->all());
         $operation->actors()->sync($request->input('actors', []));
         $operation->tasks()->sync($request->input('tasks', []));
-        $operation->operationsActivities()->sync($request->input('activities', []));
+        $operation->activities()->sync($request->input('activities', []));
 
         return redirect()->route('admin.operations.index');
     }
@@ -49,13 +53,15 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('nom')->pluck('nom', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
 
-        $operation->load('actors', 'tasks', 'operationsActivities');
+        $operation->load('actors', 'tasks', 'activities');
 
-        return view('admin.operations.edit', compact('actors', 'tasks', 'operation', 'activities'));
+        return view('admin.operations.edit', 
+            compact('processes', 'actors', 'tasks', 'operation', 'activities'));
     }
 
     public function update(UpdateOperationRequest $request, Operation $operation)
@@ -63,7 +69,7 @@ class OperationController extends Controller
         $operation->update($request->all());
         $operation->actors()->sync($request->input('actors', []));
         $operation->tasks()->sync($request->input('tasks', []));
-        $operation->operationsActivities()->sync($request->input('activities', []));
+        $operation->activities()->sync($request->input('activities', []));
 
         return redirect()->route('admin.operations.index');
     }
@@ -72,7 +78,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operation->load('actors', 'tasks', 'operationsActivities');
+        $operation->load('actors', 'tasks', 'activities');
 
         return view('admin.operations.show', compact('operation'));
     }

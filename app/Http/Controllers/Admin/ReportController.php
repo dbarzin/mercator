@@ -198,7 +198,7 @@ class ReportController extends Controller
             // TODO : improve me
             $operations = Operation::All()->sortBy('name')
                 ->filter(function ($item) use ($activities) {
-                    foreach ($item->operationsActivities as $o) {
+                    foreach ($item->activities as $o) {
                         foreach ($activities as $activity) {
                             if ($o->id === $activity->id) {
                                 return true;

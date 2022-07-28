@@ -659,6 +659,8 @@ return [
             'name_helper' => '',
             'tasks' => 'Tasks',
             'tasks_helper' => 'List of tasks that compose it',
+            'process' => 'Processus',
+            'process_helper' => 'Process of which this operation is part',
         ],
         'title' => 'Operations',
         'title_singular' => 'Surgery',

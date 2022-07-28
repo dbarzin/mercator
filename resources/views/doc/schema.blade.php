@@ -141,9 +141,10 @@
           }\
           MPROCESS -> PROCESS  [label=\"  0-n\"]\
           PROCESS -> ACTIVITY  [label=\"  0-n\"]\
+          PROCESS -> OPERATION  [label=\"  0-n\"]\
           ENTITY -> PROCESS [label=\"  0-n\"]\
           PROCESS -> APPLICATION  [label=\"  n-m\"]\
-          PROCESS -> INFORMATION  [label=\"  0-n\"]\
+          PROCESS -> INFORMATION  [label=\"  n-m\"]\
           ACTIVITY -> OPERATION  [label=\"  0-n\"]\
           OPERATION -> TASK  [label=\"  0-n\"]\
           OPERATION -> ACTOR  [label=\"  0-n\"]\
@@ -152,8 +153,8 @@
           ENTITY -> APPLICATION  [label=\"  0-n\"]\
           APPLICATION -> APPLICSERV  [label=\"  0-n\"]\
           APPLICSERV-> APPLICMODULE  [label=\"  0-n\"]\
-          INFORMATION -> DATABASE [label=\"  0-n\"]\
-          APPLICATION -> DATABASE   [label=\"  0-n\"]\
+          INFORMATION -> DATABASE [label=\"  n-m\"]\
+          APPLICATION -> DATABASE   [label=\"  n-m\"]\
           /* ENTITY -> DATABASE [label=\"  0-n\"] */\
 \
           EXTERNAL -> NETWORK [label=\"  0-n\"]\
