@@ -662,6 +662,8 @@ return [
             'name_helper' => '',
             'tasks' => 'Tâches',
             'tasks_helper' => 'Liste des tâches qui la compose',
+            'process' => 'Processus',
+            'process_helper' => 'Processus dont fait partie cette opération',
         ],
         'title' => 'Opérations',
         'title_singular' => 'Opération',

@@ -146,6 +146,7 @@
                                         <td><b>{{ trans('cruds.process.fields.in_out') }}</b></td>
                                         <td>{!! $process->in_out !!}</td>
                                     </tr>
+                                    @if (auth()->user()->granularity>=3)
                                     <tr>
                                         <td><b>{{ trans('cruds.process.fields.activities') }}</b></td>
                                         <td>
@@ -157,6 +158,7 @@
                                             @endforeach
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <td><b>{{ trans('cruds.process.fields.entities') }}</b></td>
                                         <td>
@@ -214,13 +216,13 @@
             @endcan
 
             @can('activity_access')
-            @if ($activities->count()>0)
+            @if (($activities->count()>0)&&(auth()->user()->granularity>=3))
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.acivity.title') }}
+                    {{ trans('cruds.activity.title') }}
                 </div>
                 <div class="card-body">
-                    <p>{{ trans('cruds.acivity.description') }}</p>
+                    <p>{{ trans('cruds.activity.description') }}</p>
                         @foreach($activities as $activity)
                       <div class="row">
                         <div class="col-sm-6">                        
@@ -232,12 +234,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>{{ trans('cruds.acivity.fields.description') }}</b></td>
+                                    <td width="20%"><b>{{ trans('cruds.activity.fields.description') }}</b></td>
                                     <td>{!! $activity->description !!}</td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <b>{{ trans('cruds.acivity.fields.operation') }}</b>
+                                        <b>{{ trans('cruds.activity.fields.operations') }}</b>
                                     </td>
                                     <td>
                                         @foreach($activity->operations as $operation)
@@ -280,6 +282,31 @@
                                     <td width="20%"><b>{{ trans('cruds.operation.fields.description') }}</b></td>
                                     <td>{!! $operation->description !!}</td>
                                 </tr>
+                                <tr>
+                                    <td><b>{{ trans('cruds.operation.fields.process') }}</b></td>
+                                    <td>
+                                        @if($operation->process!=null)
+                                            <a href="#PROCESS{{$operation->process->id}}">{{$operation->process->identifiant}}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @if (auth()->user()->granularity>=3)
+                                <tr>
+                                    <td>
+                                        <b>{{ trans('cruds.operation.fields.activities') }}</b>
+                                    </td>
+                                    <td>
+                                        @foreach($operation->activities as $activity)
+                                            <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                                {{ $activity->name }}
+                                            </a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td>
                                         <b>{{ trans('cruds.operation.fields.tasks') }}</b>
@@ -491,26 +518,36 @@ digraph  {
     @endif
     @foreach($processes as $process)
         P{{ $process->id }} [label="{{ $process->identifiant }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
-        @foreach($process->activities as $activity)
-            P{{$process->id}} -> A{{$activity->id}}
-        @endforeach
+        @if(auth()->user()->granularity>=3)
+            @foreach($process->activities as $activity)
+                P{{$process->id}} -> A{{$activity->id}}
+            @endforeach
+        @endif
         @foreach($process->processInformation as $information)
             P{{ $process->id }} -> I{{ $information->id }}
         @endforeach
         @if (auth()->user()->granularity>=2)
-        @if ($process->macroprocess_id!=null) 
-            MP{{ $process->macroprocess_id }} -> P{{$process->id}}
-        @endif
+            @if ($process->macroprocess_id!=null) 
+                MP{{ $process->macroprocess_id }} -> P{{$process->id}}
+            @endif
         @endif
     @endforeach
+    @if (auth()->user()->granularity>=3)
     @foreach($activities as $activity)
         A{{ $activity->id }} [label="{{ $activity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/activity.png"  href="#ACTIVITY{{ $activity->id }}"]
         @foreach($activity->operations as $operation)
             A{{ $activity->id }} -> O{{ $operation->id }}
         @endforeach
+        @if($activity->process!=null)
+            A{{ $activity->id }} -> P{{ $operation->process->id }}
+        @endif
     @endforeach
+    @endif
     @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
+        @if($operation->process!=null)
+            P{{ $operation->process->id }} -> O{{ $operation->id }} 
+        @endif
         @foreach($operation->tasks as $task)
             O{{ $operation->id }} -> T{{ $task->id }}
         @endforeach

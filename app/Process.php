@@ -114,7 +114,7 @@ class Process extends Model
 
     public function macroProcess()
     {
-        return $this->belongsTo(MacroProcessus::class, 'macroprocess_id')->orderBy('name');
+        return $this->belongsTo(MacroProcessus::class, 'macroprocess_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
