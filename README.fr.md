@@ -51,7 +51,7 @@ Modèle de données
 
 ## Technologies
 - PHP, Javascript, Laravel
-- Base de données supportées : MySQL, Postgres, SQLite, SQL Server
+- Base de données supportées : MySQL, Postgres, SQLite, SQL Server (cf.: [Laravel/Databases/introduction](https://laravel.com/docs/master/database#introduction) )
 - WebAssembly + Graphviz
 - ChartJS
 

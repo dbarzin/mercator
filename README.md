@@ -54,7 +54,7 @@ Data model
 
 ## Technologies
 - PHP, Javascript, Laravel
-- Supported databases: MySQL, Postgres, SQLite, SQL Server
+- Supported databases: MySQL, Postgres, SQLite, SQL Server (see: [Laravel/Databases/introduction](https://laravel.com/docs/master/database#introduction) )
 - WebAssembly + Graphviz
 - ChartJS
 
