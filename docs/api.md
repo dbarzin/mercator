@@ -6,6 +6,14 @@ Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Re
 est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
 et permet d'interagir avec les services web RESTful. 
 
+### Installer l'API sur Mercator
+
+pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :
+
+```bash
+php artisan passport:install
+```
+- l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.
 
 ### Les APIs
 
