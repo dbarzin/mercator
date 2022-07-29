@@ -68,7 +68,7 @@ Démarrage des 2 services app et db
 
     docker-compose up -d
 
-L'application répond sur le pour 8000
+L'application répond sur le pour 8000 ; login par défaut: admin@admin.com / password
 
     wget http://127.0.0.1:8000
 
