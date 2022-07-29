@@ -85,6 +85,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -368,6 +370,31 @@ l'entête "Authorization" de la requête de l'API.</p>
     curl_close($curl);
 
     var_dump($response);
+</code></pre>
+<h3 id="python">Python</h3>
+<p>Voici un exemple d'utilisation de l'API en Python</p>
+<pre><code class="language-python">#!/usr/bin/python3
+
+import requests
+
+vheaders = {}
+vheaders['accept'] = 'application/json'
+vheaders['content-type'] = 'application/x-www-form-urlencoded'
+vheaders['cache-control'] = 'no-cache'
+
+print(&quot;Login&quot;)
+response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;, 
+    headers=vheaders, 
+    data= {'email':'admin@admin.com', 'password':'password'} )
+print(response.status_code)
+
+vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token']
+
+print(&quot;Get workstations&quot;)
+response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, headers=vheaders)
+print(response.json())
+print(response.status_code)
+
 </code></pre>
               
             </div>
