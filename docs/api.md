@@ -257,3 +257,32 @@ Voici quelques exemples d'utilisation de l'API avec PHP :
 
     var_dump($response);
 ```
+
+### Python
+
+Voici un exemple d'utilisation de l'API en Python
+
+```python
+#!/usr/bin/python3
+
+import requests
+
+vheaders = {}
+vheaders['accept'] = 'application/json'
+vheaders['content-type'] = 'application/x-www-form-urlencoded'
+vheaders['cache-control'] = 'no-cache'
+
+print("Login")
+response = requests.post("http://127.0.0.1:8000/api/login", 
+    headers=vheaders, 
+    data= {'email':'admin@admin.com', 'password':'password'} )
+print(response.status_code)
+
+vheaders['Authorization'] = "Bearer " + response.json()['access_token']
+
+print("Get workstations")
+response = requests.get("http://127.0.0.1:8000/api/workstations", headers=vheaders)
+print(response.json())
+print(response.status_code)
+
+```
