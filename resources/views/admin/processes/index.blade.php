@@ -29,8 +29,13 @@
                             {{ trans('cruds.process.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.process.fields.operations') }}
+                        </th>
+                        @if (auth()->user()->granularity>=3)
+                        <th>
                             {{ trans('cruds.process.fields.activities') }}                              
                         </th>
+                        @endif
                         <th>
                             {{ trans('cruds.process.fields.informations') }}
                         </th>
@@ -75,6 +80,17 @@
                                 {!! $process->description ?? '' !!}
                             </td>
                             <td>
+                                @foreach($process->operations as $operation)
+                                    <a href="{{ route('admin.operations.show', $operation->id) }}">
+                                        {{ $operation->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                
+                                @endforeach
+                            </td>
+                            @if (auth()->user()->granularity>=3)
+                            <td>
                                 @foreach($process->activities as $activity)
                                     <a href="{{ route('admin.activities.show', $activity->id) }}">
                                         {{ $activity->name }}
@@ -84,6 +100,7 @@
                                     @endif                                
                                 @endforeach
                             </td>
+                            @endif
                             <td>
                                 @foreach($process->processInformation as $information)
                                     <a href="{{ route('admin.information.show', $information->id) }}">

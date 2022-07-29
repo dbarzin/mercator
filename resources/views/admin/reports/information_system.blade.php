@@ -531,6 +531,9 @@ digraph  {
                 MP{{ $process->macroprocess_id }} -> P{{$process->id}}
             @endif
         @endif
+        @foreach($process->operations as $operation)
+            P{{ $process->id }} -> O{{ $operation->id }}
+        @endforeach
     @endforeach
     @if (auth()->user()->granularity>=3)
     @foreach($activities as $activity)
@@ -545,9 +548,6 @@ digraph  {
     @endif
     @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
-        @if($operation->process!=null)
-            P{{ $operation->process->id }} -> O{{ $operation->id }} 
-        @endif
         @foreach($operation->tasks as $task)
             O{{ $operation->id }} -> T{{ $task->id }}
         @endforeach
