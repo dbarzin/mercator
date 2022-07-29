@@ -40,9 +40,9 @@
                 <span class="help-block">{{ trans('cruds.process.fields.in_out_helper') }}</span>
             </div>
 
-
           <div class="row">
             <div class="col-sm">
+                @if (auth()->user()->granularity>=3)
                 <div class="form-group">
                     <label for="activities">{{ trans('cruds.process.fields.activities') }}</label>
                     <div style="padding-bottom: 4px">
@@ -61,7 +61,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.process.fields.activities_helper') }}</span>
                 </div>
-                
+                @endif
                 <div class="form-group">
                     <label for="entities">{{ trans('cruds.process.fields.entities') }}</label>
                     <div style="padding-bottom: 4px">
