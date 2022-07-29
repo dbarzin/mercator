@@ -112,6 +112,11 @@ class Process extends Model
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
+    public function operations()
+    {
+        return $this->hasMany(Operation::class, 'process_id', 'id')->orderBy('name');
+    }
+
     public function macroProcess()
     {
         return $this->belongsTo(MacroProcessus::class, 'macroprocess_id');

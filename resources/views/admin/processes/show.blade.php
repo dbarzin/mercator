@@ -58,6 +58,7 @@
                             {!! $process->in_out !!}
                         </td>
                     </tr>
+                    @if (auth()->user()->granularity>=3)
                     <tr>
                         <th>
                             {{ trans('cruds.process.fields.activities') }}
@@ -73,6 +74,7 @@
                             @endforeach
                         </td>
                     </tr>
+                    @endif
                     <tr>
                         <th>
                             {{ trans('cruds.process.fields.entities') }}

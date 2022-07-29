@@ -81,9 +81,6 @@
                         <span class="help-block">{{ trans('cruds.process.fields.entities_helper') }}</span>
                     </div>
 
-
-
-
                     <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
