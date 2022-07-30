@@ -1,5 +1,5 @@
-# ubuntu / impish (21.10)
-FROM ubuntu:impish
+# ubuntu / jammy (22.04-LTS)
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND noninteractive
 
