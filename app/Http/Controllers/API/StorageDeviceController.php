@@ -33,9 +33,11 @@ class StorageDeviceController extends Controller
         return response()->json($storagedevice, 201);
     }
 
-    public function show(StorageDevice $storagedevice)
+    public function show(int $id)
     {
         abort_if(Gate::denies('storage_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $storagedevice = Storagedevice::where('id', $id)->get();
 
         return new StorageDeviceResource($storagedevice);
     }

@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\ApplicationResource;
 use App\MApplication;
 use Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
@@ -38,6 +39,8 @@ class ApplicationController extends Controller
     public function show(MApplication $application)
     {
         abort_if(Gate::denies('application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        Log::debug("id=" . $application->id);
 
         return new ApplicationResource($application);
     }

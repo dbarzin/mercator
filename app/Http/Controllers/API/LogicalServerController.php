@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\LogicalServerResource;
 use App\LogicalServer;
 use Gate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class LogicalServerController extends Controller
 {
@@ -33,9 +34,11 @@ class LogicalServerController extends Controller
         return response()->json($logicalServer, 201);
     }
 
-    public function show(LogicalServer $logicalserver)
+    public function show(int $id)
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $logicalserver = LogicalServer::where('id', $id)->get();
 
         return new LogicalServerResource($logicalserver);
     }
