@@ -17,7 +17,7 @@ Install PHP and some PHP libraries
 
     sudo apt install php php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
 
-Installer Apache2, GIT, Graphviz et Composer
+Install Apache2, GIT, Graphviz et Composer
 
     sudo apt install apache2 git graphviz composer
 
@@ -127,6 +127,21 @@ The application is accessible at the URL [http://127.0.0.1:8000]
     user : admin@admin.com
     password : password
 
+## Passport configuration
+
+To set up the JSON API, install Laravel Passport
+
+    php artisan passport:install
+
+Generate the API keys
+
+    php artisan passport:keys
+
+Change the access permissions of the key
+
+    sudo chown www-data:www-data storage/oauth-*.key
+    sudo chmod 600 storage/oauth-*.key
+
 ## Mail configuration
 
 If you want to send notification mails from Mercator.
@@ -143,7 +158,7 @@ Send a test mail with
 
     echo "Test mail body" | mailx -r "mercator@yourdomain.local" -s "Subject Test" yourname@yourdomain.local
 
-## Sheduler
+## Scheduler
 
 Modify the crontab
 
@@ -180,7 +195,7 @@ Find more complete documentation on LDAP configuration here.
 
 ## Apache
 
-To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command
+To configure Apache, change the properties of the mercator directory and grant the appropriate permissions to the hive with the following command:
 
     sudo chown -R www-data:www-data /var/www/mercator
     sudo chmod -R 775 /var/www/mercator/storage
@@ -277,7 +292,7 @@ or to stop on first error
 
     php artisan dusk --stop-on-error --stop-on-failure
 
-## Repair the problems of migraton
+## Repair the problems of migration
 
 Update the libraries
 
