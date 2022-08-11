@@ -22,14 +22,7 @@ class UpdateExternalConnectedEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:external_connected_entities,name,' . request()->route('external_connected_entity')->id,
                 'unique:external_connected_entities,name,'.request()->route('external_connected_entity')->id.',id,deleted_at,NULL',
-            ],
-            'connected_networks.*' => [
-                'integer',
-            ],
-            'connected_networks' => [
-                'array',
             ],
         ];
     }

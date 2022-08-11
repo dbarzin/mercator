@@ -1235,8 +1235,8 @@ class CartographyController extends Controller
 
             foreach ($externalConnectedEntities as $entity) {
                 $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
-                foreach ($entity->connected_networks as $network) {
-                    $graph .= ' NET' . $network->id . '->E' . $entity->id;
+                if ($entity->network_id != null) {
+                    $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
                 }
             }
 
@@ -1455,16 +1455,21 @@ class CartographyController extends Controller
                     $section->addBookmark('EXTENTITY'.$entity->id);
                     $table = $this->addTable($section, $entity->name);
 
-                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.responsible_sec'), $entity->responsible_sec);
+                    $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.entity'));
+                    if ($entity->entity_id!=null) {
+                        $textRun->addLink('ENTITY'.$entity->entity->id, $entity->entity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                    }
+
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.type'), $entity->type);
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.contacts'), $entity->contacts);
 
-                    $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.connected_networks'));
-                    foreach ($entity->connected_networks as $network) {
-                        $textRun->addLink('NETWORK'.$network->id, $network->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($entity->connected_networks->last() !== $network) {
-                            $textRun->addText(', ');
-                        }
+                    $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.network'));
+                    if ($entity->network_id!=null) {
+                        $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src);
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest);
+
                     $section->addTextBreak(1);
                 }
             }

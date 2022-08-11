@@ -82,7 +82,8 @@ class Network extends Model
 
     public function externalConnectedEntities()
     {
-        return $this->belongsToMany(ExternalConnectedEntity::class)->orderBy('name');
+        // return $this->belongsToMany(ExternalConnectedEntity::class)->orderBy('name');
+        return $this->hasMany(ExternalConnectedEntity::class, 'network_id', 'id')->orderBy('name');
     }
 
     public function subnetworks()

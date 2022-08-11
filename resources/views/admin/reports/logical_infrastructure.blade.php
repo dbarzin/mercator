@@ -292,23 +292,36 @@
                                         </th>
                                     </thead>
                                     <tr>
-                                        <th width="20%">{{ trans("cruds.externalConnectedEntity.fields.responsible_sec") }}</th>
-                                        <td>{{ $entity->responsible_sec }}</td>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.entity") }}</th>
+                                        <td>
+                                            @if($entity->entity!=null) 
+                                                <a href="#ENTITY{{$entity->entity->id}}">{{$entity->entity->name}}</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th width="20%">{{ trans("cruds.externalConnectedEntity.fields.type") }}</th>
+                                        <td>{{ $entity->type }}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ trans("cruds.externalConnectedEntity.fields.contacts") }}</th>
                                         <td>{{ $entity->contacts }}</td>
                                     </tr>
                                     <tr>
-                                        <th>{{ trans("cruds.externalConnectedEntity.fields.connected_networks") }}</th>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.network") }}</th>
                                         <td>
-                                            @foreach($entity->connected_networks as $subnetwork) 
-                                                <a href="#SUBNET{{$subnetwork->id}}">{{$subnetwork->name}}</a>
-                                                @if (!$loop->last)
-                                                ,
-                                                @endif
-                                            @endforeach
+                                            @if($entity->network!=null) 
+                                                <a href="#NETWORK{{$entity->network->id}}">{{$entity->network->name}}</a>
+                                            @endif
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.src") }}</th>
+                                        <td>{{ $entity->src }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.externalConnectedEntity.fields.dest") }}</th>
+                                        <td>{{ $entity->dest }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -695,9 +708,9 @@ digraph  {
     @can('external_connected_entity_access')
     @foreach($externalConnectedEntities as $entity) 
         E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/entity.png" href="#EXTENTITY{{$entity->id}}"]
-        @foreach($entity->connected_networks as $network)
-            E{{ $entity->id }} -> NET{{ $network->id }} 
-        @endforeach
+        @if($entity->network!=null)
+            E{{ $entity->id }} -> NET{{ $entity->network->id }} 
+        @endif
     @endforeach
     @endcan
     @can('logical_server_access')

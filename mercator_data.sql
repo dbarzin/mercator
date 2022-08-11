@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for Linux (x86_64)
 --
 -- Host: localhost    Database: mercator
 -- ------------------------------------------------------
--- Server version	8.0.29-0ubuntu0.22.04.3
+-- Server version	8.0.30-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -309,18 +309,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `external_connected_entities` WRITE;
 /*!40000 ALTER TABLE `external_connected_entities` DISABLE KEYS */;
-INSERT INTO `external_connected_entities` (`id`, `name`, `responsible_sec`, `contacts`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Entité externe 1','Nestor','Marcel','2020-07-23 07:59:25','2020-07-23 07:59:25',NULL),(2,'Entité externe 2','Philippe','it@external.corp','2021-08-17 17:52:26','2021-08-17 17:52:26',NULL);
+INSERT INTO `external_connected_entities` (`id`, `name`, `description`, `type`, `entity_id`, `network_id`, `src`, `dest`, `contacts`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Entité externe 1','description entité 1','Token',2,1,'8.9.10.11','10.212.32.12','Marcel','2020-07-23 07:59:25','2022-08-11 19:35:57',NULL),(2,'Entité externe 2','description de la connexion','SSL-VPN',4,1,NULL,NULL,'it@external.corp','2021-08-17 17:52:26','2022-08-11 19:17:06',NULL),(3,'Test',NULL,'SSL-VPN',NULL,1,NULL,NULL,NULL,'2022-08-11 19:46:40','2022-08-11 19:47:15',NULL);
 /*!40000 ALTER TABLE `external_connected_entities` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `external_connected_entity_network`
---
-
-LOCK TABLES `external_connected_entity_network` WRITE;
-/*!40000 ALTER TABLE `external_connected_entity_network` DISABLE KEYS */;
-INSERT INTO `external_connected_entity_network` (`external_connected_entity_id`, `network_id`) VALUES (1,1),(2,2);
-/*!40000 ALTER TABLE `external_connected_entity_network` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -547,7 +537,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `operations` WRITE;
 /*!40000 ALTER TABLE `operations` DISABLE KEYS */;
-INSERT INTO `operations` (`id`, `name`, `description`, `process_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Operation 1','<p>Description de l\'opération</p>',1,'2020-06-13 00:02:42','2022-07-28 12:43:43',NULL),(2,'Operation 2','<p>Description de l\'opération</p>',NULL,'2020-06-13 00:02:58','2020-06-13 00:02:58',NULL),(3,'Operation 3','<p>Desciption de l\'opération</p>',NULL,'2020-06-13 00:03:11','2020-07-15 14:34:52',NULL),(4,'Operation 4',NULL,2,'2020-07-15 14:34:02','2022-07-28 12:34:27',NULL),(5,'Master operation','<p>Opération maitre</p>',NULL,'2020-08-15 04:01:40','2020-08-15 04:01:40',NULL),(6,'Operation zullu','<p>Opération de mouvement tactique.</p>',9,'2022-07-28 11:58:41','2022-07-28 11:58:41',NULL);
+INSERT INTO `operations` (`id`, `name`, `description`, `process_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Operation 1','<p>Description de l\'opération</p>',NULL,'2020-06-13 00:02:42','2022-07-29 05:37:13',NULL),(2,'Operation 2','<p>Description de l\'opération</p>',NULL,'2020-06-13 00:02:58','2020-06-13 00:02:58',NULL),(3,'Operation 3','<p>Desciption de l\'opération</p>',NULL,'2020-06-13 00:03:11','2020-07-15 14:34:52',NULL),(4,'Operation 4','<p>Description de l\'opération 4</p>',NULL,'2020-07-15 14:34:02','2022-07-29 05:47:16',NULL),(5,'Master operation','<p>Opération maitre</p>',NULL,'2020-08-15 04:01:40','2020-08-15 04:01:40',NULL),(6,'Operation zullu','<p>Opération de mouvement tactique.</p>',NULL,'2022-07-28 11:58:41','2022-07-28 11:58:41',NULL);
 /*!40000 ALTER TABLE `operations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,7 +617,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `processes` WRITE;
 /*!40000 ALTER TABLE `processes` DISABLE KEYS */;
-INSERT INTO `processes` (`id`, `identifiant`, `description`, `owner`, `security_need_c`, `in_out`, `dummy`, `created_at`, `updated_at`, `deleted_at`, `macroprocess_id`, `security_need_i`, `security_need_a`, `security_need_t`) VALUES (1,'Processus 1','<p>Description du processus 1</p>','Ched',3,'<ul><li>pommes</li><li>poires</li><li>cerise</li></ul><p>&lt;test</p>',NULL,'2020-06-17 14:36:24','2021-09-22 11:38:57',NULL,1,2,3,1),(2,'Processus 2','<p>Description du processus 2</p>','Ched',3,'<p>1 2 3 4 5 6</p>',NULL,'2020-06-17 14:36:58','2021-09-22 10:59:14',NULL,10,4,2,4),(3,'Processus 3','<p>Description du processus 3</p>','Johan',3,'<p>a,b,c</p><p>d,e,f</p>',NULL,'2020-07-01 15:50:27','2021-08-17 08:22:13',NULL,2,2,3,1),(4,'Processus 4','<p>Description du processus 4</p>','Paul',4,'<ul><li>chaussettes</li><li>pantalon</li><li>chaussures</li></ul>',NULL,'2020-08-18 15:00:36','2021-08-17 08:22:29',NULL,2,2,2,2),(5,'totoat','<p>tto</p>',NULL,1,'<p>sgksdùmfk</p>',NULL,'2020-08-27 13:16:56','2020-08-27 13:17:01','2020-08-27 13:17:01',1,NULL,NULL,NULL),(6,'ptest','<p>description de ptest</p>',NULL,0,'<p>toto titi tutu</p>',NULL,'2020-08-29 11:10:23','2020-08-29 11:10:28','2020-08-29 11:10:28',NULL,NULL,NULL,NULL),(7,'ptest2','<p>fdfsdfsdf</p>',NULL,1,'<p>fdfsdfsd</p>',NULL,'2020-08-29 11:16:42','2020-08-29 11:17:09','2020-08-29 11:17:09',1,NULL,NULL,NULL),(8,'ptest3','<p>processus de test 3</p>','CHEM - Facturation',3,'<p>dsfsdf sdf sdf sd fsd fsd f s</p>',NULL,'2020-08-29 11:19:13','2020-08-29 11:20:59','2020-08-29 11:20:59',1,NULL,NULL,NULL),(9,'Processus 5','<p>Description du cinquième processus</p>','Paul',4,'<ul><li>chat</li><li>chien</li><li>poisson</li></ul>',NULL,'2021-05-14 07:10:02','2021-09-22 10:59:14',NULL,10,3,2,3),(10,'Proc 6',NULL,NULL,0,NULL,NULL,'2021-10-08 19:18:28','2021-10-08 19:28:38','2021-10-08 19:28:38',NULL,0,0,0);
+INSERT INTO `processes` (`id`, `identifiant`, `description`, `owner`, `security_need_c`, `in_out`, `dummy`, `created_at`, `updated_at`, `deleted_at`, `macroprocess_id`, `security_need_i`, `security_need_a`, `security_need_t`) VALUES (1,'Processus 1','<p>Description du processus 1</p>','Ched',3,'<ul><li>pommes</li><li>poires</li><li>cerise</li></ul>',NULL,'2020-06-17 14:36:24','2022-07-29 05:50:09',NULL,1,2,3,1),(2,'Processus 2','<p>Description du processus 2</p>','Ched',3,'<p>1 2 3 4 5 6</p>',NULL,'2020-06-17 14:36:58','2021-09-22 10:59:14',NULL,10,4,2,4),(3,'Processus 3','<p>Description du processus 3</p>','Johan',3,'<p>a,b,c</p><p>d,e,f</p>',NULL,'2020-07-01 15:50:27','2021-08-17 08:22:13',NULL,2,2,3,1),(4,'Processus 4','<p>Description du processus 4</p>','Paul',4,'<ul><li>chaussettes</li><li>pantalon</li><li>chaussures</li></ul>',NULL,'2020-08-18 15:00:36','2021-08-17 08:22:29',NULL,2,2,2,2),(5,'totoat','<p>tto</p>',NULL,1,'<p>sgksdùmfk</p>',NULL,'2020-08-27 13:16:56','2020-08-27 13:17:01','2020-08-27 13:17:01',1,NULL,NULL,NULL),(6,'ptest','<p>description de ptest</p>',NULL,0,'<p>toto titi tutu</p>',NULL,'2020-08-29 11:10:23','2020-08-29 11:10:28','2020-08-29 11:10:28',NULL,NULL,NULL,NULL),(7,'ptest2','<p>fdfsdfsdf</p>',NULL,1,'<p>fdfsdfsd</p>',NULL,'2020-08-29 11:16:42','2020-08-29 11:17:09','2020-08-29 11:17:09',1,NULL,NULL,NULL),(8,'ptest3','<p>processus de test 3</p>','CHEM - Facturation',3,'<p>dsfsdf sdf sdf sd fsd fsd f s</p>',NULL,'2020-08-29 11:19:13','2020-08-29 11:20:59','2020-08-29 11:20:59',1,NULL,NULL,NULL),(9,'Processus 5','<p>Description du cinquième processus</p>','Paul',4,'<ul><li>chat</li><li>chien</li><li>poisson</li></ul>',NULL,'2021-05-14 07:10:02','2021-09-22 10:59:14',NULL,10,3,2,3),(10,'Proc 6',NULL,NULL,0,NULL,NULL,'2021-10-08 19:18:28','2021-10-08 19:28:38','2021-10-08 19:28:38',NULL,0,0,0);
 /*!40000 ALTER TABLE `processes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -760,4 +750,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-28 17:00:03
+-- Dump completed on 2022-08-12  0:07:53

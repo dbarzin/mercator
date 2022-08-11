@@ -45,7 +45,7 @@ class ExternalConnectedEntity extends Model
 
     public static $searchable = [
         'name',
-        'responsible_sec',
+        'description',
         'contacts',
     ];
 
@@ -57,16 +57,23 @@ class ExternalConnectedEntity extends Model
 
     protected $fillable = [
         'name',
-        'responsible_sec',
+        'type',
+        'entity_id',
         'contacts',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'description',
+        'network_id',
+        'src',
+        'dest'
     ];
 
-    public function connected_networks()
+    public function entity()
     {
-        return $this->belongsToMany(Network::class)->orderBy('name');
+        return $this->belongsTo(Entity::class, 'entity_id');
+    }
+
+    public function network()
+    {
+        return $this->belongsTo(Network::class, 'network_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
