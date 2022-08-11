@@ -21,7 +21,6 @@ class RenameSubnetwork extends Migration
         Schema::rename('network_subnetword', 'network_subnetwork');
 
         Schema::table('network_subnetwork', function (Blueprint $table) {
-            $table->renameIndex('subnetword_id_fk_1492377', 'subnetwork_id_fk_1492377');
             $table->renameColumn('subnetword_id', 'subnetwork_id');
         });
 
@@ -51,7 +50,6 @@ class RenameSubnetwork extends Migration
         Schema::rename('network_subnetwork', 'network_subnetword');
 
         Schema::table('network_subnetword', function (Blueprint $table) {
-            $table->renameIndex('subnetwork_id_fk_1492377', 'subnetword_id_fk_1492377');
             $table->renameColumn('subnetwork_id', 'subnetword_id');
         });
 

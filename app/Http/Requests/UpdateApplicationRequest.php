@@ -20,7 +20,9 @@ class UpdateApplicationRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
+                'max:32',
                 'required',
+                'unique:m_applications,name,'.request()->route('application')->id.',id,deleted_at,NULL',
             ],
             'entities.*' => [
                 'integer',

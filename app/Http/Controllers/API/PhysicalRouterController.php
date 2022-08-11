@@ -51,11 +51,11 @@ class PhysicalRouterController extends Controller
         return response()->json();
     }
 
-    public function destroy(PhysicalRouter $physicalrouter)
+    public function destroy(PhysicalRouter $physicalRouter)
     {
         abort_if(Gate::denies('physical_router_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalrouter->delete();
+        $physicalRouter->delete();
 
         return response()->json();
     }

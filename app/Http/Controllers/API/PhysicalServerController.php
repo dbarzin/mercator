@@ -42,22 +42,22 @@ class PhysicalServerController extends Controller
         return new PhysicalServerResource($physicalserver);
     }
 
-    public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalserver)
+    public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalserver->update($request->all());
+        $physicalServer->update($request->all());
         // syncs
-        // $physicalserver->roles()->sync($request->input('roles', []));
+        // $physicalServer->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(PhysicalServer $physicalserver)
+    public function destroy(PhysicalServer $physicalServer)
     {
         abort_if(Gate::denies('physical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalserver->delete();
+        $physicalServer->delete();
 
         return response()->json();
     }
