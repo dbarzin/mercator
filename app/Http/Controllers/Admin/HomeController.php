@@ -476,7 +476,7 @@ class HomeController extends Controller
 
             'externalConnectedEntities' => ExternalConnectedEntity::count(),
             'externalConnectedEntities_lvl2' => ExternalConnectedEntity
-                    ::where('responsible_sec', '<>', null)
+                    ::where('type', '<>', null)
                         ->where('contacts', '<>', null)
                         ->count(),
 

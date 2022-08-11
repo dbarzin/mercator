@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
 use App\Network;
+use App\Entity;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,15 +27,18 @@ class ExternalConnectedEntityController extends Controller
     {
         abort_if(Gate::denies('external_connected_entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $connected_networks = Network::all()->sortBy('name')->pluck('name', 'id');
+        $networks = Network::all()->sortBy('name')->pluck('name', 'id');
+        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.externalConnectedEntities.create', compact('connected_networks'));
+        $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.externalConnectedEntities.create', 
+            compact('networks', 'entities', 'type_list'));
     }
 
     public function store(StoreExternalConnectedEntityRequest $request)
     {
         $externalConnectedEntity = ExternalConnectedEntity::create($request->all());
-        $externalConnectedEntity->connected_networks()->sync($request->input('connected_networks', []));
 
         return redirect()->route('admin.external-connected-entities.index');
     }
@@ -43,17 +47,18 @@ class ExternalConnectedEntityController extends Controller
     {
         abort_if(Gate::denies('external_connected_entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $connected_networks = Network::all()->sortBy('name')->pluck('name', 'id');
+        $networks = Network::all()->sortBy('name')->pluck('name', 'id');
+        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
 
-        $externalConnectedEntity->load('connected_networks');
+        $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.externalConnectedEntities.edit', compact('connected_networks', 'externalConnectedEntity'));
+        return view('admin.externalConnectedEntities.edit', 
+            compact('externalConnectedEntity','networks', 'entities', 'type_list'));
     }
 
     public function update(UpdateExternalConnectedEntityRequest $request, ExternalConnectedEntity $externalConnectedEntity)
     {
         $externalConnectedEntity->update($request->all());
-        $externalConnectedEntity->connected_networks()->sync($request->input('connected_networks', []));
 
         return redirect()->route('admin.external-connected-entities.index');
     }
@@ -61,8 +66,6 @@ class ExternalConnectedEntityController extends Controller
     public function show(ExternalConnectedEntity $externalConnectedEntity)
     {
         abort_if(Gate::denies('external_connected_entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $externalConnectedEntity->load('connected_networks');
 
         return view('admin.externalConnectedEntities.show', compact('externalConnectedEntity'));
     }

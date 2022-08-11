@@ -22,14 +22,7 @@ class StoreExternalConnectedEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:external_connected_entities',
                 'unique:external_connected_entities,name,NULL,id,deleted_at,NULL',
-            ],
-            'connected_networks.*' => [
-                'integer',
-            ],
-            'connected_networks' => [
-                'array',
             ],
         ];
     }
