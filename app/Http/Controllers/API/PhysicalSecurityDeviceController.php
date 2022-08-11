@@ -40,22 +40,22 @@ class PhysicalSecurityDeviceController extends Controller
         return new PhysicalSecurityDeviceResource($physicalsecuritydevice);
     }
 
-    public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $device)
+    public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
     {
         abort_if(Gate::denies('physical_security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $device->update($request->all());
+        $physicalSecurityDevice->update($request->all());
         // syncs
-        // $physicalsecuritydevice->roles()->sync($request->input('roles', []));
+        // $physicalSecurityDevice->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(PhysicalSecurityDevice $device)
+    public function destroy(PhysicalSecurityDevice $physicalSecurityDevice)
     {
         abort_if(Gate::denies('physical_security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $device->delete();
+        $physicalSecurityDevice->delete();
 
         return response()->json();
     }

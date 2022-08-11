@@ -40,22 +40,22 @@ class PhysicalSwitchController extends Controller
         return new PhysicalSwitchResource($physicalswitch);
     }
 
-    public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalswitch)
+    public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('physical_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalswitch->update($request->all());
+        $physicalSwitch->update($request->all());
         // syncs
-        // $physicalswitch->roles()->sync($request->input('roles', []));
+        // $physicalSwitch->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(PhysicalSwitch $physicalswitch)
+    public function destroy(PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('physical_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalswitch->delete();
+        $physicalSwitch->delete();
 
         return response()->json();
     }

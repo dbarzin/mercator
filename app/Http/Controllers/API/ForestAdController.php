@@ -40,22 +40,22 @@ class ForestAdController extends Controller
         return new ForestAdResource($forestad);
     }
 
-    public function update(UpdateForestAdRequest $request, ForestAd $forestad)
+    public function update(UpdateForestAdRequest $request, ForestAd $forestAd)
     {
         abort_if(Gate::denies('forestad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $forestad->update($request->all());
+        $forestAd->update($request->all());
         // syncs
-        // $forestad->roles()->sync($request->input('roles', []));
+        // $forestAd->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(ForestAd $forestad)
+    public function destroy(ForestAd $forestAd)
     {
         abort_if(Gate::denies('forestad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $forestad->delete();
+        $forestAd->delete();
 
         return response()->json();
     }

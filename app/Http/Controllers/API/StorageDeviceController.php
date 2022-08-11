@@ -42,22 +42,22 @@ class StorageDeviceController extends Controller
         return new StorageDeviceResource($storagedevice);
     }
 
-    public function update(UpdateStorageDeviceRequest $request, StorageDevice $storagedevice)
+    public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)
     {
         abort_if(Gate::denies('storage_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevice->update($request->all());
+        $storageDevice->update($request->all());
         // syncs
-        // $storagedevice->roles()->sync($request->input('roles', []));
+        // $storageDevice->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(StorageDevice $storagedevice)
+    public function destroy(StorageDevice $storageDevice)
     {
         abort_if(Gate::denies('storage_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevice->delete();
+        $storageDevice->delete();
 
         return response()->json();
     }

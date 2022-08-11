@@ -40,22 +40,22 @@ class ApplicationModuleController extends Controller
         return new ApplicationModuleResource($applicationmodule);
     }
 
-    public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationmodule)
+    public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodule->update($request->all());
+        $applicationModule->update($request->all());
         // syncs
-        // $applicationmodule->roles()->sync($request->input('roles', []));
+        // $applicationModule->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(ApplicationModule $applicationmodule)
+    public function destroy(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodule->delete();
+        $applicationModule->delete();
 
         return response()->json();
     }

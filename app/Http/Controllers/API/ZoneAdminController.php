@@ -40,22 +40,22 @@ class ZoneAdminController extends Controller
         return new ZoneAdminResource($zoneadmin);
     }
 
-    public function update(UpdateZoneAdminRequest $request, ZoneAdmin $zoneadmin)
+    public function update(UpdateZoneAdminRequest $request, ZoneAdmin $zoneAdmin)
     {
         abort_if(Gate::denies('zoneadmin_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $zoneadmin->update($request->all());
+        $zoneAdmin->update($request->all());
         // syncs
-        // $zoneadmin->roles()->sync($request->input('roles', []));
+        // $zoneAdmin->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
 
-    public function destroy(ZoneAdmin $zoneadmin)
+    public function destroy(ZoneAdmin $zoneAdmin)
     {
         abort_if(Gate::denies('zoneadmin_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $zoneadmin->delete();
+        $zoneAdmin->delete();
 
         return response()->json();
     }

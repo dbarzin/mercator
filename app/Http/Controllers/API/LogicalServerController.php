@@ -54,11 +54,11 @@ class LogicalServerController extends Controller
         return response()->json();
     }
 
-    public function destroy(LogicalServer $logicalserver)
+    public function destroy(LogicalServer $logicalServer)
     {
         abort_if(Gate::denies('logical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalserver->delete();
+        $logicalServer->delete();
 
         return response()->json();
     }
