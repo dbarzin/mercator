@@ -51,11 +51,11 @@ class NetworkSwitchController extends Controller
         return response()->json();
     }
 
-    public function destroy(NetworkSwitch $networkswitch)
+    public function destroy(NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('networkswitch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networkswitch->delete();
+        $networkSwitch->delete();
 
         return response()->json();
     }

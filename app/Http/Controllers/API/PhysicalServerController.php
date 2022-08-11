@@ -53,11 +53,11 @@ class PhysicalServerController extends Controller
         return response()->json();
     }
 
-    public function destroy(PhysicalServer $physicalserver)
+    public function destroy(PhysicalServer $physicalServer)
     {
         abort_if(Gate::denies('physical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalserver->delete();
+        $physicalServer->delete();
 
         return response()->json();
     }

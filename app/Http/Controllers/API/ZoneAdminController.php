@@ -51,11 +51,11 @@ class ZoneAdminController extends Controller
         return response()->json();
     }
 
-    public function destroy(ZoneAdmin $zoneadmin)
+    public function destroy(ZoneAdmin $zoneAdmin)
     {
         abort_if(Gate::denies('zoneadmin_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $zoneadmin->delete();
+        $zoneAdmin->delete();
 
         return response()->json();
     }

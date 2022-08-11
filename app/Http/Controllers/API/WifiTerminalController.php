@@ -51,11 +51,11 @@ class WifiTerminalController extends Controller
         return response()->json();
     }
 
-    public function destroy(WifiTerminal $wifiterminal)
+    public function destroy(WifiTerminal $wifiTerminal)
     {
         abort_if(Gate::denies('wifiterminal_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wifiterminal->delete();
+        $wifiTerminal->delete();
 
         return response()->json();
     }

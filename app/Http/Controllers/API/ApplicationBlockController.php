@@ -47,11 +47,11 @@ class ApplicationBlockController extends Controller
         return response()->json();
     }
 
-    public function destroy(ApplicationBlock $applicationblock)
+    public function destroy(ApplicationBlock $applicationBlock)
     {
         abort_if(Gate::denies('application_block_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationblock->delete();
+        $applicationBlock->delete();
 
         return response()->json();
     }

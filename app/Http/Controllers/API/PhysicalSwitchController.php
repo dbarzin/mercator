@@ -51,11 +51,11 @@ class PhysicalSwitchController extends Controller
         return response()->json();
     }
 
-    public function destroy(PhysicalSwitch $physicalswitch)
+    public function destroy(PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('physical_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalswitch->delete();
+        $physicalSwitch->delete();
 
         return response()->json();
     }

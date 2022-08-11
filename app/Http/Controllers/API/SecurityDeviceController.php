@@ -51,11 +51,11 @@ class SecurityDeviceController extends Controller
         return response()->json();
     }
 
-    public function destroy(SecurityDevice $securitydevice)
+    public function destroy(SecurityDevice $securityDevice)
     {
         abort_if(Gate::denies('securitydevice_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $securitydevice->delete();
+        $securityDevice->delete();
 
         return response()->json();
     }

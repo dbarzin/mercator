@@ -51,11 +51,11 @@ class PhysicalSecurityDeviceController extends Controller
         return response()->json();
     }
 
-    public function destroy(PhysicalSecurityDevice $device)
+    public function destroy(PhysicalSecurityDevice $physicalSecurityDevice)
     {
         abort_if(Gate::denies('physical_security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $device->delete();
+        $physicalSecurityDevice->delete();
 
         return response()->json();
     }

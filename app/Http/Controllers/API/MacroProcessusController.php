@@ -56,11 +56,11 @@ class MacroProcessusController extends Controller
         return response()->json();
     }
 
-    public function destroy(MacroProcessus $macroprocessus)
+    public function destroy(MacroProcessus $macroProcessus)
     {
         abort_if(Gate::denies('macroprocessus_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroprocessus->delete();
+        $macroProcessus->delete();
 
         return response()->json();
     }

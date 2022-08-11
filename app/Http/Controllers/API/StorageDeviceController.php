@@ -53,11 +53,11 @@ class StorageDeviceController extends Controller
         return response()->json();
     }
 
-    public function destroy(StorageDevice $storagedevice)
+    public function destroy(StorageDevice $storageDevice)
     {
         abort_if(Gate::denies('storage_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $storagedevice->delete();
+        $storageDevice->delete();
 
         return response()->json();
     }

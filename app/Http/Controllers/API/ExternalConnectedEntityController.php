@@ -51,11 +51,11 @@ class ExternalConnectedEntityController extends Controller
         return response()->json();
     }
 
-    public function destroy(ExternalConnectedEntity $externalconnectedentity)
+    public function destroy(ExternalConnectedEntity $externalConnectedEntity)
     {
         abort_if(Gate::denies('external_connected_entity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $externalconnectedentity->delete();
+        $externalConnectedEntity->delete();
 
         return response()->json();
     }

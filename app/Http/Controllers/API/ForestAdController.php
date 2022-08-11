@@ -51,11 +51,11 @@ class ForestAdController extends Controller
         return response()->json();
     }
 
-    public function destroy(ForestAd $forestad)
+    public function destroy(ForestAd $forestAd)
     {
         abort_if(Gate::denies('forestad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $forestad->delete();
+        $forestAd->delete();
 
         return response()->json();
     }

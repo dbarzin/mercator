@@ -51,11 +51,11 @@ class ApplicationModuleController extends Controller
         return response()->json();
     }
 
-    public function destroy(ApplicationModule $applicationmodule)
+    public function destroy(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationmodule->delete();
+        $applicationModule->delete();
 
         return response()->json();
     }

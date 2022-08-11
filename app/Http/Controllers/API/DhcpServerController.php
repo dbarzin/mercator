@@ -51,11 +51,11 @@ class DhcpServerController extends Controller
         return response()->json();
     }
 
-    public function destroy(DhcpServer $dhcpserver)
+    public function destroy(DhcpServer $dhcpServer)
     {
         abort_if(Gate::denies('dhcp_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dhcpserver->delete();
+        $dhcpServer->delete();
 
         return response()->json();
     }
