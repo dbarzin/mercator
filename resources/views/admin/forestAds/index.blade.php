@@ -54,9 +54,11 @@
                                 {!! $forestAd->description ?? '' !!}
                             </td>
                             <td>
+                                @if ($forestAd->zone_admin!=null)
                                 <a href="{{ route('admin.zone-admins.show', $forestAd->zone_admin->id) }}">
                                     {{ $forestAd->zone_admin->name ?? '' }}
                                 </a>
+                                @nedif
                             </td>
                             <td>
                                 @foreach($forestAd->domaines as $domain)
