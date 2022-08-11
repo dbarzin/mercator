@@ -38,11 +38,11 @@ class ApplicationBlockController extends Controller
         return new ApplicationBlockResource($applicationblock);
     }
 
-    public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationblock)
+    public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationBlock)
     {
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationblock->update($request->all());
+        $applicationBlock->update($request->all());
 
         return response()->json();
     }

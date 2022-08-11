@@ -40,13 +40,13 @@ class WifiTerminalController extends Controller
         return new WifiTerminalResource($wifiterminal);
     }
 
-    public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiterminal)
+    public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
     {
         abort_if(Gate::denies('wifiterminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wifiterminal->update($request->all());
+        $wifiTerminal->update($request->all());
         // syncs
-        // $wifiterminal->roles()->sync($request->input('roles', []));
+        // $wifiTerminal->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

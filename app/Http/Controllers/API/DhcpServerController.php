@@ -40,13 +40,13 @@ class DhcpServerController extends Controller
         return new DhcpServerResource($dhcpserver);
     }
 
-    public function update(UpdateDhcpServerRequest $request, DhcpServer $dhcpserver)
+    public function update(UpdateDhcpServerRequest $request, DhcpServer $dhcpServer)
     {
         abort_if(Gate::denies('dhcp_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dhcpserver->update($request->all());
+        $dhcpServer->update($request->all());
         // syncs
-        // $dhcpserver->roles()->sync($request->input('roles', []));
+        // $dhcpServer->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

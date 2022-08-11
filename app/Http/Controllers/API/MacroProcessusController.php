@@ -45,13 +45,13 @@ class MacroProcessusController extends Controller
         return new MacroProcessusResource($macroprocessus);
     }
 
-    public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroprocessus)
+    public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
     {     
         abort_if(Gate::denies('macroprocessus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroprocessus->update($request->all());
+        $macroProcessus->update($request->all());
         // syncs
-        // $macroprocessus->roles()->sync($request->input('roles', []));
+        // $macroProcessus->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

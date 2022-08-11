@@ -40,13 +40,13 @@ class NetworkSwitchController extends Controller
         return new NetworkSwitchResource($networkswitch);
     }
 
-    public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkswitch)
+    public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
         abort_if(Gate::denies('networkswitch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $networkswitch->update($request->all());
+        $networkSwitch->update($request->all());
         // syncs
-        // $networkswitch->roles()->sync($request->input('roles', []));
+        // $networkSwitch->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
