@@ -33,11 +33,11 @@ class SecurityDeviceController extends Controller
         return response()->json($securitydevice, 201);
     }
 
-    public function show(SecurityDevice $securitydevice)
+    public function show(SecurityDevice $securityDevice)
     {
         abort_if(Gate::denies('securitydevice_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SecurityDeviceResource($securitydevice);
+        return new SecurityDeviceResource($securityDevice);
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)

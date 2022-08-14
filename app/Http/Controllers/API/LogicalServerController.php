@@ -34,13 +34,11 @@ class LogicalServerController extends Controller
         return response()->json($logicalServer, 201);
     }
 
-    public function show(int $id)
+    public function show(LogicalServer $logicalServer)
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalserver = LogicalServer::where('id', $id)->get();
-
-        return new LogicalServerResource($logicalserver);
+        return new LogicalServerResource($logicalServer);
     }
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)

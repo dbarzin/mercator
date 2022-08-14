@@ -33,11 +33,11 @@ class PhysicalRouterController extends Controller
         return response()->json($physicalrouter, 201);
     }
 
-    public function show(PhysicalRouter $physicalrouter)
+    public function show(PhysicalRouter $physicalRouter)
     {
         abort_if(Gate::denies('physical_router_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalRouterResource($physicalrouter);
+        return new PhysicalRouterResource($physicalRouter);
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalrouter)

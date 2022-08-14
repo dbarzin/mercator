@@ -33,11 +33,11 @@ class WifiTerminalController extends Controller
         return response()->json($wifiterminal, 201);
     }
 
-    public function show(WifiTerminal $wifiterminal)
+    public function show(WifiTerminal $wifiTerminal)
     {
         abort_if(Gate::denies('wifiterminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WifiTerminalResource($wifiterminal);
+        return new WifiTerminalResource($wifiTerminal);
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)

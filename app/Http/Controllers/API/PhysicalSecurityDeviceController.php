@@ -27,17 +27,15 @@ class PhysicalSecurityDeviceController extends Controller
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $device = PhysicalSecurityDevice::create($request->all());
-        // syncs
-        // $physicalsecuritydevice->roles()->sync($request->input('roles', []));
 
         return response()->json($device, 201);
     }
 
-    public function show(PhysicalSecurityDevice $physicalsecuritydevice)
+    public function show(PhysicalSecurityDevice $physicalSecurityDevice)
     {
         abort_if(Gate::denies('physical_security_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalSecurityDeviceResource($physicalsecuritydevice);
+        return new PhysicalSecurityDeviceResource($physicalSecurityDevice);
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
