@@ -31,11 +31,11 @@ class ApplicationBlockController extends Controller
         return response()->json($applicationblock, 201);
     }
 
-    public function show(ApplicationBlock $applicationblock)
+    public function show(ApplicationBlock $applicationBlock)
     {
         abort_if(Gate::denies('application_block_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationBlockResource($applicationblock);
+        return new ApplicationBlockResource($applicationBlock);
     }
 
     public function update(UpdateApplicationBlockRequest $request, ApplicationBlock $applicationBlock)

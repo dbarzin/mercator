@@ -33,11 +33,11 @@ class PhysicalSwitchController extends Controller
         return response()->json($physicalswitch, 201);
     }
 
-    public function show(PhysicalSwitch $physicalswitch)
+    public function show(PhysicalSwitch $physicalSwitch)
     {
         abort_if(Gate::denies('physical_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalSwitchResource($physicalswitch);
+        return new PhysicalSwitchResource($physicalSwitch);
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)

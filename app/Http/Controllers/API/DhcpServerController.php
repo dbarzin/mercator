@@ -33,11 +33,11 @@ class DhcpServerController extends Controller
         return response()->json($dhcpserver, 201);
     }
 
-    public function show(DhcpServer $dhcpserver)
+    public function show(DhcpServer $dhcpServer)
     {
         abort_if(Gate::denies('dhcp_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DhcpServerResource($dhcpserver);
+        return new DhcpServerResource($dhcpServer);
     }
 
     public function update(UpdateDhcpServerRequest $request, DhcpServer $dhcpServer)

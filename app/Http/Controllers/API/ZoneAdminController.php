@@ -33,11 +33,11 @@ class ZoneAdminController extends Controller
         return response()->json($zoneadmin, 201);
     }
 
-    public function show(ZoneAdmin $zoneadmin)
+    public function show(ZoneAdmin $zoneAdmin)
     {
         abort_if(Gate::denies('zoneadmin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ZoneAdminResource($zoneadmin);
+        return new ZoneAdminResource($zoneAdmin);
     }
 
     public function update(UpdateZoneAdminRequest $request, ZoneAdmin $zoneAdmin)

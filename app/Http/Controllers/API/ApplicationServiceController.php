@@ -33,11 +33,11 @@ class ApplicationServiceController extends Controller
         return response()->json($applicationService, 201);
     }
 
-    public function show(ApplicationService $applicationservice)
+    public function show(ApplicationService $applicationService)
     {
         abort_if(Gate::denies('applicationservice_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationServiceResource($applicationservice);
+        return new ApplicationServiceResource($applicationService);
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)

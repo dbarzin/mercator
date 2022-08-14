@@ -33,11 +33,11 @@ class ApplicationModuleController extends Controller
         return response()->json($applicationmodule, 201);
     }
 
-    public function show(ApplicationModule $applicationmodule)
+    public function show(ApplicationModule $applicationModule)
     {
         abort_if(Gate::denies('application_module_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ApplicationModuleResource($applicationmodule);
+        return new ApplicationModuleResource($applicationModule);
     }
 
     public function update(UpdateApplicationModuleRequest $request, ApplicationModule $applicationModule)
