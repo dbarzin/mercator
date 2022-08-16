@@ -314,13 +314,13 @@ Backup the database
 
 or (Postgres)
 
-   pg_dump --exclude-table=users \
-   --exclude-table=roles \
-   --exclude-table=permissions \
-   --exclude-table=permission_role \
-   --exclude-table=role_user  \
-   --exclude-table=migrations  \
-   mercator > backup_mercator_data.sql
+    pg_dump --exclude-table=users \
+      --exclude-table=roles \
+      --exclude-table=permissions \
+      --exclude-table=permission_role \
+      --exclude-table=role_user  \
+      --exclude-table=migrations  \
+      mercator > backup_mercator_data.sql
 
 Then backup database users
 
@@ -332,9 +332,9 @@ Then backup database users
 
 or (Postgres):
 
-   pg_dump --clean \
-   -t users -t roles -t role_user \
-   > backup_mercator_users.sql
+    pg_dump --clean \
+      -t users -t roles -t role_user \
+      > backup_mercator_users.sql
 
 Delete the Mercator database
 
@@ -358,7 +358,7 @@ Restore the data and fix errors
 
 or (Postgres)
 
-   psql mercator < backup_mercator_data.sql
+    psql mercator < backup_mercator_data.sql
 
 Restore users
 
@@ -366,7 +366,7 @@ Restore users
 
 or (Postgres)
 
-   psql mercator < backup_mercator_users.sql
+    psql mercator < backup_mercator_users.sql
 
 All migration issues should be resolved.
 
