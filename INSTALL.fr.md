@@ -112,7 +112,7 @@ Pour importer la base de données de test (facultatif)
 
 ou (Postgres):
 
-   psql mercator < pg_mercator_data.sql
+    psql mercator < pg_mercator_data.sql
 
 Démarrer l'application avec php
 
@@ -310,13 +310,13 @@ Sauvegarder la base de données
 
 ou (Postgres) :
 
-   pg_dump --exclude-table=users \
-   --exclude-table=roles \
-   --exclude-table=permissions \
-   --exclude-table=permission_role \
-   --exclude-table=role_user  \
-   --exclude-table=migrations  \
-   mercator > backup_mercator_data.sql
+    pg_dump --exclude-table=users \
+      --exclude-table=roles \
+      --exclude-table=permissions \
+      --exclude-table=permission_role \
+      --exclude-table=role_user  \
+      --exclude-table=migrations  \
+      mercator > backup_mercator_data.sql
 
 Then backup database users
 
@@ -327,9 +327,9 @@ Then backup database users
 
 ou (Postgres):
 
-   pg_dump --clean \
-   -t users -t roles -t role_user \
-   > backup_mercator_users.sql
+    pg_dump --clean \
+      -t users -t roles -t role_user \
+      > backup_mercator_users.sql
    
 Supprimer la base de données de Mercator
 
@@ -337,7 +337,7 @@ Supprimer la base de données de Mercator
 
 ou (Postgres)
 
-   dropdb mercator
+    dropdb mercator
    
 Créer une nouvelle base de données
 
@@ -345,7 +345,7 @@ Créer une nouvelle base de données
 
 ou (Postgres)
 
-   createdb mercator
+    createdb mercator
 
 Exécuter les migrations
 
@@ -361,7 +361,7 @@ Restaurer les données
 
 ou (Postgres)
 
-   psql mercator < backup_mercator_data.sql
+    psql mercator < backup_mercator_data.sql
 
 Restaurer les utilisateurs
 
@@ -369,6 +369,6 @@ Restaurer les utilisateurs
 
 ou (Postgres)
 
-   psql mercator < backup_mercator_users.sql
+    psql mercator < backup_mercator_users.sql
 
 Tous les problèmes de migration devraient être résolus.
