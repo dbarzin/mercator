@@ -31,18 +31,18 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macroprocessus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroprocessus = MacroProcessus::create($request->all());
+        $macroProcessus = MacroProcessus::create($request->all());
         // syncs
         // $macroprocessus->roles()->sync($request->input('roles', []));
 
-        return response()->json($macroprocessus, 201);
+        return response()->json($macroProcessus, 201);
     }
 
     public function show(MacroProcessus $macroProcessus)
     {
         abort_if(Gate::denies('macroprocessus_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MacroProcessusResource($macroprocessus);
+        return new MacroProcessusResource($macroProcessus);
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
