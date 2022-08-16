@@ -248,7 +248,7 @@ Avant de mettre à jour l'application prenez un backup de la base de données et
 
 ou (Postgres)
 
-   pg_dump mercator > mercator_backup.sql
+    pg_dump mercator > mercator_backup.sql
 
 Récupérer les sources de GIT
 
