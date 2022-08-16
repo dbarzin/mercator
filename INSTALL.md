@@ -82,7 +82,7 @@ Put the connection parameters to the database :
 
     ## .env file
     DB_CONNECTION=mysql
-    # DB_CONNECTION=pgsql
+    # DB_CONNECTION=pgsql.env
     DB_HOST=127.0.0.1
     DB_PORT=3306
     # Comment DB_PORT for pgsql
@@ -247,7 +247,7 @@ Before updating the application take a backup of the database and the project.
 
 or (Postgres)
 
-   pg_dump mercator > mercator_backup.sql
+    pg_dump mercator > mercator_backup.sql
 
 Get the sources from GIT
 
