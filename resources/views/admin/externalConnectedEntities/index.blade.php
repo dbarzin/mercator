@@ -58,7 +58,9 @@
                             </td>
                             <td>
                                 @if ($externalConnectedEntity->entity!=null)
-                                {{ $externalConnectedEntity->entity->name }}
+                                    <a href="{{ route('admin.entities.show', $externalConnectedEntity->entity->id) }}">
+                                        {{ $externalConnectedEntity->entity->name }}
+                                    </a>
                                 @endif
                             </td>                            
                             <td>
@@ -66,7 +68,9 @@
                             </td>                            
                             <td>
                                 @if($externalConnectedEntity->network!=null)
-                                    {{ $externalConnectedEntity->network->name }}
+                                    <a href="{{ route('admin.networks.show', $externalConnectedEntity->network->id) }}">
+                                        {{ $externalConnectedEntity->network->name }}
+                                    </a>
                                 @endif
                             </td>
                             <td>

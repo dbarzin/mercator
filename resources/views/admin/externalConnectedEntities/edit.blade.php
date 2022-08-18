@@ -155,6 +155,17 @@
 @section('scripts')
 <script>
 $(document).ready(function () {
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: []
+      }
+    );
+  }
+});
+
+$(document).ready(function () {
   $(".select2-free").select2({
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
