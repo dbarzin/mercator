@@ -20,7 +20,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Dessiner un nouveu jeu d'icônes en SVG
 - [x] Revoir les pages de gestion des droits d'accès
 - [ ] Améliorer la documentation, notemment les niveaux de maturité pour chaque objet.
-- [ ] Mise à jour du framework Laravel vers la version suivante
+- [x] Mise à jour du framework Laravel vers la version suivante
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
@@ -41,4 +41,5 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Ajouter des fonctions de manipulation des graphes d'objets
 - [ ] schémas de l'infrastructure réseau physiqiue
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
+- [ ] Carte des actifs par rack, bâtiment/salle et site
 
