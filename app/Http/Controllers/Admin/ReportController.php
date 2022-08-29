@@ -1322,7 +1322,8 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.address_ip'),         // J
             trans('cruds.logicalServer.fields.configuration'),      // K
             trans('cruds.logicalServer.fields.applications'),       // L
-            trans('cruds.logicalServer.fields.servers'),            // M
+            trans('cruds.application.fields.application_block'),    // M 
+            trans('cruds.logicalServer.fields.servers'),            // N
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1346,6 +1347,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('N')->setAutoSize(true);
 
         // center (CPU, Men, Disk)
         $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -1370,7 +1372,9 @@ class ReportController extends Controller
             $sheet->setCellValue("J{$row}", $logicalServer->address_ip);
             $sheet->setCellValue("K{$row}", $html->toRichTextObject($logicalServer->configuration));
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
-            $sheet->setCellValue("M{$row}", $logicalServer->servers->implode('name', ', '));
+	    $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !=null ? 
+		    ($logicalServer->applications->first()->application_block !=null ? $logicalServer->applications->first()->application_block->name : "") : "");
+            $sheet->setCellValue("N{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
         }
