@@ -265,6 +265,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography'])->name('report.cartography');
     Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp'])->name('report.logicalServerResp');
+    Route::get('report/externalAccess', [Admin\ReportController::class,'externalAccess'])->name('report.externalAccess');
 
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');

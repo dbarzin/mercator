@@ -19,7 +19,6 @@ use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
-use App\ExternalConnectedEntity;
 use App\Flux;
 // Administration
 use App\ForestAd;
@@ -27,10 +26,11 @@ use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Information;
 // Logique
+use App\ExternalConnectedEntity;
+use App\Network;
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\MApplication;
-use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
@@ -1301,6 +1301,75 @@ class ReportController extends Controller
 
         return response()->download($path);
     }
+
+    // TODO : i18n
+    public function externalAccess()
+    {
+        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.xlsx');
+
+        $accesses = ExternalConnectedEntity::All()->sortBy('name');
+        $accesses->load('entity', 'network');
+
+	$header = [
+		'Nom',
+        	'Type',
+                'Entité',
+                'Description',
+                'Contact',
+                'Justification',
+                'Contact technique',
+                'Réseau',
+                'Source IP',
+                'Dest IP'
+        ];
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+	$sheet->fromArray([$header], null, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // Widths
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setWidth(150, 'pt'); // description
+        $sheet->getColumnDimension('E')->setWidth(150, 'pt'); // description
+        $sheet->getColumnDimension('F')->setWidth(150, 'pt');
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+
+        // converter
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($accesses as $access) {
+            $sheet->setCellValue("A{$row}", $access->name);
+            $sheet->setCellValue("B{$row}", $access->type);
+            $sheet->setCellValue("C{$row}", $access->entity ? $access->entity->name : "");
+            $sheet->setCellValue("D{$row}", $access->entity ? $html->toRichTextObject($access->entity->description) : "");
+            $sheet->setCellValue("E{$row}", $access->entity ? $html->toRichTextObject($access->entity->contact_point) : "");
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($access->description));
+            $sheet->setCellValue("G{$row}", $access->contacts);
+            $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : "");
+            $sheet->setCellValue("I{$row}", $access->src);
+            $sheet->setCellValue("J{$row}", $access->dest);
+
+            $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+
+	return;
+    }
+
 
     public function logicalServerConfigs()
     {
