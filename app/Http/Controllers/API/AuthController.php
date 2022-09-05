@@ -28,7 +28,7 @@ class AuthController extends Controller
         ]);
 
         // if (! auth()->attempt($loginData)) {
-        if (!auth()->attempt($this->credentials($request))) {
+        if (! auth()->attempt($this->credentials($request))) {
             return response(['message' => 'This user does not exist, check your details'], 400);
         }
         error_log('LOGIN - User: '. json_encode(auth()->user()));

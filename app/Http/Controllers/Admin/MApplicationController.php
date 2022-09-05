@@ -68,11 +68,13 @@ class MApplicationController extends Controller
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
 
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
-        $res=[];
-        foreach($responsible_list as $i)
-            foreach(explode(",",$i) as $j)    
-                $res[]=trim($j);
-        $responsible_list=array_unique($res);
+        $res = [];
+        foreach ($responsible_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                $res[] = trim($j);
+            }
+        }
+        $responsible_list = array_unique($res);
 
         $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
@@ -102,7 +104,7 @@ class MApplicationController extends Controller
 
     public function store(StoreMApplicationRequest $request)
     {
-        $request->merge(['responsible' => implode(", ",$request->responsibles!=null ? $request->responsibles : array())]);
+        $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
         $application = MApplication::create($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
@@ -136,13 +138,15 @@ class MApplicationController extends Controller
         $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
         $users_list = MApplication::select('users')->where('users', '<>', null)->distinct()->orderBy('users')->pluck('users');
         $external_list = MApplication::select('external')->where('external', '<>', null)->distinct()->orderBy('external')->pluck('external');
-        
+
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
-        $res=[];
-        foreach($responsible_list as $i)
-            foreach(explode(",",$i) as $j)    
-                $res[]=trim($j);
-        $responsible_list=array_unique($res);
+        $res = [];
+        foreach ($responsible_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                $res[] = trim($j);
+            }
+        }
+        $responsible_list = array_unique($res);
 
         $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
@@ -176,8 +180,8 @@ class MApplicationController extends Controller
     }
 
     public function update(UpdateMApplicationRequest $request, MApplication $application)
-    { 
-        $application->responsible=implode(", ",$request->responsibles!=null ? $request->responsibles : array());
+    {
+        $application->responsible = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
         $application->update($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));

@@ -22,7 +22,6 @@ Auth::routes(['register' => false]);
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
-
     // Dashboard
     Route::get('/', [Admin\HomeController::class,'index'])->name('home');
 

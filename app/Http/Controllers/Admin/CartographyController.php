@@ -58,11 +58,11 @@ use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 // PhpOffice
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\Shared\Html;
 // Log
-use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpWord\Shared\Html;
 
 class CartographyController extends Controller
 {
@@ -1235,7 +1235,7 @@ class CartographyController extends Controller
 
             foreach ($externalConnectedEntities as $entity) {
                 $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
-                if ($entity->network_id != null) {
+                if ($entity->network_id !== null) {
                     $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
                 }
             }
@@ -1456,7 +1456,7 @@ class CartographyController extends Controller
                     $table = $this->addTable($section, $entity->name);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.entity'));
-                    if ($entity->entity_id!=null) {
+                    if ($entity->entity_id !== null) {
                         $textRun->addLink('ENTITY'.$entity->entity->id, $entity->entity->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
 
@@ -1464,7 +1464,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.contacts'), $entity->contacts);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.network'));
-                    if ($entity->network_id!=null) {
+                    if ($entity->network_id !== null) {
                         $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src);
@@ -2295,9 +2295,8 @@ class CartographyController extends Controller
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
         try {
             \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
-        }
-        catch (\Exception $e) {
-            Log::error("CartographyController - Invalid HTML " . $value);
+        } catch (\Exception $e) {
+            Log::error('CartographyController - Invalid HTML ' . $value);
         }
     }
 
@@ -2312,7 +2311,6 @@ class CartographyController extends Controller
     // Generate the image of the graph from a dot notation using GraphViz
     private function generateGraphImage(string $graph)
     {
-
         // Save it to a file
         $dot_path = tempnam('/tmp', 'dot');
         $dot_file = fopen($dot_path, 'w');

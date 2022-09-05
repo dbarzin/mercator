@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $contact_point
  * @property string|null $description
  * @property string|null $entity_type
- * @property boolean|false $is_external
+ * @property bool|false $is_external
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at

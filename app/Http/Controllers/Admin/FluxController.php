@@ -59,7 +59,7 @@ class FluxController extends Controller
 
     public function store(StoreFluxRequest $request)
     {
-        $flux = Flux::create($request->all());
+        Flux::create($request->all());
 
         return redirect()->route('admin.fluxes.index');
     }

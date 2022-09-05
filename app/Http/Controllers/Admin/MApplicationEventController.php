@@ -30,7 +30,6 @@ class MApplicationEventController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -40,7 +39,6 @@ class MApplicationEventController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -74,7 +72,6 @@ class MApplicationEventController extends Controller
      */
     public function show(MApplicationEvent $mApplicationEvent)
     {
-        
     }
 
     /**
@@ -86,7 +83,6 @@ class MApplicationEventController extends Controller
      */
     public function edit(MApplicationEvent $mApplicationEvent)
     {
-        
     }
 
     /**
@@ -99,7 +95,6 @@ class MApplicationEventController extends Controller
      */
     public function update(Request $request, MApplicationEvent $mApplicationEvent)
     {
-        
     }
 
     /**

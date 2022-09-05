@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\MacroProcessus;
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
-use App\Http\Requests\MassDestroyMacroProcessusRequest;
 use App\Http\Resources\Admin\MacroProcessusResource;
-
+use App\MacroProcessus;
 use Gate;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use Illuminate\Support\Facades\Log;
 
 class MacroProcessusController extends Controller
 {
     public function index()
     {
-    abort_if(Gate::denies('macroprocessus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macroprocessus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    $macroprocessuss = MacroProcessus::all();
+        $macroprocessuss = MacroProcessus::all();
 
-    return response()->json($macroprocessuss);
+        return response()->json($macroprocessuss);
     }
 
     public function store(StoreMacroProcessusRequest $request)
@@ -46,7 +41,7 @@ class MacroProcessusController extends Controller
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
-    {     
+    {
         abort_if(Gate::denies('macroprocessus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus->update($request->all());
@@ -71,6 +66,4 @@ class MacroProcessusController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }
-

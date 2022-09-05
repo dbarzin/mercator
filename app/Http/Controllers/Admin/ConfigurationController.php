@@ -77,7 +77,7 @@ class ConfigurationController extends Controller
                 ];
 
                 // En-têtes additionnels
-                if (mail($mail_to, "=?UTF-8?B?" . base64_encode($mail_subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                if (mail($mail_to, '=?UTF-8?B?' . base64_encode($mail_subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
                 } else {
                     $msg = 'Email sending fail.';
@@ -117,7 +117,7 @@ class ConfigurationController extends Controller
     /*
     * Save the CVE configuration
     */
-    public function saveCVEConfig(Request $request) 
+    public function saveCVEConfig(Request $request)
     {
         abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -156,24 +156,22 @@ class ConfigurationController extends Controller
                 ];
 
                 // En-têtes additionnels
-                if (mail($mail_to, "=?UTF-8?B?" . base64_encode($mail_subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                if (mail($mail_to, '=?UTF-8?B?' . base64_encode($mail_subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     $msg = 'Mail sent to '.$mail_to;
                 } else {
                     $msg = 'Email sending fail.';
                 }
                 break;
             case 'test_provider':
-    
-                $client = curl_init($provider . "/api/dbInfo");
-                curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+                $client = curl_init($provider . '/api/dbInfo');
+                curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($client);
-                if ($response == false) {
-                    $msg = "Could not connect to provider";
-                }
-                else {
+                if ($response === false) {
+                    $msg = 'Could not connect to provider';
+                } else {
                     $json = json_decode($response);
-                    $msg = "Provider last update : " . $json->cves->last_update . " size = " . $json->cves->size;
-                    }
+                    $msg = 'Provider last update : ' . $json->cves->last_update . ' size = ' . $json->cves->size;
+                }
                 break;
 
             default:
@@ -182,8 +180,7 @@ class ConfigurationController extends Controller
         return view(
             'admin.config.cve',
             compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'provider')
-            )
+        )
             ->withErrors($msg);
-        }
-
+    }
 }

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Log SQL queries
         /*
-        if (env('APP_DEBUG')) 
+        if (env('APP_DEBUG'))
         {
             \DB::listen(function ($query) {
                 \Log::info($query->time . ':' . $query->sql);

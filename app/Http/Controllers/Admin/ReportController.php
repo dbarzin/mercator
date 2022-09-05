@@ -19,18 +19,18 @@ use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
-use App\Flux;
+use App\ExternalConnectedEntity;
 // Administration
+use App\Flux;
 use App\ForestAd;
 use App\Gateway;
 use App\Http\Controllers\Controller;
-use App\Information;
 // Logique
-use App\ExternalConnectedEntity;
-use App\Network;
+use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\MApplication;
+use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
@@ -61,56 +61,57 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReportController extends Controller
 {
-    const ALLOWED_PERIMETERS  = ['All','Internes','Externes'];
-    const SANITIZED_PERIMETER = 'All';
+    public const ALLOWED_PERIMETERS = ['All','Internes','Externes'];
+    public const SANITIZED_PERIMETER = 'All';
 
     public function ecosystem(Request $request)
     {
-        $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ? 
+        $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ?
                    $request->perimeter : $this::SANITIZED_PERIMETER;
         $typefilter = $request->entity_type ??= 'All';
-        
-        $entitiesGroups  = Entity::All()->groupBy('entity_type');
+
+        $entitiesGroups = Entity::All()->groupBy('entity_type');
         $entities = collect([]);
-        $entityTypes =  collect([]);
+        $entityTypes = collect([]);
         $isTypeExists = false; /* sanitize entity_type: si type inconnu pas d'entités*/
-        foreach($entitiesGroups as $entity_type => $entOfGroup)
-        {
+        foreach ($entitiesGroups as $entity_type => $entOfGroup) {
             $entities = $entities->concat($entOfGroup);
-            if ($entity_type != null) {
-                $isTypeExists = $isTypeExists ||  ($entity_type ==  $typefilter);
+            if ($entity_type !== null) {
+                $isTypeExists = $isTypeExists || ($entity_type === $typefilter);
                 $entityTypes->push($entity_type);
             }
         }
 
         $has_filter = false;
-        if ($typefilter != 'All'  ) {
+        if ($typefilter !== 'All') {
             $has_filter = true;
-            $entities = $isTypeExists  ? $entitiesGroups[$typefilter] : collect([]);
+            $entities = $isTypeExists ? $entitiesGroups[$typefilter] : collect([]);
         }
-        
-        if ($perimeter != 'All') {
+
+        if ($perimeter !== 'All') {
             $has_filter = true;
             $entities = $entities
-                      ->filter(function ($item)  use ($perimeter){
-                          return ('Externes' == $perimeter) ?
-                                             $item->is_external : (! $item->is_external);
-                      });
+                ->filter(function ($item) use ($perimeter) {
+                    return $perimeter === 'Externes' ?
+                                       $item->is_external : ! $item->is_external;
+                });
         }
-        
+
         $relations = Relation::All()->sortBy('name');
-        if ($has_filter){
+        if ($has_filter) {
             /**
              * Le "group by" semble résoudre les entités on doit travailler avec les ids ..
              */
-            $ids = $entities->map(function ($item) {return $item->id;});
+            $ids = $entities->map(function ($item) {
+                return $item->id;
+            });
             $relations = $relations
-                       ->filter(function ($item)  use ($ids){
-                           return $ids->contains($item->source_id) &&
-                               $ids->contains($item->destination_id);
-                       });
-	    }
-        
+                ->filter(function ($item) use ($ids) {
+                    return $ids->contains($item->source_id) &&
+                        $ids->contains($item->destination_id);
+                });
+        }
+
         $request->session()->put('perimeter', $perimeter);
         $request->session()->put('entity_type', $typefilter);
         return view('admin/reports/ecosystem')
@@ -413,12 +414,11 @@ class ReportController extends Controller
             ->with('applicationModules', $applicationModules)
             ->with('databases', $databases)
             ->with('fluxes', $fluxes)
-            ;
+        ;
     }
 
     public function applicationFlows(Request $request)
     {
-
         // Blocks
         if ($request->applicationBlocks === null) {
             $applicationBlocks = [];
@@ -578,7 +578,7 @@ class ReportController extends Controller
             ->with('applicationModules', $applicationModules)
             ->with('databases', $databases)
             ->with('flows', $flows)
-            ;
+        ;
     }
 
     public function logicalInfrastructure(Request $request)
@@ -606,10 +606,11 @@ class ReportController extends Controller
                 $subnetwork = $request->session()->get('subnetwork');
             }
         }
-        if ($request->has("show_ip")) 
-            $request->session()->put("show_ip",true);
-        else
-            $request->session()->put("show_ip", null);
+        if ($request->has('show_ip')) {
+            $request->session()->put('show_ip', true);
+        } else {
+            $request->session()->put('show_ip', null);
+        }
 
         $all_networks = Network::All()->sortBy('name')->pluck('name', 'id');
         if ($network !== null) {
@@ -1012,7 +1013,7 @@ class ReportController extends Controller
             ->with('physicalRouters', $physicalRouters)
             ->with('wifiTerminals', $wifiTerminals)
             ->with('physicalSecurityDevices', $physicalSecurityDevices)
-            ;
+        ;
     }
 
     public function administration()
@@ -1069,7 +1070,7 @@ class ReportController extends Controller
         foreach ($entities as $entity) {
             $sheet->setCellValue("A{$row}", $entity->name);
             $sheet->setCellValue("B{$row}", $html->toRichTextObject($entity->description));
-            $sheet->setCellValue("C{$row}", $entity->is_external ? trans('global.yes') : trans('global.no') );
+            $sheet->setCellValue("C{$row}", $entity->is_external ? trans('global.yes') : trans('global.no'));
             $sheet->setCellValue("D{$row}", $entity->entity_type);
             $sheet->setCellValue("E{$row}", $html->toRichTextObject($entity->security_level));
             $sheet->setCellValue("F{$row}", $html->toRichTextObject($entity->contact_point));
@@ -1202,16 +1203,28 @@ class ReportController extends Controller
                     }
                 }
                 */
-                $res = DB::Table("physical_servers")
+                $res = DB::Table('physical_servers')
                     ->distinct()
                     ->select('physical_servers.name')
-                    ->leftJoin('logical_server_physical_server',
-                        'physical_servers.id','=','logical_server_physical_server.physical_server_id')
-                    ->leftJoin('logical_servers', 
-                        'logical_servers.id', '=', 'logical_server_physical_server.logical_server_id')
-                    ->leftJoin('logical_server_m_application',
-                        'logical_server_m_application.logical_server_id','=','logical_servers.id')
-                    ->where('logical_server_m_application.m_application_id','=',$application->id)
+                    ->leftJoin(
+                        'logical_server_physical_server',
+                        'physical_servers.id',
+                        '=',
+                        'logical_server_physical_server.physical_server_id'
+                    )
+                    ->leftJoin(
+                        'logical_servers',
+                        'logical_servers.id',
+                        '=',
+                        'logical_server_physical_server.logical_server_id'
+                    )
+                    ->leftJoin(
+                        'logical_server_m_application',
+                        'logical_server_m_application.logical_server_id',
+                        '=',
+                        'logical_servers.id'
+                    )
+                    ->where('logical_server_m_application.m_application_id', '=', $application->id)
                     ->orderBy('physical_servers.name')
                     ->get()
                     ->implode('name', ', ');
@@ -1321,7 +1334,7 @@ class ReportController extends Controller
             trans('cruds.externalConnectedEntity.fields.network'),
             trans('cruds.externalConnectedEntity.fields.src'),
             trans('cruds.externalConnectedEntity.fields.dest'),
-           ];
+        ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -1350,12 +1363,12 @@ class ReportController extends Controller
         foreach ($accesses as $access) {
             $sheet->setCellValue("A{$row}", $access->name);
             $sheet->setCellValue("B{$row}", $access->type);
-            $sheet->setCellValue("C{$row}", $access->entity ? $access->entity->name : "");
-            $sheet->setCellValue("D{$row}", $access->entity ? $html->toRichTextObject($access->entity->description) : "");
-            $sheet->setCellValue("E{$row}", $access->entity ? $html->toRichTextObject($access->entity->contact_point) : "");
+            $sheet->setCellValue("C{$row}", $access->entity ? $access->entity->name : '');
+            $sheet->setCellValue("D{$row}", $access->entity ? $html->toRichTextObject($access->entity->description) : '');
+            $sheet->setCellValue("E{$row}", $access->entity ? $html->toRichTextObject($access->entity->contact_point) : '');
             $sheet->setCellValue("F{$row}", $html->toRichTextObject($access->description));
             $sheet->setCellValue("G{$row}", $access->contacts);
-            $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : "");
+            $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : '');
             $sheet->setCellValue("I{$row}", $access->src);
             $sheet->setCellValue("J{$row}", $access->dest);
 
@@ -1367,9 +1380,8 @@ class ReportController extends Controller
 
         return response()->download($path);
 
-	return;
+        return;
     }
-
 
     public function logicalServerConfigs()
     {
@@ -1391,7 +1403,7 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.address_ip'),         // J
             trans('cruds.logicalServer.fields.configuration'),      // K
             trans('cruds.logicalServer.fields.applications'),       // L
-            trans('cruds.application.fields.application_block'),    // M 
+            trans('cruds.application.fields.application_block'),    // M
             trans('cruds.logicalServer.fields.servers'),            // N
         ];
 
@@ -1441,8 +1453,8 @@ class ReportController extends Controller
             $sheet->setCellValue("J{$row}", $logicalServer->address_ip);
             $sheet->setCellValue("K{$row}", $html->toRichTextObject($logicalServer->configuration));
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
-	    $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !=null ? 
-		    ($logicalServer->applications->first()->application_block !=null ? $logicalServer->applications->first()->application_block->name : "") : "");
+            $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
+                ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
             $sheet->setCellValue("N{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
@@ -1739,7 +1751,6 @@ class ReportController extends Controller
 
     private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null)
     {
-
         // PhysicalServer
         if ($bay !== null) {
             $physicalServers = PhysicalServer::where('bay_id', '=', $bay->id)->orderBy('name')->get();
@@ -1988,7 +1999,6 @@ class ReportController extends Controller
         ?Database $database = null,
         ?Information $information = null
     ) {
-
         // Macroprocessus
         $sheet->setCellValue("A{$row}", $macroprocess->name);
 

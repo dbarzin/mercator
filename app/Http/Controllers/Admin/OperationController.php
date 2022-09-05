@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Activity;
 use App\Actor;
-use App\Operation;
-use App\Process;
-use App\Task;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyOperationRequest;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
+use App\Operation;
+use App\Process;
+use App\Task;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,8 +34,10 @@ class OperationController extends Controller
         $tasks = Task::all()->sortBy('nom')->pluck('nom', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.operations.create', 
-            compact('processes', 'actors', 'tasks', 'activities'));
+        return view(
+            'admin.operations.create',
+            compact('processes', 'actors', 'tasks', 'activities')
+        );
     }
 
     public function store(StoreOperationRequest $request)
@@ -60,8 +61,10 @@ class OperationController extends Controller
 
         $operation->load('actors', 'tasks', 'activities');
 
-        return view('admin.operations.edit', 
-            compact('processes', 'actors', 'tasks', 'operation', 'activities'));
+        return view(
+            'admin.operations.edit',
+            compact('processes', 'actors', 'tasks', 'operation', 'activities')
+        );
     }
 
     public function update(UpdateOperationRequest $request, Operation $operation)
