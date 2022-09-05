@@ -19,7 +19,6 @@ use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
-use App\ExternalConnectedEntity;
 use App\Flux;
 // Administration
 use App\ForestAd;
@@ -27,10 +26,11 @@ use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Information;
 // Logique
+use App\ExternalConnectedEntity;
+use App\Network;
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\MApplication;
-use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
@@ -1302,6 +1302,75 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+    // TODO : i18n
+    public function externalAccess()
+    {
+        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.xlsx');
+
+        $accesses = ExternalConnectedEntity::All()->sortBy('name');
+        $accesses->load('entity', 'network');
+
+	$header = [
+		'Nom',
+        	'Type',
+                'Entité',
+                'Description',
+                'Contact',
+                'Justification',
+                'Contact technique',
+                'Réseau',
+                'Source IP',
+                'Dest IP'
+        ];
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+	$sheet->fromArray([$header], null, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // Widths
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setWidth(150, 'pt'); // description
+        $sheet->getColumnDimension('E')->setWidth(150, 'pt'); // description
+        $sheet->getColumnDimension('F')->setWidth(150, 'pt');
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+
+        // converter
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($accesses as $access) {
+            $sheet->setCellValue("A{$row}", $access->name);
+            $sheet->setCellValue("B{$row}", $access->type);
+            $sheet->setCellValue("C{$row}", $access->entity ? $access->entity->name : "");
+            $sheet->setCellValue("D{$row}", $access->entity ? $html->toRichTextObject($access->entity->description) : "");
+            $sheet->setCellValue("E{$row}", $access->entity ? $html->toRichTextObject($access->entity->contact_point) : "");
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($access->description));
+            $sheet->setCellValue("G{$row}", $access->contacts);
+            $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : "");
+            $sheet->setCellValue("I{$row}", $access->src);
+            $sheet->setCellValue("J{$row}", $access->dest);
+
+            $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+
+	return;
+    }
+
+
     public function logicalServerConfigs()
     {
         $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
@@ -1322,7 +1391,8 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.address_ip'),         // J
             trans('cruds.logicalServer.fields.configuration'),      // K
             trans('cruds.logicalServer.fields.applications'),       // L
-            trans('cruds.logicalServer.fields.servers'),            // M
+            trans('cruds.application.fields.application_block'),    // M 
+            trans('cruds.logicalServer.fields.servers'),            // N
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1346,6 +1416,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('N')->setAutoSize(true);
 
         // center (CPU, Men, Disk)
         $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -1370,7 +1441,9 @@ class ReportController extends Controller
             $sheet->setCellValue("J{$row}", $logicalServer->address_ip);
             $sheet->setCellValue("K{$row}", $html->toRichTextObject($logicalServer->configuration));
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
-            $sheet->setCellValue("M{$row}", $logicalServer->servers->implode('name', ', '));
+	    $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !=null ? 
+		    ($logicalServer->applications->first()->application_block !=null ? $logicalServer->applications->first()->application_block->name : "") : "");
+            $sheet->setCellValue("N{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
         }
