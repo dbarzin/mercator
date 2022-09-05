@@ -1229,9 +1229,9 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
-    public function logicalServerResp()
+    public function logicalServers()
     {
-        $path = storage_path('app/logicalServersResp-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.application_block');
@@ -1310,22 +1310,22 @@ class ReportController extends Controller
         $accesses = ExternalConnectedEntity::All()->sortBy('name');
         $accesses->load('entity', 'network');
 
-	$header = [
-		'Nom',
-        	'Type',
-                'Entité',
-                'Description',
-                'Contact',
-                'Justification',
-                'Contact technique',
-                'Réseau',
-                'Source IP',
-                'Dest IP'
-        ];
+        $header = [
+            trans('cruds.externalConnectedEntity.fields.name'),
+            trans('cruds.externalConnectedEntity.fields.type'),
+            trans('cruds.entity.fields.name'),
+            trans('cruds.entity.fields.description'),
+            trans('cruds.entity.fields.contact_point'),
+            trans('cruds.externalConnectedEntity.fields.description'),
+            trans('cruds.externalConnectedEntity.fields.contacts'),
+            trans('cruds.externalConnectedEntity.fields.network'),
+            trans('cruds.externalConnectedEntity.fields.src'),
+            trans('cruds.externalConnectedEntity.fields.dest'),
+           ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-	$sheet->fromArray([$header], null, 'A1');
+        $sheet->fromArray([$header], null, 'A1');
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -1335,8 +1335,8 @@ class ReportController extends Controller
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setWidth(150, 'pt'); // description
-        $sheet->getColumnDimension('E')->setWidth(150, 'pt'); // description
-        $sheet->getColumnDimension('F')->setWidth(150, 'pt');
+        $sheet->getColumnDimension('E')->setWidth(150, 'pt'); // contact point
+        $sheet->getColumnDimension('F')->setWidth(150, 'pt'); // reason
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);

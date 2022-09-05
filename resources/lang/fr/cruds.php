@@ -394,8 +394,8 @@ return [
             'name_helper' => '',
             'type' => 'Type',
             'type_helper' => 'Type de connexion (site2site, SSL ...)',
-            'description' => 'Description',
-            'description_helper' => "Description de la connexion avec l'entité",
+            'description' => 'Raison',
+            'description_helper' => "Raison de la connexion externe",
             'network' => 'Réseau connecté',
             'network_helper' => "Réseau interne connecté à l'entité",
             'entity' => 'Entité',
@@ -894,6 +894,8 @@ return [
             'maturity_helper' => 'Liste les niveaux de maturité atteints par les différents objets de la cartographie',
             'changes' => 'Mise à jour / changements',
             'changes_helper' => 'Trace les changements realisés sur la cartographie les 12 derniers mois',
+            'external_access' => 'Connexions externes', 
+            'external_access_helper' => 'Entités externes connectées au système d\'information'
         ],
     ],
     'role' => [

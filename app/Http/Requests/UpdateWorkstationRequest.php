@@ -18,13 +18,6 @@ class UpdateWorkstationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'min:3',
-                'max:32',
-                'required',
-                //'unique:workstations,name,' . request()->route('workstation')->id,
-                'unique:workstations,name,'.request()->route('workstation')->id.',id,deleted_at,NULL',
-            ],
         ];
     }
 }
