@@ -43,7 +43,9 @@
 
                             </td>
                             <td>
-                                {{ $networkSwitch->name ?? '' }}
+                                <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">
+                                    {{ $networkSwitch->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $networkSwitch->description ?? '' !!}

@@ -22,7 +22,6 @@ Auth::routes(['register' => false]);
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
-
     // Dashboard
     Route::get('/', [Admin\HomeController::class,'index'])->name('home');
 
@@ -264,7 +263,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory'])->name('report.physicalInventory');
     Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography'])->name('report.cartography');
-    Route::get('report/logicalServerResp', [Admin\ReportController::class,'logicalServerResp'])->name('report.logicalServerResp');
+    Route::get('report/logicalServers', [Admin\ReportController::class,'logicalServers'])->name('report.logicalServers');
     Route::get('report/externalAccess', [Admin\ReportController::class,'externalAccess'])->name('report.externalAccess');
 
     // Auditing

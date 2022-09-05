@@ -886,6 +886,12 @@ return [
             'security_needs' => 'Security needs analysis',
             'security_needs_helper' => 'List of security needs between macro-processes, processes, applications, database and information.',
             'title' => 'Lists',
+            'maturity' => 'Maturity levels',
+            'maturity_helper' => 'Lists the levels of maturity reached by the different objects',
+            'changes' => 'Update / Changes',
+            'changes_helper' => 'Traces the changes made on the cartography over the last 12 months',
+            'external_access' => 'External connctions', 
+            'external_access_helper' => 'External entities connected to the information system'
         ],
     ],
     'role' => [

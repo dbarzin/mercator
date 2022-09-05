@@ -25,7 +25,7 @@ class LogicalServerController extends Controller
 
     public function store(StoreLogicalServerRequest $request)
     {
-        Log::Debug("LogicalServerController:store Start");
+        Log::Debug('LogicalServerController:store Start');
 
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -33,14 +33,14 @@ class LogicalServerController extends Controller
         #$logicalServer->servers()->sync($request->input('servers', []));
         #$logicalServer->applications()->sync($request->input('applications', []));
 
-	Log::Debug("LogicalServerController:store Done");
+        Log::Debug('LogicalServerController:store Done');
 
         return response()->json($logicalServer, 201);
     }
 
     public function show(LogicalServer $logicalServer)
     {
-	abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new LogicalServerResource($logicalServer);
     }

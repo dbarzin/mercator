@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-
-use App\MApplication;
 
 class CVESearch extends Command
 {
@@ -36,33 +35,32 @@ class CVESearch extends Command
 
         if ($this->needCheck()) {
             Log::debug('CVESearch - no check needed');
-        }
-        else {
+        } else {
             // Check for CVE
             Log::debug('CVESearch - check');
 
             $provider = config('mercator-config.cve.provider');
             $check_frequency = config('mercator-config.cve.check-frequency');
 
-            $client = curl_init($provider . "/api/dbInfo");
-            curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+            $client = curl_init($provider . '/api/dbInfo');
+            curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($client);
-            if ($response == false) {
+            if ($response === false) {
                 Log::debug('CVESearch - Could not connect to provider');
                 return;
             }
 
             $json = json_decode($response);
-            Log::debug("CVESearch - Provider last update: " . $json->cwe->last_update . " size=" . $json->cwe->size);
+            Log::debug('CVESearch - Provider last update: ' . $json->cwe->last_update . ' size=' . $json->cwe->size);
 
-            $client = curl_init($provider . "/api/query");
-            curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
+            $client = curl_init($provider . '/api/query');
+            curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($client);
-            if ($response == false) {
+            if ($response === false) {
                 Log::debug('CVESearch - Could not query the provider');
                 return;
             }
-            
+
             $json = json_decode($response);
 
             // get application names in lowercase
@@ -70,13 +68,12 @@ class CVESearch extends Command
                 ->sortBy('name')
                 ->pluck('name')
                 ->map(function ($name) {
-                    return strtoLower($name);
+                    return strtolower($name);
                 });
 
-
             // start timestamp
-            $min_timestamp = strtotime(sprintf('-%d days', $check_frequency),strtotime("now"));
-            Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A',$min_timestamp));
+            $min_timestamp = strtotime(sprintf('-%d days', $check_frequency), strtotime('now'));
+            Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A', $min_timestamp));
 
             // CVE counters
             $cve_count = 0;
@@ -94,11 +91,11 @@ class CVESearch extends Command
                     // Log::debug('CVESearch - CVE summary ' . $cve->summary);
                     foreach ($names as $name) {
                         // Log::debug('CVESearch - check ' . $name);
-			    if (str_contains($cve->summary,$name)) {
+                        if (str_contains($cve->summary, $name)) {
                             $cve->application = $name;
-			    $cve_match[] = $cve;
-                            }
+                            $cve_match[] = $cve;
                         }
+                    }
                 }
             }
 
@@ -106,7 +103,6 @@ class CVESearch extends Command
 
             // compose message
             if (count($cve_match) > 0) {
-
                 // send email alert
                 $mail_from = config('mercator-config.cve.mail-from');
                 $to_email = config('mercator-config.cve.mail-to');
@@ -128,12 +124,11 @@ class CVESearch extends Command
                 Log::debug('CVESearch - '. $message);
 
                 // Send mail
-                if (mail($to_email, "=?UTF-8?B?" . base64_encode($subject) . "?=", $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
+                if (mail($to_email, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
                     Log::debug('Mail sent to '.$to_email);
                 } else {
                     Log::debug('Email sending fail.');
                 }
-
             }
         }
         Log::debug('CVESearch - DONE.');
@@ -148,7 +143,7 @@ class CVESearch extends Command
     {
         $check_frequency = config('mercator-config.cve.check-frequency');
 
-	Log::debug('CVESearch - check-frequency '. $check_frequency);
+        Log::debug('CVESearch - check-frequency '. $check_frequency);
 
         return // Daily
             ($check_frequency === 1) ||

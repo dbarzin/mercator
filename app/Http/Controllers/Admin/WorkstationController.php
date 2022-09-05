@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Workstation;
-use App\MApplication;
-use App\Site;
 use App\Building;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
-use Symfony\Component\HttpFoundation\Response;
-
+use App\MApplication;
+use App\Site;
+use App\Workstation;
 use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class WorkstationController extends Controller
 {
@@ -51,8 +49,10 @@ class WorkstationController extends Controller
             ->orderBy('cpu')
             ->pluck('cpu');
 
-        return view('admin.workstations.create', 
-            compact('sites', 'buildings','type_list','operating_system_list','cpu_list','application_list'));
+        return view(
+            'admin.workstations.create',
+            compact('sites', 'buildings', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+        );
     }
 
     public function store(StoreWorkstationRequest $request)
@@ -90,8 +90,10 @@ class WorkstationController extends Controller
 
         $workstation->load('site', 'building');
 
-        return view('admin.workstations.edit', 
-            compact('sites', 'buildings', 'workstation','type_list','operating_system_list','cpu_list','application_list'));
+        return view(
+            'admin.workstations.edit',
+            compact('sites', 'buildings', 'workstation', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+        );
     }
 
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)

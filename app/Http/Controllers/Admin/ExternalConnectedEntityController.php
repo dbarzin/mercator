@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entity;
 use App\ExternalConnectedEntity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyExternalConnectedEntityRequest;
 use App\Http\Requests\StoreExternalConnectedEntityRequest;
 use App\Http\Requests\UpdateExternalConnectedEntityRequest;
 use App\Network;
-use App\Entity;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,13 +32,15 @@ class ExternalConnectedEntityController extends Controller
 
         $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.externalConnectedEntities.create', 
-            compact('networks', 'entities', 'type_list'));
+        return view(
+            'admin.externalConnectedEntities.create',
+            compact('networks', 'entities', 'type_list')
+        );
     }
 
     public function store(StoreExternalConnectedEntityRequest $request)
     {
-        $externalConnectedEntity = ExternalConnectedEntity::create($request->all());
+        ExternalConnectedEntity::create($request->all());
 
         return redirect()->route('admin.external-connected-entities.index');
     }
@@ -52,8 +54,10 @@ class ExternalConnectedEntityController extends Controller
 
         $type_list = ExternalConnectedEntity::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.externalConnectedEntities.edit', 
-            compact('externalConnectedEntity','networks', 'entities', 'type_list'));
+        return view(
+            'admin.externalConnectedEntities.edit',
+            compact('externalConnectedEntity', 'networks', 'entities', 'type_list')
+        );
     }
 
     public function update(UpdateExternalConnectedEntityRequest $request, ExternalConnectedEntity $externalConnectedEntity)

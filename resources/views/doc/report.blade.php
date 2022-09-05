@@ -91,6 +91,12 @@
                         <br><br>
                     </li>
                     <li>
+                        <a href="/admin/report/externalAccess" target="_new">{{ trans("cruds.report.lists.external_access") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.external_access_helper") }}
+                        <br><br>
+                    </li>
+                    <li>
                         <a href="/admin/report/physicalInventory" target="_new">{{ trans("cruds.report.lists.physical_inventory") }}</a>
                         <br>
                         {{ trans("cruds.report.lists.physical_inventory_helper") }}
