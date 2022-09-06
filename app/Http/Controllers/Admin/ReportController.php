@@ -1745,8 +1745,7 @@ class ReportController extends Controller
     {
         $subnetworks = Subnetwork::All()->sortBy('zone, address');
 
-        return view('admin/reports/zones')
-            ->with('subnetworks');
+        return view('admin/reports/zones', compact('subnetworks'));
     }
 
     private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null)
