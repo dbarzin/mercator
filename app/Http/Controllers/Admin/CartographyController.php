@@ -1408,16 +1408,15 @@ class CartographyController extends Controller
                 $section->addText(trans('cruds.networkSwitch.description'));
                 $section->addTextBreak(1);
 
-                foreach ($networkSwitches as $networkSwitches) {
-                    $section->addBookmark('ROUTER'.$networkSwitches->id);
-                    $table = $this->addTable($section, $networkSwitches->name);
-                    $this->addHTMLRow($table, trans('cruds.networkSwitch.fields.description'), $networkSwitches->description);
-                    $this->addTextRow($table, trans('cruds.networkSwitch.fields.ip'), $networkSwitches->ip);
+                foreach ($networkSwitches as $networkSwitch) {
+                    $section->addBookmark('NETWORK_SWITCH'.$networkSwitch->id);
+                    $table = $this->addTable($section, $networkSwitch->name);
+                    $this->addHTMLRow($table, trans('cruds.networkSwitch.fields.description'), $networkSwitch->description);
+                    $this->addTextRow($table, trans('cruds.networkSwitch.fields.ip'), $networkSwitch->ip);
 
                     $section->addTextBreak(1);
                 }
             }
-
 
             // =====================================
             if ($routers->count() > 0) {
@@ -1435,6 +1434,23 @@ class CartographyController extends Controller
                     $section->addTextBreak(1);
                 }
             }
+
+            // =====================================
+
+            if ($securityDevices->count() > 0) {
+                $section->addTitle(trans('cruds.securityDevice.title'), 2);
+                $section->addText(trans('cruds.securityDevice.description'));
+                $section->addTextBreak(1);
+
+                foreach ($securityDevices as $securityDevice) {
+                    $section->addBookmark('SEC_DEV'.$securityDevice->id);
+                    $table = $this->addTable($section, $securityDevice->name);
+                    $this->addHTMLRow($table, trans('cruds.securityDevice.fields.description'), $securityDevice->description);
+
+                    $section->addTextBreak(1);
+                }
+            }
+
 
             // =====================================
             if ($gateways->count() > 0) {
