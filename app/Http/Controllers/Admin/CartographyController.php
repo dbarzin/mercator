@@ -1402,6 +1402,24 @@ class CartographyController extends Controller
             }
 
             // =====================================
+
+            if ($networkSwitches->count() > 0) {
+                $section->addTitle(trans('cruds.networkSwitch.title'), 2);
+                $section->addText(trans('cruds.networkSwitch.description'));
+                $section->addTextBreak(1);
+
+                foreach ($networkSwitches as $networkSwitches) {
+                    $section->addBookmark('ROUTER'.$networkSwitches->id);
+                    $table = $this->addTable($section, $networkSwitches->name);
+                    $this->addHTMLRow($table, trans('cruds.networkSwitch.fields.description'), $networkSwitches->description);
+                    $this->addTextRow($table, trans('cruds.networkSwitch.fields.ip'), $networkSwitches->ip);
+
+                    $section->addTextBreak(1);
+                }
+            }
+
+
+            // =====================================
             if ($routers->count() > 0) {
                 $section->addTitle(trans('cruds.router.title'), 2);
                 $section->addText(trans('cruds.router.description'));
