@@ -76,16 +76,12 @@ class CVESearch extends Command
             Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A', $min_timestamp));
 
             // CVE counters
-            $cve_count = 0;
             $cve_match = [];
 
             // loop on all CVE
             foreach ($json->results as $cve) {
                 // check CVE in frequency range
                 if (strtotime($cve->Published) >= $min_timestamp) {
-                    $cve_count += 1;
-                    // check application name present in cve summary
-                    $found = false;
                     // put summary in lowercase
                     $cve->summary = strtolower($cve->summary);
                     // Log::debug('CVESearch - CVE summary ' . $cve->summary);
