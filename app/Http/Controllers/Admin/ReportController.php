@@ -446,11 +446,10 @@ class ReportController extends Controller
         }
 
         // Get assets
-        $application_ids =
-            DB::table('m_applications')
-                ->whereIn('application_block_id', $applicationBlocks)
-                ->orWhereIn('id', $applications)
-                ->pluck('id');
+        $application_ids = DB::table('m_applications')
+            ->whereIn('application_block_id', $applicationBlocks)
+            ->orWhereIn('id', $applications)
+            ->pluck('id');
 
         $applicationservice_ids = DB::table('m_applications')
             ->join('application_service_m_application', 'm_applications.id', '=', 'application_service_m_application.m_application_id')
@@ -619,10 +618,10 @@ class ReportController extends Controller
 
             $networks = Network::All()->sortBy('name')->where('id', '=', $network);
 
-            $externalConnectedEntities = ExternalConnectedEntity::
-                join('external_connected_entity_network', 'external_connected_entities.id', '=', 'external_connected_entity_network.external_connected_entity_id')
-                    ->where('external_connected_entity_network.network_id', '=', $network)
-                    ->orderBy('name')->get();
+            $externalConnectedEntities = ExternalConnectedEntity
+                ::join('external_connected_entity_network', 'external_connected_entities.id', '=', 'external_connected_entity_network.external_connected_entity_id')
+                ->where('external_connected_entity_network.network_id', '=', $network)
+                ->orderBy('name')->get();
 
             if ($subnetwork !== null) {
                 $subnetworks = Subnetwork::All()->sortBy('name')

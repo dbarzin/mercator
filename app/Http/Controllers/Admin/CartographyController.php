@@ -1451,7 +1451,6 @@ class CartographyController extends Controller
                 }
             }
 
-
             // =====================================
             if ($gateways->count() > 0) {
                 $section->addTitle(trans('cruds.gateway.title'), 2);
