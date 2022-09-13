@@ -76,6 +76,13 @@ class CertificateExpiracy extends Command
                     }
                 }
             }
+            else {
+                // set last notification for all certificates
+                foreach ($certificates as $cert) {
+                    $cert->last_notification = now();
+                    $cert->save();
+                }
+            }
 
             if ($certificates->count() > 0) {
                 // send email alert

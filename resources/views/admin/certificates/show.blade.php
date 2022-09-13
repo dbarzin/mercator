@@ -75,6 +75,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.certificate.fields.last_notification') }}
+                        </th>
+                        <td>
+                            {!! $certificate->last_notification !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.certificate.fields.logical_servers') }}
                         </th>
                         <td>
