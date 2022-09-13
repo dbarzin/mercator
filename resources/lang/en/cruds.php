@@ -219,7 +219,7 @@ return [
         'title' => 'Buildings / Rooms',
         'title_singular' => 'Building / Room',
     ],
-    "certificate" => [
+    'certificate' => [
         "description" => "An electronic certificate (also called a digital certificate or public key certificate) can be thought of as a digital identity card. It is mainly used to identify and authenticate a natural or legal person, but also to encrypt exchanges.",
         "fields" => [
             "applications" => "Applications",
@@ -228,6 +228,7 @@ return [
             "description_helper" => "Certificate Description",
             "end_validity" => "End date",
             "end_validity_helper" => "Certificate Expiry Date",
+            'last_notification' => 'Expiracy notification date',
             "logical_servers" => "Logical Servers",
             "logical_servers_helper" => "Logical servers where this certificate is installed",
             "name" => "Name",
