@@ -259,6 +259,8 @@ return [
             'to' => 'à',
             'one_mail' => 'Envoyer un mail par certificat expiré',
             'multiple_mails' => 'Envoyer un mail avec tous les certificats expirés',
+            'one_notification' => 'Envoyer une notification par certificat expiré',
+            'multiple_notifications' => 'Répéter les notifications de certificats expirés',
         ],
         'cve' => [
             'title' => 'Configuration de la recherche de CVE',

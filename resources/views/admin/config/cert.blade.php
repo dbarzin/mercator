@@ -68,6 +68,21 @@
             </div>
 
             <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="repeat-notification" id="certRadios3" value="0" {{ $repeat_notification==='0' ? 'checked' : '' }}>
+                  <label class="form-check-label" for="certRadios3">
+                    {{ trans("cruds.configuration.certificate.one_notification") }}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="repeat-notification" id="certRadios4" value="1" {{ $repeat_notification==='1' ? 'checked' : '' }}>
+                  <label class="form-check-label" for="certRadios4">
+                    {{ trans("cruds.configuration.certificate.multiple_notifications") }}
+                  </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit" name="action" value="save">
                     {{ trans('global.save') }}
                 </button>

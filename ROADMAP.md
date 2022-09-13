@@ -24,7 +24,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
-- [ ] Ajouter un lien entre application et poste de travail
+- [x] Ajouter un lien entre application et poste de travail
 
 ## Petites évolutions
 
@@ -42,4 +42,4 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] schémas de l'infrastructure réseau physiqiue
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
 - [ ] Carte des actifs par rack, bâtiment/salle et site
-
+- [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
