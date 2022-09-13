@@ -258,6 +258,8 @@ return [
             'to' => 'to',
             'one_mail' => 'Send one mail per expired certificate',
             'multiple_mails' => 'Send one mail with all expired certificates',
+            'one_notification' => 'Send one notification for each expired certificate',
+            'multiple_notifications' => 'Repeat expired certificate notifications',
         ],
         'cve' => [
             'title' => 'CVE Search Configuration',

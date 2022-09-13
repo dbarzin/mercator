@@ -23,13 +23,15 @@ class ConfigurationController extends Controller
         $check_frequency = config('mercator-config.cert.check-frequency');
         $expire_delay = config('mercator-config.cert.expire-delay');
         $group = config('mercator-config.cert.group');
+        $repeat_notification = config('mercator-config.cert.repeat-notification');
 
         // dd($mail_from);
 
         // Return
         return view(
             'admin.config.cert',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay', 'group')
+            compact('mail_from', 'mail_to', 'mail_subject', 
+                    'check_frequency', 'expire_delay', 'group', 'repeat_notification')
         );
     }
 
@@ -47,6 +49,7 @@ class ConfigurationController extends Controller
         $check_frequency = request('check_frequency');
         $expire_delay = request('expire_delay');
         $group = request('group');
+        $repeat_notification = request('repeat-notification');
 
         switch ($request->input('action')) {
             case 'save':
@@ -57,6 +60,7 @@ class ConfigurationController extends Controller
                 config(['mercator-config.cert.check-frequency' => $check_frequency]);
                 config(['mercator-config.cert.expire-delay' => $expire_delay]);
                 config(['mercator-config.cert.group' => $group]);
+                config(['mercator-config.cert.repeat-notification' => $repeat_notification]);
 
                 // Save configuration
                 $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
@@ -88,7 +92,8 @@ class ConfigurationController extends Controller
         }
         return view(
             'admin.config.cert',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 'expire_delay', 'group')
+            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 
+                    'expire_delay', 'group', 'repeat_notification')
         )
             ->withErrors($msg);
     }

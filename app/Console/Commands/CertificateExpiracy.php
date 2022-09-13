@@ -30,14 +30,17 @@ class CertificateExpiracy extends Command
      */
     public function handle()
     {
+        Log::debug('CertificateExpiracy - Start.');
+
         Log::debug('CertificateExpiracy - day '. Carbon::now()->day);
 
+        // if (true) {
         if ($this->needCheck()) {
             // Check for old certificates
             Log::debug('CertificateExpiracy - check');
 
-            $certificates = Certificate::select('name', 'type', 'end_validity')
-                ->where('status', 0)
+            $certificates = Certificate
+                ::where('status', 0)
                 ->where('end_validity', '<=', Carbon::now()
                     ->addDays(intval(config('mercator-config.cert.expire-delay')))->toDateString())
                 ->orderBy('end_validity')
@@ -45,10 +48,34 @@ class CertificateExpiracy extends Command
 
             Log::debug(
                 $certificates->count() .
-                ' certificate(s) will expire in '.
+                ' certificate(s) will expire within '.
                 config('mercator-config.cert.expire-delay') .
                 ' days.'
             );
+
+            // check
+            $repeat_notification = config('mercator-config.cert.repeat-notification');
+            if (intval($repeat_notification) == 0) {
+                Log::debug('CertificateExpiracy - remove cert aleady notified');
+                foreach ($certificates as $key => $cert) {
+                    if ($cert->last_notification == null) {
+                        // never notified
+                        Log::debug('CertificateExpiracy - ' . $cert->name . ' never notified.');
+                        $cert->last_notification = now();
+                        $cert->save();
+                    }
+                    else if ($cert->last_notification > now()->addDays(-intval(config('mercator-config.cert.expire-delay')))) {
+                        Log::debug('CertificateExpiracy - ' . $cert->name . ' already notified.');
+                        $certificates->forget($key);
+                    }
+                    else {
+                        // must be notified
+                        Log::debug('CertificateExpiracy - ' . $cert->name . ' kept.');
+                        $cert->last_notification = now();
+                        $cert->save();
+                    }
+                }
+            }
 
             if ($certificates->count() > 0) {
                 // send email alert
@@ -92,6 +119,9 @@ class CertificateExpiracy extends Command
                 }
             }
         }
+        else
+            Log::debug('CertificateExpiracy - no check');
+
         Log::debug('CertificateExpiracy - DONE.');
     }
 

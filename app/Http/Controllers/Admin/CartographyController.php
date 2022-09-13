@@ -1402,6 +1402,23 @@ class CartographyController extends Controller
             }
 
             // =====================================
+
+            if ($networkSwitches->count() > 0) {
+                $section->addTitle(trans('cruds.networkSwitch.title'), 2);
+                $section->addText(trans('cruds.networkSwitch.description'));
+                $section->addTextBreak(1);
+
+                foreach ($networkSwitches as $networkSwitch) {
+                    $section->addBookmark('NETWORK_SWITCH'.$networkSwitch->id);
+                    $table = $this->addTable($section, $networkSwitch->name);
+                    $this->addHTMLRow($table, trans('cruds.networkSwitch.fields.description'), $networkSwitch->description);
+                    $this->addTextRow($table, trans('cruds.networkSwitch.fields.ip'), $networkSwitch->ip);
+
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
             if ($routers->count() > 0) {
                 $section->addTitle(trans('cruds.router.title'), 2);
                 $section->addText(trans('cruds.router.description'));
@@ -1413,6 +1430,22 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.router.fields.description'), $router->description);
                     $this->addTextRow($table, trans('cruds.router.fields.ip_addresses'), $router->ip_addresses);
                     $this->addHTMLRow($table, trans('cruds.router.fields.rules'), $router->rules);
+
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
+
+            if ($securityDevices->count() > 0) {
+                $section->addTitle(trans('cruds.securityDevice.title'), 2);
+                $section->addText(trans('cruds.securityDevice.description'));
+                $section->addTextBreak(1);
+
+                foreach ($securityDevices as $securityDevice) {
+                    $section->addBookmark('SEC_DEV'.$securityDevice->id);
+                    $table = $this->addTable($section, $securityDevice->name);
+                    $this->addHTMLRow($table, trans('cruds.securityDevice.fields.description'), $securityDevice->description);
 
                     $section->addTextBreak(1);
                 }
