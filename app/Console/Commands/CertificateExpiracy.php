@@ -81,6 +81,7 @@ class CertificateExpiracy extends Command
                 foreach ($certificates as $cert) {
                     $cert->last_notification = now();
                     $cert->save();
+                }
             }
 
             if ($certificates->count() > 0) {
