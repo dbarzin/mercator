@@ -48,10 +48,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function (User $user, $ability) {
             // check $ability before
             if (!config('app.cartographers', false))
-                if ($ability==="is-cartographer-m-application")
-                    // Si c'est un admin, on lui autorise toutes les applications
-                    if ($user->getIsAdminAttribute()) 
-                        return true;
+                return true;
+            if ($ability==="is-cartographer-m-application")
+                // Si c'est un admin, on lui autorise toutes les applications
+                if ($user->getIsAdminAttribute()) 
+                    return true;
+                else
+                    return false;
         });
 
         /**
@@ -59,6 +62,8 @@ class AuthServiceProvider extends ServiceProvider
          */
         Gate::define('is-cartographer-m-application', function (User $user, MApplication $application) {
             if (!config('app.cartographers', false))
+                return true;
+            else
                 return $application->hasCartographer($user);
         });
         

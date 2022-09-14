@@ -101,7 +101,7 @@
                                 </a>
                                 @endif
                             </td>
-                            <!--
+                            {{--
                             <td>
                                 @if ($application->cartographers !== null)
                                     @foreach($application->cartographers as $cartographer)
@@ -109,7 +109,7 @@
                                     @endforeach
                                 @endif
                             </td>
-                            -->
+                            --}}
                             <td>
                                 @can('m_application_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.applications.show', $application->id) }}">
