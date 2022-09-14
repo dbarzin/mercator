@@ -18,7 +18,7 @@ class CertificateController extends Controller
     {
         abort_if(Gate::denies('certificate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $certificates = Certificate::all()->sortBy('name');
+        $certificates = Certificate::with('applications','logical_servers')->orderBy('name')->get();
 
         return view('admin.certificates.index', compact('certificates'));
     }

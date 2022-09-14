@@ -45,7 +45,8 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::all()->sortBy('name');
+        $applications = MApplication::with('application_block','entity_resp')
+            ->orderBy('name')->get();
 
         return view('admin.applications.index', compact('applications'));
     }

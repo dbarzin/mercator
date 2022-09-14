@@ -45,25 +45,21 @@ class AuthServiceProvider extends ServiceProvider
         /**
          * Before check
          */
-        /*
         Gate::before(function (User $user, $ability) {
             // check $ability before
-            // Si c'est un admin, on lui autorise toutes les applications
-            if (!config('app.cartographers', false) || $user->getIsAdminAttribute()) {
-                return true;
-            }
+            if (!config('app.cartographers', false))
+                if ($ability==="is-cartographer-m-application")
+                    // Si c'est un admin, on lui autorise toutes les applications
+                    if ($user->getIsAdminAttribute()) 
+                        return true;
         });
-        */
 
         /**
          * MApplication
          */
-        // TODO : fix performance issue
-        /*
         Gate::define('is-cartographer-m-application', function (User $user, MApplication $application) {
             return $application->hasCartographer($user);
         });
-        */
         
     }
 }
