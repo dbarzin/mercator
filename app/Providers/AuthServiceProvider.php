@@ -34,8 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
-        // LDAP Restrictions on connection
-        LDAPuser::addGlobalScope(new OnlyOrgUnitUser());
+        // if LDAP activated
+        if (env('LDAP_DOMAIN'))
+            // LDAP Restrictions on connection
+            LDAPuser::addGlobalScope(new OnlyOrgUnitUser());
 
         /*
          *  Register one Gate per model for cartographers.
@@ -44,10 +46,12 @@ class AuthServiceProvider extends ServiceProvider
          * Before check
          */
         Gate::before(function (User $user, $ability) {
-            // Si c'est un admin, on lui autorise toutes les applications
-            if ($user->getIsAdminAttribute() || ! config('app.cartographers', false)) {
-                return true;
-            }
+            // check $ability before
+            if (!config('app.cartographers', false))
+                if ($ability==="is-cartographer-m-application")
+                    // Si c'est un admin, on lui autorise toutes les applications
+                    if ($user->getIsAdminAttribute()) 
+                        return true;
         });
 
         /**
@@ -56,5 +60,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('is-cartographer-m-application', function (User $user, MApplication $application) {
             return $application->hasCartographer($user);
         });
+        
     }
 }
