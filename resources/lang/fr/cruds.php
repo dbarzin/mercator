@@ -1013,6 +1013,8 @@ return [
             'description_helper' => '',
             'nom' => 'Nom',
             'nom_helper' => '',
+            'operations' => 'Opérations',
+            'operations_helper' => '',
         ],
         'title' => 'Tâches',
         'title_singular' => 'Tâche',

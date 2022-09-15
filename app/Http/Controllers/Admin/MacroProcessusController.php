@@ -17,7 +17,8 @@ class MacroProcessusController extends Controller
     {
         abort_if(Gate::denies('macro_processus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $macroProcessuses = MacroProcessus::orderBy('name')->get();
+        // $macroProcessuses = MacroProcessus::orderBy('name')->get();
+        $macroProcessuses = MacroProcessus::with('processes')->orderBy('name')->get();
 
         return view('admin.macroProcessuses.index', compact('macroProcessuses'));
     }

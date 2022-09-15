@@ -29,6 +29,9 @@
                             {{ trans('cruds.task.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.task.fields.operations') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -46,6 +49,16 @@
                             </td>
                             <td>
                                 {{ $task->description ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($task->operations as $operation)
+                                    <a href="{{ route('admin.operations.show', $operation->id) }}">
+                                        {{ $operation->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif                                
+                                @endforeach
                             </td>
                             <td>
                                 @can('task_show')

@@ -17,7 +17,8 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $buildings = Building::all()->sortBy('name');
+        // $buildings = Building::all()->sortBy('name');
+        $buildings = Building::with('site')->orderBy('name')->get();
 
         return view('admin.buildings.index', compact('buildings'));
     }
