@@ -19,7 +19,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServers = PhysicalServer::all()->sortBy('name');
+        $physicalServers = PhysicalServer::with('site','building','bay')->orderBy('name')->get();
 
         return view('admin.physicalServers.index', compact('physicalServers'));
     }

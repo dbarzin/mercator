@@ -20,11 +20,8 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $entities = Entity::orderBy('name')->get();
-
         $entities = Entity::with('entitiesProcesses','applications','databases')
             ->orderBy('name')->get();
-
 
         return view('admin.entities.index', compact('entities'));
     }

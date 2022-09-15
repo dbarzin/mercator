@@ -1009,6 +1009,8 @@ return [
             'description_helper' => '',
             'nom' => 'Name',
             'nom_helper' => '',
+            'operations' => 'Operations',
+            'operations_helper' => '',
         ],
         'title' => 'Tasks',
         'title_singular' => 'Task',
