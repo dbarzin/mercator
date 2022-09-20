@@ -58,7 +58,7 @@ class Role extends Model
      *
      * @return Role|null
      */
-    public static function getRoleByTitle(string $title): Role|null
+    public static function getRoleByTitle(string $title)
     {
         return Role::whereTitle($title)->first();
     }
