@@ -618,9 +618,7 @@ class ReportController extends Controller
 
             $networks = Network::All()->sortBy('name')->where('id', '=', $network);
 
-            $externalConnectedEntities = ExternalConnectedEntity
-                ::join('external_connected_entity_network', 'external_connected_entities.id', '=', 'external_connected_entity_network.external_connected_entity_id')
-                ->where('external_connected_entity_network.network_id', '=', $network)
+            $externalConnectedEntities = ExternalConnectedEntity::where("network_id","=",$network)
                 ->orderBy('name')->get();
 
             if ($subnetwork !== null) {
