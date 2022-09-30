@@ -367,6 +367,8 @@ return [
             'exploits' => 'exploits',
             'name' => 'Name',
             'name_helper' => 'Name of entity or system',
+            'type' => 'Type',
+            'type_helper' => '',
             'processes' => 'Supported processes',
             'processes_helper' => 'List of processes supported by the entity',
             'relations' => 'Relationships',
