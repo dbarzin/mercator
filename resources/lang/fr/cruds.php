@@ -147,7 +147,7 @@ return [
         'description' => 'Élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).',
         'fields' => [
             'applications' => 'Applications',
-            'applications_helper' => 'Liste des applications qui utilisent ce service applicatif',
+            'applications_helper' => 'Liste des applications qui délivrent ce service applicatif',
             'description' => 'Description',
             'description_helper' => '',
             'exposition' => 'Exposition',
@@ -905,8 +905,8 @@ return [
         'fields' => [
             'permissions' => 'Permissions',
             'permissions_helper' => '',
-            'title' => 'Title',
-            'title_helper' => '',
+            'title' => 'Nom',
+            'title_helper' => 'Nom du rôle',
         ],
         'title' => 'Rôles',
         'title_singular' => 'Rôle',
