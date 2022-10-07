@@ -45,10 +45,11 @@ class AuthServiceProvider extends ServiceProvider
         /**
          * Before check
          */
+        /*
         Gate::before(function (User $user, $ability) {
             // check $ability before
             if (!config('app.cartographers', false))
-                return true;
+                return false;
             if ($ability==="is-cartographer-m-application")
                 // Si c'est un admin, on lui autorise toutes les applications
                 if ($user->getIsAdminAttribute()) 
@@ -56,7 +57,8 @@ class AuthServiceProvider extends ServiceProvider
                 else
                     return false;
         });
-
+        */
+        
         /**
          * MApplication
          */
