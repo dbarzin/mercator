@@ -222,6 +222,73 @@ class ExplorerController extends Controller
             array_push($edges, [ 'from' => 'APP_' . $join->m_application_id, 'to' => 'DATABASE_' . $join->database_id ]);
         }
 
+        // Fluxes
+        $fluxes = DB::table('fluxes')->select('id', 'name', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id' )->whereNull('deleted_at')->get();
+        foreach ($fluxes as $flux) {
+            $edges = $this->fluxFactory($edges, $flux);
+
+            if ($flux->application_source_id !== null) {
+                if ($flux->application_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'APP_' . $flux->application_source_id, 'to' => 'APP_' . $flux->application_dest_id ]);
+                }
+                if ($flux->service_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'APP_' . $flux->application_source_id, 'to' => 'SERV_' . $flux->service_dest_id ]);
+                }
+                if ($flux->module_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'APP_' . $flux->application_source_id, 'to' => 'MOD_' . $flux->module_dest_id ]);
+                }
+                if ($flux->database_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'APP_' . $flux->application_source_id, 'to' => 'DATABASE_' . $flux->database_dest_id ]);
+                }
+            
+            }
+            if ($flux->service_source_id !== null) {
+
+                if ($flux->application_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'SERV_' . $flux->service_source_id, 'to' => 'APP_' . $flux->application_dest_id ]);
+                }
+                if ($flux->service_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'SERV_' . $flux->service_source_id, 'to' => 'SERV_' . $flux->service_dest_id ]);
+                }
+                if ($flux->module_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'SERV_' . $flux->service_source_id, 'to' => 'MOD_' . $flux->module_dest_id ]);
+                }
+                if ($flux->database_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'SERV_' . $flux->service_source_id, 'to' => 'DATABASE_' . $flux->database_dest_id ]);
+                }
+                
+            }
+            if ($flux->module_source_id !== null) {
+                if ($flux->application_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'MOD_' . $flux->module_source_id, 'to' => 'APP_' . $flux->application_dest_id ]);
+                }
+                if ($flux->service_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'MOD_' . $flux->module_source_id, 'to' => 'SERV_' . $flux->service_dest_id ]);
+                }
+                if ($flux->module_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'MOD_' . $flux->module_source_id, 'to' => 'MOD_' . $flux->module_dest_id ]);
+                }
+                if ($flux->database_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'MOD_' . $flux->module_source_id, 'to' => 'DATABASE_' . $flux->database_dest_id ]);
+                }
+            }
+            if ($flux->database_source_id !== null) {
+                if ($flux->application_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'DATABASE_' . $flux->database_source_id, 'to' => 'APP_' . $flux->application_dest_id ]);
+                }
+                if ($flux->service_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'DATABASE_' . $flux->database_source_id, 'to' => 'SERV_' . $flux->service_dest_id ]);
+                }
+                if ($flux->module_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'DATABASE_' . $flux->database_source_id, 'to' => 'MOD_' . $flux->module_dest_id ]);
+                }
+                if ($flux->database_dest_id !== null) {
+                    array_push($edges, [ 'from' => 'DATABASE_' . $flux->database_source_id, 'to' => 'DATABASE_' . $flux->database_dest_id ]);
+                }
+            }
+
+        }
+
         // ---------------------------------------------------
         // Information System
         // ---------------------------------------------------
