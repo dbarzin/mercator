@@ -192,7 +192,7 @@ dans le fichier .env, mettez les paramètres de connexion en décommentant les l
     # Allows you to restrict access to groups
     LDAP_GROUPS="Delivering,Help Desk"
 
-Retrouvez une documentation plus complète sur le configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+Retrouvez une documentation plus complète sur la configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
 
 ## Apache
 
