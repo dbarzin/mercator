@@ -225,7 +225,6 @@ class ExplorerController extends Controller
         // Fluxes
         $fluxes = DB::table('fluxes')->select('id', 'name', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id' )->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
-            $edges = $this->fluxFactory($edges, $flux);
 
             if ($flux->application_source_id !== null) {
                 if ($flux->application_dest_id !== null) {
