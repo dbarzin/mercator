@@ -140,7 +140,7 @@
                     </ul>
                 </li>
             @endcan
-            @can('papplication_access')
+            @can('application_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
