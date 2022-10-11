@@ -16,9 +16,9 @@ class RoleController extends Controller
     {
         abort_if(Gate::denies('roles_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roless = Role::all();
+        $roles = Role::all();
 
-        return response()->json($roless);
+        return response()->json($roles);
     }
 
     public function store(StoreRoleRequest $request)

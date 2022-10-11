@@ -572,7 +572,7 @@
                     </ul>
                 </li>
             @endcan
-            @can('user_management_access')
+            @can('configure')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-gear nav-icon">
