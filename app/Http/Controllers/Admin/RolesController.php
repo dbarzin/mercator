@@ -29,7 +29,7 @@ class RolesController extends Controller
             $explode = explode('_', $permission);
             if (count($explode) >= 2) {
                 $sliced = array_slice($explode, 0, -1);
-                $name = implode(' ', $sliced);
+                $name = implode('_', $sliced);
                 $action = $explode[count($explode) - 1];
             } else {
                 $name = $explode[0];
@@ -40,6 +40,7 @@ class RolesController extends Controller
                 $permissions_sorted[$name] = ['name' => $name, 'actions' => []];
             }
             array_push($permissions_sorted[$name]['actions'], $actionTab);
+
         }
 
         return $permissions_sorted;
@@ -114,7 +115,7 @@ class RolesController extends Controller
 
         $role->delete();
 
-        return back();
+        return redirect()->route('admin.roles.index');
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
