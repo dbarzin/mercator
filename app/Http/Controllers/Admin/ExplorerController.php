@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 // Logique
 // Physique
+use App\Router;
 use App\Subnetwork;
 use Illuminate\Support\Facades\DB;
 
@@ -93,6 +94,22 @@ class ExplorerController extends Controller
             }
             if ($subnetwork->vlan_id !== null) {
                 array_push($edges, [ 'from' => 'SUBNETWORK_' . $subnetwork->id, 'to' => 'VLAN_' . $subnetwork->vlan_id ]);
+            }
+        }
+
+        // Logical Routers
+        $logicalRouters = Router::All();
+        foreach ($logicalRouters as $logicalRouter) {
+
+            if ($logicalRouter->getAttribute('ip_addresses') !== null) {
+                foreach ($subnetworks as $subnetwork) {
+                    foreach (explode(',', $logicalRouter->getAttribute('ip_addresses')) as $address) {
+                        if ($subnetwork->contains($address)) {
+                            array_push($edges, [ 'from' => 'SUBNETWORK_' . $subnetwork->id, 'to' => 'ROUTER_' . $logicalRouter->id ]);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
