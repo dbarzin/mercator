@@ -21,28 +21,28 @@
 
 <script>
 
-      const IMG = "image";
+    const IMG = "image";
       
-      var nodes = null;
-      var edges = null;
-      var network = null;
+    var nodes = null;
+    var edges = null;
+    var network = null;
 
 
-      var _nodes = new Map();
-      var _edges = new Map();
-      @foreach($nodes as $node) 
+    var _nodes = new Map();
+    var _edges = new Map();
+    @foreach($nodes as $node) 
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG });
         _edges.set( "{{ $node["id"] }}", [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
-                echo '"' . $edge["to"] .'",';
+                echo '{id:"' . $edge["to"] .'",edgeType:"' . $edge["type"] .'", edgeDirection: "TO"},';
             if ($edge["to"]==$node["id"])
-                echo '"' . $edge["from"] .'",';
+                echo '{id:"' . $edge["from"] .'",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM"},';
             } ?> ]); 
-      @endforeach
+    @endforeach
 
-      // Called when the Visualization API is loaded.
-      function draw() {
+    // Called when the Visualization API is loaded.
+    function draw() {
         // Start node 
         nodes = new vis.DataSet([_nodes.get("{{ Request::get("node") }}")]);
 
@@ -52,17 +52,17 @@
         // create a network
         var container = document.getElementById("mynetwork");
         var data = {
-          nodes: nodes,
-          edges: edges,
+            nodes: nodes,
+            edges: edges,
         };
         var options = {
             interaction: { hover: true },
             manipulation: {
-              enabled: false,
+                enabled: false,
             },
         };
         network = new vis.Network(container, data, options);
-      }
+    }
 
     // check if edge between node1 and node2 already exists
     function exists(node1, node2) {
@@ -73,27 +73,35 @@
 
     window.onload = function() {
         draw();
-          network.on("doubleClick", function (params) {
+        network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
             var nodeList = _edges.get(params.nodes[0]);
             if (nodeList !== undefined)
             for (const node of nodeList) {
-                var new_node = _nodes.get(node);
+                var new_node = _nodes.get(node.id);
                 if (new_node!=null) {
-                    if (nodes.get(node)==null) {
-                        console.log("add node :"+node);
+                    if (nodes.get(node.id)==null) {
+                        console.log("add node :"+node.id);
                         nodes.add(new_node);
                     }
-                    if (exists(params.nodes[0], node).length==0) 
+                    if (exists(params.nodes[0], node.id).length==0) 
                     {
-                        console.log("add edge :"+params.nodes[0]+" -> " +node);
-                        edges.add({ from: params.nodes[0], to: node })
-                        }
+                        console.log("add edge :"+params.nodes[0]+" -> " +node.id);
+                        if(node.edgeType === 'FLUX') {
+							if(node.edgeDirection === 'TO') {
+								edges.add({ from: params.nodes[0], to: node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
+							} else if(node.edgeDirection === 'FROM') {
+								edges.add({ from: params.nodes[0], to: node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
+							}
+						} else if(node.edgeType === 'LINK') {
+							edges.add({ from: params.nodes[0], to: node.id });
+						}
+                    }
                 }
             network.redraw();
             }
-          });
-        }
+        });
+    }
 
 </script>
 
