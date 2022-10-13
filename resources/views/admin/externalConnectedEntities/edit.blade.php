@@ -31,7 +31,7 @@
                     <div class="form-group">
 
                         <label class="recommended" for="type">{{ trans('cruds.externalConnectedEntity.fields.type') }}</label>
-                        <select class="form-control select2 {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                        <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
                                 <option> {{ old('type') }}</option>'
                             @endif
