@@ -27,7 +27,6 @@
     var edges = null;
     var network = null;
 
-
     var _nodes = new Map();
     var _edges = new Map();
     @foreach($nodes as $node) 
@@ -73,6 +72,34 @@
 
     window.onload = function() {
         draw();
+
+        var options = {
+          interaction:{
+            dragNodes:true,
+            dragView: true,
+            hideEdgesOnDrag: false,
+            hideEdgesOnZoom: false,
+            hideNodesOnDrag: false,
+            hover: false,
+            hoverConnectedEdges: true,
+            keyboard: {
+              enabled: false,
+              speed: {x: 10, y: 10, zoom: 0.02},
+              bindToWindow: true,
+              autoFocus: true,
+            },
+            multiselect: false,
+            navigationButtons: true,
+            selectable: true,
+            selectConnectedEdges: true,
+            tooltipDelay: 300,
+            zoomSpeed: 1,
+            zoomView: true
+          }
+        }
+
+        network.setOptions(options);
+
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
             var nodeList = _edges.get(params.nodes[0]);
