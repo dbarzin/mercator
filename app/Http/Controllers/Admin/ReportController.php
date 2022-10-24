@@ -1123,10 +1123,10 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setWidth(60, 'pt');
+        $sheet->getColumnDimension('A')->setAutoSize(true);  // block
+        $sheet->getColumnDimension('B')->setAutoSize(true);  // name
+        $sheet->getColumnDimension('C')->setAutoSize(true);  // vesrion
+        $sheet->getColumnDimension('D')->setWidth(60, 'pt'); // description
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
