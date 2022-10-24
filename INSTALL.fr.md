@@ -75,9 +75,7 @@ Créer un fichier .env dans le répertoire racine du projet :
     cd /var/www/mercator
     cp .env.example .env
 
-Mettre les paramètre de connexion à la base de données :
-
-    vi .env
+Modifier les paramètres de connexion à la base de données dans le fichier .env :
 
     ## .env file
     DB_CONNECTION=mysql
@@ -236,7 +234,7 @@ Enfin, redémarrez le service Apache pour activer les modifications :
 
 ### PHP Memory
 
-Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/7.4/apache2/php.ini
+Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/8.x/apache2/php.ini
 
     memory_limit = 512M
 

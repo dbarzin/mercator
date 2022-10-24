@@ -72,7 +72,8 @@ class MApplicationController extends Controller
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {
-                $res[] = trim($j);
+                if (strlen(trim($j))>0)
+                    $res[] = trim($j);
             }
         }
         $responsible_list = array_unique($res);
@@ -144,10 +145,12 @@ class MApplicationController extends Controller
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {
-                $res[] = trim($j);
+                if (strlen(trim($j))>0)
+                    $res[] = trim($j);
             }
         }
         $responsible_list = array_unique($res);
+
 
         $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
