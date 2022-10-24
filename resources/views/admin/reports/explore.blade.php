@@ -54,24 +54,6 @@
             nodes: nodes,
             edges: edges,
         };
-        var options = {
-            interaction: { hover: true },
-            manipulation: {
-                enabled: false,
-            },
-        };
-        network = new vis.Network(container, data, options);
-    }
-
-    // check if edge between node1 and node2 already exists
-    function exists(node1, node2) {
-        return edges.get().filter(function (edge) {
-           return (edge.from === node1 && edge.to === node2) || (edge.from === node2 && edge.to === node1);
-        });
-    }
-
-    window.onload = function() {
-        draw();
 
         var options = {
           interaction:{
@@ -80,7 +62,7 @@
             hideEdgesOnDrag: false,
             hideEdgesOnZoom: false,
             hideNodesOnDrag: false,
-            hover: false,
+            hover: true,
             hoverConnectedEdges: true,
             keyboard: {
               enabled: false,
@@ -94,11 +76,23 @@
             selectConnectedEdges: true,
             tooltipDelay: 300,
             zoomSpeed: 1,
-            zoomView: true
+            zoomView: true,
+            navigationButtons: true,
           }
-        }
+        };
 
-        network.setOptions(options);
+        network = new vis.Network(container, data, options);
+    }
+
+    // check if edge between node1 and node2 already exists
+    function exists(node1, node2) {
+        return edges.get().filter(function (edge) {
+           return (edge.from === node1 && edge.to === node2) || (edge.from === node2 && edge.to === node1);
+        });
+    }
+
+    window.onload = function() {
+        draw();
 
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
