@@ -39,6 +39,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Générer un annuaire de crise
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
+- [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Ajouter des fonctions de manipulation des graphes d'objets
