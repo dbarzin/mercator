@@ -147,7 +147,7 @@
               bindToWindow: true,
               autoFocus: true,
             },
-            multiselect: false,
+            multiselect: true,
             navigationButtons: true,
             selectable: true,
             selectConnectedEdges: true,
