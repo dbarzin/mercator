@@ -25,10 +25,12 @@
                                     <span class="help-block">Filtre sur les vues de la cartographie</span>
                                 </div>
                             </td>
+                            <td width=10>
+                            </td>
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">Objet</label>
-                                    <select class="form-control select2" id="node">
+                                    <select class="form-control select2" id="node" >
                                         <option></option>
                                         @foreach($nodes as $node) 
                                         <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
@@ -56,13 +58,13 @@
                                     <i class="fas fa-minus-circle">
                                         
                                     </i>
-                                    Delete
+                                    Supprimer
                                 </a>
                                 <a href="#" onclick="location.reload()">
                                     <i class="fas fa-repeat">
                                         
                                     </i>
-                                    Clear
+                                    Recommencer
                                 </a>
                                 <!-- TODO -->
                                 <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
