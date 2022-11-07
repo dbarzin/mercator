@@ -900,6 +900,15 @@ return [
             'external_access' => 'Connexions externes', 
             'external_access_helper' => 'Entités externes connectées au système d\'information'
         ],
+        'explorer' => [
+            'title' => 'Exploration de la cartographie',
+            'filter' => 'Filtre',
+            'filter_helper' => 'Filtre sur les vues de la cartographie',
+            'object' => 'Objet',
+            'object_helper' => 'Objet de la cartographie à ajouter',
+            'delete' => 'Supprimer',
+            'reload' => 'Recommencer'
+        ],
     ],
     'role' => [
         'fields' => [

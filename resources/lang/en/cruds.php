@@ -898,6 +898,15 @@ return [
             'external_access' => 'External connctions', 
             'external_access_helper' => 'External entities connected to the information system'
         ],
+        'explorer' => [
+            'title' => 'Mapping explorer',
+            'filter' => 'Filter',
+            'filter_helper' => 'Filter on mapping views',
+            'object' => 'Object',
+            'object_helper' => 'Map object to add',
+            'delete' => 'Delete',
+            'reload' => 'Reload'
+        ],
     ],
     'role' => [
         'fields' => [
