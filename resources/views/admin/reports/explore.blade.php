@@ -112,9 +112,34 @@
         var id=document.getElementById('node').value
         var new_node = _nodes.get(id);
         // add node
+        console.log("add node :"+new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
-        //........
+        var nodeList = _edges.get(new_node.id);
+        if (nodeList === undefined)
+            return;
+
+        // Loop on all links
+        for (const node of nodeList) {
+            // Get destination node
+            var target_node = _nodes.get(node.id);
+            // check node exists
+            if (target_node!=null) {
+                // Check node already present
+                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
+                    console.log("add edge :"+new_node.id+" -> " +target_node.id);
+                    if(node.edgeType === 'FLUX') {
+                        if(node.edgeDirection === 'TO') {
+                            edges.add({ from: new_node.id, to: target_node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
+                        } else if(node.edgeDirection === 'FROM') {
+                            edges.add({ from: new_node.id, to: target_node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
+                        }
+                    } else if(node.edgeType === 'LINK') {
+                        edges.add({ from: new_node.id, to: target_node.id });
+                    }
+                }
+            }
+        }
         // redraw
         network.redraw();
     };
@@ -191,18 +216,20 @@
                     filter.push(option.value);
             console.log("filter :"+filter);
 
-            // Loop on nodes
+            // Loop on all links
             for (const node of nodeList) {
-                // get new node
+                // Get destination node
                 var new_node = _nodes.get(node.id);
                 if (new_node!=null) {
                     console.log(new_node.vue)
                     // Apply filter
                     if ((filter.length==0) || filter.includes(new_node.vue)) { 
+                        // Check node already present
                         if (nodes.get(node.id)==null) {
                             console.log("add node :"+node.id);
                             nodes.add(new_node);
                         }
+                        // Check link already present
                         if (exists(params.nodes[0], node.id).length==0) 
                         {
                             console.log("add edge :"+params.nodes[0]+" -> " +node.id);
