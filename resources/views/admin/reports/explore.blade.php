@@ -147,7 +147,11 @@
     // Called when the Visualization API is loaded.
     function draw() {
         // Start node 
-        nodes = new vis.DataSet([_nodes.get("{{ Request::get("node") }}")]);
+        @if (Request::get("node")!=null)
+            nodes = new vis.DataSet([_nodes.get("{{ Request::get("node") }}")]);
+        @else
+            nodes = new vis.DataSet();
+        @endif
 
         // create an array with edges
         edges = new vis.DataSet([]);
