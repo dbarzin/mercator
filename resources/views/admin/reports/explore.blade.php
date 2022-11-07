@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Exploration de la cartographie
+                    {{ trans("cruds.report.explorer.title") }}
                 </div>
                 <div class="card-body">
                     <table border=0>
@@ -22,21 +22,21 @@
                                             <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
                                             <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
                                     </select>
-                                    <span class="help-block">Filtre sur les vues de la cartographie</span>
+                                    <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
                                 </div>
                             </td>
                             <td width=10>
                             </td>
                             <td width="400">
                                 <div class="form-group">
-                                    <label for="title">Objet</label>
+                                    <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
                                     <select class="form-control select2" id="node" >
                                         <option></option>
                                         @foreach($nodes as $node) 
                                         <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
                                         @endforeach
                                     </select>
-                                    <span class="help-block">Objet de la cartographie à ajouter</span>
+                                    <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
                                 </div>
                             </td>
                             <td style="text-align: center; vertical-align: middle">
@@ -58,13 +58,13 @@
                                     <i class="fas fa-minus-circle">
                                         
                                     </i>
-                                    Supprimer
+                                    {{ trans("cruds.report.explorer.delete") }}                                    
                                 </a>
                                 <a href="#" onclick="location.reload()">
                                     <i class="fas fa-repeat">
                                         
                                     </i>
-                                    Recommencer
+                                    {{ trans("cruds.report.explorer.reload") }}
                                 </a>
                                 <!-- TODO -->
                                 <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
