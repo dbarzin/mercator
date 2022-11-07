@@ -47,9 +47,14 @@ Drawing of the cartography
 
 [<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png) [<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
 
+Explore 
+
+[<img src="public/screenshots/mercator9.png" width="400">](public/screenshots/mercator9.png)
+
 Data model
 
-[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
+[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png) 
+
 
 
 ## Technologies
