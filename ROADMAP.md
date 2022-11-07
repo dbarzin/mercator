@@ -41,7 +41,7 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 - [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
-- [ ] Ajouter des fonctions de manipulation des graphes d'objets
+- [x] Ajouter des fonctions de manipulation des graphes d'objets dans l'explorateur
 - [ ] schémas de l'infrastructure réseau physiqiue
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
 - [ ] Carte des actifs par rack, bâtiment/salle et site
