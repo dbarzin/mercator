@@ -226,7 +226,6 @@
                 // Get destination node
                 var new_node = _nodes.get(edge.id);
                 if (new_node!=null) {
-                    console.log(new_node.vue)
                     // Apply filter
                     if ((filter.length==0) || filter.includes(new_node.vue)) { 
                         // Check node already present
