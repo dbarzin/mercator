@@ -60,7 +60,7 @@
                                     </i>
                                     {{ trans("cruds.report.explorer.delete") }}                                    
                                 </a>
-                                <a href="#" onclick="location.reload()">
+                                <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();">
                                     <i class="fas fa-repeat">
                                         
                                     </i>
@@ -101,9 +101,9 @@
         _edges.set( "{{ $node["id"] }}", [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
-                echo '{id:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO"},';
+                echo '{id:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
             if ($edge["to"]==$node["id"])
-                echo '{id:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM"},';
+                echo '{id:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
             } ?> ]); 
     @endforeach
 
@@ -128,12 +128,17 @@
                 // Check node already present
                 if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
                     console.log("add edge :"+new_node.id+" -> " +target_node.id);
-                    if(node.edgeType === 'FLUX') {
+                    if(edge.edgeType === 'FLUX') {
                         console.log('edge.label='+edge.name)
-                        if(node.edgeDirection === 'TO') {
+                        if(edge.edgeDirection === 'TO') {
                             edges.add({ label: edge.name, from: new_node.id, to: target_node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name,from: target_node.id, to: new_node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
+
                         } else if(edge.edgeDirection === 'FROM') {
                             edges.add({ label: edge.name, from: new_node.id, to: target_node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name,from: target_node.id, to: new_node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
                     } else if(edge.edgeType === 'LINK') {
                         edges.add({ from: new_node.id, to: target_node.id });
@@ -240,8 +245,12 @@
                             if(edge.edgeType === 'FLUX') {
     							if(edge.edgeDirection === 'TO') {
     								edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, arrows: {to: {enabled: true, type: 'arrow'}} });
+                                    if (edge.bidirectional)
+                                        edges.add({ label: edge.name,from: edge.id, to: params.nodes[0], arrows: {to: {enabled: true, type: 'arrow'}} });
     							} else if(edge.edgeDirection === 'FROM') {
     								edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, arrows: {from: {enabled: true, type: 'arrow'}} })
+                                    if (edge.bidirectional)
+                                        edges.add({ label: edge.name,from: edge.id, to: params.nodes[0], arrows: {from: {enabled: true, type: 'arrow'}} })
     							}
     						} else if(edge.edgeType === 'LINK') {
     							edges.add({ from: params.nodes[0], to: edge.id });
