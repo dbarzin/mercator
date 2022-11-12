@@ -222,25 +222,25 @@ class ExplorerController extends Controller
         // Fluxes
         $fluxes = DB::table('fluxes')->select('id', 'name', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id' )->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
-            $this->addFluxEdge($edges, $this->formatId('APP_', $flux->application_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('APP_', $flux->application_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('APP_', $flux->application_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('APP_', $flux->application_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('APP_', $flux->application_source_id), $this->formatId('APP_', $flux->application_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('APP_', $flux->application_source_id), $this->formatId('SERV_', $flux->service_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('APP_', $flux->application_source_id), $this->formatId('MOD_', $flux->module_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('APP_', $flux->application_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
     
-            $this->addFluxEdge($edges, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));                
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('APP_', $flux->application_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('SERV_', $flux->service_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('MOD_', $flux->module_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
 
-            $this->addFluxEdge($edges, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('APP_', $flux->application_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('SERV_', $flux->service_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('MOD_', $flux->module_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
 
-            $this->addFluxEdge($edges, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('APP_', $flux->application_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('SERV_', $flux->service_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('MOD_', $flux->module_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
         }
 
         // ---------------------------------------------------
@@ -354,18 +354,18 @@ class ExplorerController extends Controller
 
     private function addLinkEdge(&$edges, $from, $to)
     {
-        $this->addEdge($edges, $from, $to, 'LINK');
+        $this->addEdge($edges, null, $from, $to, 'LINK');
     }
 
-    private function addFluxEdge(&$edges, $from, $to)
+    private function addFluxEdge(&$edges, $name, $from, $to)
     {
-        $this->addEdge($edges, $from, $to, 'FLUX');
+        $this->addEdge($edges, $name, $from, $to, 'FLUX');
     }
 
-    private function addEdge(&$edges, $from, $to, $type)
+    private function addEdge(&$edges, $name, $from, $to, $type)
     {
         if($from !== null && $to !== null) {
-            array_push($edges, [ 'from' => $from, 'to' => $to, 'type' => $type ]);
+            array_push($edges, [ 'name' => $name, 'from' => $from, 'to' => $to, 'type' => $type ]);
         }
     }
     

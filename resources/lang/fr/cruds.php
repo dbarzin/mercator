@@ -905,7 +905,7 @@ return [
             'filter' => 'Filtre',
             'filter_helper' => 'Filtre sur les vues de la cartographie',
             'object' => 'Objet',
-            'object_helper' => 'Objet de la cartographie à ajouter',
+            'object_helper' => "Choisir l'objet à ajouter",
             'delete' => 'Supprimer',
             'reload' => 'Recommencer'
         ],
