@@ -903,7 +903,7 @@ return [
             'filter' => 'Filter',
             'filter_helper' => 'Filter on mapping views',
             'object' => 'Object',
-            'object_helper' => 'Map object to add',
+            'object_helper' => 'Select object to add',
             'delete' => 'Delete',
             'reload' => 'Reload'
         ],
