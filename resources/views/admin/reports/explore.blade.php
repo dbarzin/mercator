@@ -97,14 +97,13 @@
     var _nodes = new Map();
     var _edges = new Map();
     @foreach($nodes as $node) 
-        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG });
-        _edges.set( "{{ $node["id"] }}", [ <?php 
+        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG, edges: [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
                 echo '{id:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
             if ($edge["to"]==$node["id"])
                 echo '{id:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
-            } ?> ]); 
+            } ?> ]}); 
     @endforeach
 
     // Add a node base on the node.id
@@ -115,7 +114,7 @@
         console.log("add node :"+new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
-        var edgeList = _edges.get(new_node.id);
+        var edgeList = new_node.edges;
         if (edgeList === undefined)
             return;
 
@@ -216,9 +215,10 @@
 
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
-            var edgeList = _edges.get(params.nodes[0]);
-            if (edgeList === undefined)
+            var new_node = _nodes.get(params.nodes[0]);
+            if (new_node === undefined)
                 return;
+            var edgeList = new_node.edges;
 
             // get filter
             var filter = [];
