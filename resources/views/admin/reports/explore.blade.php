@@ -131,14 +131,15 @@
                     if(edge.edgeType === 'FLUX') {
                         console.log('edge.label='+edge.name)
                         if(edge.edgeDirection === 'TO') {
-                            edges.add({ label: edge.name, from: new_node.id, to: target_node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
                             if (edge.bidirectional)
-                                edges.add({ label: edge.name,from: target_node.id, to: new_node.id, arrows: {to: {enabled: true, type: 'arrow'}} });
-
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
                         } else if(edge.edgeDirection === 'FROM') {
-                            edges.add({ label: edge.name, from: new_node.id, to: target_node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
                             if (edge.bidirectional)
-                                edges.add({ label: edge.name,from: target_node.id, to: new_node.id, arrows: {from: {enabled: true, type: 'arrow'}} })
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
                     } else if(edge.edgeType === 'LINK') {
                         edges.add({ from: new_node.id, to: target_node.id });
@@ -244,13 +245,15 @@
                             console.log("add edge :"+params.nodes[0]+" -> " +edge.id);
                             if(edge.edgeType === 'FLUX') {
     							if(edge.edgeDirection === 'TO') {
-    								edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, arrows: {to: {enabled: true, type: 'arrow'}} });
                                     if (edge.bidirectional)
-                                        edges.add({ label: edge.name,from: edge.id, to: params.nodes[0], arrows: {to: {enabled: true, type: 'arrow'}} });
+                                        edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} });
+                                    else
+                                        edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
     							} else if(edge.edgeDirection === 'FROM') {
-    								edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, arrows: {from: {enabled: true, type: 'arrow'}} })
                                     if (edge.bidirectional)
-                                        edges.add({ label: edge.name,from: edge.id, to: params.nodes[0], arrows: {from: {enabled: true, type: 'arrow'}} })
+                                        edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} })
+                                    else
+                                        edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
     							}
     						} else if(edge.edgeType === 'LINK') {
     							edges.add({ from: params.nodes[0], to: edge.id });
