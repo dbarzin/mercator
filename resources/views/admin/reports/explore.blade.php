@@ -87,8 +87,11 @@
 <script src="/js/vis-network.min.js"></script>
 
 <script>
+
     const IMG = "image";
+    
     var nodes = null;
+    var edges = null;
     var network = null;
 
     var _nodes = new Map();
