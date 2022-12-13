@@ -332,7 +332,7 @@ class ExplorerController extends Controller
         // entity_process
         $joins = DB::table('entity_process')->select('entity_id', 'process_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entitynetworks_id), $this->formatId('PROCESS_', $join->process_id));
+            $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entity_id), $this->formatId('PROCESS_', $join->process_id));
         }
         // entity_m_application
         $joins = DB::table('entity_m_application')->select('entity_id', 'm_application_id')->get();
