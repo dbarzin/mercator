@@ -80,7 +80,30 @@
         </div>
     </div>
 </div>
+<ul id="explore_context"></ul>
 @endsection
+
+@section('styles')
+@parent
+
+    #explore_context{
+        position: absolute;
+        width: auto;
+        height: auto;
+        background-color: #f2f2f2;
+        border: 1px solid #cfcfcf;
+        display: none;
+        opacity: 0;
+	min-height: 3rem;
+	padding: 10px 16px;
+	list-style: none;
+    }
+    #explore_context a:hover{
+    	text-decoration:none;
+    }
+
+@endsection
+
 
 @section('scripts')
 
@@ -96,7 +119,7 @@
 
     var _nodes = new Map();
     @foreach($nodes as $node) 
-        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG, edges: [ <?php 
+        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG, type: "{{ $node["type"] }}", edges: [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
                 echo '{id:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
@@ -211,6 +234,7 @@
             console.log("click on : "+params.nodes[0]);
             //nodes.remove(params.nodes[0]);
         });
+		console.log(_nodes);
 
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
@@ -263,6 +287,55 @@
             network.redraw();
             }
         });
+
+        // Adds a contextmenu for quickaccess from nodes 
+
+        let contextMenu = document.getElementById("explore_context");
+        let x = null;
+        let y = null;
+    
+        document.addEventListener('mousemove', onMouseUpdate, false);
+        document.addEventListener('mouseenter', onMouseUpdate, false);
+
+        function onMouseUpdate(e) {
+            x = e.pageX;
+            y = e.pageY;
+        }
+
+        function displayContext(){
+            contextMenu.style.display="block";
+            contextMenu.style.opacity = "1";
+            contextMenu.style.top=y + "px";
+	    contextMenu.style.left=x + "px";
+        }
+
+        function hideContext(e){
+            contextMenu.style.opacity = "0";
+            contextMenu.style.display = "none";
+        }
+        
+        network.on("click", hideContext);
+
+    	network.on("oncontext", function(e){
+		e.event.preventDefault();
+                let s = network.getNodeAt({
+                x: e.pointer.DOM.x,
+                y: e.pointer.DOM.y
+            });
+
+            if (s){
+		link = s;
+		let nodeId = link.slice(-1);
+		let node = _nodes.get(link);
+		console.log(node);
+		let type = node.type;
+               	 
+                contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir : "+link+"</a></li>";
+                displayContext();
+	    } else{
+                hideContext();
+            }
+        })
     }
 
 </script>
