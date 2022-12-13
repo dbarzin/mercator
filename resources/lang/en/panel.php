@@ -24,6 +24,7 @@ return [
         'config' => 'Configuration',
         'documentation' => 'Documentation',
         'ecosystem' => 'Ecosystem',
+        'explore' => 'Exploration',
         'guide' => 'Guide',
         'information_system' => 'Information system',
         'logical_infrastructure' => 'Logical infrastructure',

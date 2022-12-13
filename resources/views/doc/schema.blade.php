@@ -62,6 +62,7 @@
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
+    .addImage("/images/lserver.png", "64px", "64px")
 
     .addImage("/images/vlan.png", "64px", "64px")
 
@@ -115,7 +116,7 @@
           NETWORK [label=\"{{ trans('cruds.network.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/cloud.png\" href=\"/admin/networks\"]\
           SUBNETWORK [label=\"{{ trans('cruds.subnetwork.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/network.png\" href=\"/admin/subnetworks\"]\
           VLAN [label=\"vlan\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/vlan.png\" href=\"/admin/vlans\"]\
-          LOGICALSERVER [label=\"{{ trans('cruds.logicalServer.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/server.png\" href=\"/admin/logical-servers\"]\
+          LOGICALSERVER [label=\"{{ trans('cruds.logicalServer.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/lserver.png\" href=\"/admin/logical-servers\"]\
           LOGICALROUTER [label=\"{{ trans('cruds.router.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/router.png\" href=\"/admin/routers\"]\
           NETWORKSWITCHES [label=\"{{ trans('cruds.networkSwitch.title_short') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/switch.png\" href=\"/admin/network-switches\"]\
           CERTIFICATE [label=\"{{ trans('cruds.certificate.title') }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/certificate.png\" href=\"/admin/network-switches\"]\

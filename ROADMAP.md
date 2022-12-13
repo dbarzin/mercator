@@ -36,10 +36,15 @@ Ce document reprend les évolutions prévues sur Mercator sur l'année 2022.
 ## Evolution 2023
 
 - [ ] Maintenir le registre des traitements
+- [ ] Générer un annuaire de crise
+- [ ] Ajouter des champs personnalisés aux objets de la cartographie
+- [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
+- [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
-- [ ] Ajouter des fonctions de manipulation des graphes d'objets
+- [x] Ajouter des fonctions de manipulation des graphes d'objets dans l'explorateur
 - [ ] schémas de l'infrastructure réseau physiqiue
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
 - [ ] Carte des actifs par rack, bâtiment/salle et site
 - [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
+

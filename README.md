@@ -1,6 +1,6 @@
 # Mercator
 
-Mercator is a web application allowing to manage the mapping of an information system as described in the [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) of the [ANSSI](https://www.ssi.gouv.fr/en/). 
+Mercator is an Open Source web application to manage the mapping of an information system as described in the [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) of the [ANSSI](https://www.ssi.gouv.fr/en/). 
 
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
@@ -15,7 +15,7 @@ Computer attacks occur in a constantly changing environment. To meet these chall
 
 The mapping of the Information System allows to have a global view of all the elements which compose the information system to obtain a better readability, and thus a better control. 
 
-The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. It is an essential tool for the control of its information system (IS) and is an obligation for Operators of Vital Importance (OVI) and is part of a global risk management and a global risk management approach.
+The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. It is an essential tool for the control of its information system and is an obligation for operators of vital importance and is part of a global risk management approach.
 
 ## Major functions
 - Graphical views of the ecosystem, information system, administration, logical, applications, and physical infrastructure
@@ -47,9 +47,14 @@ Drawing of the cartography
 
 [<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png) [<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
 
+Explore 
+
+[<img src="public/screenshots/mercator9.png" width="400">](public/screenshots/mercator9.png)
+
 Data model
 
-[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
+[<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png) 
+
 
 
 ## Technologies

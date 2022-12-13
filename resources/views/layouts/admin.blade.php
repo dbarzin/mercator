@@ -86,6 +86,7 @@
                       &nbsp {{ trans('panel.menu.documentation') }}
                     </a>
                     <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/admin/report/explore">{{ trans('panel.menu.explore') }}</a>
                       <a class="dropdown-item" href="/admin/doc/report">{{ trans('panel.menu.reports') }}</a>
                       <a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a>
                       <a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a>
