@@ -89,7 +89,7 @@
 <script>
 
     const IMG = "image";
-    
+
     var nodes = null;
     var edges = null;
     var network = null;
