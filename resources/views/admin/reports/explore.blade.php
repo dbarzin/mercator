@@ -317,26 +317,25 @@
         
         network.on("click", hideContext);
 
-    	network.on("oncontext", function(e){
-		e.event.preventDefault();
-                let s = network.getNodeAt({
-                x: e.pointer.DOM.x,
-                y: e.pointer.DOM.y
-            });
+        network.on("oncontext", function(e){
+          e.event.preventDefault();
+          let s = network.getNodeAt({
+          x: e.pointer.DOM.x,
+          y: e.pointer.DOM.y
+        });
 
-            if (s){
-		link = s;
-		let nodeId = link.slice(-1);
-		let node = _nodes.get(link);
-		console.log(node);
-		let type = node.type;
-               	 
-                contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir : "+link+"</a></li>";
-                displayContext();
-	    } else{
-                hideContext();
-            }
-        })
+          if (s){
+            link = s;
+            let nodeId = link.split("_").pop();
+            console.log(nodeId);
+            let node = _nodes.get(link);
+            let type = node.type;
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir : "+link+"</a></li>";
+            displayContext();
+          } else{
+              hideContext();
+          }
+      })
     }
 
 </script>

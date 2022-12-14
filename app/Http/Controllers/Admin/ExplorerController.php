@@ -44,7 +44,7 @@ class ExplorerController extends Controller
         // Physical Server
         $physicalServers = DB::table('physical_servers')->select('id', 'name', 'bay_id')->whereNull('deleted_at')->get();
         foreach ($physicalServers as $physicalServer) {
-            $this->addNode($nodes, 6, $this->formatId('PSERVER_', $physicalServer->id), $physicalServer->name, '/images/server.png', 'physical_servers');
+            $this->addNode($nodes, 6, $this->formatId('PSERVER_', $physicalServer->id), $physicalServer->name, '/images/server.png', 'physical-servers');
             $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
         }
         // Workstation
@@ -72,7 +72,7 @@ class ExplorerController extends Controller
         // vlans
         $vlans = DB::table('vlans')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($vlans as $vlan) {
-            $this->addNode($nodes, 5, $this->formatId('VLAN_', $vlan->id), $vlan->name, '/images/vlan.png', 'wlans');
+            $this->addNode($nodes, 5, $this->formatId('VLAN_', $vlan->id), $vlan->name, '/images/vlan.png', 'vlans');
         }
 
         // Subnetworks
@@ -102,7 +102,7 @@ class ExplorerController extends Controller
         // Logical Servers
         $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip')->get();
         foreach ($logicalServers as $logicalServer) {
-            $this->addNode($nodes, 5, $this->formatId('LSERVER_', $logicalServer->id), $logicalServer->name, '/images/lserver.png', 'logical_servers');
+            $this->addNode($nodes, 5, $this->formatId('LSERVER_', $logicalServer->id), $logicalServer->name, '/images/lserver.png', 'logical-servers');
 
             if ($logicalServer->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
@@ -169,7 +169,7 @@ class ExplorerController extends Controller
         // Application Blocks
         $applicationBlocks = DB::table('application_blocks')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($applicationBlocks as $applicationBlock) {
-            $this->addNode($nodes, 3, $this->formatId('BLOCK_', $applicationBlock->id), $applicationBlock->name, '/images/applicationblock.png', 'application_blocks');
+            $this->addNode($nodes, 3, $this->formatId('BLOCK_', $applicationBlock->id), $applicationBlock->name, '/images/applicationblock.png', 'application-blocks');
         }
         // Applications
         $applications = DB::table('m_applications')->select('id', 'name', 'application_block_id')->whereNull('deleted_at')->get();
@@ -185,7 +185,7 @@ class ExplorerController extends Controller
         // Application Services
         $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($services as $service) {
-            $this->addNode($nodes, 3, $this->formatId('SERV_', $service->id), $service->name, '/images/service.png', 'services');
+            $this->addNode($nodes, 3, $this->formatId('SERV_', $service->id), $service->name, '/images/service.png', 'application-services');
         }
         // application_service_m_application
         $joins = DB::table('application_service_m_application')->select('m_application_id', 'application_service_id')->get();
