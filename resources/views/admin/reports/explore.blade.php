@@ -112,13 +112,12 @@
 <script>
 
     const IMG = "image";
-      
+
     var nodes = null;
     var edges = null;
     var network = null;
 
     var _nodes = new Map();
-    var _edges = new Map();
     @foreach($nodes as $node) 
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}", shape: IMG, type: "{{ $node["type"] }}", edges: [ <?php 
         foreach($edges as $edge) {
