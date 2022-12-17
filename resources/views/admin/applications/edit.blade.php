@@ -278,21 +278,20 @@
         </div>
 
           <div class="row">
-            <div class="col-sm">
+            <div class="col-md-6">
+                    <label
+                        @if (auth()->user()->granularity>=2)
+                        class="recommended"
+                        @endif
+                        for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
                     <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
-                                <td width='20%'>
-                                    <label
-                                        @if (auth()->user()->granularity>=2)
-                                        class="recommended"
-                                        @endif
-                                        for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
+                                <td align="right" valign="bottom">
+                                    <label for="security_need">{{ trans("global.confidentiality_short") }}</label>
                                 </td>
-                                <td align="right" width="10">
-                                    <label for="security_need">C</label>
-                                </td>
-                                <td  width="120">
+                                <td>
+                                    <span class="help-block">{{ trans("global.confidentiality") }}</span>
                                     <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
                                         <option value="-1" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
@@ -302,10 +301,11 @@
                                         <option value="4" {{ ($application->security_need_c ? $application->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                     </select>
                                 </td>
-                                <td align="right">
-                                    <label for="security_need">I</label>
+                                <td align="right" valign="bottom">
+                                    <label for="security_need">{{ trans("global.integrity_short") }}</label>
                                 </td>
-                                <td  width="120">
+                                <td>
+                                    <span class="help-block">{{ trans("global.integrity") }}</span>
                                     <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
                                         <option value="-1" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
@@ -315,10 +315,11 @@
                                         <option value="4" {{ ($application->security_need_i ? $application->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                     </select>
                                 </td>
-                                <td align="right">
-                                    <label for="security_need">D</label>
+                                <td align="right" valign="bottom">
+                                    <label for="security_need">{{ trans("global.availability_short") }}</label>
                                 </td>
-                                <td  width="120">
+                                <td>
+                                    <span class="help-block">{{ trans("global.availability") }}</span>
                                     <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
                                         <option value="-1" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
@@ -328,10 +329,11 @@
                                         <option value="4" {{ ($application->security_need_a ? $application->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                     </select>
                                 </td>
-                                <td align="right">
-                                    <label for="security_need">T</label>
+                                <td align="right" valign="bottom">
+                                    <label for="security_need">{{ trans("global.tracability_short") }}</label>
                                 </td>
-                                <td  width="120">
+                                <td>
+                                    <span class="help-block">{{ trans("global.tracability") }}</span>
                                     <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
                                         <option value="-1" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == -1 ? 'selected' : '' }}></option>
                                         <option value="0" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
@@ -348,18 +350,59 @@
                                 {{ $errors->first('security_need') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>                    </div>
+                        <span class="help-block">{{ trans('cruds.application.fields.security_need_helper') }}</span>
+                    </div>
 
                 </div>
+
                 <div class="col-sm">
+                    <div class="form-group">
+                        <label>{{ trans('cruds.application.fields.RTO') }}</label>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="rto_days" name="rto_days" min="0" value="{{ old('rto_days', $application->rto_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="rto_hours" name="rto_hours" min="0" max="24" value="{{ old('rto_hours', $application->rto_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="rto_minutes" name="rto_minutes" min="0" max="60" value="{{ old('rto_minutes', $application->rto_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
+                        <span class="help-block">{{ trans('cruds.application.fields.RTO_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label>{{ trans('cruds.application.fields.RPO') }}</label>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="rpo" name="rpo_days" min="0" value="{{ old('rpo_days', $application->rpo_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="rpo" name="rpo_hours" min="0" max="24" value="{{ old('rpo_hours', $application->rpo_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="rpo" name="rpo_minutes" min="0" max="60" value="{{ old('rpo_minutes', $application->rpo_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
+                        <span class="help-block">{{ trans('cruds.application.fields.RPO_helper') }}</span>
+                    </div>
                 </div>
         </div>
 
-
       <div class="row">
         <div class="col-sm">
-
-
             <div class="form-group">
                 <label class="recommended" for="processes">{{ trans('cruds.application.fields.processes') }}</label>
                 <div style="padding-bottom: 4px">
@@ -592,5 +635,7 @@ function template(data, container) {
       }
     });
   });
+
+
 </script>
 @endsection

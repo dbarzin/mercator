@@ -752,6 +752,48 @@ class CartographyController extends Controller
                             '</p>'
                     );
 
+                    // RTO
+                    $textRun = $this->addHTMLRow(
+                        $table,
+                        trans('cruds.application.fields.RTO'),
+                        ((intdiv($application->rto,60 * 24) > 0) ?
+                            (strval(intdiv($application->rto,60 * 24)) . " " . 
+                                ( (intdiv($application->rto,60 * 24) > 1) ? trans('global.days') :  trans('global.day') )
+                            ) : "" 
+                        ) .
+                        (((intdiv($application->rto,60) %24) > 0) ?
+                            (strval(intdiv($application->rto,60) % 24)) . " " .
+                                (((intdiv($application->rto,60) % 24) > 1) ? trans('global.hours') : trans('global.hour') )
+                            : "" 
+                        ) .
+                        ((($application->rto % 60) > 0) ?
+                            (strval($application->rto % 60) ) . " " .
+                                ((($application->rto % 60) > 1) ? trans('global.hours') : trans('global.hour') )
+                            : "" 
+                        )
+                    );
+
+                    // RPO
+                    $textRun = $this->addHTMLRow(
+                        $table,
+                        trans('cruds.application.fields.RPO'),
+                        ((intdiv($application->rpo,60 * 24) > 0) ?
+                            (strval(intdiv($application->rpo,60 * 24)) . " " . 
+                                ( (intdiv($application->rpo,60 * 24) > 1) ? trans('global.days') :  trans('global.day') )
+                            ) : "" 
+                        ) .
+                        (((intdiv($application->rpo,60) %24) > 0) ?
+                            (strval(intdiv($application->rpo,60) % 24)) . " " .
+                                (((intdiv($application->rpo,60) % 24) > 1) ? trans('global.hours') : trans('global.hour') )
+                            : "" 
+                        ) .
+                        ((($application->rpo % 60) > 0) ?
+                            (strval($application->rpo % 60) ) . " " .
+                                ((($application->rpo % 60) > 1) ? trans('global.hours') : trans('global.hour') )
+                            : "" 
+                        )
+                    );
+
                     $this->addTextRow($table, trans('cruds.application.fields.external'), $application->external);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.processes'));
@@ -1226,7 +1268,7 @@ class CartographyController extends Controller
                     $graph .= ' SUBNET' . $subnetwork->id . '->VLAN' . $subnetwork->vlan_id;
                 }
                 if ($subnetwork->network_id !== null) {
-                    $graph .= ' NET' . $subnetwork->network_id . '->SUBNET' . $subnetwork->id;
+                    $graph .= ' NET' . $subnetwork->network->id . '->SUBNET' . $subnetwork->id;
                 }
                 if ($subnetwork->gateway_id !== null) {
                     $graph .= ' SUBNET' . $subnetwork->id . '->GATEWAY' . $subnetwork->gateway_id;
@@ -1235,7 +1277,7 @@ class CartographyController extends Controller
 
             foreach ($externalConnectedEntities as $entity) {
                 $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
-                if ($entity->network_id !== null) {
+                if ($entity->network !== null) {
                     $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
                 }
             }
@@ -1497,7 +1539,7 @@ class CartographyController extends Controller
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.contacts'), $entity->contacts);
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.externalConnectedEntity.fields.network'));
-                    if ($entity->network_id !== null) {
+                    if ($entity->network !== null) {
                         $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
                     $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src);

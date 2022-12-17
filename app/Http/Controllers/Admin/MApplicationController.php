@@ -107,7 +107,14 @@ class MApplicationController extends Controller
     public function store(StoreMApplicationRequest $request)
     {
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
+
         $application = MApplication::create($request->all());
+
+        // rto-rpo
+        $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
+        $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
+        $application->update();
+
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
@@ -124,6 +131,7 @@ class MApplicationController extends Controller
     public function edit(MApplication $application)
     {
         abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Check for cartographers
         LaravelGate::authorize('is-cartographer-m-application', $application);
 
@@ -134,6 +142,15 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // rto-rpo
+        $application->rto_days = intdiv($application->rto,60*24);
+        $application->rto_hours = intdiv($application->rto,60) % 24;
+        $application->rto_minutes = $application->rto % 60;
+
+        $application->rpo_days = intdiv($application->rpo,60*24);
+        $application->rpo_hours = intdiv($application->rpo,60) % 24;
+        $application->rpo_minutes = $application->rpo % 60;
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -186,7 +203,14 @@ class MApplicationController extends Controller
     public function update(UpdateMApplicationRequest $request, MApplication $application)
     {
         $application->responsible = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
+
+        // rto-rpo
+        $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
+        $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
+
+        // other fields
         $application->update($request->all());
+
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
