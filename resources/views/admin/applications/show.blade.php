@@ -165,7 +165,7 @@
                         <th>
                             {{ trans('cruds.application.fields.security_need') }}
                         </th>
-                        <td colspan="11">
+                        <td colspan="5">
                             {{ trans('global.confidentiality') }} :
                                 {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$application->security_need_c] ?? "" }}
@@ -181,6 +181,59 @@
                             {{ trans('global.tracability') }} :
                                 {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
                                 [$application->security_need_t] ?? "" }}
+                        </td>
+                        <td colspan="4">
+                            <b>{{ trans('cruds.application.fields.RTO') }} </b> : 
+                            @if (intdiv($application->rto,60 * 24) > 0)
+                                {{ intdiv($application->rto,60 * 24) }}
+                                @if (intdiv($application->rto,60 * 24) > 1)
+                                    {{ trans('global.days') }}
+                                @else
+                                    {{ trans('global.day') }}
+                                @endif
+                            @endif
+                            @if ((intdiv($application->rto,60) % 24) > 0)
+                                {{ intdiv($application->rto,60) % 24 }}
+                                @if ((intdiv($application->rto,60) % 24) > 1)
+                                    {{ trans('global.hours') }}
+                                @else
+                                    {{ trans('global.hour') }}
+                                @endif
+                            @endif
+                            @if (($application->rto % 60) > 0)
+                                {{ $application->rto % 60 }}
+                                @if (($application->rto % 60) > 1)
+                                    {{ trans('global.minutes') }}
+                                @else
+                                    {{ trans('global.minute') }}
+                                @endif
+                            @endif
+                            <br>
+                            <b>{{ trans('cruds.application.fields.RPO') }} </b> : 
+                            {{ intdiv($application->rpo,60 * 24) }}
+                            @if (intdiv($application->rpo,60 * 24) > 0)
+                                @if (intdiv($application->rpo,60 * 24) > 1)
+                                    {{ trans('global.days') }}
+                                @else
+                                    {{ trans('global.day') }}
+                                @endif
+                            @endif
+                            @if ((intdiv($application->rpo,60) % 24) > 0)
+                                {{ intdiv($application->rpo,60) % 24 }}
+                                @if ((intdiv($application->rpo,60) % 24) > 1)
+                                    {{ trans('global.hours') }}
+                                @else
+                                    {{ trans('global.hour') }}
+                                @endif
+                            @endif    
+                            @if (($application->rpo % 60) > 0)
+                                {{ $application->rpo % 60 }}
+                                @if (($application->rpo % 60) > 1)
+                                    {{ trans('global.minutes') }}
+                                @else
+                                    {{ trans('global.minute') }}
+                                @endif
+                            @endif
                         </td>
                     </tr>
                     <tr>

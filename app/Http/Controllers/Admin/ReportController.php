@@ -1109,10 +1109,12 @@ class ReportController extends Controller
             trans('cruds.application.fields.type'),
             trans('cruds.application.fields.users'),
             trans('cruds.application.fields.external'),
-            'C',
-            'I',
-            'A',
-            'T',
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
+            trans('cruds.application.fields.RTO'),
+            trans('cruds.application.fields.RPO'),
             trans('cruds.application.fields.documentation'),
             trans('cruds.application.fields.logical_servers'),
             trans('cruds.physicalServer.title'),
@@ -1144,11 +1146,14 @@ class ReportController extends Controller
         $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getColumnDimension('P')->setWidth(10, 'pt');
         $sheet->getStyle('P')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
+        // RTO - RPO
         $sheet->getColumnDimension('Q')->setAutoSize(true);
-        $sheet->getColumnDimension('R')->setWidth(200, 'pt');
-        $sheet->getColumnDimension('S')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('R')->setAutoSize(true);
+
+        $sheet->getColumnDimension('S')->setAutoSize(true);
         $sheet->getColumnDimension('T')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('U')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('V')->setWidth(200, 'pt');
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -1185,8 +1190,11 @@ class ReportController extends Controller
                 $sheet->setCellValue("P{$row}", $application->security_need_t);
                 $this->addSecurityNeedColor($sheet, "P{$row}", $application->security_need_t);
 
-                $sheet->setCellValue("Q{$row}", $application->documentation);
-                $sheet->setCellValue("R{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue("Q{$row}", $application->rto);
+                $sheet->setCellValue("R{$row}", $application->rpo);
+
+                $sheet->setCellValue("S{$row}", $application->documentation);
+                $sheet->setCellValue("T{$row}", $application->logical_servers->implode('name', ', '));
                 $res = null;
 
                 // Done: improve me with select, join and unique
@@ -1470,15 +1478,30 @@ class ReportController extends Controller
         // macroprocess - process - application - base de données - information
         $header = [
             trans('cruds.macroProcessus.title'),
-            'C','I','A','T',
+                trans('global.confidentiality_short'),
+                trans('global.integrity_short'),
+                trans('global.availability_short'),
+                trans('global.tracability_short'),
             trans('cruds.process.title'),
-            'C','I','A','T',
+                trans('global.confidentiality_short'),
+                trans('global.integrity_short'),
+                trans('global.availability_short'),
+                trans('global.tracability_short'),
             trans('cruds.application.title'),
-            'C','I','A','T',
+                trans('global.confidentiality_short'),
+                trans('global.integrity_short'),
+                trans('global.availability_short'),
+                trans('global.tracability_short'),
             trans('cruds.database.title'),
-            'C','I','A','T',
+                trans('global.confidentiality_short'),
+                trans('global.integrity_short'),
+                trans('global.availability_short'),
+                trans('global.tracability_short'),
             trans('cruds.information.title'),
-            'C','I','A','T',
+                trans('global.confidentiality_short'),
+                trans('global.integrity_short'),
+                trans('global.availability_short'),
+                trans('global.tracability_short'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
