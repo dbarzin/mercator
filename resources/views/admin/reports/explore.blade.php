@@ -191,7 +191,6 @@
         };
 
         var options = {
-            autoresize: true,tr
           interaction:{
             dragNodes:true,
             dragView: true,
@@ -339,7 +338,8 @@
             console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
-            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir : "+link+"</a></li>";
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir"</a></li>" + 
+            "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>Modifier</a></li>";
             displayContext();
           } else{
               hideContext();
