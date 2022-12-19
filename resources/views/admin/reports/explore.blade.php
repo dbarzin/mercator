@@ -318,11 +318,11 @@
 	    contextMenu.style.left=x + "px";
         }
 
-        function hideContext(e){
+        function hideContext(){
             contextMenu.style.opacity = "0";
             contextMenu.style.display = "none";
         }
-        
+
         network.on("click", hideContext);
 
         network.on("oncontext", function(e){
@@ -338,9 +338,21 @@
             console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
-            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir"</a></li>" + 
-            "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>Modifier</a></li>";
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir</a></li>" + 
+                                    "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>Modifier</a></li>" +
+                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>Masquer</span></li>";
+
             displayContext();
+            
+            let hideNode = document.getElementById("hideNode");
+            hideNode.addEventListener("click", function(){
+                let node = _nodes.get(link);
+                console.log(_nodes);
+                network.body.data.nodes.remove(node);
+                console.log("noeud "+ link + " masqué !" );
+                hideContext();
+            });
+
           } else{
               hideContext();
           }
