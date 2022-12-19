@@ -212,6 +212,64 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>{{ trans("cruds.application.fields.RTO") }}</th>
+                                        <td>
+                                            @if (intdiv($application->rto,60 * 24) > 0)
+                                                {{ intdiv($application->rto,60 * 24) }}
+                                                @if (intdiv($application->rto,60 * 24) > 1)
+                                                    {{ trans('global.days') }}
+                                                @else
+                                                    {{ trans('global.day') }}
+                                                @endif
+                                            @endif
+                                            @if ((intdiv($application->rto,60) % 24) > 0)
+                                                {{ intdiv($application->rto,60) % 24 }}
+                                                @if ((intdiv($application->rto,60) % 24) > 1)
+                                                    {{ trans('global.hours') }}
+                                                @else
+                                                    {{ trans('global.hour') }}
+                                                @endif
+                                            @endif
+                                            @if (($application->rto % 60) > 0)
+                                                {{ $application->rto % 60 }}
+                                                @if (($application->rto % 60) > 1)
+                                                    {{ trans('global.minutes') }}
+                                                @else
+                                                    {{ trans('global.minute') }}
+                                                @endif
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.application.fields.RPO") }}</th>
+                                        <td>
+                                            {{ intdiv($application->rpo,60 * 24) }}
+                                            @if (intdiv($application->rpo,60 * 24) > 0)
+                                                @if (intdiv($application->rpo,60 * 24) > 1)
+                                                    {{ trans('global.days') }}
+                                                @else
+                                                    {{ trans('global.day') }}
+                                                @endif
+                                            @endif
+                                            @if ((intdiv($application->rpo,60) % 24) > 0)
+                                                {{ intdiv($application->rpo,60) % 24 }}
+                                                @if ((intdiv($application->rpo,60) % 24) > 1)
+                                                    {{ trans('global.hours') }}
+                                                @else
+                                                    {{ trans('global.hour') }}
+                                                @endif
+                                            @endif    
+                                            @if (($application->rpo % (24*60)) > 0)
+                                                {{ $application->rpo % (24*60) }}
+                                                @if (($application->rpo % (24*60)) > 1)
+                                                    {{ trans('global.minutes') }}
+                                                @else
+                                                    {{ trans('global.minute') }}
+                                                @endif
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>{{ trans("cruds.application.fields.external") }}</th>
                                         <td>{{ $application->external}}</td>
                                     </tr>

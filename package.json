@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-duration-picker": "^2.1.3",
         "sweetalert2": "^11.4.4"
     }
 }

@@ -216,7 +216,7 @@
             @endcan
 
             @can('activity_access')
-            @if (($activities->count()>0)&&(auth()->user()->granularity>=3))
+            @if (($activities->count()>0)&&(auth()->user()->granularity==3))
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.activity.title') }}
@@ -342,7 +342,7 @@
             @endcan
 
             @can('task_access')
-            @if ($tasks->count()>0)
+            @if (($tasks->count()>0)&&(auth()->user()->granularity==3))
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.task.title') }}
@@ -374,7 +374,7 @@
             @endcan
 
             @can('actors_access')
-            @if ($actors->count()>0)
+            @if (($actors->count()>0)&&(auth()->user()->granularity>=2))
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.actor.title') }}
@@ -518,7 +518,7 @@ digraph  {
     @endif
     @foreach($processes as $process)
         P{{ $process->id }} [label="{{ $process->identifiant }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
-        @if(auth()->user()->granularity>=3)
+        @if(auth()->user()->granularity==3)
             @foreach($process->activities as $activity)
                 P{{$process->id}} -> A{{$activity->id}}
             @endforeach
@@ -531,9 +531,11 @@ digraph  {
                 MP{{ $process->macroprocess_id }} -> P{{$process->id}}
             @endif
         @endif
-        @foreach($process->operations as $operation)
-            P{{ $process->id }} -> O{{ $operation->id }}
-        @endforeach
+        @if (auth()->user()->granularity<=2)
+            @foreach($process->operations as $operation)
+                P{{ $process->id }} -> O{{ $operation->id }}
+            @endforeach
+        @endif
     @endforeach
     @if (auth()->user()->granularity>=3)
     @foreach($activities as $activity)
@@ -548,19 +550,27 @@ digraph  {
     @endif
     @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
+        @if (auth()->user()->granularity==3)
         @foreach($operation->tasks as $task)
             O{{ $operation->id }} -> T{{ $task->id }}
         @endforeach
+        @endif
+        @if (auth()->user()->granularity>=2)
         @foreach($operation->actors as $actor)
             O{{ $operation->id }} -> ACT{{ $actor->id }}
         @endforeach
+        @endif
     @endforeach
+    @if (auth()->user()->granularity==3)
     @foreach($tasks as $task)
         T{{ $task->id }} [label="{{ $task->nom }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#TASK{{ $task->id }}"]
     @endforeach
+    @endif
+    @if (auth()->user()->granularity>=2)
     @foreach($actors as $actor)
         ACT{{ $actor->id }} [label="{{ $actor->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png"  href="#ACTOR{{ $actor->id }}"]
     @endforeach
+    @endif
     @foreach($informations as $information)
         I{{ $information->id }} [label="{{ $information->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png"  href="#INFORMATION{{ $information->id }}"]
     @endforeach
