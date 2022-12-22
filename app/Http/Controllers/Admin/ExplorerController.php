@@ -60,7 +60,7 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('SITE_', $workstation->site_id));
         }
         // physical_switches
-        $switches = DB::table('physical_switches')->select('id', 'name', 'bay_id')->whereNull('deleted_at')->get();
+        $switches = DB::table('physical_switches')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($switches as $switch) {
             $this->addNode($nodes, 6, $this->formatId('SWITCH_', $switch->id), $switch->name, '/images/switch.png', 'physical_switches');
             if ($switch->bay_id!=null)
@@ -72,9 +72,9 @@ class ExplorerController extends Controller
         }
 
         // Physical routers
-        $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id')->whereNull('deleted_at')->get();
+        $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id' )->whereNull('deleted_at')->get();
         foreach ($routers as $router) {
-            $this->addNode($nodes, 6, $this->formatId('ROUTER_', $router->id), $router->name, '/images/router.png', 'physical-routers');
+            $this->addNode($nodes, 6, $this->formatId('ROUTER_', $router->id), $router->name, '/images/prouter.png', 'physical-routers');
             if ($router->bay_id!=null)
                 $this->addLinkEdge($edges, $this->formatId('ROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
             elseif ($router->building_id!=null)
@@ -85,7 +85,7 @@ class ExplorerController extends Controller
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'physical-security-devices');
+            $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/securitysevice.png', 'physical-security-devices');
             if ($securityDevice->bay_id!=null)
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
             elseif ($securityDevice->building_id!=null)
