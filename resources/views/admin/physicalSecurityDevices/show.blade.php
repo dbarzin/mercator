@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-security-devices.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SECURITY_{{$physicalSecurityDevice->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('physical_security_device_edit')
                     <a class="btn btn-info" href="{{ route('admin.physical-security-devices.edit', $physicalSecurityDevice->id) }}">
                         {{ trans('global.edit') }}

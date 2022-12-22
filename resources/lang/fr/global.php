@@ -21,6 +21,7 @@ return [
     'edit' => 'Modifier',
     'explore' => 'Explorer',
     'forgot_password' => 'Mot de passe oublié ?',
+    'hide' => 'Masquer',
     'integrity' => 'Intégrité',
     'list' => 'Liste',
     'login' => 'Connexion',
