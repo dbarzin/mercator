@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.wan.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.wan.fields.name') }}
                         </th>
                         <th>
@@ -44,9 +41,6 @@
                         <tr data-entry-id="{{ $wan->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $wan->id ?? '' }}
                             </td>
                             <td>
                                 {{ $wan->name ?? '' }}

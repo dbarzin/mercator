@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.storage-devices.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=STORAGE_{{$storageDevice->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('storage_device_edit')
                     <a class="btn btn-info" href="{{ route('admin.storage-devices.edit', $storageDevice->id) }}">
                         {{ trans('global.edit') }}

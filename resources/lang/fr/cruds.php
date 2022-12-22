@@ -1083,7 +1083,7 @@ return [
             'lans_helper' => '',
             'mans' => 'MANs rattachés',
             'mans_helper' => '',
-            'name' => 'Name',
+            'name' => 'Nom',
             'name_helper' => '',
         ],
         'title' => 'WAN - Wide Area Network',
