@@ -817,6 +817,17 @@ digraph  {
         @foreach($building->roomBays as $bay) 
             B{{ $building->id }} -> BAY{{ $bay->id }}
         @endforeach
+        @can('workstation_access')
+            @if ($building->buildingWorkstations()->count()>=5)
+                WG{{ $building->buildingWorkstations()->first()->id }} [label="{{ $building->buildingWorkstations()->count() }} {{ trans("cruds.workstation.title")}}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+                B{{ $building->id }} -> WG{{ $building->buildingWorkstations()->first()->id }}
+            @else
+                @foreach($building->buildingWorkstations() as $workstation) 
+                   W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+                   S{{ $workstation->site->id }} -> W{{ $workstation->id }}
+                @endforEach
+            @endif
+        @endcan
     @endforEach
     @endcan
     @can('bay_access')
@@ -833,16 +844,6 @@ digraph  {
              B{{ $pServer->building->id }} -> PSERVER{{ $pServer->id }}
         @elseif ($pServer->site!=null)
              S{{ $pServer->site->id }} -> PSERVER{{ $pServer->id }}
-        @endif
-    @endforeach
-    @endcan
-    @can('workstation_access')
-    @foreach($workstations as $workstation) 
-        W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
-        @if ($workstation->building!=null)
-             B{{ $workstation->building->id }} -> W{{ $workstation->id }}
-        @elseif ($workstation->site!=null)
-             S{{ $workstation->site->id }} -> W{{ $workstation->id }}
         @endif
     @endforeach
     @endcan
