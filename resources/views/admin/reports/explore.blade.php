@@ -347,7 +347,6 @@
             let hideNode = document.getElementById("hideNode");
             hideNode.addEventListener("click", function(){
                 let node = _nodes.get(link);
-                console.log(_nodes);
                 network.body.data.nodes.remove(node);
                 console.log("noeud "+ link + " masqué !" );
                 hideContext();
