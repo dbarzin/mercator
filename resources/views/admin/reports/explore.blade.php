@@ -348,10 +348,9 @@
             console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
-            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir</a></li>" + 
-                                    "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>Modifier</a></li>" +
-                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>Masquer</span></li>";
-
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
+                                    "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>{{ trans("global.edit") }}</a></li>" +
+                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span>
             displayContext();
             
             let hideNode = document.getElementById("hideNode");
