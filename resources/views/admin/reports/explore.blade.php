@@ -107,7 +107,7 @@
         top: 0;
         left: 0;
         z-index: 1030;
-        height: 100vh;
+        height: 100vh !important;
         width: 100vw;
     }
 
@@ -368,6 +368,23 @@
       })
     }
 
+    const network_container = document.getElementById('mynetwork');
+
+    document.addEventListener('keypress', fullscreen_network);
+
+    function fullscreen_network(e){
+      if (e.key === "F"){
+        if (network_container.classList.contains('fullscreen_network')){
+          network_container.classList.remove('fullscreen_network');
+          return;
+        }
+        network_container.classList.add('fullscreen_network');
+        return;
+      }
+      if (e.key === "Escape"){
+        network_container.classList.remove('fullscreen_network');
+      }
+    }
 
 
 </script>
