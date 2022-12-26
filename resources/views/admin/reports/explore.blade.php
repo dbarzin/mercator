@@ -350,7 +350,7 @@
             let type = node.type;
             contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
                                     "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>{{ trans("global.edit") }}</a></li>" +
-                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span>
+                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>"
             displayContext();
             
             let hideNode = document.getElementById("hideNode");
