@@ -94,13 +94,23 @@
         border: 1px solid #cfcfcf;
         display: none;
         opacity: 0;
-	min-height: 3rem;
-	padding: 10px 16px;
-	list-style: none;
+      	min-height: 3rem;
+	      padding: 10px 16px;
+	      list-style: none;
     }
     #explore_context a:hover{
-    	text-decoration:none;
+    	  text-decoration:none;
     }
+    .fullscreen_network{
+        position: fixed;
+        background-color: #fff;
+        top: 0;
+        left: 0;
+        z-index: 1030;
+        height: 100vh;
+        width: 100vw;
+    }
+
 
 @endsection
 
@@ -338,9 +348,9 @@
             console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
-            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
-                                    "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>{{ trans("global.edit") }}</a></li>" +
-                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>";
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>Voir</a></li>" + 
+                                    "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>Modifier</a></li>" +
+                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>Masquer</span></li>";
 
             displayContext();
             
@@ -357,6 +367,8 @@
           }
       })
     }
+
+
 
 </script>
 
