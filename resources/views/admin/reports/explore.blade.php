@@ -94,13 +94,23 @@
         border: 1px solid #cfcfcf;
         display: none;
         opacity: 0;
-	min-height: 3rem;
-	padding: 10px 16px;
-	list-style: none;
+      	min-height: 3rem;
+	      padding: 10px 16px;
+	      list-style: none;
     }
     #explore_context a:hover{
-    	text-decoration:none;
+    	  text-decoration:none;
     }
+    .fullscreen_network{
+        position: fixed;
+        background-color: #fff;
+        top: 0;
+        left: 0;
+        z-index: 1030;
+        height: 100vh !important;
+        width: 100vw;
+    }
+
 
 @endsection
 
@@ -340,8 +350,7 @@
             let type = node.type;
             contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
                                     "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>{{ trans("global.edit") }}</a></li>" +
-                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>";
-
+                                    "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span>
             displayContext();
             
             let hideNode = document.getElementById("hideNode");
@@ -357,6 +366,25 @@
           }
       })
     }
+
+    const network_container = document.getElementById('mynetwork');
+
+    document.addEventListener('keypress', fullscreen_network);
+
+    function fullscreen_network(e){
+      if (e.key === "F"){
+        if (network_container.classList.contains('fullscreen_network')){
+          network_container.classList.remove('fullscreen_network');
+          return;
+        }
+        network_container.classList.add('fullscreen_network');
+        return;
+      }
+      if (e.key === "Escape"){
+        network_container.classList.remove('fullscreen_network');
+      }
+    }
+
 
 </script>
 

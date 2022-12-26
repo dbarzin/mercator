@@ -74,13 +74,13 @@ class ExplorerController extends Controller
         // Physical routers
         $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id' )->whereNull('deleted_at')->get();
         foreach ($routers as $router) {
-            $this->addNode($nodes, 6, $this->formatId('ROUTER_', $router->id), $router->name, '/images/prouter.png', 'physical-routers');
+            $this->addNode($nodes, 6, $this->formatId('PROUTER_', $router->id), $router->name, '/images/prouter.png', 'physical-routers');
             if ($router->bay_id!=null)
-                $this->addLinkEdge($edges, $this->formatId('ROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
+                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
             elseif ($router->building_id!=null)
-                $this->addLinkEdge($edges, $this->formatId('ROUTER_', $router->id), $this->formatId('BUILDING_', $router->building_id));
+                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BUILDING_', $router->building_id));
             elseif ($routers->site_id!=null)
-                $this->addLinkEdge($edges, $this->formatId('ROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
+                $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
         }
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
@@ -198,6 +198,7 @@ class ExplorerController extends Controller
         // Logical Routers
         $logicalRouters = Router::All();
         foreach ($logicalRouters as $logicalRouter) {
+            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
             if ($logicalRouter->getAttribute('ip_addresses') !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalRouter->getAttribute('ip_addresses')) as $address) {
