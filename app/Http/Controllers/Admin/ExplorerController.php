@@ -174,10 +174,8 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('LAN_', $join->lan_id), $this->formatId('WAN_', $join->wan_id));
         }
-        
-        
+                
         // Subnetworks
-        // $subnetworks = DB::table("subnetworks")->select("id","name","network_id","vlan_id")->whereNull('deleted_at')->get();
         $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
@@ -361,7 +359,13 @@ class ExplorerController extends Controller
         // database_m_application
         $joins = DB::table('database_m_application')->select('m_application_id', 'database_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('DATABASE_', $join->database_id));
+            $this->addFluxEdge($edges, null, false, $this->formatId('APP_', $join->m_application_id), $this->formatId('DATABASE_', $join->database_id));
+        }
+
+        // database_logical_server
+        $joins = DB::table('database_logical_server')->select('database_id', 'logical_server_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('LSERVER_', $join->logical_server_id), $this->formatId('DATABASE_', $join->database_id));
         }
 
         // Fluxes

@@ -146,6 +146,73 @@
             </div>
         </div>
 
+
+            <div class="row">
+                <div class="col-sm">
+
+                    <div class="form-group">
+                        <label class="recommended" for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                            @foreach($applications as $id => $applications)
+                                <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $logicalServer->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('servers'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('servers') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.applications_helper') }}</span>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="servers">{{ trans('cruds.logicalServer.fields.databases') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                            @foreach($databases as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('servers'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('servers') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.databases_helper') }}</span>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="servers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="servers[]" id="servers" multiple>
+                            @foreach($servers as $id => $servers)
+                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $servers }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('servers'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('servers') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.servers_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="configuration">{{ trans('cruds.logicalServer.fields.configuration') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('configuration') ? 'is-invalid' : '' }}" name="configuration" id="configuration">{!! old('configuration', $logicalServer->configuration) !!}</textarea>
@@ -157,44 +224,6 @@
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.configuration_helper') }}</span>
             </div>
 
-            <div class="form-group">
-                <label class="recommended" for="applications">{{ trans('cruds.logicalServer.fields.applications') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
-                    @foreach($applications as $id => $applications)
-                        <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $logicalServer->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('servers'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('servers') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.logicalServer.fields.applications_helper') }}</span>
-            </div>
-
-
-            <div class="form-group">
-                <label class="recommended" for="servers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="servers[]" id="servers" multiple>
-                    @foreach($servers as $id => $servers)
-                        <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $servers }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('servers'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('servers') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.logicalServer.fields.servers_helper') }}</span>
-            </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

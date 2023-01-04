@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\LogicalServer;
+use App\Database;
+use App\MApplication;
+use App\PhysicalServer;
+use App\Services\CartographerService;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
-use App\LogicalServer;
-use App\MApplication;
-use App\PhysicalServer;
-use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,6 +43,7 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::with('cartographers')->get();
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
@@ -50,8 +53,13 @@ class LogicalServerController extends Controller
 
         return view(
             'admin.logicalServers.create',
-            compact('servers', 'applications', 'environment_list', 'operating_system_list')
-        );
+            compact(
+                'servers', 
+                'applications', 
+                'databases',
+                'environment_list', 
+                'operating_system_list')
+            );
     }
 
     public function store(StoreLogicalServerRequest $request)
@@ -59,6 +67,7 @@ class LogicalServerController extends Controller
         $logicalServer = LogicalServer::create($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->databases()->sync($request->input('databases', []));
 
         return redirect()->route('admin.logical-servers.index');
     }
@@ -68,6 +77,7 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::with('cartographers')->get();
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
@@ -79,7 +89,13 @@ class LogicalServerController extends Controller
 
         return view(
             'admin.logicalServers.edit',
-            compact('servers', 'applications', 'operating_system_list', 'environment_list', 'logicalServer')
+            compact(
+                'servers', 
+                'applications', 
+                'databases',
+                'operating_system_list', 
+                'environment_list', 
+                'logicalServer')
         );
     }
 
@@ -88,6 +104,7 @@ class LogicalServerController extends Controller
         $logicalServer->update($request->all());
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->databases()->sync($request->input('databases', []));
 
         return redirect()->route('admin.logical-servers.index');
     }

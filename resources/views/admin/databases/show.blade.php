@@ -83,8 +83,40 @@
                             {{ trans('cruds.database.fields.informations') }}
                         </th>
                         <td>
-                            @foreach($database->informations as $key => $informations)
-                                <span class="label label-info">{{ $informations->name }}</span>
+                            @foreach($database->informations as $information)
+                                <a href="{{ route('admin.information.show', $information->id) }}">
+                                    {{ $information->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.database.fields.applications') }}
+                        </th>
+                        <td>
+                            @foreach($database->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.database.fields.logical_servers') }}
+                        </th>
+                        <td>
+                            @foreach($database->logicalServers as $logicalServer)
+                                <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
+                                    {{ $logicalServer->name }}
+                                </a>
                                 @if (!$loop->last)
                                 ,
                                 @endif

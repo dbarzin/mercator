@@ -136,6 +136,21 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.logicalServer.fields.databases') }}
+                        </th>
+                        <td colspan="10">
+                            @foreach($logicalServer->databases as $database)
+                                <a href="{{ route('admin.databases.show', $database->id) }}">
+                                    {{ $database->name }}
+                                </a>
+                                @if(!$loop->last)
+                                ,
+                                @endif                                
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.logicalServer.fields.servers') }}
                         </th>
                         <td colspan="10">

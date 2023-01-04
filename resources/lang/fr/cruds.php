@@ -305,6 +305,8 @@ return [
             'security_need_helper' => 'Besoins de sécurité de la base de données',
             'type' => 'Type de technologie',
             'type_helper' => 'ex: mySQL, Oracle, SQL Server',
+            'logical_servers' => 'Serveurs logiques',
+            'logical_servers_helper' =>  'Liste des serveurs logiques qui hébergent la base de données'
         ],
         'title' => 'Bases de données',
         'title_singular' => 'Base de données',
@@ -555,6 +557,8 @@ return [
             "install_date_helper" => "Date d'installation du système d'exploitation",
             "update_date" => "Date de mise à jour",
             "update_date_helper" => "Date de dernière de dernière mise à jour du système d'exploitation",
+            'databases' => 'Base de données',
+            'databases_helper' => 'Bases de données hébergées par le serveur logique',
         ],
         'title' => 'Serveurs logiques',
         'title_short' => 'Serveurs',
