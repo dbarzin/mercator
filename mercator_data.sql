@@ -214,12 +214,22 @@ INSERT INTO `database_information` (`database_id`, `information_id`) VALUES (1,1
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `database_logical_server`
+--
+
+LOCK TABLES `database_logical_server` WRITE;
+/*!40000 ALTER TABLE `database_logical_server` DISABLE KEYS */;
+INSERT INTO `database_logical_server` (`database_id`, `logical_server_id`) VALUES (6,1);
+/*!40000 ALTER TABLE `database_logical_server` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `database_m_application`
 --
 
 LOCK TABLES `database_m_application` WRITE;
 /*!40000 ALTER TABLE `database_m_application` DISABLE KEYS */;
-INSERT INTO `database_m_application` (`m_application_id`, `database_id`) VALUES (2,3),(3,4),(3,1),(4,5),(4,6),(15,5),(15,4),(16,1),(35,3);
+INSERT INTO `database_m_application` (`m_application_id`, `database_id`) VALUES (2,3),(3,4),(3,1),(4,5),(15,5),(15,4),(16,1),(35,3),(1,6),(2,6),(3,6),(18,6),(35,6);
 /*!40000 ALTER TABLE `database_m_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -727,7 +737,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `workstations` WRITE;
 /*!40000 ALTER TABLE `workstations` DISABLE KEYS */;
-INSERT INTO `workstations` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`) VALUES (1,'Workstation 1','<p>Station de travail compta</p>','2020-06-21 15:09:04','2022-06-27 09:35:27',NULL,1,7,NULL,'ThinThink 460','Windows 11','10.10.43.2','Intel i5','4',120),(2,'Workstation 2','<p>Station de travail accueil</p>','2020-06-21 15:09:54','2021-10-20 07:14:59',NULL,2,3,NULL,'ThinThink 410',NULL,NULL,NULL,NULL,NULL),(3,'Workstation 3','<p>Station de travail back-office</p>','2020-06-21 15:17:57','2021-10-20 07:15:25',NULL,2,4,NULL,'ThinThink 420',NULL,NULL,NULL,NULL,NULL),(4,'Workstation 4','<p>Description goes here</p>','2022-06-27 08:53:58','2022-06-27 09:36:01',NULL,3,2,NULL,'ThinThink 420','Windows 10','10.10.21.3','Intel i7','4',250),(5,'Workstation 5','<p>Description here</p>','2022-06-27 09:36:52','2022-06-27 09:36:52',NULL,1,7,NULL,'ThinThink 420','Windows 10','10.10.43.4','Intel i7','8',250),(6,'Workstation 6','<p>Description of workstation 6</p>','2022-06-27 09:37:54','2022-06-27 09:37:54',NULL,1,2,NULL,'ThinThink 420','Windows 11','10.23.54.3','Intel i7','4',500);
+INSERT INTO `workstations` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`) VALUES (1,'Workstation 1','<p>Station de travail compta</p>','2020-06-21 15:09:04','2022-06-27 09:35:27',NULL,1,7,NULL,'ThinThink 460','Windows 11','10.10.43.2','Intel i5','4',120),(2,'Workstation 2','<p>Station de travail accueil</p>','2020-06-21 15:09:54','2021-10-20 07:14:59',NULL,2,3,NULL,'ThinThink 410',NULL,NULL,NULL,NULL,NULL),(3,'Workstation 3','<p>Station de travail back-office</p>','2020-06-21 15:17:57','2021-10-20 07:15:25',NULL,2,4,NULL,'ThinThink 420',NULL,NULL,NULL,NULL,NULL),(4,'Workstation 4','<p>Description goes here</p>','2022-06-27 08:53:58','2022-06-27 09:36:01',NULL,3,2,NULL,'ThinThink 420','Windows 10','10.10.21.3','Intel i7','4',250),(5,'Workstation 5','<p>Description here</p>','2022-06-27 09:36:52','2022-06-27 09:36:52',NULL,1,7,NULL,'ThinThink 420','Windows 10','10.10.43.4','Intel i7','8',250),(6,'Workstation 6','<p>Description of workstation 6</p>','2022-06-27 09:37:54','2022-06-27 09:37:54',NULL,1,2,NULL,'ThinThink 420','Windows 11','10.23.54.3','Intel i7','4',500),(7,'Workstation 7',NULL,'2022-12-22 22:05:24','2022-12-22 22:05:24',NULL,1,7,NULL,'ThinThink 410',NULL,NULL,NULL,NULL,NULL),(8,'Workstation 8',NULL,'2022-12-22 22:05:42','2022-12-22 22:05:42',NULL,1,7,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(9,'Workstation 9',NULL,'2022-12-22 22:06:00','2022-12-22 22:06:00',NULL,1,7,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(10,'Workstation 10',NULL,'2022-12-22 22:06:17','2022-12-22 22:06:17',NULL,1,7,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `workstations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -750,4 +760,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-17 16:58:55
+-- Dump completed on 2023-01-04 21:27:31
