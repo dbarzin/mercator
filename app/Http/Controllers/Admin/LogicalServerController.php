@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\LogicalServer;
 use App\Database;
-use App\MApplication;
-use App\PhysicalServer;
-use App\Services\CartographerService;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
 use App\Http\Requests\UpdateLogicalServerRequest;
+use App\LogicalServer;
+use App\MApplication;
+use App\PhysicalServer;
+use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServers = LogicalServer::with('applications','servers')->orderBy('name')->get();
+        $logicalServers = LogicalServer::with('applications', 'servers')->orderBy('name')->get();
 
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
@@ -54,12 +53,13 @@ class LogicalServerController extends Controller
         return view(
             'admin.logicalServers.create',
             compact(
-                'servers', 
-                'applications', 
+                'servers',
+                'applications',
                 'databases',
-                'environment_list', 
-                'operating_system_list')
-            );
+                'environment_list',
+                'operating_system_list'
+            )
+        );
     }
 
     public function store(StoreLogicalServerRequest $request)
@@ -90,12 +90,13 @@ class LogicalServerController extends Controller
         return view(
             'admin.logicalServers.edit',
             compact(
-                'servers', 
-                'applications', 
+                'servers',
+                'applications',
                 'databases',
-                'operating_system_list', 
-                'environment_list', 
-                'logicalServer')
+                'operating_system_list',
+                'environment_list',
+                'logicalServer'
+            )
         );
     }
 

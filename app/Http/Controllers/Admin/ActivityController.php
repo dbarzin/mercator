@@ -19,7 +19,7 @@ class ActivityController extends Controller
         abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $activities = Activity::all()->sortBy('name');
-        $activities = Activity::with('operations','activitiesProcesses')->orderBy('name')->get();
+        $activities = Activity::with('operations', 'activitiesProcesses')->orderBy('name')->get();
 
         return view('admin.activities.index', compact('activities'));
     }

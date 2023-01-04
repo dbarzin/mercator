@@ -45,7 +45,7 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applications = MApplication::with('application_block','entity_resp','entities','processes')
+        $applications = MApplication::with('application_block', 'entity_resp', 'entities', 'processes')
             ->orderBy('name')->get();
 
         return view('admin.applications.index', compact('applications'));
@@ -72,8 +72,9 @@ class MApplicationController extends Controller
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {
-                if (strlen(trim($j))>0)
+                if (strlen(trim($j)) > 0) {
                     $res[] = trim($j);
+                }
             }
         }
         $responsible_list = array_unique($res);
@@ -144,12 +145,12 @@ class MApplicationController extends Controller
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // rto-rpo
-        $application->rto_days = intdiv($application->rto,60*24);
-        $application->rto_hours = intdiv($application->rto,60) % 24;
+        $application->rto_days = intdiv($application->rto, 60 * 24);
+        $application->rto_hours = intdiv($application->rto, 60) % 24;
         $application->rto_minutes = $application->rto % 60;
 
-        $application->rpo_days = intdiv($application->rpo,60*24);
-        $application->rpo_hours = intdiv($application->rpo,60) % 24;
+        $application->rpo_days = intdiv($application->rpo, 60 * 24);
+        $application->rpo_hours = intdiv($application->rpo, 60) % 24;
         $application->rpo_minutes = $application->rpo % 60;
 
         // lists
@@ -162,12 +163,12 @@ class MApplicationController extends Controller
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {
-                if (strlen(trim($j))>0)
+                if (strlen(trim($j)) > 0) {
                     $res[] = trim($j);
+                }
             }
         }
         $responsible_list = array_unique($res);
-
 
         $referent_list = MApplication::select('functional_referent')->where('functional_referent', '<>', null)->distinct()->orderBy('functional_referent')->pluck('functional_referent');
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');

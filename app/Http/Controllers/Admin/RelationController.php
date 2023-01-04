@@ -17,7 +17,7 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $relations = Relation::with('source','destination')->orderBy('name')->get();
+        $relations = Relation::with('source', 'destination')->orderBy('name')->get();
 
         return view('admin.relations.index', compact('relations'));
     }
