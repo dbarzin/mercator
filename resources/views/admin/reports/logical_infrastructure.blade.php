@@ -440,6 +440,24 @@
                                                 @endforeach
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.logicalServer.fields.databases') }}
+                                            </th>
+                                            <td colspan="10">
+                                                @foreach($logicalServer->databases as $database)
+                                                    <a href="/admin/report/applications#DATABASE{{ $database->id}}">
+                                                        {{ $database->name }}
+                                                    </a>
+                                                    @if(!$loop->last)
+                                                    ,
+                                                    @endif                                
+                                                @endforeach
+                                            </td>
+                                        </tr>
+
+
                                         <tr>
                                             <th>
                                                 {{ trans('cruds.logicalServer.fields.servers') }}
@@ -460,7 +478,7 @@
                                             </th>
                                             <td>
                                                 @foreach($logicalServer->certificates as $certificate)
-                                                    <a href="/admin/certificates/{{ $certificate->id}}">{{ $certificate->name }}</a>
+                                                    <a href="/admin/report/logical_infrastructure#CERT{{ $certificate->id}}">{{ $certificate->name }}</a>
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif

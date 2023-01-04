@@ -560,6 +560,32 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>{{ trans("cruds.database.fields.applications_helper") }}</th>
+                                        <td>
+                                            @foreach($database->applications as $application)
+                                                <a href="/admin/report/applications#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
+                                                @if(!$loop->last)
+                                                ,
+                                                @endif                                                
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{ trans('cruds.database.fields.logical_servers') }}
+                                        </th>
+                                        <td>
+                                            @foreach($database->logicalServers as $logicalServer)
+                                                <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logicalServer->id }}">
+                                                    {{ $logicalServer->name }}
+                                                </a>
+                                                @if (!$loop->last)
+                                                ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>{{ trans("cruds.database.fields.security_need") }}</th>
                                         <td>
                                             {{ trans('global.confidentiality') }} :
