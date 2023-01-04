@@ -9,8 +9,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 // Logique
 // Physique
-use App\Subnetwork;
 use App\Router;
+use App\Subnetwork;
 use Illuminate\Support\Facades\DB;
 
 class ExplorerController extends Controller
@@ -33,95 +33,105 @@ class ExplorerController extends Controller
         $buildings = DB::table('buildings')->select('id', 'name', 'site_id')->whereNull('deleted_at')->get();
         foreach ($buildings as $building) {
             $this->addNode($nodes, 6, $this->formatId('BUILDING_', $building->id), $building->name, '/images/building.png', 'buildings');
-            if ($building->site_id!=null)
+            if ($building->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('BUILDING_', $building->id), $this->formatId('SITE_', $building->site_id));
+            }
         }
         // Bay
         $bays = DB::table('bays')->select('id', 'name', 'room_id')->whereNull('deleted_at')->get();
         foreach ($bays as $bay) {
             $this->addNode($nodes, 6, $this->formatId('BAY_', $bay->id), $bay->name, '/images/bay.png', 'bays');
-            if ($bay->room_id!=null)
-            $this->addLinkEdge($edges, $this->formatId('BAY_', $bay->id), $this->formatId('BUILDING_', $bay->room_id));
+            if ($bay->room_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('BAY_', $bay->id), $this->formatId('BUILDING_', $bay->room_id));
+            }
         }
         // Physical Server
         $physicalServers = DB::table('physical_servers')->select('id', 'name', 'bay_id')->whereNull('deleted_at')->get();
         foreach ($physicalServers as $physicalServer) {
             $this->addNode($nodes, 6, $this->formatId('PSERVER_', $physicalServer->id), $physicalServer->name, '/images/server.png', 'physical-servers');
-            if ($physicalServer->bay_id!=null)
+            if ($physicalServer->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
+            }
         }
         // Workstation
         $workstations = DB::table('workstations')->select('id', 'name', 'building_id')->whereNull('deleted_at')->get();
         foreach ($workstations as $workstation) {
             $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations');
-            if ($workstation->building_id!=null)
+            if ($workstation->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
-            elseif ($workstation->sie_id!=null)
+            } elseif ($workstation->sie_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('SITE_', $workstation->site_id));
+            }
         }
         // physical_switches
         $switches = DB::table('physical_switches')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($switches as $switch) {
             $this->addNode($nodes, 6, $this->formatId('SWITCH_', $switch->id), $switch->name, '/images/switch.png', 'physical_switches');
-            if ($switch->bay_id!=null)
+            if ($switch->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('BAY_', $switch->bay_id));
-            elseif ($switch->building_id!=null)
+            } elseif ($switch->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('BUILDING_', $switch->building_id));
-            elseif ($switch->site_id!=null)
+            } elseif ($switch->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('SITE_', $switch->site_id));
+            }
         }
 
         // Physical routers
-        $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id' )->whereNull('deleted_at')->get();
+        $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($routers as $router) {
             $this->addNode($nodes, 6, $this->formatId('PROUTER_', $router->id), $router->name, '/images/prouter.png', 'physical-routers');
-            if ($router->bay_id!=null)
+            if ($router->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
-            elseif ($router->building_id!=null)
+            } elseif ($router->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BUILDING_', $router->building_id));
-            elseif ($routers->site_id!=null)
+            } elseif ($routers->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
+            }
         }
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
             $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'physical-security-devices');
-            if ($securityDevice->bay_id!=null)
+            if ($securityDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
-            elseif ($securityDevice->building_id!=null)
+            } elseif ($securityDevice->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BUILDING_', $securityDevice->building_id));
-            elseif ($securityDevice->site_id!=null)
+            } elseif ($securityDevice->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('SITE_', $securityDevice->site_id));
+            }
         }
-        
+
         // peripherals
         $peripherals = DB::table('peripherals')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($peripherals as $peripheral) {
             $this->addNode($nodes, 6, $this->formatId('PERIF_', $peripheral->id), $peripheral->name, '/images/peripheral.png', 'peripherals');
-            if ($peripheral->bay_id!=null)
+            if ($peripheral->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BAY_', $peripheral->bay_id));
-            elseif ($peripheral->building_id!=null)
+            } elseif ($peripheral->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BUILDING_', $peripheral->building_id));
-            elseif ($peripheral->site_id!=null)
+            } elseif ($peripheral->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('SITE_', $peripheral->site_id));
+            }
         }
-        
+
         // Storage devices
         $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'physical_switch_id')->whereNull('deleted_at')->get();
         foreach ($storageDevices as $storageDevice) {
             $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices');
-            if ($storageDevice->bay_id!=null)
+            if ($storageDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('STORAGE_', $storageDevice->id), $this->formatId('BAY_', $storageDevice->bay_id));
+            }
         }
 
-        // Wifi terminals 
+        // Wifi terminals
         $wifiTerminals = DB::table('wifi_terminals')->select('id', 'name', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($wifiTerminals as $wifiTerminal) {
             $this->addNode($nodes, 6, $this->formatId('WIFI_', $wifiTerminal->id), $wifiTerminal->name, '/images/wifi.png', 'wifi-terminals');
-            if ($peripheral->building_id!=null)
+            if ($peripheral->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('BUILDING_', $wifiTerminal->building_id));
-            elseif ($peripheral->site_id!=null)
+            } elseif ($peripheral->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('SITE_', $wifiTerminal->site_id));
+            }
         }
 
         // ---------------------------------------------------
@@ -138,7 +148,7 @@ class ExplorerController extends Controller
         foreach ($lans as $lan) {
             $this->addNode($nodes, 5, $this->formatId('LAN_', $lan->id), $lan->name, '/images/vlan.png', 'lans');
         }
-        
+
         // mans
         $mans = DB::table('mans')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($mans as $man) {
@@ -174,7 +184,7 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('LAN_', $join->lan_id), $this->formatId('WAN_', $join->wan_id));
         }
-                
+
         // Subnetworks
         $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
@@ -211,9 +221,9 @@ class ExplorerController extends Controller
 
         // DHCP Servers
         $dhcp_servers = DB::table('dhcp_servers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
-        foreach ($dhcp_servers as $dhcp_server){
+        foreach ($dhcp_servers as $dhcp_server) {
             $this->addNode($nodes, 5, $this->formatId('DHCPS_', $dhcp_server->id), $dhcp_server->name, '/images/lserver.png', 'dhcp-servers');
-            if ($dhcp_server->address_ip !== null){
+            if ($dhcp_server->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $dhcp_server->address_ip) as $address) {
                         if ($subnetwork->contains($address)) {
@@ -227,9 +237,9 @@ class ExplorerController extends Controller
 
         // DNS Servers
         $dns_servers = DB::table('dnsservers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
-        foreach ($dns_servers as $dns_server){
+        foreach ($dns_servers as $dns_server) {
             $this->addNode($nodes, 5, $this->formatId('DNSS_', $dns_server->id), $dns_server->name, '/images/lserver.png', 'dnsservers');
-            if ($dns_server->address_ip !== null){
+            if ($dns_server->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $dns_server->address_ip) as $address) {
                         if ($subnetwork->contains($address)) {
@@ -318,7 +328,6 @@ class ExplorerController extends Controller
         foreach ($applications as $application) {
             $this->addNode($nodes, 3, $this->formatId('APP_', $application->id), $application->name, '/images/application.png', 'applications');
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
-
         }
         // logical_server_m_application
         $joins = DB::table('logical_server_m_application')->select('m_application_id', 'logical_server_id')->get();
@@ -369,13 +378,13 @@ class ExplorerController extends Controller
         }
 
         // Fluxes
-        $fluxes = DB::table('fluxes')->select('id', 'name', 'bidirectional', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id' )->whereNull('deleted_at')->get();
+        $fluxes = DB::table('fluxes')->select('id', 'name', 'bidirectional', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('APP_', $flux->application_dest_id));
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('SERV_', $flux->service_dest_id));
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('MOD_', $flux->module_dest_id));
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
-    
+
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('APP_', $flux->application_dest_id));
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('SERV_', $flux->service_dest_id));
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('MOD_', $flux->module_dest_id));
@@ -501,8 +510,7 @@ class ExplorerController extends Controller
     private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)
     {
         $data = [ 'vue' => $vue, 'id' => $id,  'label' => $label, 'image' => $image, 'type' => $type];
-        if($title !== null) {
-
+        if ($title !== null) {
             $data['title'] = $title;
         }
         array_push($nodes, $data);
@@ -520,17 +528,16 @@ class ExplorerController extends Controller
 
     private function addEdge(&$edges, $name, $bidir, $from, $to, $type)
     {
-        if($from !== null && $to !== null) {
+        if ($from !== null && $to !== null) {
             array_push($edges, [ 'name' => $name, 'bidirectional' => $bidir, 'from' => $from, 'to' => $to, 'type' => $type ]);
         }
     }
-    
+
     private function formatId($prefix, $id)
     {
-        if($id !== null) {
+        if ($id !== null) {
             return $prefix . $id;
-        } else {
-            return null;
         }
+        return null;
     }
 }

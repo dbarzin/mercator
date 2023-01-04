@@ -30,8 +30,15 @@ class ConfigurationController extends Controller
         // Return
         return view(
             'admin.config.cert',
-            compact('mail_from', 'mail_to', 'mail_subject', 
-                    'check_frequency', 'expire_delay', 'group', 'repeat_notification')
+            compact(
+                'mail_from',
+                'mail_to',
+                'mail_subject',
+                'check_frequency',
+                'expire_delay',
+                'group',
+                'repeat_notification'
+            )
         );
     }
 
@@ -92,8 +99,15 @@ class ConfigurationController extends Controller
         }
         return view(
             'admin.config.cert',
-            compact('mail_from', 'mail_to', 'mail_subject', 'check_frequency', 
-                    'expire_delay', 'group', 'repeat_notification')
+            compact(
+                'mail_from',
+                'mail_to',
+                'mail_subject',
+                'check_frequency',
+                'expire_delay',
+                'group',
+                'repeat_notification'
+            )
         )
             ->withErrors($msg);
     }

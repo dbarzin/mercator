@@ -19,7 +19,7 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $workstations = Workstation::with('site','building')->orderBy('name')->get();
+        $workstations = Workstation::with('site', 'building')->orderBy('name')->get();
 
         return view('admin.workstations.index', compact('workstations'));
     }

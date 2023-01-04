@@ -756,42 +756,34 @@ class CartographyController extends Controller
                     $textRun = $this->addHTMLRow(
                         $table,
                         trans('cruds.application.fields.RTO'),
-                        ((intdiv($application->rto,60 * 24) > 0) ?
-                            (strval(intdiv($application->rto,60 * 24)) . " " . 
-                                ( (intdiv($application->rto,60 * 24) > 1) ? trans('global.days') :  trans('global.day') )
-                            ) : "" 
-                        ) .
-                        (((intdiv($application->rto,60) %24) > 0) ?
-                            (strval(intdiv($application->rto,60) % 24)) . " " .
-                                (((intdiv($application->rto,60) % 24) > 1) ? trans('global.hours') : trans('global.hour') )
-                            : "" 
-                        ) .
-                        ((($application->rto % 60) > 0) ?
-                            (strval($application->rto % 60) ) . " " .
-                                ((($application->rto % 60) > 1) ? trans('global.hours') : trans('global.hour') )
-                            : "" 
-                        )
+                        (intdiv($application->rto, 60 * 24) > 0 ?
+                            (strval(intdiv($application->rto, 60 * 24)) . ' ' .
+                                (intdiv($application->rto, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '') .
+                        (intdiv($application->rto, 60) % 24 > 0 ?
+                            (strval(intdiv($application->rto, 60) % 24)) . ' ' .
+                                (intdiv($application->rto, 60) % 24 > 1 ? trans('global.hours') : trans('global.hour'))
+                            : '') .
+                        ($application->rto % 60 > 0 ?
+                            (strval($application->rto % 60)) . ' ' .
+                                ($application->rto % 60 > 1 ? trans('global.hours') : trans('global.hour'))
+                            : '')
                     );
 
                     // RPO
                     $textRun = $this->addHTMLRow(
                         $table,
                         trans('cruds.application.fields.RPO'),
-                        ((intdiv($application->rpo,60 * 24) > 0) ?
-                            (strval(intdiv($application->rpo,60 * 24)) . " " . 
-                                ( (intdiv($application->rpo,60 * 24) > 1) ? trans('global.days') :  trans('global.day') )
-                            ) : "" 
-                        ) .
-                        (((intdiv($application->rpo,60) %24) > 0) ?
-                            (strval(intdiv($application->rpo,60) % 24)) . " " .
-                                (((intdiv($application->rpo,60) % 24) > 1) ? trans('global.hours') : trans('global.hour') )
-                            : "" 
-                        ) .
-                        ((($application->rpo % 60) > 0) ?
-                            (strval($application->rpo % 60) ) . " " .
-                                ((($application->rpo % 60) > 1) ? trans('global.hours') : trans('global.hour') )
-                            : "" 
-                        )
+                        (intdiv($application->rpo, 60 * 24) > 0 ?
+                            (strval(intdiv($application->rpo, 60 * 24)) . ' ' .
+                                (intdiv($application->rpo, 60 * 24) > 1 ? trans('global.days') : trans('global.day'))) : '') .
+                        (intdiv($application->rpo, 60) % 24 > 0 ?
+                            (strval(intdiv($application->rpo, 60) % 24)) . ' ' .
+                                (intdiv($application->rpo, 60) % 24 > 1 ? trans('global.hours') : trans('global.hour'))
+                            : '') .
+                        ($application->rpo % 60 > 0 ?
+                            (strval($application->rpo % 60)) . ' ' .
+                                ($application->rpo % 60 > 1 ? trans('global.hours') : trans('global.hour'))
+                            : '')
                     );
 
                     $this->addTextRow($table, trans('cruds.application.fields.external'), $application->external);

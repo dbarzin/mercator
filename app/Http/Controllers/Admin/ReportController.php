@@ -618,7 +618,7 @@ class ReportController extends Controller
 
             $networks = Network::All()->sortBy('name')->where('id', '=', $network);
 
-            $externalConnectedEntities = ExternalConnectedEntity::where("network_id","=",$network)
+            $externalConnectedEntities = ExternalConnectedEntity::where('network_id', '=', $network)
                 ->orderBy('name')->get();
 
             if ($subnetwork !== null) {
@@ -1478,30 +1478,30 @@ class ReportController extends Controller
         // macroprocess - process - application - base de données - information
         $header = [
             trans('cruds.macroProcessus.title'),
-                trans('global.confidentiality_short'),
-                trans('global.integrity_short'),
-                trans('global.availability_short'),
-                trans('global.tracability_short'),
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
             trans('cruds.process.title'),
-                trans('global.confidentiality_short'),
-                trans('global.integrity_short'),
-                trans('global.availability_short'),
-                trans('global.tracability_short'),
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
             trans('cruds.application.title'),
-                trans('global.confidentiality_short'),
-                trans('global.integrity_short'),
-                trans('global.availability_short'),
-                trans('global.tracability_short'),
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
             trans('cruds.database.title'),
-                trans('global.confidentiality_short'),
-                trans('global.integrity_short'),
-                trans('global.availability_short'),
-                trans('global.tracability_short'),
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
             trans('cruds.information.title'),
-                trans('global.confidentiality_short'),
-                trans('global.integrity_short'),
-                trans('global.availability_short'),
-                trans('global.tracability_short'),
+            trans('global.confidentiality_short'),
+            trans('global.integrity_short'),
+            trans('global.availability_short'),
+            trans('global.tracability_short'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();

@@ -40,7 +40,6 @@ class RolesController extends Controller
                 $permissions_sorted[$name] = ['name' => $name, 'actions' => []];
             }
             array_push($permissions_sorted[$name]['actions'], $actionTab);
-
         }
 
         return $permissions_sorted;

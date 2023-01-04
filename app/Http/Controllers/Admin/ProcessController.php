@@ -22,7 +22,7 @@ class ProcessController extends Controller
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $processes = Process::orderBy('identifiant')->get();
-        $processes = Process::with('operations','activities','processInformation','macroProcess')->orderBy('identifiant')->get();
+        $processes = Process::with('operations', 'activities', 'processInformation', 'macroProcess')->orderBy('identifiant')->get();
 
         return view('admin.processes.index', compact('processes'));
     }
