@@ -23,6 +23,7 @@
         "laravel/passport": "^10.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "nunomaduro/larastan": "*.*",
         "phpoffice/phpspreadsheet": "^1.14",
         "phpoffice/phpword": "^0.18.0",
         "yajra/laravel-datatables": "^1.5",
