@@ -304,6 +304,8 @@ return [
             'security_need_helper' => 'Database security requirements',
             'type' => 'Type of technology',
             'type_helper' => 'ex: mySQL, Oracle, SQL Server',
+            'logical_servers' => 'Logical servers',
+            'logical_servers_helper' =>  'Logical servers hosting the database'
         ],
         'title' => 'Database',
         'title_singular' => 'Database',
@@ -554,6 +556,8 @@ return [
             'install_date_helper' => 'Logical server installation date',
             'update_date' => 'Update date',
             'update_date_helper' => 'Last logical server update',
+            'databases' => 'Databases',
+            'databases_helper' => 'Databases hosted on the logical server',
         ],
         'title' => 'Logical Servers',
         'title_short' => 'Servers',

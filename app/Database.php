@@ -105,7 +105,7 @@ class Database extends Model
         return $this->hasMany(Flux::class, 'database_dest_id', 'id')->orderBy('name');
     }
 
-    public function databasesMApplications()
+    public function applications()
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
@@ -123,6 +123,11 @@ class Database extends Model
     public function informations()
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
+    }
+
+    public function logicalServers()
+    {
+        return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)
