@@ -1,6 +1,6 @@
 # Feuille de route
 
-C document reprend les changements de l'application Mercator.
+Ce document reprend les changements de l'application Mercator.
 
 Changements réalisés en 2022 :
 
