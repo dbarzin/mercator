@@ -729,6 +729,22 @@ return [
         'title' => 'Phones',
         'title_singular' => 'Phone',
     ],
+    'physicalLink' => [
+        'description' => 'Link between physical equipment.',
+        'fields' => [
+            'src_port' => 'Source',
+            'src_port_helper' => 'Port source',
+            'dest_port' => 'Destination',
+            'dest_port_helper' => 'Destination port',
+            'src' => 'Source',
+            'src_helper' => 'Connected source device',
+            'dest' => 'Destination',
+            'dest_helper' => 'Connected destination Device'
+        ],
+        'title' => 'Physical links',
+        'title_short' => 'Links',
+        'title_singular' => 'Physical link',
+    ],
     'physicalRouter' => [
         'description' => 'Component managing connections between different networks.',
         'fields' => [

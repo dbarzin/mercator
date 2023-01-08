@@ -529,6 +529,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('physical_link_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.physical-links.index") }}" class="nav-link {{ request()->is('admin/physical-links') || request()->is('admin/physical-links/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.physicalLink.title') }}
+                                </a>
+                            </li>
+                        @endcan
                         @can('wan_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.wans.index") }}" class="nav-link {{ request()->is('admin/wans') || request()->is('admin/wans/*') ? 'active' : '' }}">

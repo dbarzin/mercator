@@ -730,6 +730,22 @@ return [
         'title' => 'Téléphones',
         'title_singular' => 'Téléphone',
     ],
+    'physicalLink' => [
+        'description' => 'Lien entre équipements physiques.',
+        'fields' => [
+            'src_port' => 'Port source',
+            'src_port_helper' => 'Port source',
+            'dest_port' => 'Port destinataire',
+            'dest_port_helper' => 'Port source',
+            'src' => 'source',
+            'src_helper' => 'Equipement source de la connexion',
+            'dest' => 'Destination',
+            'dest_helper' => 'Equipement destinataire de la connexion'
+        ],
+        'title' => 'Liens physiques',
+        'title_short' => 'Liens',
+        'title_singular' => 'Lien physique',
+    ],
     'physicalRouter' => [
         'description' => 'Composant gérant les connexions entre différents réseaux.',
         'fields' => [

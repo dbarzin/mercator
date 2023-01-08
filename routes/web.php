@@ -196,6 +196,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('physical-security-devices', Admin\PhysicalSecurityDeviceController::class);
     Route::delete('physical-security-devices-destroy', [Admin\PhysicalSecurityDeviceController::class,'massDestroy'])->name('physical-security-devices.massDestroy');
 
+    // Physical Links
+    Route::resource('physical-links', Admin\PhysicalLinkController::class);
+    Route::delete('physical-links-destroy', [Admin\PhysicalLinkController::class,'massDestroy'])->name('physical-links.massDestroy');
+
     // WANs
     Route::resource('wans', Admin\WanController::class);
     Route::delete('wans-destroy', [Admin\WanController::class,'massDestroy'])->name('wans.massDestroy');
@@ -233,9 +237,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // CVE Configuration page
     Route::get('config/cve', [Admin\ConfigurationController::class,'getCVEConfig'])->name('config.cve');
     Route::put('config/cve/save', [Admin\ConfigurationController::class,'saveCVEConfig'])->name('config.cve.save');
-
-    // CVE
-    Route::get('cve', [Admin\CVEController::class,'show'])->name('cve');
 
     // Views
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');
