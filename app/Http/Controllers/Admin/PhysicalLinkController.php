@@ -19,6 +19,7 @@ use App\Http\Requests\StorePhysicalLinkRequest;
 use App\Http\Requests\UpdatePhysicalLinkRequest;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Collection;
 
 class PhysicalLinkController extends Controller
 {
@@ -27,10 +28,9 @@ class PhysicalLinkController extends Controller
         abort_if(Gate::denies('physical_link_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // TODO: optimise loading of related objects
-        $physicalLinks = PhysicalLink::All();
+        $physicalLinks = PhysicalLink::all();
 
-        // return view('admin.physical-links.index', compact('physicalLinks'));
-        return view('admin.physical-links.index', compact('physicalLinks'));
+        return view('admin.links.index', compact('physicalLinks'));
     }
 
     public function create()
@@ -47,25 +47,36 @@ class PhysicalLinkController extends Controller
         $wifiTerminals = WifiTerminal::All()->sortBy('name')->pluck('name', 'id');
         $workstations = Workstation::All()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.physical-links.create', 
-            compact('peripherals', 
-                'phones', 
-                'physicalRouters',
-                'physicalSecurityDevices',
-                'physicalServers',
-                'physicalSwitches',
-                'storageDevices',
-                'wifiTerminals',
-                'workstations'
-            )
-        );
+        $devices=Collection::make();
+        foreach($peripherals as $key => $value)
+            $devices->put('PER_' . $key,$value);
+        foreach($phones as $key => $value)
+            $devices->put('PHONE_' . $key,$value);
+        foreach($physicalRouters as $key => $value)
+            $devices->put('ROUTER_' . $key,$value);
+        foreach($physicalSecurityDevices as $key => $value)
+            $devices->put('SECDEV__' . $key,$value);
+        foreach($physicalServers as $key => $value)
+            $devices->put('SERV__' . $key,$value);
+        foreach($physicalSwitches as $key => $value)
+            $devices->put('SWITCH__' . $key,$value);
+        foreach($storageDevices as $key => $value)
+            $devices->put('STORAGE__' . $key,$value);
+        foreach($wifiTerminals as $key => $value)
+            $devices->put('WIFI__' . $key,$value);
+        foreach($workstations as $key => $value)
+            $devices->put('WORK__' . $key,$value);
+
+        // dd($devices);
+
+        return view('admin.links.create', compact('devices'));
     }
 
     public function store(StorePhysicalLinkRequest $request)
     {
         $physicalLink = PhysicalLink::create($request->all());
 
-        return redirect()->route('admin.physical-links.index');
+        return redirect()->route('admin.links.index');
     }
 
     public function edit(PhysicalLink $physicalLink)
@@ -82,7 +93,7 @@ class PhysicalLinkController extends Controller
         $wifiTerminals = WifiTerminal::All()->sortBy('name')->pluck('name', 'id');
         $workstations = Workstation::All()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.physical-links.edit', 
+        return view('admin.links.edit', 
             compact('peripherals', 
                 'phones', 
                 'physicalRouters',
@@ -100,14 +111,14 @@ class PhysicalLinkController extends Controller
     {
         $physicalLink->update($request->all());
 
-        return redirect()->route('admin.physical-links.index');
+        return redirect()->route('admin.links.index');
     }
 
     public function show(PhysicalLink $physicalLink)
     {
         abort_if(Gate::denies('physical_link_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.physical-links.show', compact('physicalLink'));
+        return view('admin.links.show', compact('physicalLink'));
     }
 
     public function destroy(PhysicalLink $physicalLink)
@@ -116,7 +127,7 @@ class PhysicalLinkController extends Controller
 
         $physicalLink->delete();
 
-        return redirect()->route('admin.physical-links.index');
+        return redirect()->route('admin.links.index');
     }
 
     public function massDestroy(MassDestroyPhysicalLinkRequest $request)

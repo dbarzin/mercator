@@ -734,10 +734,10 @@ return [
         'description' => 'Lien entre équipements physiques.',
         'fields' => [
             'src_port' => 'Port source',
-            'src_port_helper' => 'Port source',
+            'src_port_helper' => 'Port source du lien',
             'dest_port' => 'Port destinataire',
-            'dest_port_helper' => 'Port source',
-            'src' => 'source',
+            'dest_port_helper' => 'Port destinataire du lien',
+            'src' => 'Source',
             'src_helper' => 'Equipement source de la connexion',
             'dest' => 'Destination',
             'dest_helper' => 'Equipement destinataire de la connexion'

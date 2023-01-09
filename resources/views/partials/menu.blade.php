@@ -531,7 +531,7 @@
                         @endcan
                         @can('physical_link_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.physical-links.index") }}" class="nav-link {{ request()->is('admin/physical-links') || request()->is('admin/physical-links/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.links.index") }}" class="nav-link {{ request()->is('admin/links') || request()->is('admin/links/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
