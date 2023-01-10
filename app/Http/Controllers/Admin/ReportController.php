@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 // ecosystem
 use App\Activity;
 use App\Actor;
-use App\Annuaire;
+use App\Relation;
 // information system
 use App\ApplicationBlock;
 use App\ApplicationModule;
@@ -24,6 +24,8 @@ use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
 use App\Gateway;
+use App\Annuaire;
+use App\ZoneAdmin;
 use App\Http\Controllers\Controller;
 // Logique
 use App\Information;
@@ -35,23 +37,23 @@ use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
 use App\Phone;
+use App\Vlan;
+// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
-// Physique
 use App\PhysicalSwitch;
 use App\Process;
-use App\Relation;
 use App\Router;
 use App\SecurityDevice;
 use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
-use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
+use App\PhysicalLink;
+//
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -580,6 +582,8 @@ class ReportController extends Controller
         ;
     }
 
+
+
     public function logicalInfrastructure(Request $request)
     {
         if ($request->network === null) {
@@ -1012,6 +1016,271 @@ class ReportController extends Controller
             ->with('physicalSecurityDevices', $physicalSecurityDevices)
         ;
     }
+
+
+    // TODO : fix duplicate code iwth physical infrastructure
+
+    public function networkSchema(Request $request)
+    {
+        if ($request->site === null) {
+            $request->session()->put('site', null);
+            $site = null;
+            $request->session()->put('building', null);
+            $building = null;
+        } else {
+            if ($request->site !== null) {
+                $site = intval($request->site);
+                $request->session()->put('site', $site);
+            } else {
+                $site = $request->session()->get('site');
+            }
+
+            if ($request->building === null) {
+                $request->session()->put('building', null);
+                $building = null;
+            } elseif ($request->building !== null) {
+                $building = intval($request->building);
+                $request->session()->put('building', $building);
+            } else {
+                $building = $request->session()->get('building');
+            }
+        }
+
+        $all_sites = Site::All()->sortBy('name')->pluck('name', 'id');
+
+        if ($site !== null) {
+            $sites = Site::All()->sortBy('name')->where('id', '=', $site);
+
+            $all_buildings = Building::All()->sortBy('name')
+                ->where('site_id', '=', $site)->pluck('name', 'id');
+
+            if ($building === null) {
+                $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
+            } else {
+                $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
+            }
+
+            // TODO: improve me
+            $bays = Bay::All()->sortBy('name')
+                ->filter(function ($item) use ($buildings) {
+                    foreach ($buildings as $building) {
+                        if ($item->room_id === $building->id) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+            $physicalServers = PhysicalServer::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($buildings === null) && ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            $workstations = Workstation::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings) {
+                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                        return true;
+                    }
+                    foreach ($buildings as $building) {
+                        if ($item->building_id === $building->id) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+            $storageDevices = StorageDevice::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            $peripherals = Peripheral::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            $phones = Phone::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings) {
+                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                        return true;
+                    }
+                    foreach ($buildings as $building) {
+                        if ($item->building_id === $building->id) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+            $physicalSwitches = PhysicalSwitch::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            $physicalRouters = PhysicalRouter::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            $wifiTerminals = WifiTerminal::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings) {
+                    if (($item->building_id === null) && ($item->site_id === $site)) {
+                        return true;
+                    }
+                    foreach ($buildings as $building) {
+                        if ($item->building_id === $building->id) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+        } else {
+            $sites = Site::All()->sortBy('name');
+            $buildings = Building::All()->sortBy('name');
+            $all_buildings = null;
+            $bays = Bay::All()->sortBy('name');
+            $physicalServers = PhysicalServer::All()->sortBy('name');
+            $workstations = Workstation::All()->sortBy('name');
+            $storageDevices = StorageDevice::All()->sortBy('name');
+            $peripherals = Peripheral::All()->sortBy('name');
+            $phones = Phone::All()->sortBy('name');
+            $physicalSwitches = PhysicalSwitch::All()->sortBy('name');
+            $physicalRouters = PhysicalRouter::All()->sortBy('name');
+            $wifiTerminals = WifiTerminal::All()->sortBy('name');
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
+            $physicalLinks = PhysicalLink::All()->sortBy('name');
+        }
+
+        return view('admin/reports/network_schema')
+            ->with('all_sites', $all_sites)
+            ->with('sites', $sites)
+            ->with('all_buildings', $all_buildings)
+            ->with('buildings', $buildings)
+            ->with('bays', $bays)
+            ->with('physicalServers', $physicalServers)
+            ->with('workstations', $workstations)
+            ->with('storageDevices', $storageDevices)
+            ->with('peripherals', $peripherals)
+            ->with('phones', $phones)
+            ->with('physicalSwitches', $physicalSwitches)
+            ->with('physicalRouters', $physicalRouters)
+            ->with('wifiTerminals', $wifiTerminals)
+            ->with('physicalSecurityDevices', $physicalSecurityDevices)
+            ->with('physicalLinks',$physicalLinks)
+        ;
+    }
+
 
     public function administration()
     {

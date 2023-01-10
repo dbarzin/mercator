@@ -199,7 +199,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Physical Links
     // TODO : check why it is not working with physical-links as resource name
     Route::resource('links', Admin\PhysicalLinkController::class);
-    Route::delete('physical-links-destroy', [Admin\PhysicalLinkController::class,'massDestroy'])->name('physical-links.massDestroy');
+    Route::delete('links-destroy', [Admin\PhysicalLinkController::class,'massDestroy'])->name('links.massDestroy');
 
     // WANs
     Route::resource('wans', Admin\WanController::class);
@@ -247,6 +247,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/application_flows', [Admin\ReportController::class,'applicationFlows'])->name('report.view.application-flows');
     Route::get('report/logical_infrastructure', [Admin\ReportController::class,'logicalInfrastructure'])->name('report.view.logical-infrastructure');
     Route::get('report/physical_infrastructure', [Admin\ReportController::class,'physicalInfrastructure'])->name('report.view.physical-infrastructure');
+    Route::get('report/network_schema', [Admin\ReportController::class,'networkSchema'])->name('report.view.network-schema');
 
     // Experimental views
     Route::get('report/zones', [Admin\ReportController::class,'zones'])->name('report.view.zones');

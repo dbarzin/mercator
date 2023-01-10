@@ -626,6 +626,12 @@ return [
             'title' => 'View of the physical infrastructure',
             'title_short' => 'Physical infrastructure',
         ],
+        'network_schema' => [
+            // TODO : add a description here
+            'description' => 'Network schema',
+            'title' => "Network schema",
+            'title_short' => 'Network schema',
+        ],
         'user_management' => ['title' => 'User management', 'title_short' => 'Users'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],

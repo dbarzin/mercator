@@ -627,6 +627,12 @@ return [
             'title' => "Vue de l'infrastructure physique",
             'title_short' => 'Infrastructure Physique',
         ],
+        'network_schema' => [
+            // TODO : add a description here
+            'description' => 'Diagramme réseau',
+            'title' => "Diagramme réseau",
+            'title_short' => 'Diagramme réseau',
+        ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
