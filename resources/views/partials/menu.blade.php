@@ -387,7 +387,7 @@
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.vlan.title') }}
+                                    {{ trans('cruds.vlan.title_short') }}
                                 </a>
                             </li>
                         @endcan
