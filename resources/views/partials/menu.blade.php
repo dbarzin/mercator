@@ -381,6 +381,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('vlan_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans') || request()->is('admin/vlans/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.vlan.title') }}
+                                </a>
+                            </li>
+                        @endcan
                         @if (auth()->user()->granularity>=2)
                         @can('certificate_access')
                             <li class="nav-item">
@@ -566,16 +576,6 @@
 
                                     </i>
                                     {{ trans('cruds.lan.title') }}
-                                </a>
-                            </li>
-                        @endcan
-                        @can('vlan_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans') || request()->is('admin/vlans/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-align-justify nav-icon">
-
-                                    </i>
-                                    {{ trans('cruds.vlan.title') }}
                                 </a>
                             </li>
                         @endcan

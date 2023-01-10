@@ -18,6 +18,12 @@ class UpdatePhysicalLinkRequest extends FormRequest
     public function rules()
     {
         return [
+            'src_id' => [
+                'required',
+            ],
+            'dest_id' => [
+                'required',
+            ],
         ];
     }
 }

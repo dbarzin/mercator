@@ -54,37 +54,37 @@ class PhysicalLink extends Model
 
     public function physicalRouterSrc()
     {
-        return $this->belongsTo(Phone::class, 'physical_router_src_id');
+        return $this->belongsTo(PhysicalRouter::class, 'physical_router_src_id');
     }
 
     public function physicalSecurityDeviceSrc()
     {
-        return $this->belongsTo(Phone::class, 'physical_security_device_src_id');
+        return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_src_id');
     }
 
     public function physicalServerSrc()
     {
-        return $this->belongsTo(Phone::class, 'physical_server_src_id');
+        return $this->belongsTo(PhysicalServer::class, 'physical_server_src_id');
     }
 
     public function physicalSwitchSrc()
     {
-        return $this->belongsTo(Phone::class, 'physical_switch_src_id');
+        return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_src_id');
     }
 
     public function physicalStorageSrc()
     {
-        return $this->belongsTo(Phone::class, 'physical_storage_src_id');
+        return $this->belongsTo(StorageDevice::class, 'physical_storage_src_id');
     }
 
     public function physicalWifiTerminalSrc()
     {
-        return $this->belongsTo(Phone::class, 'wifi_terminal_src_id');
+        return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_src_id');
     }
 
-    public function physicalWorkstationSrc()
+    public function workstationSrc()
     {
-        return $this->belongsTo(Phone::class, 'workstation_src_id');
+        return $this->belongsTo(Workstation::class, 'workstation_src_id');
     }
 
     // Destinations
@@ -101,37 +101,37 @@ class PhysicalLink extends Model
 
     public function physicalRouterDest()
     {
-        return $this->belongsTo(Phone::class, 'physical_router_dest_id');
+        return $this->belongsTo(PhysicalRouter::class, 'physical_router_dest_id');
     }
 
     public function physicalSecurityDeviceDest()
     {
-        return $this->belongsTo(Phone::class, 'physical_security_device_dest_id');
+        return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
     }
 
     public function physicalServerDest()
     {
-        return $this->belongsTo(Phone::class, 'physical_server_dest_id');
+        return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
     }
 
     public function physicalSwitchDest()
     {
-        return $this->belongsTo(Phone::class, 'physical_switch_dest_id');
+        return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_dest_id');
     }
 
     public function physicalStorageDest()
     {
-        return $this->belongsTo(Phone::class, 'physical_storage_dest_id');
+        return $this->belongsTo(StorageDevice::class, 'physical_storage_dest_id');
     }
 
     public function physicalWifiTerminalDest()
     {
-        return $this->belongsTo(Phone::class, 'wifi_terminal_dest_id');
+        return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_dest_id');
     }
 
-    public function physicalWorkstationDest()
+    public function workstationDest()
     {
-        return $this->belongsTo(Phone::class, 'workstation_dest_id');
+        return $this->belongsTo(Workstation::class, 'workstation_dest_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

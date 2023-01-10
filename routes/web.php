@@ -197,6 +197,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('physical-security-devices-destroy', [Admin\PhysicalSecurityDeviceController::class,'massDestroy'])->name('physical-security-devices.massDestroy');
 
     // Physical Links
+    // TODO : check why it is not working with physical-links as resource name
     Route::resource('links', Admin\PhysicalLinkController::class);
     Route::delete('physical-links-destroy', [Admin\PhysicalLinkController::class,'massDestroy'])->name('physical-links.massDestroy');
 

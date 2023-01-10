@@ -735,8 +735,8 @@ return [
         'fields' => [
             'src_port' => 'Port source',
             'src_port_helper' => 'Port source du lien',
-            'dest_port' => 'Port destinataire',
-            'dest_port_helper' => 'Port destinataire du lien',
+            'dest_port' => 'Port dest.',
+            'dest_port_helper' => 'Port dest. du lien',
             'src' => 'Source',
             'src_helper' => 'Equipement source de la connexion',
             'dest' => 'Destination',
