@@ -127,9 +127,9 @@ class ExplorerController extends Controller
         $wifiTerminals = DB::table('wifi_terminals')->select('id', 'name', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($wifiTerminals as $wifiTerminal) {
             $this->addNode($nodes, 6, $this->formatId('WIFI_', $wifiTerminal->id), $wifiTerminal->name, '/images/wifi.png', 'wifi-terminals');
-            if ($peripheral->building_id !== null) {
+            if ($wifiTerminal->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('BUILDING_', $wifiTerminal->building_id));
-            } elseif ($peripheral->site_id !== null) {
+            } elseif ($wifiTerminal->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('SITE_', $wifiTerminal->site_id));
             }
         }
