@@ -1245,6 +1245,10 @@ class ReportController extends Controller
                     }
                     return false;
                 });
+
+            // TODO : implement filter
+            $physicalLinks = PhysicalLink::All()->sortBy('name');
+
         } else {
             $sites = Site::All()->sortBy('name');
             $buildings = Building::All()->sortBy('name');
