@@ -29,11 +29,11 @@ Changements prévus en 2023 :
 - [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
-- [ ] schémas de l'infrastructure réseau physiqiue
+- [x] schémas de l'infrastructure réseau physique
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
 - [ ] Carte des actifs par rack, bâtiment/salle et site
 - [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
-- [ ] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
+- [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Revoir le modèle des pages web
