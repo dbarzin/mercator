@@ -22,8 +22,8 @@ class AddPhysicalLink extends Migration
             $table->increments('id');
 
             // Source and destination ports
-            $table->string('src_port')->nullable();
-            $table->string('dest_port')->nullable();
+            $table->string('src_port')->nullable()->default(null);
+            $table->string('dest_port')->nullable()->default(null);
             /*
             Note:
             Some switches do use letters to label their ports instead of numbers. For example, 
@@ -39,59 +39,59 @@ class AddPhysicalLink extends Migration
             */
 
             // Source objects
-            $table->unsignedInteger('peripheral_src_id')->nullable()->index('peripheral_src_id_fk');
+            $table->unsignedInteger('peripheral_src_id')->nullable()->default(null)->index('peripheral_src_id_fk');
             $table->foreign('peripheral_src_id', 'peripheral_src_id_fk')->references('id')->on('peripherals')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('phone_src_id')->nullable()->index('phone_src_id_fk');
+            $table->unsignedInteger('phone_src_id')->nullable()->default(null)->index('phone_src_id_fk');
             $table->foreign('phone_src_id', 'phone_src_id_fk')->references('id')->on('phones')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_router_src_id')->nullable()->index('physical_router_src_id_fk');
+            $table->unsignedInteger('physical_router_src_id')->nullable()->default(null)->index('physical_router_src_id_fk');
             $table->foreign('physical_router_src_id', 'physical_router_src_id_fk')->references('id')->on('physical_routers')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_security_device_src_id')->nullable()->index('physical_security_device_src_id_fk');
+            $table->unsignedInteger('physical_security_device_src_id')->nullable()->default(null)->index('physical_security_device_src_id_fk');
             $table->foreign('physical_security_device_src_id', 'physical_security_device_src_id_fk')->references('id')->on('physical_security_devices')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_server_src_id')->nullable()->index('physical_server_src_id_fk');
+            $table->unsignedInteger('physical_server_src_id')->nullable()->default(null)->index('physical_server_src_id_fk');
             $table->foreign('physical_server_src_id', 'physical_server_src_id_fk')->references('id')->on('physical_servers')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_switch_src_id')->nullable()->index('physical_switch_src_id_fk');
+            $table->unsignedInteger('physical_switch_src_id')->nullable()->default(null)->index('physical_switch_src_id_fk');
             $table->foreign('physical_switch_src_id', 'physical_switch_src_id_fk')->references('id')->on('physical_switches')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('storage_device_src_id')->nullable()->index('storage_device_src_id_fk');
+            $table->unsignedInteger('storage_device_src_id')->nullable()->default(null)->index('storage_device_src_id_fk');
             $table->foreign('storage_device_src_id', 'storage_device_src_id_fk')->references('id')->on('storage_devices')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('wifi_terminal_src_id')->nullable()->index('wifi_terminal_src_id_fk');
+            $table->unsignedInteger('wifi_terminal_src_id')->nullable()->default(null)->index('wifi_terminal_src_id_fk');
             $table->foreign('wifi_terminal_src_id', 'wifi_terminal_src_id_fk')->references('id')->on('wifi_terminals')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('workstation_src_id')->nullable()->index('workstation_src_id_fk');
+            $table->unsignedInteger('workstation_src_id')->nullable()->default(null)->index('workstation_src_id_fk');
             $table->foreign('workstation_src_id', 'workstation_src_id_fk')->references('id')->on('workstations')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
             // Destination objects
-            $table->unsignedInteger('peripheral_dest_id')->nullable()->index('peripheral_dest_id_fk');
+            $table->unsignedInteger('peripheral_dest_id')->nullable()->default(null)->index('peripheral_dest_id_fk');
             $table->foreign('peripheral_dest_id', 'peripheral_dest_id_fk')->references('id')->on('peripherals')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('phone_dest_id')->nullable()->index('phone_dest_id_fk');
+            $table->unsignedInteger('phone_dest_id')->nullable()->default(null)->index('phone_dest_id_fk');
             $table->foreign('phone_dest_id', 'phone_dest_id_fk')->references('id')->on('phones')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_router_dest_id')->nullable()->index('physical_router_dest_id_fk');
+            $table->unsignedInteger('physical_router_dest_id')->nullable()->default(null)->index('physical_router_dest_id_fk');
             $table->foreign('physical_router_dest_id', 'physical_router_dest_id_fk')->references('id')->on('physical_routers')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_security_device_dest_id')->nullable()->index('physical_security_device_dest_id_fk');
+            $table->unsignedInteger('physical_security_device_dest_id')->nullable()->default(null)->index('physical_security_device_dest_id_fk');
             $table->foreign('physical_security_device_dest_id', 'physical_security_device_dest_id_fk')->references('id')->on('physical_security_devices')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_server_dest_id')->nullable()->index('physical_server_dest_id_fk');
+            $table->unsignedInteger('physical_server_dest_id')->nullable()->default(null)->index('physical_server_dest_id_fk');
             $table->foreign('physical_server_dest_id', 'physical_server_dest_id_fk')->references('id')->on('physical_servers')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('physical_switch_dest_id')->nullable()->index('physical_switch_dest_id_fk');
+            $table->unsignedInteger('physical_switch_dest_id')->nullable()->default(null)->index('physical_switch_dest_id_fk');
             $table->foreign('physical_switch_dest_id', 'physical_switch_dest_id_fk')->references('id')->on('physical_switches')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('storage_device_dest_id')->nullable()->index('storage_device_dest_id_fk');
+            $table->unsignedInteger('storage_device_dest_id')->nullable()->default(null)->index('storage_device_dest_id_fk');
             $table->foreign('storage_device_dest_id', 'storage_device_dest_id_fk')->references('id')->on('storage_devices')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('wifi_terminal_dest_id')->nullable()->index('wifi_terminal_dest_id_fk');
+            $table->unsignedInteger('wifi_terminal_dest_id')->nullable()->default(null)->index('wifi_terminal_dest_id_fk');
             $table->foreign('wifi_terminal_dest_id', 'wifi_terminal_dest_id_fk')->references('id')->on('wifi_terminals')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
-            $table->unsignedInteger('workstation_dest_id')->nullable()->index('workstation_dest_id_fk');
+            $table->unsignedInteger('workstation_dest_id')->nullable()->default(null)->index('workstation_dest_id_fk');
             $table->foreign('workstation_dest_id', 'workstation_dest_id_fk')->references('id')->on('workstations')->onUpdate('NO ACTION')->onDelete('CASCADE');
 
             // Soft delete and timestamp

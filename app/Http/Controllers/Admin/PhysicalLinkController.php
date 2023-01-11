@@ -180,6 +180,26 @@ class PhysicalLinkController extends Controller
         elseif ($link->workstation_src_id!=null)
             $link->src_id= 'WORK_' . $link->workstation_src_id;
 
+        // Dest device
+        if ($link->peripheral_dest_id!=null)
+            $link->dest_id='PER_'.$link->peripheral_dest_id;
+        elseif ($link->phone_dest_id!=null)
+            $link->dest_id= 'PHONE_' . $link->phone_dest_id;
+        elseif ($link->physical_router_dest_id!=null)
+            $link->dest_id= 'ROUTER_' . $link->physical_router_dest_id;
+        elseif ($link->physical_security_device_dest_id!=null)
+            $link->dest_id= 'SECDEV_' . $link->physical_security_device_dest_id;
+        elseif ($link->physical_server_dest_id!=null)
+            $link->dest_id= 'SERV_' . $link->physical_server_dest_id;
+        elseif ($link->physical_switch_dest_id!=null)
+            $link->dest_id= 'SWITCH_' . $link->physical_switch_dest_id;
+        elseif ($link->storage_device_dest_id!=null)
+            $link->dest_id= 'STORAGE_' . $link->storage_device_dest_id;
+        elseif ($link->wifi_terminal_dest_id!=null)
+            $link->dest_id= 'WIFI_' . $link->wifi_terminal_dest_id;
+        elseif ($link->workstation_dest_id!=null)
+            $link->dest_id= 'WORK_' . $link->workstation_dest_id;
+
         return view('admin.links.edit', compact('devices','link'));
     }
 
@@ -188,49 +208,99 @@ class PhysicalLinkController extends Controller
         // Source device
         if (str_starts_with($request->src_id,'PER_'))
             $link->peripheral_src_id=intval(substr($request->src_id,4));
-        elseif (str_starts_with($request->src_id,'PHONE_'))
+        else
+            $link->peripheral_src_id=null;
+
+        if (str_starts_with($request->src_id,'PHONE_'))
             $link->phone_src_id=intval(substr($request->src_id,6));
-        elseif (str_starts_with($request->src_id,'ROUTER_'))
+        else
+            $link->phone_src_id=null;
+
+        if (str_starts_with($request->src_id,'ROUTER_'))
             $link->physical_router_src_id=intval(substr($request->src_id,7));
-        elseif (str_starts_with($request->src_id,'SECDEV_'))
+        else
+            $link->physical_router_src_id=null;
+
+        if (str_starts_with($request->src_id,'SECDEV_'))
             $link->physical_security_device_src_id=intval(substr($request->src_id,7));
-        elseif (str_starts_with($request->src_id,'SERV_'))
+        else
+            $link->physical_security_device_src_id=null;
+
+        if (str_starts_with($request->src_id,'SERV_'))
             $link->physical_server_src_id=intval(substr($request->src_id,5));
-        elseif (str_starts_with($request->src_id,'SWITCH_'))
+        else
+            $link->physical_server_src_id=null;
+
+        if (str_starts_with($request->src_id,'SWITCH_')) 
             $link->physical_switch_src_id=intval(substr($request->src_id,7));
-        elseif (str_starts_with($request->src_id,'STORAGE_'))
+        else
+            $link->physical_switch_src_id=null;
+        
+        if (str_starts_with($request->src_id,'STORAGE_'))
             $link->storage_device_src_id=intval(substr($request->src_id,8));
-        elseif (str_starts_with($request->src_id,'WIFI_'))
+        else
+            $link->storage_device_src_id=null;
+
+        if (str_starts_with($request->src_id,'WIFI_'))
             $link->wifi_terminal_src_id=intval(substr($request->src_id,5));
-        elseif (str_starts_with($request->src_id,'WORK_'))
+        else
+            $link->wifi_terminal_src_id=null;
+        if (str_starts_with($request->src_id,'WORK_'))
             $link->workstation_src_id=intval(substr($request->src_id,5));
+        else
+            $link->workstation_src_id=null;
 
         // Dest device
         if (str_starts_with($request->dest_id,'PER_'))
             $link->peripheral_dest_id=intval(substr($request->dest_id,4));
-        elseif (str_starts_with($request->dest_id,'PHONE_'))
+        else
+            $link->peripheral_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'PHONE_'))
             $link->phone_dest_id=intval(substr($request->dest_id,6));
-        elseif (str_starts_with($request->dest_id,'ROUTER_'))
+        else
+            $link->phone_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'ROUTER_'))
             $link->physical_router_dest_id=intval(substr($request->dest_id,7));
-        elseif (str_starts_with($request->dest_id,'SECDEV_'))
+        else
+            $link->physical_router_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'SECDEV_'))
             $link->physical_security_device_dest_id=intval(substr($request->dest_id,7));
-        elseif (str_starts_with($request->dest_id,'SERV_'))
+        else
+            $link->physical_security_device_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'SERV_'))
             $link->physical_server_dest_id=intval(substr($request->dest_id,5));
-        elseif (str_starts_with($request->dest_id,'SWITCH_'))
+        else
+            $link->physical_server_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'SWITCH_')) 
             $link->physical_switch_dest_id=intval(substr($request->dest_id,7));
-        elseif (str_starts_with($request->dest_id,'STORAGE_'))
+        else
+            $link->physical_switch_dest_id=null;
+        
+        if (str_starts_with($request->dest_id,'STORAGE_'))
             $link->storage_device_dest_id=intval(substr($request->dest_id,8));
-        elseif (str_starts_with($request->dest_id,'WIFI_'))
+        else
+            $link->storage_device_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'WIFI_'))
             $link->wifi_terminal_dest_id=intval(substr($request->dest_id,5));
-        elseif (str_starts_with($request->dest_id,'WORK_'))
+        else
+            $link->wifi_terminal_dest_id=null;
+        if (str_starts_with($request->dest_id,'WORK_'))
             $link->workstation_dest_id=intval(substr($request->dest_id,5));
+        else
+            $link->workstation_dest_id=null;
 
         // Ports
         $link->src_port = $request->src_port;
         $link->dest_port = $request->dest_port;
 
         // Update 
-        $link->save();
+        $link->update();
 
         return redirect()->route('admin.links.index');
     }
