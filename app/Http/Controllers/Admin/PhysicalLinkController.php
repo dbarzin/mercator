@@ -305,11 +305,11 @@ class PhysicalLinkController extends Controller
         return redirect()->route('admin.links.index');
     }
 
-    public function show(PhysicalLink $physicalLink)
+    public function show(PhysicalLink $link)
     {
         abort_if(Gate::denies('physical_link_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.links.show', compact('physicalLink'));
+        return view('admin.links.show', compact('link'));
     }
 
     public function destroy(PhysicalLink $physicalLink)

@@ -129,11 +129,11 @@ class AddPhysicalLink extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([263,264,265,265,267], false);
+            Role::findOrFail(1)->permissions()->sync([263,264,265,266,267], false);
             // User
-            Role::findOrFail(2)->permissions()->sync([262,263,264,265,265,267], false);
+            Role::findOrFail(2)->permissions()->sync([263,264,265,266,267], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([263,264], false);
+            Role::findOrFail(3)->permissions()->sync([266,267], false);
         }
 
     }

@@ -77,7 +77,7 @@ class PhysicalLink extends Model
         return $this->belongsTo(StorageDevice::class, 'storage_device_src_id');
     }
 
-    public function physicalWifiTerminalSrc()
+    public function wifiTerminalSrc()
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_src_id');
     }
@@ -124,7 +124,7 @@ class PhysicalLink extends Model
         return $this->belongsTo(StorageDevice::class, 'storage_device_dest_id');
     }
 
-    public function physicalWifiTerminalDest()
+    public function wifiTerminalDest()
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_dest_id');
     }
