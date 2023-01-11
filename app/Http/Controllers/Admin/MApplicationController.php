@@ -114,7 +114,7 @@ class MApplicationController extends Controller
         // rto-rpo
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
-        $application->update();
+        $application->save();
 
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));

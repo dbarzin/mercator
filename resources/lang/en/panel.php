@@ -27,6 +27,7 @@ return [
         'explore' => 'Exploration',
         'guide' => 'Guide',
         'information_system' => 'Information system',
+        'network_schema' => 'Network schema',
         'logical_infrastructure' => 'Logical infrastructure',
         'options' => 'Options',
         'password' => 'Password',

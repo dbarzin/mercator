@@ -110,6 +110,11 @@ class Building extends Model
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
+    public function wifiTerminals()
+    {
+        return $this->hasMany(WifiTerminal::class, 'building_id', 'id')->orderBy('name');
+    }
+
     public function buildingPhysicalSwitches()
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');

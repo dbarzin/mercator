@@ -118,7 +118,7 @@ or (Postgres)
 Start the application with php
 
     php artisan serve
-    
+
 or to access the application there from another server
 
     php artisan serve --host 0.0.0.0 --port 8000

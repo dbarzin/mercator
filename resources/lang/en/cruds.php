@@ -626,6 +626,12 @@ return [
             'title' => 'View of the physical infrastructure',
             'title_short' => 'Physical infrastructure',
         ],
+        'network_schema' => [
+            // TODO : add a description here
+            'description' => 'Network schema',
+            'title' => "Network schema",
+            'title_short' => 'Network schema',
+        ],
         'user_management' => ['title' => 'User management', 'title_short' => 'Users'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
@@ -728,6 +734,22 @@ return [
         ],
         'title' => 'Phones',
         'title_singular' => 'Phone',
+    ],
+    'physicalLink' => [
+        'description' => 'Link between physical equipment.',
+        'fields' => [
+            'src_port' => 'Source',
+            'src_port_helper' => 'Port source',
+            'dest_port' => 'Destination',
+            'dest_port_helper' => 'Destination port',
+            'src' => 'Source',
+            'src_helper' => 'Connected source device',
+            'dest' => 'Destination',
+            'dest_helper' => 'Connected destination Device'
+        ],
+        'title' => 'Physical links',
+        'title_short' => 'Links',
+        'title_singular' => 'Physical link',
     ],
     'physicalRouter' => [
         'description' => 'Component managing connections between different networks.',

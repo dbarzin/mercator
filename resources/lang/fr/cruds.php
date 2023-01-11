@@ -627,6 +627,12 @@ return [
             'title' => "Vue de l'infrastructure physique",
             'title_short' => 'Infrastructure Physique',
         ],
+        'network_schema' => [
+            // TODO : add a description here
+            'description' => 'Diagramme réseau',
+            'title' => "Diagramme réseau",
+            'title_short' => 'Diagramme réseau',
+        ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
@@ -729,6 +735,22 @@ return [
         ],
         'title' => 'Téléphones',
         'title_singular' => 'Téléphone',
+    ],
+    'physicalLink' => [
+        'description' => 'Lien entre équipements physiques.',
+        'fields' => [
+            'src_port' => 'Port source',
+            'src_port_helper' => 'Port source du lien',
+            'dest_port' => 'Port dest.',
+            'dest_port_helper' => 'Port dest. du lien',
+            'src' => 'Source',
+            'src_helper' => 'Equipement source de la connexion',
+            'dest' => 'Destination',
+            'dest_helper' => 'Equipement destinataire de la connexion'
+        ],
+        'title' => 'Liens physiques',
+        'title_short' => 'Liens',
+        'title_singular' => 'Lien physique',
     ],
     'physicalRouter' => [
         'description' => 'Composant gérant les connexions entre différents réseaux.',
