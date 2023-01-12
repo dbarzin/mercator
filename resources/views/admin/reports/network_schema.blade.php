@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("cruds.menu.physical_infrastructure.title") }}
+                    {{ trans("cruds.menu.network_schema.title") }}
                 </div>
 
                 <div class="card-body">
