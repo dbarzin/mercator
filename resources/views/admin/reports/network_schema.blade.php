@@ -920,7 +920,7 @@ digraph  {
         @elseif($link->workstation_dest_id!=null)
             WORK{{$link->workstation_dest_id}}
         @endif
-        [arrowhead=none,headlabel="{{$link->dest_port}}", taillabel="{{$link->src_port}}"];
+        [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
     @endforeach
 
 

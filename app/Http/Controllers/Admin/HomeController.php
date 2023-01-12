@@ -10,9 +10,8 @@ use App\Annuaire;
 use App\ApplicationBlock;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Bay;
-use App\Building;
 use App\Certificate;
+use App\Task;
 // Applications
 use App\Database;
 use App\DhcpServer;
@@ -38,6 +37,9 @@ use App\Operation;
 use App\Peripheral;
 use App\Phone;
 // Physique
+use App\Site;
+use App\Bay;
+use App\Building;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
@@ -46,12 +48,11 @@ use App\Process;
 use App\Relation;
 use App\Router;
 use App\SecurityDevice;
-use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
-use App\Task;
 use App\Vlan;
 use App\Wan;
+use App\PhysicalLink;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
@@ -646,6 +647,8 @@ class HomeController extends Controller
                 // not always in a bay
                 // ->where('bay_id', '<>', null)
                     ->count(),
+
+            'links' => PhysicalLink::count(),
 
             'wans' => Wan::count(),
             'wans_lvl1' => Wan::count(),
