@@ -791,7 +791,6 @@ class ReportController extends Controller
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
-
             if ($building === null) {
                 $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
             } else {
@@ -1017,9 +1016,6 @@ class ReportController extends Controller
         ;
     }
 
-
-    // TODO : fix duplicate code iwth physical infrastructure
-
     public function networkSchema(Request $request)
     {
         if ($request->site === null) {
@@ -1058,6 +1054,7 @@ class ReportController extends Controller
                 $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
             } else {
                 $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
+
             }
 
             // TODO: improve me
@@ -1128,6 +1125,29 @@ class ReportController extends Controller
                     return false;
                 });
 
+            $physicalSwitches = PhysicalSwitch::All()->sortBy('name')
+                ->filter(function ($item) use ($site, $buildings, $bays) {
+                    if (($item->bay_id === null) &&
+                        ($item->building_id === null) &&
+                        ($item->site_id === $site)) {
+                        return true;
+                    }
+                    if ($item->bay_id === null) {
+                        foreach ($buildings as $building) {
+                            if ($item->building_id === $building->id) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        foreach ($bays as $bay) {
+                            if ($item->bay_id === $bay->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
             $peripherals = Peripheral::All()->sortBy('name')
                 ->filter(function ($item) use ($site, $buildings, $bays) {
                     if (($item->bay_id === null) &&
@@ -1159,29 +1179,6 @@ class ReportController extends Controller
                     foreach ($buildings as $building) {
                         if ($item->building_id === $building->id) {
                             return true;
-                        }
-                    }
-                    return false;
-                });
-
-            $physicalSwitches = PhysicalSwitch::All()->sortBy('name')
-                ->filter(function ($item) use ($site, $buildings, $bays) {
-                    if (($item->bay_id === null) &&
-                        ($item->building_id === null) &&
-                        ($item->site_id === $site)) {
-                        return true;
-                    }
-                    if ($item->bay_id === null) {
-                        foreach ($buildings as $building) {
-                            if ($item->building_id === $building->id) {
-                                return true;
-                            }
-                        }
-                    } else {
-                        foreach ($bays as $bay) {
-                            if ($item->bay_id === $bay->id) {
-                                return true;
-                            }
                         }
                     }
                     return false;
@@ -1246,8 +1243,199 @@ class ReportController extends Controller
                     return false;
                 });
 
-            // TODO : implement filter
-            $physicalLinks = PhysicalLink::All()->sortBy('name');
+            // Filter physicalLinks on selected objects
+            $physicalLinks = PhysicalLink::All()->sortBy('name')
+                ->filter(function ($item) use (
+                    $physicalRouters,$physicalServers,
+                    $workstations,$storageDevices,$physicalSwitches,
+                    $peripherals,$wifiTerminals,$phones) {
+                    // Routers
+                    if ($item->physical_router_src_id!==null) {
+                        $found = false;
+                        foreach ($physicalRouters as $router) {
+                            if ($item->physical_router_src_id === $router->id) { 
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                        }
+                    if ($item->physical_router_dest_id!==null) {
+                        $found = false;
+                        foreach ($physicalRouters as $router) {
+                            if ($item->physical_router_dest_id === $router->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Switches
+                    if ($item->physical_switch_src_id!==null) {
+                        $found = false;
+                        foreach ($physicalSwitches as $physicalSwitch) {
+                            if ($item->physical_switch_src_id === $physicalSwitch->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->physical_switch_dest_id!==null) {
+                        $found = false;
+                        foreach ($physicalSwitches as $physicalSwitch) { 
+                            if ($item->physical_switch_dest_id === $physicalSwitch->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Servers
+                    if ($item->physical_server_src_id!==null) {
+                        $found = false;
+                        foreach ($physicalServers as $server) {
+                            if ($item->physical_server_src_id === $server->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->physical_server_dest_id!==null) {
+                        $found = false;
+                        foreach ($physicalServers as $server) {
+                            if ($item->physical_server_dest_id === $server->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Workstations
+                    if ($item->workstation_src_id!==null) {
+                        $found = false;
+                        foreach ($workstations as $workstation) {
+                            if ($item->workstation_src_id === $workstation->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->workstation_dest_id!==null) {
+                        $found = false;
+                        foreach ($workstations as $workstation) {
+                            if ($item->workstation_dest_id === $workstation->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Peripheral
+                    if ($item->peripheral_src_id!==null) {
+                        $found = false;
+                        foreach ($peripherals as $peripheral) {
+                            if ($item->peripheral_src_id === $peripheral->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->peripheral_dest_id!==null) {
+                        $found = false;
+                        foreach ($peripherals as $server) {
+                            if ($item->peripheral_dest_id === $peripheral->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Storage
+                    if ($item->storage_device_src_id!==null) {
+                        $found = false;
+                        foreach ($storageDevices as $storageDevice) {
+                            if ($item->storage_device_src_id === $storageDevice->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->storage_device_dest_id!==null) {
+                        $found = false;
+                        foreach ($storageDevices as $storageDevice) {
+                            if ($item->storage_device_dest_id === $storageDevice->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+
+                    // Wifi
+                    if ($item->wifi_terminal_src_id!==null) {
+                        $found = false;
+                        foreach ($wifiTerminals as $wifiTerminal) {
+                            if ($item->wifi_terminal_src_id === $wifiTerminal->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->wifi_terminal_dest_id!==null) {
+                        $found = false;
+                        foreach ($wifiTerminals as $wifiTerminal) {
+                            if ($item->wifi_terminal_dest_id === $wifiTerminal->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    // Phones
+                    if ($item->phone_src_id!==null) {
+                        $found = false;
+                        foreach ($phones as $phone) {
+                            if ($item->phone_src_id === $phone->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    if ($item->phone_dest_id!==null) {
+                        $found = false;
+                        foreach ($phones as $phone) {
+                            if ($item->phone_dest_id === $phone->id) {
+                                $found = true;
+                                break;
+                                }
+                            }
+                        if (!$found)
+                            return false;
+                    }
+                    return true;
+                });
 
         } else {
             $sites = Site::All()->sortBy('name');
@@ -1265,6 +1453,7 @@ class ReportController extends Controller
             $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
             $physicalLinks = PhysicalLink::All()->sortBy('name');
         }
+
 
         return view('admin/reports/network_schema')
             ->with('all_sites', $all_sites)
