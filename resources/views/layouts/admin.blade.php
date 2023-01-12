@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="/admin">
             <span class="navbar-brand-full">{{ trans('panel.site_title') }}</span>
-            <span class="navbar-brand-minimized">M</span>
+            <span class="navbar-brand-minimized">Merc</span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>

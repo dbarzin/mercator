@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    {{ trans("cruds.menu.physical_infrastructure.title") }}
+                    {{ trans("cruds.menu.network_schema.title") }}
                 </div>
 
                 <div class="card-body">
@@ -920,7 +920,7 @@ digraph  {
         @elseif($link->workstation_dest_id!=null)
             WORK{{$link->workstation_dest_id}}
         @endif
-        [arrowhead=none,headlabel="{{$link->dest_port}}", taillabel="{{$link->src_port}}"];
+        [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
     @endforeach
 
 

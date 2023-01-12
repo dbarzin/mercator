@@ -1387,7 +1387,6 @@ class ReportController extends Controller
                         if (!$found)
                             return false;
                     }
-
                     // Wifi
                     if ($item->wifi_terminal_src_id!==null) {
                         $found = false;
