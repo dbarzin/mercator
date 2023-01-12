@@ -648,7 +648,8 @@ class HomeController extends Controller
                 // ->where('bay_id', '<>', null)
                     ->count(),
 
-            'links' => PhysicalLink::count(),
+            // Too many links...
+            // 'links' => PhysicalLink::count(),
 
             'wans' => Wan::count(),
             'wans_lvl1' => Wan::count(),

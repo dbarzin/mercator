@@ -403,11 +403,6 @@
           value: {!! $securityDevices !!},
           url: "/admin/physical-security-devices"
         }, {
-          label: "{!! trans('cruds.physicalLink.title_short') !!}",
-          data: [0, 0, 0, 0, 0, {!! $links !!}],
-          value: {!! $links !!},
-          url: "/admin/links"
-        }, {
           label: "{!! trans('cruds.wan.title_short') !!}",
           data: [0, 0, 0, 0, 0, {!! $wans !!}],
           value: {!! $wans !!},
@@ -556,7 +551,6 @@
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.storageDevice.title_short') !!}" , num:{!! $storageDevices !!}, url: "/admin/storage-devices" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalSwitch.title_short') !!}" , num:{!! $physicalSwitchs !!}, url: "/admin/physical-switches" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalRouter.title_short') !!}" , num:{!! $physicalRouters !!}, url: "/admin/physical-routers" },
-     {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalLink.title_short') !!}" , num:{!! $links !!}, url: "/admin/links" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.wan.title_short') !!}" , num:{!! $wans !!}, url: "/admin/wans" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.man.title_short') !!}" , num:{!! $mans !!}, url: "/admin/mans" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.lan.title_short') !!}" , num:{!! $lans !!}, url: "/admin/lans" },
