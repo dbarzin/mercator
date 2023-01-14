@@ -823,9 +823,9 @@ digraph  {
                 WG{{ $building->buildingWorkstations()->first()->id }} [label="{{ $building->buildingWorkstations()->count() }} {{ trans("cruds.workstation.title")}}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
                 B{{ $building->id }} -> WG{{ $building->buildingWorkstations()->first()->id }}
             @else
-                @foreach($building->buildingWorkstations() as $workstation) 
+                @foreach($building->buildingWorkstations as $workstation) 
                    W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
-                   S{{ $workstation->site->id }} -> W{{ $workstation->id }}
+                   B{{ $building->id }} -> W{{ $workstation->id }}
                 @endforEach
             @endif
         @endcan
