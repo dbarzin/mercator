@@ -628,10 +628,9 @@ return [
             'title_short' => 'Infrastructure Physique',
         ],
         'network_schema' => [
-            // TODO : add a description here
-            'description' => 'Diagramme réseau',
-            'title' => "Diagramme réseau",
-            'title_short' => 'Diagramme réseau',
+            'description' => "La vue de l'infrastructure réseau décrit à la façon dont les éléments du réseau (tels que les routeurs, les commutateurs, les passerelles, etc.) sont connectés les uns avec les autres pour permettre la communication des données.",
+            'title' => "Vue de l'infrastructure réseau",
+            'title_short' => 'Infrastructure réseau',
         ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
