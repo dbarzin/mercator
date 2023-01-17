@@ -901,6 +901,7 @@ return [
             'information_system' => "Système d'information",
             'logical_infrastructure' => 'Infrastructure logique',
             'physical_infrastructure' => 'Infrastructure physique',
+            'network_infrastructure' => 'Infrastructure réseau',
             'title' => "Rapport de Cartographie du Système d'Information",
             'views' => 'Vues',
             'views_helper' => 'Vues présentes dans le rapport',

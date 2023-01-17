@@ -31,7 +31,8 @@ Changements prévus en 2023 :
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [x] schémas de l'infrastructure réseau physique
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
-- [ ] Carte des actifs par rack, bâtiment/salle et site
+- [ ] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques 
+- [x] Carte des actifs par rack, bâtiment/salle et site
 - [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.

@@ -21,6 +21,7 @@
                                             <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
                                             <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
                                             <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                            <option value="7">{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
                                     </select>
                                     <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
                                 </div>
