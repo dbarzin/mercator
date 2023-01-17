@@ -68,7 +68,7 @@
                       <a class="dropdown-item" href="/admin/report/logical_infrastructure">{{ trans('panel.menu.logical_infrastructure') }}</a>
                       <a class="dropdown-item" href="/admin/report/physical_infrastructure">{{ trans('panel.menu.physical_infrastructure') }}</a>
                       @can('physical_link_access')
-                        <a class="dropdown-item" href="/admin/report/network_schema">{{ trans('panel.menu.network_schema') }}</a>
+                        <a class="dropdown-item" href="/admin/report/network_infrastructure">{{ trans('panel.menu.network_infrastructure') }}</a>
                       @endcan
                     </div>
                 </li>

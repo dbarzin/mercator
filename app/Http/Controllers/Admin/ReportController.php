@@ -1016,7 +1016,7 @@ class ReportController extends Controller
         ;
     }
 
-    public function networkSchema(Request $request)
+    public function networkInfrastructure(Request $request)
     {
         if ($request->site === null) {
             $request->session()->put('site', null);
@@ -1454,7 +1454,7 @@ class ReportController extends Controller
         }
 
 
-        return view('admin/reports/network_schema')
+        return view('admin/reports/network_infrastructure')
             ->with('all_sites', $all_sites)
             ->with('sites', $sites)
             ->with('all_buildings', $all_buildings)
@@ -1469,8 +1469,7 @@ class ReportController extends Controller
             ->with('physicalRouters', $physicalRouters)
             ->with('wifiTerminals', $wifiTerminals)
             ->with('physicalSecurityDevices', $physicalSecurityDevices)
-            ->with('physicalLinks',$physicalLinks)
-        ;
+            ->with('physicalLinks',$physicalLinks);
     }
 
 

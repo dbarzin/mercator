@@ -28,7 +28,7 @@ return [
         'guide' => 'Guide',
         'information_system' => "Système d'information",
         'logical_infrastructure' => 'Infrastructure logique',
-        'network_schema' => 'Diagramme réseau',
+        'network_infrastructure' => 'Infrastructure réseau',
         'options' => 'Options',
         'password' => 'Mot de passe',
         'physical_infrastructure' => 'Infrastructure physique',
