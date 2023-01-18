@@ -1694,8 +1694,8 @@ class ReportController extends Controller
                     ->get()
                     ->implode('name', ', ');
 
-                $sheet->setCellValue("S{$row}", $res);
-                $sheet->setCellValue("T{$row}", $application->databases->implode('name', ', '));
+                $sheet->setCellValue("U{$row}", $res);
+                $sheet->setCellValue("V{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
