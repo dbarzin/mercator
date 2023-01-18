@@ -17,7 +17,7 @@
                     @endif
 
                 <div class="col-sm-4">
-                    <form action="/admin/report/network_schema">
+                    <form action="/admin/report/network_infrastructure">
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td>
