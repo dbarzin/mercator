@@ -19,7 +19,27 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.flux.fields.name_helper') }}</span>
-	    </div>
+    	    </div>
+
+            <div class="form-group">
+                <label for="name">{{ trans('cruds.flux.fields.nature') }}</label>
+
+                <select class="form-control select2-free {{ $errors->has('nature') ? 'is-invalid' : '' }}" name="nature" id="nature">
+                    @if (!$nature_list->contains(old('nature')))
+                        <option> {{ old('nature') }}</option>'
+                    @endif
+                    @foreach($nature_list as $nature)
+                        <option {{ (old('nature') ? old('nature') : $flux->nature) == $nature ? 'selected' : '' }}>{{$nature}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('nature'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('nature') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.flux.fields.nature_helper') }}</span>
+            </div>
+
 
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.flux.fields.description') }}</label>

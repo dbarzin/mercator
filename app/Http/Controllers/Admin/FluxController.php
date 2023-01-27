@@ -49,6 +49,9 @@ class FluxController extends Controller
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
 
+        // List
+        $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+
         $items=Collection::make();
         foreach($applications as $key => $value)
             $items->put('APP_' . $key,$value);
@@ -59,13 +62,14 @@ class FluxController extends Controller
         foreach($databases as $key => $value)
             $items->put('DB_' . $key,$value);
 
-        return view('admin.fluxes.create', compact('items'));
+        return view('admin.fluxes.create', compact('items','nature_list'));
     }
 
     public function store(StoreFluxRequest $request)
     {
         $flux = new Flux;
         $flux->name = $request->name;
+        $flux->nature = $request->nature;
         $flux->description = $request->description;
 
         // Source item
@@ -126,6 +130,9 @@ class FluxController extends Controller
         $modules = ApplicationModule::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
 
+        // List
+        $nature_list = Flux::select('nature')->where('nature', '<>', null)->distinct()->orderBy('nature')->pluck('nature');
+
         $items=Collection::make();
         foreach($applications as $key => $value)
             $items->put('APP_' . $key,$value);
@@ -156,12 +163,13 @@ class FluxController extends Controller
         elseif ($flux->database_dest_id!=null)
             $flux->dest_id='DB_'.$flux->database_dest_id;
 
-        return view('admin.fluxes.edit', compact('items','flux'));
+        return view('admin.fluxes.edit', compact('items','nature_list','flux'));
     }
 
     public function update(UpdateFluxRequest $request, Flux $flux)
     {
         $flux->name = $request->get('name');
+        $flux->nature = $request->nature;
         $flux->description = $request->get('description');
         
         // Source item

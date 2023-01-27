@@ -448,6 +448,8 @@ return [
             'module_source_helper' => '',
             'name' => 'Nom',
             'name_helper' => '',
+            'nature' => 'Nature du flux',
+            'nature_helper' => 'ex: "saisie manuelle", "transfert de fichier", "partage de fichier", "api" ...)',
             'service_dest' => 'Service destinataire',
             'service_dest_helper' => '',
             'service_source' => 'Service Source',
