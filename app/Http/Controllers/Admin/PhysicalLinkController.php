@@ -67,8 +67,6 @@ class PhysicalLinkController extends Controller
         foreach($workstations as $key => $value)
             $devices->put('WORK_' . $key,$value);
 
-        // dd($devices);
-
         return view('admin.links.create', compact('devices'));
     }
 
