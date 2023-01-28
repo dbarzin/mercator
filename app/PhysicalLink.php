@@ -87,6 +87,21 @@ class PhysicalLink extends Model
         return $this->belongsTo(Workstation::class, 'workstation_src_id');
     }
 
+    public function routerSrc()
+    {
+        return $this->belongsTo(Router::class, 'router_src_id');
+    }
+
+    public function networkSwitchSrc()
+    {
+        return $this->belongsTo(NetworkSwitch::class, 'network_switch_src_id');
+    }
+
+    public function logicalServerSrc()
+    {
+        return $this->belongsTo(LogicalServer::class, 'logical_server_src_id');
+    }
+
     // Destinations
 
     public function peripheralDest()
@@ -132,6 +147,21 @@ class PhysicalLink extends Model
     public function workstationDest()
     {
         return $this->belongsTo(Workstation::class, 'workstation_dest_id');
+    }
+
+    public function routerDest()
+    {
+        return $this->belongsTo(Router::class, 'router_dest_id');
+    }
+
+    public function networkSwitchDest()
+    {
+        return $this->belongsTo(NetworkSwitch::class, 'network_switch_dest_id');
+    }
+
+    public function logicalServerDest()
+    {
+        return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
