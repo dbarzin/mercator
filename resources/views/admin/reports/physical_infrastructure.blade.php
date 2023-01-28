@@ -790,6 +790,34 @@
             </div>
             @endif
             @endcan
+
+            @can('physical_link_access')
+            @if ($physicalSecurityDevices->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.physicalSecurityDevice.title") }}                    
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
+                      @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="PSD{{ $physicalSecurityDevice->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.physicalSecurityDevice.fields.description") }}</th>
+                                    <td>{!! $physicalSecurityDevice->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.type") }}</th>
+                                    <td>{{ $physicalSecurityDevice->type }}</td>
+                                </tr>
+
         </div>
     </div>
 </div>
