@@ -19,7 +19,7 @@ Installer Apache2, GIT, Graphviz et Composer
 
 Installer PHP et les librairies
 
-    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd
+    sudo apt install php-zip php-curl php-mbstring php-dom php-ldap php-soap php-xdebug php-mysql php-gd libapache2-mod-php
 
 ## Project
 
