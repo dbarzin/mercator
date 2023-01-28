@@ -26,6 +26,9 @@
                             {{ trans('cruds.flux.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.flux.fields.nature') }}
+                        </th>
+                        <th>
             			    {{ trans('cruds.flux.fields.description') }}
                         </th>
                         <th>
@@ -76,6 +79,9 @@
                                 <a href="{{ route('admin.fluxes.show', $flux->id) }}">
                                 {{ $flux->name ?? '' }}
                                 </a>
+                            </td>
+                            <td>
+                                {{ $flux->nature }}
                             </td>
                             <td>
                                 {!! $flux->description ?? '' !!}

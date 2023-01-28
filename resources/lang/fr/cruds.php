@@ -423,6 +423,10 @@ return [
     'flux' => [
         'description' => 'Echange d’informations entre un émetteur ou un récepteur (service applicatif, application ou acteur).',
         'fields' => [
+            'destination' => 'Destination',
+            'destination_helper' => 'Destination du flux',
+            'source' => 'Source',
+            'source_helper' => 'Source du flux',
             'application_dest' => 'Application destinataire',
             'application_dest_helper' => '',
             'application_source' => 'Application Source',
@@ -444,6 +448,8 @@ return [
             'module_source_helper' => '',
             'name' => 'Nom',
             'name_helper' => '',
+            'nature' => 'Nature du flux',
+            'nature_helper' => 'ex: "saisie manuelle", "transfert de fichier", "partage de fichier", "api" ...)',
             'service_dest' => 'Service destinataire',
             'service_dest_helper' => '',
             'service_source' => 'Service Source',

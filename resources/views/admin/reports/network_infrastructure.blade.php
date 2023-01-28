@@ -790,6 +790,138 @@
             </div>
             @endif
             @endcan
+
+            @can('physical_link_access')
+            @if ($physicalLinks->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.physicalLink.title") }}                    
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.physicalLink.description") }}</p>
+
+                   <div class="row">
+                        <div class="col-sm-6">
+   
+                            <table class="table table-bordered table-striped table-hover">
+                                    <th></th>
+                                    <th width='40%'>
+                                        {{ trans('cruds.physicalLink.fields.src') }}
+                                    </th>
+                                    <th width='10%'>
+                                        {{ trans('cruds.physicalLink.fields.src_port') }}
+                                    </th>
+                                    <th width='40%'>
+                                        {{ trans('cruds.physicalLink.fields.dest') }}
+                                    </th>
+                                    <th width='10%'>
+                                        {{ trans('cruds.physicalLink.fields.dest_port') }}
+                                    </th>
+                                </thead>
+
+                                @foreach($physicalLinks as $physicalLink)
+                                    <tr data-entry-id="{{ $physicalLink->id }}">
+                                        <td>
+                                            <a href="/admin/links/{{ $physicalLink->id }}">&#9741;</a>
+                                        </td>
+                                        <td>
+                                        @if ($physicalLink->peripheral_src_id!=null)
+                                        <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_src_id) }}">
+                                            {{ $physicalLink->peripheralSrc->name; }}
+                                        </a>
+                                        @elseif ($physicalLink->phone_src_id!=null)
+                                        <a href="{{ route('admin.phones.show', $physicalLink->phone_src_id) }}">
+                                            {{ $physicalLink->phoneSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_router_src_id!=null)
+                                        <a href="{{ route('admin.physical-routers.show', $physicalLink->physical_router_src_id) }}">
+                                            {{ $physicalLink->physicalRouterSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_security_device_src_id!=null)
+                                        <a href="{{ route('admin.physical-security-devices.show', $physicalLink->physical_security_device_src_id) }}">
+                                            {{ $physicalLink->physicalSecurityDeviceSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_server_src_id!=null)
+                                        <a href="{{ route('admin.physical-servers.show', $physicalLink->physical_server_src_id) }}">
+                                            {{ $physicalLink->physicalServerSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_switch_src_id!=null)
+                                        <a href="{{ route('admin.physical-switches.show', $physicalLink->physical_switch_src_id) }}">
+                                            {{ $physicalLink->physicalSwitchSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->storage_device_src_id!=null)
+                                        <a href="{{ route('admin.storage-devices.show', $physicalLink->storage_device_src_id) }}">
+                                            {{ $physicalLink->storageDeviceSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->wifi_terminal_src_id!=null)
+                                        <a href="{{ route('admin.wifi-terminals.show', $physicalLink->wifi_terminal_src_id) }}">
+                                            {{ $physicalLink->wifiTerminalSrc->name }}
+                                        </a>
+                                        @elseif ($physicalLink->workstation_src_id!=null)
+                                        <a href="{{ route('admin.workstations.show', $physicalLink->workstation_src_id) }}">
+                                            {{ $physicalLink->workstationSrc->name }}
+                                        </a>
+                                        @endif
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ $physicalLink->src_port }}
+                                    </td>
+                                    <td>
+                                        @if ($physicalLink->peripheral_dest_id!=null)
+                                        <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_dest_id) }}">
+                                            {{ $physicalLink->peripheralDest->name; }}
+                                        </a>
+                                        @elseif ($physicalLink->phone_dest_id!=null)
+                                        <a href="{{ route('admin.phones.show', $physicalLink->phone_dest_id) }}">
+                                            {{ $physicalLink->phoneDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_router_dest_id!=null)
+                                        <a href="{{ route('admin.physical-routers.show', $physicalLink->physical_router_dest_id) }}">
+                                            {{ $physicalLink->physicalRouterDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_security_device_dest_id!=null)
+                                        <a href="{{ route('admin.physical-security-devices.show', $physicalLink->physical_security_device_dest_id) }}">
+                                            {{ $physicalLink->physicalSecurityDeviceDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_server_dest_id!=null)
+                                        <a href="{{ route('admin.physical-servers.show', $physicalLink->physical_server_dest_id) }}">
+                                            {{ $physicalLink->physicalServerDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->physical_switch_dest_id!=null)
+                                        <a href="{{ route('admin.physical-switches.show', $physicalLink->physical_switch_dest_id) }}">
+                                            {{ $physicalLink->physicalSwitchDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->storage_device_dest_id!=null)
+                                        <a href="{{ route('admin.storage-devices.show', $physicalLink->storage_device_dest_id) }}">
+                                            {{ $physicalLink->storageDeviceDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->wifi_terminal_dest_id!=null)
+                                        <a href="{{ route('admin.wifi-terminals.show', $physicalLink->wifi_terminal_dest_id) }}">
+                                            {{ $physicalLink->wifiTerminalDest->name }}
+                                        </a>
+                                        @elseif ($physicalLink->workstation_dest_id!=null)
+                                        <a href="{{ route('admin.workstations.show', $physicalLink->workstation_dest_id) }}">
+                                            {{ $physicalLink->workstationDest->name }}
+                                        </a>
+                                        @endif
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ $physicalLink->dest_port }}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @endcan
+
+
+    
         </div>
     </div>
 </div>
