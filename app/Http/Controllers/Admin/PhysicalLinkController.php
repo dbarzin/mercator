@@ -13,6 +13,10 @@ use App\StorageDevice;
 use App\WifiTerminal;
 use App\Workstation;
 
+use App\Router;
+use App\NetworkSwitch;
+use App\LogicalServer;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
@@ -37,6 +41,7 @@ class PhysicalLinkController extends Controller
     {
         abort_if(Gate::denies('physical_link_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // physical devices
         $peripherals = Peripheral::All()->sortBy('name')->pluck('name', 'id');
         $phones = Phone::All()->sortBy('name')->pluck('name', 'id');
         $physicalRouters = PhysicalRouter::All()->sortBy('name')->pluck('name', 'id');
@@ -46,6 +51,11 @@ class PhysicalLinkController extends Controller
         $storageDevices = StorageDevice::All()->sortBy('name')->pluck('name', 'id');
         $wifiTerminals = WifiTerminal::All()->sortBy('name')->pluck('name', 'id');
         $workstations = Workstation::All()->sortBy('name')->pluck('name', 'id');
+
+        // logical devices
+        $routers = Router::All()->sortBy('name')->pluck('name', 'id');
+        $networkSwitches = NetworkSwitch::All()->sortBy('name')->pluck('name', 'id');
+        $logicalServers = LogicalServer::All()->sortBy('name')->pluck('name', 'id');
 
         $devices=Collection::make();
         foreach($peripherals as $key => $value)
@@ -66,6 +76,13 @@ class PhysicalLinkController extends Controller
             $devices->put('WIFI_' . $key,$value);
         foreach($workstations as $key => $value)
             $devices->put('WORK_' . $key,$value);
+
+        foreach($routers as $key => $value)
+            $devices->put('LROUTER_' . $key,$value);
+        foreach($networkSwitches as $key => $value)
+            $devices->put('LSWITCH_' . $key,$value);
+        foreach($logicalServers as $key => $value)
+            $devices->put('LSERV_' . $key,$value);
 
         return view('admin.links.create', compact('devices'));
     }
@@ -94,6 +111,12 @@ class PhysicalLinkController extends Controller
             $physicalLink->wifi_terminal_src_id=intval(substr($request->src_id,5));
         elseif (str_starts_with($request->src_id,'WORK_'))
             $physicalLink->workstation_src_id=intval(substr($request->src_id,5));
+        elseif (str_starts_with($request->src_id,'LROUTER_'))
+            $physicalLink->router_src_id=intval(substr($request->src_id,8));
+        elseif (str_starts_with($request->src_id,'LSWITCH_'))
+            $physicalLink->network_switch_src_id=intval(substr($request->src_id,8));
+        elseif (str_starts_with($request->src_id,'LSERV_'))
+            $physicalLink->logical_server_src_id=intval(substr($request->src_id,6));
 
         // Dest device
         if (str_starts_with($request->dest_id,'PER_'))
@@ -114,6 +137,12 @@ class PhysicalLinkController extends Controller
             $physicalLink->wifi_terminal_dest_id=intval(substr($request->dest_id,5));
         elseif (str_starts_with($request->dest_id,'WORK_'))
             $physicalLink->workstation_dest_id=intval(substr($request->dest_id,5));
+        elseif (str_starts_with($request->dest_id,'LROUTER_'))
+            $physicalLink->router_dest_id=intval(substr($request->dest_id,8));
+        elseif (str_starts_with($request->dest_id,'LSWITCH_'))
+            $physicalLink->network_switch_dest_id=intval(substr($request->dest_id,8));
+        elseif (str_starts_with($request->dest_id,'LSERV_'))
+            $physicalLink->logical_server_dest_id=intval(substr($request->dest_id,6));
 
         // Ports
         $physicalLink->src_port = $request->src_port;
@@ -128,6 +157,7 @@ class PhysicalLinkController extends Controller
     {
         abort_if(Gate::denies('physical_link_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // Physical devices
         $peripherals = Peripheral::All()->sortBy('name')->pluck('name', 'id');
         $phones = Phone::All()->sortBy('name')->pluck('name', 'id');
         $physicalRouters = PhysicalRouter::All()->sortBy('name')->pluck('name', 'id');
@@ -137,6 +167,11 @@ class PhysicalLinkController extends Controller
         $storageDevices = StorageDevice::All()->sortBy('name')->pluck('name', 'id');
         $wifiTerminals = WifiTerminal::All()->sortBy('name')->pluck('name', 'id');
         $workstations = Workstation::All()->sortBy('name')->pluck('name', 'id');
+
+        // logical devices
+        $routers = Router::All()->sortBy('name')->pluck('name', 'id');
+        $networkSwitches = NetworkSwitch::All()->sortBy('name')->pluck('name', 'id');
+        $logicalServers = LogicalServer::All()->sortBy('name')->pluck('name', 'id');
 
         $devices=Collection::make();
         foreach($peripherals as $key => $value)
@@ -157,6 +192,12 @@ class PhysicalLinkController extends Controller
             $devices->put('WIFI_' . $key,$value);
         foreach($workstations as $key => $value)
             $devices->put('WORK_' . $key,$value);
+        foreach($routers as $key => $value)
+            $devices->put('LROUTER_' . $key,$value);
+        foreach($networkSwitches as $key => $value)
+            $devices->put('LSWITCH_' . $key,$value);
+        foreach($logicalServers as $key => $value)
+            $devices->put('LSERV_' . $key,$value);
 
         // Source device
         if ($link->peripheral_src_id!=null)
@@ -177,6 +218,12 @@ class PhysicalLinkController extends Controller
             $link->src_id= 'WIFI_' . $link->wifi_terminal_src_id;
         elseif ($link->workstation_src_id!=null)
             $link->src_id= 'WORK_' . $link->workstation_src_id;
+        elseif ($link->router_src_id!=null)
+            $link->src_id= 'LROUTER_' . $link->router_src_id;
+        elseif ($link->network_switch_src_id!=null)
+            $link->src_id= 'LSWITCH_' . $link->network_switch_src_id;
+        elseif ($link->logical_server_src_id!=null)
+            $link->src_id= 'LSERV_' . $link->logical_server_src_id;
 
         // Dest device
         if ($link->peripheral_dest_id!=null)
@@ -197,6 +244,12 @@ class PhysicalLinkController extends Controller
             $link->dest_id= 'WIFI_' . $link->wifi_terminal_dest_id;
         elseif ($link->workstation_dest_id!=null)
             $link->dest_id= 'WORK_' . $link->workstation_dest_id;
+        elseif ($link->router_dest_id!=null)
+            $link->dest_id= 'LROUTER_' . $link->router_dest_id;
+        elseif ($link->network_switch_dest_id!=null)
+            $link->dest_id= 'LSWITCH_' . $link->network_switch_dest_id;
+        elseif ($link->logical_server_dest_id!=null)
+            $link->dest_id= 'LSERV_' . $link->logical_server_dest_id;
 
         return view('admin.links.edit', compact('devices','link'));
     }
@@ -243,10 +296,27 @@ class PhysicalLinkController extends Controller
             $link->wifi_terminal_src_id=intval(substr($request->src_id,5));
         else
             $link->wifi_terminal_src_id=null;
+
         if (str_starts_with($request->src_id,'WORK_'))
             $link->workstation_src_id=intval(substr($request->src_id,5));
         else
             $link->workstation_src_id=null;
+
+        if (str_starts_with($request->src_id,'LROUTER_'))
+            $link->router_src_id=intval(substr($request->src_id,8));
+        else
+            $link->router_src_id=null;
+
+        if (str_starts_with($request->src_id,'LSWITCH_'))
+            $link->network_switch_src_id=intval(substr($request->src_id,8));
+        else
+            $link->network_switch_src_id=null;
+
+        if (str_starts_with($request->src_id,'LSERV_'))
+            $link->logical_server_src_id=intval(substr($request->src_id,6));
+        else
+            $link->logical_server_src_id=null;
+
 
         // Dest device
         if (str_starts_with($request->dest_id,'PER_'))
@@ -292,6 +362,21 @@ class PhysicalLinkController extends Controller
             $link->workstation_dest_id=intval(substr($request->dest_id,5));
         else
             $link->workstation_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'LROUTER_'))
+            $link->router_dest_id=intval(substr($request->dest_id,8));
+        else
+            $link->router_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'LSWITCH_'))
+            $link->network_switch_dest_id=intval(substr($request->dest_id,8));
+        else
+            $link->network_switch_dest_id=null;
+
+        if (str_starts_with($request->dest_id,'LSERV_'))
+            $link->logical_server_dest_id=intval(substr($request->dest_id,6));
+        else
+            $link->logical_server_dest_id=null;
 
         // Ports
         $link->src_port = $request->src_port;
