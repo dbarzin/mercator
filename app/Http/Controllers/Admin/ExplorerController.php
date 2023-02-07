@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-// ecosystem
-// information system
-// Applications
-// Administration
 use App\Http\Controllers\Controller;
-// Logique
-// Physique
-use App\Router;
-use App\Subnetwork;
 use Illuminate\Support\Facades\DB;
+
+// TODO : Why ????
+use App\Subnetwork;
+use App\Router;
 
 class ExplorerController extends Controller
 {
@@ -133,6 +129,68 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('SITE_', $wifiTerminal->site_id));
             }
         }
+
+        // PhysicalLink 
+        $links = DB::table('physical_links')->whereNull('deleted_at')->get();
+        foreach ($links as $link) {
+
+            if ($link->peripheral_src_id!==null) 
+                $src_id = 'PERIF_' . $link->peripheral_src_id;
+            elseif ($link->phone_src_id!==null)
+                $src_id = 'PHONE_' . $link->phone_src_id;
+            elseif ($link->physical_router_src_id!==null)
+                $src_id = 'PROUTER_' . $link->physical_router_src_id;
+            elseif ($link->physical_security_device_src_id!==null)
+                $src_id = 'SECURITY_' . $link->physical_security_device_src_id;
+            elseif ($link->physical_server_src_id!==null)
+                $src_id = 'PSERVER_' . $link->physical_server_src_id;
+            elseif ($link->physical_switch_src_id!==null)
+                $src_id = 'SWITCH_' . $link->physical_switch_src_id;
+            elseif ($link->storage_device_src_id!==null)
+                $src_id = 'STORAGE_' . $link->storage_device_src_id;
+            elseif ($link->wifi_terminal_src_id!==null)
+                $src_id = 'WIFI_' . $link->wifi_terminal_src_id;
+            elseif ($link->workstation_src_id!==null)
+                $src_id = 'WORK_' . $link->workstation_src_id;
+            elseif ($link->logical_server_src_id!==null)
+                $src_id = 'LSERVER_' . $link->logical_server_src_id;
+            elseif ($link->network_switch_src_id!==null)
+                $src_id = 'LSWITCH_' . $link->network_switch_src_id;
+            elseif ($link->router_src_id!==null)
+                $src_id = 'LROUTER' . $link->router_src_id;
+            else
+                continue;
+
+            if ($link->peripheral_dest_id!==null) 
+                $dest_id = 'PERIF_' . $link->peripheral_dest_id;
+            elseif ($link->phone_dest_id!==null)
+                $dest_id = 'PHONE_' . $link->phone_dest_id;
+            elseif ($link->physical_router_dest_id!==null)
+                $dest_id = 'PROUTER_' . $link->physical_router_dest_id;
+            elseif ($link->physical_security_device_dest_id!==null)
+                $dest_id = 'SECURITY_' . $link->physical_security_device_dest_id;
+            elseif ($link->physical_server_dest_id!==null)
+                $dest_id = 'PSERVER_' . $link->physical_server_dest_id;
+            elseif ($link->physical_switch_dest_id!==null)
+                $dest_id = 'SWITCH_' . $link->physical_switch_dest_id;
+            elseif ($link->storage_device_dest_id!==null)
+                $dest_id = 'STORAGE_' . $link->storage_device_dest_id;
+            elseif ($link->wifi_terminal_dest_id!==null)
+                $dest_id = 'WIFI_' . $link->wifi_terminal_dest_id;
+            elseif ($link->workstation_dest_id!==null)
+                $dest_id = 'WORK_' . $link->workstation_dest_id;
+            elseif ($link->logical_server_dest_id!==null)
+                $dest_id = 'LSERVER_' . $link->logical_server_dest_id;
+            elseif ($link->network_switch_dest_id!==null)
+                $dest_id = 'LSWITCH_' . $link->network_switch_dest_id;
+            elseif ($link->router_dest_id!==null)
+                $dest_id = 'LROUTER' . $link->router_dest_id;
+            else
+                continue;
+
+            $this->addPhysicalLinkEdge($edges, $src_id, $dest_id);
+        }
+
 
         // ---------------------------------------------------
         // Logical view - 5
@@ -378,27 +436,32 @@ class ExplorerController extends Controller
         }
 
         // Fluxes
-        $fluxes = DB::table('fluxes')->select('id', 'name', 'bidirectional', 'application_source_id', 'service_source_id', 'module_source_id', 'database_source_id', 'application_dest_id', 'service_dest_id', 'module_dest_id', 'database_dest_id')->whereNull('deleted_at')->get();
+        $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('APP_', $flux->application_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
 
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('SERV_', $flux->service_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            if ($flux->application_source_id!==null) 
+                $src_id = 'APP_' . $flux->application_source_id;
+            elseif ($flux->service_source_id!==null)
+                $src_id = 'SERV_' . $flux->service_source_id;
+            elseif ($flux->module_source_id!==null)
+                $src_id = 'MOD_' . $flux->module_source_id;
+            elseif ($flux->database_source_id!==null)
+                $src_id = 'DATABASE_' . $flux->database_source_id;
+            else
+                continue;
 
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('MOD_', $flux->module_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            if ($flux->application_dest_id!==null) 
+                $dest_id = 'APP_' . $flux->application_dest_id;
+            elseif ($flux->service_dest_id!==null)
+                $dest_id = 'SERV' . $flux->service_dest_id;
+            elseif ($flux->module_dest_id!==null)
+                $dest_id = 'MOD_ ' . $flux->module_dest_id;
+            elseif ($flux->database_dest_id!==null)
+                $dest_id = 'DATABASE_' . $flux->database_dest_id;
+            else
+                continue;
 
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('APP_', $flux->application_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('SERV_', $flux->service_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('MOD_', $flux->module_dest_id));
-            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $this->formatId('DATABASE_', $flux->database_source_id), $this->formatId('DATABASE_', $flux->database_dest_id));
+            $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $src_id, $dest_id);
         }
 
         // ---------------------------------------------------
@@ -519,6 +582,11 @@ class ExplorerController extends Controller
     private function addLinkEdge(&$edges, $from, $to)
     {
         $this->addEdge($edges, null, false, $from, $to, 'LINK');
+    }
+
+    private function addPhysicalLinkEdge(&$edges, $from, $to)
+    {
+        $this->addEdge($edges, null, false, $from, $to, 'CABLE');
     }
 
     private function addFluxEdge(&$edges, $name, $bidir, $from, $to)

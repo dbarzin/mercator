@@ -154,24 +154,24 @@
             // Get destination node
             var target_node = _nodes.get(edge.id);
             // check node exists
-            if (target_node!=null) {
+            if (target_node !== null) {
                 // Check node already present
                 if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
                     console.log("add edge :"+new_node.id+" -> " +target_node.id);
-                    if(edge.edgeType === 'FLUX') {
+                    if (edge.edgeType === 'FLUX') {
                         console.log('edge.label='+edge.name)
-                        if(edge.edgeDirection === 'TO') {
+                        if (edge.edgeDirection === 'TO') {
                             if (edge.bidirectional)
                                 edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
                             else
                                 edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
-                        } else if(edge.edgeDirection === 'FROM') {
+                        } else if (edge.edgeDirection === 'FROM') {
                             if (edge.bidirectional)
                                 edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
                             else
                                 edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
-                    } else if(edge.edgeType === 'LINK') {
+                    } else if (edge.edgeType === 'LINK') {
                         edges.add({ from: new_node.id, to: target_node.id });
                     }
                 }
@@ -184,7 +184,7 @@
     // Called when the Visualization API is loaded.
     function draw() {
         // Start node 
-        @if (Request::get("node")!=null)
+        @if (Request::get("node") !== null)
             nodes = new vis.DataSet([_nodes.get("{{ Request::get("node") }}")]);
         @else
             nodes = new vis.DataSet();
@@ -276,7 +276,10 @@
                 var new_node = _nodes.get(edge.id);
                 if (new_node!=null) {
                     // Apply filter
-                    if ((filter.length==0) || filter.includes(new_node.vue)) { 
+                    if (
+                        (filter.length==0) || filter.includes(new_node.vue) || 
+                        (filter.includes("7") && edge.edgeType === 'CABLE')
+                    ) { 
                         // Check node already present
                         if (nodes.get(edge.id)==null) {
                             console.log("add node :"+edge.id);
@@ -298,9 +301,11 @@
                                     else
                                         edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
     							}
-    						} else if(edge.edgeType === 'LINK') {
-    							edges.add({ from: params.nodes[0], to: edge.id });
-    						}
+    						} else if(edge.edgeType === 'CABLE') {
+    							edges.add({ from: params.nodes[0], to: edge.id, color:'grey', width: 3 });    						
+                            } else if(edge.edgeType === 'LINK') {
+                                edges.add({ from: params.nodes[0], to: edge.id});
+                            }
                         }
                     }
                 }
@@ -326,7 +331,7 @@
             contextMenu.style.display="block";
             contextMenu.style.opacity = "1";
             contextMenu.style.top=y + "px";
-	    contextMenu.style.left=x + "px";
+    	    contextMenu.style.left=x + "px";
         }
 
         function hideContext(){
@@ -343,7 +348,7 @@
           y: e.pointer.DOM.y
         });
 
-          if (s){
+        if (s){
             link = s;
             let nodeId = link.split("_").pop();
             console.log(nodeId);
