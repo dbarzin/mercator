@@ -1012,47 +1012,58 @@ digraph  {
         }
     @endforeach
 
-    @foreach($physicalLinks as $link) 
-        @if($link->peripheral_src_id!=null)
-            PER{{$link->peripheral_src_id ?? ""}}
-        @elseif($link->physical_router_src_id!=null)
-            ROUTER{{$link->physical_router_src_id}}
-        @elseif($link->phone_src_id!=null)
-            PHONE{{$link->phone_src_id}}
-        @elseif($link->physical_security_device_src_id!=null)
-            PSD{{$link->physical_security_device_src_id}}
-        @elseif($link->physical_server_src_id!=null)
-            PSERVER{{$link->physical_server_src_id}}
-        @elseif($link->physical_switch_src_id!=null)
-            SWITCH{{$link->physical_switch_src_id}}
-        @elseif($link->storage_device_src_id!=null)
-            SD{{$link->storage_device_src_id}}
-        @elseif($link->wifi_terminal_src_id!=null)
-            WIFI{{$link->wifi_terminal_src_id}}
-        @elseif($link->workstation_src_id!=null)
-            WORK{{$link->workstation_src_id}}
+    @foreach($physicalLinks as $link)
+
+        @if ( 
+            ($link->logical_server_src_id==null) &&
+            ($link->network_switch_src_id==null) &&
+            ($link->router_src_id==null) &&
+            ($link->logical_server_dest_id==null) &&
+            ($link->network_switch_dest_id==null) &&
+            ($link->router_desr_id==null) 
+        ) 
+
+            @if($link->peripheral_src_id!=null)
+                PER{{$link->peripheral_src_id }}
+            @elseif($link->physical_router_src_id!=null)
+                ROUTER{{$link->physical_router_src_id}}
+            @elseif($link->phone_src_id!=null)
+                PHONE{{$link->phone_src_id}}
+            @elseif($link->physical_security_device_src_id!=null)
+                PSD{{$link->physical_security_device_src_id}}
+            @elseif($link->physical_server_src_id!=null)
+                PSERVER{{$link->physical_server_src_id}}
+            @elseif($link->physical_switch_src_id!=null)
+                SWITCH{{$link->physical_switch_src_id}}
+            @elseif($link->storage_device_src_id!=null)
+                SD{{$link->storage_device_src_id}}
+            @elseif($link->wifi_terminal_src_id!=null)
+                WIFI{{$link->wifi_terminal_src_id}}
+            @elseif($link->workstation_src_id!=null)
+                WORK{{$link->workstation_src_id}}
+            @endif
+            ->
+            @if($link->peripheral_dest_id!=null)
+                PER{{$link->peripheral_dest_id}}
+            @elseif($link->physical_router_dest_id!=null)
+                ROUTER{{$link->physical_router_dest_id}}
+            @elseif($link->phone_dest_id!=null)
+                PHONE{{$link->phone_dest_id}}
+            @elseif($link->physical_security_device_dest_id!=null)
+                PSD{{$link->physical_security_device_dest_id}}
+            @elseif($link->physical_server_dest_id!=null)
+                PSERVER{{$link->physical_server_dest_id}}
+            @elseif($link->physical_switch_dest_id!=null)
+                SWITCH{{$link->physical_switch_dest_id}}
+            @elseif($link->storage_device_dest_id!=null)
+                SD{{$link->storage_device_dest_id}}
+            @elseif($link->wifi_terminal_dest_id!=null)
+                WIFI{{$link->wifi_terminal_dest_id}}
+            @elseif($link->workstation_dest_id!=null)
+                WORK{{$link->workstation_dest_id}}
+            @endif
+            [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
         @endif
-        ->
-        @if($link->peripheral_dest_id!=null)
-            PER{{$link->peripheral_dest_id}}
-        @elseif($link->physical_router_dest_id!=null)
-            ROUTER{{$link->physical_router_dest_id}}
-        @elseif($link->phone_dest_id!=null)
-            PHONE{{$link->phone_dest_id}}
-        @elseif($link->physical_security_device_dest_id!=null)
-            PSD{{$link->physical_security_device_dest_id}}
-        @elseif($link->physical_server_dest_id!=null)
-            PSERVER{{$link->physical_server_dest_id}}
-        @elseif($link->physical_switch_dest_id!=null)
-            SWITCH{{$link->physical_switch_dest_id}}
-        @elseif($link->storage_device_dest_id!=null)
-            SD{{$link->storage_device_dest_id}}
-        @elseif($link->wifi_terminal_dest_id!=null)
-            WIFI{{$link->wifi_terminal_dest_id}}
-        @elseif($link->workstation_dest_id!=null)
-            WORK{{$link->workstation_dest_id}}
-        @endif
-        [arrowhead=none,taillabel="{{$link->src_port}}", headlabel="{{$link->dest_port}}", href="{{ route('admin.links.show', $link->id) }}"];
     @endforeach
 
 
