@@ -130,7 +130,7 @@ class ExplorerController extends Controller
             }
         }
 
-        // PhysicalLink xxxxxxxxxxxxxxxxxxxxx
+        // PhysicalLink 
         $links = DB::table('physical_links')->whereNull('deleted_at')->get();
         foreach ($links as $link) {
 
