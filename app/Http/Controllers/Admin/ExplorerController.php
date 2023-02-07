@@ -75,7 +75,7 @@ class ExplorerController extends Controller
         // Physical routers
         $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($routers as $router) {
-            $this->addNode($nodes, 6, $this->formatId('PROUTER_', $router->id), $router->name, '/images/prouter.png', 'physical-routers');
+            $this->addNode($nodes, 6, $this->formatId('PROUTER_', $router->id), $router->name, '/images/router.png', 'physical-routers');
             if ($router->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
             } elseif ($router->building_id !== null) {

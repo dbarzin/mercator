@@ -1015,12 +1015,12 @@ digraph  {
     @foreach($physicalLinks as $link)
 
         @if ( 
-            ($link->logical_server_src_id==null) &&
-            ($link->network_switch_src_id==null) &&
-            ($link->router_src_id==null) &&
-            ($link->logical_server_dest_id==null) &&
-            ($link->network_switch_dest_id==null) &&
-            ($link->router_desr_id==null) 
+            ($link->logical_server_src_id === null) &&
+            ($link->network_switch_src_id === null) &&
+            ($link->router_src_id === null) &&
+            ($link->logical_server_dest_id === null) &&
+            ($link->network_switch_dest_id === null) &&
+            ($link->router_desr_id === null) 
         ) 
 
             @if($link->peripheral_src_id!=null)
