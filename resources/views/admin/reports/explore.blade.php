@@ -298,9 +298,11 @@
                                     else
                                         edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
     							}
-    						} else if(edge.edgeType === 'LINK') {
-    							edges.add({ from: params.nodes[0], to: edge.id });
-    						}
+    						} else if(edge.edgeType === 'CABLE') {
+    							edges.add({ from: params.nodes[0], to: edge.id, color:'grey', width: 3 });    						
+                            } else if(edge.edgeType === 'LINK') {
+                                edges.add({ from: params.nodes[0], to: edge.id});
+                            }
                         }
                     }
                 }
@@ -326,7 +328,7 @@
             contextMenu.style.display="block";
             contextMenu.style.opacity = "1";
             contextMenu.style.top=y + "px";
-	    contextMenu.style.left=x + "px";
+    	    contextMenu.style.left=x + "px";
         }
 
         function hideContext(){
@@ -343,7 +345,7 @@
           y: e.pointer.DOM.y
         });
 
-          if (s){
+        if (s){
             link = s;
             let nodeId = link.split("_").pop();
             console.log(nodeId);
