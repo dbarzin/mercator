@@ -31,7 +31,7 @@ Changements prévus en 2023 :
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [x] schémas de l'infrastructure réseau physique
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
-- [ ] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques 
+- [x] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques 
 - [x] Carte des actifs par rack, bâtiment/salle et site
 - [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
