@@ -26,7 +26,7 @@
                             {{ trans('cruds.flux.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.flux.fields.nature') }}
+                            {{ trans('cruds.flux.fields.nature_short') }}
                         </th>
                         <th>
             			    {{ trans('cruds.flux.fields.description') }}
