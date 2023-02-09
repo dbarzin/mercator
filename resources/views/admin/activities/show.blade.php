@@ -51,6 +51,70 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.activity.fields.responsible') }}
+                        </th>
+                        <td>
+                            {!! $activity->responsible !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.purpose') }}
+                        </th>
+                        <td>
+                            {!! $activity->purpose !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.categories') }}
+                        </th>
+                        <td>
+                            {!! $activity->categories !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.recipients') }}
+                        </th>
+                        <td>
+                            {!! $activity->recipients !!}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.transfert') }}
+                        </th>
+                        <td>
+                            {!! $activity->transfert !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.retention') }}
+                        </th>
+                        <td>
+                            {!! $activity->retention !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.controls') }}
+                        </th>
+                        <td>
+                            {!! $activity->controls !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
                             {{ trans('cruds.activity.fields.operations') }}
                         </th>
                         <td>

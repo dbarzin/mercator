@@ -1549,6 +1549,91 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+
+    public function activities()
+    {
+        $path = storage_path('app/activities-'. Carbon::today()->format('Ymd') .'.xlsx');
+
+        $activities = Activity::All()->sortBy('name');
+
+        $header = [
+            trans('cruds.activity.fields.name'),
+            trans('cruds.activity.fields.description'),
+            trans('cruds.activity.fields.responsible'),
+            trans('cruds.activity.fields.purpose'),
+            trans('cruds.activity.fields.categories'),
+            trans('cruds.activity.fields.recipients'),
+            trans('cruds.activity.fields.transfert'),
+            trans('cruds.activity.fields.retention'),
+            trans('cruds.activity.fields.controls'),
+            trans('cruds.activity.fields.processes'),
+            trans('cruds.activity.fields.operations'),
+        ];
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], null, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // column size
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('C')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('D')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('E')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('F')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('G')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('H')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('I')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+
+        // converter
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+        foreach ($activities as $activity) {
+            $sheet->setCellValue("A{$row}", $activity->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($activity->description));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($activity->responsible));
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($activity->purpose));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($activity->categories));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($activity->recipients));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($activity->transfert));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($activity->retention));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($activity->controls));
+
+            $txt = '';
+            foreach ($activity->activitiesProcesses as $process) {
+                $txt .= $process->name;
+                if ($activity->activitiesProcesses->last() !== $process) {
+                    $txt .= ', ';
+                }
+            }
+            $sheet->setCellValue("J{$row}", $txt);
+
+            $txt = '';
+            foreach ($activity->operations as $operation) {
+                $txt .= $operation->name;
+                if ($activity->operations->last() !== $operation) {
+                    $txt .= ', ';
+                }
+            }
+            $sheet->setCellValue("K{$row}", $txt);
+
+            $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
+
+
     public function applicationsByBlocks()
     {
         $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.xlsx');

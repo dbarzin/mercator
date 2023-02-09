@@ -3,10 +3,27 @@ return [
     'activity' => [
         'description' => 'Étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.',
         'fields' => [
-            'description' => 'Description',
-            'description_helper' => "Description de l'opération",
             'name' => 'Nom',
-            'name_helper' => "Nom de l'opération",
+            'name_helper' => "Nom de l'activité de traitement",
+
+            'description' => 'Description',
+            'description_helper' => "Description de l'activité de traitement",
+
+            'responsible' => 'Responsable du traitement',
+            'responsible_helper' => 'Le nom et les coordonnées du responsable du traitement et, le cas échéant, du responsable conjoint du traitement, du représentant du responsable du traitement et du délégué à la protection des données.',
+            'purpose' => 'Finalités du traitement',
+            'purpose_helper' => 'Les finalités du traitement',
+            'categories' => 'Catégories de destinataires',
+            'categories_helper' => 'Une description des catégories de personnes concernées et des catégories de données à caractère personnel',
+            'recipients' => 'Destinataires des données',
+            'recipients_helper' => 'Les catégories de destinataires auxquels les données à caractère personnel ont été ou seront communiquées, y compris les destinataires dans des pays tiers ou des organisations internationales;',
+            'transfert' => 'Transferts de données',
+            'transfert_helper' => "Les transferts de données à caractère personnel vers un pays tiers ou à une organisation internationale, y compris l'identification de ce pays tiers ou de cette organisation internationale et, le cas échéant, les documents attestant de l'existence de garanties appropriées.",
+            'retention' => 'Durées de rétention',
+            'retention_helper' => "Les délais prévus pour l'effacement des différentes catégories de données",
+            'controls' => 'Mesures de sécurité',
+            'controls_helper' => "Une description générale des mesures de sécurité techniques et organisationnelles",
+
             'operations' => 'Opérations',
             'operations_helper' => 'Liste des opérations réalisées',
             'processes' => 'Processus',
@@ -449,7 +466,8 @@ return [
             'name' => 'Nom',
             'name_helper' => '',
             'nature' => 'Nature du flux',
-            'nature_helper' => 'ex: "saisie manuelle", "transfert de fichier", "partage de fichier", "api" ...)',
+            'nature_short' => 'Nature',
+            'nature_helper' => 'ex: "saisie manuelle", "transfert de fichier", "partage de fichier", "API" ...)',
             'service_dest' => 'Service destinataire',
             'service_dest_helper' => '',
             'service_source' => 'Service Source',
@@ -898,6 +916,7 @@ return [
         'title_singular' => 'Relation',
     ],
     'report' => [
+
         'cartography' => [
             'administration' => 'Administration',
             'applications' => 'Applications',
@@ -934,7 +953,10 @@ return [
             'changes' => 'Mise à jour / changements',
             'changes_helper' => 'Trace les changements realisés sur la cartographie les 12 derniers mois',
             'external_access' => 'Connexions externes', 
-            'external_access_helper' => 'Entités externes connectées au système d\'information'
+            'external_access_helper' => 'Entités externes connectées au système d\'information',
+            'gdpr' => 'RGPD',
+            'activities' => 'Activités de traitement',
+            'activities_helper' =>  'Liste des activités de traitement'
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',

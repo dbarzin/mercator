@@ -39,6 +39,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <th width="10%">
+                            {{ trans('cruds.flux.fields.nature') }}
+                        </th>
+                        <td>
+                            {{ $flux->nature }}
+                        </td>
+                    </tr>
+                    <tr>
                         <th>
                             {{ trans('cruds.flux.fields.description') }}
                         </th>
