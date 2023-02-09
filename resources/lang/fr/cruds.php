@@ -916,6 +916,7 @@ return [
         'title_singular' => 'Relation',
     ],
     'report' => [
+
         'cartography' => [
             'administration' => 'Administration',
             'applications' => 'Applications',
@@ -952,7 +953,10 @@ return [
             'changes' => 'Mise à jour / changements',
             'changes_helper' => 'Trace les changements realisés sur la cartographie les 12 derniers mois',
             'external_access' => 'Connexions externes', 
-            'external_access_helper' => 'Entités externes connectées au système d\'information'
+            'external_access_helper' => 'Entités externes connectées au système d\'information',
+            'gdpr' => 'RGPD',
+            'activities' => 'Activités de traitement',
+            'activities_helper' =>  'Liste des activités de traitement'
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',

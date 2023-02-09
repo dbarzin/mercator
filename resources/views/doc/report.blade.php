@@ -4,6 +4,7 @@
 <div class="content">
     <div class="row">
         <div class="col-lg-12">
+
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.cartography.title") }}
@@ -51,6 +52,12 @@
                   </form>
                 </div>
               </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+        <div class="col-lg-6">
 
               <div class="card">
                 <div class="card-header">
@@ -112,6 +119,28 @@
                 </div>
               </div>
 
+          </div>
+
+        <div class="col-lg-6">
+
+              <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.report.lists.gdpr") }}
+                </div>
+                <div class="card-body">
+                  <ul>
+                    <li>
+                        <a href="/admin/report/activities" target="_new">{{ trans("cruds.report.lists.activities") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.activities_helper") }}
+                        <br>                    
+                        <br>
+                    </li>
+                </ul>
+                </div>
+              </div>
+
+
               <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.audit") }}
@@ -133,6 +162,10 @@
                 </ul>
                 </div>
               </div>
+
+        </div>
+        </div>
+
           </div>
         </div>
         <br><br><br>

@@ -269,6 +269,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory'])->name('report.physicalInventory');
     Route::get('report/workstations', [Admin\ReportController::class,'workstations'])->name('report.workstations');
 
+    // GDPR
+    Route::get('report/activities', [Admin\ReportController::class,'activities'])->name('report.activities');
+
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
     Route::get('audit/changes', [Admin\AuditController::class,'changes'])->name('audit.changes');
