@@ -56,6 +56,15 @@ class Activity extends Model
     protected $fillable = [
         'name',
         'description',
+
+        'responsible',
+        'purpose',
+        'categories',
+        'recipients',
+        'transfert',
+        'retention',
+        'controls',
+
         'created_at',
         'updated_at',
         'deleted_at',
