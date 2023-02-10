@@ -363,7 +363,6 @@
             hideNode.addEventListener("click", function(){
                 let node = _nodes.get(link);
                 network.body.data.nodes.remove(node);
-                console.log("noeud "+ link + " masqué !" );
                 hideContext();
             });
 
@@ -379,6 +378,10 @@
 
     function fullscreen_network(e){
       if (e.key === "F"){
+
+        if (document.activeElement.classList.contains("select2-search__field"))
+          return;
+
         if (network_container.classList.contains('fullscreen_network')){
           network_container.classList.remove('fullscreen_network');
           return;
