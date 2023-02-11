@@ -1578,20 +1578,18 @@ class ReportController extends Controller
         $phpWord->addTitleStyle(
             1,
             ['size' => 16, 'bold' => true],
-            ['numStyle' => 'hNum', 'numLevel' => 0]
+            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 0]
         );
         $phpWord->addTitleStyle(
             2,
             ['size' => 14, 'bold' => true],
-            ['numStyle' => 'hNum', 'numLevel' => 1]
+            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 1]
         );
         $phpWord->addTitleStyle(
             3,
             ['size' => 12, 'bold' => true],
             ['numStyle' => 'hNum', 'numLevel' => 2]
         );
-
-        // $phpWord->addParagraphStyle('P-Style', array('spaceAfter'=>0,'lineHeight'=>1.0))
 
         // Title
         $section->addTitle(trans('cruds.activity.report_title'), 0);
@@ -1600,7 +1598,7 @@ class ReportController extends Controller
         // TOC
         $toc = $section->addTOC(['spaceAfter' => 50, 'size' => 10]);
         $toc->setMinDepth(1);
-        $toc->setMaxDepth(3);
+        $toc->setMaxDepth(1);
         $section->addTextBreak(1);
 
         // page break
