@@ -57,11 +57,11 @@ use App\Workstation;
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-// PhpOffice
+// Log
 use Illuminate\Support\Facades\Log;
+// PhpOffice
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
-// Log
 use PhpOffice\PhpWord\Shared\Html;
 
 class CartographyController extends Controller
@@ -141,7 +141,6 @@ class CartographyController extends Controller
         // Add footer
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-        // $footer->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
 
         // ====================
         // ==== Ecosystème ====

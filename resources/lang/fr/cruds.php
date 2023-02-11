@@ -28,7 +28,12 @@ return [
             'operations_helper' => 'Liste des opérations réalisées',
             'processes' => 'Processus',
             'processes_helper' => 'Liste des processus parents',
+
+            'applications' => 'Applications',
+            'databases' => 'Bases de données',
+            'information' => 'Informations',
         ],
+        'report_title' => 'Regsitre des activités de traitement',
         'title' => 'Activités',
         'title_singular' => 'Activité',
     ],
@@ -955,8 +960,10 @@ return [
             'external_access' => 'Connexions externes', 
             'external_access_helper' => 'Entités externes connectées au système d\'information',
             'gdpr' => 'RGPD',
-            'activities' => 'Activités de traitement',
-            'activities_helper' =>  'Liste des activités de traitement'
+            'activity_report' => 'Registres des traitement',
+            'activity_report_helper' =>  'Documentation interne des traitements de données personnelles opérés.',
+            'activity_list' => 'Liste des activités de traitement',
+            'activity_list_helper' =>  'Liste des activités de traitement, applications, bases de données et informations liés.'
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',
