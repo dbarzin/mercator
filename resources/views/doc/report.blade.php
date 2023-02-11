@@ -130,9 +130,16 @@
                 <div class="card-body">
                   <ul>
                     <li>
-                        <a href="/admin/report/activities" target="_new">{{ trans("cruds.report.lists.activities") }}</a>
+                        <a href="/admin/report/activityReport" target="_new">{{ trans("cruds.report.lists.activity_report") }}</a>
                         <br>
-                        {{ trans("cruds.report.lists.activities_helper") }}
+                        {{ trans("cruds.report.lists.activity_report_helper") }}
+                        <br>                    
+                        <br>
+                    </li>
+                    <li>
+                        <a href="/admin/report/activityList" target="_new">{{ trans("cruds.report.lists.activity_list") }}</a>
+                        <br>
+                        {{ trans("cruds.report.lists.activity_list_helper") }}
                         <br>                    
                         <br>
                     </li>

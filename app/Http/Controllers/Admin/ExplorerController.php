@@ -387,6 +387,11 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 3, $this->formatId('APP_', $application->id), $application->name, '/images/application.png', 'applications');
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
         }
+        // m_application_process
+        $joins = DB::table('m_application_process')->select('m_application_id', 'process_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PROCESS_', $join->process_id));
+        }
         // logical_server_m_application
         $joins = DB::table('logical_server_m_application')->select('m_application_id', 'logical_server_id')->get();
         foreach ($joins as $join) {

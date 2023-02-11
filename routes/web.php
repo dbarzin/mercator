@@ -270,7 +270,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/workstations', [Admin\ReportController::class,'workstations'])->name('report.workstations');
 
     // GDPR
-    Route::get('report/activities', [Admin\ReportController::class,'activities'])->name('report.activities');
+    Route::get('report/activityList', [Admin\ReportController::class,'activityList'])->name('report.activityList');
+    Route::get('report/activityReport', [Admin\ReportController::class,'activityReport'])->name('report.activityReport');
 
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');

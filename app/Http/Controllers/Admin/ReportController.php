@@ -8,6 +8,7 @@ use App\Actor;
 use App\Relation;
 // information system
 use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
 use App\Bay;
@@ -31,7 +32,6 @@ use App\Http\Controllers\Controller;
 use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
-use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
@@ -59,6 +59,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
+use PhpOffice\PhpWord\Element\Section;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReportController extends Controller
@@ -1549,8 +1552,112 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+    public function activityReport() {
+        // get template
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+        $phpWord->getSettings()->setHideGrammaticalErrors(true);
+        $phpWord->getSettings()->setHideSpellingErrors(true);
+        $section = $phpWord->addSection();
 
-    public function activities()
+        // Numbering Style
+        $phpWord->addNumberingStyle(
+            'hNum',
+            ['type' => 'multilevel', 'levels' => [
+                ['pStyle' => 'Heading1', 'format' => 'decimal', 'text' => '%1.'],
+                ['pStyle' => 'Heading2', 'format' => 'decimal', 'text' => '%1.%2.'],
+                ['pStyle' => 'Heading3', 'format' => 'decimal', 'text' => '%1.%2.%3.'],
+            ],
+            ]
+        );
+        $phpWord->addTitleStyle(
+            0,
+            ['size' => 28, 'bold' => true],
+            ['align' => 'center']
+        );
+        $phpWord->addTitleStyle(
+            1,
+            ['size' => 16, 'bold' => true],
+            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 0]
+        );
+        $phpWord->addTitleStyle(
+            2,
+            ['size' => 14, 'bold' => true],
+            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 1]
+        );
+        $phpWord->addTitleStyle(
+            3,
+            ['size' => 12, 'bold' => true],
+            ['numStyle' => 'hNum', 'numLevel' => 2]
+        );
+
+        // Title
+        $section->addTitle(trans('cruds.activity.report_title'), 0);
+        $section->addTextBreak(1);
+
+        // TOC
+        $toc = $section->addTOC(['spaceAfter' => 50, 'size' => 10]);
+        $toc->setMinDepth(1);
+        $toc->setMaxDepth(1);
+        $section->addTextBreak(1);
+
+        // page break
+        $section->addPageBreak();
+
+        // Add footer
+        $footer = $section->addFooter();
+        $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+
+        $activities = Activity::orderBy('name')->get();
+        foreach ($activities as $activity) {
+            // schema
+            $section->addTitle($activity->name, 1);
+            $this->addText($section, $activity->description);
+
+            $section->addTitle(trans('cruds.activity.fields.responsible'), 2);
+            $this->addText($section, $activity->responsible);
+
+            $section->addTitle(trans('cruds.activity.fields.purpose'), 2);
+            $this->addText($section, $activity->purpose);
+
+            $section->addTitle(trans('cruds.activity.fields.categories'), 2);
+            $this->addText($section, $activity->categories);
+
+            $section->addTitle(trans('cruds.activity.fields.recipients'), 2);
+            $this->addText($section, $activity->recipients);
+
+            $section->addTitle(trans('cruds.activity.fields.transfert'), 2);
+            $this->addText($section, $activity->transfert);
+
+            $section->addTitle(trans('cruds.activity.fields.retention'), 2);
+            $this->addText($section, $activity->retention);
+
+            $section->addTitle(trans('cruds.activity.fields.controls'), 2);
+            $this->addText($section, $activity->controls);
+            }
+
+        // Finename
+        $filepath = storage_path('app/reports/activities-'. Carbon::today()->format('Ymd') .'.docx');
+
+        // Saving the document as Word2007 file.
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save($filepath);
+
+        // return
+        return response()->download($filepath);
+    }
+
+    private static function addText(Section $section, ?string $value = null)
+    {
+        try {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, str_replace('<br>', '<br/>', $value));
+        } catch (\Exception $e) {
+            $section->addText("Invalid text");
+            Log::error('CartographyController - Invalid HTML ' . $value);
+        }
+    }
+
+    public function activityList()
     {
         $path = storage_path('app/activities-'. Carbon::today()->format('Ymd') .'.xlsx');
 
@@ -1568,6 +1675,9 @@ class ReportController extends Controller
             trans('cruds.activity.fields.controls'),
             trans('cruds.activity.fields.processes'),
             trans('cruds.activity.fields.operations'),
+            trans('cruds.activity.fields.applications'),
+            trans('cruds.activity.fields.databases'),
+            trans('cruds.activity.fields.information'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1576,6 +1686,10 @@ class ReportController extends Controller
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        $sheet->getStyle('A:I')->getAlignment()->setWrapText(true); 
+
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -1589,6 +1703,11 @@ class ReportController extends Controller
         $sheet->getColumnDimension('I')->setWidth(350, 'pt');
         $sheet->getColumnDimension('J')->setAutoSize(true);
         $sheet->getColumnDimension('K')->setAutoSize(true);
+
+        $sheet->getColumnDimension('L')->setAutoSize(true);
+        $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('N')->setAutoSize(true);
+
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -1608,7 +1727,7 @@ class ReportController extends Controller
 
             $txt = '';
             foreach ($activity->activitiesProcesses as $process) {
-                $txt .= $process->name;
+                $txt .= $process->identifiant;
                 if ($activity->activitiesProcesses->last() !== $process) {
                     $txt .= ', ';
                 }
@@ -1623,6 +1742,99 @@ class ReportController extends Controller
                 }
             }
             $sheet->setCellValue("K{$row}", $txt);
+
+            $applications = DB::Table('activities')
+                ->distinct()
+                ->select('m_applications.name')
+                ->join(
+                    'activity_process',
+                    'activity_process.activity_id',
+                    '=',
+                    'activities.id'
+                )
+                ->join(
+                    'm_application_process',
+                    'm_application_process.process_id',
+                    '=',
+                    'activity_process.process_id'
+                )
+                ->join(
+                    'm_applications',
+                    'm_applications.id',
+                    '=',
+                    'm_application_process.m_application_id'
+                )
+                ->where('activities.id', '=', $activity->id)
+                ->whereNull('activities.deleted_at')
+                ->whereNull('m_applications.deleted_at')
+                ->orderBy('m_applications.name')
+                ->get()
+                ->implode('name', ', ');
+            $sheet->setCellValue("L{$row}", $applications);
+
+            $databases = DB::Table('activities')
+                ->select('databases.name')
+                ->distinct()
+                ->join(
+                    'activity_process',
+                    'activity_process.activity_id',
+                    '=',
+                    'activities.id'
+                )
+                ->join(
+                    'm_application_process',
+                    'm_application_process.process_id',
+                    '=',
+                    'activity_process.process_id'
+                )
+                ->join(
+                    'database_m_application',
+                    'database_m_application.m_application_id',
+                    '=',
+                    'm_application_process.m_application_id'
+                )
+                ->join(
+                    'databases',
+                    'databases.id',
+                    '=',
+                    'database_m_application.database_id'
+                )
+                ->where('activities.id', '=', $activity->id)
+                ->whereNull('activities.deleted_at')
+                ->whereNull('databases.deleted_at')
+                ->orderBy('databases.name')
+                ->get()
+                ->implode('name', ', ');
+            $sheet->setCellValue("M{$row}", $databases);
+
+            $informations = DB::Table('activities')
+                ->select('information.name')
+                ->distinct()
+                ->join(
+                    'activity_process',
+                    'activity_process.activity_id',
+                    '=',
+                    'activities.id'
+                )
+                ->join(
+                    'information_process',
+                    'information_process.process_id',
+                    '=',
+                    'activity_process.process_id'
+                )
+                ->join(
+                    'information',
+                    'information.id',
+                    '=',
+                    'information_process.information_id'
+                )
+                ->where('activities.id', '=', $activity->id)
+                ->whereNull('activities.deleted_at')
+                ->whereNull('information.deleted_at')
+                ->orderBy('information.name')
+                ->get()
+                ->implode('name', ', ');
+            $sheet->setCellValue("N{$row}", $informations);
 
             $row++;
         }
@@ -1756,24 +1968,26 @@ class ReportController extends Controller
                 $res = DB::Table('physical_servers')
                     ->distinct()
                     ->select('physical_servers.name')
-                    ->leftJoin(
+                    ->join(
                         'logical_server_physical_server',
                         'physical_servers.id',
                         '=',
                         'logical_server_physical_server.physical_server_id'
                     )
-                    ->leftJoin(
+                    ->join(
                         'logical_servers',
                         'logical_servers.id',
                         '=',
                         'logical_server_physical_server.logical_server_id'
                     )
-                    ->leftJoin(
+                    ->join(
                         'logical_server_m_application',
                         'logical_server_m_application.logical_server_id',
                         '=',
                         'logical_servers.id'
                     )
+                    ->whereNull('logical_servers.deleted_at')
+                    ->whereNull('physical_servers.deleted_at')
                     ->where('logical_server_m_application.m_application_id', '=', $application->id)
                     ->orderBy('physical_servers.name')
                     ->get()
