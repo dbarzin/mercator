@@ -215,12 +215,22 @@ class HomeController extends Controller
             'activities' => Activity::count(),
             'activities_lvl3' => Activity
                 ::where('description', '<>', null)
-                // activity must have one operation
+                    ->where('responsible', '<>', null)
+                    ->where('purpose', '<>', null)
+                    ->where('categories', '<>', null)
+                    ->where('recipients', '<>', null)
+                    ->where('transfert', '<>', null)
+                    ->where('description', '<>', null)
+                    ->where('retention', '<>', null)
+                    ->where('controls', '<>', null)
+                    // activity must have one process
+                    /*
                     ->whereExists(function ($query) {
                         $query->select('activity_operation.activity_id')
                             ->from('activity_operation')
                             ->whereRaw('activity_operation.activity_id = activities.id');
                     })
+                    */
                     ->count(),
 
             'operations' => Operation::count(),
