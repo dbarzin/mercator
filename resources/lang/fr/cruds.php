@@ -33,7 +33,7 @@ return [
             'databases' => 'Bases de données',
             'information' => 'Informations',
         ],
-        'report_title' => 'Regsitre des activités de traitement',
+        'report_title' => 'Registre des activités de traitement',
         'title' => 'Activités',
         'title_singular' => 'Activité',
     ],

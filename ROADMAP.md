@@ -24,8 +24,8 @@ Changements prévus en 2023 :
 
 - [ ] Maintenir le registre des traitements
 - [ ] Générer un annuaire de crise
-- [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
+- [ ] Revoir le modèle des pages web
 - [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
 - [ ] Généraliser la notion de cartographe à d'autres objets
 - [ ] Générer les cartographes dans la gestion des utilisateurs
@@ -37,7 +37,7 @@ Changements prévus en 2023 :
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
 - [ ] Intégration des données de la cartographie dans syslog
-- [ ] Revoir le modèle des pages web
+- [ ] Ajouter des champs personnalisés aux objets de la cartographie
 
 ## Evolutions mineurs
 
