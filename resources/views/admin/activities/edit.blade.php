@@ -20,6 +20,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.activity.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.activity.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $activity->description) !!}</textarea>
@@ -31,9 +32,8 @@
                 <span class="help-block">{{ trans('cruds.activity.fields.description_helper') }}</span>
             </div>
 
-
             <div class="form-group">
-                <label for="responsible">{{ trans('cruds.activity.fields.responsible') }}</label>
+                <label class="recommended" for="responsible">{{ trans('cruds.activity.fields.responsible') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">{!! old('responsible', $activity->responsible) !!}</textarea>
                 @if($errors->has('responsible'))
                     <div class="invalid-feedback">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group">
-                <label for="purpose">{{ trans('cruds.activity.fields.purpose') }}</label>
+                <label class="recommended" for="purpose">{{ trans('cruds.activity.fields.purpose') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('purpose') ? 'is-invalid' : '' }}" name="purpose" id="purpose">{!! old('purpose', $activity->purpose) !!}</textarea>
                 @if($errors->has('purpose'))
                     <div class="invalid-feedback">
@@ -55,7 +55,7 @@
             </div>
 
             <div class="form-group">
-                <label for="categories">{{ trans('cruds.activity.fields.categories') }}</label>
+                <label class="recommended" for="categories">{{ trans('cruds.activity.fields.categories') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories" id="categories">{!! old('categories', $activity->categories) !!}</textarea>
                 @if($errors->has('categories'))
                     <div class="invalid-feedback">
@@ -66,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                <label for="recipients">{{ trans('cruds.activity.fields.recipients') }}</label>
+                <label class="recommended" for="recipients">{{ trans('cruds.activity.fields.recipients') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('recipients') ? 'is-invalid' : '' }}" name="recipients" id="recipients">{!! old('recipients', $activity->recipients) !!}</textarea>
                 @if($errors->has('recipients'))
                     <div class="invalid-feedback">
@@ -77,7 +77,7 @@
             </div>
 
             <div class="form-group">
-                <label for="transfert">{{ trans('cruds.activity.fields.transfert') }}</label>
+                <label class="recommended" for="transfert">{{ trans('cruds.activity.fields.transfert') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('transfert') ? 'is-invalid' : '' }}" name="transfert" id="transfert">{!! old('transfert', $activity->transfert) !!}</textarea>
                 @if($errors->has('transfert'))
                     <div class="invalid-feedback">
@@ -88,7 +88,7 @@
             </div>
 
             <div class="form-group">
-                <label for="retention">{{ trans('cruds.activity.fields.retention') }}</label>
+                <label class="recommended" for="retention">{{ trans('cruds.activity.fields.retention') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('retention') ? 'is-invalid' : '' }}" name="retention" id="retention">{!! old('retention', $activity->retention) !!}</textarea>
                 @if($errors->has('retention'))
                     <div class="invalid-feedback">
@@ -99,7 +99,7 @@
             </div>
 
             <div class="form-group">
-                <label for="controls">{{ trans('cruds.activity.fields.controls') }}</label>
+                <label class="recommended" for="controls">{{ trans('cruds.activity.fields.controls') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('controls') ? 'is-invalid' : '' }}" name="controls" id="controls">{!! old('controls', $activity->controls) !!}</textarea>
                 @if($errors->has('controls'))
                     <div class="invalid-feedback">

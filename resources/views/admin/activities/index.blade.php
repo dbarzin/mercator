@@ -42,10 +42,19 @@
                 <tbody>
                     @foreach($activities as $key => $activity)
                         <tr data-entry-id="{{ $activity->id }}"
-                            @if(($activity->description==null))
-                                                      class="table-warning"
+                            @if (
+                                ($activity->description===null)||
+                                ($activity->responsible===null)||
+                                ($activity->purpose===null)||
+                                ($activity->categories===null)||
+                                ($activity->recipients===null)||
+                                ($activity->transfert===null)||
+                                ($activity->retention===null)||
+                                ($activity->controls===null)
+                                )
+                                class="table-warning"
                             @endif
-                          >
+                        >
                             <td>
 
                             </td>

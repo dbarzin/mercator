@@ -20,7 +20,6 @@
                 <span class="help-block">{{ trans('cruds.activity.fields.name_helper') }}</span>
             </div>
 
-
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.activity.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
