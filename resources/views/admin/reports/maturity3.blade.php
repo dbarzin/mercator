@@ -70,7 +70,7 @@
                     <td><a href="/admin/activities">{{ trans("cruds.activity.title") }}</a></td>
                     <td><center>{{ $activities }}</center></td>
                     <td><center>{{ $activities_lvl3 }}</center></td>
-                    <td><center>{{ $activities>0 ? number_format($activities_lvl3*100/$activities_lvl3,0):0 }}%</center></td>
+                    <td><center>{{ $activities>0 ? number_format($activities_lvl3*100/$activities,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/operations">{{ trans("cruds.operation.title") }}</a></td>
@@ -82,7 +82,7 @@
                     <td><a href="/admin/tasks">{{ trans("cruds.task.title") }}</a></td>
                     <td><center>{{ $tasks }}</center></td>
                     <td><center>{{ $tasks_lvl3 }}</center></td>
-                    <td><center>{{ $tasks>0 ? number_format($tasks_lvl3*100/$tasks_lvl3,0):0 }}%</center></td>
+                    <td><center>{{ $tasks>0 ? number_format($tasks_lvl3*100/$tasks,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/actors">{{ trans("cruds.actor.title") }}</a></td>
