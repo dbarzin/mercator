@@ -140,7 +140,7 @@ return [
     'logout' => 'Sign Out',
     'low' => 'Low',
     'main_currency' => 'Main currency',
-    'mature' => 'mature',
+    'mature' => 'Maturity',
     'medium' => 'Medium',
     'message' => 'Message',
     'messages' => 'POSTS',

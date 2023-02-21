@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-routers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PROUTER_{{$physicalRouter->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('physical_router_edit')
                     <a class="btn btn-info" href="{{ route('admin.physical-routers.edit', $physicalRouter->id) }}">
                         {{ trans('global.edit') }}

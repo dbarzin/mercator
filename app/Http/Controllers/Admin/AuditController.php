@@ -135,12 +135,12 @@ class AuditController extends HomeController
         );
 
         // L2
-        $denominator = $levels['macroProcessuses'] + $levels['processes'] + $levels['operations'] + $levels['actors'] + $levels['informations'];
+        $denominator = $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['operations'] + $levels['actors'] + $levels['informations'];
         $sheet->setCellValue("D{$row}", $denominator);
         $sheet->setCellValue(
             "E{$row}",
             $denominator > 0 ?
-            ($levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
+            ($levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
             : 0
         );
 
@@ -150,7 +150,7 @@ class AuditController extends HomeController
         $sheet->setCellValue(
             "G{$row}",
             $denominator > 0 ?
-            ($levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl3'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
+            ($levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
             : 0
         );
         $row++;
@@ -179,10 +179,10 @@ class AuditController extends HomeController
         $sheet->setCellValue("A{$row}", trans('cruds.activity.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", '');
-        $sheet->setCellValue("E{$row}", '');
+        $sheet->setCellValue("D{$row}", $levels['activities']);
+        $sheet->setCellValue("E{$row}", $levels['activities'] > 0 ? $levels['activities_lvl2'] / $levels['activities'] : 0);
         $sheet->setCellValue("F{$row}", $levels['activities']);
-        $sheet->setCellValue("G{$row}", $levels['activities'] > 0 ? $levels['activities_lvl3'] / $levels['activities'] : 0);
+        $sheet->setCellValue("G{$row}", $levels['activities'] > 0 ? $levels['activities_lvl2'] / $levels['activities'] : 0);
         $row++;
 
         // Operation

@@ -924,12 +924,18 @@ return [
             'security_needs' => 'Security needs analysis',
             'security_needs_helper' => 'List of security needs between macro-processes, processes, applications, database and information.',
             'title' => 'Lists',
+            'audit' => 'Audit',
             'maturity' => 'Maturity levels',
             'maturity_helper' => 'Lists the levels of maturity reached by the different objects',
             'changes' => 'Update / Changes',
             'changes_helper' => 'Traces the changes made on the cartography over the last 12 months',
             'external_access' => 'External connctions', 
-            'external_access_helper' => 'External entities connected to the information system'
+            'external_access_helper' => 'External entities connected to the information system',
+            'gdpr' => 'GDPR',
+            'activity_report' => 'Processing registers',
+            'activity_report_helper' => 'Internal documentation of personal data processing operations',
+            'activity_list' => 'List of processing activities',
+            'activity_list_helper' => 'List of processing activities, applications, databases and related information.'
         ],
         'explorer' => [
             'title' => 'Mapping explorer',

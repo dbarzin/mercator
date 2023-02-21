@@ -12,6 +12,11 @@
                 <a class="btn btn-default" href="{{ route('admin.physical-switches.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SWITCH_{{$physicalSwitch->id}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('physical_switch_edit')
                     <a class="btn btn-info" href="{{ route('admin.physical-switches.edit', $physicalSwitch->id) }}">
                         {{ trans('global.edit') }}

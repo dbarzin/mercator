@@ -31,7 +31,7 @@ return [
     'login_password_confirmation' => 'Confirmation du mot de passe',
     'logout' => 'Déconnexion',
     'low' => 'Faible',
-    'mature' => 'Mature',
+    'mature' => 'Maturité',
     'medium' => 'Moyen',
     'month' => 'mois',
     'months' => 'mois',
