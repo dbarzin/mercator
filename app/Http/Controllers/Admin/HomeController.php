@@ -213,7 +213,7 @@ class HomeController extends Controller
                     ->count(),
 
             'activities' => Activity::count(),
-            'activities_lvl3' => Activity
+            'activities_lvl2' => Activity
                 ::where('description', '<>', null)
                     ->where('responsible', '<>', null)
                     ->where('purpose', '<>', null)
@@ -705,7 +705,7 @@ class HomeController extends Controller
         // Maturity Level 2
         $denominator =
             $levels['entities'] + $levels['relations'] +
-            $levels['macroProcessuses'] + $levels['processes'] + $levels['operations'] + $levels['actors'] + $levels['informations'] +
+            $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['operations'] + $levels['actors'] + $levels['informations'] +
             $levels['applicationBlocks'] + $levels['applications'] + $levels['applicationServices'] + $levels['applicationModules'] + $levels['databases'] + $levels['fluxes'] +
             $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'] +
             $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['logicalServers'] + $levels['certificates'] +
@@ -716,7 +716,7 @@ class HomeController extends Controller
             $denominator > 0 ?
             number_format(
                 ($levels['entities_lvl1'] + $levels['relations_lvl2'] +
-            $levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
+            $levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
             $levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
             $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
@@ -739,7 +739,7 @@ class HomeController extends Controller
             $denominator > 0 ?
             number_format(
                 ($levels['entities_lvl1'] + $levels['relations_lvl2'] +
-            $levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl3'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
+            $levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
             $levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
             $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +

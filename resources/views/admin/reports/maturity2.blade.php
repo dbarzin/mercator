@@ -48,9 +48,9 @@
                 <th>{{ trans("cruds.menu.metier.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
-                <th><center>{{ ($macroProcessuses+$processes+$operations+$actors+$informations)>0 ?
-                        number_format(($macroProcessuses_lvl2+$processes_lvl2+$operations_lvl2+$actors_lvl2+$informations_lvl2)*100/
-                            ($macroProcessuses+$processes+$operations+$actors+$informations),0) : 0 }} %</center></th>
+                <th><center>{{ ($macroProcessuses+$processes+$activities+$operations+$actors+$informations)>0 ?
+                        number_format(($macroProcessuses_lvl2+$processes_lvl2+$activities_lvl2+$operations_lvl2+$actors_lvl2+$informations_lvl2)*100/
+                            ($macroProcessuses+$processes+$activities+$operations+$actors+$informations),0) : 0 }} %</center></th>
             </thead>
             <tbody>
                <tr>
@@ -65,6 +65,12 @@
                     <td><center>{{ $processes }}</center></td>
                     <td><center>{{ $processes_lvl2 }}</center></td>
                     <td><center>{{ $processes>0 ? number_format($processes_lvl2*100/$processes,0):0 }}%</center></td>
+                </tr>
+                <tr>
+                    <td><a href="/admin/activities">{{ trans("cruds.activity.title") }}</a></td>
+                    <td><center>{{ $activities }}</center></td>
+                    <td><center>{{ $activities_lvl2 }}</center></td>
+                    <td><center>{{ $activities>0 ? number_format($activities_lvl2*100/$activities,0):0 }}%</center></td>
                 </tr>
                 <tr>
                     <td><a href="/admin/operations">{{ trans("cruds.operation.title") }}</a></td>
