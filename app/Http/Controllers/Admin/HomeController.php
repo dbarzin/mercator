@@ -661,11 +661,11 @@ class HomeController extends Controller
             // Too many links...
             // 'links' => PhysicalLink::count(),
 
-            'wans' => Wan::count(),
-            'wans_lvl1' => Wan::count(),
+            'wans' => ($wan_count=Wan::count()),
+            'wans_lvl1' => $wan_count,
 
-            'mans' => Man::count(),
-            'mans_lvl1' => Man::count(),
+            'mans' => ($man_count=Man::count()),
+            'mans_lvl1' => $man_count,
 
             'lans' => Lan::count(),
             'lans_lvl1' => Lan
