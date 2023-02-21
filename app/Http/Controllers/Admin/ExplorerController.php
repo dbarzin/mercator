@@ -62,7 +62,7 @@ class ExplorerController extends Controller
         // physical_switches
         $switches = DB::table('physical_switches')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($switches as $switch) {
-            $this->addNode($nodes, 6, $this->formatId('SWITCH_', $switch->id), $switch->name, '/images/switch.png', 'physical_switches');
+            $this->addNode($nodes, 6, $this->formatId('SWITCH_', $switch->id), $switch->name, '/images/switch.png', 'physical-switches');
             if ($switch->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SWITCH_', $switch->id), $this->formatId('BAY_', $switch->bay_id));
             } elseif ($switch->building_id !== null) {
