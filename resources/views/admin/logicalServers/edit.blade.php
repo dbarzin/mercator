@@ -179,7 +179,7 @@
                         </div>
                         <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
                             @foreach($databases as $id => $name)
-                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->databases->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('servers'))
