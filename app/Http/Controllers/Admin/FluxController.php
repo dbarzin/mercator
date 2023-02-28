@@ -56,7 +56,7 @@ class FluxController extends Controller
         foreach($applications as $key => $value)
             $items->put('APP_' . $key,$value);
         foreach($services as $key => $value)
-            $items->put('SERV_' . $key,$value);
+            $items->put('SRV_' . $key,$value);
         foreach($modules as $key => $value)
             $items->put('MOD_' . $key,$value);
         foreach($databases as $key => $value)
@@ -137,7 +137,7 @@ class FluxController extends Controller
         foreach($applications as $key => $value)
             $items->put('APP_' . $key,$value);
         foreach($services as $key => $value)
-            $items->put('SERV_' . $key,$value);
+            $items->put('SRV_' . $key,$value);
         foreach($modules as $key => $value)
             $items->put('MOD_' . $key,$value);
         foreach($databases as $key => $value)
@@ -157,7 +157,7 @@ class FluxController extends Controller
         if ($flux->application_dest_id!=null)
             $flux->dest_id='APP_'.$flux->application_dest_id;
         elseif ($flux->service_dest_id!=null)
-            $flux->dest_id='SERV_'.$flux->service_dest_id;
+            $flux->dest_id='SRV_'.$flux->service_dest_id;
         elseif ($flux->module_dest_id!=null)
             $flux->dest_id='MOD_'.$flux->module_dest_id;
         elseif ($flux->database_dest_id!=null)
