@@ -55,7 +55,7 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations');
             if ($workstation->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
-            } elseif ($workstation->sie_id !== null) {
+            } elseif ($workstation->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('SITE_', $workstation->site_id));
             }
         }
