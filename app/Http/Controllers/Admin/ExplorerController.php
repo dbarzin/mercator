@@ -157,7 +157,7 @@ class ExplorerController extends Controller
             elseif ($link->network_switch_src_id!==null)
                 $src_id = 'LSWITCH_' . $link->network_switch_src_id;
             elseif ($link->router_src_id!==null)
-                $src_id = 'LROUTER' . $link->router_src_id;
+                $src_id = 'ROUTER_' . $link->router_src_id;
             else
                 continue;
 
@@ -184,7 +184,7 @@ class ExplorerController extends Controller
             elseif ($link->network_switch_dest_id!==null)
                 $dest_id = 'LSWITCH_' . $link->network_switch_dest_id;
             elseif ($link->router_dest_id!==null)
-                $dest_id = 'LROUTER' . $link->router_dest_id;
+                $dest_id = 'ROUTER_' . $link->router_dest_id;
             else
                 continue;
 
