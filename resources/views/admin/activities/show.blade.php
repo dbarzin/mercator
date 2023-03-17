@@ -141,6 +141,20 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.documents') }}
+                        </th>
+                        <td>
+                            @foreach($activity->documents as $document)
+                                <a href="{{ route('admin.documents.show', $document->id) }}">{{ $document->filename }}</a>
+                                @if (!$loop->last)
+                                    ,
+                                @endif                                    
+                            @endforeach
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             <div class="form-group">
