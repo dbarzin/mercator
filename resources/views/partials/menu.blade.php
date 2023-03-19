@@ -629,10 +629,18 @@
                                 </a>
                             </li>
                         @endcan
+                            <li class="nav-item">
+                                <a href="{{ route("admin.config.documents") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/documents') || request()->is('admin/config/documents/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-file-text nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.configuration.documents.title_short') }}
+                                </a>
+                            </li>
                         @can('audit_log_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.audit-logs.index") }}" class="nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-file-alt nav-icon">
+                                    <i class="fa-fw fas fa-files-o nav-icon">
 
                                     </i>
                                     {{ trans('cruds.auditLog.title') }}

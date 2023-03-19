@@ -272,6 +272,7 @@ return [
         'title_singular' => 'Certificate',
     ],
     'configuration' => [
+        'title' => 'Configuration',
         'certificate' => [
             'title' => "Configuration des alertes d'expiration des certificats",
             'title_short' => 'Certificats',
@@ -297,7 +298,16 @@ return [
             'provider' => 'Provider',
             'provider_helper' => 'CVE-Search provder (ex: https://cve.circl.lu)',
         ],
-        'title' => 'Configuration',
+        'documents' => [
+            'title' => 'Documents',
+            'title_short' => 'Documents',
+            'count' => 'Number de documents',
+            'total_size' => 'total size',
+            'hash' => 'Hash',
+            'name' => 'Name',
+            'size' => 'Size',
+            'status' => 'Status'
+        ],
     ],
     'database' => [
         'description' => 'Structured and ordered set of information intended to be exploited by computer.',

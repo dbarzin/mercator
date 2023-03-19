@@ -106,7 +106,7 @@ class DocumentController extends Controller
         $count = Document::All()->count();
         $sum = Document::All()->sum('size');
 
-        return view('admin.documents.index')
+        return view('admin.config.documents')
             ->with('count', $count)
             ->with('sum', $sum);
     }
@@ -115,7 +115,7 @@ class DocumentController extends Controller
     {
         $documents = Document::All();
 
-        return view('/documents/check')
+        return view('admin.config.check')
             ->with('documents', $documents);
     }
 }
