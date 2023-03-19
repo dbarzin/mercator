@@ -5,10 +5,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => "Nom de l'activité de traitement",
-
             'description' => 'Description',
             'description_helper' => "Description de l'activité de traitement",
-
             'responsible' => 'Responsable du traitement',
             'responsible_helper' => 'Le nom et les coordonnées du responsable du traitement et, le cas échéant, du responsable conjoint du traitement, du représentant du responsable du traitement et du délégué à la protection des données.',
             'purpose' => 'Finalités du traitement',
@@ -23,12 +21,12 @@ return [
             'retention_helper' => "Les délais prévus pour l'effacement des différentes catégories de données",
             'controls' => 'Mesures de sécurité',
             'controls_helper' => "Une description générale des mesures de sécurité techniques et organisationnelles",
-
+            'documents' => 'Documents',
+            'documents_helper' => "Ex.: évaluation, analyse d'impact...",
             'operations' => 'Opérations',
             'operations_helper' => 'Liste des opérations réalisées',
             'processes' => 'Processus',
             'processes_helper' => 'Liste des processus parents',
-
             'applications' => 'Applications',
             'databases' => 'Bases de données',
             'information' => 'Informations',
@@ -274,6 +272,7 @@ return [
         'title_singular' => 'Certificat',
     ],
     'configuration' => [
+        'title' => 'Configuration',
         'certificate' => [
             'title' => "Configuration des alertes d'expiration des certificats",
             'title_short' => 'Certificats',
@@ -300,7 +299,16 @@ return [
             'provider' => 'Founisseur de CVE',
             'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.circl.lu)',
         ],
-        'title' => 'Configuration',
+        'documents' => [
+            'title' => 'Documents',
+            'title_short' => 'Documents',
+            'count' => 'Nombre de documents',
+            'total_size' => 'Taille totale',
+            'hash' => 'Hash',
+            'name' => 'Nom',
+            'size' => 'Taille',
+            'status' => 'Etat'
+        ],
     ],
     'database' => [
         'description' => 'Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.',

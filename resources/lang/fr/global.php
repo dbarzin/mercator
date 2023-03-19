@@ -6,6 +6,7 @@ return [
     'back_to_list' => 'Retour à la liste',
     'change_password' => 'Changer le mot de passe',
     'change_password_success' => 'Mot de passe changé avec succès',
+    'check' => 'Vérifier',
     'confidentiality' => 'Confidentialité',
     'create' => 'Créer',
     'created_at' => 'Créé le',

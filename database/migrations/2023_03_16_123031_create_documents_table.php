@@ -19,6 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('mimetype');
             $table->integer('size');
             $table->string('hash');
+            $table->softDeletes();
             $table->timestamps();
         });
 

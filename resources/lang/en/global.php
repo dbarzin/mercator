@@ -52,6 +52,7 @@ return [
     'change_password' => 'to change the password',
     'change_password_success' => 'Password successfully changed',
     'chart_type' => 'Type of chart',
+    'check' => 'Check',
     'clickHereToVerify' => 'Click to verify',
     'code' => 'Code',
     'companies' => 'Companies',

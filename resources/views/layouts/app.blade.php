@@ -29,7 +29,6 @@
     <!-- link href="https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/coreui.min.css') }}" rel="stylesheet" />
     <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" /-->
-    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
 
     <!-- custom css -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />

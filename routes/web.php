@@ -277,6 +277,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
     Route::get('audit/changes', [Admin\AuditController::class,'changes'])->name('audit.changes');
 
+    // Documents
+    Route::post('/documents/store', [Admin\DocumentController::class,'store'])->name('documents.store');
+    Route::get('/documents/delete/{id}', [Admin\DocumentController::class,'delete'])->name('documents.delete');
+    Route::get('/documents/show/{id}', [Admin\DocumentController::class,'get'])->name('documents.show');
+    Route::get('/config/documents', [Admin\DocumentController::class,'stats'])->name('config.documents');
+    Route::get('/config/documents/check', [Admin\DocumentController::class,'check'])->name('config.documents.check');
+
     // Reporting
     Route::get('doc/report', function () {
         return view('doc/report');
