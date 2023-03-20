@@ -23,12 +23,9 @@ Changements prévus en 2023 :
 ## Evolutions majeures
 
 - [ ] Maintenir le registre des traitements
+- [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
 - [ ] Générer un annuaire de crise
 - [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
-- [ ] Revoir le modèle des pages web
-- [ ] Améliorer la recherche des CVE en utilisant CPE (Common Plateform Enumeration)
-- [ ] Généraliser la notion de cartographe à d'autres objets
-- [ ] Générer les cartographes dans la gestion des utilisateurs
 - [x] schémas de l'infrastructure réseau physique
 - [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
 - [x] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques 
@@ -36,8 +33,11 @@ Changements prévus en 2023 :
 - [ ] Utiliser des Accessor pour les Model : https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
-- [ ] Intégration des données de la cartographie dans syslog
+- [ ] Généraliser la notion de cartographe à d'autres objets
+- [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
+- [ ] Intégration des données de la cartographie dans syslog
+- [ ] Revoir le modèle des pages web
 
 ## Evolutions mineurs
 
@@ -49,6 +49,7 @@ Changements prévus en 2023 :
 - [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [x] Lien entre bases de données et serveurs logiques
+- [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 
 ## Petites évolutions
 
