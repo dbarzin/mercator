@@ -28,6 +28,7 @@ The elaboration of a cartography participates in the protection, the defense and
 - Multi-user with role management
 - Multilingual
 - Connection to LDAP or Active Directory
+- [CPE](https://nvd.nist.gov/products/cpe) - Common Platform Enumeration
 
 ## Screens
 
