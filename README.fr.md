@@ -1,3 +1,4 @@
+
 # Mercator
 
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). La [documentation](https://dbarzin.github.io/mercator/) et les [sources de l'application](https://dbarzin.github.io/mercator/) sont publiées sur GitHub.
@@ -25,6 +26,7 @@ L’élaboration d’une cartographie participe à la protection, à la défense
 - Multi utilisateurs avec gestion de rôles
 - Multilingue
 - Connexion LDAP / Active Directory
+- [CPE](https://nvd.nist.gov/products/cpe) - Common Platform Enumeration
 
 ## Ecrans
 

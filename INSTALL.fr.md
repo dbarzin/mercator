@@ -112,6 +112,18 @@ ou (Postgres):
 
     psql mercator < pg_mercator_data.sql
 
+## Importer la base de données des CPE
+
+Décompresse la base de données
+
+    gzip -d mercator_data.sql.gz
+
+Importer la base de données
+
+    sudo mysql mercator < mercator_cpe.sql
+
+## Démarrage
+
 Démarrer l'application avec php
 
     php artisan serve

@@ -11,31 +11,15 @@
             @method('PUT')
             @csrf
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $application->name) }}">
-                        @if($errors->has('name'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
-                            </div>
-                        @endif
+                        <input type="text" class="form-control" id="name" name="name" min="0" value="{{ old('name', $application->name) }}">
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
-                        <input class="form-control {{ $errors->has('version') ? 'is-invalid' : '' }}" type="text" name="version" id="version" value="{{ old('version', $application->version) }}">
-                        @if($errors->has('version'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('version') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
-                    </div>
-                </div>
             </div>
+
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $application->description) !!}</textarea>
@@ -47,6 +31,48 @@
                 <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
             </div>
 
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="name">{{ trans('cruds.application.fields.vendor') }}</label>
+                        <div class="form-group">
+                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                                <option>{{ old('vendor', $application->vendor) }}</option>
+                            </select>
+                        <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="name">{{ trans('cruds.application.fields.product') }}</label>
+                        <select id="product-selector" class="form-control select2-free" name="name">
+                            <option>{{ old('name', $application->name) }}</option>
+                        </select>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <select id="version-selector" class="form-control select2-free" name="version">
+                            <option>{{ old('version', $application->version) }}</option>
+                        </select>
+                        @if($errors->has('version'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('version') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
+                    </div>
+                </div>
+            </div>
 
           <div class="row">
             <div class="col-sm">
@@ -634,8 +660,103 @@ function template(data, container) {
           return m;
       }
     });
-  });
 
+    // ------------------------------------------------
+    $('#vendor-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true,
+      ajax: {
+        url: '/admin/cpe/search/vendors',
+        data: function(params) {
+          var query = {
+            part: "a",
+            search: params.term,
+          };
+          return query;
+        },
+        processResults: function(data) {
+          var results = [];
+          if (data.length) {
+            $.each(data, function(id, vendor) {
+              results.push({
+                id: vendor.name,
+                text: vendor.name
+              });
+            });
+          }
+
+          return {
+            results: results
+          };
+        }
+      }
+    });
+
+    // ------------------------------------------------
+    $('#product-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true,
+      ajax: {
+        url: '/admin/cpe/search/products',
+        data: function(params) {
+          var query = {
+            part: "a",
+            vendor: $("#vendor-selector").val(),
+            search: params.term,
+          };
+          return query;
+        },
+        processResults: function(data) {
+          var results = [];
+          if (data.length) {
+            $.each(data, function(id, product) {
+              results.push({
+                id: product.name,
+                text: product.name
+              });
+            });
+          }
+          return {
+            results: results
+          };
+        }
+      }
+    });
+
+    // ------------------------------------------------
+    $('#version-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true,
+      ajax: {
+        url: '/admin/cpe/search/versions',
+        data: function(params) {
+          var query = {
+            part: "a",
+            vendor: $("#vendor-selector").val(),
+            product: $("#product-selector").val(),
+            search: params.term,
+          };
+          return query;
+        },
+        processResults: function(data) {
+          var results = [];
+          if (data.length) {
+            $.each(data, function(id, version) {
+              results.push({
+                id: version.name,
+                text: version.name
+              });
+            });
+          }
+          return {
+            results: results
+          };
+        }
+      }
+
+      });
+
+    });
 
 </script>
 @endsection

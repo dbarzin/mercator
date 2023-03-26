@@ -84,6 +84,7 @@ class MApplication extends Model
     public $table = 'm_applications';
 
     public static $searchable = [
+        'vendor',
         'name',
         'description',
         'responsible',
@@ -97,6 +98,7 @@ class MApplication extends Model
     ];
 
     protected $fillable = [
+        'vendor',
         'name',
         'version',
         'description',
