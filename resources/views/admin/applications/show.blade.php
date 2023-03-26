@@ -36,22 +36,9 @@
                 <tbody>
                     <tr>
                         <th width="10%" colspan='1'>
-                            {{ trans('cruds.application.fields.vendor') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->vendor }}
-                        </td>
-                        <th colspan='1'>
                             {{ trans('cruds.application.fields.name') }}
-                        </th>
-                        <td colspan="3">
+                        <td colspan="11">
                             {{ $application->name }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.version') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->version }}
                         </td>
                     </tr>
                     <tr>
@@ -60,6 +47,14 @@
                         </th>
                         <td colspan="11">
                             {!! $application->description !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            CPE
+                        </th>
+                        <td colspan="11">
+                            {{ $application->vendor }}:{{ $application->product }}:{{ $application->version }}
                         </td>
                     </tr>
 

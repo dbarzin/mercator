@@ -375,6 +375,29 @@ class HomeController extends Controller
                 */
                     ->count(),
 
+            'applications_lvl3' => MApplication
+                ::where('description', '<>', null)
+                    ->where('entity_resp_id', '<>', null)
+                    ->where('responsible', '<>', null)
+                    ->where('technology', '<>', null)
+                    ->where('type', '<>', null)
+                    ->where('users', '<>', null)
+                    ->where('security_need_c', '<>', null)
+                    ->where('security_need_i', '<>', null)
+                    ->where('security_need_a', '<>', null)
+                    ->where('security_need_t', '<>', null)
+                // application must have one process
+                    ->whereExists(function ($query) {
+                        $query->select('m_application_process.m_application_id')
+                            ->from('m_application_process')
+                            ->whereRaw('m_application_process.m_application_id = m_applications.id');
+                    })
+                // CPE must be given
+                    ->where('vendor', '<>', null)
+                    ->where('product', '<>', null)
+                    ->where('version', '<>', null)
+            ->count(),
+
             'applicationServices' => ApplicationService::count(),
             'applicationServices_lvl2' => ApplicationService
                 ::where('description', '<>', null)
@@ -740,7 +763,7 @@ class HomeController extends Controller
             number_format(
                 ($levels['entities_lvl1'] + $levels['relations_lvl2'] +
             $levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
-            $levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
+            $levels['applicationBlocks_lvl2'] + $levels['applications_lvl3'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
             $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
             $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + $levels['physicalSecurityDevices_lvl1'] + $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) * 100 / $denominator,

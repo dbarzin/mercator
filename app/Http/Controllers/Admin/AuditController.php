@@ -258,7 +258,7 @@ class AuditController extends HomeController
         $sheet->setCellValue(
             "G{$row}",
             $denominator > 0 ?
-            ($levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1']) / $denominator
+            ($levels['applicationBlocks_lvl2'] + $levels['applications_lvl3'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1']) / $denominator
             : 0
         );
         $row++;
@@ -280,7 +280,7 @@ class AuditController extends HomeController
         $sheet->setCellValue("D{$row}", $levels['applications']);
         $sheet->setCellValue("E{$row}", $levels['applications'] > 0 ? $levels['applications_lvl2'] / $levels['applications'] : 0);
         $sheet->setCellValue("F{$row}", $levels['applications']);
-        $sheet->setCellValue("G{$row}", $levels['applications'] > 0 ? $levels['applications_lvl2'] / $levels['applications'] : 0);
+        $sheet->setCellValue("G{$row}", $levels['applications'] > 0 ? $levels['applications_lvl3'] / $levels['applications'] : 0);
         $row++;
 
         // applicationService

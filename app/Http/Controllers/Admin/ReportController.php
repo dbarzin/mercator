@@ -1856,8 +1856,8 @@ class ReportController extends Controller
         $header = [
             trans('cruds.application.fields.application_block'),
             trans('cruds.application.fields.name'),
-            trans('cruds.application.fields.version'),
             trans('cruds.application.fields.description'),
+            'CPE',
             trans('cruds.application.fields.entity_resp'),
             trans('cruds.application.fields.entities'),
             trans('cruds.application.fields.responsible'),
@@ -1884,8 +1884,8 @@ class ReportController extends Controller
 
         $sheet->getColumnDimension('A')->setAutoSize(true);  // block
         $sheet->getColumnDimension('B')->setAutoSize(true);  // name
-        $sheet->getColumnDimension('C')->setAutoSize(true);  // vesrion
-        $sheet->getColumnDimension('D')->setWidth(60, 'pt'); // description
+        $sheet->getColumnDimension('C')->setWidth(60, 'pt'); // description
+        $sheet->getColumnDimension('D')->setAutoSize(true);  // CPE
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
@@ -1924,8 +1924,8 @@ class ReportController extends Controller
             foreach ($applicationBlock->applications as $application) {
                 $sheet->setCellValue("A{$row}", $applicationBlock->name);
                 $sheet->setCellValue("B{$row}", $application->name);
-                $sheet->setCellValue("C{$row}", $application->version);
-                $sheet->setCellValue("D{$row}", $html->toRichTextObject($application->description));
+                $sheet->setCellValue("C{$row}", $html->toRichTextObject($application->description));
+                $sheet->setCellValue("D{$row}", $application->vendor . ":" . $application->product . ":" . $application->version);
                 $sheet->setCellValue("E{$row}", $application->entity_resp ? $application->entity_resp->name : '');
                 $sheet->setCellValue("F{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("G{$row}", $application->responsible);
