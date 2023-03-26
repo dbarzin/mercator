@@ -273,6 +273,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/activityList', [Admin\ReportController::class,'activityList'])->name('report.activityList');
     Route::get('report/activityReport', [Admin\ReportController::class,'activityReport'])->name('report.activityReport');
 
+    // CPE
+    Route::get('/cpe/search/vendors', [Admin\CPEController::class,'vendors']);
+    Route::get('/cpe/search/products', [Admin\CPEController::class,'products']);
+    Route::get('/cpe/search/versions', [Admin\CPEController::class,'versions']);
+
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
     Route::get('audit/changes', [Admin\AuditController::class,'changes'])->name('audit.changes');

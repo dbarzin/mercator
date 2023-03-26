@@ -131,6 +131,8 @@ return [
             "RTO_helper" => "Durée maximale d'interruption admissible",
             "RPO" => "RPO",
             "RPO_helper" => "Objectif de point de reprise",
+            'vendor' => 'Editeur',
+            'vendor_helper' => "Editeur de l'application"
         ],
         'title' => 'Applications',
         'title_short' => 'Applications',

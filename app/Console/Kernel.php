@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Cleanup::class,
         Commands\CertificateExpiracy::class,
         Commands\CVESearch::class,
+        Commands\CPEImport::class,
     ];
 
     /**

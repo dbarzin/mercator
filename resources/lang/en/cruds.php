@@ -131,6 +131,8 @@ return [
             "RTO_helper" => "Recovery Time Objective",
             "RPO" => "RPO",
             "RPO_helper" => "Recovery Point Objective",
+            'vendor' => 'Vendor',
+            'vendor_helper' => "Application vendor"
         ],
         'title' => 'Applications',
         'title_short' => 'Applications',
