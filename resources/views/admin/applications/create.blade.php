@@ -10,29 +10,52 @@
         <form method="POST" action="{{ route("admin.applications.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
+                        <input type="text" class="form-control" id="name" name="name" min="0" value="{{ old('name', '') }}">
+                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
+                @if($errors->has('description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
+            </div>
+
+            <div class="row">
 
                 <div class="col-md-4">
-                    <label class="required" for="name">{{ trans('cruds.application.fields.vendor') }}</label>
                     <div class="form-group">
-                        <select id="vendor-selector" class="form-control select2-free" name="vendor">
-                            <option>{{ old('vendor', '') }}</option>
-                        </select>
-                    <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
+                        <label class="recommended" for="name">{{ trans('cruds.application.fields.vendor') }}</label>
+                        <div class="form-group">
+                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                                <option>{{ old('vendor', '') }}</option>
+                            </select>
+                            <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="name">
-                            <option>{{ old('name', '') }}</option>
+                        <label class="recommended" for="name">{{ trans('cruds.application.fields.product') }}</label>
+                        <select id="product-selector" class="form-control select2-free" name="product">
+                            <option>{{ old('product', '') }}</option>
                         </select>
-                        @if($errors->has('name'))
+                        @if($errors->has('product'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
+                                {{ $errors->first('product') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -49,17 +72,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
-                @if($errors->has('description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
             </div>
 
           <div class="row">

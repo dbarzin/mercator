@@ -117,8 +117,6 @@ return [
             'type_helper' => 'ex: dev. internal, software, firmware, script, EAI / ESB, etc.',
             'users' => 'Users',
             'users_helper' => 'Volume of users and profiles',
-            'version' => 'Version',
-            'version_helper' => "Application's version",
             "functional_referent" => "Functional referent",
             "functional_referent_helper" => "",
             "editor" => "Editor",
@@ -131,8 +129,12 @@ return [
             "RTO_helper" => "Recovery Time Objective",
             "RPO" => "RPO",
             "RPO_helper" => "Recovery Point Objective",
-            'vendor' => 'Vendor',
-            'vendor_helper' => "Application vendor"
+            'vendor' => 'CPE Vendor',
+            'vendor_helper' => "CPE Application vendor"
+            'product' => 'CPE Product',
+            'product_helper' => "CPE product name",
+            'version' => 'CPE Version',
+            'version_helper' => "CPE Application's version",
         ],
         'title' => 'Applications',
         'title_short' => 'Applications',
