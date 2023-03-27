@@ -101,7 +101,7 @@ class MApplication extends Model
         'name',
         'description',
         'vendor',
-        'product'
+        'product',
         'version',
         'entity_resp_id',
         'functional_referent',
