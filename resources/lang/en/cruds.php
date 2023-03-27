@@ -130,7 +130,7 @@ return [
             "RPO" => "RPO",
             "RPO_helper" => "Recovery Point Objective",
             'vendor' => 'CPE Vendor',
-            'vendor_helper' => "CPE Application vendor"
+            'vendor_helper' => "CPE Application vendor",
             'product' => 'CPE Product',
             'product_helper' => "CPE product name",
             'version' => 'CPE Version',
