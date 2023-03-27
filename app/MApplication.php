@@ -98,10 +98,11 @@ class MApplication extends Model
     ];
 
     protected $fillable = [
-        'vendor',
         'name',
-        'version',
         'description',
+        'vendor',
+        'product'
+        'version',
         'entity_resp_id',
         'functional_referent',
         'editor',
