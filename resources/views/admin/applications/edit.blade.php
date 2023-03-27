@@ -47,15 +47,15 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="name">{{ trans('cruds.application.fields.product') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="name">
-                            <option>{{ old('name', $application->name) }}</option>
+                        <select id="product-selector" class="form-control select2-free" name="product">
+                            <option>{{ old('name', $application->product) }}</option>
                         </select>
-                        @if($errors->has('name'))
+                        @if($errors->has('product'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
+                                {{ $errors->first('product') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-md-4">
