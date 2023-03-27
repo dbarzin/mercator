@@ -34,7 +34,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="name">{{ trans('cruds.application.fields.vendor') }}</label>
+                        <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
                         <div class="form-group">
                             <select id="vendor-selector" class="form-control select2-free" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="name">{{ trans('cruds.application.fields.product') }}</label>
+                        <label class="recommended" for="product">{{ trans('cruds.application.fields.product') }}</label>
                         <select id="product-selector" class="form-control select2-free" name="product">
                             <option>{{ old('product', '') }}</option>
                         </select>
