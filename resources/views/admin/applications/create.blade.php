@@ -69,7 +69,7 @@
                                 {{ $errors->first('version') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
                     </div>
                 </div>
             </div>
