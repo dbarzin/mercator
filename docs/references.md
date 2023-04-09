@@ -9,3 +9,8 @@ Outil indispensable à la maitrise de son système d’information (SI) et oblig
 - [EBIOS Risk Manager](https://www.ssi.gouv.fr/entreprise/management-du-risque/la-methode-ebios-risk-manager/)
 
 La méthode de référence française EBIOS accompagne les organisations pour identifier et comprendre les risques numériques qui leurs sont propres. Elle permet de déterminer les mesures de sécurité adaptées à la menace et de mettre en place le cadre de suivi et d’amélioration continue à l’issue d’une analyse de risque partagée au plus haut niveau.
+
+- Le [GitHub du projet](https://github.com/dbarzin/mercator)
+
+Le lien vers les sources, la documentation et la procédure d'installation de Mercator
+
