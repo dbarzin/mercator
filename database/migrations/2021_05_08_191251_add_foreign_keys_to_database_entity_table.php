@@ -27,8 +27,12 @@ class AddForeignKeysToDatabaseEntityTable extends Migration
     public function down()
     {
         Schema::table('database_entity', function (Blueprint $table) {
-            $table->dropForeign('database_id_fk_1485563');
-            $table->dropForeign('entity_id_fk_1485563');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('database_id_fk_1485563');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('entity_id_fk_1485563');
+            }
         });
     }
 }

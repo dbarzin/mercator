@@ -15,7 +15,9 @@ class RenameSubnetwork extends Migration
     public function up()
     {
         Schema::table('network_subnetword', function (Blueprint $table) {
-            $table->dropForeign('subnetword_id_fk_1492377');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('subnetword_id_fk_1492377');
+            }
         });
 
         Schema::rename('network_subnetword', 'network_subnetwork');
@@ -45,7 +47,9 @@ class RenameSubnetwork extends Migration
     {
         //
         Schema::table('network_subnetwork', function (Blueprint $table) {
-            $table->dropForeign('subnetwork_id_fk_1492377');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('subnetwork_id_fk_1492377');
+            }
         });
         Schema::rename('network_subnetwork', 'network_subnetword');
 

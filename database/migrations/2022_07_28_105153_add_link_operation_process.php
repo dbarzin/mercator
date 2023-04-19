@@ -27,7 +27,9 @@ class AddLinkOperationProcess extends Migration
     public function down()
     {
         Schema::table('operations', function (Blueprint $table) {
-            $table->dropForeign('process_id_fk_7945129');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('process_id_fk_7945129');
+            }
             $table->dropColumn('process_id');
         });
     }

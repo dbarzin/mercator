@@ -27,8 +27,12 @@ class AddForeignKeysToSubnetworksTable extends Migration
     public function down()
     {
         Schema::table('subnetworks', function (Blueprint $table) {
-            $table->dropForeign('connected_subnets_fk_1483256');
-            $table->dropForeign('gateway_fk_1492376');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('connected_subnets_fk_1483256');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('gateway_fk_1492376');
+            }
         });
     }
 }

@@ -27,8 +27,12 @@ class AddForeignKeysToLanManTable extends Migration
     public function down()
     {
         Schema::table('lan_man', function (Blueprint $table) {
-            $table->dropForeign('lan_id_fk_1490345');
-            $table->dropForeign('man_id_fk_1490345');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('lan_id_fk_1490345');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('man_id_fk_1490345');
+            }
         });
     }
 }

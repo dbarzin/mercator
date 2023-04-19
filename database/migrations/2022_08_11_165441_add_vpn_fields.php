@@ -43,10 +43,14 @@ class AddVpnFields extends Migration
             $table->dropColumn('type');
             $table->string("responsible_sec")->nullable()->after("name");
 
-            $table->dropForeign('network_id_fk_8596554');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('network_id_fk_8596554');
+            }
             $table->dropColumn('network_id');
 
-            $table->dropForeign('entity_id_fk_1295034');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('entity_id_fk_1295034');
+            }
             $table->dropColumn('entity_id');
 
             $table->dropColumn('src');

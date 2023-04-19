@@ -33,14 +33,30 @@ class AddForeignKeysToFluxesTable extends Migration
     public function down()
     {
         Schema::table('fluxes', function (Blueprint $table) {
-            $table->dropForeign('application_dest_fk_1485549');
-            $table->dropForeign('application_source_fk_1485545');
-            $table->dropForeign('database_dest_fk_1485552');
-            $table->dropForeign('database_source_fk_1485548');
-            $table->dropForeign('module_dest_fk_1485551');
-            $table->dropForeign('module_source_fk_1485547');
-            $table->dropForeign('service_dest_fk_1485550');
-            $table->dropForeign('service_source_fk_1485546');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('application_dest_fk_1485549');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('application_source_fk_1485545');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('database_dest_fk_1485552');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('database_source_fk_1485548');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('module_dest_fk_1485551');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('module_source_fk_1485547');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('service_dest_fk_1485550');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('service_source_fk_1485546');
+            }
         });
     }
 }

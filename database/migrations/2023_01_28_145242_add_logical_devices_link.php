@@ -43,22 +43,34 @@ class AddLogicalDevicesLink extends Migration
     {
         Schema::table('physical_links', function (Blueprint $table) {
  
-            $table->dropForeign('router_src_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('router_src_id_fk');
+            }
             $table->dropColumn('router_src_id');
 
-            $table->dropForeign('router_dest_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('router_dest_id_fk');
+            }
             $table->dropColumn('router_dest_id');
 
-            $table->dropForeign('network_switch_src_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('network_switch_src_id_fk');
+            }
             $table->dropColumn('network_switch_src_id');
 
-            $table->dropForeign('network_switch_dest_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('network_switch_dest_id_fk');
+            }
             $table->dropColumn('network_switch_dest_id');
 
-            $table->dropForeign('logical_server_src_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('logical_server_src_id_fk');
+            }
             $table->dropColumn('logical_server_src_id');
 
-            $table->dropForeign('logical_server_dest_id_fk');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('logical_server_dest_id_fk');
+            }
             $table->dropColumn('logical_server_dest_id');
 
         });

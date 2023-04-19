@@ -27,8 +27,12 @@ class AddForeignKeysToActorOperationTable extends Migration
     public function down()
     {
         Schema::table('actor_operation', function (Blueprint $table) {
-            $table->dropForeign('actor_id_fk_1472680');
-            $table->dropForeign('operation_id_fk_1472680');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('actor_id_fk_1472680');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('operation_id_fk_1472680');
+            }
         });
     }
 }

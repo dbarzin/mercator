@@ -25,7 +25,9 @@ class Cleanup extends Migration
         });
 
         Schema::table('wifi_terminals', function (Blueprint $table) {
-            $table->dropForeign('physical_switch_fk_593584');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_593584');
+            }
             $table->dropColumn('physical_switch_id');
         });
 

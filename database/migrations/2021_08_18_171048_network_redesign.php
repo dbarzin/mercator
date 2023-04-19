@@ -54,10 +54,14 @@ class NetworkRedesign extends Migration
             // remove column zone in subnetworks
             $table->dropColumn('zone');
             // remove link to vlan in subnetwork
-            $table->dropForeign('vlan_fk_6844934');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('vlan_fk_6844934');
+            }
             $table->dropColumn('vlan_id');
             // remove link to vlan in network
-            $table->dropForeign('network_fk_5476544');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('network_fk_5476544');
+            }
             $table->dropColumn('network_id');
         });
     }

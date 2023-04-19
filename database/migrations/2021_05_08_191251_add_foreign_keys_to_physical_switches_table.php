@@ -28,9 +28,15 @@ class AddForeignKeysToPhysicalSwitchesTable extends Migration
     public function down()
     {
         Schema::table('physical_switches', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485493');
-            $table->dropForeign('building_fk_1485489');
-            $table->dropForeign('site_fk_1485488');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485493');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485489');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485488');
+            }
         });
     }
 }

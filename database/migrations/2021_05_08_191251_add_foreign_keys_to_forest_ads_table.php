@@ -26,7 +26,9 @@ class AddForeignKeysToForestAdsTable extends Migration
     public function down()
     {
         Schema::table('forest_ads', function (Blueprint $table) {
-            $table->dropForeign('zone_admin_fk_1482667');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('zone_admin_fk_1482667');
+            }
         });
     }
 }

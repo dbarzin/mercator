@@ -29,10 +29,18 @@ class AddForeignKeysToStorageDevicesTable extends Migration
     public function down()
     {
         Schema::table('storage_devices', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485363');
-            $table->dropForeign('building_fk_1485362');
-            $table->dropForeign('physical_switch_fk_4025543');
-            $table->dropForeign('site_fk_1485361');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485363');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485362');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_4025543');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485361');
+            }
         });
     }
 }

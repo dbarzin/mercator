@@ -27,8 +27,12 @@ class AddForeignKeysToEntityProcessTable extends Migration
     public function down()
     {
         Schema::table('entity_process', function (Blueprint $table) {
-            $table->dropForeign('entity_id_fk_1627958');
-            $table->dropForeign('process_id_fk_1627958');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('entity_id_fk_1627958');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('process_id_fk_1627958');
+            }
         });
     }
 }

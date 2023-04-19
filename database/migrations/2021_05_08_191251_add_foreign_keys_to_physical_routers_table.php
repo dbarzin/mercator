@@ -28,9 +28,15 @@ class AddForeignKeysToPhysicalRoutersTable extends Migration
     public function down()
     {
         Schema::table('physical_routers', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485499');
-            $table->dropForeign('building_fk_1485498');
-            $table->dropForeign('site_fk_1485497');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485499');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485498');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485497');
+            }
         });
     }
 }
