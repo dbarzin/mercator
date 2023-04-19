@@ -1,45 +1,51 @@
-# ubuntu / jammy (22.04-LTS)
-FROM ubuntu:jammy
+FROM php:8.2-alpine3.16
 
-ENV DEBIAN_FRONTEND noninteractive
+# apparently you cannot pass both env variables
+# and .env file
+ENV DB_CONNECTION=sqlite
+ENV DB_DATABASE=/var/www/mercator/database/db.sqlite
 
-RUN set -x ; \
-  apt update ; apt upgrade ; \
-  apt install -y --no-install-recommends \
-    ssmtp \
-    mailutils \
-    php php-zip \
-    php-curl \
-    php-mbstring \
-    php-dom php-ldap \
-    php-soap \
-    php-xdebug \
-    php-mysql \
-    php-gd \
-    php-xdebug \
-    php-mysql \
-    php-gd \
-    graphviz \
-    curl less ca-certificates netcat-traditional ; \
-    apt-get autoremove --yes ; rm -fr /var/cache/apt
+# system deps
+RUN apk update && apk add curl ssmtp graphviz ca-certificates sqlite sqlite-dev
 
-# install composer
-RUN set -x ; \
-  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# php deps
+RUN apk add php8-zip \
+  php8-curl \
+  php8-mbstring \
+  php8-dom php8-ldap \
+  php8-soap \
+  php8-xdebug \
+  php8-mysqli \
+  php8-sqlite3 \
+  php8-gd \
+  php8-xdebug \
+  php8-gd \
+  php8-pdo php8-pdo_sqlite \
+  php8-fileinfo \
+  php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
+  php8-tokenizer \
+  composer
 
-WORKDIR /var/www/mercator
+# sources
 COPY . /var/www/mercator
+WORKDIR /var/www/mercator
 
-# USER www:www
-# RUN set -x ; \
-#  groupadd www ; \
-#  useradd -g www -ms /bin/bash www ; \
-#  chown -R www:www /var/www ; \
+# the sqlite file must exist
+RUN touch ${DB_DATABASE}
 
+# add mercator:www user
+RUN addgroup -S www && \
+  adduser -S mercator -G www && \
+  chown -R mercator:www /var/www 
+
+USER mercator:www
 
 # install mercator dependancies
-RUN set -x ; \
-  cd /var/www/mercator ; composer install
+RUN composer install
 
 EXPOSE 8000
-ENTRYPOINT /var/www/mercator/docker/entrypoint.sh
+
+# APP_KEY is automcatically generated if not provided 
+CMD php artisan --no-interaction --force --seed migrate && \
+  php artisan passport:install && \
+  APP_KEY="${APP_KEY:-base64:$(head -c 32 /dev/urandom|base64)}" php artisan serve --host=0.0.0.0 --port=8000
