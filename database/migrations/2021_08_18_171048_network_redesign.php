@@ -27,15 +27,12 @@ class NetworkRedesign extends Migration
         /* to process later...
         // remove link to physical_switch_id in wifi_terminals
         Schema::table('wifi_terminals', function(Blueprint $table) {
-            $table->dropColumn('physical_switch_id');
+            $table->dropColumn(['physical_switch_id']);
         }
 
         // cleanup VLAN table
         Schema::table('vlans', function(Blueprint $table) {
-            $table->dropColumn('address');
-            $table->dropColumn('mask');
-            $table->dropColumn('gateway');
-            $table->dropColumn('zone');
+            $table->dropColumn(['address', 'mask', 'gateway', 'zone']);
         }
 
         // remove table between networks and subnetworks
@@ -52,17 +49,17 @@ class NetworkRedesign extends Migration
     {
         Schema::table('subnetworks', function (Blueprint $table) {
             // remove column zone in subnetworks
-            $table->dropColumn('zone');
+            $table->dropColumn(['zone']);
             // remove link to vlan in subnetwork
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('vlan_fk_6844934');
             }
-            $table->dropColumn('vlan_id');
+            $table->dropColumn(['vlan_id']);
             // remove link to vlan in network
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('network_fk_5476544');
             }
-            $table->dropColumn('network_id');
+            $table->dropColumn(['network_id']);
         });
     }
 }

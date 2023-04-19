@@ -14,21 +14,18 @@ class Cleanup extends Migration
     public function up()
     {
         Schema::table('vlans', function (Blueprint $table) {
-            $table->dropColumn('address');
-            $table->dropColumn('mask');
-            $table->dropColumn('zone');
-            $table->dropColumn('gateway');
+            $table->dropColumn(['address', 'mask', 'zone', 'gateway']);
         });
     
         Schema::table('subnetworks', function (Blueprint $table) {
-            $table->dropColumn('ip_range');
+            $table->dropColumn(['ip_range']);
         });
 
         Schema::table('wifi_terminals', function (Blueprint $table) {
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('physical_switch_fk_593584');
             }
-            $table->dropColumn('physical_switch_id');
+            $table->dropColumn(['physical_switch_id']);
         });
 
         Schema::drop('network_subnetwork');

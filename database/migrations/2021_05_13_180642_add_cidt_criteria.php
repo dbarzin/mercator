@@ -54,33 +54,23 @@ class AddCidtCriteria extends Migration
     {
         Schema::table('macro_processuses', function (Blueprint $table) {
             $table->renameColumn('security_need_c', 'security_need');
-            $table->dropColumn('security_need_i');
-            $table->dropColumn('security_need_a');
-            $table->dropColumn('security_need_t');
+            $table->dropColumn(['security_need_i', 'security_need_a', 'security_need_t']);
         });
         Schema::table('processes', function (Blueprint $table) {
             $table->renameColumn('security_need_c', 'security_need');
-            $table->dropColumn('security_need_i');
-            $table->dropColumn('security_need_a');
-            $table->dropColumn('security_need_t');
+            $table->dropColumn(['security_need_i', 'security_need_a', 'security_need_t']);
         });
         Schema::table('information', function (Blueprint $table) {
             $table->renameColumn('security_need_c', 'security_need');
-            $table->dropColumn('security_need_i');
-            $table->dropColumn('security_need_a');
-            $table->dropColumn('security_need_t');
+            $table->dropColumn(['security_need_i', 'security_need_a', 'security_need_t']);
         });
         Schema::table('m_applications', function (Blueprint $table) {
             $table->renameColumn('security_need_c', 'security_need');
-            $table->dropColumn('security_need_i');
-            $table->dropColumn('security_need_a');
-            $table->dropColumn('security_need_t');
+            $table->dropColumn(['security_need_i', 'security_need_a', 'security_need_t']);
         });
         Schema::table('databases', function (Blueprint $table) {
             $table->renameColumn('security_need_c', 'security_need');
-            $table->dropColumn('security_need_i');
-            $table->dropColumn('security_need_a');
-            $table->dropColumn('security_need_t');
+            $table->dropColumn(['security_need_i', 'security_need_a', 'security_need_t']);
         });
     }
 }

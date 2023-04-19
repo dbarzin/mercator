@@ -39,22 +39,20 @@ class AddVpnFields extends Migration
     public function down()
     {
         Schema::table('external_connected_entities', function (Blueprint $table) {
-            $table->dropColumn('description');
-            $table->dropColumn('type');
+            $table->dropColumn(['description', 'type']);
             $table->string("responsible_sec")->nullable()->after("name");
 
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('network_id_fk_8596554');
             }
-            $table->dropColumn('network_id');
+            $table->dropColumn(['network_id']);
 
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('entity_id_fk_1295034');
             }
-            $table->dropColumn('entity_id');
+            $table->dropColumn(['entity_id']);
 
-            $table->dropColumn('src');
-            $table->dropColumn('dest');
+            $table->dropColumn(['src', 'dest']);
         });
         Schema::create('external_connected_entity_network', function (Blueprint $table) {
             $table->unsignedInteger('external_connected_entity_id')->index('external_connected_entity_id_fk_1483344');

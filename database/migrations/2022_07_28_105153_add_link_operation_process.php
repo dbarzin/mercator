@@ -30,7 +30,7 @@ class AddLinkOperationProcess extends Migration
             if (DB::getDriverName() !== 'sqlite') {
                 $table->dropForeign('process_id_fk_7945129');
             }
-            $table->dropColumn('process_id');
+            $table->dropColumn(['process_id']);
         });
     }
 }

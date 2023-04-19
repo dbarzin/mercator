@@ -26,7 +26,7 @@ class AddFunctionalReferentToMApplication extends Migration
     public function down()
     {
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropColumn('functional_referent');
+            $table->dropColumn(['functional_referent']);
         });
     }
 }
