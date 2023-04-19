@@ -1,2 +1,6 @@
 .git
 docker/data
+*.Dockerfile
+*.md
+.dockerignore
+.env*
