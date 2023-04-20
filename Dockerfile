@@ -3,7 +3,7 @@ FROM php:8.2-alpine3.16
 # apparently you cannot pass both env variables
 # and .env file
 ENV DB_CONNECTION=sqlite
-ENV DB_DATABASE=/var/www/mercator/database/db.sqlite
+ENV DB_DATABASE=/var/www/mercator/db.sqlite
 
 # system deps
 RUN apk update && apk add curl ssmtp graphviz ca-certificates sqlite sqlite-dev
@@ -31,7 +31,7 @@ COPY . /var/www/mercator
 WORKDIR /var/www/mercator
 
 # the sqlite file must exist
-RUN touch ${DB_DATABASE}
+# RUN touch ${DB_DATABASE}
 
 # add mercator:www user
 RUN addgroup -S www && \
@@ -40,12 +40,14 @@ RUN addgroup -S www && \
 
 USER mercator:www
 
-# install mercator dependancies
+# install mercator deps
 RUN composer install
 
 EXPOSE 8000
 
 # APP_KEY is automcatically generated if not provided 
-CMD php artisan --no-interaction --force --seed migrate && \
+# we create the database file if it does not exist
+CMD if [ "${DB_CONNECTION}" == "sqlite" ] && [ ! -f "${DB_DATABASE}" ]; then touch ${DB_DATABASE}; fi && \
+  php artisan --no-interaction --force --seed migrate && \
   php artisan passport:install && \
   APP_KEY="${APP_KEY:-base64:$(head -c 32 /dev/urandom|base64)}" php artisan serve --host=0.0.0.0 --port=8000

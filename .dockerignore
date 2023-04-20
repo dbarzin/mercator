@@ -1,6 +1,6 @@
 .git
 docker/data
-*.Dockerfile
+*Dockerfile
 *.md
 .dockerignore
 .env*
