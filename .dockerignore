@@ -4,3 +4,6 @@ docker/data
 *.md
 .dockerignore
 .env*
+*.sqlite*
+nginx.conf
+supervisord.conf
