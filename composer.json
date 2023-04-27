@@ -8,7 +8,7 @@
         "oiv",
         "security tool",
         "anssi",
-        "urbanisation" 
+        "urbanisation"
     ],
     "license": "GPL-3.0-or-later",
     "require": {
@@ -27,7 +27,8 @@
         "phpoffice/phpspreadsheet": "^1.14",
         "phpoffice/phpword": "^0.18.0",
         "yajra/laravel-datatables": "^1.5",
-        "yajra/laravel-datatables-oracle": "^9.11"
+        "yajra/laravel-datatables-oracle": "^9.11",
+        "orangehill/iseed": "^3.0.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
