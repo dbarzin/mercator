@@ -15,6 +15,12 @@ class AddSecurityCiat extends Migration
     {
         Schema::table('networks', function (Blueprint $table) {
             $table->renameColumn('security_need', 'security_need_c');
+            // $table->integer('security_need_i')->nullable();
+            // $table->integer('security_need_a')->nullable();
+            // $table->integer('security_need_t')->nullable();
+        });
+        Schema::table('networks', function (Blueprint $table) {
+            // $table->renameColumn('security_need', 'security_need_c');
             $table->integer('security_need_i')->nullable();
             $table->integer('security_need_a')->nullable();
             $table->integer('security_need_t')->nullable();
