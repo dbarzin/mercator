@@ -45,21 +45,16 @@ RUN addgroup -S www && \
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
 # RUN chown -R mercator:www 
 
+RUN cp docker/nginx.conf /etc/nginx/http.d/mercator.conf
+RUN cp docker/supervisord.conf /etc/supervisord.conf 
+
 USER mercator:www
 
 # install mercator deps
 RUN composer install
 
-
 EXPOSE 8000
 
-# APP_KEY is automcatically generated if not provided 
-# we create the database file if it does not exist
-# CMD if [ "${DB_CONNECTION}" == "sqlite" ] && [ ! -f "${DB_DATABASE}" ]; then touch ${DB_DATABASE}; fi && \
-#   php artisan cache:clear && php artisan config:clear && \
-#   php artisan --no-interaction --force migrate --seed && \
-#   php artisan passport:install && \
-#   APP_KEY="${APP_KEY:-base64:$(head -c 32 /dev/urandom|base64)}" nginx -g 'daemon off; pid /tmp/nginx.pid;'
 
 CMD ["/usr/bin/supervisord"]
 
