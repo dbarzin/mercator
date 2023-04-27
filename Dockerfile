@@ -6,7 +6,7 @@ ENV DB_CONNECTION=sqlite
 ENV DB_DATABASE=/var/www/mercator/db.sqlite
 
 # system deps
-RUN apk update && apk add curl ssmtp graphviz ca-certificates sqlite sqlite-dev
+RUN apk update && apk add curl ssmtp graphviz ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev
 
 # php deps
 RUN apk add php8-zip \
@@ -17,14 +17,17 @@ RUN apk add php8-zip \
   php8-xdebug \
   php8-mysqli \
   php8-sqlite3 \
+  php8-pgsql \
   php8-gd \
   php8-xdebug \
   php8-gd \
-  php8-pdo php8-pdo_sqlite \
+  php8-pdo php8-pdo_sqlite php8-pdo_mysql php8-pdo_pgsql \
   php8-fileinfo \
   php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
   php8-tokenizer \
   composer
+
+RUN docker-php-ext-install pgsql pdo_pgsql
 
 # sources
 COPY . /var/www/mercator
@@ -48,6 +51,7 @@ EXPOSE 8000
 # APP_KEY is automcatically generated if not provided 
 # we create the database file if it does not exist
 CMD if [ "${DB_CONNECTION}" == "sqlite" ] && [ ! -f "${DB_DATABASE}" ]; then touch ${DB_DATABASE}; fi && \
-  php artisan --no-interaction --force --seed migrate && \
+  php artisan cache:clear && php artisan config:clear && \
+  php artisan --no-interaction --force migrate --seed && \
   php artisan passport:install && \
   APP_KEY="${APP_KEY:-base64:$(head -c 32 /dev/urandom|base64)}" php artisan serve --host=0.0.0.0 --port=8000
