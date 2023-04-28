@@ -75,13 +75,13 @@ See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
 First download the docker image.
 
 ```shell
-docker pull ghcr.io/mercator/mercator:latest
+docker pull docker pull ghcr.io/dbarzin/mercator:latest
 ```
 
 Then you can run an ephemeral local instance:
 
 ```shell
-docker run -it --rm --name mercator -p "127.0.0.1:8000":80 ghcr.io/mercator/mercator:latest
+docker run -it --rm --name mercator -p "127.0.0.1:8000":80 ghcr.io/dbarzin/mercator:latest
 ```
 
 By default it uses an SQLite backend. If you want to make data persistent:
