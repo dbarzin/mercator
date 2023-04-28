@@ -27,8 +27,12 @@ class AddForeignKeysToDomaineAdForestAdTable extends Migration
     public function down()
     {
         Schema::table('domaine_ad_forest_ad', function (Blueprint $table) {
-            $table->dropForeign('domaine_ad_id_fk_1492084');
-            $table->dropForeign('forest_ad_id_fk_1492084');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('domaine_ad_id_fk_1492084');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('forest_ad_id_fk_1492084');
+            }
         });
     }
 }

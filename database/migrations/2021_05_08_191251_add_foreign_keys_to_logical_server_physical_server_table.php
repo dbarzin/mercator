@@ -27,8 +27,12 @@ class AddForeignKeysToLogicalServerPhysicalServerTable extends Migration
     public function down()
     {
         Schema::table('logical_server_physical_server', function (Blueprint $table) {
-            $table->dropForeign('logical_server_id_fk_1657961');
-            $table->dropForeign('physical_server_id_fk_1657961');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('logical_server_id_fk_1657961');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_server_id_fk_1657961');
+            }
         });
     }
 }

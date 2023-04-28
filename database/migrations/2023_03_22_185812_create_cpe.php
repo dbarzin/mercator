@@ -118,62 +118,43 @@ class CreateCpe extends Migration
         Schema::dropIfExists('cpe_vendors');
 
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
+            $table->dropColumn(['vendor', 'product']);
         });
 
         Schema::table('physical_switches', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('physical_routers', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('peripherals', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('wifi_terminals', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('phones', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('security_devices', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('workstations', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('physical_servers', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
 
         Schema::table('storage_devices', function (Blueprint $table) {
-            $table->dropColumn('vendor');
-            $table->dropColumn('product');
-            $table->dropColumn('version');
+            $table->dropColumn(['vendor', 'product', 'version']);
         });
     }
 }

@@ -28,9 +28,15 @@ class AddForeignKeysToPhysicalSecurityDevicesTable extends Migration
     public function down()
     {
         Schema::table('physical_security_devices', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485519');
-            $table->dropForeign('building_fk_1485518');
-            $table->dropForeign('site_fk_1485517');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485519');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485518');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485517');
+            }
         });
     }
 }

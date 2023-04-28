@@ -26,7 +26,9 @@ class AddForeignKeysToBuildingsTable extends Migration
     public function down()
     {
         Schema::table('buildings', function (Blueprint $table) {
-            $table->dropForeign('site_fk_1483431');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1483431');
+            }
         });
     }
 }

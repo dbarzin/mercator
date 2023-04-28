@@ -27,8 +27,12 @@ class AddForeignKeysToApplicationModuleApplicationServiceTable extends Migration
     public function down()
     {
         Schema::table('application_module_application_service', function (Blueprint $table) {
-            $table->dropForeign('application_module_id_fk_1492414');
-            $table->dropForeign('application_service_id_fk_1492414');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('application_module_id_fk_1492414');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('application_service_id_fk_1492414');
+            }
         });
     }
 }

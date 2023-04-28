@@ -26,7 +26,7 @@ class CertLastNotification extends Migration
     public function down()
     {
         Schema::table('certificates', function (Blueprint $table) {
-            $table->dropColumn('last_notification');
+            $table->dropColumn(['last_notification']);
         });
     }
 }

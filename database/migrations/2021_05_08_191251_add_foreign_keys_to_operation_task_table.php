@@ -27,8 +27,12 @@ class AddForeignKeysToOperationTaskTable extends Migration
     public function down()
     {
         Schema::table('operation_task', function (Blueprint $table) {
-            $table->dropForeign('operation_id_fk_1472749');
-            $table->dropForeign('task_id_fk_1472749');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('operation_id_fk_1472749');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('task_id_fk_1472749');
+            }
         });
     }
 }

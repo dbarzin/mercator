@@ -26,7 +26,7 @@ class AddCertStatus extends Migration
     public function down()
     {
         Schema::table('certificates', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn(['status']);
         });
     }
 }

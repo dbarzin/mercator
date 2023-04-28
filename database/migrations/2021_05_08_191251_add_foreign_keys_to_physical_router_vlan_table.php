@@ -27,8 +27,12 @@ class AddForeignKeysToPhysicalRouterVlanTable extends Migration
     public function down()
     {
         Schema::table('physical_router_vlan', function (Blueprint $table) {
-            $table->dropForeign('physical_router_id_fk_1658250');
-            $table->dropForeign('vlan_id_fk_1658250');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_router_id_fk_1658250');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('vlan_id_fk_1658250');
+            }
         });
     }
 }

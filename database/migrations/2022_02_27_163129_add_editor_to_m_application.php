@@ -26,7 +26,7 @@ class AddEditorToMApplication extends Migration
     public function down()
     {
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropColumn('editor');
+            $table->dropColumn(['editor']);
         });
     }
 }

@@ -27,8 +27,12 @@ class AddForeignKeysToRelationsTable extends Migration
     public function down()
     {
         Schema::table('relations', function (Blueprint $table) {
-            $table->dropForeign('destination_fk_1494373');
-            $table->dropForeign('source_fk_1494372');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('destination_fk_1494373');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('source_fk_1494372');
+            }
         });
     }
 }

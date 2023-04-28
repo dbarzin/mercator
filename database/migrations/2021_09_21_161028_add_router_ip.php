@@ -26,7 +26,7 @@ class AddRouterIp extends Migration
     public function down()
     {
         Schema::table('routers', function (Blueprint $table) {
-            $table->dropColumn('ip_addresses');
+            $table->dropColumn(['ip_addresses']);
         });
     }
 }

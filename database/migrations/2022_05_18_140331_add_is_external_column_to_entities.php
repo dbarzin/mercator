@@ -26,7 +26,7 @@ class AddIsExternalColumnToEntities extends Migration
     public function down()
     {
         Schema::table('entities', function (Blueprint $table) {
-            $table->dropColumn('is_external');
+            $table->dropColumn(['is_external']);
         });
     }
 }

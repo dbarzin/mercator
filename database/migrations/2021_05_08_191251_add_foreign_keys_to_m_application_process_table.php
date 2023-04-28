@@ -27,8 +27,12 @@ class AddForeignKeysToMApplicationProcessTable extends Migration
     public function down()
     {
         Schema::table('m_application_process', function (Blueprint $table) {
-            $table->dropForeign('m_application_id_fk_1482573');
-            $table->dropForeign('process_id_fk_1482573');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('m_application_id_fk_1482573');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('process_id_fk_1482573');
+            }
         });
     }
 }

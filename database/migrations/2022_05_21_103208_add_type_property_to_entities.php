@@ -26,7 +26,7 @@ class addTypePropertyToEntities extends Migration
     public function down()
     {
         Schema::table('entities', function (Blueprint $table) {
-            $table->dropColumn('entity_type');
+            $table->dropColumn(['entity_type']);
         });
     }
 }

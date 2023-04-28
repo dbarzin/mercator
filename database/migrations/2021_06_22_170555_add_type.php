@@ -30,11 +30,11 @@ class AddType extends Migration
     public function down()
     {
         Schema::table('physical_servers', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn(['type']);
         });
 
         Schema::table('workstations', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn(['type']);
         });
     }
 }
