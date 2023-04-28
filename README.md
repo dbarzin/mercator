@@ -75,7 +75,7 @@ See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
 First download the docker image.
 
 ```shell
-docker pull docker pull ghcr.io/dbarzin/mercator:latest
+docker pull ghcr.io/dbarzin/mercator:latest
 ```
 
 Then you can run an ephemeral local instance:
