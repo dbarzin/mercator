@@ -673,6 +673,11 @@ return [
             'title' => "Vue de l'infrastructure réseau",
             'title_short' => 'Infrastructure réseau',
         ],
+        'gdpr' => [
+             'description' => "The view of the General Data Protection Regulation contains all the information required by art. 30 of the GDPR.",
+             'title' => "General Data Protection Regulation View",
+             'title_short' => 'GDPR view',
+         ],
         'user_management' => ['title' => 'Gestion des utilisateurs', 'title_short' => 'Utilisateurs'],
         'configuration' => ['title' => 'Configuration', 'title_short' => 'configuration'],
     ],
@@ -987,6 +992,13 @@ return [
             'reload' => 'Recommencer'
         ],
     ],
+    'register' => [
+        'fields' => [
+            '' => '',
+        ],
+        'title' => 'Registre des traitements',
+        'title_singular' => 'Rgistre',
+    ],
     'role' => [
         'fields' => [
             'permissions' => 'Permissions',
@@ -995,8 +1007,8 @@ return [
             'title_helper' => 'Nom du rôle',
         ],
         'title' => 'Rôles',
+        'title_short' => 'Rôle',
         'title_singular' => 'Rôle',
-        "check_all" => "Tout cocher"
     ],
     'router' => [
         'description' => 'Composant gérant les connexions entre différents réseaux.',

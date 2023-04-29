@@ -16,6 +16,40 @@
                 </a>
             </li>
 
+            @can('gdpr_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+                        </i>
+                        {{ trans('cruds.menu.gdpr.title') }}
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @can('entity_access')
+                            <li class="nav-item">
+                                <a href='{{ route("admin.dataPoocessing.index") }}' class="nav-link {{ request()->is('admin/dataPoocessing') || request()->is('admin/dataPoocessing/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.data_processing.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('security_control_access')
+                            <li class="nav-item">
+                                <a href='{{ route("admin.securityControls.index") }}' class="nav-link {{ request()->is('admin/securityControls') || request()->is('admin/securityControls/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.security_control.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
+
             @can('ecosystem_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
