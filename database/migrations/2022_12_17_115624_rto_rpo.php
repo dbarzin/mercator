@@ -27,8 +27,7 @@ class RtoRpo extends Migration
     public function down()
     {
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropColumn('rto');
-            $table->dropColumn('rpo');
+            $table->dropColumn(['rto', 'rpo']);
         });
     }
 }

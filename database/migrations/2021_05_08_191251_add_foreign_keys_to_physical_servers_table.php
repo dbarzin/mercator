@@ -29,10 +29,18 @@ class AddForeignKeysToPhysicalServersTable extends Migration
     public function down()
     {
         Schema::table('physical_servers', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485324');
-            $table->dropForeign('building_fk_1485323');
-            $table->dropForeign('physical_switch_fk_8732342');
-            $table->dropForeign('site_fk_1485322');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485324');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485323');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_8732342');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485322');
+            }
         });
     }
 }

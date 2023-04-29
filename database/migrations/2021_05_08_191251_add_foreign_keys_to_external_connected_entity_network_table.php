@@ -27,8 +27,12 @@ class AddForeignKeysToExternalConnectedEntityNetworkTable extends Migration
     public function down()
     {
         Schema::table('external_connected_entity_network', function (Blueprint $table) {
-            $table->dropForeign('external_connected_entity_id_fk_1483344');
-            $table->dropForeign('network_id_fk_1483344');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('external_connected_entity_id_fk_1483344');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('network_id_fk_1483344');
+            }
         });
     }
 }

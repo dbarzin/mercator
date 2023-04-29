@@ -27,8 +27,12 @@ class AddForeignKeysToBayWifiTerminalTable extends Migration
     public function down()
     {
         Schema::table('bay_wifi_terminal', function (Blueprint $table) {
-            $table->dropForeign('bay_id_fk_1485509');
-            $table->dropForeign('wifi_terminal_id_fk_1485509');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_id_fk_1485509');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('wifi_terminal_id_fk_1485509');
+            }
         });
     }
 }

@@ -26,7 +26,9 @@ class AddForeignKeysToBaysTable extends Migration
     public function down()
     {
         Schema::table('bays', function (Blueprint $table) {
-            $table->dropForeign('room_fk_1483441');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('room_fk_1483441');
+            }
         });
     }
 }

@@ -27,8 +27,12 @@ class AddForeignKeysToInformationProcessTable extends Migration
     public function down()
     {
         Schema::table('information_process', function (Blueprint $table) {
-            $table->dropForeign('information_id_fk_1473025');
-            $table->dropForeign('process_id_fk_1473025');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('information_id_fk_1473025');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('process_id_fk_1473025');
+            }
         });
     }
 }

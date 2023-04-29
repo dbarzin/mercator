@@ -27,8 +27,12 @@ class AddForeignKeysToMApplicationsTable extends Migration
     public function down()
     {
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropForeign('application_block_fk_1644592');
-            $table->dropForeign('entity_resp_fk_1488612');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('application_block_fk_1644592');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('entity_resp_fk_1488612');
+            }
         });
     }
 }

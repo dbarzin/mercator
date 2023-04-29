@@ -28,9 +28,15 @@ class AddForeignKeysToWorkstationsTable extends Migration
     public function down()
     {
         Schema::table('workstations', function (Blueprint $table) {
-            $table->dropForeign('building_fk_1485333');
-            $table->dropForeign('physical_switch_fk_0938434');
-            $table->dropForeign('site_fk_1485332');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485333');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_0938434');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485332');
+            }
         });
     }
 }

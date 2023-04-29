@@ -38,17 +38,11 @@ class Gdpr extends Migration
     public function down()
     {
         Schema::table('activities', function (Blueprint $table) {
-            $table->dropColumn('responsible');
-            $table->dropColumn('purpose');
-            $table->dropColumn('categories');
-            $table->dropColumn('recipients');
-            $table->dropColumn('transfert');
-            $table->dropColumn('retention');
-            $table->dropColumn('controls');
+            $table->dropColumn(['responsible', 'purpose', 'categories', 'recipients', 'transfert', 'retention', 'controls']);
         });
 
         Schema::table('information', function (Blueprint $table) {
-            $table->dropColumn('retention');
+            $table->dropColumn(['retention']);
         });
     }
 }

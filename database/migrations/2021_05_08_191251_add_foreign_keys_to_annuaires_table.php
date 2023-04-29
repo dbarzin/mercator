@@ -26,7 +26,9 @@ class AddForeignKeysToAnnuairesTable extends Migration
     public function down()
     {
         Schema::table('annuaires', function (Blueprint $table) {
-            $table->dropForeign('zone_admin_fk_1482666');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('zone_admin_fk_1482666');
+            }
         });
     }
 }

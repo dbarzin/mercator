@@ -27,8 +27,12 @@ class AddForeignKeysToRoleUserTable extends Migration
     public function down()
     {
         Schema::table('role_user', function (Blueprint $table) {
-            $table->dropForeign('role_id_fk_1470803');
-            $table->dropForeign('user_id_fk_1470803');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('role_id_fk_1470803');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('user_id_fk_1470803');
+            }
         });
     }
 }

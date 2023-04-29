@@ -26,7 +26,7 @@ class DefaultGateway extends Migration
     public function down()
     {
         Schema::table('subnetworks', function (Blueprint $table) {
-            $table->dropColumn('default_gateway');
+            $table->dropColumn(['default_gateway']);
         });
     }
 }

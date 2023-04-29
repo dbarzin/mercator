@@ -28,9 +28,15 @@ class AddForeignKeysToPhonesTable extends Migration
     public function down()
     {
         Schema::table('phones', function (Blueprint $table) {
-            $table->dropForeign('building_fk_1485480');
-            $table->dropForeign('physical_switch_fk_5738332');
-            $table->dropForeign('site_fk_1485479');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485480');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_5738332');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485479');
+            }
         });
     }
 }

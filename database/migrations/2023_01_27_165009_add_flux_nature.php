@@ -26,7 +26,7 @@ class AddFluxNature extends Migration
     public function down()
     {
         Schema::table('fluxes', function (Blueprint $table) {
-            $table->dropColumn('nature');
+            $table->dropColumn(['nature']);
         });
     }
 }
