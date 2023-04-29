@@ -1,2 +1,9 @@
 .git
 docker/data
+*Dockerfile
+*.md
+.dockerignore
+.env*
+*.sqlite*
+nginx.conf
+supervisord.conf

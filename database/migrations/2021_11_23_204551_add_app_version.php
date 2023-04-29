@@ -26,7 +26,7 @@ class AddAppVersion extends Migration
     public function down()
     {
         Schema::table('m_applications', function (Blueprint $table) {
-            $table->dropColumn('version');
+            $table->dropColumn(['version']);
         });
     }
 }

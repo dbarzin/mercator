@@ -27,8 +27,12 @@ class AddForeignKeysToLogicalServerMApplicationTable extends Migration
     public function down()
     {
         Schema::table('logical_server_m_application', function (Blueprint $table) {
-            $table->dropForeign('logical_server_id_fk_1488616');
-            $table->dropForeign('m_application_id_fk_1488616');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('logical_server_id_fk_1488616');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('m_application_id_fk_1488616');
+            }
         });
     }
 }

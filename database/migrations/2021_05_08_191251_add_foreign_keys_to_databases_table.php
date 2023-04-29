@@ -26,7 +26,9 @@ class AddForeignKeysToDatabasesTable extends Migration
     public function down()
     {
         Schema::table('databases', function (Blueprint $table) {
-            $table->dropForeign('entity_resp_fk_1485569');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('entity_resp_fk_1485569');
+            }
         });
     }
 }

@@ -31,10 +31,10 @@ class AddAddressIp extends Migration
     public function down()
     {
         Schema::table('dnsservers', function (Blueprint $table) {
-            $table->dropColumn('address_ip');
+            $table->dropColumn(['address_ip']);
         });
         Schema::table('dhcp_servers', function (Blueprint $table) {
-            $table->dropColumn('address_ip');
+            $table->dropColumn(['address_ip']);
         });
     }
 }

@@ -27,8 +27,12 @@ class AddForeignKeysToActivityOperationTable extends Migration
     public function down()
     {
         Schema::table('activity_operation', function (Blueprint $table) {
-            $table->dropForeign('activity_id_fk_1472704');
-            $table->dropForeign('operation_id_fk_1472704');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('activity_id_fk_1472704');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('operation_id_fk_1472704');
+            }
         });
     }
 }

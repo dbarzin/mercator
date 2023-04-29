@@ -26,7 +26,7 @@ class AddDirectionToFlows extends Migration
     public function down()
     {
         Schema::table('fluxes', function (Blueprint $table) {
-            $table->dropColumn('bidirectional');
+            $table->dropColumn(['bidirectional']);
         });
     }
 }

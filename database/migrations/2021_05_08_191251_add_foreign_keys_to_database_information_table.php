@@ -27,8 +27,12 @@ class AddForeignKeysToDatabaseInformationTable extends Migration
     public function down()
     {
         Schema::table('database_information', function (Blueprint $table) {
-            $table->dropForeign('database_id_fk_1485570');
-            $table->dropForeign('information_id_fk_1485570');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('database_id_fk_1485570');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('information_id_fk_1485570');
+            }
         });
     }
 }

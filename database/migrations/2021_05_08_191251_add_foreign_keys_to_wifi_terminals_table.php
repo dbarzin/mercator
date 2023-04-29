@@ -28,9 +28,15 @@ class AddForeignKeysToWifiTerminalsTable extends Migration
     public function down()
     {
         Schema::table('wifi_terminals', function (Blueprint $table) {
-            $table->dropForeign('building_fk_1485508');
-            $table->dropForeign('physical_switch_fk_593584');
-            $table->dropForeign('site_fk_1485507');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485508');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('physical_switch_fk_593584');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485507');
+            }
         });
     }
 }

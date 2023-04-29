@@ -26,7 +26,9 @@ class AddForeignKeysToProcessesTable extends Migration
     public function down()
     {
         Schema::table('processes', function (Blueprint $table) {
-            $table->dropForeign('processes_ibfk_1');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('processes_ibfk_1');
+            }
         });
     }
 }

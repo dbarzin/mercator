@@ -28,9 +28,15 @@ class AddForeignKeysToPeripheralsTable extends Migration
     public function down()
     {
         Schema::table('peripherals', function (Blueprint $table) {
-            $table->dropForeign('bay_fk_1485451');
-            $table->dropForeign('building_fk_1485450');
-            $table->dropForeign('site_fk_1485449');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('bay_fk_1485451');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('building_fk_1485450');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('site_fk_1485449');
+            }
         });
     }
 }

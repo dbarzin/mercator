@@ -27,8 +27,12 @@ class AddForeignKeysToActivityProcessTable extends Migration
     public function down()
     {
         Schema::table('activity_process', function (Blueprint $table) {
-            $table->dropForeign('activity_id_fk_1627616');
-            $table->dropForeign('process_id_fk_1627616');
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('activity_id_fk_1627616');
+            }
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('process_id_fk_1627616');
+            }
         });
     }
 }
