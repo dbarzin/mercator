@@ -149,10 +149,10 @@
           ROUTER [label="{{ trans('cruds.physicalRouter.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/physical-routers"]
           SECURITY [label="{{ trans('cruds.physicalSecurityDevice.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="/admin/physical-security-devices"]
           }
-
+          /*
           REGISTER -> APPLICATION  [label="  n-m"]
           REGISTER -> PROCESS  [label="  n-m"]
-
+          */
           MPROCESS -> PROCESS  [label="  0-n"]
           PROCESS -> ACTIVITY  [label="  0-n"]
           PROCESS -> OPERATION  [label="  0-n"]
