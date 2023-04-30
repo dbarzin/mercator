@@ -122,56 +122,55 @@
           </div>
 
         <div class="col-lg-6">
-
-              <div class="card">
+            @can('gdpr_access')
+            <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.gdpr") }}
                 </div>
                 <div class="card-body">
-                  <ul>
-                    <li>
-                        <a href="/admin/report/activityReport" target="_new">{{ trans("cruds.report.lists.register_report") }}</a>
-                        <br>
-                        {{ trans("cruds.report.lists.register_report") }}
-                        <br>                    
-                        <br>
-                    </li>
-                    <li>
-                        <a href="/admin/report/activityList" target="_new">{{ trans("cruds.report.lists.register_list") }}</a>
-                        <br>
-                        {{ trans("cruds.report.lists.register_list_helper") }}
-                        <br>                    
-                        <br>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <a href="/admin/report/activityReport" target="_new">{{ trans("cruds.report.lists.register_report") }}</a>
+                            <br>
+                            {{ trans("cruds.report.lists.register_report") }}
+                            <br>                    
+                            <br>
+                        </li>
+                        <li>
+                            <a href="/admin/report/activityList" target="_new">{{ trans("cruds.report.lists.register_list") }}</a>
+                            <br>
+                            {{ trans("cruds.report.lists.register_list_helper") }}
+                            <br>                    
+                            <br>
+                        </li>
+                    </ul>
                 </div>
-              </div>
+            </div>
+            @endcan
 
-
-              <div class="card">
+            <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.audit") }}
                 </div>
                 <div class="card-body">
-                  <ul>
-                    <li>
-                        <a href="/admin/audit/maturity" target="_new">{{ trans("cruds.report.lists.maturity") }}</a>
-                        <br>
-                        {{ trans("cruds.report.lists.maturity_helper") }}
-                        <br>                    
-                        <br>
-                    </li>
+                    <ul>
+                        <li>
+                            <a href="/admin/audit/maturity" target="_new">{{ trans("cruds.report.lists.maturity") }}</a>
+                            <br>
+                            {{ trans("cruds.report.lists.maturity_helper") }}
+                            <br>                    
+                            <br>
+                        </li>
                     <li>
                         <a href="/admin/audit/changes" target="_new">{{ trans("cruds.report.lists.changes") }}</a>
                         <br>
                         {{ trans("cruds.report.lists.changes_helper") }}
                     </li>
                 </ul>
-                </div>
-              </div>
-
+            </div>
         </div>
-        </div>
+    </div>
+</div>
 
           </div>
         </div>
