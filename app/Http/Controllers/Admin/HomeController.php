@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+// GDPR
+use App\DataProcessing;
+use App\SecurityControl;
 // ecosystem
 use App\Activity;
 use App\Actor;
@@ -123,6 +126,10 @@ class HomeController extends Controller
     protected function computeMaturity()
     {
         $levels = [
+            // GDPR
+            'data_processing' => DataProcessing::count(),
+            'security_controls' => SecurityControl::count(),
+            
             // ecosystem
             'entities' => Entity::count(),
             'relations' => Relation::count(),
@@ -215,14 +222,6 @@ class HomeController extends Controller
             'activities' => Activity::count(),
             'activities_lvl2' => Activity
                 ::where('description', '<>', null)
-                    ->where('responsible', '<>', null)
-                    ->where('purpose', '<>', null)
-                    ->where('categories', '<>', null)
-                    ->where('recipients', '<>', null)
-                    ->where('transfert', '<>', null)
-                    ->where('description', '<>', null)
-                    ->where('retention', '<>', null)
-                    ->where('controls', '<>', null)
                     // activity must have one process
                     /*
                     ->whereExists(function ($query) {

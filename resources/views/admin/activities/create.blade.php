@@ -31,82 +31,6 @@
                 <span class="help-block">{{ trans('cruds.activity.fields.description_helper') }}</span>
             </div>
 
-            <div class="form-group">
-                <label class="recommended" for="responsible">{{ trans('cruds.activity.fields.responsible') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">{!! old('responsible') !!}</textarea>
-                @if($errors->has('responsible'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsible') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.responsible_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="purpose">{{ trans('cruds.activity.fields.purpose') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('purpose') ? 'is-invalid' : '' }}" name="purpose" id="purpose">{!! old('purpose') !!}</textarea>
-                @if($errors->has('purpose'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('purpose') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.purpose_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="categories">{{ trans('cruds.activity.fields.categories') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories" id="categories">{!! old('categories') !!}</textarea>
-                @if($errors->has('categories'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('categories') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.categories_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="recipients">{{ trans('cruds.activity.fields.recipients') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('recipients') ? 'is-invalid' : '' }}" name="recipients" id="recipients">{!! old('recipients') !!}</textarea>
-                @if($errors->has('recipients'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('recipients') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.recipients_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="transfert">{{ trans('cruds.activity.fields.transfert') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('transfert') ? 'is-invalid' : '' }}" name="transfert" id="transfert">{!! old('transfert') !!}</textarea>
-                @if($errors->has('transfert'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('transfert') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.transfert_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="retention">{{ trans('cruds.activity.fields.retention') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('retention') ? 'is-invalid' : '' }}" name="retention" id="retention">{!! old('retention') !!}</textarea>
-                @if($errors->has('retention'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('retention') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.retention_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="controls">{{ trans('cruds.activity.fields.controls') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('controls') ? 'is-invalid' : '' }}" name="controls" id="controls">{!! old('controls') !!}</textarea>
-                @if($errors->has('controls'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('controls') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.controls_helper') }}</span>
-            </div>
 
             <div class="row">
                 <div class="col-6">
@@ -156,17 +80,6 @@
             </div>
 
             <div class="form-group">
-                <label class="recommended" for="controls">{{ trans('cruds.activity.fields.documents') }}</label>
-                <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
-                @if($errors->has('documents'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('documents') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.documents_helper') }}</span>
-            </div>
-
-            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -178,8 +91,6 @@
 @endsection
 
 @section('scripts')
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script-->
-<script src="/js/dropzone.js"></script>
 
 <script>
 Dropzone.autoDiscover = false;

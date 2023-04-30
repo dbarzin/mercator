@@ -25,23 +25,23 @@
                         {{ trans('cruds.menu.gdpr.title') }}
                     </a>
                     <ul class="nav-dropdown-items">
-                        @can('entity_access')
+                        @can('data_processing_register_access')
                             <li class="nav-item">
-                                <a href='{{ route("admin.dataPoocessing.index") }}' class="nav-link {{ request()->is('admin/dataPoocessing') || request()->is('admin/dataPoocessing/*') ? 'active' : '' }}">
+                                <a href='{{ route("admin.data-processing.index") }}' class="nav-link {{ request()->is('admin/data-processing') || request()->is('/admin/data-processing/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.data_processing.title') }}
+                                    {{ trans('cruds.dataProcessing.title') }}
                                 </a>
                             </li>
                         @endcan
-                        @can('security_control_access')
+                        @can('security_controls_access')
                             <li class="nav-item">
-                                <a href='{{ route("admin.securityControls.index") }}' class="nav-link {{ request()->is('admin/securityControls') || request()->is('admin/securityControls/*') ? 'active' : '' }}">
+                                <a href='{{ route("admin.security-controls.index") }}' class="nav-link {{ request()->is('admin/security-controls') || request()->is('admin/security-controls/*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.security_control.title') }}
+                                    {{ trans('cruds.securityControl.title') }}
                                 </a>
                             </li>
                         @endcan

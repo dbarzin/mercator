@@ -1085,6 +1085,56 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'physical_link_access',
             ],
 
+            // GDPR
+            [
+                'id'    => '268',
+                'title' => 'gdpr_access',
+            ],
+
+            // Security controls
+            [
+                'id'    => '269',
+                'title' => 'security_controls_create',
+            ],
+            [
+                'id'    => '270',
+                'title' => 'security_controls_edit',
+            ],
+            [
+                'id'    => '271',
+                'title' => 'security_controls_show',
+            ],
+            [
+                'id'    => '272',
+                'title' => 'security_controls_delete',
+            ],
+            [
+                'id'    => '273',
+                'title' => 'security_controls_access',
+            ],
+
+            // Data processisng register
+            [
+                'id'    => '274',
+                'title' => 'data_processing_register_create',
+            ],
+            [
+                'id'    => '275',
+                'title' => 'data_processing_register_edit',
+            ],
+            [
+                'id'    => '276',
+                'title' => 'data_processing_register_show',
+            ],
+            [
+                'id'    => '277',
+                'title' => 'data_processing_register_delete',
+            ],
+            [
+                'id'    => '278',
+                'title' => 'data_processing_register_access',
+            ],
+
         ];
 
         Permission::insert($permissions);
