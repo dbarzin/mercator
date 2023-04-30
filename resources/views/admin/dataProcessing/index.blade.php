@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('data_processing_registe_create')
+@can('data_processing_register_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.data-processing.create') }}">
@@ -122,8 +122,6 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
 @section('scripts')
