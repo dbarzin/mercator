@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\SecurityControl;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-
+use App\SecurityControl;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 

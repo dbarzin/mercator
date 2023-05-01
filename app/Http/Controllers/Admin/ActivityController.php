@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
-use App\Operation;
-use App\Process;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-
+use App\Operation;
+use App\Process;
 use Gate;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
@@ -32,7 +29,7 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('identifiant', 'id');
-        
+
         return view('admin.activities.create', compact('operations', 'processes'));
     }
 
@@ -54,8 +51,10 @@ class ActivityController extends Controller
 
         $activity->load('operations', 'activitiesProcesses');
 
-        return view('admin.activities.edit', 
-            compact('operations', 'activity', 'processes'));
+        return view(
+            'admin.activities.edit',
+            compact('operations', 'activity', 'processes')
+        );
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)

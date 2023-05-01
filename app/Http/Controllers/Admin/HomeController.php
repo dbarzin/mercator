@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 // GDPR
-use App\DataProcessing;
-use App\SecurityControl;
-// ecosystem
 use App\Activity;
 use App\Actor;
-// information system
+// ecosystem
 use App\Annuaire;
 use App\ApplicationBlock;
+// information system
 use App\ApplicationModule;
 use App\ApplicationService;
+use App\Bay;
+use App\Building;
 use App\Certificate;
-use App\Task;
-// Applications
 use App\Database;
+// Applications
+use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
@@ -40,9 +40,6 @@ use App\Operation;
 use App\Peripheral;
 use App\Phone;
 // Physique
-use App\Site;
-use App\Bay;
-use App\Building;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
@@ -50,12 +47,14 @@ use App\PhysicalSwitch;
 use App\Process;
 use App\Relation;
 use App\Router;
+use App\SecurityControl;
 use App\SecurityDevice;
+use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
+use App\Task;
 use App\Vlan;
 use App\Wan;
-use App\PhysicalLink;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
@@ -129,7 +128,7 @@ class HomeController extends Controller
             // GDPR
             'data_processing' => DataProcessing::count(),
             'security_controls' => SecurityControl::count(),
-            
+
             // ecosystem
             'entities' => Entity::count(),
             'relations' => Relation::count(),
@@ -395,7 +394,7 @@ class HomeController extends Controller
                     ->where('vendor', '<>', null)
                     ->where('product', '<>', null)
                     ->where('version', '<>', null)
-            ->count(),
+                    ->count(),
 
             'applicationServices' => ApplicationService::count(),
             'applicationServices_lvl2' => ApplicationService
@@ -683,10 +682,10 @@ class HomeController extends Controller
             // Too many links...
             // 'links' => PhysicalLink::count(),
 
-            'wans' => ($wan_count=Wan::count()),
+            'wans' => ($wan_count = Wan::count()),
             'wans_lvl1' => $wan_count,
 
-            'mans' => ($man_count=Man::count()),
+            'mans' => ($man_count = Man::count()),
             'mans_lvl1' => $man_count,
 
             'lans' => Lan::count(),

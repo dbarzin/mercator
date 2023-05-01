@@ -47,8 +47,7 @@ class Handler extends ExceptionHandler
     {
         // reportable
         $this->renderable(function (Throwable $e) {
-            //
-            return response(['error' => $e->getMessage()], $e->getCode() ?: 400);
+            return response(['error' => $e->getMessage()], $e->getCode() ? null : 400);
         });
     }
 }

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-
+use App\Router;
 // TODO : Why ????
 use App\Subnetwork;
-use App\Router;
+use Illuminate\Support\Facades\DB;
 
 class ExplorerController extends Controller
 {
@@ -130,67 +129,67 @@ class ExplorerController extends Controller
             }
         }
 
-        // PhysicalLink 
+        // PhysicalLink
         $links = DB::table('physical_links')->whereNull('deleted_at')->get();
         foreach ($links as $link) {
-
-            if ($link->peripheral_src_id!==null) 
+            if ($link->peripheral_src_id !== null) {
                 $src_id = 'PERIF_' . $link->peripheral_src_id;
-            elseif ($link->phone_src_id!==null)
+            } elseif ($link->phone_src_id !== null) {
                 $src_id = 'PHONE_' . $link->phone_src_id;
-            elseif ($link->physical_router_src_id!==null)
+            } elseif ($link->physical_router_src_id !== null) {
                 $src_id = 'PROUTER_' . $link->physical_router_src_id;
-            elseif ($link->physical_security_device_src_id!==null)
+            } elseif ($link->physical_security_device_src_id !== null) {
                 $src_id = 'SECURITY_' . $link->physical_security_device_src_id;
-            elseif ($link->physical_server_src_id!==null)
+            } elseif ($link->physical_server_src_id !== null) {
                 $src_id = 'PSERVER_' . $link->physical_server_src_id;
-            elseif ($link->physical_switch_src_id!==null)
+            } elseif ($link->physical_switch_src_id !== null) {
                 $src_id = 'SWITCH_' . $link->physical_switch_src_id;
-            elseif ($link->storage_device_src_id!==null)
+            } elseif ($link->storage_device_src_id !== null) {
                 $src_id = 'STORAGE_' . $link->storage_device_src_id;
-            elseif ($link->wifi_terminal_src_id!==null)
+            } elseif ($link->wifi_terminal_src_id !== null) {
                 $src_id = 'WIFI_' . $link->wifi_terminal_src_id;
-            elseif ($link->workstation_src_id!==null)
+            } elseif ($link->workstation_src_id !== null) {
                 $src_id = 'WORK_' . $link->workstation_src_id;
-            elseif ($link->logical_server_src_id!==null)
+            } elseif ($link->logical_server_src_id !== null) {
                 $src_id = 'LSERVER_' . $link->logical_server_src_id;
-            elseif ($link->network_switch_src_id!==null)
+            } elseif ($link->network_switch_src_id !== null) {
                 $src_id = 'LSWITCH_' . $link->network_switch_src_id;
-            elseif ($link->router_src_id!==null)
+            } elseif ($link->router_src_id !== null) {
                 $src_id = 'ROUTER_' . $link->router_src_id;
-            else
+            } else {
                 continue;
+            }
 
-            if ($link->peripheral_dest_id!==null) 
+            if ($link->peripheral_dest_id !== null) {
                 $dest_id = 'PERIF_' . $link->peripheral_dest_id;
-            elseif ($link->phone_dest_id!==null)
+            } elseif ($link->phone_dest_id !== null) {
                 $dest_id = 'PHONE_' . $link->phone_dest_id;
-            elseif ($link->physical_router_dest_id!==null)
+            } elseif ($link->physical_router_dest_id !== null) {
                 $dest_id = 'PROUTER_' . $link->physical_router_dest_id;
-            elseif ($link->physical_security_device_dest_id!==null)
+            } elseif ($link->physical_security_device_dest_id !== null) {
                 $dest_id = 'SECURITY_' . $link->physical_security_device_dest_id;
-            elseif ($link->physical_server_dest_id!==null)
+            } elseif ($link->physical_server_dest_id !== null) {
                 $dest_id = 'PSERVER_' . $link->physical_server_dest_id;
-            elseif ($link->physical_switch_dest_id!==null)
+            } elseif ($link->physical_switch_dest_id !== null) {
                 $dest_id = 'SWITCH_' . $link->physical_switch_dest_id;
-            elseif ($link->storage_device_dest_id!==null)
+            } elseif ($link->storage_device_dest_id !== null) {
                 $dest_id = 'STORAGE_' . $link->storage_device_dest_id;
-            elseif ($link->wifi_terminal_dest_id!==null)
+            } elseif ($link->wifi_terminal_dest_id !== null) {
                 $dest_id = 'WIFI_' . $link->wifi_terminal_dest_id;
-            elseif ($link->workstation_dest_id!==null)
+            } elseif ($link->workstation_dest_id !== null) {
                 $dest_id = 'WORK_' . $link->workstation_dest_id;
-            elseif ($link->logical_server_dest_id!==null)
+            } elseif ($link->logical_server_dest_id !== null) {
                 $dest_id = 'LSERVER_' . $link->logical_server_dest_id;
-            elseif ($link->network_switch_dest_id!==null)
+            } elseif ($link->network_switch_dest_id !== null) {
                 $dest_id = 'LSWITCH_' . $link->network_switch_dest_id;
-            elseif ($link->router_dest_id!==null)
+            } elseif ($link->router_dest_id !== null) {
                 $dest_id = 'ROUTER_' . $link->router_dest_id;
-            else
+            } else {
                 continue;
+            }
 
             $this->addPhysicalLinkEdge($edges, $src_id, $dest_id);
         }
-
 
         // ---------------------------------------------------
         // Logical view - 5
@@ -443,28 +442,29 @@ class ExplorerController extends Controller
         // Fluxes
         $fluxes = DB::table('fluxes')->whereNull('deleted_at')->get();
         foreach ($fluxes as $flux) {
-
-            if ($flux->application_source_id!==null) 
+            if ($flux->application_source_id !== null) {
                 $src_id = 'APP_' . $flux->application_source_id;
-            elseif ($flux->service_source_id!==null)
+            } elseif ($flux->service_source_id !== null) {
                 $src_id = 'SERV_' . $flux->service_source_id;
-            elseif ($flux->module_source_id!==null)
+            } elseif ($flux->module_source_id !== null) {
                 $src_id = 'MOD_' . $flux->module_source_id;
-            elseif ($flux->database_source_id!==null)
+            } elseif ($flux->database_source_id !== null) {
                 $src_id = 'DATABASE_' . $flux->database_source_id;
-            else
+            } else {
                 continue;
+            }
 
-            if ($flux->application_dest_id!==null) 
+            if ($flux->application_dest_id !== null) {
                 $dest_id = 'APP_' . $flux->application_dest_id;
-            elseif ($flux->service_dest_id!==null)
+            } elseif ($flux->service_dest_id !== null) {
                 $dest_id = 'SERV_' . $flux->service_dest_id;
-            elseif ($flux->module_dest_id!==null)
+            } elseif ($flux->module_dest_id !== null) {
                 $dest_id = 'MOD_ ' . $flux->module_dest_id;
-            elseif ($flux->database_dest_id!==null)
+            } elseif ($flux->database_dest_id !== null) {
                 $dest_id = 'DATABASE_' . $flux->database_dest_id;
-            else
+            } else {
                 continue;
+            }
 
             $this->addFluxEdge($edges, $flux->name, $flux->bidirectional, $src_id, $dest_id);
         }

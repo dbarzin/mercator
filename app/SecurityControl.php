@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Actor
- *
  */
 class SecurityControl extends Model
 {

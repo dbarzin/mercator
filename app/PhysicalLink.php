@@ -2,16 +2,6 @@
 
 namespace App;
 
-use App\Peripheral;
-use App\Phone;
-use App\PhysicalRouter;
-use App\PhysicalSecurityDevice;
-use App\PhysicalServer;
-use App\PhysicalSwitch;
-use App\StorageDevice;
-use App\WifiTerminal;
-use App\Workstation;
-
 use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;

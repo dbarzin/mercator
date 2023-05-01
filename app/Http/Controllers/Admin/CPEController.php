@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CPEProduct;
 use App\CPEVendor;
 use App\CPEVersion;
-use App\CPEProduct;
-
 use App\Http\Controllers\Controller;
-
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class CPEController extends Controller
 {
-    public function vendors(Request $request) {
+    public function vendors(Request $request)
+    {
         $part = $request->query('part');
 
         $query = CPEVendor::limit(20);
@@ -22,13 +20,14 @@ class CPEController extends Controller
         $search = $request->query('search');
         if ($search) {
             $query->where('name', 'LIKE', $search . '%');
-            }
+        }
 
         $vendors = $query->get();
         return response()->json($vendors);
-        }
+    }
 
-    public function products(Request $request) {
+    public function products(Request $request)
+    {
         $part = $request->query('part');
         $vendor = $request->query('vendor');
 
@@ -41,13 +40,14 @@ class CPEController extends Controller
         $search = $request->query('search');
         if ($search) {
             $query->where('cpe_products.name', 'LIKE', $search . '%');
-            }
+        }
 
         $products = $query->get();
         return response()->json($products);
-        }
+    }
 
-    public function versions(Request $request) {
+    public function versions(Request $request)
+    {
         $part = $request->query('part');
         $vendor = $request->query('vendor');
         $product = $request->query('product');
@@ -66,6 +66,5 @@ class CPEController extends Controller
         }
         $versions = $query->get();
         return response()->json($versions);
-       }
-
     }
+}

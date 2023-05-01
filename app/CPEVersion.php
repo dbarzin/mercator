@@ -2,13 +2,10 @@
 
 namespace App;
 
-use App\CPEProduct;
-
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\CPEProduct
- *
  */
 class CPEVersion extends Model
 {
@@ -24,7 +21,7 @@ class CPEVersion extends Model
 
     protected $fillable = [
         'cpe_product_id',
-        'name'
+        'name',
     ];
 
     public function product()
