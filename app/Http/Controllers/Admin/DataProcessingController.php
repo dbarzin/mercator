@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Information;
-use App\MApplication;
-use App\Process;
 use App\DataProcessing;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDataProcessingRequest;
 use App\Http\Requests\StoreDataProcessingRequest;
 use App\Http\Requests\UpdateDataProcessingRequest;
-
+use App\Information;
+use App\MApplication;
+use App\Process;
 use Gate;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class DataProcessingController extends Controller
@@ -35,10 +32,12 @@ class DataProcessingController extends Controller
         $informations = Information::orderBy('name')->get()->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
 
-        session()->put("documents",array());
+        session()->put('documents', []);
 
-        return view('admin.dataProcessing.create', 
-            compact('applications', 'informations', 'processes'));
+        return view(
+            'admin.dataProcessing.create',
+            compact('applications', 'informations', 'processes')
+        );
     }
 
     public function store(StoreDataProcessingRequest $request)
@@ -47,8 +46,8 @@ class DataProcessingController extends Controller
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
-        $dataProcessing->documents()->sync(session()->get("documents"));
-        session()->forget("documents");
+        $dataProcessing->documents()->sync(session()->get('documents'));
+        session()->forget('documents');
 
         return redirect()->route('admin.data-processing.index');
     }
@@ -60,14 +59,16 @@ class DataProcessingController extends Controller
         $processes = Process::orderBy('identifiant')->get()->pluck('identifiant', 'id');
         $informations = Information::orderBy('name')->get()->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
-        session()->put("documents", $dataProcessing->documents()->get());
+        session()->put('documents', $dataProcessing->documents()->get());
 
-//dd(session()->get("documents"));
+        //dd(session()->get("documents"));
 
         $dataProcessing->load('applications', 'informations', 'processes');
 
-        return view('admin.dataProcessing.edit', 
-            compact('dataProcessing', 'applications', 'informations', 'processes'));
+        return view(
+            'admin.dataProcessing.edit',
+            compact('dataProcessing', 'applications', 'informations', 'processes')
+        );
     }
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
@@ -76,8 +77,8 @@ class DataProcessingController extends Controller
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
-        $dataProcessing->documents()->sync(session()->get("documents"));
-        session()->forget("documents");
+        $dataProcessing->documents()->sync(session()->get('documents'));
+        session()->forget('documents');
 
         return redirect()->route('admin.data-processing.index');
     }

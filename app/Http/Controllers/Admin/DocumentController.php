@@ -1,14 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Document;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-
     public function get(int $id)
     {
         // Find the document
@@ -49,18 +48,18 @@ class DocumentController extends Controller
         $file->move(storage_path('docs'), $document->id);
 
         // Attach the document to the object
-        if ($request->get("activity") !== null) {
-            $document->activities()->attach($request->get("activity"));
+        if ($request->get('activity') !== null) {
+            $document->activities()->attach($request->get('activity'));
         } else {
             // or to the session
-            $documents = session()->get("documents");
-            if ($documents === null) 
-                $document = array($document->id);
-            else
+            $documents = session()->get('documents');
+            if ($documents === null) {
+                $document = [$document->id];
+            } else {
                 array_push($documents, $document->id);
-            session()->put("documents", $documents);
+            }
+            session()->put('documents', $documents);
         }
-
 
         // Return success
         return response()->json(
@@ -88,11 +87,13 @@ class DocumentController extends Controller
         }
 
         // Remove from session
-        $documents = session()->get("documents");
+        $documents = session()->get('documents');
         if ($documents !== null) {
-            if (($key = array_search($id, $documents)) !== false)
+            $key = array_search($id, $documents);
+            if ($key !== false) {
                 unset($documents[$key]);
-            session()->put("documents", $documents);
+            }
+            session()->put('documents', $documents);
         }
 
         // Remove the object

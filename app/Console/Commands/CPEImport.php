@@ -2,13 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\CPEVendor;
 use App\CPEProduct;
+use App\CPEVendor;
 use App\CPEVersion;
-
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 class CPEImport extends Command
@@ -36,7 +33,6 @@ class CPEImport extends Command
     {
         $this->info('CPEImport - Start.');
 
-
         $start = microtime(true);
 
         // $file = "storage/official-cpe-dictionary_v2.3.xml";
@@ -45,9 +41,9 @@ class CPEImport extends Command
             $this->error('dictionary file must be specified');
             return;
         }
-        if (!file_exists ($file)) {
+        if (! file_exists($file)) {
             $this->error('dictionary file not found');
-            return;            
+            return;
         }
 
         // Delete all previous data
@@ -56,25 +52,26 @@ class CPEImport extends Command
         DB::table('cpe_vendors')->delete();
 
         // count items
-        $items = substr_count(file_get_contents($file),"<cpe-23:cpe23-item");
+        $items = substr_count(file_get_contents($file), '<cpe-23:cpe23-item');
         $this->info("CPEImport - {$items} CPE items to import");
 
-        // progress bar  
+        // progress bar
         $this->output->progressStart($items);
 
         // Start parsing
         $this->xml_parser = xml_parser_create();
         xml_set_object($this->xml_parser, $this);
 
-        xml_set_element_handler($this->xml_parser, "startElement", "endElement");
-        if (!($fp = fopen($file, "r"))) {
-            $this->error("could not open XML input");
+        xml_set_element_handler($this->xml_parser, 'startElement', 'endElement');
+        $fp = fopen($file, 'r');
+        if (! $fp) {
+            $this->error('could not open XML input');
             return;
         }
 
         while ($data = fread($fp, 4096)) {
-            if (!xml_parse($this->xml_parser, $data, feof($fp))) {
-                $this->error("XML error: {xml_error_string(xml_get_error_code($xml_parser))} at line {xml_get_current_line_number($xml_parser)}");
+            if (! xml_parse($this->xml_parser, $data, feof($fp))) {
+                $this->error("XML error: {xml_error_string(xml_get_error_code({$xml_parser}))} at line {xml_get_current_line_number({$xml_parser})}");
                 return;
             }
         }
@@ -85,20 +82,19 @@ class CPEImport extends Command
 
         // Log time
         $end = microtime(true);
-        $time = number_format(($end - $start), 2);
-        $this->info('CPEImport - elapsed time: ', $time , ' seconds');
+        $time = number_format($end - $start, 2);
+        $this->info('CPEImport - elapsed time: ', $time, ' seconds');
 
         // Done
         $this->info('CPEImport - DONE.');
     }
 
-    function startElement($parser, $name, $attribs)
+    public function startElement($parser, $name, $attribs)
     {
-        if ($name == "CPE-23:CPE23-ITEM") {
-
+        if ($name === 'CPE-23:CPE23-ITEM') {
             $this->output->progressAdvance();
 
-            $value = explode(":",$attribs["NAME"]);
+            $value = explode(':', $attribs['NAME']);
             // $this->info($value[2] . " " . $value[3] . ' ' . $value[4] . ' ' . $value[5]);
 
             // check vendor exixts
@@ -110,15 +106,16 @@ class CPEImport extends Command
             if ($vendor === null) {
                 $vendor = CPEVendor::create(['part' => $value[2], 'name' => $value[3]]);
             }
-                        
+
             // check product exists
             $product = DB::table('cpe_products')
                 ->where('cpe_vendor_id', '=', $vendor->id)
                 ->where('name', '=', $value[4])
                 ->get()->first();
             // add product
-            if ($product === null) 
+            if ($product === null) {
                 $product = CPEProduct::create(['cpe_vendor_id' => $vendor->id, 'name' => $value[4]]);
+            }
 
             // check version exists
             $version = DB::table('cpe_versions')
@@ -126,15 +123,13 @@ class CPEImport extends Command
                 ->where('name', '=', $value[5])
                 ->get()->first();
             // Add version
-            if ($version === null) 
-                $version = CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $value[5]]);
-
+            if ($version === null) {
+                CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $value[5]]);
+            }
         }
-
     }
 
-    function endElement($parser, $name)
+    public function endElement($parser, $name)
     {
     }
-
 }

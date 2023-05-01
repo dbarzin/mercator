@@ -2,11 +2,6 @@
 
 namespace App;
 
-use App\Document;
-use App\Process;
-use App\MApplication;
-use App\Information;
-
 use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Actor
- *
  */
 class DataProcessing extends Model
 {
@@ -44,7 +38,6 @@ class DataProcessing extends Model
         'retention',
         'controls',
     ];
-
 
     public function processes()
     {
