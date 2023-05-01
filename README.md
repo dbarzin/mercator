@@ -98,7 +98,7 @@ touch db.sqlite && chmod a+w db.sqlite
 docker run -it --rm \
            --name mercator \
            -p "127.0.0.1:8000":80 \
-           -v db.sqlite:/var/www/mercator/db.sqlite \
+           -v $PWD/db.sqlite:/var/www/mercator/db.sqlite \
            -e USE_DEMO_DATA=1 \
            ghcr.io/dbarzin/mercator:latest
 ```
