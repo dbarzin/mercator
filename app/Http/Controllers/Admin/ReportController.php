@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+// GDPR
+use App\DataProcessing;
+
 // ecosystem
 use App\Activity;
 use App\Actor;
@@ -1592,7 +1595,7 @@ class ReportController extends Controller
         );
 
         // Title
-        $section->addTitle(trans('cruds.activity.report_title'), 0);
+        $section->addTitle(trans('cruds.dataProcessing.report_title'), 0);
         $section->addTextBreak(1);
 
         // TOC
@@ -1608,36 +1611,36 @@ class ReportController extends Controller
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 
-        $activities = Activity::orderBy('name')->get();
-        foreach ($activities as $activity) {
+        $processes = DataProcessing::orderBy('name')->get();
+        foreach ($processes as $process) {
             // schema
-            $section->addTitle($activity->name, 1);
-            $this->addText($section, $activity->description);
+            $section->addTitle($process->name, 1);
+            $this->addText($section, $process->description);
 
-            $section->addTitle(trans('cruds.activity.fields.responsible'), 2);
-            $this->addText($section, $activity->responsible);
+            $section->addTitle(trans('cruds.dataProcessing.fields.responsible'), 2);
+            $this->addText($section, $process->responsible);
 
-            $section->addTitle(trans('cruds.activity.fields.purpose'), 2);
-            $this->addText($section, $activity->purpose);
+            $section->addTitle(trans('cruds.dataProcessing.fields.purpose'), 2);
+            $this->addText($section, $process->purpose);
 
-            $section->addTitle(trans('cruds.activity.fields.categories'), 2);
-            $this->addText($section, $activity->categories);
+            $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
+            $this->addText($section, $process->categories);
 
-            $section->addTitle(trans('cruds.activity.fields.recipients'), 2);
-            $this->addText($section, $activity->recipients);
+            $section->addTitle(trans('cruds.dataProcessing.fields.recipients'), 2);
+            $this->addText($section, $process->recipients);
 
-            $section->addTitle(trans('cruds.activity.fields.transfert'), 2);
-            $this->addText($section, $activity->transfert);
+            $section->addTitle(trans('cruds.dataProcessing.fields.transfert'), 2);
+            $this->addText($section, $process->transfert);
 
-            $section->addTitle(trans('cruds.activity.fields.retention'), 2);
-            $this->addText($section, $activity->retention);
+            $section->addTitle(trans('cruds.dataProcessing.fields.retention'), 2);
+            $this->addText($section, $process->retention);
 
-            $section->addTitle(trans('cruds.activity.fields.controls'), 2);
-            $this->addText($section, $activity->controls);
+            $section->addTitle(trans('cruds.dataProcessing.fields.controls'), 2);
+            $this->addText($section, $process->controls);
             }
 
         // Finename
-        $filepath = storage_path('app/reports/activities-'. Carbon::today()->format('Ymd') .'.docx');
+        $filepath = storage_path('app/reports/register-'. Carbon::today()->format('Ymd') .'.docx');
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -1659,25 +1662,24 @@ class ReportController extends Controller
 
     public function activityList()
     {
-        $path = storage_path('app/activities-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
 
-        $activities = Activity::All()->sortBy('name');
+        $register = DataProcessing::All()->sortBy('name');
 
         $header = [
-            trans('cruds.activity.fields.name'),
-            trans('cruds.activity.fields.description'),
-            trans('cruds.activity.fields.responsible'),
-            trans('cruds.activity.fields.purpose'),
-            trans('cruds.activity.fields.categories'),
-            trans('cruds.activity.fields.recipients'),
-            trans('cruds.activity.fields.transfert'),
-            trans('cruds.activity.fields.retention'),
-            trans('cruds.activity.fields.controls'),
-            trans('cruds.activity.fields.processes'),
-            trans('cruds.activity.fields.operations'),
-            trans('cruds.activity.fields.applications'),
-            trans('cruds.activity.fields.databases'),
-            trans('cruds.activity.fields.information'),
+            trans('cruds.dataProcessing.fields.name'),
+            trans('cruds.dataProcessing.fields.description'),
+            trans('cruds.dataProcessing.fields.responsible'),
+            trans('cruds.dataProcessing.fields.purpose'),
+            trans('cruds.dataProcessing.fields.categories'),
+            trans('cruds.dataProcessing.fields.recipients'),
+            trans('cruds.dataProcessing.fields.transfert'),
+            trans('cruds.dataProcessing.fields.retention'),
+            trans('cruds.dataProcessing.fields.controls'),
+            trans('cruds.dataProcessing.fields.processes'),
+            trans('cruds.dataProcessing.fields.applications'),
+            trans('cruds.dataProcessing.fields.databases'),
+            trans('cruds.dataProcessing.fields.information'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1702,11 +1704,10 @@ class ReportController extends Controller
         $sheet->getColumnDimension('H')->setWidth(350, 'pt');
         $sheet->getColumnDimension('I')->setWidth(350, 'pt');
         $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
 
+        $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
-        $sheet->getColumnDimension('N')->setAutoSize(true);
 
 
         // converter
@@ -1714,127 +1715,43 @@ class ReportController extends Controller
 
         // Populate the Timesheet
         $row = 2;
-        foreach ($activities as $activity) {
-            $sheet->setCellValue("A{$row}", $activity->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($activity->description));
-            $sheet->setCellValue("C{$row}", $html->toRichTextObject($activity->responsible));
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($activity->purpose));
-            $sheet->setCellValue("E{$row}", $html->toRichTextObject($activity->categories));
-            $sheet->setCellValue("F{$row}", $html->toRichTextObject($activity->recipients));
-            $sheet->setCellValue("G{$row}", $html->toRichTextObject($activity->transfert));
-            $sheet->setCellValue("H{$row}", $html->toRichTextObject($activity->retention));
-            $sheet->setCellValue("I{$row}", $html->toRichTextObject($activity->controls));
+        foreach ($register as $process) {
+            $sheet->setCellValue("A{$row}", $process->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($process->description));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($process->responsible));
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($process->purpose));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($process->categories));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($process->recipients));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($process->transfert));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($process->retention));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($process->controls));
 
             $txt = '';
-            foreach ($activity->activitiesProcesses as $process) {
-                $txt .= $process->identifiant;
-                if ($activity->activitiesProcesses->last() !== $process) {
+            foreach ($process->processes as $p) {
+                $txt .= $p->identifiant;
+                if ($process->processes->last() !== $p) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("J{$row}", $txt);
 
             $txt = '';
-            foreach ($activity->operations as $operation) {
-                $txt .= $operation->name;
-                if ($activity->operations->last() !== $operation) {
+            foreach ($process->applications as $application) {
+                $txt .= $application->name;
+                if ($process->applications->last() !== $application) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("K{$row}", $txt);
 
-            $applications = DB::Table('activities')
-                ->distinct()
-                ->select('m_applications.name')
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'm_application_process',
-                    'm_application_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'm_applications',
-                    'm_applications.id',
-                    '=',
-                    'm_application_process.m_application_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('m_applications.deleted_at')
-                ->orderBy('m_applications.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("L{$row}", $applications);
-
-            $databases = DB::Table('activities')
-                ->select('databases.name')
-                ->distinct()
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'm_application_process',
-                    'm_application_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'database_m_application',
-                    'database_m_application.m_application_id',
-                    '=',
-                    'm_application_process.m_application_id'
-                )
-                ->join(
-                    'databases',
-                    'databases.id',
-                    '=',
-                    'database_m_application.database_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('databases.deleted_at')
-                ->orderBy('databases.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("M{$row}", $databases);
-
-            $informations = DB::Table('activities')
-                ->select('information.name')
-                ->distinct()
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'information_process',
-                    'information_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'information',
-                    'information.id',
-                    '=',
-                    'information_process.information_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('information.deleted_at')
-                ->orderBy('information.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("N{$row}", $informations);
+            $txt = '';
+            foreach ($process->informations as $information) {
+                $txt .= $information->name;
+                if ($process->informations->last() !== $information) {
+                    $txt .= ', ';
+                }
+            }
+            $sheet->setCellValue("L{$row}", $txt);
 
             $row++;
         }
