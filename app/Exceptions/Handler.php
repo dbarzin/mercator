@@ -43,7 +43,6 @@ class Handler extends ExceptionHandler
     /**
      * Register new exceptions
      */
-    /*
     public function register()
     {
         // reportable
@@ -52,5 +51,4 @@ class Handler extends ExceptionHandler
             return response(['error' => $e->getMessage()], $e->getCode() ?: 400);
         });
     }
-    */
 }

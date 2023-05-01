@@ -18,13 +18,7 @@ class AddGdprTables extends Migration
     {
         // Get back on previous GDPR migration
         Schema::table('activities', function (Blueprint $table) {
-            $table->dropColumn('responsible');
-            $table->dropColumn('purpose');
-            $table->dropColumn('categories');
-            $table->dropColumn('recipients');
-            $table->dropColumn('transfert');
-            $table->dropColumn('retention');
-            $table->dropColumn('controls');
+            $table->dropColumn(['responsible', 'purpose', 'categories','recipients', 'transfert','retention','controls']);
         });
 
         // Create table security_controls
