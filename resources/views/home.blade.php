@@ -42,7 +42,7 @@
                   {!! trans("panel.repartition") !!}
                 </div>
                 <div class="card-body">
-                    <div style="width: 1000px; height: 400px;">
+                    <div style="width: 1075px; height: 400px;">
                       <canvas id="bar_chart_div"></canvas>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                   {!! trans("panel.treemap") !!}
                 </div>
                 <div class="card-body">
-                    <div style="width: 1000px; height: 500px;">
+                    <div style="width: 1050px; height: 500px;">
                       <canvas id="treemap_chart_div"></canvas>
                     </div>
                 </div>
