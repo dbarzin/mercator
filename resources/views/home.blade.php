@@ -42,7 +42,7 @@
                   {!! trans("panel.repartition") !!}
                 </div>
                 <div class="card-body">
-                    <div style="width: 1000px; height: 400px;">
+                    <div style="width: 1075px; height: 400px;">
                       <canvas id="bar_chart_div"></canvas>
                     </div>
                 </div>
@@ -459,13 +459,17 @@
           },
         },
         scales: {
-            yAxes: [{ 
-              barPercentage: 1.0,
-              beginAtZero: true,
-              steps: 10,
-              stepValue: 5,
-              max: 100
-            }],
+          xAxes: [{
+            stacked: true,
+          }],
+          yAxes: [{ 
+            barPercentage: 1.0,
+            beginAtZero: true,
+            steps: 10,
+            stepValue: 5,
+            max: 100,
+            stacked: true,
+          }],
         },
         responsive: true,
         maintainAspectRatio: false,
@@ -488,14 +492,6 @@
         },
         legend : {
           display : false,
-        },
-        scales: {
-          xAxes: [{
-            stacked: true,
-          }],
-          yAxes: [{
-            stacked: true,
-          }]
         },
         onClick: function (event, array){
            var active = window.barchart.getElementAtEvent(event);
@@ -523,11 +519,6 @@
         cnf4.data.datasets[j].data[i] =
           Math.floor(cnf4.data.datasets[j].data[i]*1000/sum)/10;
         }
-
-
-    </script>
-
-    <script type="text/javascript">
 
   var topTags = [
      {group:"{!! trans('cruds.menu.ecosystem.title_short') !!}", tag:"{!! trans('cruds.entity.title') !!}", num:{!! $entities !!}, url: "/admin/entities" },
