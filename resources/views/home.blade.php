@@ -291,7 +291,7 @@
           url: "/admin/application-services"
         }, {
           label: "{!! trans('cruds.applicationModule.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $applicationModules !!}, 0, 0, 0],
+          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $applicationModules !!}, 0, 0, 0],
           value: {!! $applicationModules !!},
           url: "/admin/application-modules"
         }, {
@@ -512,15 +512,16 @@
     };
 
     // Normalize data (%)
-    for (let i = 0; i < cnf4.data.labels.length; i++) {
+    for (let i = 0; i < (cnf4.data.labels.length); i++) {
       var sum=0;
       for (let j = 0; j < cnf4.data.datasets.length; j++) 
         sum += cnf4.data.datasets[j].data[i];
-      if (sum>0)
+      if (sum>0) {
       for (let j = 0; j < cnf4.data.datasets.length; j++) 
         cnf4.data.datasets[j].data[i] =
           Math.floor(cnf4.data.datasets[j].data[i]*1000/sum)/10;
         }
+      }
 
   var topTags = [
      {group:"{!! trans('cruds.menu.ecosystem.title_short') !!}", tag:"{!! trans('cruds.entity.title') !!}", num:{!! $entities !!}, url: "/admin/entities" },
@@ -635,7 +636,7 @@ var cnf5 = {
     }
   };
 
-    window.onload = function() {
+  window.onload = function() {
       // unregister ChartDataLabels
       Chart.plugins.unregister(ChartDataLabels);
       // Gauges
