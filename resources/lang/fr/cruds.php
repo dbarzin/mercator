@@ -328,7 +328,7 @@ return [
     'dataProcessing' => [
         'description' => 'Registre des activités de traitement',
         'fields' => [
-            'name' => 'Non',
+            'name' => 'Nom',
             'name_helper' => '',
             'description' => 'Description',
             'description_helper' => '',
