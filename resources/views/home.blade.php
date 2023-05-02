@@ -205,9 +205,10 @@
       data: {
         mode: 'single',
         labels: [
-          @can('gdpr_access') 
-            "{!! trans('cruds.menu.ecosystem.title_short') !!}", 
+          @can('gdpr_access')
+            "{!! trans('cruds.menu.gdpr.title_short') !!}",
           @endcan
+            "{!! trans('cruds.menu.ecosystem.title_short') !!}",
             "{!! trans('cruds.menu.metier.title_short') !!}", 
             "{!! trans('cruds.menu.application.title_short') !!}", 
             "{!! trans('cruds.menu.administration.title_short') !!}", 
@@ -510,9 +511,8 @@
         }
     };
 
-
     // Normalize data (%)
-    for (let i = 0; i < cnf4.data.datasets[0].data.length; i++) {
+    for (let i = 0; i < cnf4.data.labels.length; i++) {
       var sum=0;
       for (let j = 0; j < cnf4.data.datasets.length; j++) 
         sum += cnf4.data.datasets[j].data[i];
