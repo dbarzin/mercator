@@ -463,11 +463,13 @@
             stacked: true,
           }],
           yAxes: [{ 
-            barPercentage: 1.0,
-            beginAtZero: true,
-            steps: 10,
-            stepValue: 5,
-            max: 100,
+            ticks: {
+              barPercentage: 1.0,
+              beginAtZero: true,
+              steps: 10,
+              stepValue: 5,
+              max: 100,
+            },
             stacked: true,
           }],
         },
