@@ -80,11 +80,6 @@ class Activity extends Model
         return $this->belongsToMany(Operation::class)->orderBy('name');
     }
 
-    public function documents()
-    {
-        return $this->belongsToMany(Document::class);
-    }
-
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

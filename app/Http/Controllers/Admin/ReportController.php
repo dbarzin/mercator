@@ -2,67 +2,66 @@
 
 namespace App\Http\Controllers\Admin;
 
-// ecosystem
+// GDPR
 use App\Activity;
+// ecosystem
 use App\Actor;
-use App\Relation;
-// information system
+use App\Annuaire;
 use App\ApplicationBlock;
-use App\MApplication;
+// information system
 use App\ApplicationModule;
 use App\ApplicationService;
 use App\Bay;
 use App\Building;
 use App\Certificate;
 use App\Database;
-// Applications
+use App\DataProcessing;
 use App\DhcpServer;
+// Applications
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
 use App\ExternalConnectedEntity;
-// Administration
 use App\Flux;
+// Administration
 use App\ForestAd;
 use App\Gateway;
-use App\Annuaire;
-use App\ZoneAdmin;
 use App\Http\Controllers\Controller;
-// Logique
 use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
+// Logique
+use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
 use App\Phone;
-use App\Vlan;
-// Physique
+use App\PhysicalLink;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
+// Physique
 use App\PhysicalServer;
 use App\PhysicalSwitch;
 use App\Process;
+use App\Relation;
 use App\Router;
 use App\SecurityDevice;
 use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\PhysicalLink;
-//
+use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
-use PhpOffice\PhpWord\Element\Section;
-use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\Shared\Html;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpWord\Element\Section;
 
 class ReportController extends Controller
 {
@@ -585,8 +584,6 @@ class ReportController extends Controller
         ;
     }
 
-
-
     public function logicalInfrastructure(Request $request)
     {
         if ($request->network === null) {
@@ -1057,7 +1054,6 @@ class ReportController extends Controller
                 $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
             } else {
                 $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
-
             }
 
             // TODO: improve me
@@ -1249,196 +1245,217 @@ class ReportController extends Controller
             // Filter physicalLinks on selected objects
             $physicalLinks = PhysicalLink::All()->sortBy('name')
                 ->filter(function ($item) use (
-                    $physicalRouters,$physicalServers,
-                    $workstations,$storageDevices,$physicalSwitches,
-                    $peripherals,$wifiTerminals,$phones) {
+                    $physicalRouters,
+                    $physicalServers,
+                    $workstations,
+                    $storageDevices,
+                    $physicalSwitches,
+                    $peripherals,
+                    $wifiTerminals,
+                    $phones
+                ) {
                     // Routers
-                    if ($item->physical_router_src_id!==null) {
+                    if ($item->physical_router_src_id !== null) {
                         $found = false;
                         foreach ($physicalRouters as $router) {
-                            if ($item->physical_router_src_id === $router->id) { 
+                            if ($item->physical_router_src_id === $router->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
                         }
-                    if ($item->physical_router_dest_id!==null) {
+                    }
+                    if ($item->physical_router_dest_id !== null) {
                         $found = false;
                         foreach ($physicalRouters as $router) {
                             if ($item->physical_router_dest_id === $router->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Switches
-                    if ($item->physical_switch_src_id!==null) {
+                    if ($item->physical_switch_src_id !== null) {
                         $found = false;
                         foreach ($physicalSwitches as $physicalSwitch) {
                             if ($item->physical_switch_src_id === $physicalSwitch->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->physical_switch_dest_id!==null) {
+                    if ($item->physical_switch_dest_id !== null) {
                         $found = false;
-                        foreach ($physicalSwitches as $physicalSwitch) { 
+                        foreach ($physicalSwitches as $physicalSwitch) {
                             if ($item->physical_switch_dest_id === $physicalSwitch->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Servers
-                    if ($item->physical_server_src_id!==null) {
+                    if ($item->physical_server_src_id !== null) {
                         $found = false;
                         foreach ($physicalServers as $server) {
                             if ($item->physical_server_src_id === $server->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->physical_server_dest_id!==null) {
+                    if ($item->physical_server_dest_id !== null) {
                         $found = false;
                         foreach ($physicalServers as $server) {
                             if ($item->physical_server_dest_id === $server->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Workstations
-                    if ($item->workstation_src_id!==null) {
+                    if ($item->workstation_src_id !== null) {
                         $found = false;
                         foreach ($workstations as $workstation) {
                             if ($item->workstation_src_id === $workstation->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->workstation_dest_id!==null) {
+                    if ($item->workstation_dest_id !== null) {
                         $found = false;
                         foreach ($workstations as $workstation) {
                             if ($item->workstation_dest_id === $workstation->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Peripheral
-                    if ($item->peripheral_src_id!==null) {
+                    if ($item->peripheral_src_id !== null) {
                         $found = false;
                         foreach ($peripherals as $peripheral) {
                             if ($item->peripheral_src_id === $peripheral->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->peripheral_dest_id!==null) {
+                    if ($item->peripheral_dest_id !== null) {
                         $found = false;
                         foreach ($peripherals as $server) {
                             if ($item->peripheral_dest_id === $peripheral->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Storage
-                    if ($item->storage_device_src_id!==null) {
+                    if ($item->storage_device_src_id !== null) {
                         $found = false;
                         foreach ($storageDevices as $storageDevice) {
                             if ($item->storage_device_src_id === $storageDevice->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->storage_device_dest_id!==null) {
+                    if ($item->storage_device_dest_id !== null) {
                         $found = false;
                         foreach ($storageDevices as $storageDevice) {
                             if ($item->storage_device_dest_id === $storageDevice->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Wifi
-                    if ($item->wifi_terminal_src_id!==null) {
+                    if ($item->wifi_terminal_src_id !== null) {
                         $found = false;
                         foreach ($wifiTerminals as $wifiTerminal) {
                             if ($item->wifi_terminal_src_id === $wifiTerminal->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->wifi_terminal_dest_id!==null) {
+                    if ($item->wifi_terminal_dest_id !== null) {
                         $found = false;
                         foreach ($wifiTerminals as $wifiTerminal) {
                             if ($item->wifi_terminal_dest_id === $wifiTerminal->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     // Phones
-                    if ($item->phone_src_id!==null) {
+                    if ($item->phone_src_id !== null) {
                         $found = false;
                         foreach ($phones as $phone) {
                             if ($item->phone_src_id === $phone->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
-                    if ($item->phone_dest_id!==null) {
+                    if ($item->phone_dest_id !== null) {
                         $found = false;
                         foreach ($phones as $phone) {
                             if ($item->phone_dest_id === $phone->id) {
                                 $found = true;
                                 break;
-                                }
                             }
-                        if (!$found)
+                        }
+                        if (! $found) {
                             return false;
+                        }
                     }
                     return true;
                 });
-
         } else {
             $sites = Site::All()->sortBy('name');
             $buildings = Building::All()->sortBy('name');
@@ -1456,7 +1473,6 @@ class ReportController extends Controller
             $physicalLinks = PhysicalLink::All()->sortBy('name');
         }
 
-
         return view('admin/reports/network_infrastructure')
             ->with('all_sites', $all_sites)
             ->with('sites', $sites)
@@ -1472,9 +1488,8 @@ class ReportController extends Controller
             ->with('physicalRouters', $physicalRouters)
             ->with('wifiTerminals', $wifiTerminals)
             ->with('physicalSecurityDevices', $physicalSecurityDevices)
-            ->with('physicalLinks',$physicalLinks);
+            ->with('physicalLinks', $physicalLinks);
     }
-
 
     public function administration()
     {
@@ -1552,7 +1567,8 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
-    public function activityReport() {
+    public function activityReport()
+    {
         // get template
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
@@ -1578,12 +1594,12 @@ class ReportController extends Controller
         $phpWord->addTitleStyle(
             1,
             ['size' => 16, 'bold' => true],
-            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 0]
+            ['spaceAfter' => 100, 'spaceBefore' => 100, 'numStyle' => 'hNum', 'numLevel' => 0]
         );
         $phpWord->addTitleStyle(
             2,
             ['size' => 14, 'bold' => true],
-            ['spaceAfter'=>100, 'spaceBefore'=>100, 'numStyle' => 'hNum', 'numLevel' => 1]
+            ['spaceAfter' => 100, 'spaceBefore' => 100, 'numStyle' => 'hNum', 'numLevel' => 1]
         );
         $phpWord->addTitleStyle(
             3,
@@ -1592,7 +1608,7 @@ class ReportController extends Controller
         );
 
         // Title
-        $section->addTitle(trans('cruds.activity.report_title'), 0);
+        $section->addTitle(trans('cruds.dataProcessing.report_title'), 0);
         $section->addTextBreak(1);
 
         // TOC
@@ -1608,36 +1624,36 @@ class ReportController extends Controller
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 
-        $activities = Activity::orderBy('name')->get();
-        foreach ($activities as $activity) {
+        $processes = DataProcessing::orderBy('name')->get();
+        foreach ($processes as $process) {
             // schema
-            $section->addTitle($activity->name, 1);
-            $this->addText($section, $activity->description);
+            $section->addTitle($process->name, 1);
+            $this->addText($section, $process->description);
 
-            $section->addTitle(trans('cruds.activity.fields.responsible'), 2);
-            $this->addText($section, $activity->responsible);
+            $section->addTitle(trans('cruds.dataProcessing.fields.responsible'), 2);
+            $this->addText($section, $process->responsible);
 
-            $section->addTitle(trans('cruds.activity.fields.purpose'), 2);
-            $this->addText($section, $activity->purpose);
+            $section->addTitle(trans('cruds.dataProcessing.fields.purpose'), 2);
+            $this->addText($section, $process->purpose);
 
-            $section->addTitle(trans('cruds.activity.fields.categories'), 2);
-            $this->addText($section, $activity->categories);
+            $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
+            $this->addText($section, $process->categories);
 
-            $section->addTitle(trans('cruds.activity.fields.recipients'), 2);
-            $this->addText($section, $activity->recipients);
+            $section->addTitle(trans('cruds.dataProcessing.fields.recipients'), 2);
+            $this->addText($section, $process->recipients);
 
-            $section->addTitle(trans('cruds.activity.fields.transfert'), 2);
-            $this->addText($section, $activity->transfert);
+            $section->addTitle(trans('cruds.dataProcessing.fields.transfert'), 2);
+            $this->addText($section, $process->transfert);
 
-            $section->addTitle(trans('cruds.activity.fields.retention'), 2);
-            $this->addText($section, $activity->retention);
+            $section->addTitle(trans('cruds.dataProcessing.fields.retention'), 2);
+            $this->addText($section, $process->retention);
 
-            $section->addTitle(trans('cruds.activity.fields.controls'), 2);
-            $this->addText($section, $activity->controls);
-            }
+            $section->addTitle(trans('cruds.dataProcessing.fields.controls'), 2);
+            $this->addText($section, $process->controls);
+        }
 
         // Finename
-        $filepath = storage_path('app/reports/activities-'. Carbon::today()->format('Ymd') .'.docx');
+        $filepath = storage_path('app/reports/register-'. Carbon::today()->format('Ymd') .'.docx');
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -1647,37 +1663,26 @@ class ReportController extends Controller
         return response()->download($filepath);
     }
 
-    private static function addText(Section $section, ?string $value = null)
-    {
-        try {
-            \PhpOffice\PhpWord\Shared\Html::addHtml($section, str_replace('<br>', '<br/>', $value));
-        } catch (\Exception $e) {
-            $section->addText("Invalid text");
-            Log::error('CartographyController - Invalid HTML ' . $value);
-        }
-    }
-
     public function activityList()
     {
-        $path = storage_path('app/activities-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
 
-        $activities = Activity::All()->sortBy('name');
+        $register = DataProcessing::All()->sortBy('name');
 
         $header = [
-            trans('cruds.activity.fields.name'),
-            trans('cruds.activity.fields.description'),
-            trans('cruds.activity.fields.responsible'),
-            trans('cruds.activity.fields.purpose'),
-            trans('cruds.activity.fields.categories'),
-            trans('cruds.activity.fields.recipients'),
-            trans('cruds.activity.fields.transfert'),
-            trans('cruds.activity.fields.retention'),
-            trans('cruds.activity.fields.controls'),
-            trans('cruds.activity.fields.processes'),
-            trans('cruds.activity.fields.operations'),
-            trans('cruds.activity.fields.applications'),
-            trans('cruds.activity.fields.databases'),
-            trans('cruds.activity.fields.information'),
+            trans('cruds.dataProcessing.fields.name'),
+            trans('cruds.dataProcessing.fields.description'),
+            trans('cruds.dataProcessing.fields.responsible'),
+            trans('cruds.dataProcessing.fields.purpose'),
+            trans('cruds.dataProcessing.fields.categories'),
+            trans('cruds.dataProcessing.fields.recipients'),
+            trans('cruds.dataProcessing.fields.transfert'),
+            trans('cruds.dataProcessing.fields.retention'),
+            trans('cruds.dataProcessing.fields.controls'),
+            trans('cruds.dataProcessing.fields.processes'),
+            trans('cruds.dataProcessing.fields.applications'),
+            trans('cruds.dataProcessing.fields.databases'),
+            trans('cruds.dataProcessing.fields.information'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1688,8 +1693,7 @@ class ReportController extends Controller
         $sheet->getStyle('1')->getFont()->setBold(true);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
-        $sheet->getStyle('A:I')->getAlignment()->setWrapText(true); 
-
+        $sheet->getStyle('A:I')->getAlignment()->setWrapText(true);
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -1702,139 +1706,53 @@ class ReportController extends Controller
         $sheet->getColumnDimension('H')->setWidth(350, 'pt');
         $sheet->getColumnDimension('I')->setWidth(350, 'pt');
         $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
 
+        $sheet->getColumnDimension('K')->setAutoSize(true);
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
-        $sheet->getColumnDimension('N')->setAutoSize(true);
-
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
         // Populate the Timesheet
         $row = 2;
-        foreach ($activities as $activity) {
-            $sheet->setCellValue("A{$row}", $activity->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($activity->description));
-            $sheet->setCellValue("C{$row}", $html->toRichTextObject($activity->responsible));
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($activity->purpose));
-            $sheet->setCellValue("E{$row}", $html->toRichTextObject($activity->categories));
-            $sheet->setCellValue("F{$row}", $html->toRichTextObject($activity->recipients));
-            $sheet->setCellValue("G{$row}", $html->toRichTextObject($activity->transfert));
-            $sheet->setCellValue("H{$row}", $html->toRichTextObject($activity->retention));
-            $sheet->setCellValue("I{$row}", $html->toRichTextObject($activity->controls));
+        foreach ($register as $process) {
+            $sheet->setCellValue("A{$row}", $process->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($process->description));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($process->responsible));
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($process->purpose));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($process->categories));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($process->recipients));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($process->transfert));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($process->retention));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($process->controls));
 
             $txt = '';
-            foreach ($activity->activitiesProcesses as $process) {
-                $txt .= $process->identifiant;
-                if ($activity->activitiesProcesses->last() !== $process) {
+            foreach ($process->processes as $p) {
+                $txt .= $p->identifiant;
+                if ($process->processes->last() !== $p) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("J{$row}", $txt);
 
             $txt = '';
-            foreach ($activity->operations as $operation) {
-                $txt .= $operation->name;
-                if ($activity->operations->last() !== $operation) {
+            foreach ($process->applications as $application) {
+                $txt .= $application->name;
+                if ($process->applications->last() !== $application) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("K{$row}", $txt);
 
-            $applications = DB::Table('activities')
-                ->distinct()
-                ->select('m_applications.name')
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'm_application_process',
-                    'm_application_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'm_applications',
-                    'm_applications.id',
-                    '=',
-                    'm_application_process.m_application_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('m_applications.deleted_at')
-                ->orderBy('m_applications.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("L{$row}", $applications);
-
-            $databases = DB::Table('activities')
-                ->select('databases.name')
-                ->distinct()
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'm_application_process',
-                    'm_application_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'database_m_application',
-                    'database_m_application.m_application_id',
-                    '=',
-                    'm_application_process.m_application_id'
-                )
-                ->join(
-                    'databases',
-                    'databases.id',
-                    '=',
-                    'database_m_application.database_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('databases.deleted_at')
-                ->orderBy('databases.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("M{$row}", $databases);
-
-            $informations = DB::Table('activities')
-                ->select('information.name')
-                ->distinct()
-                ->join(
-                    'activity_process',
-                    'activity_process.activity_id',
-                    '=',
-                    'activities.id'
-                )
-                ->join(
-                    'information_process',
-                    'information_process.process_id',
-                    '=',
-                    'activity_process.process_id'
-                )
-                ->join(
-                    'information',
-                    'information.id',
-                    '=',
-                    'information_process.information_id'
-                )
-                ->where('activities.id', '=', $activity->id)
-                ->whereNull('activities.deleted_at')
-                ->whereNull('information.deleted_at')
-                ->orderBy('information.name')
-                ->get()
-                ->implode('name', ', ');
-            $sheet->setCellValue("N{$row}", $informations);
+            $txt = '';
+            foreach ($process->informations as $information) {
+                $txt .= $information->name;
+                if ($process->informations->last() !== $information) {
+                    $txt .= ', ';
+                }
+            }
+            $sheet->setCellValue("L{$row}", $txt);
 
             $row++;
         }
@@ -1844,7 +1762,6 @@ class ReportController extends Controller
 
         return response()->download($path);
     }
-
 
     public function applicationsByBlocks()
     {
@@ -1925,7 +1842,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("A{$row}", $applicationBlock->name);
                 $sheet->setCellValue("B{$row}", $application->name);
                 $sheet->setCellValue("C{$row}", $html->toRichTextObject($application->description));
-                $sheet->setCellValue("D{$row}", $application->vendor . ":" . $application->product . ":" . $application->version);
+                $sheet->setCellValue("D{$row}", $application->vendor . ':' . $application->product . ':' . $application->version);
                 $sheet->setCellValue("E{$row}", $application->entity_resp ? $application->entity_resp->name : '');
                 $sheet->setCellValue("F{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("G{$row}", $application->responsible);
@@ -2525,6 +2442,16 @@ class ReportController extends Controller
         $subnetworks = Subnetwork::All()->sortBy('zone, address');
 
         return view('admin/reports/zones', compact('subnetworks'));
+    }
+
+    private static function addText(Section $section, ?string $value = null)
+    {
+        try {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, str_replace('<br>', '<br/>', $value));
+        } catch (\Exception $e) {
+            $section->addText('Invalid text');
+            Log::error('CartographyController - Invalid HTML ' . $value);
+        }
     }
 
     private function addToInventory(array &$inventory, Site $site, ?Building $building = null, ?Bay $bay = null)

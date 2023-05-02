@@ -239,6 +239,19 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <b>{{ trans('cruds.activity.fields.processes') }}</b>
+                                    </td>
+                                    <td>
+                                        @foreach($activity->activitiesProcesses as $process)
+                                            <a href="#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                            @if (!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <b>{{ trans('cruds.activity.fields.operations') }}</b>
                                     </td>
                                     <td>

@@ -16,6 +16,40 @@
                 </a>
             </li>
 
+            @can('gdpr_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle open" href="#">
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+                        </i>
+                        {{ trans('cruds.menu.gdpr.title') }}
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        @can('data_processing_register_access')
+                            <li class="nav-item">
+                                <a href='{{ route("admin.data-processing.index") }}' class="nav-link {{ request()->is('admin/data-processing*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.dataProcessing.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('security_controls_access')
+                            <li class="nav-item">
+                                <a href='{{ route("admin.security-controls.index") }}' class="nav-link {{ request()->is('admin/security-controls*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.securityControl.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
+
             @can('ecosystem_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
@@ -27,7 +61,7 @@
                     <ul class="nav-dropdown-items">
                         @can('entity_access')
                             <li class="nav-item">
-                                <a href='{{ route("admin.entities.index") }}' class="nav-link {{ request()->is('admin/entities') || request()->is('admin/entities/*') ? 'active' : '' }}">
+                                <a href='{{ route("admin.entities.index") }}' class="nav-link {{ request()->is('admin/entities*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -37,7 +71,7 @@
                         @endcan
                         @can('relation_access')
                             <li class="nav-item">
-                                <a href='{{ route("admin.relations.index") }}' class="nav-link {{ request()->is('admin/relations') || request()->is('admin/relations/*') ? 'active' : '' }}">
+                                <a href='{{ route("admin.relations.index") }}' class="nav-link {{ request()->is('admin/relations*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -60,7 +94,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('macro_processus_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.macro-processuses.index") }}" class="nav-link {{ request()->is('admin/macro-processuses') || request()->is('admin/macro-processuses/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.macro-processuses.index") }}" class="nav-link {{ request()->is('admin/macro-processuses*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -71,7 +105,7 @@
                         @endif
                         @can('process_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.processes.index") }}" class="nav-link {{ request()->is('admin/processes') || request()->is('admin/processes/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.processes.index") }}" class="nav-link {{ request()->is('admin/processes*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -82,7 +116,7 @@
                         @if (auth()->user()->granularity>=3)
                         @can('activity_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.activities.index") }}" class="nav-link {{ request()->is('admin/activities') || request()->is('admin/activities/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.activities.index") }}" class="nav-link {{ request()->is('admin/activities*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -93,7 +127,7 @@
                         @endif
                         @can('operation_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.operations.index") }}" class="nav-link {{ request()->is('admin/operations') || request()->is('admin/operations/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.operations.index") }}" class="nav-link {{ request()->is('admin/operations*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -105,7 +139,7 @@
                         @if (auth()->user()->granularity>=3)
                         @can('task_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.tasks.index") }}" class="nav-link {{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.tasks.index") }}" class="nav-link {{ request()->is('admin/tasks*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -118,7 +152,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('actor_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.actors.index") }}" class="nav-link {{ request()->is('admin/actors') || request()->is('admin/actors/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.actors.index") }}" class="nav-link {{ request()->is('admin/actors*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -129,7 +163,7 @@
                         @endif
                         @can('information_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.information.index") }}" class="nav-link {{ request()->is('admin/information') || request()->is('admin/information/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.information.index") }}" class="nav-link {{ request()->is('admin/information*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -152,7 +186,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('application_block_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.application-blocks.index") }}" class="nav-link {{ request()->is('admin/application-blocks') || request()->is('admin/application-blocks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.application-blocks.index") }}" class="nav-link {{ request()->is('admin/application-blocks*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -163,7 +197,7 @@
                         @endif
                         @can('m_application_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.applications.index") }}" class="nav-link {{ request()->is('admin/applications') || request()->is('admin/applications/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.applications.index") }}" class="nav-link {{ request()->is('admin/applications*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -174,7 +208,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('application_service_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.application-services.index") }}" class="nav-link {{ request()->is('admin/application-services') || request()->is('admin/application-services/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.application-services.index") }}" class="nav-link {{ request()->is('admin/application-services*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -184,7 +218,7 @@
                         @endcan
                         @can('application_module_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.application-modules.index") }}" class="nav-link {{ request()->is('admin/application-modules') || request()->is('admin/application-modules/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.application-modules.index") }}" class="nav-link {{ request()->is('admin/application-modules*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -195,7 +229,7 @@
                         @endif
                         @can('database_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.databases.index") }}" class="nav-link {{ request()->is('admin/databases') || request()->is('admin/databases/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.databases.index") }}" class="nav-link {{ request()->is('admin/databases*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -205,7 +239,7 @@
                         @endcan
                         @can('flux_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.fluxes.index") }}" class="nav-link {{ request()->is('admin/fluxes') || request()->is('admin/fluxes/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.fluxes.index") }}" class="nav-link {{ request()->is('admin/fluxes*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -227,7 +261,7 @@
                     <ul class="nav-dropdown-items">
                         @can('zone_admin_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.zone-admins.index") }}" class="nav-link {{ request()->is('admin/zone-admins') || request()->is('admin/zone-admins/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.zone-admins.index") }}" class="nav-link {{ request()->is('admin/zone-admins*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -237,7 +271,7 @@
                         @endcan
                         @can('annuaire_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.annuaires.index") }}" class="nav-link {{ request()->is('admin/annuaires') || request()->is('admin/annuaires/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.annuaires.index") }}" class="nav-link {{ request()->is('admin/annuaires*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -247,7 +281,7 @@
                         @endcan
                         @can('forest_ad_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.forest-ads.index") }}" class="nav-link {{ request()->is('admin/forest-ads') || request()->is('admin/forest-ads/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.forest-ads.index") }}" class="nav-link {{ request()->is('admin/forest-ads*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -257,7 +291,7 @@
                         @endcan
                         @can('domaine_ad_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.domaine-ads.index") }}" class="nav-link {{ request()->is('admin/domaine-ads') || request()->is('admin/domaine-ads/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.domaine-ads.index") }}" class="nav-link {{ request()->is('admin/domaine-ads*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -279,7 +313,7 @@
                     <ul class="nav-dropdown-items">
                         @can('network_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.networks.index") }}" class="nav-link {{ request()->is('admin/networks') || request()->is('admin/networks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.networks.index") }}" class="nav-link {{ request()->is('admin/networks*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -289,7 +323,7 @@
                         @endcan
                         @can('subnetwork_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetworks') || request()->is('admin/subnetworks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.subnetworks.index") }}" class="nav-link {{ request()->is('admin/subnetworks*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -299,7 +333,7 @@
                         @endcan
                         @can('gateway_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.gateways.index") }}" class="nav-link {{ request()->is('admin/gateways') || request()->is('admin/gateways/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.gateways.index") }}" class="nav-link {{ request()->is('admin/gateways*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -310,7 +344,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('external_connected_entity_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.external-connected-entities.index") }}" class="nav-link {{ request()->is('admin/external-connected-entities') || request()->is('admin/external-connected-entities/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.external-connected-entities.index") }}" class="nav-link {{ request()->is('admin/external-connected-entities*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -321,7 +355,7 @@
                         @endif
                         @can('network_switch_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.network-switches.index") }}" class="nav-link {{ request()->is('admin/network-switches') || request()->is('admin/network-switches/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.network-switches.index") }}" class="nav-link {{ request()->is('admin/network-switches*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -331,7 +365,7 @@
                         @endcan
                         @can('router_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.routers.index") }}" class="nav-link {{ request()->is('admin/routers') || request()->is('admin/routers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.routers.index") }}" class="nav-link {{ request()->is('admin/routers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -341,7 +375,7 @@
                         @endcan
                         @can('security_device_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.security-devices.index") }}" class="nav-link {{ request()->is('admin/security-devices') || request()->is('admin/security-devices/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.security-devices.index") }}" class="nav-link {{ request()->is('admin/security-devices*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -352,7 +386,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('dhcp_server_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.dhcp-servers.index") }}" class="nav-link {{ request()->is('admin/dhcp-servers') || request()->is('admin/dhcp-servers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.dhcp-servers.index") }}" class="nav-link {{ request()->is('admin/dhcp-servers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -362,7 +396,7 @@
                         @endcan
                         @can('dnsserver_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.dnsservers.index") }}" class="nav-link {{ request()->is('admin/dnsservers') || request()->is('admin/dnsservers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.dnsservers.index") }}" class="nav-link {{ request()->is('admin/dnsservers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -373,7 +407,7 @@
                         @endif
                         @can('logical_server_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.logical-servers.index") }}" class="nav-link {{ request()->is('admin/logical-servers') || request()->is('admin/logical-servers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.logical-servers.index") }}" class="nav-link {{ request()->is('admin/logical-servers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -383,7 +417,7 @@
                         @endcan
                         @can('vlan_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans') || request()->is('admin/vlans/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -394,7 +428,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('certificate_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificatess') || request()->is('admin/certificates/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificatess*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -417,7 +451,7 @@
                     <ul class="nav-dropdown-items">
                         @can('site_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.sites.index") }}" class="nav-link {{ request()->is('admin/sites') || request()->is('admin/sites/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.sites.index") }}" class="nav-link {{ request()->is('admin/sites*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -427,7 +461,7 @@
                         @endcan
                         @can('building_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.buildings.index") }}" class="nav-link {{ request()->is('admin/buildings') || request()->is('admin/buildings/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.buildings.index") }}" class="nav-link {{ request()->is('admin/buildings*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -437,7 +471,7 @@
                         @endcan
                         @can('bay_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.bays.index") }}" class="nav-link {{ request()->is('admin/bays') || request()->is('admin/bays/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.bays.index") }}" class="nav-link {{ request()->is('admin/bays*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -447,7 +481,7 @@
                         @endcan
                         @can('physical_server_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.physical-servers.index") }}" class="nav-link {{ request()->is('admin/physical-servers') || request()->is('admin/physical-servers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.physical-servers.index") }}" class="nav-link {{ request()->is('admin/physical-servers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -458,7 +492,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('workstation_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.workstations.index") }}" class="nav-link {{ request()->is('admin/workstations') || request()->is('admin/workstations/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.workstations.index") }}" class="nav-link {{ request()->is('admin/workstations*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -468,7 +502,7 @@
                         @endcan
                         @can('storage_device_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.storage-devices.index") }}" class="nav-link {{ request()->is('admin/storage-devices') || request()->is('admin/storage-devices/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.storage-devices.index") }}" class="nav-link {{ request()->is('admin/storage-devices*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -478,7 +512,7 @@
                         @endcan
                         @can('peripheral_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.peripherals.index") }}" class="nav-link {{ request()->is('admin/peripherals') || request()->is('admin/peripherals/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.peripherals.index") }}" class="nav-link {{ request()->is('admin/peripherals*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -488,7 +522,7 @@
                         @endcan
                         @can('phone_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.phones.index") }}" class="nav-link {{ request()->is('admin/phones') || request()->is('admin/phones/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.phones.index") }}" class="nav-link {{ request()->is('admin/phones*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -499,7 +533,7 @@
                         @endif
                         @can('physical_switch_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.physical-switches.index") }}" class="nav-link {{ request()->is('admin/physical-switches') || request()->is('admin/physical-switches/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.physical-switches.index") }}" class="nav-link {{ request()->is('admin/physical-switches*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -509,7 +543,7 @@
                         @endcan
                         @can('physical_router_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.physical-routers.index") }}" class="nav-link {{ request()->is('admin/physical-routers') || request()->is('admin/physical-routers/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.physical-routers.index") }}" class="nav-link {{ request()->is('admin/physical-routers*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -520,7 +554,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('wifi_terminal_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.wifi-terminals.index") }}" class="nav-link {{ request()->is('admin/wifi-terminals') || request()->is('admin/wifi-terminals/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wifi-terminals.index") }}" class="nav-link {{ request()->is('admin/wifi-terminals*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -531,7 +565,7 @@
                         @endif
                         @can('physical_security_device_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.physical-security-devices.index") }}" class="nav-link {{ request()->is('admin/physical-security-devices') || request()->is('admin/physical-security-devices/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.physical-security-devices.index") }}" class="nav-link {{ request()->is('admin/physical-security-devices*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -541,7 +575,7 @@
                         @endcan
                         @can('physical_link_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.links.index") }}" class="nav-link {{ request()->is('admin/links') || request()->is('admin/links/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.links.index") }}" class="nav-link {{ request()->is('admin/links*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -551,7 +585,7 @@
                         @endcan
                         @can('wan_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.wans.index") }}" class="nav-link {{ request()->is('admin/wans') || request()->is('admin/wans/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wans.index") }}" class="nav-link {{ request()->is('admin/wans*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -561,7 +595,7 @@
                         @endcan
                         @can('man_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.mans.index") }}" class="nav-link {{ request()->is('admin/mans') || request()->is('admin/mans/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.mans.index") }}" class="nav-link {{ request()->is('admin/mans*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -571,7 +605,7 @@
                         @endcan
                         @can('lan_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.lans.index") }}" class="nav-link {{ request()->is('admin/lans') || request()->is('admin/lans/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.lans.index") }}" class="nav-link {{ request()->is('admin/lans*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -593,7 +627,7 @@
                     <ul class="nav-dropdown-items">
                         @can('user_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-user nav-icon">
 
                                     </i>
@@ -603,7 +637,7 @@
                         @endcan
                         @can('role_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-group nav-icon">
 
                                     </i>
@@ -613,7 +647,7 @@
                         @endcan
                         @can('configure')
                             <li class="nav-item">
-                                <a href="{{ route("admin.config.cert") }}" class="nav-link {{ request()->is('admin/config/certificate') || request()->is('admin/config/certificate/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.config.cert") }}" class="nav-link {{ request()->is('admin/config/certificate*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-lock nav-icon">
 
                                     </i>
@@ -621,7 +655,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route("admin.config.cve") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/cve') || request()->is('admin/config/cve/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.config.cve") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/cve*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-bug nav-icon">
 
                                     </i>
@@ -630,7 +664,7 @@
                             </li>
                         @endcan
                             <li class="nav-item">
-                                <a href="{{ route("admin.config.documents") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/documents') || request()->is('admin/config/documents/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.config.documents") }}" class="nav-link" class="nav-link {{ request()->is('admin/config/documents*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-file-text nav-icon">
 
                                     </i>
@@ -639,7 +673,7 @@
                             </li>
                         @can('audit_log_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.audit-logs.index") }}" class="nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.audit-logs.index") }}" class="nav-link {{ request()->is('admin/audit-logs*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-files-o nav-icon">
 
                                     </i>

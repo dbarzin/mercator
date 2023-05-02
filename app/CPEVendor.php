@@ -2,18 +2,15 @@
 
 namespace App;
 
-use App\CPEProduct;
-
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\CPEVendor
- *
  */
 class CPEVendor extends Model
 {
     public $table = 'cpe_vendors';
-    
+
     public $timestamps = false;
 
     public static $searchable = [
@@ -24,12 +21,11 @@ class CPEVendor extends Model
 
     protected $fillable = [
         'part',
-        'name'
+        'name',
     ];
 
     public function products()
     {
         return $this->belongsToMany(CPEProduct::class)->orderBy('name');
     }
-
 }

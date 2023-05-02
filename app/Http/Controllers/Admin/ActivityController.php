@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
-use App\Operation;
-use App\Process;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-
+use App\Operation;
+use App\Process;
 use Gate;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
@@ -21,7 +18,6 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $activities = Activity::all()->sortBy('name');
         $activities = Activity::with('operations', 'activitiesProcesses')->orderBy('name')->get();
 
         return view('admin.activities.index', compact('activities'));
@@ -33,8 +29,6 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('identifiant', 'id');
-    
-        session()->put("documents",array());
 
         return view('admin.activities.create', compact('operations', 'processes'));
     }
@@ -44,8 +38,6 @@ class ActivityController extends Controller
         $activity = Activity::create($request->all());
         $activity->operations()->sync($request->input('operations', []));
         $activity->activitiesProcesses()->sync($request->input('processes', []));
-        $activity->documents()->sync(session()->get("documents"));
-        session()->forget("documents");
 
         return redirect()->route('admin.activities.index');
     }
@@ -59,8 +51,10 @@ class ActivityController extends Controller
 
         $activity->load('operations', 'activitiesProcesses');
 
-        return view('admin.activities.edit', 
-            compact('operations', 'activity', 'processes'));
+        return view(
+            'admin.activities.edit',
+            compact('operations', 'activity', 'processes')
+        );
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)

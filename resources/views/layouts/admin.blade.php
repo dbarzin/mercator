@@ -49,7 +49,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="/admin">
-            <span class="navbar-brand-full">{{ env('APP_NAME') === "Laravel" ? "Mercator" : env('APP_NAME') }}</span>
+            <span class="navbar-brand-full">{{ (env('APP_NAME') === null) || (env('APP_NAME') === "Laravel") ? "Mercator" : env('APP_NAME') }}</span>
             <span class="navbar-brand-minimized"></span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">

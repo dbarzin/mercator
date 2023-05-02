@@ -14,14 +14,14 @@ class Gdpr extends Migration
     public function up()
     {
         Schema::table('activities', function (Blueprint $table) {
-            // name + description                                               // ....
-            $table->longText('responsible')->nullable()->after('description');    // a
-            $table->longText('purpose')->nullable()->after('responsible');        // b
-            $table->longText('categories')->nullable()->after('purpose');         // c
-            $table->longText('recipients')->nullable()->after('categories');         // d
-            $table->longText('transfert')->nullable()->after('recipients');       // e
-            $table->longText('retention')->nullable()->after('transfert');        // f
-            $table->longText('controls')->nullable()->after('retention');         // g
+            // name + description
+            $table->longText('responsible')->nullable()->after('description');
+            $table->longText('purpose')->nullable()->after('responsible');
+            $table->longText('categories')->nullable()->after('purpose');
+            $table->longText('recipients')->nullable()->after('categories');
+            $table->longText('transfert')->nullable()->after('recipients');
+            $table->longText('retention')->nullable()->after('transfert');
+            $table->longText('controls')->nullable()->after('retention');
         });
 
         Schema::table('information', function (Blueprint $table) {

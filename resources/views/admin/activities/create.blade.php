@@ -31,82 +31,6 @@
                 <span class="help-block">{{ trans('cruds.activity.fields.description_helper') }}</span>
             </div>
 
-            <div class="form-group">
-                <label class="recommended" for="responsible">{{ trans('cruds.activity.fields.responsible') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">{!! old('responsible') !!}</textarea>
-                @if($errors->has('responsible'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsible') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.responsible_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="purpose">{{ trans('cruds.activity.fields.purpose') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('purpose') ? 'is-invalid' : '' }}" name="purpose" id="purpose">{!! old('purpose') !!}</textarea>
-                @if($errors->has('purpose'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('purpose') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.purpose_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="categories">{{ trans('cruds.activity.fields.categories') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories" id="categories">{!! old('categories') !!}</textarea>
-                @if($errors->has('categories'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('categories') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.categories_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="recipients">{{ trans('cruds.activity.fields.recipients') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('recipients') ? 'is-invalid' : '' }}" name="recipients" id="recipients">{!! old('recipients') !!}</textarea>
-                @if($errors->has('recipients'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('recipients') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.recipients_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="transfert">{{ trans('cruds.activity.fields.transfert') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('transfert') ? 'is-invalid' : '' }}" name="transfert" id="transfert">{!! old('transfert') !!}</textarea>
-                @if($errors->has('transfert'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('transfert') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.transfert_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="retention">{{ trans('cruds.activity.fields.retention') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('retention') ? 'is-invalid' : '' }}" name="retention" id="retention">{!! old('retention') !!}</textarea>
-                @if($errors->has('retention'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('retention') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.retention_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="recommended" for="controls">{{ trans('cruds.activity.fields.controls') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('controls') ? 'is-invalid' : '' }}" name="controls" id="controls">{!! old('controls') !!}</textarea>
-                @if($errors->has('controls'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('controls') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.controls_helper') }}</span>
-            </div>
 
             <div class="row">
                 <div class="col-6">
@@ -156,17 +80,6 @@
             </div>
 
             <div class="form-group">
-                <label class="recommended" for="controls">{{ trans('cruds.activity.fields.documents') }}</label>
-                <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
-                @if($errors->has('documents'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('documents') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.documents_helper') }}</span>
-            </div>
-
-            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -178,11 +91,8 @@
 @endsection
 
 @section('scripts')
-<!--script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script-->
-<script src="/js/dropzone.js"></script>
 
 <script>
-Dropzone.autoDiscover = false;
 
 $(document).ready(function () {
 
@@ -202,60 +112,6 @@ $(document).ready(function () {
         }
     );
 
-var image_uploader = new Dropzone("#dropzoneFileUpload", { 
-        url: '/admin/documents/store',
-        headers: { 'x-csrf-token': '{{csrf_token()}}' },
-        params: { },
-            maxFilesize: 10,
-            // acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            addRemoveLinks: true,
-            timeout: 50000,
-            removedfile: function(file) 
-            {
-                console.log("remove file " + file.name + " " + file.id);
-                $.ajax({
-                    headers: {
-                      'X-CSRF-TOKEN': '{{csrf_token()}}'
-                       },
-                    type: 'GET',
-                    url: '{{ url( "/admin/documents/delete" ) }}'+"/"+file.id,
-                    success: function (data){
-                        console.log("File has been successfully removed");
-                    },
-                    error: function(e) {
-                        console.log("File not removed");
-                        console.log(e);
-                    }});
-                    // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
-                    var fileRef;
-                    return (fileRef = file.previewElement) != null ? 
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-            success: function(file, response) 
-            {
-                file.id=response.id;
-                console.log("success response");
-                console.log(response);
-            },
-            error: function(file, response)
-            {
-                console.log("error response");
-                console.log(response);
-               return false;
-            },
-            init: function () {
-            //Add existing files into dropzone            
-            var existingFiles = [
-                @foreach(session()->get("documents") as $document)
-                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },                    
-                @endforeach
-            ];
-            for (i = 0; i < existingFiles.length; i++) {
-                this.emit("addedfile", existingFiles[i]);                
-                this.emit("complete", existingFiles[i]);                
-                }
-            }
-        });
     });
 </script>
 @endsection
