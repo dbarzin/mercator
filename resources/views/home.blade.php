@@ -42,7 +42,7 @@
                   {!! trans("panel.repartition") !!}
                 </div>
                 <div class="card-body">
-                    <div style="width: 1075px; height: 400px;">
+                    <div style="width: 1000px; height: 400px;">
                       <canvas id="bar_chart_div"></canvas>
                     </div>
                 </div>
@@ -456,17 +456,17 @@
                var dataset = data['datasets'];
                 return dataset[tooltipItem['datasetIndex']]['label']+': '+dataset[tooltipItem['datasetIndex']]['value'];
             },
-            // afterLabel: function(tooltipItem, data) {
-            //    var dataset = data['datasets'];
-            //    var percent = 
-            //    return '(' + percent + '%)';
-            //    return dataset[tooltipItem['datasetIndex']]['value'];              
-            // }
           },
-        },            
+        },
         scales: {
-            yAxes: [{ barPercentage: 1.0 }],
-          },
+            yAxes: [{ 
+              barPercentage: 1.0,
+              beginAtZero: true,
+              steps: 10,
+              stepValue: 5,
+              max: 100
+            }],
+        },
         responsive: true,
         maintainAspectRatio: false,
         animation: {
