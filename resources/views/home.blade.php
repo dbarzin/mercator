@@ -205,9 +205,10 @@
       data: {
         mode: 'single',
         labels: [
-          @can('gdpr_access') 
-            "{!! trans('cruds.menu.ecosystem.title_short') !!}", 
+          @can('gdpr_access')
+            "{!! trans('cruds.menu.gdpr.title') !!}",
           @endcan
+            "{!! trans('cruds.menu.ecosystem.title_short') !!}",
             "{!! trans('cruds.menu.metier.title_short') !!}", 
             "{!! trans('cruds.menu.application.title_short') !!}", 
             "{!! trans('cruds.menu.administration.title_short') !!}", 
