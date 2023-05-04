@@ -48,11 +48,10 @@ class AddGdprTables extends Migration
         });
 
         // Link data_processing <-> documents
-        // already exist
-        // Schema::create('data_processing_document', function (Blueprint $table) {
-        // $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6930583');
-        // $table->unsignedInteger('document_id')->index('operation_id_fk_4355431');
-        // });
+        Schema::create('data_processing_document', function (Blueprint $table) {
+            $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6930583');
+            $table->unsignedInteger('document_id')->index('operation_id_fk_4355431');
+        });
 
         Schema::table('data_processing_document', function (Blueprint $table) {
             $table->foreign('data_processing_id', 'data_processing_id_fk_42343234')->references('id')->on('data_processing')->onUpdate('NO ACTION')->onDelete('CASCADE');
@@ -72,7 +71,7 @@ class AddGdprTables extends Migration
 
         // link data_processing <-> applications
         Schema::create('data_processing_m_application', function (Blueprint $table) {
-            // $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6948435');
+            $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6948435');
             $table->unsignedInteger('m_application_id')->index('m_applications_id_fk_4384483');
         });
 
@@ -83,7 +82,7 @@ class AddGdprTables extends Migration
 
         // link data_processing <-> information
         Schema::create('data_processing_information', function (Blueprint $table) {
-            // $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6948435');
+            $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6948435');
             $table->unsignedInteger('information_id')->index('information_id_fk_4384483');
         });
 
