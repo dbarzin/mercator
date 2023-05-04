@@ -79,7 +79,7 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BAY_', $router->bay_id));
             } elseif ($router->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('BUILDING_', $router->building_id));
-            } elseif ($routers->site_id !== null) {
+            } elseif ($router->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
             }
         }

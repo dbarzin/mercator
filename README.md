@@ -87,14 +87,14 @@ docker run -it --rm --name mercator -p "127.0.0.1:8000":80 ghcr.io/dbarzin/merca
 By default it uses an SQLite backend. If you want to make data persistent:
 
 ```shell
-touch db.sqlite && chmod a+w db.sqlite
-docker run -it --rm --name mercator -p "127.0.0.1:8000":80 -v $PWD/db.sqlite:/var/www/mercator/db.sqlite ghcr.io/dbarzin/mercator:latest
+touch ./db.sqlite && chmod a+w ./db.sqlite
+docker run -it --rm --name mercator -p "127.0.0.1:8000":80 -v ./db.sqlite:/var/www/mercator/db.sqlite ghcr.io/dbarzin/mercator:latest
 ```
 
 Finally you can populate the database with demo data through the `USE_DEMO_DATA` environment variable:
 
 ```shell
-touch db.sqlite && chmod a+w db.sqlite
+touch ./db.sqlite && chmod a+w ./db.sqlite
 docker run -it --rm \
            --name mercator \
            -p "127.0.0.1:8000":80 \
@@ -102,6 +102,8 @@ docker run -it --rm \
            -e USE_DEMO_DATA=1 \
            ghcr.io/dbarzin/mercator:latest
 ```
+
+Visit http://127.0.0.1:8000!
 
 ## Changelog
 

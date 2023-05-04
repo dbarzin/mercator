@@ -18,7 +18,7 @@ class AddGdprTables extends Migration
     {
         // Get back on previous GDPR migration
         Schema::table('activities', function (Blueprint $table) {
-            $table->dropColumn(['responsible', 'purpose', 'categories','recipients', 'transfert','retention','controls']);
+            $table->dropColumn(['responsible', 'purpose', 'categories', 'recipients', 'transfert', 'retention', 'controls']);
         });
 
         // Create table security_controls
@@ -93,54 +93,54 @@ class AddGdprTables extends Migration
 
         // Access rights
         // if not initial migration -> add permissions
-        if (Permission::count()>0) {
+        if (Permission::count() > 0) {
             // create new permissions
             $permissions = [
                 [
-                    'id'    => '268',
+                    'id' => '268',
                     'title' => 'gdpr_access',
                 ],
 
                 [
-                    'id'    => '269',
+                    'id' => '269',
                     'title' => 'security_controls_create',
                 ],
                 [
-                    'id'    => '270',
+                    'id' => '270',
                     'title' => 'security_controls_edit',
                 ],
                 [
-                    'id'    => '271',
+                    'id' => '271',
                     'title' => 'security_controls_show',
                 ],
                 [
-                    'id'    => '272',
+                    'id' => '272',
                     'title' => 'security_controls_delete',
                 ],
                 [
-                    'id'    => '273',
+                    'id' => '273',
                     'title' => 'security_controls_access',
                 ],
 
 
                 [
-                    'id'    => '274',
+                    'id' => '274',
                     'title' => 'data_processing_register_create',
                 ],
                 [
-                    'id'    => '275',
+                    'id' => '275',
                     'title' => 'data_processing_register_edit',
                 ],
                 [
-                    'id'    => '276',
+                    'id' => '276',
                     'title' => 'data_processing_register_show',
                 ],
                 [
-                    'id'    => '277',
+                    'id' => '277',
                     'title' => 'data_processing_register_delete',
                 ],
                 [
-                    'id'    => '278',
+                    'id' => '278',
                     'title' => 'data_processing_register_access',
                 ],
 
@@ -149,9 +149,9 @@ class AddGdprTables extends Migration
 
             // Add permissions in roles :
             // Admin
-            Role::findOrFail(1)->permissions()->sync([268,269,270,271,272,273,274,275,276,277,278], false);
+            Role::findOrFail(1)->permissions()->sync([268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([268,271,273,276,278], false);
+            Role::findOrFail(3)->permissions()->sync([268, 271, 273, 276, 278], false);
         }
     }
 
@@ -163,7 +163,7 @@ class AddGdprTables extends Migration
     public function down()
     {
         // delete access rights
-        if (Permission::count()>0) 
+        if (Permission::count() > 0)
             DB::delete("delete from permissions where id in (268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278)");
 
         // delete tables

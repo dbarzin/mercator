@@ -4,9 +4,10 @@ FROM php:8.2-fpm-alpine3.16
 # and .env file
 ENV DB_CONNECTION=sqlite
 ENV DB_DATABASE=/var/www/mercator/db.sqlite
+ENV SERVER_NAME="127.0.0.1 localhost"
 
 # system deps
-RUN apk update && apk add curl nano bash ssmtp graphviz ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev nginx supervisor
+RUN apk update && apk add curl nano bash ssmtp graphviz ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev nginx gettext supervisor
 
 # php deps
 RUN apk add php8-zip \
@@ -40,12 +41,12 @@ WORKDIR /var/www/mercator
 # add mercator:www user
 RUN addgroup -S www && \
   adduser -S mercator -G www && \
-  chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx 
+  chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
 # RUN chown -R mercator:www 
 
-RUN cp docker/nginx.conf /etc/nginx/http.d/mercator.conf
+RUN mkdir -p /etc/nginx/templates && cp docker/nginx.conf /etc/nginx/templates/mercator.conf
 RUN cp docker/supervisord.conf /etc/supervisord.conf 
 
 USER mercator:www
@@ -58,4 +59,3 @@ EXPOSE 8000
 
 CMD ["/usr/bin/supervisord"]
 
-# APP_KEY="${APP_KEY:-base64:$(head -c 32 /dev/urandom|base64)}" php artisan serve --host=0.0.0.0 --port=8000
