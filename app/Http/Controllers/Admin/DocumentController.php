@@ -47,19 +47,11 @@ class DocumentController extends Controller
         // Move the file to storage
         $file->move(storage_path('docs'), $document->id);
 
-        // Attach the document to the object
-        if ($request->get('activity') !== null) {
-            $document->activities()->attach($request->get('activity'));
-        } else {
-            // or to the session
-            $documents = session()->get('documents');
-            if ($documents === null) {
-                $document = [$document->id];
-            } else {
-                array_push($documents, $document->id);
-            }
-            session()->put('documents', $documents);
-        }
+        // Attach the document to the session
+        $documents = session()->get('documents');
+        array_push($documents, $document->id);
+
+        session()->put('documents', $documents);
 
         // Return success
         return response()->json(
@@ -104,8 +96,8 @@ class DocumentController extends Controller
 
     public function stats()
     {
-        $count = Document::All()->count();
-        $sum = Document::All()->sum('size');
+        $count = Document::count();
+        $sum = Document::sum('size');
 
         return view('admin.config.documents')
             ->with('count', $count)
