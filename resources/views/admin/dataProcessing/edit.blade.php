@@ -106,8 +106,8 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="processes" multiple>
-                    @foreach($processes as $id => $identifiant)
-                        <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $dataProcessing->processes->contains($id)) ? 'selected' : '' }}>{{ $identifiant }}</option>
+                    @foreach($processes as $process)
+                        <option value="{{ $process->id }}" {{ (in_array($process->id, old('processes', [])) || $dataProcessing->processes->contains($process->id)) ? 'selected' : '' }}>{{ $process->identifiant }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('processes'))
@@ -126,8 +126,8 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
-                    @foreach($applications as $id => $name)
-                        <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $dataProcessing->applications->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                    @foreach($applications as $app)
+                        <option value="{{ $app->id }}" {{ (in_array($app->id, old('processes', [])) || $dataProcessing->applications->contains($app->id)) ? 'selected' : '' }}>{{ $app->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('applications'))
@@ -145,8 +145,8 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('informations') ? 'is-invalid' : '' }}" name="informations[]" id="informations" multiple>
-                    @foreach($informations as $id => $name)
-                        <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $dataProcessing->informations->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                    @foreach($informations as $info)
+                        <option value="{{ $info->id }}" {{ (in_array($info->id, old('processes', [])) || $dataProcessing->informations->contains($info->id)) ? 'selected' : '' }}>{{ $info->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('informations'))
@@ -249,7 +249,7 @@ var image_uploader = new Dropzone("#dropzoneFileUpload", {
             init: function () {
             //Add existing files into dropzone            
             var existingFiles = [
-                @foreach(session()->get("documents") as $document)
+                @foreach($dataProcessing->documents as $document)
                     { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },                    
                 @endforeach
             ];

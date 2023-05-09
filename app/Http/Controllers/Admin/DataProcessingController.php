@@ -13,6 +13,8 @@ use App\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
+use Illuminate\Support\Collection;
+
 class DataProcessingController extends Controller
 {
     public function index()
@@ -46,7 +48,9 @@ class DataProcessingController extends Controller
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
+
         $dataProcessing->documents()->sync(session()->get('documents'));
+        
         session()->forget('documents');
 
         return redirect()->route('admin.data-processing.index');
@@ -56,14 +60,16 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_register_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::orderBy('identifiant')->get()->pluck('identifiant', 'id');
-        $informations = Information::orderBy('name')->get()->pluck('name', 'id');
-        $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
-        session()->put('documents', $dataProcessing->documents()->get());
+        $processes = Process::select(['id', 'identifiant'])->orderBy('identifiant')->get();
+        $informations = Information::select(['id', 'name'])->orderBy('name')->get();
+        $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
+        
+        $dataProcessing->load('applications', 'informations', 'processes', 'documents');
 
-        //dd(session()->get("documents"));
-
-        $dataProcessing->load('applications', 'informations', 'processes');
+        $documents = [];
+        foreach ($dataProcessing->documents as $doc) 
+            array_push($documents, $doc->id);
+        session()->put('documents', $documents);
 
         return view(
             'admin.dataProcessing.edit',
@@ -77,7 +83,9 @@ class DataProcessingController extends Controller
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
+
         $dataProcessing->documents()->sync(session()->get('documents'));
+
         session()->forget('documents');
 
         return redirect()->route('admin.data-processing.index');
