@@ -37,6 +37,11 @@ class AuthServiceProvider extends ServiceProvider
         if (env('LDAP_DOMAIN')) {
             // LDAP Restrictions on connection
             LDAPuser::addGlobalScope(new OnlyOrgUnitUser());
+
+            // Token expires after 4 hours
+            Passport::tokensExpireIn(now()->addHours(4));
+            Passport::refreshTokensExpireIn(now()->addHours(4));
+            Passport::personalAccessTokensExpireIn(now()->addHours(4));        
         }
 
         /*
