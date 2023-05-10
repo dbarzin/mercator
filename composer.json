@@ -1,55 +1,31 @@
 {
-    "name": "dbarzin/mercator",
+    "name": "laravel/laravel",
     "type": "project",
-    "description": "Cartographie du systeme d'information / Mapping the information system",
-    "keywords": [
-        "information system",
-        "cartography",
-        "oiv",
-        "security tool",
-        "anssi",
-        "urbanisation"
-    ],
-    "license": "GPL-3.0-or-later",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "bugsnag/bugsnag-laravel": "^2.18",
-        "directorytree/ldaprecord-laravel": "^2.5",
-        "doctrine/dbal": "^2.10",
-        "fideloper/proxy": "^4.2",
-        "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
-        "laravel/passport": "^10.3",
-        "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0",
-        "nunomaduro/larastan": "*.*",
-        "phpoffice/phpspreadsheet": "^1.14",
-        "phpoffice/phpword": "^0.18.0",
-        "yajra/laravel-datatables": "^1.5",
-        "yajra/laravel-datatables-oracle": "^9.11",
-        "orangehill/iseed": "^3.0.3"
+        "php": "^8.1",
+        "directorytree/ldaprecord-laravel": "^2.7",
+        "enyo/dropzone": "^5.9",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^10.0",
+        "laravel/passport": "^11.8",
+        "laravel/sanctum": "^3.2",
+        "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.2",
+        "maatwebsite/excel": "^3.1",
+        "phpoffice/phpword": "^1.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.10",
-        "facade/ignition": "^2.3.6",
-        "laravel/dusk": "^6.15",
-        "mockery/mockery": "^1.3.1",
-        "nunomaduro/phpinsights": "^2.5",
-        "phpunit/phpunit": "^9.0"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
+        "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.18",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^7.0",
+        "nunomaduro/phpinsights": "^2.8",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -63,12 +39,13 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -76,5 +53,22 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

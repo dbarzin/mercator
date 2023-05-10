@@ -29,10 +29,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        if (! app()->runningInConsole()) {
-            Passport::routes();
-        }
+        //if (! app()->runningInConsole()) {
+        //    Passport::routes();
+        //}
 
         // if LDAP activated
         if (env('LDAP_DOMAIN')) {
