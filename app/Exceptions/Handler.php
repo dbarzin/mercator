@@ -5,8 +5,6 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
-use Illuminate\Auth\AuthenticationException;
-
 class Handler extends ExceptionHandler
 {
     /**
@@ -15,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthenticationException::class,
+
     ];
 
     /**
@@ -31,7 +29,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param  \Throwable $exception
      *
      * @return void
      *
@@ -43,23 +41,17 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Register new exceptions
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Throwable               $exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
      */
-    public function register()
+    public function render($request, Throwable $exception)
     {
-        // reportable
-        $this->renderable(function (Throwable $e) {
-            return response(['error' => $e->getMessage()], $e->getCode() ? null : 400);
-        });
+        return parent::render($request, $exception);
     }
-
-    protected function unauthenticated($request, AuthenticationException $exception) 
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-
-        return redirect()->guest('login');
-    }
-
 }
