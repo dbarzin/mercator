@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
+use Illuminate\Auth\AuthenticationException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -13,7 +15,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-
+        AuthenticationException::class,
     ];
 
     /**
@@ -50,4 +52,14 @@ class Handler extends ExceptionHandler
             return response(['error' => $e->getMessage()], $e->getCode() ? null : 400);
         });
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception) 
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        return redirect()->guest('login');
+    }
+
 }

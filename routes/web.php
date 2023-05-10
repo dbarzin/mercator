@@ -18,7 +18,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
