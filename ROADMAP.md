@@ -38,12 +38,12 @@ Changements prévus en 2023 :
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Intégration des données de la cartographie dans syslog
-- [ ] Revoir le modèle des pages web
+- [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
 
 ## Evolutions mineurs
 
 - [ ] Packaging des librairies javascript avec [Laravel Mix](https://laravel-mix.com/).
-- [ ] Mise à jour du framework vers [Laravel 10.x](https://laravel.com/docs/10.x)
+- [x] Mise à jour du framework vers [Laravel 10.x](https://laravel.com/docs/10.x)
 - [ ] Dessiner un nouveu jeu d'icônes en SVG
 - [ ] Améliorer la documentation, notemment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
