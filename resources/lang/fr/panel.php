@@ -26,6 +26,7 @@ return [
         'ecosystem' => 'Ecosystème',
         'explore' => 'Exploration',
         'guide' => 'Guide',
+        'gdpr' => 'RGPD',
         'information_system' => "Système d'information",
         'logical_infrastructure' => 'Infrastructure logique',
         'network_infrastructure' => 'Infrastructure réseau',

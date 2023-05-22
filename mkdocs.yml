@@ -4,6 +4,7 @@ nav:
     - Introduction: index.md
     - Cartographie: cartography.md
     - Application: application.md
+    - Cas d'utilisation: usecases.md
     - Modèle de données: model.md
     - Rapports: reports.md
     - Administration: admin.md

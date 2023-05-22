@@ -57,47 +57,64 @@
         </button>
 
         <ul class="nav navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ trans('panel.views') }}
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="/admin/report/ecosystem">{{ trans('panel.menu.ecosystem') }}</a>
-                      <a class="dropdown-item" href="/admin/report/information_system">{{ trans('panel.menu.information_system') }}</a>
-                      <a class="dropdown-item" href="/admin/report/applications">{{ trans('panel.menu.applications') }}</a>
-                      <a class="dropdown-item" href="/admin/report/application_flows">{{ trans('panel.menu.application_flows') }}</a>
-                      <a class="dropdown-item" href="/admin/report/administration">{{ trans('panel.menu.administration') }}</a>
-                      <a class="dropdown-item" href="/admin/report/logical_infrastructure">{{ trans('panel.menu.logical_infrastructure') }}</a>
-                      <a class="dropdown-item" href="/admin/report/physical_infrastructure">{{ trans('panel.menu.physical_infrastructure') }}</a>
-                      @can('physical_link_access')
-                        <a class="dropdown-item" href="/admin/report/network_infrastructure">{{ trans('panel.menu.network_infrastructure') }}</a>
-                      @endcan
-                    </div>
-                </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ trans('panel.views') }}
+                </a>
+                <div class="dropdown-menu">
+                @can('gdpr_access')
+                <a class="dropdown-item" href="/admin/report/gdpr">{{ trans('panel.menu.gdpr') }}</a>
+                @endcan
+                @can('ecosystem_access')
+                <a class="dropdown-item" href="/admin/report/ecosystem">{{ trans('panel.menu.ecosystem') }}</a>
+                @endcan
+                @can('metier_access')
+                <a class="dropdown-item" href="/admin/report/information_system">{{ trans('panel.menu.information_system') }}</a>
+                @endcan
+                @can('application_access')
+                <a class="dropdown-item" href="/admin/report/applications">{{ trans('panel.menu.applications') }}</a>
+                @can('flux_access')
+                <a class="dropdown-item" href="/admin/report/application_flows">{{ trans('panel.menu.application_flows') }}</a>
+                @endcan
+                @endcan
+                @can('administration_access')
+                <a class="dropdown-item" href="/admin/report/administration">{{ trans('panel.menu.administration') }}</a>
+                @endcan
+                @can('infrastructure_access')
+                <a class="dropdown-item" href="/admin/report/logical_infrastructure">{{ trans('panel.menu.logical_infrastructure') }}</a>
+                @endcan
+                @can('physicalinfrastructure_access')
+                <a class="dropdown-item" href="/admin/report/physical_infrastructure">{{ trans('panel.menu.physical_infrastructure') }}</a>
+                @endcan
+                @can('physical_link_access')
+                <a class="dropdown-item" href="/admin/report/network_infrastructure">{{ trans('panel.menu.network_infrastructure') }}</a>
+                @endcan
+                </div>
+            </li>
 
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      &nbsp {{ trans('panel.menu.preferences') }}
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="/profile/preferences">{{ trans('panel.menu.options') }}</a>
-                      <a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a>
-                    </div>
-                </li>
-                </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  &nbsp {{ trans('panel.menu.preferences') }}
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/profile/preferences">{{ trans('panel.menu.options') }}</a>
+                  <a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a>
+                </div>
+            </li>
+            </li>
 
-                <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      &nbsp {{ trans('panel.menu.documentation') }}
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="/admin/report/explore">{{ trans('panel.menu.explore') }}</a>
-                      <a class="dropdown-item" href="/admin/doc/report">{{ trans('panel.menu.reports') }}</a>
-                      <a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a>
-                      <a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a>
-                      <a class="dropdown-item" href="/admin/doc/about">{{ trans('panel.menu.about') }}</a>
-                    </div>
-                </li>
+            <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  &nbsp {{ trans('panel.menu.documentation') }}
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/admin/report/explore">{{ trans('panel.menu.explore') }}</a>
+                  <a class="dropdown-item" href="/admin/doc/report">{{ trans('panel.menu.reports') }}</a>
+                  <a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a>
+                  <a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a>
+                  <a class="dropdown-item" href="/admin/doc/about">{{ trans('panel.menu.about') }}</a>
+                </div>
+            </li>
         </ul>
     </header>
 
