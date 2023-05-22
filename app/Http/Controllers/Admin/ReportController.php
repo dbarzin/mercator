@@ -8,8 +8,8 @@ use App\Activity;
 use App\Actor;
 use App\Annuaire;
 use App\ApplicationBlock;
-// information system
 use App\ApplicationModule;
+// information system
 use App\ApplicationService;
 use App\Bay;
 use App\Building;
@@ -68,6 +68,133 @@ class ReportController extends Controller
     public const ALLOWED_PERIMETERS = ['All','Internes','Externes'];
     public const SANITIZED_PERIMETER = 'All';
 
+    /*
+    * GDPR
+    */
+    public function gdpr(Request $request)
+    {
+        if ($request->macroprocess === null) {
+            $request->session()->put('macroprocess', null);
+            $macroprocess = null;
+            $request->session()->put('process', null);
+            $process = null;
+        } else {
+            if ($request->macroprocess !== null) {
+                $macroprocess = intval($request->macroprocess);
+                $request->session()->put('macroprocess', $macroprocess);
+            } else {
+                $macroprocess = $request->session()->get('macroprocess');
+            }
+
+            if ($request->process === null) {
+                $request->session()->put('process', null);
+                $process = null;
+            } elseif ($request->process !== null) {
+                $process = intval($request->process);
+                $request->session()->put('process', $process);
+            } else {
+                $process = $request->session()->get('process');
+            }
+        }
+
+        // All macroprocess with process having a data_processing
+        $all_macroprocess = MacroProcessus::orderBy('name')
+            ->whereExists(function ($query) {
+                $query->select('processes.id')
+                    ->from('processes')
+                    ->join('data_processing_process', 'processes.id', '=', 'data_processing_process.process_id')
+                    ->whereRaw('macro_processuses.id = processes.macroprocess_id');
+            })
+            ->get();
+
+        if ($macroprocess !== null) {
+            $macroProcessuses = MacroProcessus::
+                where('id', $macroprocess)
+                    ->get();
+
+            $all_process = Process::orderBy('identifiant')
+                ->where('macroprocess_id', $macroprocess)
+                ->whereExists(function ($query) {
+                    $query->select('data_processing_process.process_id')
+                        ->from('data_processing_process')
+                        ->whereRaw('data_processing_process.process_id = processes.id');
+                })
+                ->get();
+
+            if ($process !== null) {
+                // Data processing of this process
+                $dataProcessings = DataProcessing::orderBy('name')
+                    ->whereExists(function ($query) use ($process) {
+                        $query->select('data_processing_id')
+                            ->from('data_processing_process')
+                            ->where('data_processing_process.process_id', $process)
+                            ->whereRaw('data_processing_process.data_processing_id = data_processing.id');
+                    })
+                    ->get();
+
+                $processes = Process::where('id', $process)->get();
+            } else {
+                // Data processing for this macroprocess
+                $dataProcessings = DataProcessing::orderBy('name')
+                    ->whereExists(function ($query) use ($macroprocess) {
+                        $query->select('data_processing_id')
+                            ->from('data_processing_process')
+                            ->join('processes', 'processes.id', 'data_processing_process.process_id')
+                            ->where('processes.macroprocess_id', $macroprocess)
+                            ->whereRaw('data_processing_process.data_processing_id = data_processing.id');
+                    })
+                    ->get();
+                $processes = $all_process;
+            }
+        } else {
+            // only macroProcesses with data processisng
+            $macroProcessuses = MacroProcessus::orderBy('name')
+                ->whereExists(function ($query) {
+                    $query->select('processes.id')
+                        ->from('processes')
+                        ->join('data_processing_process', 'data_processing_process.process_id', '=', 'processes.id')
+                        ->whereRaw('processes.macroprocess_id = macro_processuses.id');
+                })
+                ->get();
+
+            // only process with data processisng
+            $processes = Process::orderBy('identifiant')
+                ->whereExists(function ($query) {
+                    $query->select('data_processing_id')
+                        ->from('data_processing_process')
+                        ->whereRaw('data_processing_process.process_id = processes.id');
+                })
+                ->get();
+
+            $dataProcessings = DataProcessing::orderBy('name')->get();
+
+            $all_process = Process::orderBy('identifiant')
+                ->where('macroprocess_id', $macroprocess)
+                ->whereExists(function ($query) {
+                    $query->select('data_processing_process.process_id')
+                        ->from('data_processing_process')
+                        ->whereRaw('data_processing_process.process_id = processes.id');
+                })
+                ->get();
+        }
+
+        // Select applications
+        $applications = MApplication
+            ::join('data_processing_m_application', 'm_application_id', 'm_applications.id')
+                ->wherein('data_processing_id', $dataProcessings->pluck('id')->all())->get();
+
+        return view('admin/reports/gdpr')
+            ->with('all_macroprocess', $all_macroprocess)
+            ->with('macroProcessuses', $macroProcessuses)
+            ->with('processes', $processes)
+            ->with('all_process', $all_process)
+            ->with('dataProcessings', $dataProcessings)
+            ->with('applications', $applications);
+    }
+
+    /*
+    * Ecosystem View
+    */
     public function ecosystem(Request $request)
     {
         $perimeter = in_array($request->perimeter, $this::ALLOWED_PERIMETERS) ?
@@ -153,10 +280,7 @@ class ReportController extends Controller
         $all_macroprocess = MacroProcessus::All()->sortBy('name');
 
         if ($macroprocess !== null) {
-            $macroProcessuses = MacroProcessus::All()->sortBy('name')
-                ->filter(function ($item) use ($macroprocess) {
-                    return $item->id === $macroprocess;
-                });
+            $macroProcessuses = MacroProcessus::where('macro_processuses.id', $macroprocess)->get();
 
             // TODO : improve me
             $processes = Process::All()->sortBy('identifiant')

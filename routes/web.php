@@ -248,6 +248,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('config/cve/save', [Admin\ConfigurationController::class,'saveCVEConfig'])->name('config.cve.save');
 
     // Views
+    // TODO : create a new class ViewController to reduce size of ReportController
+    Route::get('report/gdpr', [Admin\ReportController::class, 'gdpr'])->name('report.gdpr');
     Route::get('report/ecosystem', [Admin\ReportController::class,'ecosystem'])->name('report.view.ecosystem');
     Route::get('report/information_system', [Admin\ReportController::class,'informationSystem'])->name('report.view.informaton-system');
     Route::get('report/administration', [Admin\ReportController::class,'administration'])->name('report.view.administration');

@@ -26,6 +26,7 @@ return [
         'ecosystem' => 'Ecosystem',
         'explore' => 'Exploration',
         'guide' => 'Guide',
+        'gdpr' => 'GDPR',
         'information_system' => 'Information system',
         'network_schema' => 'Network schema',
         'logical_infrastructure' => 'Logical infrastructure',

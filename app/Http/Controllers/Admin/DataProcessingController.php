@@ -13,8 +13,6 @@ use App\Process;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-use Illuminate\Support\Collection;
-
 class DataProcessingController extends Controller
 {
     public function index()
@@ -50,7 +48,7 @@ class DataProcessingController extends Controller
         $dataProcessing->applications()->sync($request->input('applications', []));
 
         $dataProcessing->documents()->sync(session()->get('documents'));
-        
+
         session()->forget('documents');
 
         return redirect()->route('admin.data-processing.index');
@@ -63,12 +61,13 @@ class DataProcessingController extends Controller
         $processes = Process::select(['id', 'identifiant'])->orderBy('identifiant')->get();
         $informations = Information::select(['id', 'name'])->orderBy('name')->get();
         $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
-        
+
         $dataProcessing->load('applications', 'informations', 'processes', 'documents');
 
         $documents = [];
-        foreach ($dataProcessing->documents as $doc) 
+        foreach ($dataProcessing->documents as $doc) {
             array_push($documents, $doc->id);
+        }
         session()->put('documents', $documents);
 
         return view(
