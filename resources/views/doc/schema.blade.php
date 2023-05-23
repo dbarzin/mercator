@@ -28,6 +28,9 @@
 <script>
     d3.select("#graph").graphviz()
 
+    .addImage("/images/dataprocessing.png", "64px", "64px")
+    .addImage("/images/security-control.png", "64px", "64px")
+
     .addImage("/images/entity.png", "64px", "64px")
     .addImage("/images/relation.png", "64px", "64px")
 
@@ -66,6 +69,7 @@
 
     .addImage("/images/vlan.png", "64px", "64px")
 
+
     .width(window.innerWidth - 250)
     .height(window.innerHeight - 250)
     .renderDot(`
@@ -78,8 +82,8 @@
           graph[style=dotted];
           href="/admin/report/ecosystem" 
           shape = "Mrecord"
-          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/none.png" href="/admin/entities"]
-          CONTROL [label="{{ trans('cruds.securityControl.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/none.png" href="/admin/relations"]
+          CONTROL [label="{{ trans('cruds.securityControl.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/security-control.png" href="/admin/security-controls"]
+          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/dataprocessing.png" href="/admin/data-processing"]
           }
         subgraph clusterA {
           label="{{ trans('cruds.report.cartography.ecosystem') }}"

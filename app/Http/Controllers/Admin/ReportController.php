@@ -119,6 +119,8 @@ class ReportController extends Controller
                 ->whereExists(function ($query) {
                     $query->select('data_processing_process.process_id')
                         ->from('data_processing_process')
+                        ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
+                        ->whereNull('data_processing.deleted_at')
                         ->whereRaw('data_processing_process.process_id = processes.id');
                 })
                 ->get();
@@ -155,6 +157,8 @@ class ReportController extends Controller
                     $query->select('processes.id')
                         ->from('processes')
                         ->join('data_processing_process', 'data_processing_process.process_id', '=', 'processes.id')
+                        ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
+                        ->whereNull('data_processing.deleted_at')
                         ->whereRaw('processes.macroprocess_id = macro_processuses.id');
                 })
                 ->get();
@@ -164,6 +168,8 @@ class ReportController extends Controller
                 ->whereExists(function ($query) {
                     $query->select('data_processing_id')
                         ->from('data_processing_process')
+                        ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
+                        ->whereNull('data_processing.deleted_at')
                         ->whereRaw('data_processing_process.process_id = processes.id');
                 })
                 ->get();
