@@ -103,6 +103,8 @@ class ReportController extends Controller
                 $query->select('processes.id')
                     ->from('processes')
                     ->join('data_processing_process', 'processes.id', '=', 'data_processing_process.process_id')
+                    ->join('data_processing', 'data_processing_process.data_processing_id', '=', 'data_processing.id')
+                    ->whereNull('data_processing.deleted_at')
                     ->whereRaw('macro_processuses.id = processes.macroprocess_id');
             })
             ->get();
