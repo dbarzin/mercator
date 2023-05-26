@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route('admin.security-controls.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.securityControl.title_singular') }}
             </a>
+        &nbsp;
+            <a class="btn btn-success" href="{{ route('admin.security-controls.assign') }}">
+                Assigner des Mesures de sécurité
+            </a>
         </div>
     </div>
 @endcan

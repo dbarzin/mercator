@@ -40,8 +40,6 @@ class ApplicationController extends Controller
     {
         abort_if(Gate::denies('application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Log::debug('id=' . $application->id);
-
         return new ApplicationResource($application);
     }
 

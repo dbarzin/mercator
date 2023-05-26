@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
+
 use App\SecurityControl;
+
+use App\MApplication;
+use App\Process;
+
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use  Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class SecurityControlController extends Controller
 {
@@ -56,6 +63,28 @@ class SecurityControlController extends Controller
         return view('admin.securityControls.show', compact('securityControl'));
     }
 
+    public function assign(Request $request)
+    {
+        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
+        $processes = Process::All()->sortBy('identifiant')->pluck('identifiant', 'id');
+
+        // Create items
+        $items = Collection::make();
+        foreach ($applications as $key => $value) {
+            $items->put('APP_' . $key, $value);
+        }
+        foreach ($processes as $key => $value) {
+            $items->put('PR_' . $key, $value);
+        }
+
+        // Get all security controls
+        $controls = SecurityControl::All()->sortBy('name');
+
+        return view('admin.securityControls.assign', compact('items','controls'));
+    }
+
     public function destroy(SecurityControl $securityControl)
     {
         abort_if(Gate::denies('security_controls_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -64,6 +93,8 @@ class SecurityControlController extends Controller
 
         return redirect()->route('admin.security-controls.index');
     }
+
+
 
     public function massDestroy(MassDestroySecurityControlRequest $request)
     {
