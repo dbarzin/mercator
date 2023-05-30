@@ -71,19 +71,72 @@ class SecurityControlController extends Controller
         $processes = Process::All()->sortBy('identifiant')->pluck('identifiant', 'id');
 
         // Create items
-        $items = Collection::make();
+        $apps = Collection::make();
         foreach ($applications as $key => $value) {
-            $items->put('APP_' . $key, $value);
+            $apps->put('APP_' . $key, $value);
         }
+        $procs = Collection::make();
         foreach ($processes as $key => $value) {
-            $items->put('PR_' . $key, $value);
+            $procs->put('PR_' . $key, $value);
         }
 
         // Get all security controls
         $controls = SecurityControl::All()->sortBy('name');
 
-        return view('admin.securityControls.assign', compact('items','controls'));
+        return view('admin.securityControls.assign', compact('apps','procs', 'controls'));
     }
+
+    public function associate(Request $request)
+    {
+        abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $controls = Array();
+        foreach($request->request as $key => $value) {
+            if (str_starts_with($key,"CTRL_")) {
+                array_push($controls,substr($key,5));
+            }
+        }
+
+        $source=$request->get("source");
+        if (str_starts_with($source,'APP_')) {
+            $app=MApplication::where('id',substr($source,4))->get()->first();
+            $app->securityControls()->sync($controls);
+        }
+        elseif (str_starts_with($source,'PR_')) {
+            $process=Process::where('id',substr($source,3))->get()->first();
+            $process->securityControls()->sync($controls);
+        }
+        else
+            return;
+
+        return redirect()->route('admin.security-controls.assign');
+    }
+
+    public function list(Request $request) {
+        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        //http://127.0.0.1:8000/admin/security-controls-list?id=APP_2
+
+        // Get control list of object base on the ID
+        if (str_starts_with($request->id,'APP_')) {
+            $list=MApplication::where('id',substr($request->id,4))->get()->first()->securityControls;
+        }
+        elseif (str_starts_with($request->id,'PR_')) {
+            $list=Process::where('id',substr($request->id,3))->get()->first()->securityControls;
+        }
+        else
+            // Invalid ID
+            return;
+
+        // Construct the control list
+        $controls = Array();
+        foreach($list as $item) 
+            array_push($controls,"CTRL_" . $item->id);
+
+        // return JSON
+        return response()->json(compact('controls'));
+    }
+
 
     public function destroy(SecurityControl $securityControl)
     {

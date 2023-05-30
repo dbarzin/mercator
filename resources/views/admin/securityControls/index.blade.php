@@ -33,10 +33,6 @@
                             {{ trans('cruds.securityControl.fields.description') }}
                         </th>
                         <th>
-
-                        </th>
-                        <th>
-                            &nbsp;
                         </th>
                     </tr>
                 </thead>
@@ -53,10 +49,6 @@
                             </td>
                             <td>
                                 {{ $control->description ?? '' }}
-                            </td>
-                            <td>
-
-
                             </td>
                             <td>
                                 @can('task_show')

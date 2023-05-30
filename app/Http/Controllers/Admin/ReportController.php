@@ -1756,32 +1756,77 @@ class ReportController extends Controller
         $footer = $section->addFooter();
         $footer->addPreserveText('{PAGE} / {NUMPAGES}', ['size' => 8], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 
-        $processes = DataProcessing::orderBy('name')->get();
-        foreach ($processes as $process) {
+        $register = DataProcessing::orderBy('name')->get();
+        foreach ($register as $dataProcessing) {
             // schema
-            $section->addTitle($process->name, 1);
-            $this->addText($section, $process->description);
+            $section->addTitle($dataProcessing->name, 1);
+            $this->addText($section, $dataProcessing->description);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.responsible'), 2);
-            $this->addText($section, $process->responsible);
+            $this->addText($section, $dataProcessing->responsible);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.purpose'), 2);
-            $this->addText($section, $process->purpose);
+            $this->addText($section, $dataProcessing->purpose);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.categories'), 2);
-            $this->addText($section, $process->categories);
+            $this->addText($section, $dataProcessing->categories);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.recipients'), 2);
-            $this->addText($section, $process->recipients);
+            $this->addText($section, $dataProcessing->recipients);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.transfert'), 2);
-            $this->addText($section, $process->transfert);
+            $this->addText($section, $dataProcessing->transfert);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.retention'), 2);
-            $this->addText($section, $process->retention);
+            $this->addText($section, $dataProcessing->retention);
 
-            $section->addTitle(trans('cruds.dataProcessing.fields.controls'), 2);
-            $this->addText($section, $process->controls);
+            // Processes
+            $section->addTitle(trans('cruds.dataProcessing.fields.processes'), 2);
+            $txt = '<ul>';
+            foreach ($dataProcessing->processes as $p) {
+                $txt .= '<li>' . $p->identifiant . '</li>';
+                }
+            $txt .= '</ul>';            
+            $this->addText($section, $txt);
+
+            // Applications
+            $section->addTitle(trans('cruds.dataProcessing.fields.applications'), 2);
+            $txt = '<ul>';
+            foreach ($dataProcessing->applications as $ap) {
+                $txt .= '<li>' . $ap->name . '</li>';
+                }
+            $txt .= '</ul>';            
+            $this->addText($section, $txt);
+
+            // Informations
+            $section->addTitle(trans('cruds.dataProcessing.fields.information'), 2);
+            $txt = '<ul>';
+            foreach ($dataProcessing->informations as $inf) {
+                $txt .= '<li>' . $inf->name . '</li>';
+                }
+            $txt .= '</ul>';            
+            $this->addText($section, $txt);
+
+            // Security Controls
+            $section->addTitle(trans('cruds.dataProcessing.fields.security_controls'), 2);
+            // TODO : improve me
+            $allControls = Collect();
+            foreach($dataProcessing->processes as $process)
+                foreach ($process->securityControls as $sc) {
+                    $allControls->push($sc->name);
+                }
+            foreach($dataProcessing->applications as $app)
+                foreach ($app->securityControls as $sc) {
+                    $allControls->push($sc->name);
+                }
+            $allControls->unique();
+            $txt = '<ul>';
+            foreach ($allControls as $control) {
+                $txt .= '<li>' . $control . '</li>';
+                }
+            $txt .= '</ul>';            
+            $this->addText($section, $txt);
+
         }
 
         // Finename
@@ -1810,11 +1855,10 @@ class ReportController extends Controller
             trans('cruds.dataProcessing.fields.recipients'),
             trans('cruds.dataProcessing.fields.transfert'),
             trans('cruds.dataProcessing.fields.retention'),
-            trans('cruds.dataProcessing.fields.controls'),
             trans('cruds.dataProcessing.fields.processes'),
             trans('cruds.dataProcessing.fields.applications'),
-            trans('cruds.dataProcessing.fields.databases'),
             trans('cruds.dataProcessing.fields.information'),
+            trans('cruds.dataProcessing.fields.security_controls'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -1846,44 +1890,62 @@ class ReportController extends Controller
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
-        // Populate the Timesheet
+        // Populate 
         $row = 2;
-        foreach ($register as $process) {
-            $sheet->setCellValue("A{$row}", $process->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($process->description));
-            $sheet->setCellValue("C{$row}", $html->toRichTextObject($process->responsible));
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($process->purpose));
-            $sheet->setCellValue("E{$row}", $html->toRichTextObject($process->categories));
-            $sheet->setCellValue("F{$row}", $html->toRichTextObject($process->recipients));
-            $sheet->setCellValue("G{$row}", $html->toRichTextObject($process->transfert));
-            $sheet->setCellValue("H{$row}", $html->toRichTextObject($process->retention));
-            $sheet->setCellValue("I{$row}", $html->toRichTextObject($process->controls));
+        foreach ($register as $dataProcessing) {
+            $sheet->setCellValue("A{$row}", $dataProcessing->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($dataProcessing->description));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($dataProcessing->responsible));
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($dataProcessing->purpose));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($dataProcessing->categories));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($dataProcessing->recipients));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->transfert));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->retention));
 
+            // processes
             $txt = '';
-            foreach ($process->processes as $p) {
+            foreach ($dataProcessing->processes as $p) {
                 $txt .= $p->identifiant;
-                if ($process->processes->last() !== $p) {
+                if ($dataProcessing->processes->last() !== $p) {
+                    $txt .= ', ';
+                }
+            }
+            $sheet->setCellValue("I{$row}", $txt);
+
+            // Applications
+            $txt = '';
+            foreach ($dataProcessing->applications as $application) {
+                $txt .= $application->name;
+                if ($dataProcessing->applications->last() !== $application) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("J{$row}", $txt);
 
+            // Informations
             $txt = '';
-            foreach ($process->applications as $application) {
-                $txt .= $application->name;
-                if ($process->applications->last() !== $application) {
+            foreach ($dataProcessing->informations as $information) {
+                $txt .= $information->name;
+                if ($dataProcessing->informations->last() !== $information) {
                     $txt .= ', ';
                 }
             }
             $sheet->setCellValue("K{$row}", $txt);
 
-            $txt = '';
-            foreach ($process->informations as $information) {
-                $txt .= $information->name;
-                if ($process->informations->last() !== $information) {
-                    $txt .= ', ';
+            // TODO : improve me
+            $allControls = Collect();
+            foreach($dataProcessing->processes as $process)
+                foreach ($process->securityControls as $sc) {
+                    $allControls->push($sc->name);
                 }
-            }
+            foreach($dataProcessing->applications as $app)
+                foreach ($app->securityControls as $sc) {
+                    $allControls->push($sc->name);
+                }
+
+            $allControls->unique();
+            $txt = implode(', ', $allControls->toArray());
+
             $sheet->setCellValue("L{$row}", $txt);
 
             $row++;

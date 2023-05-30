@@ -219,6 +219,11 @@ class MApplication extends Model
         return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');
     }
 
+    public function securityControls()
+    {
+        return $this->belongsToMany(SecurityControl::class,'security_control_m_application')->orderBy("name");
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

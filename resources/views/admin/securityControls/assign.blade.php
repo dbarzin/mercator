@@ -1,0 +1,85 @@
+@extends('layouts.admin')
+@section('content')
+
+<div class="card">
+    <div class="card-header">
+        Assigner des mesures de sécurité
+    </div>
+
+    <div class="card-body">
+        <form method="POST" action="{{ route('admin.security-controls-associate') }}" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="required">Application / Processus</label>
+                        <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="source" id="source" onchange="">
+                            <option></option>
+                            <optgroup label="Processes">
+                            @foreach($procs as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                            </optgroup>
+                            <optgroup label="Applications">
+                            @foreach($apps as $id => $name)
+                                <option value="{{ $id }}">{{ $name }}</option>
+                            @endforeach
+                            </optgroup>
+                        </select>
+                        @if($errors->has('src_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('src_id') }}
+                            </div>
+                        @endif
+                        <span class="help-block">Objet de la mesure de sécurité</span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="recommended">Mesures de sécurité</label>
+                        <div id="checkboxes">
+                        @foreach($controls as $control)
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="{{ $control->id }}" name="CTRL_{{ $control->id }}">
+                          <label class="form-check-label">{{ $control->name }}</label>
+                        </div>
+                        @endforeach
+                        </div>
+
+                        @if($errors->has('src_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('dest_id') }}
+                            </div>
+                        @endif
+                        <span class="help-block">Liste des mesures de sécurité appliquée à l'objet</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            &nbsp;
+                <button class="btn btn-secondary" type="button"  onclick="window.location.href='/admin/security-controls'">
+                    {{ trans('global.back_to_list') }}
+                </button>
+            </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+
+$(document.body).on("change","#source",function(){
+    $(':checkbox').prop('checked', false); 
+    $.getJSON('/admin/security-controls-list?id='+$(this).prop('value'), function(data) {
+        data['controls'].forEach((x, i) => $("[name='"+x+"']").prop("checked", true));
+    });
+});
+
+</script>
+
+@endsection
