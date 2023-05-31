@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route('admin.security-controls.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.securityControl.title_singular') }}
             </a>
+        &nbsp;
+            <a class="btn btn-success" href="{{ route('admin.security-controls.assign') }}">
+                Assigner des Mesures de sécurité
+            </a>
         </div>
     </div>
 @endcan
@@ -29,10 +33,6 @@
                             {{ trans('cruds.securityControl.fields.description') }}
                         </th>
                         <th>
-
-                        </th>
-                        <th>
-                            &nbsp;
                         </th>
                     </tr>
                 </thead>
@@ -49,10 +49,6 @@
                             </td>
                             <td>
                                 {{ $control->description ?? '' }}
-                            </td>
-                            <td>
-
-
                             </td>
                             <td>
                                 @can('task_show')

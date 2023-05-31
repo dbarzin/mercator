@@ -127,6 +127,11 @@ class Process extends Model
         return $this->belongsTo(MacroProcessus::class, 'macroprocess_id');
     }
 
+    public function securityControls()
+    {
+        return $this->belongsToMany(SecurityControl::class,'security_control_process')->orderBy("name");
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

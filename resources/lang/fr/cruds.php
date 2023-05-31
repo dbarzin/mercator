@@ -354,6 +354,8 @@ return [
             'applications_helper' => '',
             'information' => 'Informations',
             'information_helper' => '',
+            'security_controls' => 'Mesures de sécurité',
+            'security_controls_helper' => 'Mesures de sécurité appliquées à ce traitement de données'
         ],
         'report_title' => 'Registre des traitements',
         'title' => 'Registre',

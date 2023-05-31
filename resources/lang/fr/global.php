@@ -46,6 +46,7 @@ return [
     'results_could_not_be_loaded' => "Le résultat n'a pas pu être chargé",
     'searching' => 'Recherche en cours',
     'select_all' => 'Tout sélectionner',
+    'save' => 'Sauver',
     'send' => 'Envoyer',
     'send_password' => 'Envoyer réinitialisation mot de passe',
     'show' => 'Afficher',

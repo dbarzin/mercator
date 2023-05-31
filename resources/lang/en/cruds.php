@@ -355,6 +355,8 @@ return [
             'applications' => 'Applications',
             'databases' => 'Databases',
             'information' => 'Information',
+            'security_controls' => 'Security measures',
+            'security_controls_helper' => 'Security measures applied to this data processing.'
         ],
         'title' => 'Register',
         'title_singular' => 'Data processing',
