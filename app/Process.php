@@ -129,7 +129,7 @@ class Process extends Model
 
     public function securityControls()
     {
-        return $this->belongsToMany(SecurityControl::class,'security_control_process')->orderBy("name");
+        return $this->belongsToMany(SecurityControl::class, 'security_control_process')->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

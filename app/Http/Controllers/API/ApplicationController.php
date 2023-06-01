@@ -9,7 +9,6 @@ use App\Http\Resources\Admin\ApplicationResource;
 use App\MApplication;
 use Gate;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
