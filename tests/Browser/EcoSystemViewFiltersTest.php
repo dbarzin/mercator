@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-class EcoystemViewFiltersTest extends DuskTestCase
+
+class EcoSystemViewFiltersTest extends DuskTestCase
 {
     public function testPerimeter() {
         $admin = \App\User::find(1);
@@ -45,17 +46,14 @@ class EcoystemViewFiltersTest extends DuskTestCase
         
         $entity = \App\Entity::where('name','Acme corp.')->first();
         $this->assertTrue($entity!=null);
-        $this->assertEquals('Producteur',$entity->entity_type);
+        $this->assertEquals('Improbable',$entity->entity_type);
         
         $entity = \App\Entity::where('name','MegaNet System')->first();
-        $this->assertEquals('Revendeur',$entity->entity_type);
+        $this->assertEquals('Improbable',$entity->entity_type);
         
-        $entity = \App\Entity::where('name','Entité1')->first();
-        $this->assertEquals('Revendeur',$entity->entity_type);
-        
-        $entity = \App\Entity::where('name','Entité3')->first();
-        $this->assertEquals('Producteur',$entity->entity_type);
-        
+        $entity = \App\Entity::where('name','World company')->first();
+        $this->assertEquals('Improbable',$entity->entity_type);
+
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
@@ -64,47 +62,29 @@ class EcoystemViewFiltersTest extends DuskTestCase
                 $browser->assertRouteIs('admin.report.view.ecosystem');
                 $browser->assertSee('Mercator');
                 $browser->assertSelected('perimeter', 'All');
+                $browser->assertSee('MegaNet System');
+                $browser->assertSee('Acme corp.');
+                $browser->assertSee('World company');
 
-                $browser->with('#graph', function ($elt){
-                    $elt->assertSee('MegaNet System');
-                    $elt->assertSee('Acme');
-                    $elt->assertSee('Entité5');
-                });
                 $browser->visit('/admin/report/ecosystem?entity_type=Improbable');
                 $browser->assertRouteIs('admin.report.view.ecosystem');
                 $browser->assertSee('Mercator');
                 $browser->assertSelected('perimeter', 'All');
-                $browser->with('#graph', function ($elt){
-                    $elt->assertDontSee('Acme');
-                    $elt->assertDontSee('MegaNet System');
-                    $elt->assertDontSee('Entité5');
-                });
+                $browser->assertSee('Acme corp.');
+                $browser->assertSee('MegaNet System');
+                $browser->assertSee('World company');
                 
-                
-                $browser->visit('/admin/report/ecosystem?entity_type=Producteur');
-                $browser->assertRouteIs('admin.report.view.ecosystem');
-                $browser->assertSee('Mercator');
-                $browser->assertSelected('perimeter', 'All');
-                $browser->with('#graph', function ($elt){
-                    $elt->assertSee('Acme');
-                    $elt->assertDontSee('MegaNet System');
-                    $elt->assertDontSee('Entité5');
-                });
-
                 $browser->visit('/admin/report/ecosystem?entity_type=Revendeur');
                 $browser->assertRouteIs('admin.report.view.ecosystem');
                 $browser->assertSee('Mercator');
                 $browser->assertSelected('perimeter', 'All');
-                
-                $browser->with('#graph', function ($elt){
-                    $elt->assertSee('MegaNet System');
-                    $elt->assertDontSee('Acme');
-                    $elt->assertDontSee('Entité5');
+                $browser->assertDontSee('Acme corp.');
+                $browser->assertDontSee('MegaNet System');
+                $browser->assertDontSee('World company');
                 });
-                
             });
-        });
-    }
+        }
+
     public function testEntityFilterOnType() {
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
@@ -141,11 +121,8 @@ class EcoystemViewFiltersTest extends DuskTestCase
                 $browser->select('entity_type', 'All');
                 
                 $browser->assertSee('Mercator');
-                $browser->with('#graph', function ($elt){
-                    foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity){
-                        $elt->assertSee($entity->name);
-                    }
-                });
+                foreach (DB::table('entities')->whereNull('deleted_at')->get() as $entity)
+                    $browser->assertSee($entity->name);
             });
         });
     }

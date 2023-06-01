@@ -17,7 +17,7 @@ abstract class DuskTestCase extends BaseTestCase
      * @beforeClass
      * @return void
      */
-    public static function prepare()
+    public static function prepare(): void
     {
         if (! static::runningInSail()) {
             static::startChromeDriver();
@@ -31,18 +31,14 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function driver()
     {
-        $options = (new ChromeOptions)->addArguments(collect([
-            '--window-size=1920,1080',
-        ])->unless($this->hasHeadlessDisabled(), function ($items) {
-            return $items->merge([
+        $options = (new ChromeOptions)->addArguments([
                 '--disable-gpu',
                 '--headless',
+                '--no-sandbox'
             ]);
-        })->all());
 
         return RemoteWebDriver::create(
-            $_ENV['DUSK_DRIVER_URL'] ?? 'http://localhost:9515',
-            DesiredCapabilities::chrome()->setCapability(
+            'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY, $options
             )
         );
@@ -57,5 +53,5 @@ abstract class DuskTestCase extends BaseTestCase
     {
         return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
                isset($_ENV['DUSK_HEADLESS_DISABLED']);
-    }
+    }    
 }
