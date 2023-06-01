@@ -1932,7 +1932,8 @@ class ReportController extends Controller
             }
             $sheet->setCellValue("K{$row}", $txt);
 
-            // TODO : improve me
+            // TODO : improve me using union
+            // https://laravel.com/docs/10.x/queries#unions
             $allControls = Collect();
             foreach($dataProcessing->processes as $process)
                 foreach ($process->securityControls as $sc) {
