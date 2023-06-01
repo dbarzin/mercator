@@ -1785,8 +1785,8 @@ class ReportController extends Controller
             $txt = '<ul>';
             foreach ($dataProcessing->processes as $p) {
                 $txt .= '<li>' . $p->identifiant . '</li>';
-                }
-            $txt .= '</ul>';            
+            }
+            $txt .= '</ul>';
             $this->addText($section, $txt);
 
             // Applications
@@ -1794,8 +1794,8 @@ class ReportController extends Controller
             $txt = '<ul>';
             foreach ($dataProcessing->applications as $ap) {
                 $txt .= '<li>' . $ap->name . '</li>';
-                }
-            $txt .= '</ul>';            
+            }
+            $txt .= '</ul>';
             $this->addText($section, $txt);
 
             // Informations
@@ -1803,30 +1803,31 @@ class ReportController extends Controller
             $txt = '<ul>';
             foreach ($dataProcessing->informations as $inf) {
                 $txt .= '<li>' . $inf->name . '</li>';
-                }
-            $txt .= '</ul>';            
+            }
+            $txt .= '</ul>';
             $this->addText($section, $txt);
 
             // Security Controls
             $section->addTitle(trans('cruds.dataProcessing.fields.security_controls'), 2);
             // TODO : improve me
             $allControls = Collect();
-            foreach($dataProcessing->processes as $process)
+            foreach ($dataProcessing->processes as $process) {
                 foreach ($process->securityControls as $sc) {
                     $allControls->push($sc->name);
                 }
-            foreach($dataProcessing->applications as $app)
+            }
+            foreach ($dataProcessing->applications as $app) {
                 foreach ($app->securityControls as $sc) {
                     $allControls->push($sc->name);
                 }
+            }
             $allControls->unique();
             $txt = '<ul>';
             foreach ($allControls as $control) {
                 $txt .= '<li>' . $control . '</li>';
-                }
-            $txt .= '</ul>';            
+            }
+            $txt .= '</ul>';
             $this->addText($section, $txt);
-
         }
 
         // Finename
@@ -1890,7 +1891,7 @@ class ReportController extends Controller
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
 
-        // Populate 
+        // Populate
         $row = 2;
         foreach ($register as $dataProcessing) {
             $sheet->setCellValue("A{$row}", $dataProcessing->name);
@@ -1935,14 +1936,16 @@ class ReportController extends Controller
             // TODO : improve me using union
             // https://laravel.com/docs/10.x/queries#unions
             $allControls = Collect();
-            foreach($dataProcessing->processes as $process)
+            foreach ($dataProcessing->processes as $process) {
                 foreach ($process->securityControls as $sc) {
                     $allControls->push($sc->name);
                 }
-            foreach($dataProcessing->applications as $app)
+            }
+            foreach ($dataProcessing->applications as $app) {
                 foreach ($app->securityControls as $sc) {
                     $allControls->push($sc->name);
                 }
+            }
 
             $allControls->unique();
             $txt = implode(', ', $allControls->toArray());

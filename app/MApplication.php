@@ -221,7 +221,7 @@ class MApplication extends Model
 
     public function securityControls()
     {
-        return $this->belongsToMany(SecurityControl::class,'security_control_m_application')->orderBy("name");
+        return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

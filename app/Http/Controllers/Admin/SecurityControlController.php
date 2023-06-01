@@ -6,16 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityControlRequest;
 use App\Http\Requests\StoreSecurityControlRequest;
 use App\Http\Requests\UpdateSecurityControlRequest;
-
-use App\SecurityControl;
-
 use App\MApplication;
 use App\Process;
-
+use App\SecurityControl;
 use Gate;
+use Illuminate\Http\Request;
+use  Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
-use  Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class SecurityControlController extends Controller
 {
@@ -83,60 +80,59 @@ class SecurityControlController extends Controller
         // Get all security controls
         $controls = SecurityControl::All()->sortBy('name');
 
-        return view('admin.securityControls.assign', compact('apps','procs', 'controls'));
+        return view('admin.securityControls.assign', compact('apps', 'procs', 'controls'));
     }
 
     public function associate(Request $request)
     {
         abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $controls = Array();
-        foreach($request->request as $key => $value) {
-            if (str_starts_with($key,"CTRL_")) {
-                array_push($controls,substr($key,5));
+        $controls = [];
+        foreach ($request->request as $key => $value) {
+            if (str_starts_with($key, 'CTRL_')) {
+                array_push($controls, substr($key, 5));
             }
         }
 
-        $source=$request->get("source");
-        if (str_starts_with($source,'APP_')) {
-            $app=MApplication::where('id',substr($source,4))->get()->first();
+        $source = $request->get('source');
+        if (str_starts_with($source, 'APP_')) {
+            $app = MApplication::where('id', substr($source, 4))->get()->first();
             $app->securityControls()->sync($controls);
-        }
-        elseif (str_starts_with($source,'PR_')) {
-            $process=Process::where('id',substr($source,3))->get()->first();
+        } elseif (str_starts_with($source, 'PR_')) {
+            $process = Process::where('id', substr($source, 3))->get()->first();
             $process->securityControls()->sync($controls);
-        }
-        else
+        } else {
             return;
+        }
 
         return redirect()->route('admin.security-controls.assign');
     }
 
-    public function list(Request $request) {
+    public function list(Request $request)
+    {
         abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         //http://127.0.0.1:8000/admin/security-controls-list?id=APP_2
 
         // Get control list of object base on the ID
-        if (str_starts_with($request->id,'APP_')) {
-            $list=MApplication::where('id',substr($request->id,4))->get()->first()->securityControls;
-        }
-        elseif (str_starts_with($request->id,'PR_')) {
-            $list=Process::where('id',substr($request->id,3))->get()->first()->securityControls;
-        }
-        else
+        if (str_starts_with($request->id, 'APP_')) {
+            $list = MApplication::where('id', substr($request->id, 4))->get()->first()->securityControls;
+        } elseif (str_starts_with($request->id, 'PR_')) {
+            $list = Process::where('id', substr($request->id, 3))->get()->first()->securityControls;
+        } else {
             // Invalid ID
             return;
+        }
 
         // Construct the control list
-        $controls = Array();
-        foreach($list as $item) 
-            array_push($controls,"CTRL_" . $item->id);
+        $controls = [];
+        foreach ($list as $item) {
+            array_push($controls, 'CTRL_' . $item->id);
+        }
 
         // return JSON
         return response()->json(compact('controls'));
     }
-
 
     public function destroy(SecurityControl $securityControl)
     {
@@ -146,8 +142,6 @@ class SecurityControlController extends Controller
 
         return redirect()->route('admin.security-controls.index');
     }
-
-
 
     public function massDestroy(MassDestroySecurityControlRequest $request)
     {
