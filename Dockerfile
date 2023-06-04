@@ -51,11 +51,13 @@ RUN cp docker/supervisord.conf /etc/supervisord.conf
 
 USER mercator:www
 
-# install mercator deps
-RUN composer install
+# Install mercator deps
+RUN set -ex ; \
+    apt-get update ; \
+    apt-get install -y git zip ; \
+    composer -n validate --strict ; \
+    composer -n install --no-scripts --ignore-platform-reqs --no-dev
 
 EXPOSE 8000
 
-
 CMD ["/usr/bin/supervisord"]
-
