@@ -82,7 +82,7 @@ class AddGdprTables extends Migration
 
         // link data_processing <-> information
         Schema::create('data_processing_information', function (Blueprint $table) {
-            $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_6948435');
+            $table->unsignedInteger('data_processing_id')->index('data_processing_id_fk_58305863');
             $table->unsignedInteger('information_id')->index('information_id_fk_4384483');
         });
 

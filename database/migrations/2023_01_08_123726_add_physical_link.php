@@ -101,7 +101,7 @@ class AddPhysicalLink extends Migration
         // Access rights
 
         // if not initial migration -> add permissions
-        if (Permission::All()->count()>100) {
+        if (Permission::count()>0) {
             // create new permissions
             $permissions = [
                 [

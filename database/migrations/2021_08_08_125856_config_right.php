@@ -18,7 +18,7 @@ class ConfigRight extends Migration
     public function up()
     {
         // if not initial migration -> add permissions
-        if (Permission::All()->count()>0) {
+        if (Permission::count()>0) {
 
             $permissions = [
                 [
