@@ -55,6 +55,6 @@ Changements prévus en 2023 :
 ## Petites évolutions
 
 - [ ] Améliorer les tests Dusk
-- [ ] Publier une VM Docker sur [dockerHub](https://hub.docker.com/)
+- [x] Publier une VM Docker sur [GitHub](https://ghcr.io)
 - [ ] Documenter une procédure de déploiement sous Debian
 - [ ] Dark Theme
