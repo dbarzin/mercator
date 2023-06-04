@@ -35,7 +35,7 @@ class CreateDocumentsTable extends Migration
 
         Schema::create('entity_document', function (Blueprint $table) {
             $table->unsignedInteger('entity_id')->index('activity_id_fk_4325433');
-            $table->unsignedInteger('document_id')->index('operation_id_fk_4355431');
+            $table->unsignedInteger('document_id')->index('operation_id_fk_5837593');
         });
 
         Schema::table('entity_document', function (Blueprint $table) {
