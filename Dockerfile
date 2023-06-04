@@ -25,10 +25,12 @@ RUN apk add php8-zip \
   php8-pdo php8-pdo_sqlite php8-pdo_mysql php8-pdo_pgsql \
   php8-fileinfo \
   php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
-  php8-tokenizer \
-  composer
+  php8-tokenizer
 
 RUN docker-php-ext-install pgsql pdo_pgsql
+
+RUN curl -sS https://getcomposer.org/installer | php \
+  && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
 # sources
 COPY . /var/www/mercator
@@ -36,7 +38,6 @@ WORKDIR /var/www/mercator
 
 # the sqlite file must exist
 # RUN touch ${DB_DATABASE}
-
 
 # add mercator:www user
 RUN addgroup -S www && \
@@ -53,8 +54,6 @@ USER mercator:www
 
 # Install mercator deps
 RUN set -ex ; \
-    apt-get update ; \
-    apt-get install -y git zip ; \
     composer -n validate --strict ; \
     composer -n install --no-scripts --ignore-platform-reqs --no-dev
 
