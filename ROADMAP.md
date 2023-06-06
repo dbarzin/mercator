@@ -42,6 +42,7 @@ Changements prévus en 2023 :
 
 ## Evolutions mineurs
 
+- [ ] Support des adresses IPv6
 - [ ] Packaging des librairies javascript avec [Laravel Mix](https://laravel-mix.com/).
 - [x] Mise à jour du framework vers [Laravel 10.x](https://laravel.com/docs/10.x)
 - [ ] Dessiner un nouveu jeu d'icônes en SVG
