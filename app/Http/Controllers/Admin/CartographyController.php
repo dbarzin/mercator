@@ -2002,9 +2002,9 @@ class CartographyController extends Controller
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.operating_system'), $workstation->operating_system);
                     $this->addHTMLRow($table, trans('cruds.workstation.fields.address_ip'), $workstation->address_ip);
                     $textRun = $this->addTextRunRow($table, trans('cruds.workstation.fields.applications'));
-                    foreach ($process->applications as $application) {
+                    foreach ($workstation->applications as $application) {
                         $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, CartographyController::NOSPACE, true);
-                        if ($process->applications->last() !== $application) {
+                        if ($workstation->applications->last() !== $application) {
                             $textRun->addText(', ', CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
                         }
                     }

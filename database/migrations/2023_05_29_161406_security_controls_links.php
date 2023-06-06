@@ -29,7 +29,7 @@ return new class extends Migration
         });
 
         Schema::table('security_control_process', function (Blueprint $table) {
-            $table->foreign('security_control_id', 'security_control_id_fk_54354353')->references('id')->on('security_controls')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('security_control_id', 'security_control_id_fk_54354354')->references('id')->on('security_controls')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->foreign('process_id', 'process_id_fk_49485754')->references('id')->on('processes')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
