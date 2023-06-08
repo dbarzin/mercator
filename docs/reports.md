@@ -18,7 +18,7 @@ Génère la liste des entités du système d'information et de leurs application
 
 Cette liste permet de dresser l'inventaire les entités responsables des différentes applications du système d’information avec les responsables et leurs points de contacts.
 
-#### Applications par groupe applicatif 
+#### Applications par groupe applicatif
 
 Liste des applications par groupe applicatif 
 
@@ -30,7 +30,7 @@ Liste des serveurs logiques par applications et responsables.
 
 Cette liste permet d'identifier les responsables des serveurs logiques et les application qu’ils servent.
 
-#### Analyse des besoins de sécurité 
+#### Analyse des besoins de sécurité
 
 Liste des besoins de sécurité entre macro-processus, processus, applications, bases de données et informations. 
 

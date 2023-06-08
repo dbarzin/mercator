@@ -2,7 +2,11 @@
 
 La cartographie est composée de trois vues allant progressivement du métier vers la technique, elles-mêmes déclinées en vues :
 
-### Vision Métier
+### Vision RGPD
+
+La vue du RGPD permet de maintenir le registre des traitements et de faire le lien avec les processus, informations, applications et mesures de sécurité mises en place. 
+
+### Vision métier
 
 La vue de l’écosystème présente les différentes entités ou systèmes avec lesquels le SI interagit pour remplir sa fonction.
 
