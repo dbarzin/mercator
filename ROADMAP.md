@@ -22,9 +22,10 @@ Changements prévus en 2023 :
 
 ## Evolutions majeures
 
-- [ ] Maintenir le registre des traitements
+- [x] Maintenir le registre des traitements
 - [ ] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la catographie.
 - [ ] Générer un annuaire de crise
+- [ ] Utiliser un modèle pour les rapports
 - [ ] Identifier les chemins critiques
 - [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
 - [x] schémas de l'infrastructure réseau physique
