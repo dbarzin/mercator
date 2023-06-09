@@ -2635,6 +2635,104 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
+
+    public function vlans()
+    {
+        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xlsx');
+
+        $vlans = Vlan::orderBy('Name')->get();
+        $vlans->load('subnetworks');
+
+        $servers = LogicalServer::orderBy('Name')->get();
+        $workstations = Workstation::orderBy('Name')->get();
+
+        $header = [
+            'Name',
+            'Description',
+            'subnet name',
+            'subnet address',
+            'servers',
+            'workstations',
+        ];
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray([$header], null, 'A1');
+
+        // bold title
+        $sheet->getStyle('1')->getFont()->setBold(true);
+
+        // Widths
+        $sheet->getColumnDimension('A')->setAutoSize(true); // Name
+        $sheet->getColumnDimension('B')->setWidth(100, 'pt'); // Desc
+        $sheet->getColumnDimension('C')->setWidth(100, 'pt'); // subnets name
+        $sheet->getColumnDimension('D')->setWidth(100, 'pt'); // subnets address
+        $sheet->getColumnDimension('E')->setWidth(200, 'pt'); // servers
+        $sheet->getColumnDimension('F')->setWidth(200, 'pt'); // workstations
+
+        // wordwrap
+        $sheet->getStyle('E')->getAlignment()->setWrapText(true); 
+        $sheet->getStyle('F')->getAlignment()->setWrapText(true); 
+
+        // converter
+        $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
+
+        // Populate the Timesheet
+        $row = 2;
+
+        // create the sheet
+        foreach ($vlans as $vlan) {
+            $sheet->setCellValue("A{$row}", $vlan->name);
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($vlan->description));
+
+            // Subnets
+            foreach ($vlan->subnetworks as $subnet) {
+                if ($vlan->subnetworks->first()!=$subnet) {
+                    $sheet->setCellValue("A{$row}", $vlan->name);
+                    $sheet->setCellValue("B{$row}", $html->toRichTextObject($vlan->description));
+                    }
+                $sheet->setCellValue("C{$row}", $subnet->name);
+                $sheet->setCellValue("D{$row}", $subnet->address);
+                // Servers
+                $txt = '';
+                foreach ($servers as $server) {
+                    foreach(explode(", ", $server->address_ip) as $ip) {
+                        if ($subnet->contains($ip)) {
+                            if (strlen($txt)>0) 
+                                $txt .= ', ';
+                            $txt .= $server->name;
+                            }
+                        }
+                    }
+                $sheet->setCellValue("E{$row}", $txt);
+                // Workstations
+                $txt = '';
+                foreach ($workstations as $workstation) {
+                    foreach(explode(", ", $workstation->address_ip) as $ip) {
+                        if ($subnet->contains($ip)) {
+                            if (strlen($txt)>0) 
+                                $txt .= ', ';
+                            $txt .= $workstation->name;
+                            }
+                        }
+                    }
+                $sheet->setCellValue("F{$row}", $txt);
+
+                if ($vlan->subnetworks->last()!=$subnet) 
+                    $row++;
+                }
+
+            // Workstations
+
+            $row++;
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        return response()->download($path);
+    }
+
     public function zones()
     {
         $subnetworks = Subnetwork::All()->sortBy('zone, address');

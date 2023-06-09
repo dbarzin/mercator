@@ -991,7 +991,10 @@ return [
             'register_report' => 'Register of processing',
             'register_report_helper' => 'Internal documentation of the processing of personal data.',
             'register_list' => 'List of processes',
-            'register_list_helper' => 'List of treatments, applications, databases and related information.'        ],
+            'register_list_helper' => 'List of treatments, applications, databases and related information.',
+            'vlans' => 'VLANs',
+            'vlans_helper' => "List of VLANs, subnets and devices"       
+        ],
         'explorer' => [
             'title' => 'Mapping explorer',
             'filter' => 'Filter',

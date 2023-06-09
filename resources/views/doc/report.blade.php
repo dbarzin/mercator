@@ -92,6 +92,13 @@
                     </li>
 
                     <li>
+                        <a href="{{ route('admin.report.vlans') }}" target="_new">{{ trans("cruds.report.lists.vlans") }}</a>                      
+                        <br>
+                        {{ trans("cruds.report.lists.vlans_helper") }}
+                        <br><br>
+                    </li>
+
+                    <li>
                         <a href="{{ route('admin.report.logicalServerConfigs') }}" target="_new">{{ trans("cruds.report.lists.logical_server_configurations") }}</a>                      
                         <br>
                         {{ trans("cruds.report.lists.logical_server_configurations_helper") }}

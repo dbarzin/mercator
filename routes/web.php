@@ -280,6 +280,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs'])->name('report.logicalServerConfigs');
     Route::get('report/externalAccess', [Admin\ReportController::class,'externalAccess'])->name('report.externalAccess');
     Route::get('report/physicalInventory', [Admin\ReportController::class, 'physicalInventory'])->name('report.physicalInventory');
+    Route::get('report/vlans', [Admin\ReportController::class,'vlans'])->name('report.vlans');
     Route::get('report/workstations', [Admin\ReportController::class,'workstations'])->name('report.workstations');
 
     // GDPR
