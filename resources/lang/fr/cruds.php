@@ -995,7 +995,9 @@ return [
             'register_report' => 'Registres des traitements',
             'register_report_helper' =>  'Documentation interne des traitements de données personnelles opérés.',
             'register_list' => 'Liste des traitements',
-            'register_list_helper' =>  'Liste des traitements, applications, bases de données et informations liées.'
+            'register_list_helper' =>  'Liste des traitements, applications, bases de données et informations liées.',
+            'vlans' => 'Liste des VLANS',
+            'vlans_helper' =>  "Liste des VLANs, sous-réseaux et équipements qui s'y trouvent"
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',
