@@ -2,11 +2,11 @@
 
 Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). La [documentation](https://dbarzin.github.io/mercator/) et les [sources de l'application](https://dbarzin.github.io/mercator/) sont publiées sur GitHub.
 
+Mercator a été présenté lors du [SSTIC 2023](https://www.sstic.org/2023/news/), une conférence francophone sur le thème de la sécurité de l'information qui s'est déroulerée à Rennes du 7 au 9 juin 2023. La présentation a été [enregistrée et est disponible en ligne](https://www.sstic.org/2023/presentation/mercator_-_la_cartographie_des_systmes_dinformation/).
+
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest) ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square) ![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
 
 Read this in other languages: [English](README.md)
-
-Mercator a été présenté lors du [SSTIC 2023](https://www.sstic.org/2023/news/), une conférence francophone sur le thème de la sécurité de l'information qui s'est déroulerée à Rennes du 7 au 9 juin 2023. La présentation a été [enregistrée et est disponible en ligne](https://www.sstic.org/2023/presentation/mercator_-_la_cartographie_des_systmes_dinformation/).
 
 ## Introduction
 
