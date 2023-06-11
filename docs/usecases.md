@@ -5,7 +5,7 @@ Mercator permet d'aider à la mise en place d'un grand nombre de mesures de séc
 
 ### Inventaire des informations et autres actifs associés
 
-La norme ISO 27001-5.9 recommande d'élaborer et de tenir à jour un inventaire des informations et autres actifs associés, y compris leurs propriétaires.
+La norme ISO 27002-5.9 recommande d'élaborer et de tenir à jour un inventaire des informations et autres actifs associés, y compris leurs propriétaires.
 
 Avec Mercator, il est possible de documenter les informations utilisés ainsi que les liens entre ces informations, les applications, les processus et les bases de données où elles sont conservées. 
 Grâce au rapport des [applications par groupe applicatif](/mercator/reports/) il est possible d'identifier les applications, les bases de données, processus et macro-processus qui utilisent ces informations.
@@ -30,7 +30,7 @@ La norme ISO 27002-5.24 recommande que l'organisation planifie et prépare la ge
 
 Afin de pouvoir assurer une réponse rapide, efficace, cohérente et ordonnée aux incidents de sécurité de l'information, il est important de pouvoir identifier rapidement lors d'un incident les processus, fournisseurs, responsables concernés.
 
-Mercator permet de disposer un inventaire complet de ces informations, avec l'outil de recherche texte libre qui se trouve en haut à gauche de l'écran, il est possible de rapidement retouver un assets, le ou les processus concernés, les fournisseurs et responsables.
+Mercator permet de disposer un inventaire complet de ces informations, avec l'[outil de recherche texte libre](/mercator/application/) qui se trouve en haut à gauche de l'écran, il est possible de rapidement retouver un assets, le ou les processus concernés, les fournisseurs et responsables.
 
 
 ### Emplacement et protection du matériel
