@@ -2643,7 +2643,9 @@ class ReportController extends Controller
         $vlans = Vlan::orderBy('Name')->get();
         $vlans->load('subnetworks');
 
-        $servers = LogicalServer::orderBy('Name')->get();
+        $lservers = LogicalServer::orderBy('Name')->get();
+        $pservers = PhysicalServer::orderBy('Name')->get();
+        $switches = PhysicalSwitch::orderBy('Name')->get();
         $workstations = Workstation::orderBy('Name')->get();
 
         $header = [
@@ -2651,8 +2653,10 @@ class ReportController extends Controller
             'Description',
             'subnet name',
             'subnet address',
-            'servers',
-            'workstations',
+            'Logical Servers',
+            'Physical Servers',
+            'Switches',
+            'Workstations',
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -2667,12 +2671,16 @@ class ReportController extends Controller
         $sheet->getColumnDimension('B')->setWidth(100, 'pt'); // Desc
         $sheet->getColumnDimension('C')->setWidth(100, 'pt'); // subnets name
         $sheet->getColumnDimension('D')->setWidth(100, 'pt'); // subnets address
-        $sheet->getColumnDimension('E')->setWidth(200, 'pt'); // servers
-        $sheet->getColumnDimension('F')->setWidth(200, 'pt'); // workstations
+        $sheet->getColumnDimension('E')->setWidth(200, 'pt'); // logical servers
+        $sheet->getColumnDimension('F')->setWidth(200, 'pt'); // physical servers
+        $sheet->getColumnDimension('G')->setWidth(200, 'pt'); // switches
+        $sheet->getColumnDimension('H')->setWidth(200, 'pt'); // workstations
 
         // wordwrap
         $sheet->getStyle('E')->getAlignment()->setWrapText(true); 
         $sheet->getStyle('F')->getAlignment()->setWrapText(true); 
+        $sheet->getStyle('G')->getAlignment()->setWrapText(true); 
+        $sheet->getStyle('H')->getAlignment()->setWrapText(true); 
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2693,9 +2701,9 @@ class ReportController extends Controller
                     }
                 $sheet->setCellValue("C{$row}", $subnet->name);
                 $sheet->setCellValue("D{$row}", $subnet->address);
-                // Servers
+                // Logical Servers
                 $txt = '';
-                foreach ($servers as $server) {
+                foreach ($lservers as $server) {
                     foreach(explode(", ", $server->address_ip) as $ip) {
                         if ($subnet->contains($ip)) {
                             if (strlen($txt)>0) 
@@ -2705,6 +2713,30 @@ class ReportController extends Controller
                         }
                     }
                 $sheet->setCellValue("E{$row}", $txt);
+                // Physical Servers
+                $txt = '';
+                foreach ($pservers as $server) {
+                    foreach(explode(", ", $server->address_ip) as $ip) {
+                        if ($subnet->contains($ip)) {
+                            if (strlen($txt)>0) 
+                                $txt .= ', ';
+                            $txt .= $server->name;
+                            }
+                        }
+                    }
+                $sheet->setCellValue("F{$row}", $txt);
+                // Switches
+                $txt = '';
+                foreach ($switches as $switch) {
+                    foreach(explode(", ", $switch->address_ip) as $ip) {
+                        if ($subnet->contains($ip)) {
+                            if (strlen($txt)>0) 
+                                $txt .= ', ';
+                            $txt .= $switch->name;
+                            }
+                        }
+                    }
+                $sheet->setCellValue("G{$row}", $txt);
                 // Workstations
                 $txt = '';
                 foreach ($workstations as $workstation) {
@@ -2716,7 +2748,7 @@ class ReportController extends Controller
                             }
                         }
                     }
-                $sheet->setCellValue("F{$row}", $txt);
+                $sheet->setCellValue("H{$row}", $txt);
 
                 if ($vlan->subnetworks->last()!=$subnet) 
                     $row++;

@@ -26,7 +26,7 @@
                             {{ trans('cruds.role.fields.title') }}
                         </th>
                         <th>
-                            {{ trans('cruds.role.fields.permissions') }}
+                            #
                         </th>
                         <th>
                             &nbsp;
@@ -45,14 +45,7 @@
                                 </a>
                             </td>
                             <td>
-                                @foreach($role->sortedPerms as $perm)
-                                    <div class="d-inline-block col-sm-12 col-lg-5">
-                                        <span class="font-weight-bold">{{ ucwords($perm['name']) }} - </span>
-                                        @foreach($perm['actions'] as $action)
-                                            <span class="badge badge-info">{{ ucfirst($action[1]) }}@if(!$loop->last), @endif</span>
-                                        @endforeach
-                                    </div>
-                                @endforeach
+                                {{ $role->count ?? '' }}
                             </td>
                             <td>
                                 @can('role_show')

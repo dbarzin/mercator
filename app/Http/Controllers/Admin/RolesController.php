@@ -11,6 +11,7 @@ use App\Role;
 use Gate;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
@@ -49,11 +50,18 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        /*
         $roles = Role::all()->sortBy('title');
         // Triage des permissions pour chaque rôles
         foreach ($roles as $role) {
             $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
         }
+        */
+        $roles=DB::table('roles')
+            ->leftJoin('role_user', 'role_user.role_id', '=', 'roles.id')
+            ->select('roles.id', 'roles.title', DB::raw("count(role_user.user_id) as count"))
+            ->groupBy('roles.id')
+            ->get();
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -102,10 +110,13 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $permissions = Permission::all()->sortBy('title')->pluck('title', 'id');
+        $permissions_sorted = $this->getSortedPerms($permissions);
+        // Chargement des permissions du rôle
         $role->load('permissions');
-        $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
 
-        return view('admin.roles.show', compact('role'));
+        return view('admin.roles.show', compact('permissions_sorted', 'role'));
+
     }
 
     public function destroy(Role $role)

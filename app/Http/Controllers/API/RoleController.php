@@ -26,8 +26,6 @@ class RoleController extends Controller
         abort_if(Gate::denies('roles_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::create($request->all());
-        // syncs
-        // $roles->roles()->sync($request->input('roles', []));
 
         return response()->json($roles, 201);
     }
@@ -44,8 +42,6 @@ class RoleController extends Controller
         abort_if(Gate::denies('roles_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role->update($request->all());
-        // syncs
-        // $roles->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
