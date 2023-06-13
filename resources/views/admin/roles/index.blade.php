@@ -26,7 +26,7 @@
                             {{ trans('cruds.role.fields.title') }}
                         </th>
                         <th>
-                            {{ trans('cruds.role.fields.permissions') }}
+                            #
                         </th>
                         <th>
                             &nbsp;
