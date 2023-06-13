@@ -40,6 +40,7 @@ Changements prévus en 2023 :
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
+- [ ] Utiliser un modèle de document pour les rapports
 
 ## Evolutions mineurs
 
