@@ -855,6 +855,8 @@ return [
     'physicalServer' => [
         'description' => 'Physical machine running a set of computer services.',
         'fields' => [
+            'address_ip' => 'IP Adresse(s)',
+            'address_ip_helper' => 'Filter : xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx, ...',
             'bay' => 'Bay',
             'bay_helper' => 'Bay in which the server is located',
             'building' => 'Building / Room',

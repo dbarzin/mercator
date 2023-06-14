@@ -51,6 +51,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.physicalServer.fields.configuration') }}
+                        </th>
+                        <td>
+                            {!! $physicalServer->configuration !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.physicalServer.fields.type') }}
                         </th>
                         <td>
@@ -59,10 +67,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.physicalServer.fields.configuration') }}
+                            {{ trans('cruds.physicalServer.fields.address_ip') }}
                         </th>
                         <td>
-                            {!! $physicalServer->configuration !!}
+                            {{ $physicalServer->address_ip }}
                         </td>
                     </tr>
                     <tr>

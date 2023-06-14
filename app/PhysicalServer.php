@@ -77,6 +77,7 @@ class PhysicalServer extends Model
         'type',
         'description',
         'configuration',
+        'address_ip',
         'site_id',
         'building_id',
         'bay_id',

@@ -60,24 +60,40 @@
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.configuration_helper') }}</span>
             </div>
 
-            <div class="form-group">
-                <label for="responsible">{{ trans('cruds.physicalServer.fields.responsible') }}</label>
-                <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
-                    @if (!$responsible_list->contains(old('responsible')))
-                        <option> {{ old('responsible') }}</option>'
-                    @endif
-                    @foreach($responsible_list as $t)
-                        <option {{ (old('responsible') ? old('responsible') : $physicalServer->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('responsible'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('responsible') }}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="responsible">{{ trans('cruds.physicalServer.fields.responsible') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsible" id="responsible">
+                            @if (!$responsible_list->contains(old('responsible')))
+                                <option> {{ old('responsible') }}</option>'
+                            @endif
+                            @foreach($responsible_list as $t)
+                                <option {{ (old('responsible') ? old('responsible') : $physicalServer->responsible) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('responsible'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('responsible') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.physicalServer.fields.responsible_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.physicalServer.fields.responsible_helper') }}</span>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="address_ip">{{ trans('cruds.physicalServer.fields.address_ip') }}</label>
+                        <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $physicalServer->address_ip) }}">
+                        @if($errors->has('address_ip'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('address_ip') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.physicalServer.fields.address_ip_helper') }}</span>
+                    </div>
+                </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
