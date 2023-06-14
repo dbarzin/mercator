@@ -108,16 +108,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.physicalServer.fields.physical_switch') }}                    
-                        </th>
-                        <td>
-                            {{ $physicalServer->physicalSwitch->name ?? '' }}
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th>
                             {{ trans('cruds.physicalServer.fields.responsible') }}
                         </th>
                         <td>
