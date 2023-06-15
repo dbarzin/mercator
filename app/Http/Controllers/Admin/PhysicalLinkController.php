@@ -22,6 +22,8 @@ use App\Workstation;
 use Gate;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PhysicalLinkController extends Controller
 {
@@ -99,67 +101,153 @@ class PhysicalLinkController extends Controller
 
     public function store(StorePhysicalLinkRequest $request)
     {
-        $physicalLink = new PhysicalLink();
+        $link = new PhysicalLink();
 
         // Source device
         if (str_starts_with($request->src_id, 'PER_')) {
-            $physicalLink->peripheral_src_id = intval(substr($request->src_id, 4));
+            $link->peripheral_src_id = intval(substr($request->src_id, 4));
         } elseif (str_starts_with($request->src_id, 'PHONE_')) {
-            $physicalLink->phone_src_id = intval(substr($request->src_id, 6));
+            $link->phone_src_id = intval(substr($request->src_id, 6));
         } elseif (str_starts_with($request->src_id, 'ROUTER_')) {
-            $physicalLink->physical_router_src_id = intval(substr($request->src_id, 7));
+            $link->physical_router_src_id = intval(substr($request->src_id, 7));
         } elseif (str_starts_with($request->src_id, 'SECDEV_')) {
-            $physicalLink->physical_security_device_src_id = intval(substr($request->src_id, 7));
+            $link->physical_security_device_src_id = intval(substr($request->src_id, 7));
         } elseif (str_starts_with($request->src_id, 'SERV_')) {
-            $physicalLink->physical_server_src_id = intval(substr($request->src_id, 5));
+            $link->physical_server_src_id = intval(substr($request->src_id, 5));
         } elseif (str_starts_with($request->src_id, 'SWITCH_')) {
-            $physicalLink->physical_switch_src_id = intval(substr($request->src_id, 7));
+            $link->physical_switch_src_id = intval(substr($request->src_id, 7));
         } elseif (str_starts_with($request->src_id, 'STORAGE_')) {
-            $physicalLink->storage_device_src_id = intval(substr($request->src_id, 8));
+            $link->storage_device_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'WIFI_')) {
-            $physicalLink->wifi_terminal_src_id = intval(substr($request->src_id, 5));
+            $link->wifi_terminal_src_id = intval(substr($request->src_id, 5));
         } elseif (str_starts_with($request->src_id, 'WORK_')) {
-            $physicalLink->workstation_src_id = intval(substr($request->src_id, 5));
+            $link->workstation_src_id = intval(substr($request->src_id, 5));
         } elseif (str_starts_with($request->src_id, 'LROUTER_')) {
-            $physicalLink->router_src_id = intval(substr($request->src_id, 8));
+            $link->router_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'LSWITCH_')) {
-            $physicalLink->network_switch_src_id = intval(substr($request->src_id, 8));
+            $link->network_switch_src_id = intval(substr($request->src_id, 8));
         } elseif (str_starts_with($request->src_id, 'LSERV_')) {
-            $physicalLink->logical_server_src_id = intval(substr($request->src_id, 6));
+            $link->logical_server_src_id = intval(substr($request->src_id, 6));
         }
 
         // Dest device
         if (str_starts_with($request->dest_id, 'PER_')) {
-            $physicalLink->peripheral_dest_id = intval(substr($request->dest_id, 4));
+            $link->peripheral_dest_id = intval(substr($request->dest_id, 4));
         } elseif (str_starts_with($request->dest_id, 'PHONE_')) {
-            $physicalLink->phone_dest_id = intval(substr($request->dest_id, 6));
+            $link->phone_dest_id = intval(substr($request->dest_id, 6));
         } elseif (str_starts_with($request->dest_id, 'ROUTER_')) {
-            $physicalLink->physical_router_dest_id = intval(substr($request->dest_id, 7));
+            $link->physical_router_dest_id = intval(substr($request->dest_id, 7));
         } elseif (str_starts_with($request->dest_id, 'SECDEV_')) {
-            $physicalLink->physical_security_device_dest_id = intval(substr($request->dest_id, 7));
+            $link->physical_security_device_dest_id = intval(substr($request->dest_id, 7));
         } elseif (str_starts_with($request->dest_id, 'SERV_')) {
-            $physicalLink->physical_server_dest_id = intval(substr($request->dest_id, 5));
+            $link->physical_server_dest_id = intval(substr($request->dest_id, 5));
         } elseif (str_starts_with($request->dest_id, 'SWITCH_')) {
-            $physicalLink->physical_switch_dest_id = intval(substr($request->dest_id, 7));
+            $link->physical_switch_dest_id = intval(substr($request->dest_id, 7));
         } elseif (str_starts_with($request->dest_id, 'STORAGE_')) {
-            $physicalLink->storage_device_dest_id = intval(substr($request->dest_id, 8));
+            $link->storage_device_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'WIFI_')) {
-            $physicalLink->wifi_terminal_dest_id = intval(substr($request->dest_id, 5));
+            $link->wifi_terminal_dest_id = intval(substr($request->dest_id, 5));
         } elseif (str_starts_with($request->dest_id, 'WORK_')) {
-            $physicalLink->workstation_dest_id = intval(substr($request->dest_id, 5));
+            $link->workstation_dest_id = intval(substr($request->dest_id, 5));
         } elseif (str_starts_with($request->dest_id, 'LROUTER_')) {
-            $physicalLink->router_dest_id = intval(substr($request->dest_id, 8));
+            $link->router_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'LSWITCH_')) {
-            $physicalLink->network_switch_dest_id = intval(substr($request->dest_id, 8));
+            $link->network_switch_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'LSERV_')) {
-            $physicalLink->logical_server_dest_id = intval(substr($request->dest_id, 6));
+            $link->logical_server_dest_id = intval(substr($request->dest_id, 6));
         }
 
         // Ports
-        $physicalLink->src_port = $request->src_port;
-        $physicalLink->dest_port = $request->dest_port;
+        $link->src_port = $request->src_port;
+        $link->dest_port = $request->dest_port;
 
-        $physicalLink->save();
+        // Empty validator
+        $validator = Validator::make($request->all(), []);
+
+        // Validate
+        $validator->after(function ($validator) use ($link) {
+            if (($link->src_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('src_port',  $link->src_port)
+                    ->where('peripheral_src_id', $link->peripheral_src_id)
+                    ->where('phone_src_id', $link->phone_src_id)
+                    ->where('physical_router_src_id', $link->physical_router_src_id)
+                    ->where('physical_security_device_src_id', $link->physical_security_device_src_id)
+                    ->where('physical_server_src_id', $link->physical_server_src_id)
+                    ->where('physical_switch_src_id', $link->physical_switch_src_id)
+                    ->where('storage_device_src_id', $link->storage_device_src_id)
+                    ->where('wifi_terminal_src_id', $link->wifi_terminal_src_id)
+                    ->where('workstation_src_id', $link->workstation_src_id)
+                    ->where('logical_server_src_id', $link->logical_server_src_id)
+                    ->where('network_switch_src_id', $link->network_switch_src_id)
+                    ->where('router_src_id', $link->router_src_id)
+                    ->exists())) {
+                        $validator->errors()->add('src_port', 'Source port already used !');
+                    }
+            if (($link->dest_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('src_port',  $link->dest_port)
+                    ->where('peripheral_src_id', $link->peripheral_dest_id)
+                    ->where('phone_src_id', $link->phone_dest_id)
+                    ->where('physical_router_src_id', $link->physical_router_dest_id)
+                    ->where('physical_security_device_src_id', $link->physical_security_device_dest_id)
+                    ->where('physical_server_src_id', $link->physical_server_dest_id)
+                    ->where('physical_switch_src_id', $link->physical_switch_dest_id)
+                    ->where('storage_device_src_id', $link->storage_device_dest_id)
+                    ->where('wifi_terminal_src_id', $link->wifi_terminal_dest_id)
+                    ->where('workstation_src_id', $link->workstation_dest_id)
+                    ->where('logical_server_src_id', $link->logical_server_dest_id)
+                    ->where('network_switch_src_id', $link->network_switch_dest_id)
+                    ->where('router_src_id', $link->router_dest_id)
+                    ->exists())) {
+                        $validator->errors()->add('dest_port', 'Destination port already used 1!');
+                    }
+            if (($link->dest_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('dest_port',  $link->dest_port)
+                    ->where('peripheral_dest_id', $link->peripheral_dest_id)
+                    ->where('phone_dest_id', $link->phone_dest_id)
+                    ->where('physical_router_dest_id', $link->physical_router_dest_id)
+                    ->where('physical_security_device_dest_id', $link->physical_security_device_dest_id)
+                    ->where('physical_server_dest_id', $link->physical_server_dest_id)
+                    ->where('physical_switch_dest_id', $link->physical_switch_dest_id)
+                    ->where('storage_device_dest_id', $link->storage_device_dest_id)
+                    ->where('wifi_terminal_dest_id', $link->wifi_terminal_dest_id)
+                    ->where('workstation_dest_id', $link->workstation_dest_id)
+                    ->where('logical_server_dest_id', $link->logical_server_dest_id)
+                    ->where('network_switch_dest_id', $link->network_switch_dest_id)
+                    ->where('router_dest_id', $link->router_dest_id)
+                    ->exists())) {
+                        $validator->errors()->add('dest_port', 'Destination port already used 2!');
+                    }                
+            if (($link->src_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('dest_port',  $link->src_port)
+                    ->where('peripheral_dest_id', $link->peripheral_src_id)
+                    ->where('phone_dest_id', $link->phone_src_id)
+                    ->where('physical_router_dest_id', $link->physical_router_src_id)
+                    ->where('physical_security_device_dest_id', $link->physical_security_device_src_id)
+                    ->where('physical_server_dest_id', $link->physical_server_src_id)
+                    ->where('physical_switch_dest_id', $link->physical_switch_src_id)
+                    ->where('storage_device_dest_id', $link->storage_device_src_id)
+                    ->where('wifi_terminal_dest_id', $link->wifi_terminal_src_id)
+                    ->where('workstation_dest_id', $link->workstation_src_id)
+                    ->where('logical_server_dest_id', $link->logical_server_src_id)
+                    ->where('network_switch_dest_id', $link->network_switch_src_id)
+                    ->where('router_dest_id', $link->router_src_id)
+                    ->exists())) {
+                        $validator->errors()->add('src_port', 'Source port already used !');
+                    }                
+        });
+         
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $link->save();
 
         return redirect()->route('admin.links.index');
     }
@@ -429,6 +517,92 @@ class PhysicalLinkController extends Controller
         // Ports
         $link->src_port = $request->src_port;
         $link->dest_port = $request->dest_port;
+
+        // Empty validator
+        $validator = Validator::make($request->all(), []);
+
+        // Validate
+        $validator->after(function ($validator) use ($link) {
+            if (($link->src_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('src_port',  $link->src_port)
+                    ->where('peripheral_src_id', $link->peripheral_src_id)
+                    ->where('phone_src_id', $link->phone_src_id)
+                    ->where('physical_router_src_id', $link->physical_router_src_id)
+                    ->where('physical_security_device_src_id', $link->physical_security_device_src_id)
+                    ->where('physical_server_src_id', $link->physical_server_src_id)
+                    ->where('physical_switch_src_id', $link->physical_switch_src_id)
+                    ->where('storage_device_src_id', $link->storage_device_src_id)
+                    ->where('wifi_terminal_src_id', $link->wifi_terminal_src_id)
+                    ->where('workstation_src_id', $link->workstation_src_id)
+                    ->where('logical_server_src_id', $link->logical_server_src_id)
+                    ->where('network_switch_src_id', $link->network_switch_src_id)
+                    ->where('router_src_id', $link->router_src_id)
+                    ->exists())) {
+                        $validator->errors()->add('src_port', 'Source port already used !');
+                    }
+            if (($link->dest_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('src_port',  $link->dest_port)
+                    ->where('peripheral_src_id', $link->peripheral_dest_id)
+                    ->where('phone_src_id', $link->phone_dest_id)
+                    ->where('physical_router_src_id', $link->physical_router_dest_id)
+                    ->where('physical_security_device_src_id', $link->physical_security_device_dest_id)
+                    ->where('physical_server_src_id', $link->physical_server_dest_id)
+                    ->where('physical_switch_src_id', $link->physical_switch_dest_id)
+                    ->where('storage_device_src_id', $link->storage_device_dest_id)
+                    ->where('wifi_terminal_src_id', $link->wifi_terminal_dest_id)
+                    ->where('workstation_src_id', $link->workstation_dest_id)
+                    ->where('logical_server_src_id', $link->logical_server_dest_id)
+                    ->where('network_switch_src_id', $link->network_switch_dest_id)
+                    ->where('router_src_id', $link->router_dest_id)
+                    ->exists())) {
+                        $validator->errors()->add('dest_port', 'Destination port already used 1!');
+                    }
+            if (($link->dest_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('dest_port',  $link->dest_port)
+                    ->where('peripheral_dest_id', $link->peripheral_dest_id)
+                    ->where('phone_dest_id', $link->phone_dest_id)
+                    ->where('physical_router_dest_id', $link->physical_router_dest_id)
+                    ->where('physical_security_device_dest_id', $link->physical_security_device_dest_id)
+                    ->where('physical_server_dest_id', $link->physical_server_dest_id)
+                    ->where('physical_switch_dest_id', $link->physical_switch_dest_id)
+                    ->where('storage_device_dest_id', $link->storage_device_dest_id)
+                    ->where('wifi_terminal_dest_id', $link->wifi_terminal_dest_id)
+                    ->where('workstation_dest_id', $link->workstation_dest_id)
+                    ->where('logical_server_dest_id', $link->logical_server_dest_id)
+                    ->where('network_switch_dest_id', $link->network_switch_dest_id)
+                    ->where('router_dest_id', $link->router_dest_id)
+                    ->exists())) {
+                        $validator->errors()->add('dest_port', 'Destination port already used 2!');
+                    }                
+            if (($link->src_port!=null) && (DB::table('physical_links')
+                    ->where('id', '!=', $link->id)
+                    ->where('dest_port',  $link->src_port)
+                    ->where('peripheral_dest_id', $link->peripheral_src_id)
+                    ->where('phone_dest_id', $link->phone_src_id)
+                    ->where('physical_router_dest_id', $link->physical_router_src_id)
+                    ->where('physical_security_device_dest_id', $link->physical_security_device_src_id)
+                    ->where('physical_server_dest_id', $link->physical_server_src_id)
+                    ->where('physical_switch_dest_id', $link->physical_switch_src_id)
+                    ->where('storage_device_dest_id', $link->storage_device_src_id)
+                    ->where('wifi_terminal_dest_id', $link->wifi_terminal_src_id)
+                    ->where('workstation_dest_id', $link->workstation_src_id)
+                    ->where('logical_server_dest_id', $link->logical_server_src_id)
+                    ->where('network_switch_dest_id', $link->network_switch_src_id)
+                    ->where('router_dest_id', $link->router_src_id)
+                    ->exists())) {
+                        $validator->errors()->add('src_port', 'Source port already used !');
+                    }                
+        });
+         
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         // Update
         $link->update();
