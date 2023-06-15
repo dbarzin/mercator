@@ -16,7 +16,7 @@
                         <label class="required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id">
                             @foreach($devices as $id => $name)
-                                <option value="{{ $id }}" {{ ($link->src_id ? $link->src_id : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ (old('src_id') ? old('src_id') : $link->src_id) == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('src_id'))
