@@ -41,13 +41,12 @@
                     </div>
                 </div>
 
-
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.physicalLink.fields.dest') }}</label>
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="dest_id" id="dest_id">
                             @foreach($devices as $id => $name)
-                                <option value="{{ $id }}" {{ ($link->dest_id ? $link->dest_id : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ (old('dest_id') ? old('dest_id') : $link->dest_id) == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('dest_id'))
