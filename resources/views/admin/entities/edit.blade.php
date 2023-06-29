@@ -69,7 +69,7 @@
             <div class="col-md-11">
                 <div class="form-group">
                 <label for="entity_type">{{ trans('cruds.entity.fields.entity_type') }}</label>
-                <select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
+                <select class="form-control select2 {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
                            name="entity_type" id="entity_type">
                     @if (!$entityTypes->contains(old('entity_type')))
                                 <option> {{ old('entity_type') }}</option>'

@@ -67,7 +67,9 @@
                                     ($application->security_need_t==null)||
                                     ($application->application_block==null)
                                     )
-                                )||
+                                )
+                                /* 
+                                ||
                                 ((auth()->user()->granularity==3)&&
                                     (
                                     ($application->vendor==null)||
@@ -75,6 +77,7 @@
                                     ($application->version==null)
                                     )
                                 )
+                                */
                             )
                             class="table-warning"
                         @endif
