@@ -64,7 +64,7 @@
                         </th>
                         <td colspan="3">
                             @foreach($application->entities as $entity)
-                                <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</span>
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</a>
                                 @if(!$loop->last)
                                 ,
                                 @endif
@@ -89,7 +89,9 @@
                             {{ trans('cruds.application.fields.entity_resp') }}
                         </th>
                         <td colspan="3">
-                            {{ $application->entity_resp->name ?? '' }}
+                            <a href="{{ route('admin.entities.show', $application->entity_resp_id) }}">
+                                {{ $application->entity_resp->name ?? '' }}
+                            </a>
                         </td>
                         <th colspan="1">
                             {{ trans('cruds.application.fields.type') }}
