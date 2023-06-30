@@ -143,7 +143,7 @@ class Subnetwork extends Model
         $cidr = preg_split('/[ ]?\/[ ]?/', $this->address);
         $range[0] = (ip2long($cidr[0]) & (-1 << 32 - (int) $cidr[1]));
         $range[1] = $range[0] + pow(2, 32 - (int) $cidr[1]) - 1;
-        return($src >= $range[0]) && ($src <= $range[1]);
+        return ($src >= $range[0]) && ($src <= $range[1]);
     }
 
     protected function serializeDate(DateTimeInterface $date)
