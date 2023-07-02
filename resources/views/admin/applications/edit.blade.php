@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="name">{{ trans('cruds.application.fields.vendor') }}</label>
+                        <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
                         <div class="form-group">
                             <select id="vendor-selector" class="form-control select2-free" name="vendor">
                                 <option>{{ old('vendor', $application->vendor) }}</option>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="name">{{ trans('cruds.application.fields.product') }}</label>
+                        <label for="name">{{ trans('cruds.application.fields.product') }}</label>
                         <select id="product-selector" class="form-control select2-free" name="product">
                             <option>{{ old('name', $application->product) }}</option>
                         </select>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <label for="version">{{ trans('cruds.application.fields.version') }}</label>
                         <select id="version-selector" class="form-control select2-free" name="version">
                             <option>{{ old('version', $application->version) }}</option>
                         </select>
@@ -275,7 +275,7 @@
                              }
                          }
                     @endphp
-                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <label class="recommended">{{ trans('cruds.application.fields.cartographers') }}</label>
                     <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
                         @foreach($cartographers as $cartographer)
                             <option value="{{ $cartographer[0] }}" {{ $cartographer[2] ? 'selected' : '' }}>{{ $cartographer[1] }}</option>
