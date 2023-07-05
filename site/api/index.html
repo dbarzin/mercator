@@ -79,7 +79,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+    <li class="toctree-l2"><a class="reference internal" href="#php">PHP</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
@@ -93,7 +93,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bash">bash</a>
+    <li class="toctree-l2"><a class="reference internal" href="#bash">Bash</a>
     </li>
     </ul>
                 </li>
@@ -118,7 +118,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>API</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/main/docs/api.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/api.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -264,9 +264,9 @@ This user must have a role in Mercator that allows him/her to access/modify the 
 objects accessed via the API. </p>
 <p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header. 
 header of the API request.</p>
-<h3 id="examples">Examples</h3>
+<h3 id="php">PHP</h3>
 <p>Here are a few examples of how to use the API with PHP:</p>
-<h4 id="authentification">Authentification</h4>
+<h5 id="authentification">Authentification</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -308,7 +308,7 @@ header of the API request.</p>
 
     var_dump($response);
 </code></pre>
-<h4 id="users-list">Users list</h4>
+<h5 id="users-list">Users list</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -336,7 +336,7 @@ header of the API request.</p>
     var_dump($response);
 
 </code></pre>
-<h4 id="get-a-user">Get a user</h4>
+<h5 id="get-a-user">Get a user</h5>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -362,7 +362,7 @@ header of the API request.</p>
 
     var_dump($response);
 </code></pre>
-<h4 id="update-a-user">Update a user</h4>
+<h5 id="update-a-user">Update a user</h5>
 <pre><code class="language-php">&lt;?php
    $curl = curl_init();
 
@@ -421,7 +421,7 @@ print(response.json())
 print(response.status_code)
 
 </code></pre>
-<h3 id="bash">bash</h3>
+<h3 id="bash">Bash</h3>
 <p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a> and <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code># valid login and password
 data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'

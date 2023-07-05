@@ -1,6 +1,6 @@
 ## Modèle de données
 
-[<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
+[<img src="/mercator/images/model.fr.png" width="700">](/mercator/images/model.fr.png)
 
 ### Vue du RGPD
 

@@ -6,7 +6,7 @@ site_description: Mapping the information system !
 
 # Repository
 repo_url: https://github.com/dbarzin/mercator
-edit_uri: edit/main/docs
+edit_uri: edit/master/docs
 
 # Copyright
 copyright: Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
