@@ -1,92 +1,94 @@
-## Cas d'utilisation
+## Use cases
 
-Mercator permet d'aider à la mise en place d'un grand nombre de mesures de sécurité recommandées par la norme ISO 27002. En suivant les cas d'utilisation décrits ci-dessous, vous pouvez mettre en place un processus de cartographie des systèmes d'information solide et efficace qui pourra vous assister dans la gestion des risques de sécurité de l'information auxquels fait face votre organisation.
-
-
-### Inventaire des informations et autres actifs associés
-
-La norme ISO 27002-5.9 recommande d'élaborer et de tenir à jour un inventaire des informations et autres actifs associés, y compris leurs propriétaires.
-
-Avec Mercator, il est possible de documenter les informations utilisés ainsi que les liens entre ces informations, les applications, les processus et les bases de données où elles sont conservées. 
-Grâce au rapport des [applications par groupe applicatif](/mercator/reports/) il est possible d'identifier les applications, les bases de données, processus et macro-processus qui utilisent ces informations.
-
-Vous pouvez vérifier grâce à ce rapport et en interrogeant les responsbales métier que les informations documentées dans Mercator sont correctes et à jour.
+Mercator can help you implement many of the security measures recommended by ISO 27002. By following the use cases described below, you can put in place a robust and effective information systems mapping process that can assist you in managing the information security risks facing your organization.
 
 
-### Classification de l'information
+### Inventory of information and related assets
 
-La norme ISO 27002-5.12 recommande de classifier les informations conformément aux besoins de sécurité de l'information de l'organisation, sur la base des exigences de confidentialité, d'intégrité, de disponibilité et des exigences importantes des parties intéressées.
+ISO 27002-5.9 recommends the creation and maintenance of an inventory of information and related assets, including their owners.
 
-Avec Mercator, il est possible d’attribuer un niveau de sécurité aux informations en termes de confidentialité, d'intégrité, de disponibilité et de traçabilité ainsi qu'aux bases de données, applications, processus et macro-processus qui utilisent ces informations.
+With Mercator, it is possible to document the information used, as well as the links between this information and the applications, processes and databases in which it is stored. 
+The [applications by application group] report (/mercator/reports/) identifies the applications, databases, processes and macro-processes that use this information.
 
-Afin de s'assurer que ces besoins sont conformes aux besoins de sécurité de l'information de l'organisation, il est possible de générer un rapport d'[analyse des besoins de sécurité](/mercator/reports/) qui dénormalise les besoins de sécurité entre les informations, les bases de données, les application, les processus et macro-processus qui utilisent ces informations.
-
-Vous pouvez vérifier si les besoins de sécurité sont correctement documentés pour chaque ligne de ce rapport.
-
-
-### Planification et préparation de la gestion des incidents de sécurité de l'information
-
-La norme ISO 27002-5.24 recommande que l'organisation planifie et prépare la gestion des incidents de sécurité de l'information en procédant à la définition, à l'établissement et à la communication des processus, fonctions et responsabilités liés à la gestion des incidents de sécurité de l'information .
-
-Afin de pouvoir assurer une réponse rapide, efficace, cohérente et ordonnée aux incidents de sécurité de l'information, il est important de pouvoir identifier rapidement lors d'un incident les processus, fournisseurs, responsables concernés.
-
-Mercator permet de disposer un inventaire complet de ces informations, avec l'[outil de recherche texte libre](/mercator/application/) qui se trouve en haut à gauche de l'écran, il est possible de rapidement retouver un assets, le ou les processus concernés, les fournisseurs et responsables.
+You can use this report to check with business managers that the information documented in Mercator is correct and up-to-date.
 
 
-### Emplacement et protection du matériel
+### Information classification
 
-La norme ISO 27002-7.8 recommande de choisir un emplacement sécurisé pour le matériel et de le protéger.
+ISO 27002-5.12 recommends classifying information according to the organization's information security needs, based on confidentiality, integrity, availability and important stakeholder requirements.
 
-Mercator permet pour chaque équipement physique (serveur, routeur, commutateur ..) de spécifier sa localisation et d'extraire un inventaire des équipements par localisation.
+With Mercator, it is possible to assign a security level to information in terms of confidentiality, integrity, availability and traceability, as well as to the databases, applications, processes and macro-processes that use this information.
 
-Vous pouvez vérifier avec le rapport d'[inventaire de l'infrastructure physique](/mercator/reports/) que cet inventaire est à jour et qu'il n'existe pas d'équipement qui soit ne se trouve pas dans l'inventaire soit qui est dans inventaire mais à un mauvais emplacement.
+To ensure that these requirements are in line with the organization's information security needs, it is possible to generate a [security requirements analysis] report (/mercator/reports/) that denormalizes the security requirements between the information, databases, applications, processes and macro-processes that use this information.
 
-Il est recommandé de vérifier au minimum annuellement que les équipements physique présent dans l'inventaire sont effectivement présent dans les locaux où ils sont référencés et qu'il n'existe pas d'équipement qui ne soit pas présent dans l'inventaire.
-
-
-### Dimensionnement
-
-La norme ISO 27002-8.6 recommande que les projections des besoins de dimensionnement futurs tiennent compte des nouveaux besoins métier et systèmes, et des tendances actuelles et prévues en termes de capacités de traitement de l'information de l'organisation.
-
-Avec Mercator, il est possible de prendre à des intervalles régulier via le rapport de [configuration des serveurs logiques](/mercator/reports) une image des ressources consommées. En faisant une table pivot avec un tableur, il est possible de faire des projections sur l'évolution des besoins de capacité de traitement de l'information de l'organisation.
-
-Vous pouvez vérifier que les besoins futurs de capacités de traitement de l'information de l'organisation sont couverts.
+You can check whether security requirements are correctly documented for each line of this report.
 
 
-### Gestion des vulnérabilités techniques
+### Planning and preparation for information security incident management
 
-La norme IS 27002-8.8 recommande d'obtenir des informations sur les vulnérabilités techniques des systèmes d'information utilisés, d'évaluer l'exposition de l'organisation à ces vulnérabilités et de prendre les mesures appropriées.
+ISO 27002-5.24 recommends that the organization should plan and prepare for the management of information security incidents by defining, establishing and communicating the processes, functions and responsibilities involved in information security incident management.
 
-Mercator permet d'identifier les vulnérabilité présentes dans le système d'information sur base du nom des applications et sur base des CPE (Common Plateforme Enumeration) associés aux applications et équipements. Un rapport est peut être envoyé lors de la détection d'une CVE qui permet d'identifier l'application, sa criticité et son exposition.
+In order to ensure a rapid, efficient, consistent and orderly response to information security incidents, it is important to be able to quickly identify the processes, suppliers and managers involved in an incident.
 
-Vous pouvez vérifier que ces alertes de détection sont analysées, et que des mesures préventives ou correctives sont prises.
-
-### Redondance des moyens de traitements de l'information
-
-Le norme ISO 27002-8.14 recommande que les moyens de traitement de l'information soient mis en œuvre avec suffisamment de redondance pour répondre aux exigences de disponibilité.
-
-Avec Mercator, il est possible d'identifier avec le rapport des [applications par groupe applicatif](/mercator/reports/) d'identifier les applications critiques en fonction de leur besoin de disponibilité, ainsi que les serveurs logiques et physique sur lesquels ces applications sont installées.
-
-Vous pouvez vérifier pour ces applications qu'elles disposent de redondance suffisante pour répondre aux exigences de disponibilité.
-Une application critique devrait se trouver sur plus d'un équipement physique et selon le modèle de déploiement sur plus d'un serveur logique.
+Mercator provides a complete inventory of this information, and with the [free text search tool](/mercator/application/) at the top left of the screen, it is possible to quickly find an asset, the process(es) concerned, the suppliers and those responsible.
 
 
-### Cloisonnement des réseaux
 
-Le norme ISO 27001-8.22 recommande que les groupes de services d'information, d'utilisateurs et de systèmes d'information soient cloisonnés dans les réseaux de l'organisation.
+### Location and protection of equipment
 
-Avec Mercator, il est possible de générer un rapport des VLAN qui identifie pour chaque VLAN les types d'équipement, de serveurs logiques et d'applications qui se trouve dans ce VLAN.
+ISO 27002-7.8 recommends choosing a secure location for hardware and protecting it.
 
-Vous pouvez vérifier que chaque VLAN correspond à un groupe distinct de services d'information, d'utilisateurs ou de systèmes d'information.
+Mercator lets you specify the location of each piece of physical equipment (server, router, switch, etc.) and extract an inventory of equipment by location.
+
+You can check with the [physical infrastructure inventory] report (/mercator/reports/) that this inventory is up to date and that there is no equipment that is either not in the inventory or is in the inventory but in the wrong location.
+
+It is recommended to check at least annually that the physical equipment listed in the inventory is actually present in the premises where it is referenced, and that there is no equipment that is not present in the inventory.
 
 
-### Gestion des changements
+### Sizing
 
-La norme ISO 27002-8.32 recommande que les changements apportés aux moyens de traitement de l'information et aux systèmes d'information soient soumis à des procédures de gestion des changements.
+ISO 27002-8.6 recommends that projections of future sizing requirements take into account new business and system requirements, as well as current and expected trends in the organization's information processing capacity.
 
-Avec Mercator il est possible d'explorer la cartographie du système d'information et d'ainsi identifier les dépendances entre les objets de la cartographie. Cette analyse peut être faite soit au travers de l'explorateur, soit au travers des différentes vues du système d'information ou directement avec le [rapport de cartographie](/mercator/reports/).
+With Mercator, it is possible to take a snapshot of consumed resources at regular intervals via the [logical server configuration](/mercator/reports) report. By creating a pivot table with a spreadsheet program, you can make projections on the evolution of the organization's information processing capacity requirements.
 
-Vous pouvez identifier que l'impacte d'un changement a correctement été identifier au moyen de la cartographie.
+You can check that the organization's future information processing capacity requirements are covered.
 
-En supplément, vous pouvez vérifier lorsque des changements ont eu lieu, que les éléments de la cartographie impliqués dans ce changement ont été documenté au moyen du rapport de [suivi des changements](/mercator/reports/).
+
+### Technical vulnerability management
+
+IS 27002-8.8 recommends obtaining information on the technical vulnerabilities of the information systems in use, assessing the organization's exposure to these vulnerabilities and taking appropriate action.
+
+Mercator identifies vulnerabilities in the information system, based on application names and CPEs (Common Platform Enumeration) associated with applications and equipment. A report can be sent when a CVE is detected, identifying the application, its criticality and its exposure.
+
+You can check that these detection alerts are analyzed, and that preventive or corrective measures are taken.
+
+
+### Redundancy of information processing resources
+
+ISO 27002-8.14 recommends that information processing resources be implemented with sufficient redundancy to meet availability requirements.
+
+With Mercator, you can use the [applications by application group] report (/mercator/reports/) to identify critical applications according to their availability requirements, as well as the logical and physical servers on which these applications are installed.
+
+You can check that these applications have sufficient redundancy to meet availability requirements.
+A critical application should be located on more than one physical device and, depending on the deployment model, on more than one logical server.
+
+
+### Network partitioning
+
+ISO 27001-8.22 recommends that groups of information services, users and information systems be partitioned within the organization's networks.
+
+With Mercator, you can generate a VLAN report that identifies for each VLAN the types of equipment, logical servers and applications that are in that VLAN.
+
+You can check that each VLAN corresponds to a distinct group of information services, users or information systems.
+
+
+### Change management
+
+ISO 27002-8.32 recommends that changes to information processing resources and information systems should be subject to change management procedures.
+
+With Mercator, it is possible to explore the information system map and identify the dependencies between the mapped objects. This analysis can be carried out using the explorer, the different views of the information system or directly with the [mapping report](/mercator/reports/).
+
+You can identify that the impact of a change has been correctly identified by means of mapping.
+
+In addition, when changes have been made, you can check that the mapping elements involved in the change have been documented using the [change tracking report](/mercator/reports/).
 

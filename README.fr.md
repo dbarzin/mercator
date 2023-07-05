@@ -1,6 +1,7 @@
 # Mercator
 
-Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). La [documentation](https://dbarzin.github.io/mercator/) et les [sources de l'application](https://dbarzin.github.io/mercator/) sont publiées sur GitHub.
+Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) de l’[ANSSI](https://www.ssi.gouv.fr/). 
+La [documentation](https://dbarzin.github.io/mercator/index.fr/) et les [sources de l'application](https://dbarzin.github.io/mercator/) sont publiées sur GitHub.
 
 Mercator a été présenté lors du [SSTIC 2023](https://www.sstic.org/2023/news/), une conférence francophone sur le thème de la sécurité de l'information qui s'est déroulerée à Rennes du 7 au 9 juin 2023. La présentation a été [enregistrée et est disponible en ligne](https://www.sstic.org/2023/presentation/mercator_-_la_cartographie_des_systmes_dinformation/).
 

@@ -45,7 +45,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
                 </li>
               </ul>
               <ul>
@@ -53,39 +53,39 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Cas d'utilisation</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
                 </li>
               </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">Rapports</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#rapport-de-cartographie">Rapport de cartographie</a>
+    <li class="toctree-l2"><a class="reference internal" href="#mapping-report">Mapping report</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#listes">Listes</a>
+    <li class="toctree-l2"><a class="reference internal" href="#lists">Lists</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#entites-et-application-supportees">Entités et application supportées</a>
+    <li class="toctree-l3"><a class="reference internal" href="#supported-entities-and-applications">Supported entities and applications</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#applications-par-groupe-applicatif">Applications par groupe applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#applications-by-application-group">Applications by application group</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#serveurs-logiques">Serveurs logiques</a>
+    <li class="toctree-l3"><a class="reference internal" href="#logical-servers">Logical servers</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#analyse-des-besoins-de-securite">Analyse des besoins de sécurité</a>
+    <li class="toctree-l3"><a class="reference internal" href="#security-needs-analysis">Security needs analysis</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#configuration-des-serveurs-logiques">Configuration des serveurs logiques</a>
+    <li class="toctree-l3"><a class="reference internal" href="#logical-server-configuration">Logical server configuration</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#inventaire-de-linfrastructure-physique">Inventaire de l'infrastructure physique</a>
+    <li class="toctree-l3"><a class="reference internal" href="#physical-infrastructure-inventory">Physical infrastructure inventory</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#audit">Audit</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#niveaux-de-maturite">Niveaux de maturité</a>
+    <li class="toctree-l3"><a class="reference internal" href="#maturity-levels">Maturity levels</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#mises-a-jour">Mises à jour</a>
+    <li class="toctree-l3"><a class="reference internal" href="#updates">Updates</a>
     </li>
         </ul>
     </li>
@@ -101,7 +101,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
                 </li>
               </ul>
       </div>
@@ -120,6 +120,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Rapports</li>
     <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/main/docs/reports.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -127,44 +128,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="modele-de-donnees">Modèle de données</h2>
-<h3 id="rapport-de-cartographie">Rapport de cartographie</h3>
-<p>Le rapport de cartographie contient l’ensemble des objets composant la cartographie et les liens entre eux. </p>
+                <ul>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../reports.fr/">Français</a></li>
+</ul>
+<h2 id="reports">Reports</h2>
+<h3 id="mapping-report">Mapping report</h3>
+<p>The cartography report contains all the objects making up the cartography and the links between them. </p>
 <p><a href="/mercator/images/report.png"><img src="/mercator/images/report.png" width="600"></a></p>
-<p>C'est un document au format Word qui contient les informations de tous les objets des vues sélectionnées au niveau de granularité souhaité.</p>
-<h3 id="listes">Listes</h3>
-<p>Mercator permet d'extraire un ensemble d’informations sous forme de listes :</p>
-<h4 id="entites-et-application-supportees">Entités et application supportées</h4>
-<p>Génère la liste des entités du système d'information et de leurs applications supportées. </p>
-<p>Cette liste permet de dresser l'inventaire les entités responsables des différentes applications du système d’information avec les responsables et leurs points de contacts.</p>
-<h4 id="applications-par-groupe-applicatif">Applications par groupe applicatif</h4>
-<p>Liste des applications par groupe applicatif </p>
-<p>Cette liste permet d’avoir une vue de toutes les applications du système d’information classées par groupe applicatif. Cette liste peut être utilisée pour mener une veille technologique sur les vulnérabilités des applications du système d’information.</p>
-<h4 id="serveurs-logiques">Serveurs logiques</h4>
-<p>Liste des serveurs logiques par applications et responsables.</p>
-<p>Cette liste permet d'identifier les responsables des serveurs logiques et les application qu’ils servent.</p>
-<h4 id="analyse-des-besoins-de-securite">Analyse des besoins de sécurité</h4>
-<p>Liste des besoins de sécurité entre macro-processus, processus, applications, bases de données et informations. </p>
-<p>Cette liste permet d’analyser la cohérence du plan de classification de l’information en termes de confidentialité, intégrité, disponibilité et traçabilité entre les processus, les applications, les bases de données et les informations qu’elles contiennent.</p>
-<h4 id="configuration-des-serveurs-logiques">Configuration des serveurs logiques</h4>
-<p>Liste de la configuration des serveurs logiques.</p>
-<p>Cette liste permet d’analyser la configuration des serveurs logiques.</p>
-<p>Cette liste peut être utilisés pour effectuer l’analyse de la capacité nécessaire pour faire fonctionner le système d’information et d’effectuer des projections d’une année sur l’autre.</p>
-<h4 id="inventaire-de-linfrastructure-physique">Inventaire de l'infrastructure physique</h4>
-<p>Liste des équipements par site/local </p>
-<p>Cette liste permet de faire une revue de l’inventaire physique des équipements du système d’information.</p>
-<p>Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le matériel présent dans l’inventaire correspond à ce qui est réellement présent dans les locaux, site et baies correspondantes.</p>
+<p>This is a Word document containing information on all the objects in the selected views at the desired level of granularity.</p>
+<h3 id="lists">Lists</h3>
+<p>Mercator allows you to extract a range of information in the form of lists:</p>
+<h4 id="supported-entities-and-applications">Supported entities and applications</h4>
+<p>Generates a list of information system entities and their supported applications. </p>
+<p>This list can be used to draw up an inventory of the entities responsible for the various information system applications, along with their managers and contact points.</p>
+<h4 id="applications-by-application-group">Applications by application group</h4>
+<p>List of applications by application group </p>
+<p>This list provides an overview of all the applications in the information system, classified by application group. This list can be used to monitor vulnerabilities in information system applications.</p>
+<h4 id="logical-servers">Logical servers</h4>
+<p>List of logical servers by applications and managers.</p>
+<p>This list can be used to identify logical server managers and the applications they serve.</p>
+<h4 id="security-needs-analysis">Security needs analysis</h4>
+<p>List of security requirements between macro-processes, processes, applications, databases and information. </p>
+<p>This list is used to analyze the consistency of the information classification plan in terms of confidentiality, integrity, availability and traceability between processes, applications, databases and the information they contain.</p>
+<h4 id="logical-server-configuration">Logical server configuration</h4>
+<p>Logical server configuration list.</p>
+<p>This list is used to analyze the configuration of logical servers.</p>
+<p>This list can be used to analyze the capacity required to run the information system, and to make year-on-year projections.</p>
+<h4 id="physical-infrastructure-inventory">Physical infrastructure inventory</h4>
+<p>List of equipment by site/location </p>
+<p>This list is used to review the physical inventory of information system equipment.</p>
+<p>Every year, we recommend you print out this list and check that the equipment in the inventory corresponds to what is actually present in the corresponding premises, sites and bays.</p>
 <h3 id="audit">Audit</h3>
-<h4 id="niveaux-de-maturite">Niveaux de maturité</h4>
-<p>Cette liste contient le détail des niveaux de maturité de chaque type d'objet de la cartographie du système d'information</p>
-<h4 id="mises-a-jour">Mises à jour</h4>
-<p>Cette liste permet d'auditer les changements réalisés sur la cartographie.</p>
-<p>Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par types d'objets réalisés sur la cartographie sur une année.</p>
+<h4 id="maturity-levels">Maturity levels</h4>
+<p>This list contains details of the maturity levels for each type of information system mapping object.</p>
+<h4 id="updates">Updates</h4>
+<p>This list is used to audit changes made to the mapping.</p>
+<p>A map that never changes is not up-to-date. This report identifies the changes (creations, deletions and modifications) made to the cartography by object type over the course of a year.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../model/" class="btn btn-neutral float-left" title="Modèle de données"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../model/" class="btn btn-neutral float-left" title="Data model"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../admin/" class="btn btn-neutral float-right" title="Administration">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -172,6 +176,7 @@
 
   <div role="contentinfo">
     <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
   </div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -186,6 +191,10 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
     
     
       <span><a href="../model/" style="color: #fcfcfc">&laquo; Previous</a></span>

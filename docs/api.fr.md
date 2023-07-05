@@ -1,38 +1,31 @@
 ## API
 
-Cartography can be modified or updated via a REST API.
+La cartographie peut être modifiée ou mise à jour via une REST API.
 
-A REST API ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer)) 
-is an application programming interface that respects the constraints of the REST 
-architecture and enables interaction with RESTful web services. 
+Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer)) 
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
+et permet d'interagir avec les services web RESTful. 
 
-### Install the API on Mercator
+### Installer l'API sur Mercator
 
-To install the API in Mercator, you need to install Passport by running this command:
+pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :
 
 ```bash
 php artisan passport:install
 ```
+- l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.
 
-- The Docker environment supports this functionality natively, via the entrypoint.
+### Les APIs
 
-### APIs
+Pour chaque objet du modèle de données de la cartographie, il existe une API.
 
-For each object in the cartography data model, there is an API.
-
-_GDPR view_
-
-- /api/data_processing
-- /api/security_devices
-
-_Ecosystem view_
+__Vues de l'écosystème__
 
 - /api/entities
 - /api/relations
 
-_Information system business view_ 
+__Vue métier du système d'information__
 
-- /api/macro-processes
 - /api/macro-processuses
 - /api/processes
 - /api/operations
@@ -41,7 +34,7 @@ _Information system business view_
 - /api/tasks
 - /api/information
 
-_Application view_
+__Vue des applications__
 
 - /api/application-blocks
 - /api/applications
@@ -50,14 +43,14 @@ _Application view_
 - /api/databases
 - /api/fluxes
 
-_Administration view_
+__Vue de l'administration__
 
 - /api/zone-admins
 - /api/annuaires
 - /api/forest-ads
 - /api/domaine-ads
 
-_Logical infrastructure view_
+__Vue de l'infrastructure logique__
 
 - /api/networks
 - /api/subnetworks
@@ -71,7 +64,7 @@ _Logical infrastructure view_
 - /api/logical-servers
 - /api/certificates
 
-_Physical infrastructure view_
+__Vue de l'infrastructure physique__
 
 - /api/sites
 - /api/buildings
@@ -90,40 +83,40 @@ _Physical infrastructure view_
 - /api/lans
 - /api/vlans
 
-_Administration_
+__Administration__
 
 - /api/users
 - /api/permissions
 - /api/roles
 
-### Actions managed by the resource controller
+### Actions gérées par le contrôleur de ressources
 
-Requests and URIs for each api are shown in the table below.
+Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 
-| Request | URI | Action    
+| Requête   | URI                | Action 	
 |-----------|--------------------|--------------------------------|      
-| GET | /api/objects | returns the list of objects |
-| GET /api/objets/{id} | returns object {id} |
-| POST | /api/objects | save new object |
-| PUT/PATCH | /api/objets/{id} | update object {id} |
-| DELETE | /api/objets/{id} | delete object {id} |
+| GET       | /api/objets        | renvoie la liste des objets    |
+| GET       | /api/objets/{id}   | renvoie l'objet {id}           |
+| POST 	    | /api/objets 	     | sauve un nouvel objet          |
+| PUT/PATCH | /api/objets/{id}   | met à jour l'objet {id}        |
+| DELETE 	| /api/objets/{id}   | supprimer l'objet {id}         |
 
-The fields to be supplied are those described in the [data model](/mercator/model/).
+Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
-### Access rights
+### Droits d'accès
 
-To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects 
-objects accessed via the API. 
+Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
+accédés par l'API. 
 
-When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header. 
-header of the API request.
+Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+l'entête "Authorization" de la requête de l'API.
 
-### PHP
+### Exemples
 
-Here are a few examples of how to use the API with PHP:
+Voici quelques exemples d'utilisation de l'API avec PHP :
 
-##### Authentification
+#### Authentification
 
 ```php
 <?php
@@ -168,7 +161,7 @@ Here are a few examples of how to use the API with PHP:
     var_dump($response);
 ```
 
-##### Users list
+#### Liste des utilisateurs
 
 ```php
 <?php
@@ -199,7 +192,7 @@ Here are a few examples of how to use the API with PHP:
 
 ```
 
-##### Get a user
+#### Récupérer un utilisateur
 
 ```php
 <?php
@@ -228,7 +221,7 @@ Here are a few examples of how to use the API with PHP:
     var_dump($response);
 ```
 
-##### Update a user
+#### Mettre à jour un utilisateur
 
 ```php
 <?php
@@ -267,7 +260,7 @@ Here are a few examples of how to use the API with PHP:
 
 ### Python
 
-Here's an example of how to use the API in Python :
+Voici un exemple d'utilisation de l'API en Python
 
 ```python
 #!/usr/bin/python3
@@ -294,10 +287,9 @@ print(response.status_code)
 
 ```
 
-### Bash
+### bash
 
-Here's an example of using the API on the command line with [CURL](https://curl.se/docs/manpage.html) and [JQ](https://stedolan.github.io/jq/)
-
+Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html) et [JQ](https://stedolan.github.io/jq/)
 ```
 # valid login and password
 data='{"email":"admin@admin.com","password":"password"}'

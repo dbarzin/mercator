@@ -1,14 +1,71 @@
+docs_dir: docs
+
+# Project information
+site_name: Mercator
+site_description: Mapping the information system !
+
+# Repository
+repo_url: https://github.com/dbarzin/mercator
+edit_uri: edit/main/docs
+
+# Copyright
+copyright: Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
+
+theme: 
+  name: readthedocs
+
+plugins:
+  - search
+  - i18n:
+      languages:
+        fr: "Français"
+        en: "English"
+      default_language: 'en'
+      no_translation:
+        fr: "Cette page n'a pas été traduite"
+        en: "This page isn't translated to English."
+      translate_nav:
+        fr:
+          section title: "Section"
+          subsection: "Souse-section"
+          page title: "Titre"
+        en:
+          section title: "Section"
+          subsection: "Subsection"
+          page title: "Page with title translated"
+
+
 site_name: Mercator
 site_url: https://dbarzin.githubs.io/mercator/
 nav:
     - Introduction: index.md
-    - Cartographie: cartography.md
+    - Introduction: index.fr.md
+    - Mapping: cartography.md
+    - Cartographie: cartography.fr.md
     - Application: application.md
-    - Cas d'utilisation: usecases.md
-    - Modèle de données: model.md
+    - Application: application.fr.md
+    - Use cases: usecases.md
+    - Cas d'utilisation: usecases.fr.md
+    - Data model: model.md
+    - Modèle de données: model.fr.md
     - Rapports: reports.md
+    - Rapports: reports.fr.md
     - Administration: admin.md
+    - Administration: admin.fr.md
     - API: api.md
-    - Références: references.md
+    - API: api.fr.md
+    - References: references.md
+    - Références: references.fr.md
 
-theme: readthedocs
+extra:
+  # Default mkdocs-material alternate links for untranslated pages
+  # https://squidfunk.github.io/mkdocs-material/setup/changing-the-language/#site-language-selector
+  alternate:
+    - name: English
+      link: ""
+      lang: en
+
+    - name: Français
+      link: index.fr/
+      lang: fr
+

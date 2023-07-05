@@ -1,67 +1,66 @@
-## Modèle de données
+## Reports
 
-### Rapport de cartographie
+### Mapping report
 
-Le rapport de cartographie contient l’ensemble des objets composant la cartographie et les liens entre eux. 
+The cartography report contains all the objects making up the cartography and the links between them. 
 
 [<img src="/mercator/images/report.png" width="600">](/mercator/images/report.png)
 
-C'est un document au format Word qui contient les informations de tous les objets des vues sélectionnées au niveau de granularité souhaité.
+This is a Word document containing information on all the objects in the selected views at the desired level of granularity.
 
-### Listes
+### Lists
 
-Mercator permet d'extraire un ensemble d’informations sous forme de listes :
+Mercator allows you to extract a range of information in the form of lists:
 
-#### Entités et application supportées 
+#### Supported entities and applications 
 
-Génère la liste des entités du système d'information et de leurs applications supportées. 
+Generates a list of information system entities and their supported applications. 
 
-Cette liste permet de dresser l'inventaire les entités responsables des différentes applications du système d’information avec les responsables et leurs points de contacts.
+This list can be used to draw up an inventory of the entities responsible for the various information system applications, along with their managers and contact points.
 
-#### Applications par groupe applicatif
+#### Applications by application group
 
-Liste des applications par groupe applicatif 
+List of applications by application group 
 
-Cette liste permet d’avoir une vue de toutes les applications du système d’information classées par groupe applicatif. Cette liste peut être utilisée pour mener une veille technologique sur les vulnérabilités des applications du système d’information.
+This list provides an overview of all the applications in the information system, classified by application group. This list can be used to monitor vulnerabilities in information system applications.
 
-#### Serveurs logiques
+#### Logical servers
 
-Liste des serveurs logiques par applications et responsables.
+List of logical servers by applications and managers.
 
-Cette liste permet d'identifier les responsables des serveurs logiques et les application qu’ils servent.
+This list can be used to identify logical server managers and the applications they serve.
 
-#### Analyse des besoins de sécurité
+#### Security needs analysis
 
-Liste des besoins de sécurité entre macro-processus, processus, applications, bases de données et informations. 
+List of security requirements between macro-processes, processes, applications, databases and information. 
 
-Cette liste permet d’analyser la cohérence du plan de classification de l’information en termes de confidentialité, intégrité, disponibilité et traçabilité entre les processus, les applications, les bases de données et les informations qu’elles contiennent.
+This list is used to analyze the consistency of the information classification plan in terms of confidentiality, integrity, availability and traceability between processes, applications, databases and the information they contain.
 
-#### Configuration des serveurs logiques 
+#### Logical server configuration 
 
-Liste de la configuration des serveurs logiques.
+Logical server configuration list.
 
-Cette liste permet d’analyser la configuration des serveurs logiques.
+This list is used to analyze the configuration of logical servers.
 
-Cette liste peut être utilisés pour effectuer l’analyse de la capacité nécessaire pour faire fonctionner le système d’information et d’effectuer des projections d’une année sur l’autre.
+This list can be used to analyze the capacity required to run the information system, and to make year-on-year projections.
 
-#### Inventaire de l'infrastructure physique 
+#### Physical infrastructure inventory 
 
-Liste des équipements par site/local 
+List of equipment by site/location 
 
-Cette liste permet de faire une revue de l’inventaire physique des équipements du système d’information.
+This list is used to review the physical inventory of information system equipment.
 
-Annuellement, il est recommandé d’imprimer cette liste et de vérifier si le matériel présent dans l’inventaire correspond à ce qui est réellement présent dans les locaux, site et baies correspondantes.
+Every year, we recommend you print out this list and check that the equipment in the inventory corresponds to what is actually present in the corresponding premises, sites and bays.
 
 ### Audit
 
-#### Niveaux de maturité
+#### Maturity levels
 
-Cette liste contient le détail des niveaux de maturité de chaque type d'objet de la cartographie du système d'information
+This list contains details of the maturity levels for each type of information system mapping object.
 
+#### Updates
 
-#### Mises à jour
+This list is used to audit changes made to the mapping.
 
-Cette liste permet d'auditer les changements réalisés sur la cartographie.
-
-Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par types d'objets réalisés sur la cartographie sur une année.
+A map that never changes is not up-to-date. This report identifies the changes (creations, deletions and modifications) made to the cartography by object type over the course of a year.
 
