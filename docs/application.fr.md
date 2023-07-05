@@ -1,6 +1,6 @@
 ## Application
 
-[<img src="/mercator/images/homepage.png" width="600">](/mercator/images/homepage.png)
+[<img src="/mercator/images/homepage.fr.png" width="600">](/mercator/images/homepage.fr.png)
 
 ### Page principale
 
@@ -12,11 +12,11 @@ La page principale est divisée en trois parties :
 
 * La répartition des objet de la cartographie par domaine 
 
-   [<img src="/mercator/images/repartition.png" width="600">](/mercator/images/repartition.png)
+   [<img src="/mercator/images/repartition.fr.png" width="600">](/mercator/images/repartition.fr.png)
 
 * La carte proportionnelle globale des objets de la cartographie
 
-   [<img src="/mercator/images/treemap.png" width="600">](/mercator/images/treemap.png)
+   [<img src="/mercator/images/treemap.fr.png" width="600">](/mercator/images/treemap.fr.png)
 
 Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnées.
 
