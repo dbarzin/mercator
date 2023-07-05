@@ -1,69 +1,69 @@
 ## Administration
 
-### Gestion des utilisateurs
+### User management
 
-Les utilisateurs de l'application Mercator sont renseignés dans la base de données de l'application.
+Mercator application users are entered in the application database.
 
 Table *users* :
 
-| Champ             | Type         | Description      |
+| Field | Type | Description |
 |:------------------|:-------------|:-----------------|
-| id                | int unsigned | auto_increment |
-| name              | varchar(255) | Nom de l'utilisateur |
-| email             | varchar(255) | Adresse mail de l'utilisateur |
-| email_verified_at | datetime     | Date de vérification de l'adresse email |
-| password          | varchar(255) | Mot de passe de l'utilisateur |
-| remember_token    | varchar(255) | Token de session |
-| granularity       | int          | Niveau de granularité utilisé |
-| language          | varchar(2)   | Langue de l'utilisateur |
-| created_at        | timestamp    | Date de création |
-| updated_at        | timestamp    | Date de mise à jour |
-| deleted_at        | timestamp    | Date de suppression |
+| id | int unsigned | auto_increment |
+| name | varchar(255) | User name |
+| email | varchar(255) | user's email address |
+| email_verified_at | datetime | Date email address verified |
+| password | varchar(255) | User's password |
+| remember_token | varchar(255) | session token |
+| granularity | int | Level of granularity used |
+| language | varchar(2) | User language |
+| created_at | timestamp | Date created |
+| updated_at | timestamp | Date updated |
+| deleted_at | timestamp | Date of deletion |
 
-Les mots de passe sont hashés par la fonction fournie en standard dans Laravel.
+Passwords are hashed using Laravel's standard hash function.
 
-Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php). 
+Mercator can be connected to an LDAP directory (see LoginController.php). 
 
-### Gestion des rôles
+### Role management
 
-Pour chaque objet de la cartographie, il existe un droit en :
+For each object in the cartography, there is a :
 
-- accès
-- création
-- édition
-- affichage
-- suppression
+- access
+- creation
+- edit
+- display
+- delete
 
-Trois rôles sont encodés par défaut :
+Three roles are encoded by default:
 
-- Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la configuation.
-- Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.
-- Administrateur : l'administrateur a tous les droits sans exception.
+- User: users have full rights to all objects except users and config.
+- Auditor: auditors have the right to access and display all objects except users and configuration.
+- Administrator: the administrator has all rights without exception.
 
-Il est possible de créer de nouveaux rôles selon les besoins. 
+New roles can be created as required. 
 
-### Gestion des certificats
+### Certificate management
 
-Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.
+Certificate expiry notifications can be sent at set times.
 
-L'écran de configuration est accessible via le menu "Configuration" -> "Certificats".
+The configuration screen can be accessed via the "Configuration" -> "Certificates" menu.
 
    [<img src="/mercator/images/certificates.png" width="600">](/mercator/images/certificates.png)
 
-Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.
+The "Test" button sends a test e-mail to the specified notification address.
 
-### Gestion des CVE
+### CVE management
 
-Des notifications de détection de CVE sur base du nom des applications peuvent être envoyées à des périodes définies.
+CVE detection notifications based on application names can be sent at set times.
 
-Les CVE sont récupérées avec le projet [CVE-Search](https://github.com/cve-search/cve-search). La rechecrhe est faite localement.
+CVEs are retrieved using the [CVE-Search] project (https://github.com/cve-search/cve-search). The search is performed locally.
 
-L'écran de configuration est accessible via le menu "Configuration" -> "CVE"
+The configuration screen can be accessed via the "Configuration" -> "CVE" menu.
 
    [<img src="/mercator/images/cve.png" width="600">](/mercator/images/cve.png)
 
 
-Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au provider de CVE.
+The "Test Mail" button sends a test mail to the specified notification address and tests access to the CVE provider.
 
-Le bouton "Test Provider" permet de tester l'accès au provider du projet CVE-Search.
+The "Test Provider" button tests access to the CVE-Search project provider.
 

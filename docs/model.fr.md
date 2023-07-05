@@ -1,282 +1,277 @@
-## Data model
+## Modèle de données
 
 [<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
 
-### RGPD view
+### Vue du RGPD
 
-The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system. 
+La vue du RGPD contient l'ensemble des données nécessaires au maintient du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information. 
 
-This view is used to fulfill the obligations set out in Article 30 of the RGPD.
+Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.
 
-#### Register
+#### Registre
 
-The register of processing activities contains the information required by article 30.1 of the RGPD.
+Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.
 
 Table *data_processing* :
 
-| Field | Type | Description |
+| Champ       | Type         | Description          |
 |:------------|:-------------|:---------------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Treatment name |
-| description | longtext | Description of treatment |
-| responsible | longtext | Responsable du traitement |
-| purpose | longtext | Purposes of processing |
-| categories | longtext | Categories of recipients |
-| recipients | longtext | Data recipients |
-| transfer | longtext | Data transfers |
-| retention | longtext | Retention periods |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id          | int unsigned | auto_increment |
+| name        | varchar(255) | Nom du traitement |
+| description | longtext     | Description du traitement |
+| responsible | longtext     | Responsable du traitement |
+| purpose     | longtext     | Finalités du traitement  |
+| categories  | longtext     | Catégories de destinataires  |
+| recipients  | longtext     | Destinataires des données  |
+| transfert   | longtext     | Transferts de données  |
+| retention   | longtext     | Durées de rétention  |
+| created_at  | timestamp    | Date de création |
+| updated_at  | timestamp    | Date de mise à jour |
+| deleted_at  | timestamp    | Date de suppression |
 
 
-#### Security measures
+#### Mesures de sécurité
 
-This table identifies the security measures applied to processes and applications.
+Cette table permet d'identifier les mesures de sécurité appliquées aux processus et applications.
 
-By default, this table is populated with the security measures of ISO 27001:2022.
+Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.
 
 Table *security_controls* :
 
-| Field | Type | Description |
+| Champ       | Type         | Description          |
 |:------------|:-------------|:---------------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | measure name |
-| description | longtext | measure description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id          | int unsigned | auto_increment |
+| name        | varchar(255) | Nom de la mesure |
+| description | longtext     | Description de la mesure |
+| created_at  | timestamp    | Date de création |
+| updated_at  | timestamp    | Date de mise à jour |
+| deleted_at  | timestamp    | Date de suppression |
 
 
-### Ecosystem view
+### Vue de l’écosystème
 
-The ecosystem view describes all the entities or systems that revolve around the information system considered in the mapping.
+La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie.
 
 [<img src="/mercator/images/ecosystem.png" width="600">](/mercator/images/ecosystem.png)
 
-This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being limited to the individual study of each entity.
+Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.
 
+#### Entités
 
-#### Entities
+Les entités sont une partie de l’organisme (ex. : filiale, département, etc.) ou en relation avec le système d’information qui vise à être cartographié.
 
-Entities are a part of the organization (e.g.: subsidiary, department, etc.) or related to the information system to be mapped.
-
-Entities are departments, suppliers, partners with whom information is exchanged through relationships.
+Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.
 
 Table *entities* :
 
-| Field | Type | Description |
+| Champ          | Type         | Description      |
 |:---------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of entity |
-| is_external | boolean | External entity |
-| security_level | longtext | Security level |
-| contact_point | longtext | Contact point |
-| description | longtext | Entity description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id             | int unsigned | auto_increment |
+| name           | varchar(255) | Nom de l'entité |
+| is_external    | boolean      | Entité externe |
+| security_level | longtext     | Niveau de sécurité |
+| contact_point  | longtext     | Point de contact |
+| description    | longtext     | Description de l'entité |
+| created_at     | timestamp    | Date de création |
+| updated_at     | timestamp    | Date de mise à jour |
+| deleted_at     | timestamp    | Date de suppression |
 
 
-#### Relationships
+#### Relations
 
-Relationships represent a link between two entities or systems.
+Les relations représentent un lien entre deux entités ou systèmes.
 
-Relationships are contracts, service agreements, legal obligations... that have an influence on the information system.
+Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système d’information.
 
 Table *relations* :
 
-| Field | Type | Description |
+| Champ          | Type         | Description      |
 |:---------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Relationship name |
-| description | longtext | Description of relationship |
-| type | varchar(255) | Type of relationship |
-| importance | int | Importance of relationship |
-| source_id | int unsigned | Reference to source entity |
-| destination_id | int unsigned | Reference to destination entity |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date updated |
-| deleted_at | timestamp | Date of deletion |
+| id             | int unsigned | auto_increment |
+| name           | varchar(255) | Nom de la relation |
+| description    | longtext     | Description de la relation |
+| type           | varchar(255) | Type de la relation |
+| importance     | int          | Importance de la relation |
+| source_id      | int unsigned | Référence vers l'entité source |
+| destination_id | int unsigned | Référence vers l'entité destinataire |
+| created_at     | timestamp    | Date de création |
+| updated_at     | timestamp    | Date de mise à jour |
+| deleted_at     | timestamp    | Date de suppression |
 
+### Vue métier du système d’information
 
-### Business view of the information system
-
-The business view of the information system describes all the organization's business processes and the players involved, independently of the technological choices made by the organization and the resources made available to it. 
+La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. 
 
 [<img src="/mercator/images/information_system.png" width="600">](/mercator/images/information_system.png)
 
-The business view is essential, as it allows you to reposition technical elements in their business environment, and thus understand their context of use.
+La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.
 
-#### Macro-processes
+#### Macro-processus
 
-Macro-processes represent sets of processes.
+Les macro-processus représentent des ensembles de processus.
 
 Table *macro_processuses* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of macro process |
-| description | longtext | Description of macro-process |
-| io_elements | longtext | Incoming and outgoing elements |
-| security_need_c | int | Privacy |
-| security_need_i | int | Integrity |
-| security_need_a | int | Availability |
-| security_need_t | int | Traceability |
-| owner | varchar(255) | Owner |
-| created_at | timestamp | Date de création |
-| updated_at | timestamp | Date de mise à jour |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom du macro processus |
+| description     | longtext     | Description du macro-processus |
+| io_elements     | longtext     | Elements entrant et sortants |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| owner           | varchar(255) | Propriétaire |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
+#### Processus
 
-#### Processes
+Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.
 
-Processes are a set of activities designed to achieve an objective. The process produces value-added information (output) (in the form of deliverables) from information (input) produced by other processes.
-
-Processes are made up of activities, the entities involved in the process, and the information processed by the process.
+Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par celui-ci.
 
 Table *processes* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| identifier | varchar(255) | Process name |
-| description | longtext | Process description |
-| owner | varchar(255) | Process owner |
-| in_out | longtext | incoming and outgoing elements |
-| security_need_c | int | Confidentiality |
-| security_need_i | int | Integrity |
-| security_need_a | int | Availability |
-| security_need_t | int | Traceability |
-| macroprocess_id | int unsigned | Reference to macro-process |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| identifiant     | varchar(255) | Nom du processus |
+| description     | longtext     | Description du processus  |
+| owner           | varchar(255) | Propriétaire du processus  |
+| in_out          | longtext     | Elements entrant et sortants |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| macroprocess_id | int unsigned | Référence vers le macro-processus |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
-#### Activities
+#### Activités
 
-An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an organizational structure of the company.
+Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.
 
 Table *activities* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | activity name |
-| description | longtext | Activity description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'activité |
+| description     | longtext     | Description de l'activité |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
-#### Operations
+#### Opérations
 
-An operation is made up of actors and tasks.
+Une opération est composée d’acteurs et de tâches.
 
 Table *operations* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of operation |
-| description | longtext | Description of operation |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'opération |
+| description     | longtext     | Description de l'opération |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
+#### Tâches
 
-#### Tasks
-
-A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in the value-added chain of a process.
+Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus.
 
 Table *tasks* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Task name |
-| description | longtext | Task description |
-| created_at | timestamp | creation date |
-| updated_at | timestamp | Date updated |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de la tâche |
+| description     | longtext     | Description de tâche |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
-#### Actors
+#### Acteurs
 
-An actor is a representative of a business role who performs operations, uses applications and makes decisions within processes. This role can be carried by a person, a group of people or an entity.
+Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.
 
 Table *actors* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | actor's name |
-| nature | varchar(255) | Nature of actor |
-| type | varchar(255) | Type of actor |
-| contact | varchar(255) | Actor contact |
-| created_at | timestamp | Date created |
-| updated_at | timestamp | Date updated |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'acteur |
+| nature          | varchar(255) | Nature de l'acteur |
+| type            | varchar(255) | Type d'acteur |
+| contact         | varchar(255) | Contact de l'acteur |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
-#### Information
+#### Informations
 
-Information is data that is processed by a computer.
+Une information est une donnée faisant l’objet d’un traitement informatique.
 
 Table *information* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of information |
-| description | longtext | Description of information |
-| owner | varchar(255) | Owner of information |
-| administrator | varchar(255) | Information administrator |
-| storage | varchar(255) | Information storage |
-| security_need_c | int | Confidentiality |
-| security_need_i | int | Integrity |
-| security_need_a | int | Availability |
-| security_need_t | int | Traceability |
-| sensitivity | varchar(255) | Sensitivity of information |
-| constraints | longtext | Legal and regulatory constraints |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
-| deleted_at | timestamp | Date de suppression |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'information |
+| description     | longtext     | Description de l'information |
+| owner           | varchar(255) | Propriétaire de l'information |
+| administrator   | varchar(255) | Administrateur de l'information |
+| storage         | varchar(255) | Stockage de l'information |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
+| sensitivity     | varchar(255) | Sensibilité de l'information |
+| constraints     | longtext     | Contraintes légales et réglementaires |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
-### Application view
+### La vue des applications
 
-The application view is used to describe part of what is classically referred to as the "computer system". 
+La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». 
 
 [<img src="/mercator/images/applications.png" width="600">](/mercator/images/applications.png)
 
-This view describes the technological solutions that support business processes, mainly applications.
+Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.
 
-#### Application block 
+#### Bloc applicatif 
 
-An application block represents a set of applications.
+Un bloc applicatif représente un ensemble d’application.
 
-An application block can be: office applications, management applications, analysis applications, development applications, etc.
+Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...
 
 Table *application_blocks* :
 
-| Field | Type | Description |
+| Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of information |
-| description | longtext | Description of application block |
-| responsible | varchar(255) | Responsible for application block |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
-| deleted_at | timestamp | Date of deletion |
+| id              | int unsigned | auto_increment |
+| name            | varchar(255) | Nom de l'information |
+| description     | longtext     | Description du block applicatif |
+| responsible     | varchar(255) | Responsable du bloc applicatif |
+| created_at      | timestamp    | Date de création |
+| updated_at      | timestamp    | Date de mise à jour |
+| deleted_at      | timestamp    | Date de suppression |
 
 #### Application
 
-An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application services.
+Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.
 
-An application can be deployed on one or more logical servers.
+Une application peut être déployée sur un ou plusieurs serveurs logiques.
 
-When there is no virtualized environment, there are not several logical servers per physical server, but one logical server per physical server.
+Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y a un serveur logique par serveur physique.
 
 Table *m_applications* :
-
 
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|

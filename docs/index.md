@@ -1,19 +1,19 @@
 ## Introduction
 
-Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme 
-décrit dans le [Guide pour la cartographie du Système d’information](https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/) 
-de l’[ANSSI](https://www.ssi.gouv.fr).
+Mercator is a Web application for managing the mapping of an information system as described in the 
+described in the [Mapping the Information System Guide](https://www.ssi.gouv.fr/guide/mapping-the-information-system/) 
+from [ANSSI](https://www.ssi.gouv.fr/en/).
 
-### Objectif
+### Objective
 
-L’objectif de Mercator est de pouvoir gérer en équipe la cartographie d'un système d’information de manière complète et cohérente et de générer automatiquement les différents rapports qui permettent de faciliter le maintien et la communication de cette cartographie.
+Mercator's objective is to enable a team to manage the mapping of an information system in a complete and consistent way, and to automatically generate the various reports needed to facilitate the maintenance and communication of this mapping.
 
-Le maintien d’une cartographie à jour et complète est un travail long et complexe. Mercator permet de diviser ce travail entre plusieurs équipes (infrastructure, réseau, système, application...) et de générer automatiquement les schémas d’infrastructure, d’extraire les inventaires et de générer les rapports de cartographie.
+Maintaining an up-to-date and complete cartography is a long and complex job. Mercator makes it possible to divide this work between several teams (infrastructure, network, system, application...) and automatically generate infrastructure diagrams, extract inventories and generate mapping reports.
 
-Mercator à l’avantage d’être simple à utiliser, à installer et à mettre en œuvre au sein d’une organisation.
+Mercator has the advantage of being simple to use, install and implement within an organization.
 
 ### Limitations
 
-Le modèle de données utilisé dans Mercator est basé sur celui proposé par l’ANSSI. Si le système d’information qui doit être modélisé est grand, complexe, comporte de nombreux systèmes hétéroclites, ce modèle peut s’avérer incomplet.
+The data model used in Mercator is based on that proposed by ANSSI. If the information system to be modeled is large, complex and comprises numerous heterogeneous systems, this model may prove incomplete.
 
-Cependant en faisant quelques concessions sur la complétude de la cartographie, il est souvent possible de modéliser le système d’information avec le modèle proposé ici.
+However, by making a few concessions regarding the completeness of the mapping, it is often possible to model the information system using the model proposed here.

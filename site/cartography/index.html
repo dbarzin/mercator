@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/cartography/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Cartographie - Mercator</title>
+    <title>Mapping - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Cartographie";
+        var mkdocs_page_name = "Mapping";
         var mkdocs_page_input_path = "cartography.md";
         var mkdocs_page_url = "/mercator/cartography/";
       </script>
@@ -45,19 +45,19 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Cartographie</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Mapping</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#vision-rgpd">Vision RGPD</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vision-metier">Vision métier</a>
+    <li class="toctree-l2"><a class="reference internal" href="#business-view">Business view</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vision-applicative">Vision applicative</a>
+    <li class="toctree-l2"><a class="reference internal" href="#application-view">Application view</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vision-infrastructure">Vision infrastructure</a>
+    <li class="toctree-l2"><a class="reference internal" href="#infrastructure-view">Infrastructure view</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#niveaux-de-maturite">Niveaux de maturité</a>
+    <li class="toctree-l2"><a class="reference internal" href="#maturity-levels">Maturity levels</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#besoins-de-securite">Besoins de sécurité</a>
+    <li class="toctree-l2"><a class="reference internal" href="#security-needs">Security needs</a>
     </li>
     </ul>
                 </li>
@@ -67,11 +67,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Cas d'utilisation</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
                 </li>
               </ul>
               <ul>
@@ -87,7 +87,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
                 </li>
               </ul>
       </div>
@@ -104,8 +104,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Cartographie</li>
+      <li>Mapping</li>
     <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/main/docs/cartography.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -113,64 +114,67 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="vues">Vues</h2>
-<p>La cartographie est composée de trois vues allant progressivement du métier vers la technique, elles-mêmes déclinées en vues :</p>
-<h3 id="vision-rgpd">Vision RGPD</h3>
-<p>La vue du RGPD permet de maintenir le registre des traitements et de faire le lien avec les processus, informations, applications et mesures de sécurité mises en place. </p>
-<h3 id="vision-metier">Vision métier</h3>
-<p>La vue de l’écosystème présente les différentes entités ou systèmes avec lesquels le SI interagit pour remplir sa fonction.</p>
-<p>La vue métier du système d’information représente le SI à travers ses processus et informations principales, qui sont les valeurs métier au sens de la méthode d’appréciation des risques EBIOS Risk Manager.</p>
-<h3 id="vision-applicative">Vision applicative</h3>
-<p>La vue des applications décrit les composants logiciels du système d’information, les services qu’ils offrent et les flux de données entre eux.</p>
-<p>La vue des flux applicatifs décrits les flux d’information entre les différentes applications, services, modules et bases de données.</p>
-<p>La vue de l’administration répertorie les périmètres et les niveaux de privilèges des utilisateurs et des administrateurs.</p>
-<h3 id="vision-infrastructure">Vision infrastructure</h3>
-<p>La vue des infrastructures logiques illustre le cloisonnement logique des réseaux, notamment par la définition des plages d’adresses IP, des VLAN et des fonctions de filtrage et routage ;</p>
-<p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou utilisés par celui-ci.</p>
-<h3 id="niveaux-de-maturite">Niveaux de maturité</h3>
-<p>Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. </p>
-<p><a href="/mercator/images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
-<p>Cette maturité est divisée en trois niveaux :</p>
-<ul>
-<li>La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;</li>
-<li>La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;</li>
-<li>La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.</li>
+                <ul>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../cartography.fr/">Français</a></li>
 </ul>
-<h3 id="besoins-de-securite">Besoins de sécurité</h3>
-<p>Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et traçabilité avec l'échelle suivante :</p>
+<h2 id="views">Views</h2>
+<p>The cartography is made up of three views progressively moving from business to technical, themselves broken down into views:</p>
+<h3 id="gdpr-view">GDPR view</h3>
+<p>The GDPR view is used to maintain the register of processing operations and to make the link with the processes, information, applications and security measures in place. </p>
+<h3 id="business-view">Business view</h3>
+<p>The ecosystem view presents the various entities or systems with which the IS interacts to fulfill its function.</p>
+<p>The business view of the information system represents the IS through its main processes and information, which are the business values as defined by the EBIOS Risk Manager risk assessment method.</p>
+<h3 id="application-view">Application view</h3>
+<p>The application view describes the information system's software components, the services they provide and the data flows between them.</p>
+<p>The application flow view describes the information flows between different applications, services, modules and databases.</p>
+<p>The administration view lists the perimeters and privilege levels of users and administrators.</p>
+<h3 id="infrastructure-view">Infrastructure view</h3>
+<p>The logical infrastructure view illustrates the logical partitioning of networks, notably through the definition of IP address ranges, VLANs and filtering and routing functions;</p>
+<p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
+<h3 id="maturity-levels">Maturity levels</h3>
+<p>The maturity levels represent the percentage of completeness of the mapping. It is an indicator of the effort remaining to be provided to achieve complete mapping.</p>
+<p><a href="/mercator/images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
+<p>This maturity is divided into three levels:</p>
+<ul>
+<li>The minimum level 1 granularity which contains the information essential to the cartography;</li>
+<li>Level 2 intermediate granularity which contains important information for mapping;</li>
+<li>Level 3 fine granularity which contains useful information for the management of information system security.</li>
+</ul>
+<h3 id="security-needs">Security needs</h3>
+<p>Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the following scale:</p>
 <table>
 <thead>
 <tr>
-<th align="center">Niveau</th>
+<th align="center">Level</th>
 <th align="center">Description</th>
-<th align="center">Couleur</th>
+<th align="center">Color</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="center">0</td>
-<td align="center">Insignifiant</td>
-<td align="center">Blanc</td>
+<td align="center">Insignificant</td>
+<td align="center">White</td>
 </tr>
 <tr>
 <td align="center">1</td>
-<td align="center">Faible</td>
-<td align="center"><span style="color:green">Vert</span></td>
+<td align="center">Low</td>
+<td align="center"><span style="color:green">Green</span></td>
 </tr>
 <tr>
 <td align="center">2</td>
-<td align="center">Moyen</td>
-<td align="center"><span style="color:yellow;">Jaune</span></td>
+<td align="center">Medium</td>
+<td align="center"><span style="color:yellow;">Yellow</span></td>
 </tr>
 <tr>
 <td align="center">3</td>
-<td align="center">Fort</td>
+<td align="center">Strong</td>
 <td align="center"><span style="color:orange">Orange</span></td>
 </tr>
 <tr>
 <td align="center">4</td>
-<td align="center">Très fort</td>
-<td align="center"><span style="color:red">Rouge</span></td>
+<td align="center">Very strong</td>
+<td align="center"><span style="color:red">Red</span></td>
 </tr>
 </tbody>
 </table>
@@ -186,6 +190,7 @@
 
   <div role="contentinfo">
     <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
   </div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -200,6 +205,10 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
     
     
       <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>

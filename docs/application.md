@@ -2,33 +2,33 @@
 
 [<img src="/mercator/images/homepage.png" width="600">](/mercator/images/homepage.png)
 
-### Page principale
+### Main page
 
-La page principale est divisée en trois parties :
+The main page is divided into three parts:
 
-* Les niveaux de conformité
+* Compliance levels
 
    [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
 
-* La répartition des objet de la cartographie par domaine 
+* The distribution of cartography objects by domain. 
 
    [<img src="/mercator/images/repartition.png" width="600">](/mercator/images/repartition.png)
 
-* La carte proportionnelle globale des objets de la cartographie
+* The global proportional map of cartography objects.
 
    [<img src="/mercator/images/treemap.png" width="600">](/mercator/images/treemap.png)
 
-Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnées.
+Each item is selectable and gives access to the list of selected map objects.
 
-### Les menus
+### Menus
 
-* Le menu latéral gauche permet d’accéder:
-    * au tableau de bord
-    * au travers des vue, aux différents écrans de gestion des objets de la cartographie
-    * aux écrans de gestion des rôles et des utilisateurs
-    * au bouton de déconnexion
-* Le menu supérieur donne accès :
-    * Aux vues
-    * Aux préférences
-    * A la documentation et aux rapports
-* Outil de recherche
+* The left side menu provides access to:
+    * the dashboard
+    * through the views, to the various cartographic object management screens
+    * role and user management screens
+    * the logout button
+* The top menu gives access to :
+    * Views
+    * Preferences
+    * Documentation and reports
+* Search tool

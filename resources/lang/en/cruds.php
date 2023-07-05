@@ -56,7 +56,7 @@ return [
         'title_short' => 'Directories',
         'title_singular' => 'Administration Directory Service',
     ],
-    "application" => [
+    'application' => [
         "description" => "Coherent set of computer objects (executables, programs, data ...). It constitutes a grouping of application services.",
         "fields" => [
             "application_block" => "Application block",
@@ -69,8 +69,8 @@ return [
             "description_helper" => "",
             "documentation" => "Documentation",
             "documentation_helper" => "Link to documentation",
-            "entities" => "Entities",
-            "entities_helper" => "List of user entities",
+            "entities" => "Using entities",
+            "entities_helper" => "List of entities using the application",
             'entity_resp' => 'Operation',
             'entity_resp_helper' => 'Entity responsible for operations',
             "events" => "Major events",

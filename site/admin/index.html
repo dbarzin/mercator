@@ -45,7 +45,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Cartographie</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
                 </li>
               </ul>
               <ul>
@@ -53,11 +53,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Cas d'utilisation</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Modèle de données</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
                 </li>
               </ul>
               <ul>
@@ -67,13 +67,13 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">Administration</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-utilisateurs">Gestion des utilisateurs</a>
+    <li class="toctree-l2"><a class="reference internal" href="#user-management">User management</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-roles">Gestion des rôles</a>
+    <li class="toctree-l2"><a class="reference internal" href="#role-management">Role management</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-certificats">Gestion des certificats</a>
+    <li class="toctree-l2"><a class="reference internal" href="#certificate-management">Certificate management</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#gestion-des-cve">Gestion des CVE</a>
+    <li class="toctree-l2"><a class="reference internal" href="#cve-management">CVE management</a>
     </li>
     </ul>
                 </li>
@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">Références</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
                 </li>
               </ul>
       </div>
@@ -102,6 +102,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Administration</li>
     <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/main/docs/admin.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -109,14 +110,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="administration">Administration</h2>
-<h3 id="gestion-des-utilisateurs">Gestion des utilisateurs</h3>
-<p>Les utilisateurs de l'application Mercator sont renseignés dans la base de données de l'application.</p>
+                <ul>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../admin.fr/">Français</a></li>
+</ul>
+<h2 id="administration">Administration</h2>
+<h3 id="user-management">User management</h3>
+<p>Mercator application users are entered in the application database.</p>
 <p>Table <em>users</em> :</p>
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
+<th align="left">Field</th>
 <th align="left">Type</th>
 <th align="left">Description</th>
 </tr>
@@ -130,85 +134,85 @@
 <tr>
 <td align="left">name</td>
 <td align="left">varchar(255)</td>
-<td align="left">Nom de l'utilisateur</td>
+<td align="left">User name</td>
 </tr>
 <tr>
 <td align="left">email</td>
 <td align="left">varchar(255)</td>
-<td align="left">Adresse mail de l'utilisateur</td>
+<td align="left">user's email address</td>
 </tr>
 <tr>
 <td align="left">email_verified_at</td>
 <td align="left">datetime</td>
-<td align="left">Date de vérification de l'adresse email</td>
+<td align="left">Date email address verified</td>
 </tr>
 <tr>
 <td align="left">password</td>
 <td align="left">varchar(255)</td>
-<td align="left">Mot de passe de l'utilisateur</td>
+<td align="left">User's password</td>
 </tr>
 <tr>
 <td align="left">remember_token</td>
 <td align="left">varchar(255)</td>
-<td align="left">Token de session</td>
+<td align="left">session token</td>
 </tr>
 <tr>
 <td align="left">granularity</td>
 <td align="left">int</td>
-<td align="left">Niveau de granularité utilisé</td>
+<td align="left">Level of granularity used</td>
 </tr>
 <tr>
 <td align="left">language</td>
 <td align="left">varchar(2)</td>
-<td align="left">Langue de l'utilisateur</td>
+<td align="left">User language</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td align="left">Date created</td>
 </tr>
 <tr>
 <td align="left">updated_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td align="left">Date updated</td>
 </tr>
 <tr>
 <td align="left">deleted_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td align="left">Date of deletion</td>
 </tr>
 </tbody>
 </table>
-<p>Les mots de passe sont hashés par la fonction fournie en standard dans Laravel.</p>
-<p>Il est possible de connecter Mercator à un annuaire LDAP (voir LoginController.php). </p>
-<h3 id="gestion-des-roles">Gestion des rôles</h3>
-<p>Pour chaque objet de la cartographie, il existe un droit en :</p>
+<p>Passwords are hashed using Laravel's standard hash function.</p>
+<p>Mercator can be connected to an LDAP directory (see LoginController.php). </p>
+<h3 id="role-management">Role management</h3>
+<p>For each object in the cartography, there is a :</p>
 <ul>
-<li>accès</li>
-<li>création</li>
-<li>édition</li>
-<li>affichage</li>
-<li>suppression</li>
+<li>access</li>
+<li>creation</li>
+<li>edit</li>
+<li>display</li>
+<li>delete</li>
 </ul>
-<p>Trois rôles sont encodés par défaut :</p>
+<p>Three roles are encoded by default:</p>
 <ul>
-<li>Utilisateur : les utilisateurs ont tous les droits sur tous les objets à l'exception des utilisateurs et de la configuation.</li>
-<li>Auditeur : l'auditeur a le droit d'accéder et d'afficher tous les objets à l'exception des utilisateurs et de la configutation.</li>
-<li>Administrateur : l'administrateur a tous les droits sans exception.</li>
+<li>User: users have full rights to all objects except users and config.</li>
+<li>Auditor: auditors have the right to access and display all objects except users and configuration.</li>
+<li>Administrator: the administrator has all rights without exception.</li>
 </ul>
-<p>Il est possible de créer de nouveaux rôles selon les besoins. </p>
-<h3 id="gestion-des-certificats">Gestion des certificats</h3>
-<p>Des notifications d'expiration des certificats peuvent être envoyés à des périodes définies.</p>
-<p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "Certificats".</p>
+<p>New roles can be created as required. </p>
+<h3 id="certificate-management">Certificate management</h3>
+<p>Certificate expiry notifications can be sent at set times.</p>
+<p>The configuration screen can be accessed via the "Configuration" -&gt; "Certificates" menu.</p>
 <p><a href="/mercator/images/certificates.png"><img src="/mercator/images/certificates.png" width="600"></a></p>
-<p>Le bouton "Test" permet d'envoyer un mail de test à l'adresse de notification spécifiée.</p>
-<h3 id="gestion-des-cve">Gestion des CVE</h3>
-<p>Des notifications de détection de CVE sur base du nom des applications peuvent être envoyées à des périodes définies.</p>
-<p>Les CVE sont récupérées avec le projet <a href="https://github.com/cve-search/cve-search">CVE-Search</a>. La rechecrhe est faite localement.</p>
-<p>L'écran de configuration est accessible via le menu "Configuration" -&gt; "CVE"</p>
+<p>The "Test" button sends a test e-mail to the specified notification address.</p>
+<h3 id="cve-management">CVE management</h3>
+<p>CVE detection notifications based on application names can be sent at set times.</p>
+<p>CVEs are retrieved using the [CVE-Search] project (https://github.com/cve-search/cve-search). The search is performed locally.</p>
+<p>The configuration screen can be accessed via the "Configuration" -&gt; "CVE" menu.</p>
 <p><a href="/mercator/images/cve.png"><img src="/mercator/images/cve.png" width="600"></a></p>
-<p>Le bouton "Test Mail" permet d'envoyer un mail de test à l'adresse de notification spécifiée et de tester l'accès au provider de CVE.</p>
-<p>Le bouton "Test Provider" permet de tester l'accès au provider du projet CVE-Search.</p>
+<p>The "Test Mail" button sends a test mail to the specified notification address and tests access to the CVE provider.</p>
+<p>The "Test Provider" button tests access to the CVE-Search project provider.</p>
               
             </div>
           </div><footer>
@@ -221,6 +225,7 @@
 
   <div role="contentinfo">
     <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
   </div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -235,6 +240,10 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
     
     
       <span><a href="../reports/" style="color: #fcfcfc">&laquo; Previous</a></span>

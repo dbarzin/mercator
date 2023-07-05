@@ -1,56 +1,52 @@
-## Vues
+## Views
 
-La cartographie est composée de trois vues allant progressivement du métier vers la technique, elles-mêmes déclinées en vues :
+The cartography is made up of three views progressively moving from business to technical, themselves broken down into views:
 
-### Vision RGPD
+### GDPR view
 
-La vue du RGPD permet de maintenir le registre des traitements et de faire le lien avec les processus, informations, applications et mesures de sécurité mises en place. 
+The GDPR view is used to maintain the register of processing operations and to make the link with the processes, information, applications and security measures in place. 
 
-### Vision métier
+### Business view
 
-La vue de l’écosystème présente les différentes entités ou systèmes avec lesquels le SI interagit pour remplir sa fonction.
+The ecosystem view presents the various entities or systems with which the IS interacts to fulfill its function.
 
-La vue métier du système d’information représente le SI à travers ses processus et informations principales, qui sont les valeurs métier au sens de la méthode d’appréciation des risques EBIOS Risk Manager.
+The business view of the information system represents the IS through its main processes and information, which are the business values as defined by the EBIOS Risk Manager risk assessment method.
 
-### Vision applicative
+### Application view
 
-La vue des applications décrit les composants logiciels du système d’information, les services qu’ils offrent et les flux de données entre eux.
+The application view describes the information system's software components, the services they provide and the data flows between them.
 
-La vue des flux applicatifs décrits les flux d’information entre les différentes applications, services, modules et bases de données.
+The application flow view describes the information flows between different applications, services, modules and databases.
 
-La vue de l’administration répertorie les périmètres et les niveaux de privilèges des utilisateurs et des administrateurs.
+The administration view lists the perimeters and privilege levels of users and administrators.
 
 
-### Vision infrastructure
+### Infrastructure view
 
-La vue des infrastructures logiques illustre le cloisonnement logique des réseaux, notamment par la définition des plages d’adresses IP, des VLAN et des fonctions de filtrage et routage ;
+The logical infrastructure view illustrates the logical partitioning of networks, notably through the definition of IP address ranges, VLANs and filtering and routing functions;
 
-La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou utilisés par celui-ci.
+The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-### Niveaux de maturité
+### Maturity levels
 
-Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
+The maturity levels represent the percentage of completeness of the mapping. It is an indicator of the effort remaining to be provided to achieve complete mapping.
 
 [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
 
-Cette maturité est divisée en trois niveaux :
+This maturity is divided into three levels:
 
-* La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;
-* La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;
-* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
+* The minimum level 1 granularity which contains the information essential to the cartography;
+* Level 2 intermediate granularity which contains important information for mapping;
+* Level 3 fine granularity which contains useful information for the management of information system security.
 
-### Besoins de sécurité
+### Security needs
 
-Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et traçabilité avec l'échelle suivante :
+Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the following scale:
 
-| Niveau   |      Description      |  Couleur |
+| Level | Description | Color |
 |:----------:|:-------------:|:------:|
-| 0| Insignifiant | Blanc |
-| 1 |    Faible   | <span style="color:green">Vert</span> |
-| 2 | Moyen | <span style="color:yellow;">Jaune</span> |
-| 3 | Fort | <span style="color:orange">Orange</span> |
-| 4 | Très fort | <span style="color:red">Rouge</span> |
-    
-
-
-
+| 0| Insignificant | White |
+| 1 | Low | <span style="color:green">Green</span> |
+| 2 | Medium | <span style="color:yellow;">Yellow</span> |
+| 3 | Strong | <span style="color:orange">Orange</span> |
+| 4 | Very strong | <span style="color:red">Red</span> |
