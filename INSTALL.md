@@ -160,7 +160,7 @@ If you want to send notification mails from Mercator.
 
 Install postfix and mailx
 
-    sudo apt install postfix mailx
+    sudo apt install postfix mailutils
 
 Configure postfix
 
