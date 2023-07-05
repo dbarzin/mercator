@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/api/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/api.fr/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>API - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
@@ -13,8 +13,8 @@
       <script>
         // Current page data
         var mkdocs_page_name = "API";
-        var mkdocs_page_input_path = "api.md";
-        var mkdocs_page_url = "/mercator/api/";
+        var mkdocs_page_input_path = "api.fr.md";
+        var mkdocs_page_url = "/mercator/api.fr/";
       </script>
     
     <script src="../js/jquery-3.6.0.min.js" defer></script>
@@ -41,65 +41,65 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                <li class="toctree-l1"><a class="reference internal" href="../index.fr/">Introduction</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography.fr/">Cartographie</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                <li class="toctree-l1"><a class="reference internal" href="../application.fr/">Application</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../model/">Data model</a>
+                <li class="toctree-l1"><a class="reference internal" href="../model.fr/">Modèle de données</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../reports.fr/">Rapports</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
                 </li>
               </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">API</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#install-the-api-on-mercator">Install the API on Mercator</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installer-lapi-sur-mercator">Installer l'API sur Mercator</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#apis">APIs</a>
+    <li class="toctree-l2"><a class="reference internal" href="#les-apis">Les APIs</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actions-managed-by-the-resource-controller">Actions managed by the resource controller</a>
+    <li class="toctree-l2"><a class="reference internal" href="#actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
+    <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#php">PHP</a>
+    <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#users-list">Users list</a>
+    <li class="toctree-l3"><a class="reference internal" href="#liste-des-utilisateurs">Liste des utilisateurs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#get-a-user">Get a user</a>
+    <li class="toctree-l3"><a class="reference internal" href="#recuperer-un-utilisateur">Récupérer un utilisateur</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#update-a-user">Update a user</a>
+    <li class="toctree-l3"><a class="reference internal" href="#mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#python">Python</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bash">Bash</a>
+    <li class="toctree-l2"><a class="reference internal" href="#bash">bash</a>
     </li>
     </ul>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references.fr/">Références</a>
                 </li>
               </ul>
       </div>
@@ -118,7 +118,7 @@
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>API</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/main/docs/api.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/main/docs/api.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -127,35 +127,29 @@
             <div class="section" itemprop="articleBody">
               
                 <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../api.fr/">Français</a></li>
+<li class="i18n-link i18n-link-found i18n-link-en"><a href="../api/">English</a></li>
 </ul>
 <h2 id="api">API</h2>
-<p>Cartography can be modified or updated via a REST API.</p>
-<p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>) 
-is an application programming interface that respects the constraints of the REST 
-architecture and enables interaction with RESTful web services. </p>
-<h3 id="install-the-api-on-mercator">Install the API on Mercator</h3>
-<p>To install the API in Mercator, you need to install Passport by running this command:</p>
+<p>La cartographie peut être modifiée ou mise à jour via une REST API.</p>
+<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>) 
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
+et permet d'interagir avec les services web RESTful. </p>
+<h3 id="installer-lapi-sur-mercator">Installer l'API sur Mercator</h3>
+<p>pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :</p>
 <pre><code class="language-bash">php artisan passport:install
 </code></pre>
 <ul>
-<li>The Docker environment supports this functionality natively, via the entrypoint.</li>
+<li>l'environnement Docker prend en charge cette fonctionnalité nativement, via le l'entrypoint.</li>
 </ul>
-<h3 id="apis">APIs</h3>
-<p>For each object in the cartography data model, there is an API.</p>
-<p><em>GDPR view</em></p>
-<ul>
-<li>/api/data_processing</li>
-<li>/api/security_devices</li>
-</ul>
-<p><em>Ecosystem view</em></p>
+<h3 id="les-apis">Les APIs</h3>
+<p>Pour chaque objet du modèle de données de la cartographie, il existe une API.</p>
+<p><strong>Vues de l'écosystème</strong></p>
 <ul>
 <li>/api/entities</li>
 <li>/api/relations</li>
 </ul>
-<p><em>Information system business view</em> </p>
+<p><strong>Vue métier du système d'information</strong></p>
 <ul>
-<li>/api/macro-processes</li>
 <li>/api/macro-processuses</li>
 <li>/api/processes</li>
 <li>/api/operations</li>
@@ -164,7 +158,7 @@ architecture and enables interaction with RESTful web services. </p>
 <li>/api/tasks</li>
 <li>/api/information</li>
 </ul>
-<p><em>Application view</em></p>
+<p><strong>Vue des applications</strong></p>
 <ul>
 <li>/api/application-blocks</li>
 <li>/api/applications</li>
@@ -173,14 +167,14 @@ architecture and enables interaction with RESTful web services. </p>
 <li>/api/databases</li>
 <li>/api/fluxes</li>
 </ul>
-<p><em>Administration view</em></p>
+<p><strong>Vue de l'administration</strong></p>
 <ul>
 <li>/api/zone-admins</li>
 <li>/api/annuaires</li>
 <li>/api/forest-ads</li>
 <li>/api/domaine-ads</li>
 </ul>
-<p><em>Logical infrastructure view</em></p>
+<p><strong>Vue de l'infrastructure logique</strong></p>
 <ul>
 <li>/api/networks</li>
 <li>/api/subnetworks</li>
@@ -194,7 +188,7 @@ architecture and enables interaction with RESTful web services. </p>
 <li>/api/logical-servers</li>
 <li>/api/certificates</li>
 </ul>
-<p><em>Physical infrastructure view</em></p>
+<p><strong>Vue de l'infrastructure physique</strong></p>
 <ul>
 <li>/api/sites</li>
 <li>/api/buildings</li>
@@ -213,18 +207,18 @@ architecture and enables interaction with RESTful web services. </p>
 <li>/api/lans</li>
 <li>/api/vlans</li>
 </ul>
-<p><em>Administration</em></p>
+<p><strong>Administration</strong></p>
 <ul>
 <li>/api/users</li>
 <li>/api/permissions</li>
 <li>/api/roles</li>
 </ul>
-<h3 id="actions-managed-by-the-resource-controller">Actions managed by the resource controller</h3>
-<p>Requests and URIs for each api are shown in the table below.</p>
+<h3 id="actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</h3>
+<p>Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.</p>
 <table>
 <thead>
 <tr>
-<th>Request</th>
+<th>Requête</th>
 <th>URI</th>
 <th>Action</th>
 </tr>
@@ -232,41 +226,41 @@ architecture and enables interaction with RESTful web services. </p>
 <tbody>
 <tr>
 <td>GET</td>
-<td>/api/objects</td>
-<td>returns the list of objects</td>
+<td>/api/objets</td>
+<td>renvoie la liste des objets</td>
 </tr>
 <tr>
-<td>GET /api/objets/{id}</td>
-<td id="id">returns object</td>
-<td></td>
+<td>GET</td>
+<td>/api/objets/{id}</td>
+<td id="id">renvoie l'objet</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/api/objects</td>
-<td>save new object</td>
+<td>/api/objets</td>
+<td>sauve un nouvel objet</td>
 </tr>
 <tr>
 <td>PUT/PATCH</td>
 <td>/api/objets/{id}</td>
-<td id="id">update object</td>
+<td id="id">met à jour l'objet</td>
 </tr>
 <tr>
 <td>DELETE</td>
 <td>/api/objets/{id}</td>
-<td id="id">delete object</td>
+<td id="id">supprimer l'objet</td>
 </tr>
 </tbody>
 </table>
-<p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
-<h3 id="access-rights">Access rights</h3>
-<p>To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects 
-objects accessed via the API. </p>
-<p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header. 
-header of the API request.</p>
-<h3 id="php">PHP</h3>
-<p>Here are a few examples of how to use the API with PHP:</p>
-<h5 id="authentification">Authentification</h5>
+<p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
+<h3 id="droits-dacces">Droits d'accès</h3>
+<p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
+accédés par l'API. </p>
+<p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+l'entête "Authorization" de la requête de l'API.</p>
+<h3 id="exemples">Exemples</h3>
+<p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
+<h4 id="authentification">Authentification</h4>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -308,7 +302,7 @@ header of the API request.</p>
 
     var_dump($response);
 </code></pre>
-<h5 id="users-list">Users list</h5>
+<h4 id="liste-des-utilisateurs">Liste des utilisateurs</h4>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -336,7 +330,7 @@ header of the API request.</p>
     var_dump($response);
 
 </code></pre>
-<h5 id="get-a-user">Get a user</h5>
+<h4 id="recuperer-un-utilisateur">Récupérer un utilisateur</h4>
 <pre><code class="language-php">&lt;?php
     $curl = curl_init();
 
@@ -362,7 +356,7 @@ header of the API request.</p>
 
     var_dump($response);
 </code></pre>
-<h5 id="update-a-user">Update a user</h5>
+<h4 id="mettre-a-jour-un-utilisateur">Mettre à jour un utilisateur</h4>
 <pre><code class="language-php">&lt;?php
    $curl = curl_init();
 
@@ -397,7 +391,7 @@ header of the API request.</p>
     var_dump($response);
 </code></pre>
 <h3 id="python">Python</h3>
-<p>Here's an example of how to use the API in Python :</p>
+<p>Voici un exemple d'utilisation de l'API en Python</p>
 <pre><code class="language-python">#!/usr/bin/python3
 
 import requests
@@ -421,8 +415,8 @@ print(response.json())
 print(response.status_code)
 
 </code></pre>
-<h3 id="bash">Bash</h3>
-<p>Here's an example of using the API on the command line with <a href="https://curl.se/docs/manpage.html">CURL</a> and <a href="https://stedolan.github.io/jq/">JQ</a></p>
+<h3 id="bash">bash</h3>
+<p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a> et <a href="https://stedolan.github.io/jq/">JQ</a></p>
 <pre><code># valid login and password
 data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
@@ -437,8 +431,8 @@ curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Be
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../admin/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../references/" class="btn btn-neutral float-right" title="References">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../admin.fr/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../references.fr/" class="btn btn-neutral float-right" title="Références">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -466,10 +460,10 @@ curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Be
         </span>
     
     
-      <span><a href="../admin/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../admin.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../references.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/model/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/model.fr/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Data model - Mercator</title>
+    <title>Modèle de données - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Data model";
-        var mkdocs_page_input_path = "model.md";
-        var mkdocs_page_url = "/mercator/model/";
+        var mkdocs_page_name = "Mod\u00e8le de donn\u00e9es";
+        var mkdocs_page_input_path = "model.fr.md";
+        var mkdocs_page_url = "/mercator/model.fr/";
       </script>
     
     <script src="../js/jquery-3.6.0.min.js" defer></script>
@@ -41,61 +41,61 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                <li class="toctree-l1"><a class="reference internal" href="../index.fr/">Introduction</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography.fr/">Cartographie</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
+                <li class="toctree-l1"><a class="reference internal" href="../application.fr/">Application</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../usecases/">Use cases</a>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Data model</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Modèle de données</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#rgpd-view">RGPD view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vue-du-rgpd">Vue du RGPD</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#register">Register</a>
+    <li class="toctree-l3"><a class="reference internal" href="#registre">Registre</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#security-measures">Security measures</a>
+    <li class="toctree-l3"><a class="reference internal" href="#mesures-de-securite">Mesures de sécurité</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#ecosystem-view">Ecosystem view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vue-de-lecosysteme">Vue de l’écosystème</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#entities">Entities</a>
+    <li class="toctree-l3"><a class="reference internal" href="#entites">Entités</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#relationships">Relationships</a>
+    <li class="toctree-l3"><a class="reference internal" href="#relations">Relations</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#business-view-of-the-information-system">Business view of the information system</a>
+    <li class="toctree-l2"><a class="reference internal" href="#vue-metier-du-systeme-dinformation">Vue métier du système d’information</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#macro-processes">Macro-processes</a>
+    <li class="toctree-l3"><a class="reference internal" href="#macro-processus">Macro-processus</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#processes">Processes</a>
+    <li class="toctree-l3"><a class="reference internal" href="#processus">Processus</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#activities">Activities</a>
+    <li class="toctree-l3"><a class="reference internal" href="#activites">Activités</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#operations">Operations</a>
+    <li class="toctree-l3"><a class="reference internal" href="#operations">Opérations</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a>
+    <li class="toctree-l3"><a class="reference internal" href="#taches">Tâches</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#actors">Actors</a>
+    <li class="toctree-l3"><a class="reference internal" href="#acteurs">Acteurs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#information">Information</a>
+    <li class="toctree-l3"><a class="reference internal" href="#informations">Informations</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#application-view">Application view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#la-vue-des-applications">La vue des applications</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#application-block">Application block</a>
+    <li class="toctree-l3"><a class="reference internal" href="#bloc-applicatif">Bloc applicatif</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
     </li>
@@ -185,19 +185,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../reports.fr/">Rapports</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
+                <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
+                <li class="toctree-l1"><a class="reference internal" href="../api.fr/">API</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../references/">References</a>
+                <li class="toctree-l1"><a class="reference internal" href="../references.fr/">Références</a>
                 </li>
               </ul>
       </div>
@@ -214,9 +214,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Data model</li>
+      <li>Modèle de données</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/main/docs/model.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/main/docs/model.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -225,20 +225,20 @@
             <div class="section" itemprop="articleBody">
               
                 <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../model.fr/">Français</a></li>
+<li class="i18n-link i18n-link-found i18n-link-en"><a href="../model/">English</a></li>
 </ul>
-<h2 id="data-model">Data model</h2>
+<h2 id="modele-de-donnees">Modèle de données</h2>
 <p><a href="/mercator/images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
-<h3 id="rgpd-view">RGPD view</h3>
-<p>The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system. </p>
-<p>This view is used to fulfill the obligations set out in Article 30 of the RGPD.</p>
-<h4 id="register">Register</h4>
-<p>The register of processing activities contains the information required by article 30.1 of the RGPD.</p>
+<h3 id="vue-du-rgpd">Vue du RGPD</h3>
+<p>La vue du RGPD contient l'ensemble des données nécessaires au maintient du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information. </p>
+<p>Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.</p>
+<h4 id="registre">Registre</h4>
+<p>Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.</p>
 <p>Table <em>data_processing</em> :</p>
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
+<th align="left">Champ</th>
 <th align="left">Type</th>
 <th align="left">Description</th>
 </tr>
@@ -252,12 +252,12 @@
 <tr>
 <td align="left">name</td>
 <td align="left">varchar(255)</td>
-<td align="left">Treatment name</td>
+<td align="left">Nom du traitement</td>
 </tr>
 <tr>
 <td align="left">description</td>
 <td align="left">longtext</td>
-<td align="left">Description of treatment</td>
+<td align="left">Description du traitement</td>
 </tr>
 <tr>
 <td align="left">responsible</td>
@@ -267,279 +267,27 @@
 <tr>
 <td align="left">purpose</td>
 <td align="left">longtext</td>
-<td align="left">Purposes of processing</td>
+<td align="left">Finalités du traitement</td>
 </tr>
 <tr>
 <td align="left">categories</td>
 <td align="left">longtext</td>
-<td align="left">Categories of recipients</td>
+<td align="left">Catégories de destinataires</td>
 </tr>
 <tr>
 <td align="left">recipients</td>
 <td align="left">longtext</td>
-<td align="left">Data recipients</td>
+<td align="left">Destinataires des données</td>
 </tr>
 <tr>
-<td align="left">transfer</td>
+<td align="left">transfert</td>
 <td align="left">longtext</td>
-<td align="left">Data transfers</td>
+<td align="left">Transferts de données</td>
 </tr>
 <tr>
 <td align="left">retention</td>
 <td align="left">longtext</td>
-<td align="left">Retention periods</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="security-measures">Security measures</h4>
-<p>This table identifies the security measures applied to processes and applications.</p>
-<p>By default, this table is populated with the security measures of ISO 27001:2022.</p>
-<p>Table <em>security_controls</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">measure name</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">measure description</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ecosystem-view">Ecosystem view</h3>
-<p>The ecosystem view describes all the entities or systems that revolve around the information system considered in the mapping.</p>
-<p><a href="/mercator/images/ecosystem.png"><img src="/mercator/images/ecosystem.png" width="600"></a></p>
-<p>This view not only delimits the scope of the mapping, but also provides an overall view of the ecosystem without being limited to the individual study of each entity.</p>
-<h4 id="entities">Entities</h4>
-<p>Entities are a part of the organization (e.g.: subsidiary, department, etc.) or related to the information system to be mapped.</p>
-<p>Entities are departments, suppliers, partners with whom information is exchanged through relationships.</p>
-<p>Table <em>entities</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of entity</td>
-</tr>
-<tr>
-<td align="left">is_external</td>
-<td align="left">boolean</td>
-<td align="left">External entity</td>
-</tr>
-<tr>
-<td align="left">security_level</td>
-<td align="left">longtext</td>
-<td align="left">Security level</td>
-</tr>
-<tr>
-<td align="left">contact_point</td>
-<td align="left">longtext</td>
-<td align="left">Contact point</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Entity description</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="relationships">Relationships</h4>
-<p>Relationships represent a link between two entities or systems.</p>
-<p>Relationships are contracts, service agreements, legal obligations... that have an influence on the information system.</p>
-<p>Table <em>relations</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Relationship name</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of relationship</td>
-</tr>
-<tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type of relationship</td>
-</tr>
-<tr>
-<td align="left">importance</td>
-<td align="left">int</td>
-<td align="left">Importance of relationship</td>
-</tr>
-<tr>
-<td align="left">source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to source entity</td>
-</tr>
-<tr>
-<td align="left">destination_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to destination entity</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h3 id="business-view-of-the-information-system">Business view of the information system</h3>
-<p>The business view of the information system describes all the organization's business processes and the players involved, independently of the technological choices made by the organization and the resources made available to it. </p>
-<p><a href="/mercator/images/information_system.png"><img src="/mercator/images/information_system.png" width="600"></a></p>
-<p>The business view is essential, as it allows you to reposition technical elements in their business environment, and thus understand their context of use.</p>
-<h4 id="macro-processes">Macro-processes</h4>
-<p>Macro-processes represent sets of processes.</p>
-<p>Table <em>macro_processuses</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of macro process</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of macro-process</td>
-</tr>
-<tr>
-<td align="left">io_elements</td>
-<td align="left">longtext</td>
-<td align="left">Incoming and outgoing elements</td>
-</tr>
-<tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Privacy</td>
-</tr>
-<tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
-</tr>
-<tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
-</tr>
-<tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
-</tr>
-<tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Owner</td>
+<td align="left">Durées de rétention</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
@@ -554,97 +302,18 @@
 <tr>
 <td align="left">deleted_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td align="left">Date de suppression</td>
 </tr>
 </tbody>
 </table>
-<h4 id="processes">Processes</h4>
-<p>Processes are a set of activities designed to achieve an objective. The process produces value-added information (output) (in the form of deliverables) from information (input) produced by other processes.</p>
-<p>Processes are made up of activities, the entities involved in the process, and the information processed by the process.</p>
-<p>Table <em>processes</em> :</p>
+<h4 id="mesures-de-securite">Mesures de sécurité</h4>
+<p>Cette table permet d'identifier les mesures de sécurité appliquées aux processus et applications.</p>
+<p>Par défaut cette table est complétée avec les mesures de sécurité de la norme ISO 27001:2022.</p>
+<p>Table <em>security_controls</em> :</p>
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">identifier</td>
-<td align="left">varchar(255)</td>
-<td align="left">Process name</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Process description</td>
-</tr>
-<tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Process owner</td>
-</tr>
-<tr>
-<td align="left">in_out</td>
-<td align="left">longtext</td>
-<td align="left">incoming and outgoing elements</td>
-</tr>
-<tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentiality</td>
-</tr>
-<tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
-</tr>
-<tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
-</tr>
-<tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
-</tr>
-<tr>
-<td align="left">macroprocess_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to macro-process</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="activities">Activities</h4>
-<p>An activity is a step required to carry out a process. It corresponds to a speciﬁc know-how and not necessarily to an organizational structure of the company.</p>
-<p>Table <em>activities</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
+<th align="left">Champ</th>
 <th align="left">Type</th>
 <th align="left">Description</th>
 </tr>
@@ -658,248 +327,17 @@
 <tr>
 <td align="left">name</td>
 <td align="left">varchar(255)</td>
-<td align="left">activity name</td>
+<td align="left">Nom de la mesure</td>
 </tr>
 <tr>
 <td align="left">description</td>
 <td align="left">longtext</td>
-<td align="left">Activity description</td>
+<td align="left">Description de la mesure</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="operations">Operations</h4>
-<p>An operation is made up of actors and tasks.</p>
-<p>Table <em>operations</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of operation</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of operation</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="tasks">Tasks</h4>
-<p>A task is an elementary activity performed by an organizational function and constituting an indivisible unit of work in the value-added chain of a process.</p>
-<p>Table <em>tasks</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Task name</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Task description</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">creation date</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="actors">Actors</h4>
-<p>An actor is a representative of a business role who performs operations, uses applications and makes decisions within processes. This role can be carried by a person, a group of people or an entity.</p>
-<p>Table <em>actors</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">actor's name</td>
-</tr>
-<tr>
-<td align="left">nature</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nature of actor</td>
-</tr>
-<tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type of actor</td>
-</tr>
-<tr>
-<td align="left">contact</td>
-<td align="left">varchar(255)</td>
-<td align="left">Actor contact</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date created</td>
-</tr>
-<tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
-</tr>
-<tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
-</tr>
-</tbody>
-</table>
-<h4 id="information">Information</h4>
-<p>Information is data that is processed by a computer.</p>
-<p>Table <em>information</em> :</p>
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
-</tr>
-<tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of information</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of information</td>
-</tr>
-<tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Owner of information</td>
-</tr>
-<tr>
-<td align="left">administrator</td>
-<td align="left">varchar(255)</td>
-<td align="left">Information administrator</td>
-</tr>
-<tr>
-<td align="left">storage</td>
-<td align="left">varchar(255)</td>
-<td align="left">Information storage</td>
-</tr>
-<tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentiality</td>
-</tr>
-<tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
-</tr>
-<tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
-</tr>
-<tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
-</tr>
-<tr>
-<td align="left">sensitivity</td>
-<td align="left">varchar(255)</td>
-<td align="left">Sensitivity of information</td>
-</tr>
-<tr>
-<td align="left">constraints</td>
-<td align="left">longtext</td>
-<td align="left">Legal and regulatory constraints</td>
-</tr>
-<tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td align="left">Date de création</td>
 </tr>
 <tr>
 <td align="left">updated_at</td>
@@ -913,18 +351,18 @@
 </tr>
 </tbody>
 </table>
-<h3 id="application-view">Application view</h3>
-<p>The application view is used to describe part of what is classically referred to as the "computer system". </p>
-<p><a href="/mercator/images/applications.png"><img src="/mercator/images/applications.png" width="600"></a></p>
-<p>This view describes the technological solutions that support business processes, mainly applications.</p>
-<h4 id="application-block">Application block</h4>
-<p>An application block represents a set of applications.</p>
-<p>An application block can be: office applications, management applications, analysis applications, development applications, etc.</p>
-<p>Table <em>application_blocks</em> :</p>
+<h3 id="vue-de-lecosysteme">Vue de l’écosystème</h3>
+<p>La vue de l’écosystème décrit l’ensemble des entités ou systèmes qui gravitent autour du système d’information considéré dans le cadre de la cartographie.</p>
+<p><a href="/mercator/images/ecosystem.png"><img src="/mercator/images/ecosystem.png" width="600"></a></p>
+<p>Cette vue permet à la fois de délimiter le périmètre de la cartographie, mais aussi de disposer d’une vision d’ensemble de l’écosystème sans se limiter à l’étude individuelle de chaque entité.</p>
+<h4 id="entites">Entités</h4>
+<p>Les entités sont une partie de l’organisme (ex. : filiale, département, etc.) ou en relation avec le système d’information qui vise à être cartographié.</p>
+<p>Les entités sont des départements, des fournisseurs, des partenaires avec lesquels des informations sont échangées au travers de relations.</p>
+<p>Table <em>entities</em> :</p>
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
+<th align="left">Champ</th>
 <th align="left">Type</th>
 <th align="left">Description</th>
 </tr>
@@ -938,22 +376,32 @@
 <tr>
 <td align="left">name</td>
 <td align="left">varchar(255)</td>
-<td align="left">Name of information</td>
+<td align="left">Nom de l'entité</td>
+</tr>
+<tr>
+<td align="left">is_external</td>
+<td align="left">boolean</td>
+<td align="left">Entité externe</td>
+</tr>
+<tr>
+<td align="left">security_level</td>
+<td align="left">longtext</td>
+<td align="left">Niveau de sécurité</td>
+</tr>
+<tr>
+<td align="left">contact_point</td>
+<td align="left">longtext</td>
+<td align="left">Point de contact</td>
 </tr>
 <tr>
 <td align="left">description</td>
 <td align="left">longtext</td>
-<td align="left">Description of application block</td>
-</tr>
-<tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsible for application block</td>
+<td align="left">Description de l'entité</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td align="left">Date de création</td>
 </tr>
 <tr>
 <td align="left">updated_at</td>
@@ -963,14 +411,566 @@
 <tr>
 <td align="left">deleted_at</td>
 <td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="relations">Relations</h4>
+<p>Les relations représentent un lien entre deux entités ou systèmes.</p>
+<p>Les relations sont des contrats, accords de services, des obligations légales... qui ont une influence sur le système d’information.</p>
+<p>Table <em>relations</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la relation</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la relation</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type de la relation</td>
+</tr>
+<tr>
+<td align="left">importance</td>
+<td align="left">int</td>
+<td align="left">Importance de la relation</td>
+</tr>
+<tr>
+<td align="left">source_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers l'entité source</td>
+</tr>
+<tr>
+<td align="left">destination_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers l'entité destinataire</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vue-metier-du-systeme-dinformation">Vue métier du système d’information</h3>
+<p>La vue métier du système d’information décrit l’ensemble des processus métiers de l’organisme avec les acteurs qui y participent, indépendamment des choix technologiques faits par l’organisme et des ressources mises à sa disposition. </p>
+<p><a href="/mercator/images/information_system.png"><img src="/mercator/images/information_system.png" width="600"></a></p>
+<p>La vue métier est essentielle, car elle permet de repositionner les éléments techniques dans leur environnement métier et ainsi de comprendre leur contexte d’emploi.</p>
+<h4 id="macro-processus">Macro-processus</h4>
+<p>Les macro-processus représentent des ensembles de processus.</p>
+<p>Table <em>macro_processuses</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du macro processus</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du macro-processus</td>
+</tr>
+<tr>
+<td align="left">io_elements</td>
+<td align="left">longtext</td>
+<td align="left">Elements entrant et sortants</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">owner</td>
+<td align="left">varchar(255)</td>
+<td align="left">Propriétaire</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="processus">Processus</h4>
+<p>Les processus sont un ensemble d’activités concourant à un objectif. Le processus produit des informations (de sortie) à valeur ajoutée (sous forme de livrables) à partir d’informations (d’entrées) produites par d’autres processus.</p>
+<p>Les processus sont composés d’activités, des entités qui participent à ce processus et des informations traitées par celui-ci.</p>
+<p>Table <em>processes</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">identifiant</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom du processus</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du processus</td>
+</tr>
+<tr>
+<td align="left">owner</td>
+<td align="left">varchar(255)</td>
+<td align="left">Propriétaire du processus</td>
+</tr>
+<tr>
+<td align="left">in_out</td>
+<td align="left">longtext</td>
+<td align="left">Elements entrant et sortants</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">macroprocess_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Référence vers le macro-processus</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="activites">Activités</h4>
+<p>Une activité est une étape nécessaire à la réalisation d’un processus. Elle correspond à un savoir-faire spéciﬁque et pas forcément à une structure organisationnelle de l’entreprise.</p>
+<p>Table <em>activities</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'activité</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'activité</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="operations">Opérations</h4>
+<p>Une opération est composée d’acteurs et de tâches.</p>
+<p>Table <em>operations</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'opération</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'opération</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="taches">Tâches</h4>
+<p>Une tâche est une activité élémentaire exercée par une fonction organisationnelle et constituant une unité indivisible de travail dans la chaîne de valeur ajoutée d’un processus.</p>
+<p>Table <em>tasks</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de la tâche</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de tâche</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="acteurs">Acteurs</h4>
+<p>Un acteur est un représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.</p>
+<p>Table <em>actors</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'acteur</td>
+</tr>
+<tr>
+<td align="left">nature</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nature de l'acteur</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type d'acteur</td>
+</tr>
+<tr>
+<td align="left">contact</td>
+<td align="left">varchar(255)</td>
+<td align="left">Contact de l'acteur</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h4 id="informations">Informations</h4>
+<p>Une information est une donnée faisant l’objet d’un traitement informatique.</p>
+<p>Table <em>information</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'information</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'information</td>
+</tr>
+<tr>
+<td align="left">owner</td>
+<td align="left">varchar(255)</td>
+<td align="left">Propriétaire de l'information</td>
+</tr>
+<tr>
+<td align="left">administrator</td>
+<td align="left">varchar(255)</td>
+<td align="left">Administrateur de l'information</td>
+</tr>
+<tr>
+<td align="left">storage</td>
+<td align="left">varchar(255)</td>
+<td align="left">Stockage de l'information</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
+</tr>
+<tr>
+<td align="left">sensitivity</td>
+<td align="left">varchar(255)</td>
+<td align="left">Sensibilité de l'information</td>
+</tr>
+<tr>
+<td align="left">constraints</td>
+<td align="left">longtext</td>
+<td align="left">Contraintes légales et réglementaires</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
+</tr>
+</tbody>
+</table>
+<h3 id="la-vue-des-applications">La vue des applications</h3>
+<p>La vue des applications permet de décrire une partie de ce qui est classiquement appelé le « système informatique ». </p>
+<p><a href="/mercator/images/applications.png"><img src="/mercator/images/applications.png" width="600"></a></p>
+<p>Cette vue décrit les solutions technologiques qui supportent les processus métiers, principalement les applications.</p>
+<h4 id="bloc-applicatif">Bloc applicatif</h4>
+<p>Un bloc applicatif représente un ensemble d’application.</p>
+<p>Un bloc applicatif peut être : les applications bureautique, de gestion, d’analyse, de développement, ...</p>
+<p>Table <em>application_blocks</em> :</p>
+<table>
+<thead>
+<tr>
+<th align="left">Champ</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">id</td>
+<td align="left">int unsigned</td>
+<td align="left">auto_increment</td>
+</tr>
+<tr>
+<td align="left">name</td>
+<td align="left">varchar(255)</td>
+<td align="left">Nom de l'information</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description du block applicatif</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable du bloc applicatif</td>
+</tr>
+<tr>
+<td align="left">created_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de création</td>
+</tr>
+<tr>
+<td align="left">updated_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de mise à jour</td>
+</tr>
+<tr>
+<td align="left">deleted_at</td>
+<td align="left">timestamp</td>
+<td align="left">Date de suppression</td>
 </tr>
 </tbody>
 </table>
 <h4 id="application">Application</h4>
-<p>An application is a coherent set of IT objects (executables, programs, data, etc.). It is a grouping of application services.</p>
-<p>An application can be deployed on one or more logical servers.</p>
-<p>When there is no virtualized environment, there are not several logical servers per physical server, but one logical server per physical server.</p>
+<p>Une application est un ensemble cohérent d’objets informatiques (exécutables, programmes, données...). Elle constitue un regroupement de services applicatifs.</p>
+<p>Une application peut être déployée sur un ou plusieurs serveurs logiques.</p>
+<p>Lorsqu'il n'y a pas d'environnement virtualisé, il n'y a pas plusieurs serveurs logiques par serveur physique mais il y a un serveur logique par serveur physique.</p>
 <p>Table <em>m_applications</em> :</p>
 <table>
 <thead>
@@ -3076,8 +3076,8 @@
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../usecases/" class="btn btn-neutral float-left" title="Use cases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../reports/" class="btn btn-neutral float-right" title="Rapports">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../usecases.fr/" class="btn btn-neutral float-left" title="Cas d'utilisation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../reports.fr/" class="btn btn-neutral float-right" title="Rapports">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -3105,10 +3105,10 @@
         </span>
     
     
-      <span><a href="../usecases/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../usecases.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../reports/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../reports.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
