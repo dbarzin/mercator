@@ -32,3 +32,18 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
     * Aux préférences
     * A la documentation et aux rapports
 * Outil de recherche
+
+### Explorateur
+
+Il est possible d'explorer la cartographie. Cette fonction est disponible via le menu "documentation".
+
+
+- Le menu déroulant filtre permet de limiter l'exploration à un ou plusieur domaines.
+- Le champ "Objet" permet de sélectionner un élément de la cartographie et de l'ajouter à l'exploration.
+- Le bouton "Supprimer" permet de supprimer un élémenet de l'exploration de la cartographie.
+
+   [<img src="/mercator/images/explore.fr.png" width="600">](/mercator/images/explore.fr.png)
+
+Un double click sur un objet affiche toutes ses connexions.
+
+

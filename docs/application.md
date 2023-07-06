@@ -32,3 +32,17 @@ Each item is selectable and gives access to the list of selected map objects.
     * Preferences
     * Documentation and reports
 * Search tool
+
+### Explorer
+
+It is possible to explore the cartography. This function is available via the "documentation" menu.
+
+- The filter drop-down menu allows you to limit exploration to one or more areas.
+- The "Object" field is used to select an element of the cartography and add it to the exploration.
+- The "Delete" button is used to remove an element from the cartography exploration.
+
+   [<img src="/mercator/images/explore.png" width="600">](/mercator/images/explore.png)
+
+Double-click on an object to display all its connections.
+
+
