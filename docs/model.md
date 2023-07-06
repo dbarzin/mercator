@@ -6,7 +6,7 @@
 
 The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system. 
 
-This view is used to fulfill the obligations set out in Article 30 of the RGPD.
+This view is used to fulfill the obligations set out in article 30 of the RGPD.
 
 #### Register
 
