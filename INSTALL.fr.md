@@ -35,6 +35,10 @@ Cloner le projet depuis Github
 
 ## Composer
 
+Mettre à jour composer
+
+    composer self-update
+
 Installer les packages avec composer :
 
     cd /var/www/mercator
@@ -116,7 +120,7 @@ ou (Postgres):
 
 Décompresse la base de données
 
-    gzip -d mercator_data.sql.gz
+    gzip -d mercator_cpe.sql.gz
 
 Importer la base de données
 
