@@ -232,7 +232,7 @@ class Subnetwork extends Model
             $ip = inet_pton($ip);
             $net = inet_pton($net);
             if (! $ip || ! $net) {
-                throw new InvalidArgumentException('Invalid IP address');
+                return false;
             }
 
             // Build mask
