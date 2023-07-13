@@ -132,6 +132,9 @@ class Subnetwork extends Model
 
         // IPv4
         if (filter_var($subnetParts[0], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            if ($subnetParts[1]>=32)
+                return $subnetParts[0] . " - " . $subnetParts[0];
+
             $ip = ip2long($subnetParts[0]);
             $mask = ~1 << 32 - $subnetParts[1] - 1;
             $start = long2ip($ip & $mask);
