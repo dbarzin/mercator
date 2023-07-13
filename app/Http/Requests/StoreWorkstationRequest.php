@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +23,11 @@ class StoreWorkstationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:workstations',
                 'unique:workstations,name,NULL,id,deleted_at,NULL',
+            ],
+            'ip_addresses' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

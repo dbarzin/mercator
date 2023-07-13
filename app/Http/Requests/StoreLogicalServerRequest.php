@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Gate;
+usr All\Rules\IPList;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,8 +35,8 @@ class StoreLogicalServerRequest extends FormRequest
                 'max:2147483647',
             ],
             'address_ip' => [
-                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\s*,\s*(?:\d|1?\d\d|2[0-4]\d|25[0-5])(?:\.(?:\d|1?\d\d|2[0-4]\d|25[0-5])){3})*$/i',
                 'nullable',
+                new IPList,
             ],
             'servers' => [
                 'array',

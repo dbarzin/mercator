@@ -890,7 +890,7 @@ class AuditController extends HomeController
                 $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
-            // backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+                // backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
             } else {
                 $sheet->getStyle("A{$idx}")->getFont()->setBold(true);
             }

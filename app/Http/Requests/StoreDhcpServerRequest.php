@@ -26,8 +26,8 @@ class StoreDhcpServerRequest extends FormRequest
                 'unique:dhcp_servers,name,NULL,id,deleted_at,NULL',
             ],
             'address_ip' => [
-                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i',
                 'nullable',
+                'ip',
             ],
         ];
     }

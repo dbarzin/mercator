@@ -24,6 +24,10 @@ class StoreExternalConnectedEntityRequest extends FormRequest
                 'required',
                 'unique:external_connected_entities,name,NULL,id,deleted_at,NULL',
             ],
+            'src' => [
+                'nullable',
+                'ip',
+            ],
         ];
     }
 }

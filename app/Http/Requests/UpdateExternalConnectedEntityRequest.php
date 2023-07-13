@@ -24,6 +24,10 @@ class UpdateExternalConnectedEntityRequest extends FormRequest
                 'required',
                 'unique:external_connected_entities,name,'.request()->route('external_connected_entity')->id.',id,deleted_at,NULL',
             ],
+            'src' => [
+                'nullable',
+                'ip',
+            ],
         ];
     }
 }

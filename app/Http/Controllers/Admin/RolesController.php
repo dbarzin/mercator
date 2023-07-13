@@ -10,8 +10,8 @@ use App\Permission;
 use App\Role;
 use Gate;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
@@ -57,9 +57,9 @@ class RolesController extends Controller
             $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
         }
         */
-        $roles=DB::table('roles')
+        $roles = DB::table('roles')
             ->leftJoin('role_user', 'role_user.role_id', '=', 'roles.id')
-            ->select('roles.id', 'roles.title', DB::raw("count(role_user.user_id) as count"))
+            ->select('roles.id', 'roles.title', DB::raw('count(role_user.user_id) as count'))
             ->groupBy('roles.id')
             ->get();
 
@@ -116,7 +116,6 @@ class RolesController extends Controller
         $role->load('permissions');
 
         return view('admin.roles.show', compact('permissions_sorted', 'role'));
-
     }
 
     public function destroy(Role $role)

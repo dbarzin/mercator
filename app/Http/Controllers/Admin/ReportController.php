@@ -2635,7 +2635,6 @@ class ReportController extends Controller
         return response()->download($path);
     }
 
-
     public function vlans()
     {
         $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xlsx');
@@ -2677,10 +2676,10 @@ class ReportController extends Controller
         $sheet->getColumnDimension('H')->setWidth(200, 'pt'); // workstations
 
         // wordwrap
-        $sheet->getStyle('E')->getAlignment()->setWrapText(true); 
-        $sheet->getStyle('F')->getAlignment()->setWrapText(true); 
-        $sheet->getStyle('G')->getAlignment()->setWrapText(true); 
-        $sheet->getStyle('H')->getAlignment()->setWrapText(true); 
+        $sheet->getStyle('E')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('F')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('G')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('H')->getAlignment()->setWrapText(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2695,64 +2694,69 @@ class ReportController extends Controller
 
             // Subnets
             foreach ($vlan->subnetworks as $subnet) {
-                if ($vlan->subnetworks->first()!=$subnet) {
+                if ($vlan->subnetworks->first() !== $subnet) {
                     $sheet->setCellValue("A{$row}", $vlan->name);
                     $sheet->setCellValue("B{$row}", $html->toRichTextObject($vlan->description));
-                    }
+                }
                 $sheet->setCellValue("C{$row}", $subnet->name);
                 $sheet->setCellValue("D{$row}", $subnet->address);
                 // Logical Servers
                 $txt = '';
                 foreach ($lservers as $server) {
-                    foreach(explode(", ", $server->address_ip) as $ip) {
+                    foreach (explode(', ', $server->address_ip) as $ip) {
                         if ($subnet->contains($ip)) {
-                            if (strlen($txt)>0) 
+                            if (strlen($txt) > 0) {
                                 $txt .= ', ';
-                            $txt .= $server->name;
                             }
+                            $txt .= $server->name;
                         }
                     }
+                }
                 $sheet->setCellValue("E{$row}", $txt);
                 // Physical Servers
                 $txt = '';
                 foreach ($pservers as $server) {
-                    foreach(explode(", ", $server->address_ip) as $ip) {
+                    foreach (explode(', ', $server->address_ip) as $ip) {
                         if ($subnet->contains($ip)) {
-                            if (strlen($txt)>0) 
+                            if (strlen($txt) > 0) {
                                 $txt .= ', ';
-                            $txt .= $server->name;
                             }
+                            $txt .= $server->name;
                         }
                     }
+                }
                 $sheet->setCellValue("F{$row}", $txt);
                 // Switches
                 $txt = '';
                 foreach ($switches as $switch) {
-                    foreach(explode(", ", $switch->address_ip) as $ip) {
+                    foreach (explode(', ', $switch->address_ip) as $ip) {
                         if ($subnet->contains($ip)) {
-                            if (strlen($txt)>0) 
+                            if (strlen($txt) > 0) {
                                 $txt .= ', ';
-                            $txt .= $switch->name;
                             }
+                            $txt .= $switch->name;
                         }
                     }
+                }
                 $sheet->setCellValue("G{$row}", $txt);
                 // Workstations
                 $txt = '';
                 foreach ($workstations as $workstation) {
-                    foreach(explode(", ", $workstation->address_ip) as $ip) {
+                    foreach (explode(', ', $workstation->address_ip) as $ip) {
                         if ($subnet->contains($ip)) {
-                            if (strlen($txt)>0) 
+                            if (strlen($txt) > 0) {
                                 $txt .= ', ';
-                            $txt .= $workstation->name;
                             }
+                            $txt .= $workstation->name;
                         }
                     }
+                }
                 $sheet->setCellValue("H{$row}", $txt);
 
-                if ($vlan->subnetworks->last()!=$subnet) 
+                if ($vlan->subnetworks->last() !== $subnet) {
                     $row++;
                 }
+            }
 
             // Workstations
 
