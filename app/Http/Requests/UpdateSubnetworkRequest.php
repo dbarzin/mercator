@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Cidr;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,12 +26,12 @@ class UpdateSubnetworkRequest extends FormRequest
                 'unique:subnetworks,name,'.request()->route('subnetwork')->id.',id,deleted_at,NULL',
             ],
             'address' => [
-                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[ ]*\/[ ]*[0-9][0-9]?$/i',
                 'nullable',
+                new Cidr(),
             ],
             'default_gateway' => [
-                'regex:/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i',
                 'nullable',
+                'ip',
             ],
         ];
     }
