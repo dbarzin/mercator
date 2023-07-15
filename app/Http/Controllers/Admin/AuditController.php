@@ -769,32 +769,8 @@ class AuditController extends HomeController
         $sheet->getStyle('1')->getFont()->setBold(true);
         // white font
         $sheet->getStyle('1')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A2')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A9')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A31')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A50')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A63')->getFont()->getColor()->setRGB('FFFFFF');
-        $sheet->getStyle('A93')->getFont()->getColor()->setRGB('FFFFFF');
-
         // background color
         $sheet->getStyle('A1:O1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A2:O2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A3:A8')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A9:O9')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A9:O9')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A10:A30')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A31:O31')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A31:O31')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A32:A49')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A50:O50')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A50:O50')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A51:A62')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A63:O63')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A63:O63')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A64:A92')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
-        $sheet->getStyle('A93:O93')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
-        $sheet->getStyle('A93:O93')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A94:A141')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // column size and border
         for ($i = 0; $i <= 14; $i++) {
@@ -812,87 +788,97 @@ class AuditController extends HomeController
 
         // App\xxx -> index, title
         $rows = [
-            'Ecosystem' => ['index' => 2, 'title' => trans('cruds.menu.ecosystem.title_short')],
-            'App\\Entity' => ['index' => 3, 'title' => trans('cruds.entity.title')],
-            'App\\Relation' => ['index' => 6, 'title' => trans('cruds.relation.title')],
+            'GDPR' => ['index' => 2, 'title' => trans('cruds.menu.gdpr.title_short')],
+            'App\\DataProcessing' => ['index' => 3, 'title' => trans('cruds.dataProcessing.title')],
+            'App\\SecurityControl' => ['index' => 6, 'title' => trans('cruds.securityControl.title')],
 
-            'Metier' => ['index' => 9, 'title' => trans('cruds.menu.metier.title_short')],
-            'App\\MacroProcessus' => ['index' => 10, 'title' => trans('cruds.macroProcessus.title')],
-            'App\\Process' => ['index' => 13, 'title' => trans('cruds.process.title')],
-            'App\\Activity' => ['index' => 16, 'title' => trans('cruds.activity.title')],
-            'App\\Operation' => ['index' => 19, 'title' => trans('cruds.operation.title')],
-            'App\\Task' => ['index' => 22, 'title' => trans('cruds.task.title')],
-            'App\\Actor' => ['index' => 25, 'title' => trans('cruds.actor.title')],
-            'App\\Information' => ['index' => 28, 'title' => trans('cruds.information.title')],
+            'Ecosystem' => ['index' => 9, 'title' => trans('cruds.menu.ecosystem.title_short')],
+            'App\\Entity' => ['index' => 10, 'title' => trans('cruds.entity.title')],
+            'App\\Relation' => ['index' => 13, 'title' => trans('cruds.relation.title')],
 
-            'Applications' => ['index' => 31, 'title' => trans('cruds.menu.application.title_short')],
-            'App\\ApplicationBlock' => ['index' => 32, 'title' => trans('cruds.applicationBlock.title')],
-            'App\\MApplication' => ['index' => 35, 'title' => trans('cruds.application.title')],
-            'App\\ApplicationService' => ['index' => 38, 'title' => trans('cruds.applicationService.title')],
-            'App\\ApplicationModule' => ['index' => 41, 'title' => trans('cruds.applicationModule.title')],
-            'App\\Database' => ['index' => 44, 'title' => trans('cruds.database.title')],
-            'App\\Flux' => ['index' => 47, 'title' => trans('cruds.flux.title')],
+            'Metier' => ['index' => 16, 'title' => trans('cruds.menu.metier.title_short')],
+            'App\\MacroProcessus' => ['index' => 17, 'title' => trans('cruds.macroProcessus.title')],
+            'App\\Process' => ['index' => 20, 'title' => trans('cruds.process.title')],
+            'App\\Activity' => ['index' => 23, 'title' => trans('cruds.activity.title')],
+            'App\\Operation' => ['index' => 26, 'title' => trans('cruds.operation.title')],
+            'App\\Task' => ['index' => 29, 'title' => trans('cruds.task.title')],
+            'App\\Actor' => ['index' => 32, 'title' => trans('cruds.actor.title')],
+            'App\\Information' => ['index' => 35, 'title' => trans('cruds.information.title')],
 
-            'Administration' => ['index' => 50, 'title' => trans('cruds.menu.administration.title_short')],
-            'App\\ZoneAdmin' => ['index' => 51, 'title' => trans('cruds.zoneAdmin.title')],
-            'App\\Annuaire' => ['index' => 54, 'title' => trans('cruds.annuaire.title')],
-            'App\\ForestAd' => ['index' => 57, 'title' => trans('cruds.forestAd.title')],
-            'App\\DomaineAd' => ['index' => 60, 'title' => trans('cruds.domaineAd.title')],
+            'Applications' => ['index' => 38, 'title' => trans('cruds.menu.application.title_short')],
+            'App\\ApplicationBlock' => ['index' => 39, 'title' => trans('cruds.applicationBlock.title')],
+            'App\\MApplication' => ['index' => 42, 'title' => trans('cruds.application.title')],
+            'App\\ApplicationService' => ['index' => 45, 'title' => trans('cruds.applicationService.title')],
+            'App\\ApplicationModule' => ['index' => 48, 'title' => trans('cruds.applicationModule.title')],
+            'App\\Database' => ['index' => 51, 'title' => trans('cruds.database.title')],
+            'App\\Flux' => ['index' => 54, 'title' => trans('cruds.flux.title')],
 
-            'LogicalInfrastructure' => ['index' => 63, 'title' => trans('cruds.menu.logical_infrastructure.title_short')],
-            'App\\Network' => ['index' => 64, 'title' => trans('cruds.network.title')],
-            'App\\Subnetwork' => ['index' => 67, 'title' => trans('cruds.subnetwork.title')],
-            'App\\Gateway' => ['index' => 70, 'title' => trans('cruds.gateway.title')],
-            'App\\ExternalConnectedEntity' => ['index' => 73, 'title' => trans('cruds.externalConnectedEntity.title')],
-            'App\\NetworkSwitch' => ['index' => 76, 'title' => trans('cruds.networkSwitch.title')],
-            'App\\Router' => ['index' => 79, 'title' => trans('cruds.router.title')],
-            'App\\SecurityDevice' => ['index' => 81, 'title' => trans('cruds.securityDevice.title')],
-            'App\\DhcpServer' => ['index' => 84, 'title' => trans('cruds.dhcpServer.title')],
-            'App\\LogicalServer' => ['index' => 87, 'title' => trans('cruds.logicalServer.title')],
-            'App\\Certificate' => ['index' => 90, 'title' => trans('cruds.certificate.title')],
+            'Administration' => ['index' => 57, 'title' => trans('cruds.menu.administration.title_short')],
+            'App\\ZoneAdmin' => ['index' => 58, 'title' => trans('cruds.zoneAdmin.title')],
+            'App\\Annuaire' => ['index' => 61, 'title' => trans('cruds.annuaire.title')],
+            'App\\ForestAd' => ['index' => 64, 'title' => trans('cruds.forestAd.title')],
+            'App\\DomaineAd' => ['index' => 67, 'title' => trans('cruds.domaineAd.title')],
 
-            'PhysicalInfrastructure' => ['index' => 93, 'title' => trans('cruds.menu.physical_infrastructure.title_short')],
-            'App\\Site' => ['index' => 94, 'title' => trans('cruds.site.title')],
-            'App\\Building' => ['index' => 97, 'title' => trans('cruds.building.title')],
-            'App\\Bay' => ['index' => 100, 'title' => trans('cruds.bay.title')],
-            'App\\PhysicalServer' => ['index' => 103, 'title' => trans('cruds.physicalServer.title')],
-            'App\\Workstation' => ['index' => 106, 'title' => trans('cruds.workstation.title')],
-            'App\\StorageDevice' => ['index' => 109, 'title' => trans('cruds.storageDevice.title')],
-            'App\\Peripheral' => ['index' => 112, 'title' => trans('cruds.peripheral.title')],
-            'App\\Phone' => ['index' => 115, 'title' => trans('cruds.phone.title')],
-            'App\\PhysicalRouter' => ['index' => 118, 'title' => trans('cruds.physicalRouter.title')],
-            'App\\PhysicalSwitch' => ['index' => 121, 'title' => trans('cruds.physicalSwitch.title')],
-            'App\\WifiTerminal' => ['index' => 124, 'title' => trans('cruds.wifiTerminal.title')],
-            'App\\PhysicalSecurityDevice' => ['index' => 127, 'title' => trans('cruds.physicalSecurityDevice.title')],
-            'App\\Wan' => ['index' => 130, 'title' => trans('cruds.wan.title')],
-            'App\\Man' => ['index' => 133, 'title' => trans('cruds.man.title')],
-            'App\\Lan' => ['index' => 136, 'title' => trans('cruds.lan.title')],
-            'App\\Vlan' => ['index' => 139, 'title' => trans('cruds.vlan.title')],
+            'LogicalInfrastructure' => ['index' => 70, 'title' => trans('cruds.menu.logical_infrastructure.title_short')],
+            'App\\Network' => ['index' => 71, 'title' => trans('cruds.network.title')],
+            'App\\Subnetwork' => ['index' => 74, 'title' => trans('cruds.subnetwork.title')],
+            'App\\Gateway' => ['index' => 77, 'title' => trans('cruds.gateway.title')],
+            'App\\ExternalConnectedEntity' => ['index' => 80, 'title' => trans('cruds.externalConnectedEntity.title')],
+            'App\\NetworkSwitch' => ['index' => 83, 'title' => trans('cruds.networkSwitch.title')],
+            'App\\Router' => ['index' => 86, 'title' => trans('cruds.router.title')],
+            'App\\SecurityDevice' => ['index' => 89, 'title' => trans('cruds.securityDevice.title')],
+            'App\\DhcpServer' => ['index' => 92, 'title' => trans('cruds.dhcpServer.title')],
+            'App\\LogicalServer' => ['index' => 95, 'title' => trans('cruds.logicalServer.title')],
+            'App\\Certificate' => ['index' => 98, 'title' => trans('cruds.certificate.title')],
+
+            'PhysicalInfrastructure' => ['index' => 101, 'title' => trans('cruds.menu.physical_infrastructure.title_short')],
+            'App\\Site' => ['index' => 102, 'title' => trans('cruds.site.title')],
+            'App\\Building' => ['index' => 105, 'title' => trans('cruds.building.title')],
+            'App\\Bay' => ['index' => 108, 'title' => trans('cruds.bay.title')],
+            'App\\PhysicalServer' => ['index' => 111, 'title' => trans('cruds.physicalServer.title')],
+            'App\\Workstation' => ['index' => 114, 'title' => trans('cruds.workstation.title')],
+            'App\\StorageDevice' => ['index' => 117, 'title' => trans('cruds.storageDevice.title')],
+            'App\\Peripheral' => ['index' => 120, 'title' => trans('cruds.peripheral.title')],
+            'App\\Phone' => ['index' => 123, 'title' => trans('cruds.phone.title')],
+            'App\\PhysicalRouter' => ['index' => 126, 'title' => trans('cruds.physicalRouter.title')],
+            'App\\PhysicalSwitch' => ['index' => 129, 'title' => trans('cruds.physicalSwitch.title')],
+            'App\\WifiTerminal' => ['index' => 132, 'title' => trans('cruds.wifiTerminal.title')],
+            'App\\PhysicalSecurityDevice' => ['index' => 135, 'title' => trans('cruds.physicalSecurityDevice.title')],
+            'App\\Wan' => ['index' => 138, 'title' => trans('cruds.wan.title')],
+            'App\\Man' => ['index' => 141, 'title' => trans('cruds.man.title')],
+            'App\\Lan' => ['index' => 144, 'title' => trans('cruds.lan.title')],
+            'App\\Vlan' => ['index' => 147, 'title' => trans('cruds.vlan.title')],
         ];
 
         // Fill sheet
+        $idx=2;
         foreach ($rows as $key => $row) {
-            $idx = $row['index'];
+            // $idx = $row['index'];
             $sheet->setCellValue("A{$idx}", $row['title']);
             if (str_starts_with($key, 'App\\')) {
                 $sheet->setCellValue("B{$idx}", 'created');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF59A14F');
                 $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $sheet->getStyle("A{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'updated');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFF28E2B');
                 $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $sheet->getStyle("A{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
                 $idx++;
                 $sheet->setCellValue("B{$idx}", 'deleted');
                 $sheet->getStyle("B{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFE15759');
                 $sheet->getStyle("A{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 $sheet->getStyle("B{$idx}")->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-
-                // backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
+                $sheet->getStyle("A{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+                $idx++;
             } else {
+                $sheet->getStyle("A{$idx}")->getFont()->getColor()->setRGB('FFFFFF');
                 $sheet->getStyle("A{$idx}")->getFont()->setBold(true);
+                $sheet->getStyle("A{$idx}:O{$idx}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+                $idx++;
             }
         }
 
