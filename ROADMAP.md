@@ -54,6 +54,7 @@ Changements prévus en 2023 :
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [x] Lien entre bases de données et serveurs logiques
 - [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
+- [ ] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
 
 ## Petites évolutions
 
