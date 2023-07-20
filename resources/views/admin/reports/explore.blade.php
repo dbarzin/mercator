@@ -95,12 +95,12 @@
         border: 1px solid #cfcfcf;
         display: none;
         opacity: 0;
-      	min-height: 3rem;
-	      padding: 10px 16px;
-	      list-style: none;
+        min-height: 3rem;
+          padding: 10px 16px;
+          list-style: none;
     }
     #explore_context a:hover{
-    	  text-decoration:none;
+          text-decoration:none;
     }
     .fullscreen_network{
         position: fixed;
@@ -254,7 +254,7 @@
             console.log("click on : "+params.nodes[0]);
             //nodes.remove(params.nodes[0]);
         });
-		console.log(_nodes);
+        console.log(_nodes);
 
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
@@ -290,19 +290,19 @@
                         {
                             console.log("add edge :"+params.nodes[0]+" -> " +edge.id);
                             if(edge.edgeType === 'FLUX') {
-    							if(edge.edgeDirection === 'TO') {
+                                if(edge.edgeDirection === 'TO') {
                                     if (edge.bidirectional)
                                         edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} });
                                     else
                                         edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
-    							} else if(edge.edgeDirection === 'FROM') {
+                                } else if(edge.edgeDirection === 'FROM') {
                                     if (edge.bidirectional)
                                         edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} })
                                     else
                                         edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
-    							}
-    						} else if(edge.edgeType === 'CABLE') {
-    							edges.add({ from: params.nodes[0], to: edge.id, color:'grey', width: 3 });    						
+                                }
+                            } else if(edge.edgeType === 'CABLE') {
+                                edges.add({ from: params.nodes[0], to: edge.id, color:'grey', width: 3 });                          
                             } else if(edge.edgeType === 'LINK') {
                                 edges.add({ from: params.nodes[0], to: edge.id});
                             }
@@ -331,7 +331,7 @@
             contextMenu.style.display="block";
             contextMenu.style.opacity = "1";
             contextMenu.style.top=y + "px";
-    	    contextMenu.style.left=x + "px";
+            contextMenu.style.left=x + "px";
         }
 
         function hideContext(){
@@ -394,6 +394,63 @@
       }
     }
 
+/* TODO : Fixme
+
+    function apply_filter() {
+        console.log("apply_filter");
+        // clear current selected node
+        $("#node").val("");
+        // get current filter
+        cur_filter = $('#filters').val();
+        // test filter size
+        console.log("filter_size= ",cur_filter.length);
+        if (cur_filter.length==0) {
+            console.log("activate all nodes");
+            // activate all nodes
+            // $('#node').find("option").each(function( index) {
+            //    $(this).attr('disabled', false).trigger("select2.change");
+            //});
+            $('#node').find("option").prop("disabled", false);
+        }
+        else 
+        {
+            // filter nodes
+            var activated=0, disabled=0;
+            $('#node').find("option").each(function( index) {
+                var cur_node = _nodes.get(this.value);
+                if ((cur_node!=null) && (cur_filter.includes(cur_node.vue))) {
+                    $(this).attr('disabled', false).trigger("select2.change");
+                    activated++;
+                    }
+                else {
+                    $(this).attr('disabled', true).trigger("select2.change");
+                    disabled++;
+                }
+            });
+            console.log("disable= ",disabled," activated= ",activated);
+          }
+        $('#node').trigger("select2.change");
+    }
+
+    $('.select2').select2();
+
+    $('#filters')
+        .on('select2:select', function(e) {
+            console.log('Select: ' , e.params.data.id);
+            console.log('val: ' ,   $('#filters').val());
+            apply_filter();
+            //$('#node').select2();
+        });
+
+    $('#filters')
+        .on('select2:unselect', function(e) {
+            console.log('unSelect: ' , e.params.data.id);
+            console.log('val: ' ,   $('#filters').val());
+            apply_filter();
+            //$('#filter').select2();
+        });
+}
+*/
 
 </script>
 
