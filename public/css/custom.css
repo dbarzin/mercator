@@ -272,3 +272,7 @@ html {
     color: #7C123E;
     font-size: 0.7rem;
 }
+
+/* Added to hide/show items in explorer.blade.php */
+.select2-container--default .select2-results__option[aria-disabled=true] { display: none;}
+

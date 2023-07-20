@@ -44,7 +44,7 @@ Changements prévus en 2023 :
 
 ## Evolutions mineurs
 
-- [ ] Support des adresses IPv6
+- [x] Support des adresses IPv6
 - [ ] Packaging des librairies javascript avec [Laravel Mix](https://laravel-mix.com/).
 - [x] Mise à jour du framework vers [Laravel 10.x](https://laravel.com/docs/10.x)
 - [ ] Dessiner un nouveu jeu d'icônes en SVG
@@ -54,6 +54,7 @@ Changements prévus en 2023 :
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [x] Lien entre bases de données et serveurs logiques
 - [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
+- [ ] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
 
 ## Petites évolutions
 
