@@ -89,9 +89,11 @@
                             {{ trans('cruds.application.fields.entity_resp') }}
                         </th>
                         <td colspan="3">
+                            @if ($application->entity_resp_id!=null)
                             <a href="{{ route('admin.entities.show', $application->entity_resp_id) }}">
                                 {{ $application->entity_resp->name ?? '' }}
                             </a>
+                            @endif
                         </td>
                         <th colspan="1">
                             {{ trans('cruds.application.fields.type') }}
