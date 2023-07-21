@@ -55,9 +55,11 @@
                             {{ trans('cruds.forestAd.fields.zone_admin') }}
                         </th>
                         <td>
+                            @if ($forestAd->zone_admin_id!=null)
                             <a href="{{ route('admin.zone-admins.show', $forestAd->zone_admin->id) }}">
                             {{ $forestAd->zone_admin->name ?? '' }}
                             </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
