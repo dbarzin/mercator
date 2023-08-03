@@ -35,7 +35,7 @@ Changements prévus en 2023 :
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
-- [ ] Généraliser la notion de cartographe à d'autres objets
+- [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Intégration des données de la cartographie dans syslog
