@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Gate;
-usr All\Rules\IPList;
+use App\Rules\IPList;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 

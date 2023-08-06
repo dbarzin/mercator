@@ -33,12 +33,13 @@ class PhysicalServerController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // List
+        $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalServers.create',
-            compact('sites', 'buildings', 'bays', 'responsible_list', 'type_list')
+            compact('sites', 'buildings', 'bays', 'operating_system_list', 'responsible_list', 'type_list')
         );
     }
 
@@ -57,6 +58,7 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // List
+        $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
@@ -69,6 +71,7 @@ class PhysicalServerController extends Controller
                 'buildings',
                 'bays',
                 'responsible_list',
+                'operating_system_list',
                 'type_list',
                 'physicalServer'
             )
