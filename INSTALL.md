@@ -35,6 +35,10 @@ Clone the project from Github
 
 ## Composer
 
+Update composer
+
+    composer update
+
 Install packages with composer :
 
     cd /var/www/mercator
@@ -119,7 +123,7 @@ or (Postgres)
 
 Decompress CPE databse
 
-    gzip -d mercator_data.sql.gz
+    gzip -d mercator_cpe.sql.gz
 
 Import database
 
