@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Auditable;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -78,6 +79,14 @@ class PhysicalServer extends Model
         'description',
         'configuration',
         'address_ip',
+        'cpu',
+        'memory',
+        'disk',
+        'disk_used',
+        'operating_system',
+        'install_date',
+        'update_date',
+        'address_ip',
         'site_id',
         'building_id',
         'bay_id',
@@ -86,6 +95,32 @@ class PhysicalServer extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getInstallDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setInstallDateAttribute($value)
+    {
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getUpdateDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+    }
+
+    public function setUpdateDateAttribute($value)
+    {
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
 
     public function serversLogicalServers()
     {

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.application.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.applications.store") }}" enctype="multipart/form-data">
+    @csrf
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.applications.store") }}" enctype="multipart/form-data">
-            @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.application.title_singular') }}
+        </div>
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -17,111 +17,96 @@
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
+                @if (auth()->user()->granularity>=2)
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
+                        <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
+                            @foreach($application_blocks as $id => $application_block)
+                            <option value="{{ $id }}" {{ old('application_block_id') == $id ? 'selected' : '' }}>{{ $application_block }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('application_block'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('application_block') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.application_block_helper') }}</span>
+                    </div>
+                </div>
+                @endif
             </div>
-
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
                 @if($errors->has('description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
-                    </div>
+                <div class="invalid-feedback">
+                    {{ $errors->first('description') }}
+                </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
             </div>
-
+        </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.menu.ecosystem.title_short") }}
+        </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-body">
             <div class="row">
-
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
-                        <div class="form-group">
-                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
-                                <option>{{ old('vendor', '') }}</option>
-                            </select>
-                            <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="recommended" for="product">{{ trans('cruds.application.fields.product') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="product">
-                            <option>{{ old('product', '') }}</option>
+                        <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
+                            @foreach($responsible_list as $resp)
+                                <option {{ str_contains(old('responsible') ,$resp) ? 'selected' : '' }}>{{$resp}}</option>
+                            @endforeach
                         </select>
-                        @if($errors->has('product'))
+                        @if($errors->has('responsible'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('product') }}
+                                {{ $errors->first('responsible') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
-                        <select id="version-selector" class="form-control select2-free" name="version">
-                            <option>{{ old('version', '') }}</option>
-                        </select>
-                        @if($errors->has('version'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('version') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
-                    </div>
-                </div>
-            </div>
-
-          <div class="row">
-            <div class="col-sm">
                 @if (auth()->user()->granularity>=2)
-                <div class="form-group">
-                    <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
-                    <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}" name="entities[]" id="entities" multiple>
-                        @foreach($entities as $id => $entities)
-                            <option value="{{ $id }}" {{ in_array($id, old('entities', [])) ? 'selected' : '' }}>{{ $entities }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('entities'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('entities') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.entities_helper') }}</span>
-                </div>
-                <div class="form-group">
-                    <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
-                    <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}" name="entity_resp_id" id="entity_resp_id">
-                        @foreach($entity_resps as $id => $entity_resp)
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
+                        <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}" name="entity_resp_id" id="entity_resp_id">
+                            @foreach($entity_resps as $id => $entity_resp)
                             <option value="{{ $id }}" {{ old('entity_resp_id') == $id ? 'selected' : '' }}>{{ $entity_resp }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('entity_resp'))
+                            @endforeach
+                        </select>
+                        @if($errors->has('entity_resp'))
                         <div class="invalid-feedback">
                             {{ $errors->first('entity_resp') }}
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.entity_resp_helper') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.entity_resp_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
+                        <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}" name="entities[]" id="entities" multiple>
+                            @foreach($entities as $id => $entities)
+                            <option value="{{ $id }}" {{ in_array($id, old('entities', [])) ? 'selected' : '' }}>{{ $entities }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('entities'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('entities') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.entities_helper') }}</span>
+                    </div>
                 </div>
                 @endif
-
-                <div class="form-group">
-                    <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
-                        @foreach($responsible_list as $resp)
-                            <option {{ str_contains(old('responsible') ,$resp) ? 'selected' : '' }}>{{$resp}}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('responsible'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('responsible') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
-                </div>
-
+            </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
                     <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
@@ -139,15 +124,75 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.functional_referent_helper') }}</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
-                    <input class="datetime form-control" type="text" name="install_date" id="install_date" value="{{ old('install_date') }}">
-                    <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
-                </div>
-
             </div>
-            <div class="col-sm">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
+                        @if (!$editor_list->contains(old('editor')))
+                        <option> {{ old('editor') }}</option>'
+                        @endif
+                        @foreach($editor_list as $t)
+                        <option {{ old('editor') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('editor'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('editor') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
+                </div>
+            </div>
+            @if (auth()->user()->granularity>=2)
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
+                        @if (!$users_list->contains(old('users')))
+                        <option> {{ old('users') }}</option>'
+                        @endif
+                        @foreach($users_list as $t)
+                        <option {{ old('users') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('users'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('users') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
+                </div>
+            </div>
+            @endif
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
+                        @foreach($cartographers_list as $key => $cartographer)
+                        <option value="{{ $key }}" {{ in_array($key, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cartographers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cartographer') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        Technique
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label class="recommended" for="technology">{{ trans('cruds.application.fields.technology') }}</label>
                     <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}" name="technology" id="technology">
@@ -167,6 +212,8 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.technology_helper') }}</span>
                 </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group">
                     <label class="recommended" for="type">{{ trans('cruds.application.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -186,50 +233,9 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.type_helper') }}</span>
                 </div>
-                @if (auth()->user()->granularity>=2)
-                <div class="form-group">
-                    <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
-                        @if (!$users_list->contains(old('users')))
-                            <option> {{ old('users') }}</option>'
-                        @endif
-                        @foreach($users_list as $t)
-                            <option {{ old('users') == $t ? 'selected' : '' }}>{{$t}}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('users'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('users') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
-                </div>
-                @endif
-
-                <div class="form-group">
-                    <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
-                        @if (!$editor_list->contains(old('editor')))
-                            <option> {{ old('editor') }}</option>'
-                        @endif
-                        @foreach($editor_list as $t)
-                            <option {{ old('editor') == $t ? 'selected' : '' }}>{{$t}}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('editor'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('editor') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
-                </div>
-                <div class="form-group">
-                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date') }}">
-                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
-                </div>
             </div>
-            <div class="col-sm">
+
+            <div class="col-md-4">
                 <div class="form-group">
                     <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
                     <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
@@ -242,8 +248,28 @@
                     </select>
                     <span class="help-block">{{ trans('cruds.application.fields.external_helper') }}</span>
                 </div>
-
-                @if (auth()->user()->granularity>=2)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
+                    <input class="datetime form-control" type="text" name="install_date" id="install_date" value="{{ old('install_date') }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
+                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date') }}">
+                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
+                </div>
+            </div>
+            <!-- no events -->
+        </div>
+        @if (auth()->user()->granularity>=2)
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
                     <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', '') }}">
@@ -254,26 +280,66 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
-                @endif
-                <div class="form-group">
-                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
-                        @foreach($cartographers_list as $key => $cartographer)
-                            <option value="{{ $key }}" {{ in_array($key, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('cartographers'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('cartographer') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
-                </div>
             </div>
           </div>
+        @endif
+        <div class="row">
+            <div class="col-sm">
 
-          <div class="row">
-            <div class="col-md-6">
+
+                @if (auth()->user()->granularity>=2)
+                <div class="form-group">
+                    <label for="services">{{ trans('cruds.application.fields.services') }}</label>
+                    <div style="padding-bottom: 4px">
+                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                    </div>
+                    <select class="form-control select2 {{ $errors->has('services') ? 'is-invalid' : '' }}" name="services[]" id="services" multiple>
+                        @foreach($services as $id => $services)
+                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $services }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('services'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('services') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
+                </div>
+                @endif
+
+
+            </div>
+            <div class="col-sm">
+                <div class="form-group">
+                    <label for="databases">{{ trans('cruds.application.fields.databases') }}</label>
+                    <div style="padding-bottom: 4px">
+                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                    </div>
+                    <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                        @foreach($databases as $id => $databases)
+                            <option value="{{ $id }}" {{ in_array($id, old('databases', [])) ? 'selected' : '' }}>{{ $databases }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('databases'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('databases') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.databases_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        Sécurité
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
                  <label
                     @if (auth()->user()->granularity>=2)
                     class="recommended"
@@ -391,7 +457,63 @@
 
             </div>
         </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        Common Plateforme Enumeration (CPE)
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
+                        <div class="form-group">
+                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                                <option>{{ old('vendor', '') }}</option>
+                            </select>
+                            <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="product">{{ trans('cruds.application.fields.product') }}</label>
+                        <select id="product-selector" class="form-control select2-free" name="product">
+                            <option>{{ old('product', '') }}</option>
+                        </select>
+                        @if($errors->has('product'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('product') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
+                        <select id="version-selector" class="form-control select2-free" name="version">
+                            <option>{{ old('version', '') }}</option>
+                        </select>
+                        @if($errors->has('version'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('version') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.metier.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
           <div class="row">
             <div class="col-sm">
                 <div class="form-group">
@@ -412,49 +534,17 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.processes_helper') }}</span>
                 </div>
-
-                @if (auth()->user()->granularity>=2)
-                <div class="form-group">
-                    <label for="services">{{ trans('cruds.application.fields.services') }}</label>
-                    <div style="padding-bottom: 4px">
-                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                    </div>
-                    <select class="form-control select2 {{ $errors->has('services') ? 'is-invalid' : '' }}" name="services[]" id="services" multiple>
-                        @foreach($services as $id => $services)
-                            <option value="{{ $id }}" {{ in_array($id, old('services', [])) ? 'selected' : '' }}>{{ $services }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('services'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('services') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
-                </div>
-                @endif
-
             </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
             <div class="col-sm">
-
-                <div class="form-group">
-                    <label for="databases">{{ trans('cruds.application.fields.databases') }}</label>
-                    <div style="padding-bottom: 4px">
-                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                    </div>
-                    <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
-                        @foreach($databases as $id => $databases)
-                            <option value="{{ $id }}" {{ in_array($id, old('databases', [])) ? 'selected' : '' }}>{{ $databases }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('databases'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('databases') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.databases_helper') }}</span>
-                </div>
                 <div class="form-group">
                     <label for="logical_servers">{{ trans('cruds.application.fields.logical_servers') }}</label>
                     <div style="padding-bottom: 4px">
@@ -473,34 +563,18 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
                 </div>
-
-            </div>
             </div>
 
-            @if (auth()->user()->granularity>=2)
-            <div class="form-group">
-                <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
-                <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
-                    @foreach($application_blocks as $id => $application_block)
-                        <option value="{{ $id }}" {{ old('application_block_id') == $id ? 'selected' : '' }}>{{ $application_block }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('application_block'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('application_block') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.application_block_helper') }}</span>
-            </div>
-            @endif
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit">
+                {{ trans('global.save') }}
+            </button>
+        </div>
     </div>
 </div>
+</form>
 
 @endsection
 

@@ -1,316 +1,407 @@
 @extends('layouts.admin')
 @section('content')
 
+<div class="form-group">
+
+    <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
+        {{ trans('global.explore') }}
+    </a>
+
+    @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
+        <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
+            {{ trans('global.edit') }}
+        </a>
+    @endif
+
+    @if(auth()->user()->can('m_application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
+        <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
+        </form>
+    @endif
+
+</div>
+
 <div class="card">
+    <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.application.title') }}
+        {{ trans('cruds.application.title_singular') }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dt>{{ trans('cruds.application.fields.name') }}</dt>
+                {{ $application->name }}
+            </div>
+            @if (auth()->user()->granularity>=2)
+            <div class="col-md-4">
+                <dt>{{ trans('cruds.application.fields.application_block') }}</dt>
+                    @if ($application->application_block!=null)
+                    <a href='{{ route("admin.application-blocks.show", $application->application_block->id) }}'>{{ $application->application_block->name }}</a>
+                    @endif
+            </div>
+            @endif
+        </div>
+        <br>
+        <dt>{{ trans('cruds.application.fields.description') }}</dt>
+        {!! $application->description !!}
     </div>
 
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.ecosystem.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-
-                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
-                    {{ trans('global.explore') }}
-                </a>
-
-                @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
-                    <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
-                        {{ trans('global.edit') }}
-                    </a>
-                @endif
-
-                @if(auth()->user()->can('m_application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
-                    <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
-                    </form>
-                @endif
-
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.responsible') }}</dt>
+                    {{ $application->responsible }}
+                </div>
             </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th width="10%" colspan='1'>
-                            {{ trans('cruds.application.fields.name') }}
-                        <td colspan="11">
-                            {{ $application->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.description') }}
-                        </th>
-                        <td colspan="11">
-                            {!! $application->description !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            CPE
-                        </th>
-                        <td colspan="11">
-                            {{ $application->vendor }}:{{ $application->product }}:{{ $application->version }}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.entities') }}
-                        </th>
-                        <td colspan="3">
-                            @foreach($application->entities as $entity)
-                                <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</a>
-                                @if(!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.technology') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->technology }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.external') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->external }}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.entity_resp') }}
-                        </th>
-                        <td colspan="3">
-                            @if ($application->entity_resp_id!=null)
-                            <a href="{{ route('admin.entities.show', $application->entity_resp_id) }}">
-                                {{ $application->entity_resp->name ?? '' }}
-                            </a>
-                            @endif
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.type') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->type }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.documentation') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->documentation }}
-                        </td>
-                    </tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.responsible') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->responsible }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.users') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->users }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.cartographers') }}
-                        </th>
-                        <td colspan="3">
-                            @foreach($application->cartographers as $cartographer)
-                                    {{ $cartographer->name }} @if(!$loop->last)-@endif
-                            @endforeach
-                        </td>
-                    <tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.functional_referent') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->functional_referent }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.editor') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->editor }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.events') }}
-                        </th>
-                        <td colspan="3">
-                            <button class="btn btn-info events_list_button">
-                                {{ trans('cruds.application.fields.events_list_button') }}
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.install_date') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->install_date }}
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.update_date') }}
-                        </th>
-                        <td colspan="3">
-                            {{ $application->update_date }}
-                        </td>
-                        <td colspan="4">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.security_need') }}
-                        </th>
-                        <td colspan="5">
-                            {{ trans('global.confidentiality') }} :
-                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$application->security_need_c] ?? "" }}
-                            <br>
-                            {{ trans('global.integrity') }} :
-                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$application->security_need_i] ?? "" }}
-                            <br>
-                            {{ trans('global.availability') }} :
-                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$application->security_need_a] ?? "" }}
-                            <br>
-                            {{ trans('global.tracability') }} :
-                                {{ array(0=>trans('global.none'),1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$application->security_need_t] ?? "" }}
-                        </td>
-                        <td colspan="4">
-                            <b>{{ trans('cruds.application.fields.RTO') }} </b> : 
-                            @if (intdiv($application->rto,60 * 24) > 0)
-                                {{ intdiv($application->rto,60 * 24) }}
-                                @if (intdiv($application->rto,60 * 24) > 1)
-                                    {{ trans('global.days') }}
-                                @else
-                                    {{ trans('global.day') }}
-                                @endif
-                            @endif
-                            @if ((intdiv($application->rto,60) % 24) > 0)
-                                {{ intdiv($application->rto,60) % 24 }}
-                                @if ((intdiv($application->rto,60) % 24) > 1)
-                                    {{ trans('global.hours') }}
-                                @else
-                                    {{ trans('global.hour') }}
-                                @endif
-                            @endif
-                            @if (($application->rto % 60) > 0)
-                                {{ $application->rto % 60 }}
-                                @if (($application->rto % 60) > 1)
-                                    {{ trans('global.minutes') }}
-                                @else
-                                    {{ trans('global.minute') }}
-                                @endif
-                            @endif
-                            <br>
-                            <b>{{ trans('cruds.application.fields.RPO') }} </b> : 
-                            {{ intdiv($application->rpo,60 * 24) }}
-                            @if (intdiv($application->rpo,60 * 24) > 0)
-                                @if (intdiv($application->rpo,60 * 24) > 1)
-                                    {{ trans('global.days') }}
-                                @else
-                                    {{ trans('global.day') }}
-                                @endif
-                            @endif
-                            @if ((intdiv($application->rpo,60) % 24) > 0)
-                                {{ intdiv($application->rpo,60) % 24 }}
-                                @if ((intdiv($application->rpo,60) % 24) > 1)
-                                    {{ trans('global.hours') }}
-                                @else
-                                    {{ trans('global.hour') }}
-                                @endif
-                            @endif    
-                            @if (($application->rpo % 60) > 0)
-                                {{ $application->rpo % 60 }}
-                                @if (($application->rpo % 60) > 1)
-                                    {{ trans('global.minutes') }}
-                                @else
-                                    {{ trans('global.minute') }}
-                                @endif
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.processes') }}
-                        </th>
-                        <td colspan="5">
-                            @foreach($application->processes as $process)
-                                <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</span>
-                                @if(!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.databases') }}
-                        </th>
-                        <td colspan="5">
-                            @foreach($application->databases as $database)
-                                <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</span>
-                                @if(!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.services') }}
-                        </th>
-                        <td colspan="5">
-                            @foreach($application->services as $service)
-                                <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</span>
-                                @if(!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                        <th colspan="1">
-                            {{ trans('cruds.application.fields.logical_servers') }}
-                        </th>
-                        <td colspan="5">
-                            @foreach($application->logical_servers as $logical_server)
-                                <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</span>
-                                @if(!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.application.fields.application_block') }}
-                        </th>
-                        <td colspan="11">
-                            @if ($application->application_block!=null)
-                            <a href='{{ route("admin.application-blocks.show", $application->application_block->id) }}'>{{ $application->application_block->name }}</a>
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @if (auth()->user()->granularity>=2)
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.entity_resp') }}</dt>
+                    @if ($application->entity_resp_id!=null)
+                    <a href="{{ route('admin.entities.show', $application->entity_resp_id) }}">
+                        {{ $application->entity_resp->name ?? '' }}
+                    </a>
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.entities') }}</dt>
+                    @foreach($application->entities as $entity)
+                        <a href="{{ route('admin.entities.show', $entity->id) }}">{{ $entity->name }}</a>
+                        @if(!$loop->last)
+                        ,
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            @endif
+        </div>
+    <div class="row">
+        <div class="col-md-4">
+            <dt>{{ trans('cruds.application.fields.functional_referent') }}</dt>
+            {{ $application->functional_referent }}
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+                <dt>{{ trans('cruds.application.fields.editor') }}</dt>
+                {{ trans('cruds.application.fields.editor') }}
+            </div>
+        </div>
+        @if (auth()->user()->granularity>=2)
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.users') }}</dt>
+                {{ $application->users }}                        
+            </div>
+        </div>
+        @endif
+
+        <div class="col-md-4">
+            <div class="form-group">
+             <dt>{{ trans('cruds.application.fields.cartographers') }}</dt>
+             @foreach($application->cartographers as $cartographer)
+             {{ $cartographer->name }} @if(!$loop->last)-@endif
+             @endforeach
             </div>
         </div>
     </div>
-    <div class="card-footer">
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.technology') }}</dt>
+                {{ $application->technology }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.type') }}</dt>
+                {{ $application->type }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.external') }}</dt>
+                {{ $application->external }} 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.install_date') }}</dt>
+                {{ $application->install_date }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.update_date') }}</dt>
+                {{ $application->update_date }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.events') }}</dt>
+                <button class="btn btn-info events_list_button">
+                {{ trans('cruds.application.fields.events_list_button') }}
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+            @if (auth()->user()->granularity>=2)
+                <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
+                {{ $application->documentation }}
+            @endif
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.databases') }}</dt>
+                @foreach($application->databases as $database)
+                    <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</a>
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </div>
+        </div>
+        <div class="col-md-4">
+            @if (auth()->user()->granularity>=2)
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.services') }}</dt>
+                @foreach($application->services as $service)
+                    <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</a>
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-header">
+    Sécurité
+</div>
+
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.security_need') }}</dt>
+                <table cellspacing="5" cellpadding="5" border="0" width='100%'>
+                    <td align="right" valign="bottom">
+                        <dt>{{ trans("global.confidentiality_short") }}</dt>
+                    </td>
+                    <td>
+                    @if ($application->security_need_c==0){{ trans('global.none') }}@endif
+                    @if ($application->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                    @if ($application->security_need_c==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                    @if ($application->security_need_c==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                    @if ($application->security_need_c==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                    </td>
+                    <td align="right" valign="bottom">
+                        <dt>{{ trans("global.integrity_short") }}</dt>
+                    </td>
+                    <td>                        
+                    @if ($application->security_need_i==0){{ trans('global.none') }}@endif
+                    @if ($application->security_need_i==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                    @if ($application->security_need_i==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                    @if ($application->security_need_i==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                    @if ($application->security_need_i==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                    </td>
+                    <td>                        
+                        <dt>{{ trans('global.availability_short') }}</dt>
+                    </td>
+                    <td>                        
+                    @if ($application->security_need_a==0){{ trans('global.none') }}@endif
+                    @if ($application->security_need_a==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                    @if ($application->security_need_a==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                    @if ($application->security_need_a==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                    @if ($application->security_need_a==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                    </td>
+                    <td>                        
+                        <dt>{{ trans('global.tracability_short') }}</dt>
+                    </td>
+                    <td>                        
+                    @if ($application->security_need_t==0){{ trans('global.none') }}@endif
+                    @if ($application->security_need_t==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                    @if ($application->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                    @if ($application->security_need_t==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                    @if ($application->security_need_t==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                </td>
+            </table>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.RTO') }}</dt>
+                    @if (intdiv($application->rto,60 * 24) > 0)
+                        {{ intdiv($application->rto,60 * 24) }}
+                        @if (intdiv($application->rto,60 * 24) > 1)
+                            {{ trans('global.days') }}
+                        @else
+                            {{ trans('global.day') }}
+                        @endif
+                    @endif
+                    @if ((intdiv($application->rto,60) % 24) > 0)
+                        {{ intdiv($application->rto,60) % 24 }}
+                        @if ((intdiv($application->rto,60) % 24) > 1)
+                            {{ trans('global.hours') }}
+                        @else
+                            {{ trans('global.hour') }}
+                        @endif
+                    @endif
+                    @if (($application->rto % 60) > 0)
+                        {{ $application->rto % 60 }}
+                        @if (($application->rto % 60) > 1)
+                            {{ trans('global.minutes') }}
+                        @else
+                            {{ trans('global.minute') }}
+                        @endif
+                    @endif
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.RPO') }}</dt>
+                {{ intdiv($application->rpo,60 * 24) }}
+                @if (intdiv($application->rpo,60 * 24) > 0)
+                    @if (intdiv($application->rpo,60 * 24) > 1)
+                        {{ trans('global.days') }}
+                    @else
+                        {{ trans('global.day') }}
+                    @endif
+                @endif
+                @if ((intdiv($application->rpo,60) % 24) > 0)
+                    {{ intdiv($application->rpo,60) % 24 }}
+                    @if ((intdiv($application->rpo,60) % 24) > 1)
+                        {{ trans('global.hours') }}
+                    @else
+                        {{ trans('global.hour') }}
+                    @endif
+                @endif    
+                @if (($application->rpo % 60) > 0)
+                    {{ $application->rpo % 60 }}
+                    @if (($application->rpo % 60) > 1)
+                        {{ trans('global.minutes') }}
+                    @else
+                        {{ trans('global.minute') }}
+                    @endif
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-header">
+    Common Plateforme Enumeration (CPE)
+</div>
+
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.vendor') }}</dt>
+                {{ $application->vendor }}
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.product') }}</dt>
+                {{ $application->product }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.version') }}</dt>
+                {{ $application->version }}
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-header">
+    {{ trans("cruds.menu.metier.title_short") }}
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.processes') }}</dt>
+                @foreach($application->processes as $process)
+                    <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-header">
+    {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+</div>
+<!------------------------------------------------------------------------------------------------------------->
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+                <dt>{{ trans('cruds.application.fields.logical_servers') }}</dt>
+                @foreach($application->logical_servers as $logical_server)
+                    <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</a>
+                    @if(!$loop->last)
+                    ,
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+   <div class="card-footer">
         {{ trans('global.created_at') }} {{ $application->created_at ? $application->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $application->updated_at ? $application->updated_at->format(trans('global.timestamp')) : '' }} 
+    </div>
+</div>
+
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+    </div>
     </div>
 </div>
 @endsection

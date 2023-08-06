@@ -77,18 +77,19 @@ class LogicalServer extends Model
         'name',
         'description',
         'operating_system',
+        'install_date',
+        'update_date',
         'address_ip',
         'cpu',
         'memory',
         'disk',
+        'disk_used',
         'environment',
         'net_services',
         'configuration',
         'created_at',
         'updated_at',
         'deleted_at',
-        'install_date',
-        'update_date',
     ];
 
     /**
