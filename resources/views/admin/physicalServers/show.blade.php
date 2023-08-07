@@ -82,10 +82,44 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.application.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg">
+                <b>{{ trans('cruds.physicalServer.fields.applications') }}</b> :
+                @foreach($physicalServer->applications as $application)
+                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                        {{ $application->name }}
+                    </a>
+                    @if(!$loop->last)
+                    ,
+                    @endif                                
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.logical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
+        <div class="row">
+            <div class="col-sm">      
+                <dt>{{ trans('cruds.physicalServer.fields.operating_system') }}</dt>
+                {!! $physicalServer->operating_system !!}
+            </div>
+            <div class="col-sm">
+                <dt>{{ trans('cruds.physicalServer.fields.install_date') }}</dt>
+                {!! $physicalServer->install_date !!}
+            </div>
+            <div class="col-sm">
+                <dt>{{ trans('cruds.physicalServer.fields.update_date') }}</dt>
+                {!! $physicalServer->update_date !!}
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm">
                 <b>{{ trans('cruds.physicalServer.fields.address_ip') }}</b>
