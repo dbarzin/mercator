@@ -27,8 +27,6 @@ class WorkstationController extends Controller
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $workstation = Workstation::create($request->all());
-        // syncs
-        // $workstation->roles()->sync($request->input('roles', []));
 
         return response()->json($workstation, 201);
     }
@@ -45,8 +43,6 @@ class WorkstationController extends Controller
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $workstation->update($request->all());
-        // syncs
-        // $workstation->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

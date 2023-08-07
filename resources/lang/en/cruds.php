@@ -857,6 +857,8 @@ return [
     'physicalServer' => [
         'description' => 'Physical machine running a set of computer services.',
         'fields' => [
+            'applications' => 'Applications',
+            'applications_helper' => 'Applications installed on this server',
             'address_ip' => 'IP Adresse(s)',
             'address_ip_helper' => 'Filter : (IPv4|IPv6), ...',
             'bay' => 'Bay',

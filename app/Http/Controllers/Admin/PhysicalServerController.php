@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Gate;
 use App\Bay;
 use App\Building;
+use App\PhysicalServer;
+use App\Site;
+use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
 use App\Http\Requests\UpdatePhysicalServerRequest;
-use App\PhysicalServer;
-use App\Site;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends Controller
@@ -31,21 +32,24 @@ class PhysicalServerController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $applications = MApplication::select('id','name')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
 
         // List
+        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalServers.create',
-            compact('sites', 'buildings', 'bays', 'operating_system_list', 'responsible_list', 'type_list')
+            compact('sites', 'buildings', 'bays', 'application_list', 'operating_system_list', 'responsible_list', 'type_list')
         );
     }
 
     public function store(StorePhysicalServerRequest $request)
     {
-        PhysicalServer::create($request->all());
+        $physicalServer = PhysicalServer::create($request->all());
+        $physicalServer->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -61,6 +65,7 @@ class PhysicalServerController extends Controller
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
         $physicalServer->load('site', 'building', 'bay');
 
@@ -70,6 +75,7 @@ class PhysicalServerController extends Controller
                 'sites',
                 'buildings',
                 'bays',
+                'application_list',
                 'responsible_list',
                 'operating_system_list',
                 'type_list',
@@ -81,6 +87,7 @@ class PhysicalServerController extends Controller
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
         $physicalServer->update($request->all());
+        $physicalServer->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.physical-servers.index');
     }

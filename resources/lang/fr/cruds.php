@@ -860,6 +860,8 @@ return [
     'physicalServer' => [
         'description' => 'Machine physique exécutant un ensemble de services informatiques.',
         'fields' => [
+            'name' => 'Nom',
+            'name_helper' => '',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
@@ -870,10 +872,10 @@ return [
             'configuration_helper' => 'Caractéristiques techniques : configuration, OS et version',
             'description' => 'Description',
             'description_helper' => '',
+            'applications' => 'Applications',
+            'applications_helper' => 'Applications installées sur ce serveur',
             'logical_servers' => 'Serveurs logiques',
             'logical_servers_helper' => 'Serveurs logiques installés sur ce serveur',
-            'name' => 'Nom',
-            'name_helper' => '',
             'physical_switch' => 'Commutateur',
             'physical_switch_helper' => 'Commutateur auquel est connecté le serveur',
             'responsible' => 'Responsable',
