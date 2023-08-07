@@ -115,7 +115,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg">
                 <div class="form-group">
@@ -126,6 +125,31 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.configuration_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.application.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg">
+                <div class="form-group">
+                    <label for="applications">{{ trans('cruds.physicalServer.fields.applications') }}</label>
+                    <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                        @foreach($application_list as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $physicalServer->applications->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('applications'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('applications') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalServer.fields.applications_helper') }}</span>
                 </div>
             </div>
         </div>
