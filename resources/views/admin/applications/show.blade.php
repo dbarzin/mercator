@@ -90,129 +90,126 @@
             </div>
             @endif
         </div>
-    <div class="row">
-        <div class="col-md-4">
-            <dt>{{ trans('cruds.application.fields.functional_referent') }}</dt>
-            {{ $application->functional_referent }}
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.editor') }}</dt>
-                {{ trans('cruds.application.fields.editor') }}
+        <div class="row">
+            <div class="col-md-4">
+                <dt>{{ trans('cruds.application.fields.functional_referent') }}</dt>
+                {{ $application->functional_referent }}
             </div>
-        </div>
-        @if (auth()->user()->granularity>=2)
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.users') }}</dt>
-                {{ $application->users }}                        
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.editor') }}</dt>
+                    {{ $application->editor }}  
+                </div>
             </div>
-        </div>
-        @endif
-
-        <div class="col-md-4">
-            <div class="form-group">
-             <dt>{{ trans('cruds.application.fields.cartographers') }}</dt>
-             @foreach($application->cartographers as $cartographer)
-             {{ $cartographer->name }} @if(!$loop->last)-@endif
-             @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-<!------------------------------------------------------------------------------------------------------------->
-<div class="card-header">
-        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
-</div>
-<!------------------------------------------------------------------------------------------------------------->
-<div class="card-body">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.technology') }}</dt>
-                {{ $application->technology }}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.type') }}</dt>
-                {{ $application->type }}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.external') }}</dt>
-                {{ $application->external }} 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.install_date') }}</dt>
-                {{ $application->install_date }}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.update_date') }}</dt>
-                {{ $application->update_date }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.events') }}</dt>
-                <button class="btn btn-info events_list_button">
-                {{ trans('cruds.application.fields.events_list_button') }}
-                </button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
             @if (auth()->user()->granularity>=2)
-                <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
-                {{ $application->documentation }}
-            @endif
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.databases') }}</dt>
-                @foreach($application->databases as $database)
-                    <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</a>
-                    @if(!$loop->last)
-                    ,
-                    @endif
-                @endforeach
-            </div>
-        </div>
-        <div class="col-md-4">
-            @if (auth()->user()->granularity>=2)
-            <div class="form-group">
-                <dt>{{ trans('cruds.application.fields.services') }}</dt>
-                @foreach($application->services as $service)
-                    <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</a>
-                    @if(!$loop->last)
-                    ,
-                    @endif
-                @endforeach
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.users') }}</dt>
+                    {{ $application->users }}                        
+                </div>
             </div>
             @endif
+            <div class="col-md-4">
+                <div class="form-group">
+                 <dt>{{ trans('cruds.application.fields.cartographers') }}</dt>
+                 @foreach($application->cartographers as $cartographer)
+                 {{ $cartographer->name }} @if(!$loop->last)-@endif
+                 @endforeach
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<!------------------------------------------------------------------------------------------------------------->
-<div class="card-header">
-    Sécurité
-</div>
-
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+            {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
-
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.technology') }}</dt>
+                    {{ $application->technology }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.type') }}</dt>
+                    {{ $application->type }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.external') }}</dt>
+                    {{ $application->external }} 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.install_date') }}</dt>
+                    {{ $application->install_date }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.update_date') }}</dt>
+                    {{ $application->update_date }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.events') }}</dt>
+                    <button class="btn btn-info events_list_button">
+                    {{ trans('cruds.application.fields.events_list_button') }}
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                @if (auth()->user()->granularity>=2)
+                    <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
+                    {{ $application->documentation }}
+                @endif
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.databases') }}</dt>
+                    @foreach($application->databases as $database)
+                        <a href="{{ route('admin.databases.show', $database->id) }}">{{ $database->name }}</a>
+                        @if(!$loop->last)
+                        ,
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-md-4">
+                @if (auth()->user()->granularity>=2)
+                <div class="form-group">
+                    <dt>{{ trans('cruds.application.fields.services') }}</dt>
+                    @foreach($application->services as $service)
+                        <a href="{{ route('admin.application-services.show', $service->id) }}">{{ $service->name }}</a>
+                        @if(!$loop->last)
+                        ,
+                        @endif
+                    @endforeach
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        Sécurité
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
       <div class="row">
         <div class="col-md-4">
             <div class="form-group">
