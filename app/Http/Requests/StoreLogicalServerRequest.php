@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use App\Rules\IPList;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,7 +36,7 @@ class StoreLogicalServerRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList,
+                new IPList(),
             ],
             'servers' => [
                 'array',

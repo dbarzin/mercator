@@ -851,7 +851,7 @@ class AuditController extends HomeController
         ];
 
         // Fill sheet
-        $idx=2;
+        $idx = 2;
         foreach ($rows as $key => $row) {
             // $idx = $row['index'];
             $sheet->setCellValue("A{$idx}", $row['title']);
