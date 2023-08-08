@@ -19,6 +19,7 @@ Route::get('/test', function () {
 });
 
 Auth::routes();
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
