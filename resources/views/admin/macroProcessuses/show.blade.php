@@ -63,21 +63,33 @@
                             {{ trans('cruds.macroProcessus.fields.security_need') }}
                         </th>
                         <td>
-                            {{ trans('global.confidentiality') }} :
-                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$macroProcessus->security_need_c] ?? "" }}
-                            <br>
-                            {{ trans('global.integrity') }} :
-                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$macroProcessus->security_need_i] ?? "" }}
-                            <br>
-                            {{ trans('global.availability') }} :
-                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$macroProcessus->security_need_a] ?? "" }}
-                            <br>
-                            {{ trans('global.tracability') }} :
-                                {{ array(0=>trans('global.none'), 1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                [$macroProcessus->security_need_t] ?? "" }}                            
+                        {{ trans('global.confidentiality') }} :
+                            @if ($macroProcessus->security_need_c==0){{ trans('global.none') }}@endif
+                            @if ($macroProcessus->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                            @if ($macroProcessus->security_need_c==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                            @if ($macroProcessus->security_need_c==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                            @if ($macroProcessus->security_need_c==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                        &nbsp;
+                        {{ trans('global.integrity') }} :
+                            @if ($macroProcessus->security_need_i==0){{ trans('global.none') }}@endif
+                            @if ($macroProcessus->security_need_i==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                            @if ($macroProcessus->security_need_i==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                            @if ($macroProcessus->security_need_i==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                            @if ($macroProcessus->security_need_i==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                        &nbsp;
+                        {{ trans('global.availability') }} :
+                            @if ($macroProcessus->security_need_a==0){{ trans('global.none') }}@endif
+                            @if ($macroProcessus->security_need_a==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                            @if ($macroProcessus->security_need_a==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                            @if ($macroProcessus->security_need_a==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                            @if ($macroProcessus->security_need_a==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                        &nbsp;
+                        {{ trans('global.tracability') }} :
+                            @if ($macroProcessus->security_need_t==0){{ trans('global.none') }}@endif
+                            @if ($macroProcessus->security_need_t==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                            @if ($macroProcessus->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                            @if ($macroProcessus->security_need_t==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                            @if ($macroProcessus->security_need_t==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                         </td>
                     </tr>
                     <tr>
@@ -93,9 +105,9 @@
                             {{ trans('cruds.macroProcessus.fields.processes') }}
                         </th>
                         <td>
-                            @foreach($macroProcessus->processes as $process)
-                                <a href="{{ route('admin.processes.show', $process->id) }}">
-                                    {{ $process->identifiant}}
+                            @foreach($macroProcessus->processes as $macroProcessus)
+                                <a href="{{ route('admin.processes.show', $macroProcessus->id) }}">
+                                    {{ $macroProcessus->identifiant}}
                                     @if(!$loop->last)
                                     ,
                                     @endif
