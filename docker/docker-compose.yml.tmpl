@@ -15,8 +15,9 @@ services:
       - ./.env:/var/www/mercator/.env
       # entrypoint: /bin/sleep 3600 # pour debug
       #   - ./:/var/www
+    #nginx conf listen port 80 or other if custom
     ports:
-      - 8000:8000
+      - 8000:80
     networks:
       - local
 
