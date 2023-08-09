@@ -48,8 +48,10 @@ RUN addgroup -S www && \
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
 # RUN chown -R mercator:www 
 
-RUN mkdir -p /etc/nginx/templates && cp docker/nginx.conf /etc/nginx/templates/mercator.conf
-RUN cp docker/supervisord.conf /etc/supervisord.conf 
+RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
+RUN cp docker/supervisord.conf /etc/supervisord.conf
+RUN chown -R mercator:www /etc/nginx/http.d/default.conf
+
 
 USER mercator:www
 
@@ -60,4 +62,4 @@ RUN set -ex ; \
 
 EXPOSE 8000
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

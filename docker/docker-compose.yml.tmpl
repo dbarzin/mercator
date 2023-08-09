@@ -17,8 +17,9 @@ services:
       - ./data/sql/:/var/www/mercator/sql/
       # entrypoint: /bin/sleep 3600 # pour debug
       #   - ./:/var/www
+    #nginx conf listen port 80 or other if custom
     ports:
-      - 8000:8000
+      - 8000:80
     networks:
       - local
   # Non fonctionnel pour le moment la database utilisé par défaut est interne au conteneur APP
