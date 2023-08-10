@@ -397,23 +397,24 @@
       }
     }
 
-/* TODO : Fixme
-
+/* TODO : Fixme 
+ 
     function apply_filter() {
         console.log("apply_filter");
         // clear current selected node
-        $("#node").val("");
+        // $("#node").val("");
+        // reinitialize component
+        $("#node").select2("destroy").select2();
+
         // get current filter
         cur_filter = $('#filters').val();
         // test filter size
         console.log("filter_size= ",cur_filter.length);
         if (cur_filter.length==0) {
             console.log("activate all nodes");
-            // activate all nodes
-            // $('#node').find("option").each(function( index) {
-            //    $(this).attr('disabled', false).trigger("select2.change");
-            //});
-            $('#node').find("option").prop("disabled", false);
+            $('#node').find("option").each(function( index) {
+                $(this).attr('disabled',false);
+            });
         }
         else 
         {
@@ -421,18 +422,22 @@
             var activated=0, disabled=0;
             $('#node').find("option").each(function( index) {
                 var cur_node = _nodes.get(this.value);
-                if ((cur_node!=null) && (cur_filter.includes(cur_node.vue))) {
-                    $(this).attr('disabled', false).trigger("select2.change");
+                if (cur_node!=null) {
+                    if (cur_filter.includes(cur_node.vue)) {
+                    // $(this).attr('disabled', false).trigger("select2.change");
+                    $(this).attr('disabled',true); <--- here
                     activated++;
                     }
-                else {
-                    $(this).attr('disabled', true).trigger("select2.change");
-                    disabled++;
+                    else {
+                        // $(this).attr('disabled', true).trigger("select2.change");
+                        $(this).attr('disabled',false);  <--- here
+                        disabled++;
+                    }
                 }
             });
             console.log("disable= ",disabled," activated= ",activated);
           }
-        $('#node').trigger("select2.change");
+        $('#node').trigger("change");
     }
 
     $('.select2').select2();
@@ -452,7 +457,7 @@
             apply_filter();
             //$('#filter').select2();
         });
-}
+    
 */
 
 </script>
