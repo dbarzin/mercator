@@ -259,7 +259,7 @@
             </div>
         </div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.RTO') }}</dt>
                     @if (intdiv($application->rto,60 * 24) > 0)

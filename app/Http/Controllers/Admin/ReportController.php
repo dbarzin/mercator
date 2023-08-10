@@ -2069,17 +2069,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("T{$row}", $application->logical_servers->implode('name', ', '));
                 $res = null;
 
-                // Done: improve me with select, join and unique
-                /*
-                foreach ($application->logical_servers as $logical_server) {
-                    foreach ($logical_server->servers as $physical_server) {
-                        if ($res !== null) {
-                            $res .= ', ';
-                        }
-                        $res .= $physical_server->name;
-                    }
-                }
-                */
+                // Done: request improved
                 $res = DB::Table('physical_servers')
                     ->distinct()
                     ->select('physical_servers.name')
@@ -2101,9 +2091,17 @@ class ReportController extends Controller
                         '=',
                         'logical_servers.id'
                     )
+                    
+                    ->leftJoin(
+                        'm_application_physical_server',
+                        'm_application_physical_server.physical_server_id',
+                        '=',
+                        'physical_servers.id',
+                    )
                     ->whereNull('logical_servers.deleted_at')
                     ->whereNull('physical_servers.deleted_at')
                     ->where('logical_server_m_application.m_application_id', '=', $application->id)
+                    ->orWhere('m_application_physical_server.m_application_id', '=', $application->id)
                     ->orderBy('physical_servers.name')
                     ->get()
                     ->implode('name', ', ');
