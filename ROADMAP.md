@@ -56,6 +56,7 @@ Changements prévus en 2023 :
 - [x] Lien entre bases de données et serveurs logiques
 - [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [ ] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
+- [ ] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 
 ## Petites évolutions
 
