@@ -27,6 +27,11 @@ RUN apk add php8-zip \
   php8-fileinfo \
   php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
   php8-tokenizer
+  
+RUN apk update && \
+    apk add --no-cache \
+    libzip-dev \
+    && docker-php-ext-install zip
 
 RUN docker-php-ext-install pgsql pdo_pgsql
 
