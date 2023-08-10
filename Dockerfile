@@ -46,8 +46,8 @@ WORKDIR /var/www/mercator
 # RUN touch ${DB_DATABASE}
 
 # add mercator:www user
-RUN addgroup -S www && \
-  adduser -S mercator -G www && \
+RUN addgroup --g 1000 -S www && \
+  adduser -u 1000 -S mercator -G www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
@@ -56,6 +56,7 @@ RUN addgroup -S www && \
 RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
 RUN cp docker/supervisord.conf /etc/supervisord.conf
 RUN chown -R mercator:www /etc/nginx/http.d/default.conf
+RUN chown -R mercator:www /etc/supervisord.conf
 
 
 USER mercator:www

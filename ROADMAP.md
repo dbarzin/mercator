@@ -24,6 +24,7 @@ Changements prévus en 2023 :
 
 - [x] Maintenir le registre des traitements
 - [ ] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la catographie.
+- [ ] Intégrer [CPE Guesser](https://github.com/cve-search/cpe-guesser)
 - [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle pour les rapports
 - [ ] Identifier les chemins critiques
