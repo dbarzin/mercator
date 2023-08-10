@@ -9,7 +9,7 @@
                     {{ trans("cruds.report.explorer.title") }}
                 </div>
                 <div class="card-body">
-                    <table border=0>
+                    <table width="100%" border=0>
                         <tr>
                             <td width="400">
                                 <div class="form-group">
@@ -47,34 +47,30 @@
                             </td>
                             <td width=20>
                             </td>
-                            <td style="text-align: center; vertical-align: middle;">
-                                <!-- 
-                                <a href="#">
-                                    <i class="fas fa-plus-circle">                                        
-                                    </i>
-                                    Open
-                                </a>
-                                -->
+                            <td style="text-align: left; vertical-align: middle;">
                                 <a href="#" onclick="network.deleteSelected()">
                                     <i class="fas fa-minus-circle">
                                         
                                     </i>
                                     {{ trans("cruds.report.explorer.delete") }}                                    
                                 </a>
+                                &nbsp;
                                 <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();">
                                     <i class="fas fa-repeat">
                                         
                                     </i>
                                     {{ trans("cruds.report.explorer.reload") }}
                                 </a>
-                                <!-- TODO -->
-                                <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
+                            </td>
+                            <td style="text-align: right; vertical-align: middle;">
+                                &nbsp;
+                                <a onclick="document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                                Photo
+                                </a>
+                                <a id="canvasImg" download="filename"></a>
                             </td>
                         </tr>
-                    </table>
-                    <!--
-                    <a href="#"><i class="fas fa-camera-retro"></i></a>
-                    -->
+                    </table>                    
                 </div>
                 <div id="mynetwork" style="height:700px;"></div>
               </div>
@@ -348,7 +344,7 @@
           y: e.pointer.DOM.y
         });
 
-        if (s){
+        if (s) {
             link = s;
             let nodeId = link.split("_").pop();
             console.log(nodeId);
@@ -366,17 +362,24 @@
                 hideContext();
             });
 
-          } else{
+          } else {
               hideContext();
           }
-      })
+      });
+
+      // Draw image
+      network.on("afterDrawing", function (ctx) {
+        var dataURL = ctx.canvas.toDataURL();
+        document.getElementById('canvasImg').href = dataURL;
+      });
+
     }
 
     const network_container = document.getElementById('mynetwork');
 
     document.addEventListener('keypress', fullscreen_network);
 
-    function fullscreen_network(e){
+    function fullscreen_network(e) {
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
