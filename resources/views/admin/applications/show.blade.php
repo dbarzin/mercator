@@ -211,12 +211,12 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.security_need') }}</dt>
                 <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                     <td align="right" valign="bottom">
-                        <dt>{{ trans("global.confidentiality_short") }}</dt>
+                        {{ trans("global.confidentiality") }}</dt>
                     </td>
                     <td>
                     @if ($application->security_need_c==0){{ trans('global.none') }}@endif
@@ -226,7 +226,7 @@
                     @if ($application->security_need_c==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
                     <td align="right" valign="bottom">
-                        <dt>{{ trans("global.integrity_short") }}</dt>
+                        {{ trans("global.integrity") }}
                     </td>
                     <td>                        
                     @if ($application->security_need_i==0){{ trans('global.none') }}@endif
@@ -236,7 +236,7 @@
                     @if ($application->security_need_i==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
                     <td>                        
-                        <dt>{{ trans('global.availability_short') }}</dt>
+                        {{ trans('global.availability') }}
                     </td>
                     <td>                        
                     @if ($application->security_need_a==0){{ trans('global.none') }}@endif
@@ -246,7 +246,7 @@
                     @if ($application->security_need_a==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
                     <td>                        
-                        <dt>{{ trans('global.tracability_short') }}</dt>
+                        {{ trans('global.tracability') }}
                     </td>
                     <td>                        
                     @if ($application->security_need_t==0){{ trans('global.none') }}@endif
@@ -259,7 +259,7 @@
             </div>
         </div>
 
-        <div class="col-sm">
+        <div class="col-sm-1">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.RTO') }}</dt>
                     @if (intdiv($application->rto,60 * 24) > 0)
@@ -288,7 +288,7 @@
                     @endif
             </div>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-1">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.RPO') }}</dt>
                 {{ intdiv($application->rpo,60 * 24) }}
@@ -327,20 +327,20 @@
 
 <div class="card-body">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.vendor') }}</dt>
                 {{ $application->vendor }}
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.product') }}</dt>
                 {{ $application->product }}
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.version') }}</dt>
                 {{ $application->version }}
