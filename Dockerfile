@@ -2,8 +2,9 @@ FROM php:8.2-fpm-alpine3.16
 
 # apparently you cannot pass both env variables
 # and .env file
+RUN mkdir -p /var/www/mercator/sql
 ENV DB_CONNECTION=sqlite
-ENV DB_DATABASE=/var/www/mercator/db.sqlite
+ENV DB_DATABASE=/var/www/mercator/sql/db.sqlite
 ENV SERVER_NAME="127.0.0.1 localhost"
 
 # system deps
@@ -40,15 +41,18 @@ WORKDIR /var/www/mercator
 # RUN touch ${DB_DATABASE}
 
 # add mercator:www user
-RUN addgroup -S www && \
-  adduser -S mercator -G www && \
+RUN addgroup --g 1000 -S www && \
+  adduser -u 1000 -S mercator -G www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
 # RUN chown -R mercator:www 
 
-RUN mkdir -p /etc/nginx/templates && cp docker/nginx.conf /etc/nginx/templates/mercator.conf
-RUN cp docker/supervisord.conf /etc/supervisord.conf 
+RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
+RUN cp docker/supervisord.conf /etc/supervisord.conf
+RUN chown -R mercator:www /etc/nginx/http.d/default.conf
+RUN chown -R mercator:www /etc/supervisord.conf
+
 
 USER mercator:www
 
@@ -59,4 +63,4 @@ RUN set -ex ; \
 
 EXPOSE 8000
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
