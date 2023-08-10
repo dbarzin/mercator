@@ -2,8 +2,9 @@ FROM php:8.2-fpm-alpine3.16
 
 # apparently you cannot pass both env variables
 # and .env file
+RUN mkdir -p /var/www/mercator/sql
 ENV DB_CONNECTION=sqlite
-ENV DB_DATABASE=/var/www/mercator/db.sqlite
+ENV DB_DATABASE=/var/www/mercator/sql/db.sqlite
 ENV SERVER_NAME="127.0.0.1 localhost"
 
 # system deps
