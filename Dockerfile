@@ -51,6 +51,7 @@ RUN addgroup -S www && \
 RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
 RUN cp docker/supervisord.conf /etc/supervisord.conf
 RUN chown -R mercator:www /etc/nginx/http.d/default.conf
+RUN chown -R mercator:www /etc/supervisord.conf
 
 
 USER mercator:www
