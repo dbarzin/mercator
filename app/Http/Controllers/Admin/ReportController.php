@@ -1990,7 +1990,8 @@ class ReportController extends Controller
             trans('cruds.application.fields.documentation'),
             trans('cruds.application.fields.logical_servers'),
             trans('cruds.physicalServer.title'),
-            trans('cruds.application.fields.databases'),
+            trans('cruds.workstation.title'),
+            trans('cruds.database.title'),
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -2023,9 +2024,10 @@ class ReportController extends Controller
         $sheet->getColumnDimension('R')->setAutoSize(true);
 
         $sheet->getColumnDimension('S')->setAutoSize(true);
-        $sheet->getColumnDimension('T')->setWidth(200, 'pt');
-        $sheet->getColumnDimension('U')->setWidth(200, 'pt');
-        $sheet->getColumnDimension('V')->setWidth(200, 'pt');
+        $sheet->getColumnDimension('T')->setWidth(200, 'pt');  // logical servers
+        $sheet->getColumnDimension('U')->setWidth(200, 'pt');  // physical serveurs
+        $sheet->getColumnDimension('V')->setWidth(200, 'pt');  // workstations
+        $sheet->getColumnDimension('W')->setWidth(200, 'pt');  // databases
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -2107,7 +2109,8 @@ class ReportController extends Controller
                     ->implode('name', ', ');
 
                 $sheet->setCellValue("U{$row}", $res);
-                $sheet->setCellValue("V{$row}", $application->databases->implode('name', ', '));
+                $sheet->setCellValue("V{$row}", $application->workstations->implode('name', ', '));
+                $sheet->setCellValue("W{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
