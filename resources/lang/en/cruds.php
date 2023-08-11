@@ -1024,7 +1024,7 @@ return [
             'delete' => 'Delete',
             'reload' => 'Reload',
             'physics' => 'Physics',
-            'deploy' => 'Deploy'
+            'deploy' => 'Deploy',
             'please_select' => 'Pease select a node in order to deploy.'
         ],
     ],
