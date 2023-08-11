@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <table border=0>
-                        <tr>
+                        <tr class="explore_commands">
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">Filtre</label>
@@ -41,7 +41,7 @@
                                 </div>
                             </td>
                             <td style="text-align: center; vertical-align: middle">
-                                    <a href="#" onclick="addNode()">
+                                    <a href="#" id="add_node_button" onclick="addNode()">
                                         <i class="fas fa-plus"></i>
                                     </a>
                             </td>
@@ -67,6 +67,7 @@
                                     </i>
                                     {{ trans("cruds.report.explorer.reload") }}
                                 </a>
+                                <input type="checkbox" id="physicsCheckbox" checked> <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
                                 <!-- TODO -->
                                 <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
                             </td>
@@ -82,37 +83,6 @@
     </div>
 </div>
 <ul id="explore_context"></ul>
-@endsection
-
-@section('styles')
-@parent
-
-    #explore_context{
-        position: absolute;
-        width: auto;
-        height: auto;
-        background-color: #f2f2f2;
-        border: 1px solid #cfcfcf;
-        display: none;
-        opacity: 0;
-        min-height: 3rem;
-          padding: 10px 16px;
-          list-style: none;
-    }
-    #explore_context a:hover{
-          text-decoration:none;
-    }
-    .fullscreen_network{
-        position: fixed;
-        background-color: #fff;
-        top: 0;
-        left: 0;
-        z-index: 1030;
-        height: 100vh !important;
-        width: 100vw;
-    }
-
-
 @endsection
 
 
@@ -231,6 +201,7 @@
             color: { border: "#aaaaaa", background: "#ffffff"},
             imagePadding: 10,
             font: { color: "#000000", background: "#ffffff"},
+
           },
           edges: {
             color: "#333333"
@@ -393,6 +364,36 @@
         network_container.classList.remove('fullscreen_network');
       }
     }
+
+    // Enable/Disable physics on network
+    let physicsCheckbox = document.getElementById('physicsCheckbox');
+
+    physicsCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        network.setOptions({
+          physics: {
+            enabled: true
+          },
+          edges: {
+            smooth: false
+          }  
+        });
+      } else {
+        network.setOptions({
+          physics: {
+            enabled: false
+          },
+          edges: {
+            smooth: false
+          }  
+        });
+      }
+    });
+
+
+
+    
+
 
 /* TODO : Fixme
 

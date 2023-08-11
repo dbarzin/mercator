@@ -1022,7 +1022,8 @@ return [
             'object' => 'Object',
             'object_helper' => 'Select object to add',
             'delete' => 'Delete',
-            'reload' => 'Reload'
+            'reload' => 'Reload',
+            'physics' => 'Physics'
         ],
     ],
     'role' => [

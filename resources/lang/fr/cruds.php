@@ -1026,7 +1026,8 @@ return [
             'object' => 'Objet',
             'object_helper' => "Choisir l'objet à ajouter",
             'delete' => 'Supprimer',
-            'reload' => 'Recommencer'
+            'reload' => 'Recommencer',
+            'physics' => 'Physique'
         ],
     ],
     'role' => [
