@@ -45,13 +45,13 @@
                                         <i class="fas fa-plus"></i>
                                     </a>
                             </td>
-                            <td width=20>
+                            <td width=10>
                             </td>
                             <td style="text-align: left; vertical-align: middle;">
                                                             </td>
                             <td style="text-align: right; vertical-align: middle;">
                                 &nbsp;
-                                <a onclick="document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                                <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
                                 Photo
                                 </a>
                                 <a id="canvasImg" download="filename"></a>
@@ -102,7 +102,6 @@
 <script src="/js/vis-network.min.js"></script>
 
 <script>
-
     let nodes = null;
     let edges = null;
     let network = null;
@@ -123,7 +122,7 @@
         let id=document.getElementById('node').value
         let new_node = _nodes.get(id);
         // add node
-        console.log("add node :"+new_node.id);
+        console.log("add node: "+new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
        if ((nodes.get(target_node.id) != null) && (exists(new_node.id, target_node.id).length == 0)) {
@@ -215,9 +214,8 @@
             if (new_node === undefined)
                 return;
             let edgeList = new_node.edges;
-
             let filter = getFilter();
-
+            
             // Loop on all links
             for (const edge of edgeList) {
                 // Get destination node
