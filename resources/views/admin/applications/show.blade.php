@@ -214,41 +214,41 @@
         <div class="col-md-5">
             <div class="form-group">
                 <dt>{{ trans('cruds.application.fields.security_need') }}</dt>
-                <table cellspacing="5" cellpadding="5" border="0" width='100%'>
-                    <td align="right" valign="bottom">
+                <table cellspacing="5" cellpadding="5" border="0">
+                    <td align="right" valign="middle">
                         {{ trans("global.confidentiality") }}</dt>
                     </td>
-                    <td>
+                    <td align="left">
                     @if ($application->security_need_c==0){{ trans('global.none') }}@endif
                     @if ($application->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
                     @if ($application->security_need_c==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
                     @if ($application->security_need_c==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                     @if ($application->security_need_c==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
-                    <td align="right" valign="bottom">
+                    <td align="right" valign="middle">
                         {{ trans("global.integrity") }}
                     </td>
-                    <td>                        
+                    <td align="left">
                     @if ($application->security_need_i==0){{ trans('global.none') }}@endif
                     @if ($application->security_need_i==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
                     @if ($application->security_need_i==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
                     @if ($application->security_need_i==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                     @if ($application->security_need_i==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
-                    <td>                        
+                    <td align="right" valign="middle">
                         {{ trans('global.availability') }}
                     </td>
-                    <td>                        
+                    <td align="left">
                     @if ($application->security_need_a==0){{ trans('global.none') }}@endif
                     @if ($application->security_need_a==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
                     @if ($application->security_need_a==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
                     @if ($application->security_need_a==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                     @if ($application->security_need_a==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                     </td>
-                    <td>                        
+                    <td align="right" valign="middle">
                         {{ trans('global.tracability') }}
                     </td>
-                    <td>                        
+                    <td align="left">
                     @if ($application->security_need_t==0){{ trans('global.none') }}@endif
                     @if ($application->security_need_t==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
                     @if ($application->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
