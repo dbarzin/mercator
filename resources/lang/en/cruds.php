@@ -1022,7 +1022,10 @@ return [
             'object' => 'Object',
             'object_helper' => 'Select object to add',
             'delete' => 'Delete',
-            'reload' => 'Reload'
+            'reload' => 'Reload',
+            'physics' => 'Physics',
+            'deploy' => 'Deploy',
+            'please_select' => 'Pease select a node in order to deploy.'
         ],
     ],
     'role' => [
