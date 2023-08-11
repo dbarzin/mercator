@@ -40,12 +40,12 @@
                                     <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
                                 </div>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td width=30 style="text-align: center; vertical-align: middle">
                                     <a href="#" onclick="addNode()">
                                         <i class="fas fa-plus"></i>
                                     </a>
                             </td>
-                            <td width=20>
+                            <td width=10>
                             </td>
                             <td style="text-align: left; vertical-align: middle;">
                                 <a href="#" onclick="network.deleteSelected()">
