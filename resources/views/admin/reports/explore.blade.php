@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <table width="100%" border=0>
-                        <tr class="explore_commands">
+                        <tr>
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">Filtre</label>
@@ -40,16 +40,12 @@
                                     <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
                                 </div>
                             </td>
-                            <td style="text-align: center; vertical-align: middle; width: 2rem;">
-                                    <a href="#" id="add_node_button" onclick="addNode()">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
-                            </td>
-                            <td width=10>
-                            </td>
                             <td style="text-align: left; vertical-align: middle;">
-                                                            </td>
-                            <td style="text-align: right; vertical-align: middle;">
+                                <a href="#" id="add_node_button" onclick="addNode()">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </td>
+                            <td style="text-align: right; vertical-align: right;">
                                 &nbsp;
                                 <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
                                 Photo
@@ -105,6 +101,7 @@
     let nodes = null;
     let edges = null;
     let network = null;
+    let needSavePNG = false;
 
     let _nodes = new Map();
     @foreach($nodes as $node) 
@@ -317,8 +314,12 @@
 
       // Draw image
       network.on("afterDrawing", function (ctx) {
-        let dataURL = ctx.canvas.toDataURL();
-        document.getElementById('canvasImg').href = dataURL;
+        if (needSavePNG) {
+            var dataURL = ctx.canvas.toDataURL();
+            document.getElementById('canvasImg').href = dataURL;
+            console.log("convert PNG");
+            needSavePNG = false;
+            }
       });
 
     }
