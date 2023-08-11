@@ -9,10 +9,8 @@
                     {{ trans("cruds.report.explorer.title") }}
                 </div>
                 <div class="card-body">
-                    <table border=0>
-                        <tr class="explore_commands">
                     <table width="100%" border=0>
-                        <tr>
+                        <tr class="explore_commands">
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">Filtre</label>
