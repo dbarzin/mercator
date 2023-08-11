@@ -1027,7 +1027,9 @@ return [
             'object_helper' => "Choisir l'objet à ajouter",
             'delete' => 'Supprimer',
             'reload' => 'Recommencer',
-            'physics' => 'Physique'
+            'physics' => 'Physique',
+            'deploy' => 'Déployer',
+            'please_select' => 'Veuillez sélectionner un noeud pour déployer.'
         ],
     ],
     'role' => [

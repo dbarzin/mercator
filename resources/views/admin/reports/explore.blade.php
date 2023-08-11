@@ -40,7 +40,7 @@
                                     <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
                                 </div>
                             </td>
-                            <td style="text-align: center; vertical-align: middle">
+                            <td style="text-align: center; vertical-align: middle; width: 2rem;">
                                     <a href="#" id="add_node_button" onclick="addNode()">
                                         <i class="fas fa-plus"></i>
                                     </a>
@@ -48,23 +48,7 @@
                             <td width=20>
                             </td>
                             <td style="text-align: left; vertical-align: middle;">
-                                <a href="#" onclick="network.deleteSelected()">
-                                    <i class="fas fa-minus-circle">
-                                        
-                                    </i>
-                                    {{ trans("cruds.report.explorer.delete") }}                                    
-                                </a>
-                                &nbsp;
-                                <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();">
-                                    <i class="fas fa-repeat">
-                                        
-                                    </i>
-                                    {{ trans("cruds.report.explorer.reload") }}
-                                </a>
-                                <input type="checkbox" id="physicsCheckbox" checked> <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
-                                <!-- TODO -->
-                                <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
-                            </td>
+                                                            </td>
                             <td style="text-align: right; vertical-align: middle;">
                                 &nbsp;
                                 <a onclick="document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
@@ -73,7 +57,36 @@
                                 <a id="canvasImg" download="filename"></a>
                             </td>
                         </tr>
-                    </table>                    
+                    </table>   
+                      <div class="explore_commands">
+                        <a href="#" onclick="network.deleteSelected()" class="command">
+                          <i class="fas fa-minus-circle"></i>
+                                    {{ trans("cruds.report.explorer.delete") }}                                    
+                        </a>
+                                &nbsp;
+                                <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
+                                    <i class="fas fa-repeat">
+
+                                    </i>
+                                    {{ trans("cruds.report.explorer.reload") }}
+                                </a>
+                                <input type="checkbox" id="physicsCheckbox" class="command" checked> <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
+                        <div class="command">
+                              <select id="depth">
+                                <option value="1">1</option>
+                                <option value="2" >2</option>
+                                <option value="3" selected>3</option>
+                                <option value="4" >4</option>
+                                <option value="5" >5</option>
+                              </select>
+                            <a href="#" onclick="deployAll()">
+                          <i class="fas fa-star"></i>
+                                    {{ trans("cruds.report.explorer.deploy") }}                                    
+                        </a>
+
+                      </div>
+
+                  </div>                 
                 </div>
                 <div id="mynetwork" style="height:700px;"></div>
               </div>
@@ -90,11 +103,11 @@
 
 <script>
 
-    var nodes = null;
-    var edges = null;
-    var network = null;
+    let nodes = null;
+    let edges = null;
+    let network = null;
 
-    var _nodes = new Map();
+    let _nodes = new Map();
     @foreach($nodes as $node) 
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php 
         foreach($edges as $edge) {
@@ -107,45 +120,16 @@
 
     // Add a node base on the node.id
     function addNode() {
-        var id=document.getElementById('node').value
-        var new_node = _nodes.get(id);
+        let id=document.getElementById('node').value
+        let new_node = _nodes.get(id);
         // add node
         console.log("add node :"+new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
-        var edgeList = new_node.edges;
-        if (edgeList === undefined)
-            return;
-
-        // Loop on all edges
-        for (const edge of edgeList) {
-            // Get destination node
-            var target_node = _nodes.get(edge.id);
-            // check node exists
-            if (target_node !== null) {
-                // Check node already present
-                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
-                    console.log("add edge :"+new_node.id+" -> " +target_node.id);
-                    if (edge.edgeType === 'FLUX') {
-                        console.log('edge.label='+edge.name)
-                        if (edge.edgeDirection === 'TO') {
-                            if (edge.bidirectional)
-                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
-                            else
-                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
-                        } else if (edge.edgeDirection === 'FROM') {
-                            if (edge.bidirectional)
-                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
-                            else
-                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
-                        }
-                    } else if (edge.edgeType === 'LINK') {
-                        edges.add({ from: new_node.id, to: target_node.id });
-                    }
-                }
-            }
-        }
-        // redraw
+       if ((nodes.get(target_node.id) != null) && (exists(new_node.id, target_node.id).length == 0)) {
+    console.log("add edge :" + new_node.id + " -> " + target_node.id);
+    addEdge(new_node.id, target_node.id);
+}        // redraw
         network.redraw();
     };
 
@@ -163,13 +147,13 @@
         edges = new vis.DataSet([]);
 
         // create a network
-        var container = document.getElementById("mynetwork");
-        var data = {
+        let container = document.getElementById("mynetwork");
+        let data = {
             nodes: nodes,
             edges: edges,
         };
 
-        var options = {
+        let options = {
           interaction:{
             dragNodes:true,
             dragView: true,
@@ -227,22 +211,17 @@
 
         network.on("doubleClick", function (params) {
             console.log("doubleClick on : "+params.nodes[0]);
-            var new_node = _nodes.get(params.nodes[0]);
+            let new_node = _nodes.get(params.nodes[0]);
             if (new_node === undefined)
                 return;
-            var edgeList = new_node.edges;
+            let edgeList = new_node.edges;
 
-            // get filter
-            var filter = [];
-            for (var option of document.getElementById('filters').options)
-                if (option.selected) 
-                    filter.push(option.value);
-            console.log("filter :"+filter);
+            let filter = getFilter();
 
             // Loop on all links
             for (const edge of edgeList) {
                 // Get destination node
-                var new_node = _nodes.get(edge.id);
+                let new_node = _nodes.get(edge.id);
                 if (new_node!=null) {
                     // Apply filter
                     if (
@@ -251,13 +230,11 @@
                     ) { 
                         // Check node already present
                         if (nodes.get(edge.id)==null) {
-                            console.log("add node :"+edge.id);
                             nodes.add(new_node);
                         }
                         // Check link already present
                         if (exists(params.nodes[0], edge.id).length==0) 
                         {
-                            console.log("add edge :"+params.nodes[0]+" -> " +edge.id);
                             if(edge.edgeType === 'FLUX') {
                                 if(edge.edgeDirection === 'TO') {
                                     if (edge.bidirectional)
@@ -308,7 +285,7 @@
             contextMenu.style.display = "none";
         }
 
-        network.on("click", hideContext);
+        network.on("click", () => hideContext());
 
         network.on("oncontext", function(e){
           e.event.preventDefault();
@@ -342,7 +319,7 @@
 
       // Draw image
       network.on("afterDrawing", function (ctx) {
-        var dataURL = ctx.canvas.toDataURL();
+        let dataURL = ctx.canvas.toDataURL();
         document.getElementById('canvasImg').href = dataURL;
       });
 
@@ -380,7 +357,7 @@
             enabled: true
           },
           edges: {
-            smooth: false
+            smooth: true
           }  
         });
       } else {
@@ -395,9 +372,97 @@
       }
     });
 
+    // Toggle physics by keypress "p"
+    document.addEventListener('keypress', togglePhysicsOnP);
+
+    function togglePhysicsOnP(event) {
+    if (event.key === "p" || event.key === "P") {
+        let physicsCheckbox = document.getElementById('physicsCheckbox');
+        physicsCheckbox.checked = !physicsCheckbox.checked; // bascule l'état de la checkbox
+
+        physicsCheckbox.dispatchEvent(new Event('change'));
+    }
+}
+
+    // Deploys all edges and nodes from a selected node, until it reaches a #depth value
+    function deployAll() {
+      let activeNode = network.getSelectedNodes()[0];
+      if (!activeNode) {
+        alert("{{ trans("cruds.report.explorer.please_select") }}");
+        return;
+      }
+
+      let depth = parseInt(document.getElementById('depth').value);
+      let visitedNodes = new Set();
+      let filter = getFilter();
+
+      deployFromNode(activeNode, depth, visitedNodes, filter);
+    }
+
+    function deployFromNode(nodeId, depth, visitedNodes, filter) {
+      if (depth <= 0 || visitedNodes.has(nodeId)) {
+        return;
+      }
+
+      visitedNodes.add(nodeId);
+
+      let node = _nodes.get(nodeId);
+      if (!node) {
+        return;
+      }
+
+      let edgeList = node.edges;
+      for (const edge of edgeList) {
+        let targetNodeId = edge.id;
+
+        if (nodes.get(targetNodeId) === null) {
+          let targetNode = _nodes.get(targetNodeId);
+          nodes.add(targetNode);
+        }
+
+        if (exists(nodeId, targetNodeId).length === 0) {
+          addEdge(nodeId, targetNodeId);
+        }
+       setTimeout(function() {
+            deployFromNode(targetNodeId, depth - 1, visitedNodes);
+       }, 500);
+      }
+    }
 
 
-    
+function addEdge(sourceNodeId, targetNodeId) {
+    var edgeList = _nodes.get(sourceNodeId).edges;
+    for (const edge of edgeList) {
+        if (edge.id === targetNodeId) {
+            if (edge.edgeType === 'FLUX') {
+                if (edge.edgeDirection === 'TO') {
+                    if (edge.bidirectional)
+                        edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
+                    else
+                        edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' } } });
+                } else if (edge.edgeDirection === 'FROM') {
+                    if (edge.bidirectional)
+                        edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
+                    else
+                        edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { from: { enabled: true, type: 'arrow' } } });
+                }
+            } else if (edge.edgeType === 'CABLE') {
+                edges.add({ from: sourceNodeId, to: targetNodeId, color: 'grey', width: 3 });
+            } else if (edge.edgeType === 'LINK') {
+                edges.add({ from: sourceNodeId, to: targetNodeId });
+            }
+        }
+    }
+}
+
+// Gets filtered entities from #filter field
+function getFilter(){
+            let filter = [];
+            for (let option of document.getElementById('filters').options)
+                if (option.selected) 
+                  filter.push(option.value);
+            return filter
+}
 
 
 /* TODO : Fixme
@@ -422,9 +487,9 @@
         else 
         {
             // filter nodes
-            var activated=0, disabled=0;
+            let activated=0, disabled=0;
             $('#node').find("option").each(function( index) {
-                var cur_node = _nodes.get(this.value);
+                let cur_node = _nodes.get(this.value);
                 if (cur_node!=null) {
                     if (cur_filter.includes(cur_node.vue)) {
                     // $(this).attr('disabled', false).trigger("select2.change");

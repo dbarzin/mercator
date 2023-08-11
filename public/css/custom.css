@@ -306,6 +306,19 @@ html {
       margin-left: 1rem
     }
 
+
+    .explore_commands{
+      display: flex;
+      align-items: center;
+    }
+    .command{
+      margin-left: 1.5rem;
+    }
+
+    .command[type="checkbox"]{
+      margin: 0 .5rem .5rem 1.5rem;
+    }
+
     .explore_commands .fas{
       margin-bottom: .6rem;
     }

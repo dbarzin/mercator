@@ -1023,7 +1023,9 @@ return [
             'object_helper' => 'Select object to add',
             'delete' => 'Delete',
             'reload' => 'Reload',
-            'physics' => 'Physics'
+            'physics' => 'Physics',
+            'deploy' => 'Deploy'
+            'please_select' => 'Pease select a node in order to deploy.'
         ],
     ],
     'role' => [
