@@ -251,7 +251,7 @@ Finally, restart the Apache service to activate the changes:
 
 ### PHP Memory
 
-If you generate large reports, you will need to increase the memory allocated to PHP in /etc/php/7.4/apache2/php.ini
+If you generate large reports, you will need to increase the memory allocated to PHP in /etc/php/x.x/apache2/php.ini
 
     memory_limit = 512M
 

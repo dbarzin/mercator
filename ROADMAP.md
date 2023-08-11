@@ -24,6 +24,7 @@ Changements prévus en 2023 :
 
 - [x] Maintenir le registre des traitements
 - [ ] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la catographie.
+- [ ] Intégrer [CPE Guesser](https://github.com/cve-search/cpe-guesser)
 - [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle pour les rapports
 - [ ] Identifier les chemins critiques
@@ -55,6 +56,7 @@ Changements prévus en 2023 :
 - [x] Lien entre bases de données et serveurs logiques
 - [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [ ] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
+- [ ] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 
 ## Petites évolutions
 

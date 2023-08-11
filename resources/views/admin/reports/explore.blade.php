@@ -11,6 +11,8 @@
                 <div class="card-body">
                     <table border=0>
                         <tr class="explore_commands">
+                    <table width="100%" border=0>
+                        <tr>
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">Filtre</label>
@@ -47,20 +49,14 @@
                             </td>
                             <td width=20>
                             </td>
-                            <td style="text-align: center; vertical-align: middle;">
-                                <!-- 
-                                <a href="#">
-                                    <i class="fas fa-plus-circle">                                        
-                                    </i>
-                                    Open
-                                </a>
-                                -->
+                            <td style="text-align: left; vertical-align: middle;">
                                 <a href="#" onclick="network.deleteSelected()">
                                     <i class="fas fa-minus-circle">
                                         
                                     </i>
                                     {{ trans("cruds.report.explorer.delete") }}                                    
                                 </a>
+                                &nbsp;
                                 <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();">
                                     <i class="fas fa-repeat">
                                         
@@ -71,11 +67,15 @@
                                 <!-- TODO -->
                                 <!-- <a href="#" id="download" download="mercator.png"><button type="button" onClick="download()">Download</button></a>-->
                             </td>
+                            <td style="text-align: right; vertical-align: middle;">
+                                &nbsp;
+                                <a onclick="document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                                Photo
+                                </a>
+                                <a id="canvasImg" download="filename"></a>
+                            </td>
                         </tr>
-                    </table>
-                    <!--
-                    <a href="#"><i class="fas fa-camera-retro"></i></a>
-                    -->
+                    </table>                    
                 </div>
                 <div id="mynetwork" style="height:700px;"></div>
               </div>
@@ -319,7 +319,7 @@
           y: e.pointer.DOM.y
         });
 
-        if (s){
+        if (s) {
             link = s;
             let nodeId = link.split("_").pop();
             console.log(nodeId);
@@ -337,17 +337,24 @@
                 hideContext();
             });
 
-          } else{
+          } else {
               hideContext();
           }
-      })
+      });
+
+      // Draw image
+      network.on("afterDrawing", function (ctx) {
+        var dataURL = ctx.canvas.toDataURL();
+        document.getElementById('canvasImg').href = dataURL;
+      });
+
     }
 
     const network_container = document.getElementById('mynetwork');
 
     document.addEventListener('keypress', fullscreen_network);
 
-    function fullscreen_network(e){
+    function fullscreen_network(e) {
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
@@ -400,18 +407,19 @@
     function apply_filter() {
         console.log("apply_filter");
         // clear current selected node
-        $("#node").val("");
+        // $("#node").val("");
+        // reinitialize component
+        $("#node").select2("destroy").select2();
+
         // get current filter
         cur_filter = $('#filters').val();
         // test filter size
         console.log("filter_size= ",cur_filter.length);
         if (cur_filter.length==0) {
             console.log("activate all nodes");
-            // activate all nodes
-            // $('#node').find("option").each(function( index) {
-            //    $(this).attr('disabled', false).trigger("select2.change");
-            //});
-            $('#node').find("option").prop("disabled", false);
+            $('#node').find("option").each(function( index) {
+                $(this).attr('disabled',false);
+            });
         }
         else 
         {
@@ -419,18 +427,22 @@
             var activated=0, disabled=0;
             $('#node').find("option").each(function( index) {
                 var cur_node = _nodes.get(this.value);
-                if ((cur_node!=null) && (cur_filter.includes(cur_node.vue))) {
-                    $(this).attr('disabled', false).trigger("select2.change");
+                if (cur_node!=null) {
+                    if (cur_filter.includes(cur_node.vue)) {
+                    // $(this).attr('disabled', false).trigger("select2.change");
+                    $(this).attr('disabled',true); <--- here
                     activated++;
                     }
-                else {
-                    $(this).attr('disabled', true).trigger("select2.change");
-                    disabled++;
+                    else {
+                        // $(this).attr('disabled', true).trigger("select2.change");
+                        $(this).attr('disabled',false);  <--- here
+                        disabled++;
+                    }
                 }
             });
             console.log("disable= ",disabled," activated= ",activated);
           }
-        $('#node').trigger("select2.change");
+        $('#node').trigger("change");
     }
 
     $('.select2').select2();
@@ -450,7 +462,7 @@
             apply_filter();
             //$('#filter').select2();
         });
-}
+    
 */
 
 </script>
