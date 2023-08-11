@@ -64,7 +64,7 @@
                             </td>
                             <td style="text-align: right; vertical-align: middle;">
                                 &nbsp;
-                                <a onclick="document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                                <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
                                 Photo
                                 </a>
                                 <a id="canvasImg" download="filename"></a>
@@ -121,6 +121,7 @@
     var nodes = null;
     var edges = null;
     var network = null;
+    var needSavePNG = false;
 
     var _nodes = new Map();
     @foreach($nodes as $node) 
@@ -138,7 +139,7 @@
         var id=document.getElementById('node').value
         var new_node = _nodes.get(id);
         // add node
-        console.log("add node :"+new_node.id);
+        console.log("add node: "+new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
         var edgeList = new_node.edges;
@@ -153,7 +154,7 @@
             if (target_node !== null) {
                 // Check node already present
                 if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
-                    console.log("add edge :"+new_node.id+" -> " +target_node.id);
+                    console.log("add edge: "+new_node.id+" -> " +target_node.id);
                     if (edge.edgeType === 'FLUX') {
                         console.log('edge.label='+edge.name)
                         if (edge.edgeDirection === 'TO') {
@@ -264,7 +265,7 @@
             for (var option of document.getElementById('filters').options)
                 if (option.selected) 
                     filter.push(option.value);
-            console.log("filter :"+filter);
+            console.log("filter: "+filter);
 
             // Loop on all links
             for (const edge of edgeList) {
@@ -278,13 +279,13 @@
                     ) { 
                         // Check node already present
                         if (nodes.get(edge.id)==null) {
-                            console.log("add node :"+edge.id);
+                            console.log("add node: "+edge.id);
                             nodes.add(new_node);
                         }
                         // Check link already present
                         if (exists(params.nodes[0], edge.id).length==0) 
                         {
-                            console.log("add edge :"+params.nodes[0]+" -> " +edge.id);
+                            console.log("add edge: "+params.nodes[0]+" -> " +edge.id);
                             if(edge.edgeType === 'FLUX') {
                                 if(edge.edgeDirection === 'TO') {
                                     if (edge.bidirectional)
@@ -369,8 +370,12 @@
 
       // Draw image
       network.on("afterDrawing", function (ctx) {
-        var dataURL = ctx.canvas.toDataURL();
-        document.getElementById('canvasImg').href = dataURL;
+        if (needSavePNG) {
+            var dataURL = ctx.canvas.toDataURL();
+            document.getElementById('canvasImg').href = dataURL;
+            console.log("convert PNG");
+            needSavePNG = false;
+            }
       });
 
     }
