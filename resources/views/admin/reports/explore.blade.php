@@ -116,18 +116,44 @@
 
     // Add a node base on the node.id
     function addNode() {
-        let id=document.getElementById('node').value
-        let new_node = _nodes.get(id);
+        var id=document.getElementById('node').value
+        var new_node = _nodes.get(id);
         // add node
-        console.log("add node: "+new_node.id);
+        // console.log("add node: ",new_node.id);
         network.body.data.nodes.add(new_node);
         // add edges
-        /*
-       if ((nodes.get(target_node.id) != null) && (exists(new_node.id, target_node.id).length == 0)) {
-            console.log("add edge :" + new_node.id + " -> " + target_node.id);
-            addEdge(new_node.id, target_node.id);
-        } 
-        */          
+        var edgeList = new_node.edges;
+        if (edgeList === undefined)
+            return;
+
+        // Loop on all edges
+        for (const edge of edgeList) {
+            // Get destination node
+            var target_node = _nodes.get(edge.id);
+            // check node exists
+            if (target_node !== null) {
+                // Check node already present
+                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
+                    // console.log("add edge: ", new_node.id, " -> ", target_node.id);
+                    if (edge.edgeType === 'FLUX') {
+                        // console.log('edge.label=', edge.name)
+                        if (edge.edgeDirection === 'TO') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
+                        } else if (edge.edgeDirection === 'FROM') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
+                        }
+                    } else if (edge.edgeType === 'LINK') {
+                        edges.add({ from: new_node.id, to: target_node.id });
+                    }
+                }
+            }
+        }
         // redraw
         network.redraw();
     };
@@ -203,13 +229,13 @@
         draw();
 
         network.on("click", function (params) {
-            console.log("click on : "+params.nodes[0]);
+            // console.log("click on : "+params.nodes[0]);
             //nodes.remove(params.nodes[0]);
         });
-        console.log(_nodes);
+        // console.log(_nodes);
 
         network.on("doubleClick", function (params) {
-            console.log("doubleClick on : "+params.nodes[0]);
+            // console.log("doubleClick on : "+params.nodes[0]);
             let new_node = _nodes.get(params.nodes[0]);
             if (new_node === undefined)
                 return;
@@ -295,7 +321,7 @@
         if (s) {
             link = s;
             let nodeId = link.split("_").pop();
-            console.log(nodeId);
+            // console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
             contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
@@ -320,7 +346,7 @@
         if (needSavePNG) {
             var dataURL = ctx.canvas.toDataURL();
             document.getElementById('canvasImg').href = dataURL;
-            console.log("convert PNG");
+            // console.log("convert PNG");
             needSavePNG = false;
             }
       });
