@@ -62,7 +62,11 @@
                             {{ trans('cruds.physicalSwitch.fields.site') }}
                         </th>
                         <td>
-                            {{ $physicalSwitch->site->name ?? '' }}
+                            @if ($physicalSwitch->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalSwitch->site->id) }}">
+                                {{ $physicalSwitch->site->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -70,7 +74,11 @@
                             {{ trans('cruds.physicalSwitch.fields.building') }}
                         </th>
                         <td>
-                            {{ $physicalSwitch->building->name ?? '' }}
+                            @if ($physicalSwitch->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalSwitch->building->id) }}">
+                                {{ $physicalSwitch->building->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +86,11 @@
                             {{ trans('cruds.physicalSwitch.fields.bay') }}
                         </th>
                         <td>
-                            {{ $physicalSwitch->bay->name ?? '' }}
+                            @if ($physicalSwitch->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalSwitch->bay->id) }}">
+                                {{ $physicalSwitch->bay->name ?? '' }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>
