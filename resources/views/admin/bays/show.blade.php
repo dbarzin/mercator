@@ -61,6 +61,67 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.menu.physical_infrastructure.title_short') }}
+                        </th>
+                        <td>
+                        @foreach($bay->bayPhysicalServers as $physicalServer)
+                            <a href="{{ route('admin.physical-servers.show', $physicalServer->id) }}">{{ $physicalServer->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($bay->bayStorageDevices as $storageDevice)
+                            <a href="{{ route('admin.storage-devices.show', $storageDevice->id) }}">{{ $storageDevice->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($bay->bayPeripherals as $peripheral)
+                            <a href="{{ route('admin.peripherals.show', $peripheral->id) }}">{{ $peripheral->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($bay->bayPhysicalSwitches as $physicalSwitch)
+                            <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">{{ $physicalSwitch->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($bay->bayPhysicalRouters as $physicalRouter)
+                            <a href="{{ route('admin.physical-routers.show', $physicalRouter->id) }}">{{ $physicalRouter->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+
+                        @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice)
+                            <a href="{{ route('admin.physical-security-devices.show', $physicalSecurityDevice->id) }}">{{ $physicalSecurityDevice->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @else
+                            <br>
+                            @endif
+                        @endforeach
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             <div class="form-group">
