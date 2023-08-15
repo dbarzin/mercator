@@ -292,6 +292,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/cpe/search/vendors', [Admin\CPEController::class,'vendors']);
     Route::get('/cpe/search/products', [Admin\CPEController::class,'products']);
     Route::get('/cpe/search/versions', [Admin\CPEController::class,'versions']);
+    Route::get('/cpe/search/guess', [Admin\CPEController::class,'guess']);
 
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');

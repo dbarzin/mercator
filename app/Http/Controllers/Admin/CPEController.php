@@ -14,7 +14,7 @@ class CPEController extends Controller
     {
         $part = $request->query('part');
 
-        $query = CPEVendor::limit(20);
+        $query = CPEVendor::limit(100);
         $query->where('part', '=', $part);
 
         $search = $request->query('search');
@@ -31,7 +31,7 @@ class CPEController extends Controller
         $part = $request->query('part');
         $vendor = $request->query('vendor');
 
-        $query = CPEProduct::limit(20)
+        $query = CPEProduct::limit(100)
             ->select('cpe_products.name')
             ->join('cpe_vendors', 'cpe_vendors.id', '=', 'cpe_vendor_id')
             ->where('cpe_vendors.part', '=', $part)
@@ -52,7 +52,7 @@ class CPEController extends Controller
         $vendor = $request->query('vendor');
         $product = $request->query('product');
 
-        $query = CPEVersion::limit(20)
+        $query = CPEVersion::limit(100)
             ->select('cpe_versions.name')
             ->join('cpe_products', 'cpe_products.id', '=', 'cpe_product_id')
             ->join('cpe_vendors', 'cpe_vendors.id', '=', 'cpe_vendor_id')
@@ -66,5 +66,21 @@ class CPEController extends Controller
         }
         $versions = $query->get();
         return response()->json($versions);
+    }
+
+    public function guess(Request $request) {
+        $search = $request->query('search');
+
+        $query = CPEVersion::limit(100)
+            ->select('cpe_versions.name', 'cpe_versions.part', 'cpe_vendors.name' )
+            ->join('cpe_products', 'cpe_products.id', '=', 'cpe_product_id')
+            ->join('cpe_vendors', 'cpe_vendors.id', '=', 'cpe_vendor_id')
+            ->whereLike('cpe_products.name',  $search)
+            ->whereLike('cpe_vendors.part', $search)
+            ->whereLike('cpe_vendors.name', $search)
+            ->distinct();
+
+        $result = $query->get();
+        return response()->json($result);
     }
 }
