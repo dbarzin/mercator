@@ -148,8 +148,12 @@
                             else
                                 edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
+                    } else if(edge.edgeType === 'CABLE') {
+                        edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5 });                          
                     } else if (edge.edgeType === 'LINK') {
-                        edges.add({ from: new_node.id, to: target_node.id });
+                        // do not add links if "network infrastructure" is selected
+                        if (!$('#filters').val().includes("7"))
+                            edges.add({ from: new_node.id, to: target_node.id });
                     }
                 }
             }
@@ -249,9 +253,12 @@
                 if (new_node!=null) {
                     // Apply filter
                     if (
-                        (filter.length==0) || filter.includes(new_node.vue) || 
-                        (filter.includes("7") && edge.edgeType === 'CABLE')
-                    ) { 
+                        ((filter.length==0) ||  filter.includes(new_node.vue))
+                        &&
+                        // do not add node not liked with cable when "network infra" is selected
+                        (filter.includes("7") ? (edge.edgeType === 'CABLE') : true)
+                        )
+                     {
                         // Check node already present
                         if (nodes.get(edge.id)==null) {
                             nodes.add(new_node);
@@ -272,7 +279,7 @@
                                         edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                                 }
                             } else if(edge.edgeType === 'CABLE') {
-                                edges.add({ from: params.nodes[0], to: edge.id, color:'grey', width: 3 });                          
+                                edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5 });                          
                             } else if(edge.edgeType === 'LINK') {
                                 edges.add({ from: params.nodes[0], to: edge.id});
                             }
@@ -475,7 +482,7 @@ function addEdge(sourceNodeId, targetNodeId) {
                         edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { from: { enabled: true, type: 'arrow' } } });
                 }
             } else if (edge.edgeType === 'CABLE') {
-                edges.add({ from: sourceNodeId, to: targetNodeId, color: 'grey', width: 3 });
+                edges.add({ from: sourceNodeId, to: targetNodeId, color: 'blue', width: 5 });
             } else if (edge.edgeType === 'LINK') {
                 edges.add({ from: sourceNodeId, to: targetNodeId });
             }
@@ -523,9 +530,12 @@ function getFilter(){
         $('#node').val(null).trigger("change");
     }
 
+    // initialize select2
     $('.select2').select2();
 
+    // clear selections
     $('#filters').val(null);
+    $('#node').val(null);
 
     $('#filters')
         .on('select2:select', function(e) {
