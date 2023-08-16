@@ -524,7 +524,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="version">{{ trans('cruds.application.fields.version') }}</label>
                     <select id="version-selector" class="form-control select2-free" name="version">
@@ -536,6 +536,12 @@
                     </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-info" id="guess">Guess</button>
                 </div>
             </div>
         </div>
@@ -604,29 +610,30 @@
             {{ trans('global.save') }}
         </button>
     </form>
+
 @endsection
 
-    @section('scripts')
+@section('scripts')
     <script>
         $(document).ready(function () {
 
         // Variable contenant la liste des évènements affichés sur la popup
-            var swalHtml = @json($application->events);
+        var swalHtml = @json($application->events);
 
         /**
          * Contruction de la liste des évènements
          * @returns {string}
          */
-            function makeHtmlForSwalEvents() {
-                let events = swalHtml;
-                let ret = '<ul>';
-                events.forEach (function(event) {
-                    ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
-                    ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
-                });
-                ret += '</ul>';
-                return ret;
-            }
+        function makeHtmlForSwalEvents() {
+            let events = swalHtml;
+            let ret = '<ul>';
+            events.forEach (function(event) {
+                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
+                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+            });
+            ret += '</ul>';
+            return ret;
+        }
 
         /**
          * Fire the popup
@@ -774,7 +781,7 @@
                 search: params.term,
             };
             return query;
-        },
+            },
         processResults: function(data) {
           var results = [];
           if (data.length) {
@@ -819,13 +826,22 @@
         }
         return {
             results: results
-        };
-    }
+            };
+        }
     }
 
     });
 
-     });
+    // CPE Guesser
+    $('#guess').click(function (event) {
+        Swal.fire({
+            icon: 'question',
+            html: "No implemented yet !",
+            showCloseButton: true,
+        });
+    });
+
+});
 
     </script>
     @endsection
