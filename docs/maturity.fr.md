@@ -3,7 +3,7 @@
 Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartographie.
 
 Le pourcentage de conformité représente l'effort qu'il faut réaliser pour être conforme.
-Il s'agit du nombre d'element conforme divisé par le nombre total d'élements.
+Il s'agit du nombre d'éléments conformes divisé par le nombre total d'élements.
 
 Un objet est conforme si toutes les informations sur l'objet ont été fournies.
 S'il manque des informations, l'objet est non-conforme.
