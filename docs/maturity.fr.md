@@ -2,6 +2,8 @@
 
 Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartographie.
 
+### Pourcentage de conformité
+
 Le pourcentage de conformité représente l'effort qu'il reste à réaliser pour être conforme.
 Ce pourcentage est calculé en divisante le nombre d'éléments conformes par le nombre total d'élements.
 
@@ -23,7 +25,7 @@ Les règles appliquées à ce calcul sont les suivantes :
 ### Exigences de conformité
 
 
-| Objet | Niveau | Exigences de conformité |
+| Objet | Niveau | Exigences |
 |---    |:-:     |---              |
 | **Écosystème** | | |
 | Entités | 1 | doit avoir une description, un niveau de sécurité, un point de contact et supporter au moins un processus |
