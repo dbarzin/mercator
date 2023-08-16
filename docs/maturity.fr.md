@@ -5,6 +5,8 @@ Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartog
 Le pourcentage de conformité représente l'effort qu'il reste à réaliser pour être conforme.
 Ce pourcentage est calculé en divisante le nombre d'éléments conformes par le nombre total d'élements.
 
+### Règles de calcul
+
 Un objet est conforme si toutes les informations sur l'objet ont été fournies.
 S'il manque des informations, l'objet est non-conforme.
 
@@ -18,10 +20,10 @@ Les règles appliquées à ce calcul sont les suivantes :
 
 * S'il 'y a pas de nouveaux attributs qui entre en compte pour passer du niveau n au niveau n+1, l'objet conforme au niveau n reste conforme au niveau n+1.
 
-### Règles de calcul
+### Exigences de conformité
 
 
-| Objet | Niveau | Règle de calcul |
+| Objet | Niveau | Exigences de conformité |
 |---    |:-:     |---              |
 | **Écosystème** | | |
 | Entités | 1 | doit avoir une description, un niveau de sécurité, un point de contact et supporter au moins un processus |
