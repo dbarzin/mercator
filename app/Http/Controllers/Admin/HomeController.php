@@ -179,11 +179,9 @@ class HomeController extends Controller
 
             'processes' => Process::count(),
             'processes_lvl1' => Process
-                ::where('identifiant', '<>', null)
-                    ->where('description', '<>', null)
+                    ::where('description', '<>', null)
                     ->where('in_out', '<>', null)
                     ->where('owner', '<>', null)
-                    ->where('macroprocess_id', '<>', null)
                 /*
                 // process must have one activity
                 ->whereExists(function ($query) {
