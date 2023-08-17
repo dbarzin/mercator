@@ -29,7 +29,8 @@ La vue des infrastructures physiques décrit les équipements physiques qui comp
 
 ### Niveaux de maturité
 
-Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
+Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. 
+C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
 
 [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
 
