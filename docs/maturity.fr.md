@@ -2,10 +2,19 @@
 
 Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartographie.
 
-### Pourcentage de conformité
+### Niveaux de maturité
 
-Le pourcentage de conformité représente l'effort qu'il reste à réaliser pour être conforme.
+Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie.
+C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète.
 Ce pourcentage est calculé en divisante le nombre d'éléments conformes par le nombre total d'élements.
+
+[<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
+
+Cette maturité est divisée en trois niveaux :
+
+* La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;
+* La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;
+* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
 
 ### Règles de calcul
 
@@ -21,6 +30,8 @@ Les règles appliquées à ce calcul sont les suivantes :
 * Un élément peut être conforme au niveau n, et ne pas être conforme au niveau n+1. L'inverse n'est pas vrais.
 
 * S'il 'y a pas de nouveaux attributs qui entre en compte pour passer du niveau n au niveau n+1, l'objet conforme au niveau n reste conforme au niveau n+1.
+
+* Le pourcentage de conformité du niveau n peut être inférieur ou suppérieur au pourcentage du niveau n+1
 
 ### Exigences de conformité
 

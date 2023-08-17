@@ -233,7 +233,7 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator = $levels['applications'] + $levels['databases'] + $levels['databases'];
+        $denominator = $levels['applications'] + $levels['databases'] + $levels['fluxes'];
         $sheet->setCellValue("B{$row}", $denominator);
         $sheet->setCellValue(
             "C{$row}",
