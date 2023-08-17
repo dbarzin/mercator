@@ -239,57 +239,65 @@
         // console.log(_nodes);
 
         network.on("doubleClick", function (params) {
-            // console.log("doubleClick on : "+params.nodes[0]);
-            let new_node = _nodes.get(params.nodes[0]);
-            if (new_node === undefined)
-                return;
-            let edgeList = new_node.edges;
-            let filter = getFilter();
-            
-            // Loop on all links
-            for (const edge of edgeList) {
-                // Get destination node
-                let new_node = _nodes.get(edge.id);
-                if (new_node!=null) {
-                    // Apply filter
-                    if (
-                        ((filter.length==0) ||  filter.includes(new_node.vue))
-                        &&
-                        // do not add node not liked with cable when "network infra" is selected
-                        (filter.includes("7") ? (edge.edgeType === 'CABLE') : true)
-                        )
-                     {
-                        // Check node already present
-                        if (nodes.get(edge.id)==null) {
-                            nodes.add(new_node);
-                        }
-                        // Check link already present
-                        if (exists(params.nodes[0], edge.id).length==0) 
-                        {
-                            if(edge.edgeType === 'FLUX') {
-                                if(edge.edgeDirection === 'TO') {
-                                    if (edge.bidirectional)
-                                        edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} });
-                                    else
-                                        edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
-                                } else if(edge.edgeDirection === 'FROM') {
-                                    if (edge.bidirectional)
-                                        edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}} })
-                                    else
-                                        edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
-                                }
-                            } else if(edge.edgeType === 'CABLE') {
-                                edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5 });                          
-                            } else if(edge.edgeType === 'LINK') {
-                                edges.add({ from: params.nodes[0], to: edge.id});
-                            }
-                        }
-                    }
-                }
-            network.redraw();
-            }
-        });
+    // Store IDs of newly added nodes in order to impact options later (physics)
+    let newlyAddedNodes = [];
 
+    let new_node = _nodes.get(params.nodes[0]);
+    if (new_node === undefined) return;
+    let edgeList = new_node.edges;
+    let filter = getFilter();
+
+    // Loop on all links
+    for (const edge of edgeList) {
+        // Get destination node
+        let new_node = _nodes.get(edge.id);
+        if (new_node != null) {
+            // Apply filter
+            if (
+                ((filter.length == 0) || filter.includes(new_node.vue))
+                &&
+                // do not add node not liked with cable when "network infra" is selected
+                (filter.includes("7") ? (edge.edgeType === 'CABLE') : true)
+            ) {
+                // Check node already present
+                if (nodes.get(edge.id) == null) {
+                    nodes.add({ ...new_node, physics: true });
+                    newlyAddedNodes.push(new_node.id); 
+                }
+
+                if (exists(params.nodes[0], edge.id).length==0) 
+{
+    if(edge.edgeType === 'FLUX') {
+        if(edge.edgeDirection === 'TO') {
+            if (edge.bidirectional)
+                edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true });
+            else
+                edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}}, physics: true });
+        } else if(edge.edgeDirection === 'FROM') {
+            if (edge.bidirectional)
+                edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true })
+            else
+                edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
+        }
+    } else if(edge.edgeType === 'CABLE') {
+        edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5, physics: true });                          
+    } else if(edge.edgeType === 'LINK') {
+        edges.add({ from: params.nodes[0], to: edge.id, physics: true });
+    }
+}
+            }
+        }
+    }
+
+    // If global physics is disabled, disable physics of newly deployed nodes after some time
+    if (!physicsCheckbox.checked) {
+        setTimeout(() => {
+            nodes.update(newlyAddedNodes.map(id => ({ id, physics: false })));
+        }, 1500); 
+    }
+
+    network.redraw();
+});
         // Adds a contextmenu for quickaccess from nodes 
 
         let contextMenu = document.getElementById("explore_context");
@@ -388,22 +396,30 @@
     physicsCheckbox.addEventListener('change', function() {
       if (this.checked) {
         network.setOptions({
-          physics: {
-            enabled: true
-          },
+        nodes: {
+         physics: true
+      },
           edges: {
-            smooth: true
+          smooth: {
+          type: "dynamic"
+      }
           }  
         });
+        // update all nodes
+        nodes.update(nodes.getIds().map(id => ({ id, physics: true })));
       } else {
         network.setOptions({
-          physics: {
-            enabled: false
-          },
-          edges: {
-            smooth: false
+           nodes: {
+             physics: false
+      },          
+        edges: {
+            smooth: {
+              type: "continuous"
+            } 
           }  
         });
+        // update all nodes
+        nodes.update(nodes.getIds().map(id => ({ id, physics: false  })));
       }
     });
 
