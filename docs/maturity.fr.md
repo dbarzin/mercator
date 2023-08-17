@@ -6,7 +6,7 @@ Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartog
 
 Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie.
 C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète.
-Ce pourcentage est calculé en divisante le nombre d'éléments conformes par le nombre total d'élements.
+Ce pourcentage est calculé en divisant le nombre d'éléments conformes par le nombre total d'élements.
 
 [<img src="images/maturity.png" width="600">](images/maturity.png)
 
