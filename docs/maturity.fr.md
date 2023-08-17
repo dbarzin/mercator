@@ -8,7 +8,7 @@ Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cart
 C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète.
 Ce pourcentage est calculé en divisante le nombre d'éléments conformes par le nombre total d'élements.
 
-[<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
+[<img src="images/maturity.png" width="600">](images/maturity.png)
 
 Cette maturité est divisée en trois niveaux :
 
