@@ -22,13 +22,16 @@ class AuditController extends HomeController
         $path = storage_path('app/levels-' . Carbon::today()->format('Ymd') . '.xlsx');
 
         $header = [
-            'Objet',
-            '#',
-            'Maturity1',
-            '#',
-            'Maturity2',
-            '#',
-            'Maturity3',
+            'Object',
+            'Count 1',
+            'Total 1',
+            'Maturity 1',
+            'Count 2',
+            'Total 2',
+            'Maturity 2',
+            'Count 3',
+            'Total 3',
+            'Maturity 3',
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -36,25 +39,28 @@ class AuditController extends HomeController
         $sheet->fromArray([$header], null, 'A1');
 
         // bold title
-        $sheet->getStyle('A1:G1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
+        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:J1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF1F77BE');
 
         // column size
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setAutoSize(true);
-        $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('A')->setAutoSize(true); // Objet
+        $sheet->getColumnDimension('B')->setAutoSize(true); // Count 1
+        $sheet->getColumnDimension('C')->setAutoSize(true); // Total 1
+        $sheet->getColumnDimension('D')->setAutoSize(true); // % 1
+        $sheet->getColumnDimension('E')->setAutoSize(true); // Count 2
+        $sheet->getColumnDimension('F')->setAutoSize(true); // total 2
+        $sheet->getColumnDimension('G')->setAutoSize(true); // % 2
+        $sheet->getColumnDimension('H')->setAutoSize(true); // Count 3
+        $sheet->getColumnDimension('I')->setAutoSize(true); // Total 3
+        $sheet->getColumnDimension('J')->setAutoSize(true); // % 3
 
         // center cells
-        $sheet->getStyle('B:G')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('B:J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // percentage
-        $sheet->getStyle('C')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
-        $sheet->getStyle('E')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+        $sheet->getStyle('D')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
         $sheet->getStyle('G')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+        $sheet->getStyle('J')->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
 
         // Initialise row count
         $row = 2;
@@ -63,136 +69,126 @@ class AuditController extends HomeController
         // Ecosystem
         // ============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.ecosystem.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator = $levels['entities'] + $levels['relations'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['entities_lvl1'] + $levels['relations_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B'.($row + 1).':B'.($row + 2).')');
+        $sheet->setCellValue("C{$row}", '=sum(C'.($row + 1).':C'.($row + 2).')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $denominator = $levels['entities'] + $levels['relations'];
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['entities_lvl1'] + $levels['relations_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E'.($row + 1).':E'.($row + 2).')');
+        $sheet->setCellValue("F{$row}", '=sum(F'.($row + 1).':F'.($row + 2).')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $denominator = $levels['entities'] + $levels['relations'];
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['entities_lvl1'] + $levels['relations_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H'.($row + 1).':H'.($row + 2).')');
+        $sheet->setCellValue("I{$row}", '=sum(I'.($row + 1).':I'.($row + 2).')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Entities
         $sheet->setCellValue("A{$row}", trans('cruds.entity.title'));
-        $sheet->setCellValue("B{$row}", $levels['entities']);
-        $sheet->setCellValue("C{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
-        $sheet->setCellValue("D{$row}", $levels['entities']);
-        $sheet->setCellValue("E{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
+        $sheet->setCellValue("B{$row}", $levels['entities_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['entities']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['entities_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['entities']);
-        $sheet->setCellValue("G{$row}", ($levels['entities'] > 0 ? $levels['entities_lvl1'] / $levels['entities'] : 0));
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['entities_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['entities']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
+
 
         // Relations
         $sheet->setCellValue("A{$row}", trans('cruds.relation.title'));
-        $sheet->setCellValue("B{$row}", $levels['relations']);
-        $sheet->setCellValue("C{$row}", $levels['relations'] > 0 ? $levels['relations_lvl1'] / $levels['relations'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['relations']);
-        $sheet->setCellValue("E{$row}", $levels['relations'] > 0 ? $levels['relations_lvl1'] / $levels['relations'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['relations_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['relations']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['relations_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['relations']);
-        $sheet->setCellValue("G{$row}", $levels['relations'] > 0 ? $levels['relations_lvl1'] / $levels['relations'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['relations_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['relations']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
+
 
         // ============
         // Metier
         // ============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.metier.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator = $levels['processes'] + $levels['operations'] + $levels['informations'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['processes_lvl1'] + $levels['operations_lvl1'] + $levels['informations_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+6) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+6) .')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $denominator = $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['operations'] + $levels['actors'] + $levels['informations'];
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+6) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+6) .')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $denominator = $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['tasks'] + $levels['operations'] + $levels['actors'] + $levels['informations'];
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+6) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+6) .')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // MacroProcessus
         $sheet->setCellValue("A{$row}", trans('cruds.macroProcessus.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['macroProcessuses']);
-        $sheet->setCellValue("E{$row}", $levels['macroProcessuses'] > 0 ? $levels['macroProcessuses_lvl2'] / $levels['macroProcessuses'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['macroProcessuses_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['macroProcessuses']);
-        $sheet->setCellValue("G{$row}", $levels['macroProcessuses'] > 0 ? $levels['macroProcessuses_lvl2'] / $levels['macroProcessuses'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['macroProcessuses_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['macroProcessuses']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Process
         $sheet->setCellValue("A{$row}", trans('cruds.process.title'));
-        $sheet->setCellValue("B{$row}", $levels['processes']);
-        $sheet->setCellValue("C{$row}", $levels['processes'] > 0 ? $levels['processes_lvl1'] / $levels['processes'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['processes']);
-        $sheet->setCellValue("E{$row}", $levels['processes'] > 0 ? $levels['processes_lvl2'] / $levels['processes'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['processes_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['processes']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['processes_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['processes']);
-        $sheet->setCellValue("G{$row}", $levels['processes'] > 0 ? $levels['processes_lvl2'] / $levels['processes'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['processes_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['processes']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Activity
         $sheet->setCellValue("A{$row}", trans('cruds.activity.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['activities']);
-        $sheet->setCellValue("E{$row}", $levels['activities'] > 0 ? $levels['activities_lvl2'] / $levels['activities'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['activities_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['activities']);
-        $sheet->setCellValue("G{$row}", $levels['activities'] > 0 ? $levels['activities_lvl2'] / $levels['activities'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['activities_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['activities']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Operation
         $sheet->setCellValue("A{$row}", trans('cruds.operation.title'));
-        $sheet->setCellValue("B{$row}", $levels['operations']);
-        $sheet->setCellValue("C{$row}", $levels['operations'] > 0 ? $levels['operations_lvl1'] / $levels['operations'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['operations']);
-        $sheet->setCellValue("E{$row}", $levels['operations'] > 0 ? $levels['operations_lvl2'] / $levels['operations'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['operations_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['operations']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['operations_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['operations']);
-        $sheet->setCellValue("G{$row}", $levels['operations'] > 0 ? $levels['operations_lvl3'] / $levels['operations'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['operations_lvl3']);
+        $sheet->setCellValue("I{$row}", $levels['operations']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Tâche
@@ -201,212 +197,231 @@ class AuditController extends HomeController
         $sheet->setCellValue("C{$row}", '');
         $sheet->setCellValue("D{$row}", '');
         $sheet->setCellValue("E{$row}", '');
-        $sheet->setCellValue("F{$row}", $levels['tasks']);
-        $sheet->setCellValue("G{$row}", $levels['tasks'] > 0 ? $levels['tasks_lvl3'] / $levels['tasks'] : 0);
+        $sheet->setCellValue("F{$row}", '');
+        $sheet->setCellValue("G{$row}", '');
+        $sheet->setCellValue("H{$row}", $levels['tasks_lvl3']);
+        $sheet->setCellValue("I{$row}", $levels['tasks']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Acteur
         $sheet->setCellValue("A{$row}", trans('cruds.actor.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['actors']);
-        $sheet->setCellValue("E{$row}", $levels['actors'] > 0 ? $levels['actors_lvl2'] / $levels['actors'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['actors_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['actors']);
-        $sheet->setCellValue("G{$row}", $levels['actors'] > 0 ? $levels['actors_lvl2'] / $levels['actors'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['actors_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['actors']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Information
         $sheet->setCellValue("A{$row}", trans('cruds.information.title'));
-        $sheet->setCellValue("B{$row}", $levels['informations']);
-        $sheet->setCellValue("C{$row}", $levels['informations'] > 0 ? $levels['informations_lvl1'] / $levels['informations'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['informations']);
-        $sheet->setCellValue("E{$row}", $levels['informations'] > 0 ? $levels['informations_lvl2'] / $levels['informations'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['informations_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['informations']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['informations_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['informations']);
-        $sheet->setCellValue("G{$row}", $levels['informations'] > 0 ? $levels['informations_lvl2'] / $levels['informations'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['informations_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['informations']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
+
 
         // ============
         // Application
         // ============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.application.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator = $levels['applications'] + $levels['databases'] + $levels['fluxes'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['applications_lvl1'] + $levels['databases_lvl1'] + $levels['fluxes_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+6) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+6) .')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $denominator = $levels['applicationBlocks'] + $levels['applications'] + $levels['applicationServices'] + $levels['applicationModules'] + $levels['databases'] + $levels['fluxes'];
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+6) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+6) .')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $denominator = $levels['applicationBlocks'] + $levels['applications'] + $levels['applicationServices'] + $levels['applicationModules'] + $levels['databases'] + $levels['fluxes'];
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['applicationBlocks_lvl2'] + $levels['applications_lvl3'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+6) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+6) .')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Block applicatif
         $sheet->setCellValue("A{$row}", trans('cruds.applicationBlock.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['applicationBlocks']);
-        $sheet->setCellValue("E{$row}", $levels['applicationBlocks'] > 0 ? $levels['applicationBlocks_lvl2'] / $levels['applicationBlocks'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['applicationBlocks_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['applicationBlocks']);
-        $sheet->setCellValue("G{$row}", $levels['applicationBlocks'] > 0 ? $levels['applicationBlocks_lvl2'] / $levels['applicationBlocks'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['applicationBlocks_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['applicationBlocks']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Applications
         $sheet->setCellValue("A{$row}", trans('cruds.application.title'));
-        $sheet->setCellValue("B{$row}", $levels['applications']);
-        $sheet->setCellValue("C{$row}", $levels['applications'] > 0 ? $levels['applications_lvl1'] / $levels['applications'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['applications']);
-        $sheet->setCellValue("E{$row}", $levels['applications'] > 0 ? $levels['applications_lvl2'] / $levels['applications'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['applications_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['applications']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['applications_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['applications']);
-        $sheet->setCellValue("G{$row}", $levels['applications'] > 0 ? $levels['applications_lvl3'] / $levels['applications'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['applications_lvl3']);
+        $sheet->setCellValue("I{$row}", $levels['applications']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // applicationService
         $sheet->setCellValue("A{$row}", trans('cruds.applicationService.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['applicationServices']);
-        $sheet->setCellValue("E{$row}", $levels['applicationServices'] > 0 ? $levels['applicationServices_lvl2'] / $levels['applicationServices'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['applicationServices_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['applicationServices']);
-        $sheet->setCellValue("G{$row}", $levels['applicationServices'] > 0 ? $levels['applicationServices_lvl2'] / $levels['applicationServices'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['applicationServices_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['applicationServices']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // applicationModule
         $sheet->setCellValue("A{$row}", trans('cruds.applicationModule.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['applicationModules']);
-        $sheet->setCellValue("E{$row}", $levels['applicationModules'] > 0 ? $levels['applicationModules_lvl2'] / $levels['applicationModules'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['applicationModules_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['applicationModules']);
-        $sheet->setCellValue("G{$row}", $levels['applicationModules'] > 0 ? $levels['applicationModules_lvl2'] / $levels['applicationModules'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['applicationModules_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['applicationModules']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // database
         $sheet->setCellValue("A{$row}", trans('cruds.database.title'));
-        $sheet->setCellValue("B{$row}", $levels['databases']);
-        $sheet->setCellValue("C{$row}", $levels['databases'] > 0 ? $levels['databases_lvl1'] / $levels['databases'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['databases']);
-        $sheet->setCellValue("E{$row}", $levels['databases'] > 0 ? $levels['databases_lvl2'] / $levels['databases'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['databases_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['databases']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['databases_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['databases']);
-        $sheet->setCellValue("G{$row}", $levels['databases'] > 0 ? $levels['databases_lvl2'] / $levels['databases'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['databases_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['databases']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // flux
         $sheet->setCellValue("A{$row}", trans('cruds.flux.title'));
-        $sheet->setCellValue("B{$row}", $levels['fluxes']);
-        $sheet->setCellValue("C{$row}", $levels['fluxes'] > 0 ? $levels['fluxes_lvl1'] / $levels['fluxes'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['fluxes']);
-        $sheet->setCellValue("E{$row}", $levels['fluxes'] > 0 ? $levels['fluxes_lvl1'] / $levels['fluxes'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['fluxes_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['fluxes']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['fluxes_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['fluxes']);
-        $sheet->setCellValue("G{$row}", $levels['fluxes'] > 0 ? $levels['fluxes_lvl1'] / $levels['fluxes'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['fluxes_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['fluxes']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // ===============
         // Administration
         // ===============
         $sheet->setCellValue("A{$row}", trans('cruds.menu.administration.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator = $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+5) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+5) .')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $denominator = $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'];
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+5) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+5) .')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $denominator = $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'];
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+5) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+5) .')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Zone
         $sheet->setCellValue("A{$row}", trans('cruds.zoneAdmin.title'));
-        $sheet->setCellValue("B{$row}", $levels['zones']);
-        $sheet->setCellValue("C{$row}", $levels['zones'] > 0 ? $levels['zones_lvl1'] / $levels['zones'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['zones']);
-        $sheet->setCellValue("E{$row}", $levels['zones'] > 0 ? $levels['zones_lvl1'] / $levels['zones'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['zones_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['zones']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['zones_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['zones']);
-        $sheet->setCellValue("G{$row}", $levels['zones'] > 0 ? $levels['zones_lvl1'] / $levels['zones'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['zones_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['zones']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Annuaire
         $sheet->setCellValue("A{$row}", trans('cruds.annuaire.title'));
-        $sheet->setCellValue("B{$row}", $levels['annuaires']);
-        $sheet->setCellValue("C{$row}", $levels['annuaires'] > 0 ? $levels['annuaires_lvl1'] / $levels['annuaires'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['annuaires']);
-        $sheet->setCellValue("E{$row}", $levels['annuaires'] > 0 ? $levels['annuaires_lvl1'] / $levels['annuaires'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['annuaires_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['annuaires']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['annuaires_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['annuaires']);
-        $sheet->setCellValue("G{$row}", $levels['annuaires'] > 0 ? $levels['annuaires_lvl1'] / $levels['annuaires'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['annuaires_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['annuaires']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Forest
         $sheet->setCellValue("A{$row}", trans('cruds.forestAd.title'));
-        $sheet->setCellValue("B{$row}", $levels['forests']);
-        $sheet->setCellValue("C{$row}", $levels['forests'] > 0 ? $levels['forests_lvl1'] / $levels['forests'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['forests']);
-        $sheet->setCellValue("E{$row}", $levels['forests'] > 0 ? $levels['forests_lvl1'] / $levels['forests'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['forests_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['forests']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['forests_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['forests']);
-        $sheet->setCellValue("G{$row}", $levels['forests'] > 0 ? $levels['forests_lvl1'] / $levels['forests'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['forests_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['forests']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
-        // Forest
+        // Domaines
         $sheet->setCellValue("A{$row}", trans('cruds.domaineAd.title'));
-        $sheet->setCellValue("B{$row}", $levels['domaines']);
-        $sheet->setCellValue("C{$row}", $levels['domaines'] > 0 ? $levels['domaines_lvl1'] / $levels['domaines'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['domaines']);
-        $sheet->setCellValue("E{$row}", $levels['domaines'] > 0 ? $levels['domaines_lvl1'] / $levels['domaines'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['domaines_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['domaines']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['domaines_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['domaines']);
-        $sheet->setCellValue("G{$row}", $levels['domaines'] > 0 ? $levels['domaines_lvl1'] / $levels['domaines'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['domaines_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['domaines']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // ======================
         // Infrastructure logique
         // ======================
         $sheet->setCellValue("A{$row}", trans('cruds.menu.logical_infrastructure.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+
+        // =============================================================
+        // Save sheet
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($path);
+
+        // Return
+        return response()->download($path);
+        // =============================================================
 
         // L1
         $denominator = $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['logicalServers'];
