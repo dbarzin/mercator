@@ -124,18 +124,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+6) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+6) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+7) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+7) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+6) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+6) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+7) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+7) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+6) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+6) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+7) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+7) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -340,18 +340,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+5) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+5) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+4) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+4) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+5) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+5) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+4) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+4) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+5) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+5) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+4) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+4) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -414,321 +414,329 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
-        // =============================================================
-        // Save sheet
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $writer->save($path);
-
-        // Return
-        return response()->download($path);
-        // =============================================================
-
         // L1
-        $denominator = $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['logicalServers'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['logicalServers_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+10) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+10) .')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $denominator = $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities']
-            + $levels['switches'] + $levels['routers'] + $levels['securityDevices']
-            + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['logicalServers']
-            + $levels['certificates'];
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+10) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+10) .')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $denominator = $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities']
-            + $levels['switches'] + $levels['routers'] + $levels['securityDevices']
-            + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['logicalServers']
-            + $levels['certificates'];
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+10) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+10) .')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Network
         $sheet->setCellValue("A{$row}", trans('cruds.network.title'));
-        $sheet->setCellValue("B{$row}", $levels['networks']);
-        $sheet->setCellValue("C{$row}", $levels['networks'] > 0 ? $levels['networks_lvl1'] / $levels['networks'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['networks']);
-        $sheet->setCellValue("E{$row}", $levels['networks'] > 0 ? $levels['networks_lvl1'] / $levels['networks'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['networks_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['networks']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['networks_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['networks']);
-        $sheet->setCellValue("G{$row}", $levels['networks'] > 0 ? $levels['networks_lvl1'] / $levels['networks'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['networks_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['networks']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // SubNetwork
         $sheet->setCellValue("A{$row}", trans('cruds.subnetwork.title'));
-        $sheet->setCellValue("B{$row}", $levels['subnetworks']);
-        $sheet->setCellValue("C{$row}", $levels['subnetworks'] > 0 ? $levels['subnetworks_lvl1'] / $levels['subnetworks'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['subnetworks']);
-        $sheet->setCellValue("E{$row}", $levels['subnetworks'] > 0 ? $levels['subnetworks_lvl1'] / $levels['subnetworks'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['subnetworks_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['subnetworks']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['subnetworks_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['subnetworks']);
-        $sheet->setCellValue("G{$row}", $levels['subnetworks'] > 0 ? $levels['subnetworks_lvl1'] / $levels['subnetworks'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['subnetworks_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['subnetworks']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Gateway
         $sheet->setCellValue("A{$row}", trans('cruds.gateway.title'));
-        $sheet->setCellValue("B{$row}", $levels['gateways']);
-        $sheet->setCellValue("C{$row}", $levels['gateways'] > 0 ? $levels['gateways_lvl1'] / $levels['gateways'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['gateways']);
-        $sheet->setCellValue("E{$row}", $levels['gateways'] > 0 ? $levels['gateways_lvl1'] / $levels['gateways'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['gateways_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['gateways']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['gateways_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['gateways']);
-        $sheet->setCellValue("G{$row}", $levels['gateways'] > 0 ? $levels['gateways_lvl1'] / $levels['gateways'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['gateways_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['gateways']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // ExternalConnectedEntity
         $sheet->setCellValue("A{$row}", trans('cruds.externalConnectedEntity.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['externalConnectedEntities']);
-        $sheet->setCellValue("E{$row}", $levels['externalConnectedEntities'] > 0 ? $levels['externalConnectedEntities_lvl2'] / $levels['externalConnectedEntities'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['externalConnectedEntities_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['externalConnectedEntities']);
-        $sheet->setCellValue("G{$row}", $levels['externalConnectedEntities'] > 0 ? $levels['externalConnectedEntities_lvl2'] / $levels['externalConnectedEntities'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['externalConnectedEntities_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['externalConnectedEntities']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // NetworkSwitch
         $sheet->setCellValue("A{$row}", trans('cruds.networkSwitch.title'));
-        $sheet->setCellValue("B{$row}", $levels['switches']);
-        $sheet->setCellValue("C{$row}", $levels['switches'] > 0 ? $levels['switches_lvl1'] / $levels['switches'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['switches']);
-        $sheet->setCellValue("E{$row}", $levels['switches'] > 0 ? $levels['switches_lvl1'] / $levels['switches'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['switches_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['switches']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['switches_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['switches']);
-        $sheet->setCellValue("G{$row}", $levels['switches'] > 0 ? $levels['switches_lvl1'] / $levels['switches'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['switches_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['switches']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Router
         $sheet->setCellValue("A{$row}", trans('cruds.router.title'));
-        $sheet->setCellValue("B{$row}", $levels['routers']);
-        $sheet->setCellValue("C{$row}", $levels['routers'] > 0 ? $levels['routers_lvl1'] / $levels['routers'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['routers']);
-        $sheet->setCellValue("E{$row}", $levels['routers'] > 0 ? $levels['routers_lvl1'] / $levels['routers'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['routers_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['routers']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['routers_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['routers']);
-        $sheet->setCellValue("G{$row}", $levels['routers'] > 0 ? $levels['routers_lvl1'] / $levels['routers'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['routers_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['routers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // SecurityDevice
         $sheet->setCellValue("A{$row}", trans('cruds.securityDevice.title'));
-        $sheet->setCellValue("B{$row}", $levels['securityDevices']);
-        $sheet->setCellValue("C{$row}", $levels['securityDevices'] > 0 ? $levels['securityDevices_lvl1'] / $levels['securityDevices'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['securityDevices']);
-        $sheet->setCellValue("E{$row}", $levels['securityDevices'] > 0 ? $levels['securityDevices_lvl1'] / $levels['securityDevices'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['securityDevices_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['securityDevices']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['securityDevices_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['securityDevices']);
-        $sheet->setCellValue("G{$row}", $levels['securityDevices'] > 0 ? $levels['securityDevices_lvl1'] / $levels['securityDevices'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['securityDevices_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['securityDevices']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // DHCPServer
         $sheet->setCellValue("A{$row}", trans('cruds.dhcpServer.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['DHCPServers']);
-        $sheet->setCellValue("E{$row}", $levels['DHCPServers'] > 0 ? $levels['DHCPServers_lvl2'] / $levels['DHCPServers'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['DHCPServers_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['DHCPServers']);
-        $sheet->setCellValue("G{$row}", $levels['DHCPServers'] > 0 ? $levels['DHCPServers_lvl2'] / $levels['DHCPServers'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['DHCPServers_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['DHCPServers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // LogicalServer
         $sheet->setCellValue("A{$row}", trans('cruds.logicalServer.title'));
-        $sheet->setCellValue("B{$row}", $levels['logicalServers']);
-        $sheet->setCellValue("C{$row}", $levels['logicalServers'] > 0 ? $levels['logicalServers_lvl1'] / $levels['logicalServers'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['logicalServers']);
-        $sheet->setCellValue("E{$row}", $levels['logicalServers'] > 0 ? $levels['logicalServers_lvl1'] / $levels['logicalServers'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['logicalServers_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['logicalServers']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['logicalServers_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['logicalServers']);
-        $sheet->setCellValue("G{$row}", $levels['logicalServers'] > 0 ? $levels['logicalServers_lvl1'] / $levels['logicalServers'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['logicalServers_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['logicalServers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
+
+        // VLAN
+        $sheet->setCellValue("A{$row}", trans('cruds.vlan.title'));
+        $sheet->setCellValue("B{$row}", $levels['vlans_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['vlans']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['vlans_lvl1']);
+        $sheet->setCellValue("F{$row}", $levels['vlans']);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['vlans_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['vlans']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
 
         // certificates
         $sheet->setCellValue("A{$row}", trans('cruds.certificate.title'));
         $sheet->setCellValue("B{$row}", '');
         $sheet->setCellValue("C{$row}", '');
-        $sheet->setCellValue("D{$row}", $levels['certificates']);
-        $sheet->setCellValue("E{$row}", $levels['certificates'] > 0 ? $levels['certificates_lvl2'] / $levels['certificates'] : 0);
+        $sheet->setCellValue("D{$row}", '');
+        $sheet->setCellValue("E{$row}", $levels['certificates_lvl2']);
         $sheet->setCellValue("F{$row}", $levels['certificates']);
-        $sheet->setCellValue("G{$row}", $levels['certificates'] > 0 ? $levels['certificates_lvl2'] / $levels['certificates'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['certificates_lvl2']);
+        $sheet->setCellValue("I{$row}", $levels['certificates']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // =========================
         // Infrastructure physique
         // =========================
         $sheet->setCellValue("A{$row}", trans('cruds.menu.physical_infrastructure.title_short'));
-        $sheet->getStyle("A{$row}:G{$row}")->getFont()->setBold(true);
-        $sheet->getStyle("A{$row}:G{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
+        $sheet->getStyle("A{$row}:J{$row}")->getFont()->setBold(true);
+        $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $denominator =
-            $levels['sites'] + $levels['buildings'] + $levels['bays'] + $levels['physicalServers'] +
-            $levels['phones'] + $levels['physicalRouters'] + $levels['physicalSwitchs'] +
-            $levels['physicalSecurityDevices'] +
-            $levels['wans'] + $levels['mans'] + $levels['lans'] + $levels['vlans'];
-        $sheet->setCellValue("B{$row}", $denominator);
-        $sheet->setCellValue(
-            "C{$row}",
-            $denominator > 0 ?
-            ($levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
-            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] +
-            $levels['physicalSecurityDevices_lvl1'] +
-            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+11) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+11) .')');
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        // $denominator=...
-        $sheet->setCellValue("D{$row}", $denominator);
-        $sheet->setCellValue(
-            "E{$row}",
-            $denominator > 0 ?
-            ($levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
-            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] +
-            $levels['physicalSecurityDevices_lvl1'] +
-            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+11) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+11) .')');
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        // $denominator=...
-        $sheet->setCellValue("F{$row}", $denominator);
-        $sheet->setCellValue(
-            "G{$row}",
-            $denominator > 0 ?
-            ($levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] +
-            $levels['phones_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] +
-            $levels['physicalSecurityDevices_lvl1'] +
-            $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) / $denominator
-            : 0
-        );
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+11) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+11) .')');
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Site
         $sheet->setCellValue("A{$row}", trans('cruds.site.title'));
-        $sheet->setCellValue("B{$row}", $levels['sites']);
-        $sheet->setCellValue("C{$row}", $levels['sites'] > 0 ? $levels['sites_lvl1'] / $levels['sites'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['sites']);
-        $sheet->setCellValue("E{$row}", $levels['sites'] > 0 ? $levels['sites_lvl1'] / $levels['sites'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['sites_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['sites']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['sites_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['sites']);
-        $sheet->setCellValue("G{$row}", $levels['sites'] > 0 ? $levels['sites_lvl1'] / $levels['sites'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['sites_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['sites']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Building
         $sheet->setCellValue("A{$row}", trans('cruds.building.title'));
-        $sheet->setCellValue("B{$row}", $levels['buildings']);
-        $sheet->setCellValue("C{$row}", $levels['buildings'] > 0 ? $levels['buildings_lvl1'] / $levels['buildings'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['buildings']);
-        $sheet->setCellValue("E{$row}", $levels['buildings'] > 0 ? $levels['buildings_lvl1'] / $levels['buildings'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['buildings_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['buildings']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['buildings_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['buildings']);
-        $sheet->setCellValue("G{$row}", $levels['buildings'] > 0 ? $levels['buildings_lvl1'] / $levels['buildings'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['buildings_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['buildings']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Bay
         $sheet->setCellValue("A{$row}", trans('cruds.bay.title'));
-        $sheet->setCellValue("B{$row}", $levels['bays']);
-        $sheet->setCellValue("C{$row}", $levels['bays'] > 0 ? $levels['bays_lvl1'] / $levels['bays'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['bays']);
-        $sheet->setCellValue("E{$row}", $levels['bays'] > 0 ? $levels['bays_lvl1'] / $levels['bays'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['bays_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['bays']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['bays_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['bays']);
-        $sheet->setCellValue("G{$row}", $levels['bays'] > 0 ? $levels['bays_lvl1'] / $levels['bays'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['bays_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['bays']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // PhysicalServer
         $sheet->setCellValue("A{$row}", trans('cruds.physicalServer.title'));
-        $sheet->setCellValue("B{$row}", $levels['physicalServers']);
-        $sheet->setCellValue("C{$row}", $levels['physicalServers'] > 0 ? $levels['physicalServers_lvl1'] / $levels['physicalServers'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['physicalServers']);
-        $sheet->setCellValue("E{$row}", $levels['physicalServers'] > 0 ? $levels['physicalServers_lvl1'] / $levels['physicalServers'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['physicalServers_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['physicalServers']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['physicalServers_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['physicalServers']);
-        $sheet->setCellValue("G{$row}", $levels['physicalServers'] > 0 ? $levels['physicalServers_lvl1'] / $levels['physicalServers'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['physicalServers_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['physicalServers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // Phone
         $sheet->setCellValue("A{$row}", trans('cruds.phone.title'));
-        $sheet->setCellValue("B{$row}", $levels['phones']);
-        $sheet->setCellValue("C{$row}", $levels['phones'] > 0 ? $levels['phones_lvl1'] / $levels['phones'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['phones']);
-        $sheet->setCellValue("E{$row}", $levels['phones'] > 0 ? $levels['phones_lvl1'] / $levels['phones'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['phones_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['phones']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['phones_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['phones']);
-        $sheet->setCellValue("G{$row}", $levels['phones'] > 0 ? $levels['phones_lvl1'] / $levels['phones'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['phones_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['phones']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // PhysicalRouter
         $sheet->setCellValue("A{$row}", trans('cruds.physicalRouter.title'));
-        $sheet->setCellValue("B{$row}", $levels['physicalRouters']);
-        $sheet->setCellValue("C{$row}", $levels['physicalRouters'] > 0 ? $levels['physicalRouters_lvl1'] / $levels['physicalRouters'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['physicalRouters']);
-        $sheet->setCellValue("E{$row}", $levels['physicalRouters'] > 0 ? $levels['physicalRouters_lvl1'] / $levels['physicalRouters'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['physicalRouters_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['physicalRouters']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['physicalRouters_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['physicalRouters']);
-        $sheet->setCellValue("G{$row}", $levels['physicalRouters'] > 0 ? $levels['physicalRouters_lvl1'] / $levels['physicalRouters'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['physicalRouters_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['physicalRouters']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // PhysicalSwitch
         $sheet->setCellValue("A{$row}", trans('cruds.physicalSwitch.title'));
-        $sheet->setCellValue("B{$row}", $levels['physicalSwitchs']);
-        $sheet->setCellValue("C{$row}", $levels['physicalSwitchs'] > 0 ? $levels['physicalSwitchs_lvl1'] / $levels['physicalSwitchs'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['physicalSwitchs']);
-        $sheet->setCellValue("E{$row}", $levels['physicalSwitchs'] > 0 ? $levels['physicalSwitchs_lvl1'] / $levels['physicalSwitchs'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['physicalSwitchs_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['physicalSwitchs']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['physicalSwitchs_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['physicalSwitchs']);
-        $sheet->setCellValue("G{$row}", $levels['physicalSwitchs'] > 0 ? $levels['physicalSwitchs_lvl1'] / $levels['physicalSwitchs'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['physicalSwitchs_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['physicalSwitchs']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // PhysicalSecurityDevice
         $sheet->setCellValue("A{$row}", trans('cruds.physicalSecurityDevice.title'));
-        $sheet->setCellValue("B{$row}", $levels['physicalSecurityDevices']);
-        $sheet->setCellValue("C{$row}", $levels['physicalSecurityDevices'] > 0 ? $levels['physicalSecurityDevices_lvl1'] / $levels['physicalSecurityDevices'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['physicalSecurityDevices']);
-        $sheet->setCellValue("E{$row}", $levels['physicalSecurityDevices'] > 0 ? $levels['physicalSecurityDevices_lvl1'] / $levels['physicalSecurityDevices'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['physicalSecurityDevices_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['physicalSecurityDevices']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['physicalSecurityDevices_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['physicalSecurityDevices']);
-        $sheet->setCellValue("G{$row}", $levels['physicalSecurityDevices'] > 0 ? $levels['physicalSecurityDevices_lvl1'] / $levels['physicalSecurityDevices'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['physicalSecurityDevices_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['physicalSecurityDevices']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // WAN
         $sheet->setCellValue("A{$row}", trans('cruds.wan.title'));
-        $sheet->setCellValue("B{$row}", $levels['wans']);
-        $sheet->setCellValue("C{$row}", $levels['wans'] > 0 ? $levels['wans_lvl1'] / $levels['wans'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['wans']);
-        $sheet->setCellValue("E{$row}", $levels['wans'] > 0 ? $levels['wans_lvl1'] / $levels['wans'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['wans_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['wans']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['wans_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['wans']);
-        $sheet->setCellValue("G{$row}", $levels['wans'] > 0 ? $levels['wans_lvl1'] / $levels['wans'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['wans_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['wans']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // MAN
         $sheet->setCellValue("A{$row}", trans('cruds.man.title'));
-        $sheet->setCellValue("B{$row}", $levels['mans']);
-        $sheet->setCellValue("C{$row}", $levels['mans'] > 0 ? $levels['mans_lvl1'] / $levels['mans'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['mans']);
-        $sheet->setCellValue("E{$row}", $levels['mans'] > 0 ? $levels['mans_lvl1'] / $levels['mans'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['mans_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['mans']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['mans_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['mans']);
-        $sheet->setCellValue("G{$row}", $levels['mans'] > 0 ? $levels['mans_lvl1'] / $levels['mans'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['mans_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['mans']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
         // LAN
         $sheet->setCellValue("A{$row}", trans('cruds.lan.title'));
-        $sheet->setCellValue("B{$row}", $levels['lans']);
-        $sheet->setCellValue("C{$row}", $levels['lans'] > 0 ? $levels['lans_lvl1'] / $levels['lans'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['lans']);
-        $sheet->setCellValue("E{$row}", $levels['lans'] > 0 ? $levels['lans_lvl1'] / $levels['lans'] : 0);
+        $sheet->setCellValue("B{$row}", $levels['lans_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['lans']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['lans_lvl1']);
         $sheet->setCellValue("F{$row}", $levels['lans']);
-        $sheet->setCellValue("G{$row}", $levels['lans'] > 0 ? $levels['lans_lvl1'] / $levels['lans'] : 0);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['lans_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['lans']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
-
-        // VLAN
-        $sheet->setCellValue("A{$row}", trans('cruds.vlan.title'));
-        $sheet->setCellValue("B{$row}", $levels['vlans']);
-        $sheet->setCellValue("C{$row}", $levels['vlans'] > 0 ? $levels['vlans_lvl1'] / $levels['vlans'] : 0);
-        $sheet->setCellValue("D{$row}", $levels['vlans']);
-        $sheet->setCellValue("E{$row}", $levels['vlans'] > 0 ? $levels['vlans_lvl1'] / $levels['vlans'] : 0);
-        $sheet->setCellValue("F{$row}", $levels['vlans']);
-        $sheet->setCellValue("G{$row}", $levels['vlans'] > 0 ? $levels['vlans_lvl1'] / $levels['vlans'] : 0);
 
         // =============================================================
         // Save sheet
