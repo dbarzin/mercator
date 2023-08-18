@@ -1,7 +1,5 @@
 ## Niveaux de maturité
 
-Ce chapitre détaille le calcul des niveaux de maturité des objets de la cartographie.
-
 ### Niveaux
 
 Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie.
@@ -31,7 +29,7 @@ Les règles appliquées à ce calcul sont les suivantes :
 
 * S'il 'y a pas de nouveaux attributs qui entre en compte pour passer du niveau n au niveau n+1, l'objet conforme au niveau n reste conforme au niveau n+1.
 
-En fonction du nombre d'objets pris en compte dans le calcul de conformité à chaque niveau,
+En fonction du nombre d'objets pris en compte dans le calcul de conformité, à chaque niveau,
 le pourcentage de conformité du niveau n peut être inférieur, égal ou suppérieur au pourcentage du niveau n+1
 
 ### Exigences de conformité
