@@ -157,11 +157,10 @@ class CartographyController extends Controller
             // Generate Graph
             $graph = 'digraph  {';
 
-            // Fix missing fonts in small linux VM
-            // see : https://bugs.launchpad.net/ubuntu/+source/graphviz/+bug/1016777
-            $graph .= 'graph [fontname="fixed"];';
-            $graph .= 'node [fontname="fixed"];';
-            $graph .= 'edge [fontname="fixed"];';
+            // use font from the library fonts-freefont-ttf
+            $graph .= 'graph [fontname = "FreeSans"];';
+            $graph .= 'node [fontname = "FreeSans"];';
+            $graph .= 'edge [fontname = "FreeSans"];';
 
             foreach ($entities as $entity) {
                 $graph .= 'E'. $entity->id . '[label="'. $entity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/entity.png').'"]';
