@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 // GDPR
@@ -26,7 +25,6 @@ use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
 use App\Gateway;
-use App\Http\Controllers\Controller;
 // Logique
 use App\Information;
 use App\Lan;
@@ -58,6 +56,8 @@ use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
 use App\ZoneAdmin;
+
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
