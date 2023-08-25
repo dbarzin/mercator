@@ -2386,8 +2386,11 @@ class CartographyController extends Controller
         // create image file
         $png_path = tempnam('/tmp', 'png');
 
-        // dot -Tpng ./test.dot -otest.png
-        shell_exec('/usr/bin/dot -Tpng '.$dot_path.' -o'.$png_path);
+        // Call DOT : dot -Tpng ./test.dot -otest.png
+
+        // add "unset SERVER_NAME;" due to Apache2 
+        // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
+        shell_exec('unset SERVER_NAME; /usr/bin/dot -Tpng '.$dot_path.' -o'.$png_path);
 
         // delete graph file
         unlink($dot_path);
