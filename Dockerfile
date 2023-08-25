@@ -8,7 +8,10 @@ ENV DB_DATABASE=/var/www/mercator/sql/db.sqlite
 ENV SERVER_NAME="127.0.0.1 localhost"
 
 # system deps
-RUN apk update && apk add curl nano bash ssmtp graphviz font-freefont ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev nginx gettext supervisor
+RUN apk update && apk add curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev nginx gettext supervisor
+
+# run font cache
+RUN fc-cache -f
 
 # php deps
 RUN apk add php8-zip \
