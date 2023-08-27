@@ -617,19 +617,18 @@
     <script>
         $(document).ready(function () {
 
-        // Variable contenant la liste des évènements affichés sur la popup
-        var swalHtml = @json($application->events);
-
         /**
          * Contruction de la liste des évènements
          * @returns {string}
          */
-        function makeHtmlForSwalEvents() {
-            let events = swalHtml;
-            let ret = '<ul>';
-            events.forEach (function(event) {
-                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
-                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+        function generateEventsList() {
+            ret += '<li>';
+            @json($application->events).forEach (function(event) {
+                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
+                ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
+                ret += '<i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
+                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') 
+                ret += ' | Utilisateur : '+event.user.name+'</span>';
             });
             ret += '</ul>';
             return ret;
@@ -642,9 +641,8 @@
                 e.preventDefault()
                 Swal.fire({
                     title: 'Évènements',
-                    icon: 'info',
-                    html: makeHtmlForSwalEvents(),
-                    showCloseButton: true,
+                    // icon: 'info',
+                    html: generateEventsList(),
                     didOpen(popup) {
                         $('.delete_event').on('click', function(e) {
                             e.preventDefault();
@@ -832,16 +830,51 @@
 
     });
 
+
     // CPE Guesser
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // TODO: add vertical scroll bar
+    // see https://stackoverflow.com/questions/65156717/how-to-create-activate-a-vertical-scroll-bar-within-a-swal-sweetalert
+    function generateCPEList(data) {
+        let ret = '<table class="table compact">'
+        ret += '<thead><tr><th>Vendor</th><th>Product</th><th></th></tr></thead>';
+        data.forEach (function(element) {
+            ret += '<tr>';
+            ret += '<td>' + element.vendor_name + '</td>';
+            ret += '<td>' + element.product_name +'</td>';
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '</td>';
+            ret += '</tr>';
+        });
+        ret += '</table>';
+        return ret;
+    }
+
+    // CPE Guesser window
     $('#guess').click(function (event) {
-        Swal.fire({
-            icon: 'question',
-            html: "No implemented yet !",
-            showCloseButton: true,
+        let name = $("#name").val();
+        $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
+        .then((result)=>
+            Swal.fire({
+                title: "Matching",
+                html: generateCPEList(result),
+                didOpen(popup) {
+                    $('.select_cpe').on('click', function(e) {
+                        e.preventDefault();
+                        let product = $(this).data('product');
+                        let vendor = $(this).data('vendor');
+                        // TODO: fixme
+                        $("#product").select2(product);
+                        $("#vendor").select2(vendor);
+                        swal.close();
+                    })
+                },
+                showConfirmButton: false,
+                showCloseButton: true,
+                showCancelButton: true,
+            }));
         });
     });
-
-});
 
     </script>
     @endsection
