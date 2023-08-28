@@ -15,13 +15,13 @@
                                 <div class="form-group">
                                     <label for="title">Filtre</label>
                                     <select class="form-control select2" id="filters" multiple>
-                                            <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
-                                            <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
-                                            <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
-                                            <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
-                                            <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
-                                            <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
-                                            <option value="7">{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
+                                        <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
+                                        <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
+                                        <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
+                                        <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
+                                        <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
+                                        <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                        <option value="7">{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
                                     </select>
                                     <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
                                 </div>
@@ -53,36 +53,35 @@
                                 <a id="canvasImg" download="filename"></a>
                             </td>
                         </tr>
-                    </table>   
-                      <div class="explore_commands">
+                        <tr>
+                            <td colspan="3">
                         <a href="#" onclick="network.deleteSelected()" class="command">
-                          <i class="fas fa-minus-circle"></i>
-                                    {{ trans("cruds.report.explorer.delete") }}                                    
+                            <i class="fas fa-minus-circle"></i>
+                            {{ trans("cruds.report.explorer.delete") }}                                    
                         </a>
-                                &nbsp;
-                                <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                                    <i class="fas fa-repeat">
-
-                                    </i>
-                                    {{ trans("cruds.report.explorer.reload") }}
-                                </a>
-                                <input type="checkbox" id="physicsCheckbox" class="command" checked> <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
-                        <div class="command">
-                              <select id="depth">
-                                <option value="1">1</option>
-                                <option value="2" >2</option>
-                                <option value="3" selected>3</option>
-                                <option value="4" >4</option>
-                                <option value="5" >5</option>
-                              </select>
+                        &nbsp;
+                        <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
+                            <i class="fas fa-repeat"></i>
+                            {{ trans("cruds.report.explorer.reload") }}
+                        </a>
+                        <input type="checkbox" id="physicsCheckbox" class="command" checked> 
+                        <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
+                        &nbsp;
+                        &nbsp;
+                        <select id="depth">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
                             <a href="#" onclick="deployAll()">
-                          <i class="fas fa-star"></i>
-                                    {{ trans("cruds.report.explorer.deploy") }}                                    
-                        </a>
-
-                      </div>
-
-                  </div>                 
+                                <i class="fas fa-star"></i>
+                                {{ trans("cruds.report.explorer.deploy") }}                                    
+                            </a>
+                         </td>
+                    </tr>
+                </table>                 
                 </div>
                 <div id="mynetwork" style="height:700px;"></div>
               </div>

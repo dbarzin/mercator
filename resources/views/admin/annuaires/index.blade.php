@@ -51,9 +51,11 @@
                                 {{ $annuaire->solution ?? '' }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin_id) }}">
+                                @if ($annuaire->zone_admin!=null)
+                                <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
                                     {{ $annuaire->zone_admin->name ?? '' }}
                                 </a>
+                                @endif
                             </td>
 
                             <td>
