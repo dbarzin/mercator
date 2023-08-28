@@ -541,7 +541,8 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <br>
-                    <button type="button" class="btn btn-info" id="guess">Guess</button>
+                    <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
+                    <span class="help-block"></span>
                 </div>
             </div>
         </div>
@@ -617,19 +618,18 @@
     <script>
         $(document).ready(function () {
 
-        // Variable contenant la liste des évènements affichés sur la popup
-        var swalHtml = @json($application->events);
-
         /**
          * Contruction de la liste des évènements
          * @returns {string}
          */
-        function makeHtmlForSwalEvents() {
-            let events = swalHtml;
-            let ret = '<ul>';
-            events.forEach (function(event) {
-                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative"><a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#"><i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
-                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') +' | Utilisateur : '+event.user.name+'</span>';
+        function generateEventsList() {
+            let ret = '<li>';
+            @json($application->events).forEach (function(event) {
+                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
+                ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
+                ret += '<i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
+                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') 
+                ret += ' | Utilisateur : '+event.user.name+'</span>';
             });
             ret += '</ul>';
             return ret;
@@ -642,9 +642,8 @@
                 e.preventDefault()
                 Swal.fire({
                     title: 'Évènements',
-                    icon: 'info',
-                    html: makeHtmlForSwalEvents(),
-                    showCloseButton: true,
+                    // icon: 'info',
+                    html: generateEventsList(),
                     didOpen(popup) {
                         $('.delete_event').on('click', function(e) {
                             e.preventDefault();
@@ -833,15 +832,59 @@
     });
 
     // CPE Guesser
+    // ===========
+    // TODO: add vertical scroll bar
+    // see https://stackoverflow.com/questions/65156717/how-to-create-activate-a-vertical-scroll-bar-within-a-swal-sweetalert
+    function generateCPEList(data) {
+        let ret = '<table class="table compact">'
+        ret += '<thead><tr><th>Vendor</th><th>Product</th><th></th></tr></thead>';
+        data.forEach (function(element) {
+            ret += '<tr>';
+            ret += '<td>' + element.vendor_name + '</td>';
+            ret += '<td>' + element.product_name +'</td>';
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '</td>';
+            ret += '</tr>';
+        });
+        ret += '</table>';
+        return ret;
+    }
+
+    // CPE Guesser window
     $('#guess').click(function (event) {
-        Swal.fire({
-            icon: 'question',
-            html: "No implemented yet !",
-            showCloseButton: true,
+        let name = $("#name").val();
+        $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
+        .then((result)=>
+            Swal.fire({
+                title: "Matching",
+                html: generateCPEList(result),
+                didOpen(popup) {
+                    $('.select_cpe').on('click', function(e) {
+                        e.preventDefault();
+                        let vendor = $(this).data('vendor');
+                        $("#vendor-selector").append('<option>'+vendor+'</option>');
+                        $("#vendor-selector").val(vendor);                        
+                        let product = $(this).data('product');
+                        $("#product-selector").append('<option>'+product+'</option>');
+                        $("#product-selector").val(product);
+                        $("#version-selector").append('<option></option>');
+                        $("#version-selector").val(null);                        
+                        swal.close();
+                    })
+                },
+                showConfirmButton: false,
+                showCloseButton: true,
+                showCancelButton: true,
+                customClass: {
+                    container:   {
+                        'max-height': "6em", 
+                        'overflow-y': 'scroll',
+                        'width': '100%',
+                    }
+                }
+            }));
         });
     });
-
-});
 
     </script>
     @endsection
