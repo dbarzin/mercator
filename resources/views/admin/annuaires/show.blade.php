@@ -63,7 +63,7 @@
                             {{ trans('cruds.annuaire.fields.zone_admin') }}
                         </th>
                         <td>
-                            <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin->id) }}">
+                            <a href="{{ route('admin.zone-admins.show', $annuaire->zone_admin_id) }}">
                             {{ $annuaire->zone_admin->name ?? '' }}
                             </a>
                         </td>
