@@ -52,8 +52,7 @@ class CPEController extends Controller
         $vendor = $request->query('vendor');
         $product = $request->query('product');
 
-        $query = CPEVersion::limit(100)
-            ->select('cpe_versions.name')
+        $query = CPEVersion::select('cpe_versions.name')
             ->join('cpe_products', 'cpe_products.id', '=', 'cpe_product_id')
             ->join('cpe_vendors', 'cpe_vendors.id', '=', 'cpe_vendor_id')
             ->where('cpe_products.name', '=', $product)

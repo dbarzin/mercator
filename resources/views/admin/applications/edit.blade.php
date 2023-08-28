@@ -541,7 +541,8 @@
             <div class="col-md-1">
                 <div class="form-group">
                     <br>
-                    <button type="button" class="btn btn-info" id="guess">Guess</button>
+                    <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
+                    <span class="help-block"></span>
                 </div>
             </div>
         </div>
@@ -622,7 +623,7 @@
          * @returns {string}
          */
         function generateEventsList() {
-            ret += '<li>';
+            let ret = '<li>';
             @json($application->events).forEach (function(event) {
                 ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
                 ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
@@ -830,9 +831,8 @@
 
     });
 
-
     // CPE Guesser
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // ===========
     // TODO: add vertical scroll bar
     // see https://stackoverflow.com/questions/65156717/how-to-create-activate-a-vertical-scroll-bar-within-a-swal-sweetalert
     function generateCPEList(data) {
@@ -861,17 +861,27 @@
                 didOpen(popup) {
                     $('.select_cpe').on('click', function(e) {
                         e.preventDefault();
-                        let product = $(this).data('product');
                         let vendor = $(this).data('vendor');
-                        // TODO: fixme
-                        $("#product").select2(product);
-                        $("#vendor").select2(vendor);
+                        $("#vendor-selector").append('<option>'+vendor+'</option>');
+                        $("#vendor-selector").val(vendor);                        
+                        let product = $(this).data('product');
+                        $("#product-selector").append('<option>'+product+'</option>');
+                        $("#product-selector").val(product);
+                        $("#version-selector").append('<option></option>');
+                        $("#version-selector").val(null);                        
                         swal.close();
                     })
                 },
                 showConfirmButton: false,
                 showCloseButton: true,
                 showCancelButton: true,
+                customClass: {
+                    container:   {
+                        'max-height': "6em", 
+                        'overflow-y': 'scroll',
+                        'width': '100%',
+                    }
+                }
             }));
         });
     });
