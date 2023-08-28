@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('content')
 
+@section('content')
 <form method="POST" action="{{ route("admin.applications.update", [$application->id]) }}" enctype="multipart/form-data">
     @method('PUT')
     @csrf
@@ -610,7 +610,8 @@
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
-    </form>
+    </div>
+</form>
 
 @endsection
 
@@ -833,10 +834,9 @@
 
     // CPE Guesser
     // ===========
-    // TODO: add vertical scroll bar
-    // see https://stackoverflow.com/questions/65156717/how-to-create-activate-a-vertical-scroll-bar-within-a-swal-sweetalert
     function generateCPEList(data) {
-        let ret = '<table class="table compact">'
+        let ret = '<div style="max-height: 300px; overflow-y: scroll;">';
+        ret += '<table class="table compact">'
         ret += '<thead><tr><th>Vendor</th><th>Product</th><th></th></tr></thead>';
         data.forEach (function(element) {
             ret += '<tr>';
@@ -846,7 +846,7 @@
             ret += '</td>';
             ret += '</tr>';
         });
-        ret += '</table>';
+        ret += '</table></div>';
         return ret;
     }
 
@@ -873,7 +873,6 @@
                     })
                 },
                 showConfirmButton: false,
-                showCloseButton: true,
                 showCancelButton: true,
                 customClass: {
                     container:   {
@@ -884,7 +883,19 @@
                 }
             }));
         });
+
+    // submit the correct button when "enter" key pressed
+        $("form input").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            $('input[type=submit].default').click();
+            return false;
+        }
+        else {
+            return true;
+        }
     });
+
+});
 
     </script>
     @endsection
