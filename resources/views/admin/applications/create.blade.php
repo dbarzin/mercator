@@ -491,7 +491,7 @@
                         <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
                         <select id="version-selector" class="form-control select2-free" name="version">
@@ -505,6 +505,15 @@
                         <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
                     </div>
                 </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <br>
+                        <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -575,7 +584,6 @@
     </div>
 </div>
 </form>
-
 @endsection
 
 @section('scripts')
@@ -714,6 +722,68 @@ $(document).ready(function () {
 
       });
 
+    // CPE Guesser
+    // ===========
+    function generateCPEList(data) {
+        let ret = '<div style="max-height: 300px; overflow-y: scroll;">';
+        ret += '<table class="table compact">'
+        ret += '<thead><tr><th>Vendor</th><th>Product</th><th></th></tr></thead>';
+        data.forEach (function(element) {
+            ret += '<tr>';
+            ret += '<td>' + element.vendor_name + '</td>';
+            ret += '<td>' + element.product_name +'</td>';
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '</td>';
+            ret += '</tr>';
+        });
+        ret += '</table></div>';
+        return ret;
+    }
+
+    // CPE Guesser window
+    $('#guess').click(function (event) {
+        let name = $("#name").val();
+        $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
+        .then((result)=>
+            Swal.fire({
+                title: "Matching",
+                html: generateCPEList(result),
+                didOpen(popup) {
+                    $('.select_cpe').on('click', function(e) {
+                        e.preventDefault();
+                        let vendor = $(this).data('vendor');
+                        $("#vendor-selector").append('<option>'+vendor+'</option>');
+                        $("#vendor-selector").val(vendor);                        
+                        let product = $(this).data('product');
+                        $("#product-selector").append('<option>'+product+'</option>');
+                        $("#product-selector").val(product);
+                        $("#version-selector").append('<option></option>');
+                        $("#version-selector").val(null);                        
+                        swal.close();
+                    })
+                },
+                showConfirmButton: false,
+                showCancelButton: true,
+                customClass: {
+                    container:   {
+                        'max-height': "6em", 
+                        'overflow-y': 'scroll',
+                        'width': '100%',
+                    }
+                }
+            }));
+        });
+
+    // submit the correct button when "enter" key pressed
+        $("form input").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            $('input[type=submit].default').click();
+            return false;
+        }
+        else {
+            return true;
+        }
+    });
 });
 </script>
 @endsection
