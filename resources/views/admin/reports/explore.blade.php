@@ -107,9 +107,9 @@
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php 
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
-                echo '{id:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
+                echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
             if ($edge["to"]==$node["id"])
-                echo '{id:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
+                echo '{attachedNodeId:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
             } ?> ]}); 
     @endforeach
 
@@ -128,7 +128,7 @@
         // Loop on all edges
         for (const edge of edgeList) {
             // Get destination node
-            var target_node = _nodes.get(edge.id);
+            var target_node = _nodes.get(edge.attachedNodeId);
             // check node exists
             if (target_node !== null) {
                 // Check node already present
@@ -148,7 +148,7 @@
                                 edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
                     } else if(edge.edgeType === 'CABLE') {
-                        edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5 });                          
+                        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5 });                          
                     } else if (edge.edgeType === 'LINK') {
                         // do not add links if "network infrastructure" is selected
                         if (!$('#filters').val().includes("7"))
@@ -249,7 +249,7 @@
     // Loop on all links
     for (const edge of edgeList) {
         // Get destination node
-        let new_node = _nodes.get(edge.id);
+        let new_node = _nodes.get(edge.attachedNodeId);
         if (new_node != null) {
             // Apply filter
             if (
@@ -259,29 +259,29 @@
                 (filter.includes("7") ? (edge.edgeType === 'CABLE') : true)
             ) {
                 // Check node already present
-                if (nodes.get(edge.id) == null) {
+                if (nodes.get(edge.attachedNodeId) == null) {
                     nodes.add({ ...new_node, physics: true });
                     newlyAddedNodes.push(new_node.id); 
                 }
 
-                if (exists(params.nodes[0], edge.id).length==0) 
+                if (exists(params.nodes[0], edge.attachedNodeId).length==0) 
 {
     if(edge.edgeType === 'FLUX') {
         if(edge.edgeDirection === 'TO') {
             if (edge.bidirectional)
-                edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true });
+                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true });
             else
-                edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}}, physics: true });
+                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {to: {enabled: true, type: 'arrow'}}, physics: true });
         } else if(edge.edgeDirection === 'FROM') {
             if (edge.bidirectional)
-                edges.add({ label: edge.name, from: edge.id, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true })
+                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true })
             else
-                edges.add({ label: edge.name, from: params.nodes[0], to: edge.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
+                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
         }
     } else if(edge.edgeType === 'CABLE') {
-        edges.add({ from: params.nodes[0], to: edge.id, color:'blue', width: 5, physics: true });                          
+        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5, physics: true });                          
     } else if(edge.edgeType === 'LINK') {
-        edges.add({ from: params.nodes[0], to: edge.id, physics: true });
+        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, physics: true });
     }
 }
             }
@@ -463,7 +463,7 @@
 
       let edgeList = node.edges;
       for (const edge of edgeList) {
-        let targetNodeId = edge.id;
+        let targetNodeId = edge.attachedNodeId;
 
         if (nodes.get(targetNodeId) === null) {
           let targetNode = _nodes.get(targetNodeId);
@@ -483,7 +483,7 @@
 function addEdge(sourceNodeId, targetNodeId) {
     var edgeList = _nodes.get(sourceNodeId).edges;
     for (const edge of edgeList) {
-        if (edge.id === targetNodeId) {
+        if (edge.attachedNodeId === targetNodeId) {
             if (edge.edgeType === 'FLUX') {
                 if (edge.edgeDirection === 'TO') {
                     if (edge.bidirectional)
