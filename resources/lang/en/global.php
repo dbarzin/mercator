@@ -168,6 +168,7 @@ return [
     'outbox' => 'outbox',
     'pages' => 'Pages',
     'parse_csv' => 'Analyze CSV.',
+    'patch' => 'Patch',
     'payments' => ['amount' => 'Amount', 'payment_date' => 'Payment date', 'title' => 'Payments'],
     'permadel' => 'Delete definitely',
     'phone' => 'Phone',

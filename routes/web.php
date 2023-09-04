@@ -294,6 +294,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/cpe/search/versions', [Admin\CPEController::class,'versions']);
     Route::get('/cpe/search/guess', [Admin\CPEController::class,'guess']);
 
+    // Patching
+    Route::get('/patching/index', [Admin\PatchingController::class,'index'])->name('patching.index');
+    Route::get('/patching/edit/{id}', [Admin\PatchingController::class,'edit'])->name('patching.edit');
+    Route::post('/patching/update', [Admin\PatchingController::class,'update'])->name('patching.update');
+
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
     Route::get('audit/changes', [Admin\AuditController::class,'changes'])->name('audit.changes');

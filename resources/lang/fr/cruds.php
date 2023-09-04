@@ -618,6 +618,8 @@ return [
             "update_date_helper" => "Date de dernière de dernière mise à jour du système d'exploitation",
             'databases' => 'Base de données',
             'databases_helper' => 'Bases de données hébergées par le serveur logique',
+            'patching_group' => 'Groupe de mise à jour',
+            'patching_group_helper' => 'Nom du groupe de mise à jour',
         ],
         'title' => 'Serveurs logiques',
         'title_short' => 'Serveurs',

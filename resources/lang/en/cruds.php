@@ -614,6 +614,8 @@ return [
             'update_date_helper' => 'Last logical server update',
             'databases' => 'Databases',
             'databases_helper' => 'Databases hosted on the logical server',
+            'patching_group' => 'Patching group',
+            'patching_group_helper' => 'Name of the patching group',
         ],
         'title' => 'Logical Servers',
         'title_short' => 'Servers',
