@@ -336,11 +336,11 @@ class HomeController extends Controller
 
             'applications_lvl2' => MApplication
                 ::where('description', '<>', null)
-                    ->where('entity_resp_id', '<>', null)
                     ->where('responsible', '<>', null)
                     ->where('technology', '<>', null)
                     ->where('type', '<>', null)
                     ->where('users', '<>', null)
+                    ->where('entity_resp_id', '<>', null)
                     ->where('security_need_c', '<>', null)
                     ->where('security_need_i', '<>', null)
                     ->where('security_need_a', '<>', null)
@@ -389,9 +389,9 @@ class HomeController extends Controller
                             ->whereRaw('m_application_process.m_application_id = m_applications.id');
                     })
                 // CPE must be given
-                //    ->where('vendor', '<>', null)
-                //    ->where('product', '<>', null)
-                //    ->where('version', '<>', null)
+                    ->where('vendor', '<>', null)
+                    ->where('product', '<>', null)
+                    ->where('version', '<>', null)
                     ->count(),
 
             'applicationServices' => ApplicationService::count(),

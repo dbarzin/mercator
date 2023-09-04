@@ -54,9 +54,15 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 | Acteur | 2 | doit avoir un contact, une nature et un type |
 | Information | 1 | doit avoir une description, un propriétaire et un mode de stockage |
 | Information | 2 | doit avoir un niveau de sécurité et de sensibilité |
-
-
-
-
-
+| **Vue applicative** | | |
+| Block applicatif | 2 | doit avoir une description |
+| Application | 1 | doit avoir une description, un responsable, une technologie, un type des utilisateurs et servir un processus |
+| Application | 2 | doit avoir une entité responsable et un besoin de sécurité |
+| Application | 3 | doit être identifiées par une CPE |
+| Service applicatif | 2 | doit avoir une description et une application |
+| Module applicatif | 2 | doit avoir une description |
+| Base de données | 1 | doit avoir une description, une entité responsable, un responsable et un type |
+| Base de données | 2 | doit avoir un niveau de sécurité |
+| Flux applicatif | 1 | doit avoir une description, une source et une destination |
+| **Vue de l'administration** | | |
 
