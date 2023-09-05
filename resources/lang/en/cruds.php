@@ -972,6 +972,10 @@ return [
         'title' => 'Relationships',
         'title_singular' => 'Relationship',
     ],
+    'tools' => [
+        "patching" => "Patching",
+        "explore" => "Exploration",        
+    ],
     'report' => [
         'cartography' => [
             'administration' => 'Administration',

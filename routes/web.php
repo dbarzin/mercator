@@ -297,7 +297,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Patching
     Route::get('/patching/index', [Admin\PatchingController::class,'index'])->name('patching.index');
     Route::get('/patching/edit/{id}', [Admin\PatchingController::class,'edit'])->name('patching.edit');
-    Route::post('/patching/update', [Admin\PatchingController::class,'update'])->name('patching.update');
+    Route::put('/patching/update', [Admin\PatchingController::class,'update'])->name('patching.update');
 
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');

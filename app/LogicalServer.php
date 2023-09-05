@@ -35,7 +35,9 @@ class LogicalServer extends Model
         'description',
         'operating_system',
         'install_date',
+        'patching_group',
         'update_date',
+        'next_update',
         'address_ip',
         'cpu',
         'memory',
@@ -60,6 +62,20 @@ class LogicalServer extends Model
     public function setInstallDateAttribute($value)
     {
         $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    /**
+     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
+     */
+    public function getNextUpdateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setNextUpdateAttribute($value)
+    {
+        //dd($value);
+        $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     /**

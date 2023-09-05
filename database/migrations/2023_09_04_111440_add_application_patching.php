@@ -17,9 +17,13 @@ return new class extends Migration
         // Add a patching group
         Schema::table('logical_servers', function (Blueprint $table) {
             $table->string('patching_group')->nullable();
+            $table->integer('paching_frequency')->nullable();
+            $table->date('next_update')->nullable();
         });
         Schema::table('physical_servers', function (Blueprint $table) {
             $table->string('patching_group')->nullable();
+            $table->integer('paching_frequency')->nullable();
+            $table->date('next_update')->nullable();
         });
 
         // Link between documents and logical_servers
@@ -73,9 +77,13 @@ return new class extends Migration
         // Remove column
         Schema::table('physical_servers', function (Blueprint $table) {
             $table->dropColumn(['patching_group']);
+            $table->dropColumn(['paching_frequency']);
+            $table->dropColumn(['next_update']);
         });
         Schema::table('logical_servers', function (Blueprint $table) {
             $table->dropColumn(['patching_group']);
+            $table->dropColumn(['paching_frequency']);
+            $table->dropColumn(['next_update']);
         });
 
         // delete access rights
