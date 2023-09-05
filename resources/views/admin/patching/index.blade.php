@@ -39,6 +39,9 @@
                             {{ trans('cruds.logicalServer.fields.applications') }}
                         </th>
                         <th>
+                            {{ trans('cruds.application.fields.responsible') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.logicalServer.fields.patching_group') }}
                         </th>
                         <th>
@@ -70,6 +73,16 @@
                               @foreach($server->applications as $application)
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
                                   {{ $application->name }}
+                                </a>
+                                  @if(!$loop->last)
+                                  ,
+                                  @endif
+                              @endforeach
+                            </td>
+                            <td>
+                              @foreach($server->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                  {{ $application->responsible }}
                                 </a>
                                   @if(!$loop->last)
                                   ,
