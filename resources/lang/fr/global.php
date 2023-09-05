@@ -40,6 +40,7 @@ return [
     'no' => 'Non',
     'no_results' => 'Aucun résultat',
     'none' => 'Aucun',
+    'patch' => 'Correctif',
     'pleaseSelect' => 'Sélectionner SVP',
     'remember_me' => 'Se souvenir de moi',
     'reset_password' => 'Réinitialiser le mot de passe',

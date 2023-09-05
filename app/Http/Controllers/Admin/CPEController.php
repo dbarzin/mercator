@@ -67,14 +67,15 @@ class CPEController extends Controller
         return response()->json($versions);
     }
 
-    public function guess(Request $request) {
+    public function guess(Request $request)
+    {
         $search = $request->query('search');
 
         $query = CPEVendor
             ::select('cpe_vendors.name as vendor_name', 'cpe_products.name as product_name')
-            ->join('cpe_products', 'cpe_vendor_id', '=', 'cpe_vendors.id')
-            ->where('cpe_products.name',  'like', '%' . $search . '%')
-            ->limit(100);
+                ->join('cpe_products', 'cpe_vendor_id', '=', 'cpe_vendors.id')
+                ->where('cpe_products.name', 'like', '%' . $search . '%')
+                ->limit(100);
 
         $result = $query->get();
 

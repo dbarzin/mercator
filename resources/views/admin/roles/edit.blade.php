@@ -1458,7 +1458,23 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label><b>{{ trans('cruds.tools.patching') }}</b></label>
+                        @php($permission = $permissions_sorted['patching'])
+                        <div class="form-check form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][0][0] }}" value="{{ $permission['actions'][0][0] }}" {{ in_array($permission['actions'][0][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][0][0]) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][0][0] }}">{{ $permission['actions'][0][1] }}</label>
+                        </div>
+                        <div class="form-check form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][1][0] }}" {{ in_array($permission['actions'][1][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][1][0]) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][1][0] }}">{{ $permission['actions'][1][1] }}</label>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
@@ -1474,7 +1490,6 @@
             </div>
 
             <div class="row">
-
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>{{ trans('cruds.user.title') }}</label>

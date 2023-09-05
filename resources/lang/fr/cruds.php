@@ -615,9 +615,13 @@ return [
             "install_date" => "Date d'installation",
             "install_date_helper" => "Date d'installation du système d'exploitation",
             "update_date" => "Date de mise à jour",
-            "update_date_helper" => "Date de dernière de dernière mise à jour du système d'exploitation",
+            "update_date_helper" => "Date de mise à jour du système d'exploitation",
             'databases' => 'Base de données',
             'databases_helper' => 'Bases de données hébergées par le serveur logique',
+            'patching_group' => 'Groupe de mise à jour',
+            'patching_group_helper' => 'Nom du groupe de mise à jour',
+            'next_update' => 'Date de prochaine mise à jour',
+            'next_update_helper' => 'Date prévue pour la prochaine mise à jour',
         ],
         'title' => 'Serveurs logiques',
         'title_short' => 'Serveurs',
@@ -972,6 +976,10 @@ return [
         ],
         'title' => 'Relations',
         'title_singular' => 'Relation',
+    ],
+    'tools' => [
+        "patching" => "Correctifs",
+        "explore" => "Exploration",        
     ],
     'report' => [
         'cartography' => [

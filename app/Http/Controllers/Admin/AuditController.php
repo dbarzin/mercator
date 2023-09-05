@@ -101,7 +101,6 @@ class AuditController extends HomeController
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
-
         // Relations
         $sheet->setCellValue("A{$row}", trans('cruds.relation.title'));
         $sheet->setCellValue("B{$row}", $levels['relations_lvl1']);
@@ -115,7 +114,6 @@ class AuditController extends HomeController
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
-
         // ============
         // Metier
         // ============
@@ -124,18 +122,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+7) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+7) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 7) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 7) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+7) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+7) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 7) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 7) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+7) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+7) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 7) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 7) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -230,7 +228,6 @@ class AuditController extends HomeController
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
-
         // ============
         // Application
         // ============
@@ -239,18 +236,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+6) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+6) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 6) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 6) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+6) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+6) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 6) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 6) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+6) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+6) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 6) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 6) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -340,18 +337,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+4) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+4) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 4) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 4) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+4) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+4) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 4) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 4) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+4) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+4) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 4) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 4) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -415,18 +412,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+10) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+10) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 10) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 10) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+10) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+10) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 10) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 10) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+10) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+10) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 10) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 10) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -580,18 +577,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row+1) . ':B' . ($row+11) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row+1) . ':C' . ($row+11) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 11) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 11) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row+1) . ':E' . ($row+11) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row+1) . ':F' . ($row+11) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 11) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 11) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row+1) . ':H' . ($row+11) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row+1) . ':I' . ($row+11) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 11) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 11) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 

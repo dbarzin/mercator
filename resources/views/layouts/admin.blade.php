@@ -91,7 +91,7 @@
                 @endcan
                 </div>
             </li>
-
+            &nbsp;
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   &nbsp {{ trans('panel.menu.preferences') }}
@@ -101,15 +101,25 @@
                   <a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a>
                 </div>
             </li>
-            </li>
-
+            &nbsp;
             <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  &nbsp {{ trans('panel.menu.documentation') }}
+                  &nbsp {{ trans('panel.menu.tools') }}
                 </a>
                 <div class="dropdown-menu">
+                  @can('patching_access')
+                  <a class="dropdown-item" href="/admin/patching/index">{{ trans('panel.menu.patching') }}</a>
+                  @endcan
                   <a class="dropdown-item" href="/admin/report/explore">{{ trans('panel.menu.explore') }}</a>
                   <a class="dropdown-item" href="/admin/doc/report">{{ trans('panel.menu.reports') }}</a>
+                </div>
+            </li>
+            &nbsp;
+            <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  &nbsp {{ trans('panel.menu.help') }}
+                </a>
+                <div class="dropdown-menu">
                   <a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a>
                   <a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a>
                   <a class="dropdown-item" href="/admin/doc/about">{{ trans('panel.menu.about') }}</a>
