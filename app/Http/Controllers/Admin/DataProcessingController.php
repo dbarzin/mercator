@@ -78,7 +78,6 @@ class DataProcessingController extends Controller
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
     {
-        dd($dataProcessing);
         $dataProcessing->update($request->all());
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));

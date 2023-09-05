@@ -2093,7 +2093,7 @@ class ReportController extends Controller
                         '=',
                         'logical_servers.id'
                     )
-                    
+
                     ->leftJoin(
                         'm_application_physical_server',
                         'm_application_physical_server.physical_server_id',

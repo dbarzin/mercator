@@ -1,12 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
-use Gate;
-use App\MApplication;
-use App\LogicalServer;
 use App\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use App\LogicalServer;
+use Gate;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller
 {
@@ -19,25 +19,23 @@ class PatchingController extends Controller
 
         // TODO : Physical servers
         $group = $request->group;
-        if ($group==='None') {
+        if ($group === 'None') {
             $servers = LogicalServer::All();
             session()->forget('patching_group');
-        }
-        elseif ($group===null) {
+        } elseif ($group === null) {
             $group = session()->get('patching_group');
-            if ($group===null)
+            if ($group === null) {
                 $servers = LogicalServer::All();
-            else
-                $servers = LogicalServer::where('patching_group','=',$group)->get();
-        }
-        else {
-            $servers = LogicalServer::where('patching_group','=',$group)->get();
-            session()->put('patching_group',$group);
+            } else {
+                $servers = LogicalServer::where('patching_group', '=', $group)->get();
+            }
+        } else {
+            $servers = LogicalServer::where('patching_group', '=', $group)->get();
+            session()->put('patching_group', $group);
         }
 
-        return view('admin.patching.index', compact('servers','patching_group_list'));
+        return view('admin.patching.index', compact('servers', 'patching_group_list'));
     }
-
 
     public function edit(Request $request)
     {
@@ -56,7 +54,7 @@ class PatchingController extends Controller
         }
         session()->put('documents', $documents);
 
-        return view('admin.patching.edit', compact('server','operating_system_list','environment_list','patching_group_list'));
+        return view('admin.patching.edit', compact('server', 'operating_system_list', 'environment_list', 'patching_group_list'));
     }
 
     public function update(Request $request)
@@ -68,5 +66,4 @@ class PatchingController extends Controller
 
         return redirect()->route('admin.patching.index');
     }
-
 }
