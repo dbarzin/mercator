@@ -1134,7 +1134,15 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '278',
                 'title' => 'data_processing_register_access',
             ],
-
+            // Patching
+            [
+                'id'    => '279',
+                'title' => 'patching_show',
+            ],
+            [
+                'id'    => '280',
+                'title' => 'patching_make',
+            ],
         ];
 
         Permission::insert($permissions);

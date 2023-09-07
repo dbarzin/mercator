@@ -894,8 +894,6 @@
             return true;
         }
     });
-
 });
-
-    </script>
-    @endsection
+</script>
+@endsection

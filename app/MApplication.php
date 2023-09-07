@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\MApplication
- *
  */
 class MApplication extends Model
 {

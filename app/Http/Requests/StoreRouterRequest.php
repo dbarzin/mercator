@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use App\Rules\IPList;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ class StoreRouterRequest extends FormRequest
             ],
             'ip_addresses' => [
                 'nullable',
-                new IPList,
+                new IPList(),
             ],
         ];
     }
