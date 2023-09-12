@@ -281,7 +281,7 @@ return [
             'to' => 'à',
             'recurence' => 'tous les',
             'provider' => 'Founisseur de CVE',
-            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cve.circl.lu)',
+            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cvepremium.circl.lu)',
         ],
         'documents' => [
             'title' => 'Documents',

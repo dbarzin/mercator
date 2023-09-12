@@ -283,7 +283,7 @@ return [
             'to' => 'to',
             'recurence' => 'every',
             'provider' => 'Provider',
-            'provider_helper' => 'CVE-Search provder (ex: https://cve.circl.lu)',
+            'provider_helper' => 'CVE-Search provder (ex: https://cvepremium.circl.lu)',
         ],
         'documents' => [
             'title' => 'Documents',

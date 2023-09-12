@@ -182,14 +182,18 @@ class ConfigurationController extends Controller
                 }
                 break;
             case 'test_provider':
-                $client = curl_init($provider . '/api/dbInfo');
+                $client = curl_init($provider . '/api/dbinfo');
                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($client);
                 if ($response === false) {
                     $msg = 'Could not connect to provider';
                 } else {
                     $json = json_decode($response);
-                    $msg = 'Provider last update : ' . $json->cves->last_update . ' size = ' . $json->cves->size;
+                    if ($json === null) {
+                        $msg = 'Could not connect to provider';
+                    } else {
+                        $msg = 'Provider last update : ' . $json->cves->last_update . ' size = ' . $json->cves->size;
+                    }
                 }
                 break;
 
