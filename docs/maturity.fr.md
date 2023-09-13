@@ -65,4 +65,13 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 | Base de données | 2 | doit avoir un niveau de sécurité |
 | Flux applicatif | 1 | doit avoir une description, une source et une destination |
 | **Vue de l'administration** | | |
+| Zone d'administration | 1 | doit avoir une description |
+| Service d'annuaire | 1 | doit avoir une description, une solution et faire partie d'une zone |
+| Forêt active directory / LDAP | 1 | doit avoir une description et faire partie d'une zone |
+| Domains active directory / LDAP | 1 | doit avoir une description, une nombre de domain contrôleur, un nombre d'utilisateurn un nombre de machines et des relations inter-domaine |
+| **Vue logique** | | |
+| Réseaux | 1 | doit avoir un type de protocol, un responsable, un responsable sécurité et des besoins de sécurité |
+| Sous-réseau | 1 | doit avoir une description, une adresse IP, une passerelle par défaut, un type d'allocation d'adresse IP, un responsable d'exploitation et un VLAN |
+| Passerelle | 1 | doit avoir une description, un tupe d'authentification et une adresse IP |
+| Entité externe connectée | 1 | doit avoir un type et un contact |
 

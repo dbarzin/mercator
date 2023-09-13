@@ -446,6 +446,7 @@ class HomeController extends Controller
                     ->where('crypted', '<>', null)
                     ->count(),
 
+            // Administration
             'zones' => ZoneAdmin::count(),
             'zones_lvl1' => ZoneAdmin
                 ::where('description', '<>', null)
