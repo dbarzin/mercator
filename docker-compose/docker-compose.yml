@@ -2,6 +2,8 @@ version: '3.7'
 services:
   reverse-proxy:
     image: nginx:latest
+    restart: unless-stopped
+    container_name: reverse-proxy
     volumes:
       - ./PV/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./PV/nginx/certs:/etc/nginx/certs
@@ -23,6 +25,8 @@ services:
     volumes:
       - ./PV/mercator/db.sqlite/:/var/www/mercator/sql/db.sqlite
       - ./env/mercator.env:/var/www/mercator/.env
+      - ../app/Http/Kernel.php:/var/www/mercator/app/Http/Kernel.php
+      - ../app/Http/Middleware/ForceXForwardedProto.php:/var/www/mercator/app/Http/Middleware/ForceXForwardedProto.php
     expose:
       - 80
     environment:
