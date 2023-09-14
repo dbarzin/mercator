@@ -60,7 +60,7 @@ class RolesController extends Controller
         $roles = DB::table('roles')
             ->leftJoin('role_user', 'role_user.role_id', '=', 'roles.id')
             ->select('roles.id', 'roles.title', DB::raw('count(role_user.user_id) as count'))
-            ->groupBy('roles.id')
+            ->groupBy('roles.id','roles.title')
             ->get();
 
         return view('admin.roles.index', compact('roles'));
