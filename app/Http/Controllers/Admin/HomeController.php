@@ -389,9 +389,9 @@ class HomeController extends Controller
                             ->whereRaw('m_application_process.m_application_id = m_applications.id');
                     })
                 // CPE must be given
-                    ->where('vendor', '<>', null)
-                    ->where('product', '<>', null)
-                    ->where('version', '<>', null)
+                //    ->where('vendor', '<>', null)
+                //    ->where('product', '<>', null)
+                //    ->where('version', '<>', null)
                     ->count(),
 
             'applicationServices' => ApplicationService::count(),
