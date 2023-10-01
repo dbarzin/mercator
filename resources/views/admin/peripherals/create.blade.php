@@ -255,16 +255,18 @@
                     <span class="help-block">{{ trans('cruds.peripheral.fields.bay_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
+<div class="form-group">
+    <button class="btn btn-danger" type="submit">
+        {{ trans('global.save') }}
+    </button>
+</div>
+
+</form>
+
 @endsection
 
 @section('scripts')
