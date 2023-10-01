@@ -21,11 +21,16 @@ class IPList implements ValidationRule
     {
         $ipList = explode(',', $value);
         foreach ($ipList as $ip) {
-            if ((filter_var(trim($ip), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) &&
-                (filter_var(trim($ip), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false)) {
+            if (
+                // Less restrictive IPv4 filter
+                (preg_match_all("/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i", trim($ip)) === 0) &&
+                // (filter_var(trim($ip), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) &&
+                (filter_var(trim($ip), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false)) 
+            {
                 $fail($this->message());
                 return;
             }
+            // less restrictiveIPv4 filter
         }
     }
 
