@@ -37,15 +37,6 @@ class ApplicationWorkstation extends Migration
      */
     public function down()
     {
-        Schema::table('m_application_workstation', function (Blueprint $table) {
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('workstation_id_fk_1486547');
-            }
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('m_application_id_fk_1486547');
-            }
-        });
-
         Schema::dropIfExists('m_application_workstation');
 
         Schema::table('workstations', function (Blueprint $table) {

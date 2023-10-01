@@ -26,18 +26,20 @@
                             {{ trans('cruds.peripheral.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.peripheral.fields.domain') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.peripheral.fields.type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.peripheral.fields.provider') }}
                         </th>
                         <th>
                             {{ trans('cruds.peripheral.fields.responsible') }}
                         </th>
                         <th>
-                            {{ trans('cruds.peripheral.fields.site') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.peripheral.fields.building') }}
-                        </th>
-                        <th>
+                            {{ trans('cruds.peripheral.fields.site') }} -
+                            {{ trans('cruds.peripheral.fields.building') }} -
                             {{ trans('cruds.peripheral.fields.bay') }}
                         </th>
                         <th>
@@ -55,18 +57,20 @@
                                 {{ $peripheral->name ?? '' }}
                             </td>
                             <td>
+                                {{ $peripheral->domain ?? '' }}
+                            </td>
+                            <td>
                                 {{ $peripheral->type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $peripheral->provider->name ?? '' }}
                             </td>
                             <td>
                                 {{ $peripheral->responsible ?? '' }}
                             </td>
                             <td>
-                                {{ $peripheral->site->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $peripheral->building->name ?? '' }}
-                            </td>
-                            <td>
+                                {{ $peripheral->site->name ?? '' }} -
+                                {{ $peripheral->building->name ?? '' }} -
                                 {{ $peripheral->bay->name ?? '' }}
                             </td>
                             <td>
