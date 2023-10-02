@@ -54,7 +54,9 @@
 
                             </td>
                             <td>
-                                {{ $peripheral->name ?? '' }}
+                                <a href="{{ route('admin.peripherals.show', $peripheral->id) }}">
+                                    {{ $peripheral->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $peripheral->domain ?? '' }}
