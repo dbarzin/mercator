@@ -97,7 +97,7 @@ class ExplorerController extends Controller
         }
 
         // peripherals
-        $peripherals = DB::table('peripherals')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+        $peripherals = DB::table('peripherals')->select('id', 'name', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
         foreach ($peripherals as $peripheral) {
             $this->addNode($nodes, 6, $this->formatId('PERIF_', $peripheral->id), $peripheral->name, '/images/peripheral.png', 'peripherals');
             if ($peripheral->bay_id !== null) {
@@ -106,7 +106,16 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BUILDING_', $peripheral->building_id));
             } elseif ($peripheral->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('SITE_', $peripheral->site_id));
+            } 
+            if ($peripheral->provider_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('ENTITY_', $peripheral->provider_id));
             }
+        }
+
+        // m_application_peripheral
+        $joins = DB::table('m_application_peripheral')->select('m_application_id', 'peripheral_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PERIF_', $join->peripheral_id));
         }
 
         // Storage devices
