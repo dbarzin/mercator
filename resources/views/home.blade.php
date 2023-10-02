@@ -395,6 +395,11 @@
           value: {!! $workstations !!},
           url: "/admin/workstations"
         }, {
+          label: "{!! trans('cruds.peripheral.title') !!}",
+          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $peripherals !!}],
+          value: {!! $peripherals !!},
+          url: "/admin/peripherals"
+        }, {
           label: "{!! trans('cruds.storageDevice.title_short') !!}",
           data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $storageDevices !!}],
           value: {!! $storageDevices !!},
@@ -558,6 +563,7 @@
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.bay.title') !!}" , num:{!! $bays !!}, url: "/admin/bays" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalServer.title_short') !!}", num:{!! $physicalServers !!}, url: "/admin/physical-servers" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.workstation.title') !!}" , num:{!! $workstations !!}, url: "/admin/workstations" },
+     {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.peripheral.title') !!}" , num:{!! $peripherals !!}, url: "/admin/peripherals" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.storageDevice.title_short') !!}" , num:{!! $storageDevices !!}, url: "/admin/storage-devices" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalSwitch.title_short') !!}" , num:{!! $physicalSwitchs !!}, url: "/admin/physical-switches" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalRouter.title_short') !!}" , num:{!! $physicalRouters !!}, url: "/admin/physical-routers" },
