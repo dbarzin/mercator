@@ -6,6 +6,7 @@ use App\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class CVESearch extends Command
 {
@@ -33,16 +34,35 @@ class CVESearch extends Command
         Log::debug('CVESearch - Start');
         Log::debug('CVESearch - day '. Carbon::now()->day);
 
-        if ($this->needCheck()) {
+        if (false) {
+        //if ($this->needCheck()) {
             Log::debug('CVESearch - no check needed');
         } else {
             // Check for CVE
             Log::debug('CVESearch - check');
 
+            // Be nice with CIRCL, wait few seconds !
+            $seconds = rand(1,600);
+            Log::debug('CVESearch - wait ' . $seconds . 's');
+            // sleep($seconds);
+
+            Log::debug('CVESearch - check');
+
             $provider = config('mercator-config.cve.provider');
             $check_frequency = config('mercator-config.cve.check-frequency');
 
-            $client = curl_init($provider . '/api/dbInfo');
+            // update provider
+            if ($provider === 'https//cve.circl.lu') {
+                // change variable
+                $provider = "https://cvepremium.circl.lu";
+                config(['mercator-config.cve.provider' => $provider]);
+
+                // Save configuration
+                $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
+                file_put_contents(config_path('mercator-config.php'), $text);
+                }
+
+            $client = curl_init($provider . '/api/dbinfo');
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($client);
             if ($response === false) {
@@ -53,6 +73,60 @@ class CVESearch extends Command
             $json = json_decode($response);
             Log::debug('CVESearch - Provider last update: ' . $json->cwe->last_update . ' size=' . $json->cwe->size);
 
+            // start timestamp
+            $min_timestamp = strtotime(sprintf('-%d days', $check_frequency), strtotime('now'));
+            Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A', $min_timestamp));
+
+            // CVE counters
+            $cpe_match = [];
+
+            // loop on applications
+            $applications = DB::table('m_applications')
+                ->select('name', 'vendor', 'product', 'version')
+                ->whereNotNull('vendor')
+                ->whereNotNull('product')
+                ->orderBy('name')
+                ->get();
+
+            foreach ($applications as $app) {
+                $url = $provider . '/api/cvefor/cpe:2.3:a:' . $app->vendor . ':' . $app->product . ':' . $app->version;
+
+                Log::debug('CVEReport - url ' . $url);
+
+                $http = curl_init($url);
+                curl_setopt($http, CURLOPT_RETURNTRANSFER, true);
+
+                $response = curl_exec($http);
+                if ($response === false) {
+                    Log::debug('CVESearch - Could not query the provider');
+                    return;
+                }
+
+                $http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
+                Log::debug('CVEReport - status ' . $http_status);
+                curl_close($http);
+
+                $json = json_decode($response);
+
+                // loop on all CVE
+                if ($http_status === 200) {
+                    // loop on all CVE
+                    foreach ($json as $cve) {
+                        // check CVE in frequency range
+                        if (strtotime($cve->Published) >= $min_timestamp) {
+                            // put summary in lowercase
+                            $cve->summary = strtolower($cve->summary);
+                            // Log::debug('CVESearch - CVE summary ' . $cve->summary);
+                            $cve->application = $name;
+                            $cve_match[] = $cve;
+                        }
+                    }
+                }
+                // Be nice with CIRCL, wait few miliseconds
+                usleep(200);
+            }
+
+            // QUERY
             $client = curl_init($provider . '/api/query');
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($client);
@@ -70,10 +144,6 @@ class CVESearch extends Command
                 ->map(function ($name) {
                     return strtolower($name);
                 });
-
-            // start timestamp
-            $min_timestamp = strtotime(sprintf('-%d days', $check_frequency), strtotime('now'));
-            Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A', $min_timestamp));
 
             // CVE counters
             $cve_match = [];
@@ -98,7 +168,7 @@ class CVESearch extends Command
             Log::debug('CVESearch - ' . count($cve_match) . ' match found');
 
             // compose message
-            if (count($cve_match) > 0) {
+            if ((count($cpe_match) > 0) || (count($cve_match) > 0)) {
                 // send email alert
                 $mail_from = config('mercator-config.cve.mail-from');
                 $to_email = config('mercator-config.cve.mail-to');
@@ -112,12 +182,21 @@ class CVESearch extends Command
                 ];
 
                 $message = '<html><body>';
-                foreach ($cve_match as $cve) {
-                    $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
-                }
+                if (count($cpe_match)>0) {
+                    $message = '<h1>CPE Matching</h1>';
+                    foreach ($cpe_match as $cve) {
+                        $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
+                       }
+                    }
+                if (count($cve_match)>0) {
+                    $message = '<h1>String matching</h1>';
+                    foreach ($cve_match as $cve) {
+                        $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
+                        }
+                    }
                 $message .= '</body></html>';
 
-                Log::debug('CVESearch - '. $message);
+                // Log::debug('CVESearch - '. $message);
 
                 // Send mail
                 if (mail($to_email, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {

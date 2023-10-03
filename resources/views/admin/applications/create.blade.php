@@ -627,6 +627,7 @@ $(document).ready(function () {
     });
 
 
+    // CPE
     // ------------------------------------------------
     $('#vendor-selector').select2({
       placeholder: 'Start typing to search',

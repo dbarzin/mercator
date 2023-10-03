@@ -1,17 +1,19 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Bay;
 use App\Building;
+use App\Peripheral;
+use App\Site;
+use App\Entity;
+use App\MApplication;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use App\Peripheral;
-use App\Site;
-use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Gate;
 
 class PeripheralController extends Controller
 {
@@ -28,18 +30,25 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // lists
+        $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
+        $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.peripherals.create', compact('sites', 'buildings', 'bays'));
+        return view('admin.peripherals.create', 
+            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list','domain_list','responsible_list'));
     }
 
     public function store(StorePeripheralRequest $request)
     {
-        Peripheral::create($request->all());
+        $peripheral = Peripheral::create($request->all());
+        $peripheral->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.peripherals.index');
     }
@@ -48,20 +57,27 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // lists
+        $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
+        $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         $peripheral->load('site', 'building', 'bay');
 
-        return view('admin.peripherals.edit', compact('sites', 'buildings', 'bays', 'peripheral'));
+        return view('admin.peripherals.edit', 
+            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'peripheral','type_list','domain_list','responsible_list'));
     }
 
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
         $peripheral->update($request->all());
+        $peripheral->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.peripherals.index');
     }

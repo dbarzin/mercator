@@ -129,6 +129,24 @@
           </div>
 
         <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-header">
+                    Common Vulnerabilities and Exposures
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            <a href="/admin/report/cve" target="_new">Find matching CVE</a>
+                            <br>
+                            Search for CVE based on application's CPE
+                            <br>
+                            <br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             @can('gdpr_access')
             <div class="card">
                 <div class="card-header">

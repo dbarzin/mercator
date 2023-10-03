@@ -389,9 +389,9 @@ class HomeController extends Controller
                             ->whereRaw('m_application_process.m_application_id = m_applications.id');
                     })
                 // CPE must be given
-                    ->where('vendor', '<>', null)
-                    ->where('product', '<>', null)
-                    ->where('version', '<>', null)
+                //    ->where('vendor', '<>', null)
+                //    ->where('product', '<>', null)
+                //    ->where('version', '<>', null)
                     ->count(),
 
             'applicationServices' => ApplicationService::count(),
@@ -446,6 +446,7 @@ class HomeController extends Controller
                     ->where('crypted', '<>', null)
                     ->count(),
 
+            // Administration
             'zones' => ZoneAdmin::count(),
             'zones_lvl1' => ZoneAdmin
                 ::where('description', '<>', null)

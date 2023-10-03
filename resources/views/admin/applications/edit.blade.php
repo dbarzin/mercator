@@ -130,7 +130,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="referent">
+                    <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
                         @if (!$editor_list->contains(old('editor')))
                             <option> {{ old('editor') }}</option>'
                         @endif
@@ -145,7 +145,6 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
                 </div>
-
             </div>
 
             @if (auth()->user()->granularity>=2)
