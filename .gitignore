@@ -43,3 +43,4 @@ stubs/
 vendor/
 *.xlsx
 tests/Browser/console/*.log
+docker-compose/PV/mercator/db.sqlite
