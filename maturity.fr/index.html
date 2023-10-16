@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/maturity.fr/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Maturity.fr - Mercator</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Maturity.fr";
+        var mkdocs_page_input_path = "maturity.fr.md";
+        var mkdocs_page_url = "/mercator/maturity.fr/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Mercator
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../index.fr/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../cartography.fr/">Cartographie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../application.fr/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usecases.fr/">Cas d'utilisation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../model.fr/">Modèle de données</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reports.fr/">Rapports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../api.fr/">API</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../references.fr/">Références</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Mercator</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Maturity.fr</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/maturity.fr.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <ul>
+<li class="i18n-link i18n-link-not-found i18n-link-en">English: This page isn't translated to English.</li>
+</ul>
+<h2 id="niveaux-de-maturite">Niveaux de maturité</h2>
+<h3 id="niveaux">Niveaux</h3>
+<p>Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie.
+C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète.
+Ce pourcentage est calculé en divisant le nombre d'éléments conformes par le nombre total d'élements.</p>
+<p><a href="../images/maturity.png"><img src="images/maturity.png" width="600"></a></p>
+<p>Cette maturité est divisée en trois niveaux correspondant aux trois niveaux de granularité :</p>
+<ul>
+<li>La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;</li>
+<li>La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;</li>
+<li>La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.</li>
+</ul>
+<h3 id="regles-de-calcul">Règles de calcul</h3>
+<p>Un objet est conforme si toutes les informations sur l'objet ont été fournies.
+S'il manque des informations, l'objet est non-conforme.</p>
+<p>Cela peut être l'absence d'un attribut : une application sans description, l'absence d'un point de contact pour une entité, 
+la criticité qui n'est pas spécifiés... ou l'absence d'une relation avec d'autres objets : un serveur sans applications, un processus sans acteurs, 
+une application qui ne sert aucun processus...</p>
+<p>Les règles appliquées à ce calcul sont les suivantes :</p>
+<ul>
+<li>
+<p>Un élément peut être conforme au niveau n, et ne pas être conforme au niveau n+1. L'inverse n'est pas vrais.</p>
+</li>
+<li>
+<p>S'il 'y a pas de nouveaux attributs qui entre en compte pour passer du niveau n au niveau n+1, l'objet conforme au niveau n reste conforme au niveau n+1.</p>
+</li>
+</ul>
+<p>En fonction du nombre d'objets pris en compte dans le calcul de conformité, à chaque niveau,
+le pourcentage de conformité du niveau n peut être inférieur, égal ou suppérieur au pourcentage du niveau n+1</p>
+<h3 id="exigences-de-conformite">Exigences de conformité</h3>
+<table>
+<thead>
+<tr>
+<th>Objet</th>
+<th align="center">Niveau</th>
+<th>Exigences</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Écosystème</strong></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td>Entité</td>
+<td align="center">1</td>
+<td>doit avoir une description, un niveau de sécurité, un point de contact et supporter au moins un processus</td>
+</tr>
+<tr>
+<td>Relation</td>
+<td align="center">1</td>
+<td>doit avoir un type et une description</td>
+</tr>
+<tr>
+<td>Relation</td>
+<td align="center">2</td>
+<td>doit avoir une importance</td>
+</tr>
+<tr>
+<td><strong>Système d'Information</strong></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td>Macro-Processus</td>
+<td align="center">2</td>
+<td>doit avoir une description, des éléments d'entrée/sortie et un besoins de sécurité (CIDT)</td>
+</tr>
+<tr>
+<td>Macro-Processus</td>
+<td align="center">3</td>
+<td>doit avoir un propriétaire</td>
+</tr>
+<tr>
+<td>Processus</td>
+<td align="center">1</td>
+<td>doit avoir une description, des éléments d'entrée/sortie, un propriétaire</td>
+</tr>
+<tr>
+<td>Processus</td>
+<td align="center">2</td>
+<td>doit avoir un niveau de sécurité et faire partie d'un macro-processus</td>
+</tr>
+<tr>
+<td>Activité</td>
+<td align="center">2</td>
+<td>doit avoir une desription</td>
+</tr>
+<tr>
+<td>Opération</td>
+<td align="center">1</td>
+<td>doit avoir une description</td>
+</tr>
+<tr>
+<td>Opération</td>
+<td align="center">2</td>
+<td>doit avoir un acteur</td>
+</tr>
+<tr>
+<td>Opération</td>
+<td align="center">3</td>
+<td>doit avoir une tâche</td>
+</tr>
+<tr>
+<td>Tâche</td>
+<td align="center">3</td>
+<td>doit avoir une description et faire partie d'une opération</td>
+</tr>
+<tr>
+<td>Acteur</td>
+<td align="center">2</td>
+<td>doit avoir un contact, une nature et un type</td>
+</tr>
+<tr>
+<td>Information</td>
+<td align="center">1</td>
+<td>doit avoir une description, un propriétaire et un mode de stockage</td>
+</tr>
+<tr>
+<td>Information</td>
+<td align="center">2</td>
+<td>doit avoir un niveau de sécurité et de sensibilité</td>
+</tr>
+<tr>
+<td><strong>Vue applicative</strong></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td>Block applicatif</td>
+<td align="center">2</td>
+<td>doit avoir une description</td>
+</tr>
+<tr>
+<td>Application</td>
+<td align="center">1</td>
+<td>doit avoir une description, un responsable, une technologie, un type des utilisateurs et servir un processus</td>
+</tr>
+<tr>
+<td>Application</td>
+<td align="center">2</td>
+<td>doit avoir une entité responsable et un besoin de sécurité</td>
+</tr>
+<tr>
+<td>Application</td>
+<td align="center">3</td>
+<td>doit être identifiées par une CPE</td>
+</tr>
+<tr>
+<td>Service applicatif</td>
+<td align="center">2</td>
+<td>doit avoir une description et une application</td>
+</tr>
+<tr>
+<td>Module applicatif</td>
+<td align="center">2</td>
+<td>doit avoir une description</td>
+</tr>
+<tr>
+<td>Base de données</td>
+<td align="center">1</td>
+<td>doit avoir une description, une entité responsable, un responsable et un type</td>
+</tr>
+<tr>
+<td>Base de données</td>
+<td align="center">2</td>
+<td>doit avoir un niveau de sécurité</td>
+</tr>
+<tr>
+<td>Flux applicatif</td>
+<td align="center">1</td>
+<td>doit avoir une description, une source et une destination</td>
+</tr>
+<tr>
+<td><strong>Vue de l'administration</strong></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td>Zone d'administration</td>
+<td align="center">1</td>
+<td>doit avoir une description</td>
+</tr>
+<tr>
+<td>Service d'annuaire</td>
+<td align="center">1</td>
+<td>doit avoir une description, une solution et faire partie d'une zone</td>
+</tr>
+<tr>
+<td>Forêt active directory / LDAP</td>
+<td align="center">1</td>
+<td>doit avoir une description et faire partie d'une zone</td>
+</tr>
+<tr>
+<td>Domains active directory / LDAP</td>
+<td align="center">1</td>
+<td>doit avoir une description, une nombre de domain contrôleur, un nombre d'utilisateurn un nombre de machines et des relations inter-domaine</td>
+</tr>
+<tr>
+<td><strong>Vue logique</strong></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td>Réseaux</td>
+<td align="center">1</td>
+<td>doit avoir un type de protocol, un responsable, un responsable sécurité et des besoins de sécurité</td>
+</tr>
+<tr>
+<td>Sous-réseau</td>
+<td align="center">1</td>
+<td>doit avoir une description, une adresse IP, une passerelle par défaut, un type d'allocation d'adresse IP, un responsable d'exploitation et un VLAN</td>
+</tr>
+<tr>
+<td>Passerelle</td>
+<td align="center">1</td>
+<td>doit avoir une description, un tupe d'authentification et une adresse IP</td>
+</tr>
+<tr>
+<td>Entité externe connectée</td>
+<td align="center">1</td>
+<td>doit avoir un type et un contact</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dbarzin/mercator" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
