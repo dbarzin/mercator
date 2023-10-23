@@ -49,13 +49,17 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
-    public function getIsAdminAttribute(): bool
+    /**
+     * Check if the User has the 'Admin' role, which is the first role in the app
+     * @return bool
+     */
+    public function isAdmin(): bool
     {
         return $this->roles()->where('id', 1)->exists();
     }
 
     /**
-     * Permet de check si un utilisateur a un role
+     * Check si un utilisateur a un role
      *
      * @param String|Role $role
      *
