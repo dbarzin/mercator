@@ -187,7 +187,7 @@
                      }
                  }
                  @endphp
-                 <label class="recommended">{{ trans('cruds.application.fields.cartographers') }}</label>
+                 <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
                  <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
                     @foreach($cartographers as $cartographer)
                     <option value="{{ $cartographer[0] }}" {{ $cartographer[2] ? 'selected' : '' }}>{{ $cartographer[1] }}</option>
