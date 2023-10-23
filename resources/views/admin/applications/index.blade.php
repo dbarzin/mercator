@@ -37,11 +37,6 @@
                         <th>
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
-                        <!--
-                        <th>
-                            {{ trans('cruds.application.fields.cartographers') }}
-                        </th>
-                        -->
                         <th>
                         </th>
                     </tr>
@@ -110,15 +105,6 @@
                                 </a>
                                 @endif
                             </td>
-                            {{--
-                            <td>
-                                @if ($application->cartographers !== null)
-                                    @foreach($application->cartographers as $cartographer)
-                                        {{ $cartographer->name }} @if(!$loop->last)-@endif
-                                    @endforeach
-                                @endif
-                            </td>
-                            --}}
                             <td>
                                 @can('m_application_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.applications.show', $application->id) }}">

@@ -4,11 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
@@ -20,7 +20,11 @@ use LdapRecord\Laravel\Auth\LdapAuthenticatable;
  */
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, AuthenticatesWithLdap, HasLdapUser;
+    use AuthenticatesWithLdap;
+    use HasApiTokens;
+    use HasLdapUser;
+    use Notifiable;
+    use SoftDeletes;
 
     public $table = 'users';
 
@@ -29,7 +33,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         'password',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'email_verified_at',
         'created_at',
         'updated_at',
