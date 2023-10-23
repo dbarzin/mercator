@@ -11,7 +11,7 @@ class OnlySpecificUsers extends Rule
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         if (! config('app.ldap_groups')) {
             return true;
