@@ -623,7 +623,7 @@
          * @returns {string}
          */
         function generateEventsList() {
-            let ret = '<li>';
+            let ret = '<ul>';
             @json($application->events).forEach (function(event) {
                 ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
                 ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
@@ -657,14 +657,14 @@
                                         m_application_id: {{ $application->id }},
                                         _token: "{{ csrf_token() }}"
                                     },
-                                    success: function(data){
+                                    success: (data) => {
                                         that.parent().remove();
-                                    // Mise à jour des évènements pour la popup
+                                        // Mise à jour des évènements pour la popup
                                         swalHtml = data.events;
-                                        alert('Evènement supprimé !');
+                                        Swal.fire('Evènement supprimé !', '', 'success');
                                     },
-                                    error: function(){
-                                        alert('Une erreur est survenue');
+                                    error: () => {
+                                        Swal.fire('Une erreur est survenue', '', 'error');
                                     }
                                 })
                             }
@@ -688,14 +688,14 @@
                         message: message,
                         _token: "{{ csrf_token() }}"
                     }, "json")
-                    .done(function (data) {
+                    .done((data) => {
                         // Mise à jour des évènements pour la popup
                         swalHtml = data.events;
-                        alert('Evènement ajouté !');
+                        Swal.fire('Evènement ajouté !', '', 'success');
                         $('#eventMessage').val('');
                     })
-                    .fail(function (msg) {
-                        alert('Une erreur est survenue');
+                    .fail(() => {
+                        Swal.fire('Une erreur est survenue', '', 'error');
                     })
                 }
             });
