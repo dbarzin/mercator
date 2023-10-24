@@ -4,11 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
@@ -20,7 +20,11 @@ use LdapRecord\Laravel\Auth\LdapAuthenticatable;
  */
 class User extends Authenticatable implements LdapAuthenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, AuthenticatesWithLdap, HasLdapUser;
+    use AuthenticatesWithLdap;
+    use HasApiTokens;
+    use HasLdapUser;
+    use Notifiable;
+    use SoftDeletes;
 
     public $table = 'users';
 
@@ -29,7 +33,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         'password',
     ];
 
-    protected $dates = [
+    protected array $dates = [
         'email_verified_at',
         'created_at',
         'updated_at',
@@ -49,13 +53,17 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
-    public function getIsAdminAttribute(): bool
+    /**
+     * Check if the User has the 'Admin' role, which is the first role in the app
+     * @return bool
+     */
+    public function isAdmin(): bool
     {
         return $this->roles()->where('id', 1)->exists();
     }
 
     /**
-     * Permet de check si un utilisateur a un role
+     * Check si un utilisateur a un role
      *
      * @param String|Role $role
      *
@@ -110,15 +118,9 @@ class User extends Authenticatable implements LdapAuthenticatable
         $this->notify(new ResetPassword($token));
     }
 
-    // Add some caching for roles
-    private $roles = null;
-
     public function roles()
     {
-        if ($this->roles === null)
-            return ($this->roles=$this->belongsToMany(Role::class)->orderBy('title'));
-        else
-            return $this->roles;
+        return $this->belongsToMany(Role::class)->orderBy('title');
     }
 
     public function m_applications()

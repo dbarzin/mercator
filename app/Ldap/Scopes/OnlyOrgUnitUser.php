@@ -16,7 +16,7 @@ class OnlyOrgUnitUser implements Scope
      *
      * @return void
      */
-    public function apply(Builder $query, Model $model)
+    public function apply(Builder $query, Model $model): void
     {
         if (! config('app.ldap_scope')) {
             return;

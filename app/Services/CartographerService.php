@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\MApplication;
 use App\Role;
+use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -35,7 +36,7 @@ class CartographerService
         // Maybe there's a way to TypeHint the authenticated user ? (\Illuminate\Contracts\Auth\Authenticatable user)
         $currentUser = Auth::user();
         // On ne filtre pas pour les admins
-        if (! $this->active || $currentUser->getIsAdminAttribute()) {
+        if (! $this->active || $currentUser->isAdmin()) {
             return $applications->sortBy('name')->pluck('name', 'id');
         }
 
@@ -53,27 +54,27 @@ class CartographerService
      *
      * @param MApplication $application
      *
-     * @return bool
+     * @return void
      */
-    public function attributeCartographerRole(MApplication $application): bool
+    public function attributeCartographerRole(MApplication $application): void
     {
         if (! $this->active) {
-            return false;
+            return;
         }
 
         // On ne veut pas le créer s'il existe pas
         if (! ($role = Role::getRoleByTitle('Cartographer')) && ! ($role = Role::getRoleByTitle('Cartographe'))) {
-            return false;
+            return;
         }
 
+        /** @var User $cartographer */
         foreach ($application->cartographers as $cartographer) {
             // Pas besoin de le mettre sur les utilisateurs étant administrateurs
-            if ($cartographer->getIsAdminAttribute()) {
+            if ($cartographer->isAdmin()) {
                 continue;
             }
 
             $cartographer->addRole($role);
         }
-        return true;
     }
 }
