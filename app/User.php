@@ -118,15 +118,9 @@ class User extends Authenticatable implements LdapAuthenticatable
         $this->notify(new ResetPassword($token));
     }
 
-    // Add some caching for roles
-    private $roles = null;
-
     public function roles()
     {
-        if ($this->roles === null)
-            return ($this->roles=$this->belongsToMany(Role::class)->orderBy('title'));
-        else
-            return $this->roles;
+        return $this->belongsToMany(Role::class)->orderBy('title');
     }
 
     public function m_applications()
