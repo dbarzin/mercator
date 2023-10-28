@@ -29,12 +29,13 @@ class PhysicalSwitchController extends Controller
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.physicalSwitches.create', compact('sites', 'buildings', 'bays'));
+        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.physicalSwitches.create',
+            compact('sites', 'buildings', 'bays','type_list'));
     }
 
     public function store(StorePhysicalSwitchRequest $request)
@@ -52,9 +53,12 @@ class PhysicalSwitchController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
         $physicalSwitch->load('site', 'building', 'bay');
 
-        return view('admin.physicalSwitches.edit', compact('sites', 'buildings', 'bays', 'physicalSwitch'));
+        return view('admin.physicalSwitches.edit',
+            compact('sites', 'buildings', 'bays', 'physicalSwitch','type_list'));
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)
