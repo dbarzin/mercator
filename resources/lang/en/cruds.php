@@ -258,6 +258,20 @@ return [
         'title_short' => 'Certificates',
         'title_singular' => 'Certificate',
     ],
+    'cluster' => [
+        'description' => "Group of interconnected virtual servers that work together to provide computing services and resources in a scalable, redundant and efficient manner.",
+        'fields' => [
+            'name' => 'Name',
+            'name_helper' => 'Cluster name',
+            'type' => 'Type',
+            'type_helper' => 'Cluster type',
+            'description' => 'Description',
+            'description_helper' => 'Cluster description',
+        ],
+        'title' => 'Logical server cluster',
+        'title_short' => 'Clusters',
+        'title_singular' => 'Cluster',
+    ],
     'configuration' => [
         'title' => 'Configuration',
         'certificate' => [
@@ -986,7 +1000,7 @@ return [
     ],
     'tools' => [
         "patching" => "Patching",
-        "explore" => "Exploration",        
+        "explore" => "Exploration",
     ],
     'report' => [
         'cartography' => [
@@ -1023,7 +1037,7 @@ return [
             'maturity_helper' => 'Lists the levels of maturity reached by the different objects',
             'changes' => 'Update / Changes',
             'changes_helper' => 'Traces the changes made on the cartography over the last 12 months',
-            'external_access' => 'External connctions', 
+            'external_access' => 'External connctions',
             'external_access_helper' => 'External entities connected to the information system',
             'gdpr' => 'GDPR',
             'register_report' => 'Register of processing',
@@ -1031,7 +1045,7 @@ return [
             'register_list' => 'List of processes',
             'register_list_helper' => 'List of treatments, applications, databases and related information.',
             'vlans' => 'VLANs',
-            'vlans_helper' => "List of VLANs, subnets and devices"       
+            'vlans_helper' => "List of VLANs, subnets and devices"
         ],
         'explorer' => [
             'title' => 'Mapping explorer',

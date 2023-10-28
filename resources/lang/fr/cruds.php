@@ -255,6 +255,20 @@ return [
         'title_short' => 'Certificats',
         'title_singular' => 'Certificat',
     ],
+    'cluster' => [
+        'description' => "Groupe de serveurs virtuels interconnectés qui travaillent ensemble pour fournir des services et des ressources informatiques de manière évolutive, redondante et efficace.",
+        'fields' => [
+            'name' => 'Nom',
+            'name_helper' => 'Nom du cluster',
+            'type' => 'Type',
+            'type_helper' => 'Type de cluster',
+            'description' => 'Description',
+            'description_helper' => 'Description du cluster',
+        ],
+        'title' => 'Cluster de serveurs logique',
+        'title_short' => 'Clusters',
+        'title_singular' => 'Cluster',
+    ],
     'configuration' => [
         'title' => 'Configuration',
         'certificate' => [
@@ -991,7 +1005,7 @@ return [
     ],
     'tools' => [
         "patching" => "Correctifs",
-        "explore" => "Exploration",        
+        "explore" => "Exploration",
     ],
     'report' => [
         'cartography' => [
@@ -1029,7 +1043,7 @@ return [
             'maturity_helper' => 'Liste les niveaux de maturité atteints par les différents objets de la cartographie',
             'changes' => 'Mise à jour / changements',
             'changes_helper' => 'Trace les changements realisés sur la cartographie les 12 derniers mois',
-            'external_access' => 'Connexions externes', 
+            'external_access' => 'Connexions externes',
             'external_access_helper' => 'Entités externes connectées au système d\'information',
             'gdpr' => 'RGPD',
             'register_report' => 'Registres des traitements',

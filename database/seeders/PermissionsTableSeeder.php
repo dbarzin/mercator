@@ -1143,6 +1143,27 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '280',
                 'title' => 'patching_make',
             ],
+            // Cluster
+            [
+                'id'    => '281',
+                'title' => 'cluster_create',
+            ],
+            [
+                'id'    => '282',
+                'title' => 'cluster_edit',
+            ],
+            [
+                'id'    => '283',
+                'title' => 'cluster_show',
+            ],
+            [
+                'id'    => '284',
+                'title' => 'cluster_delete',
+            ],
+            [
+                'id'    => '285',
+                'title' => 'cluster_access',
+            ],
         ];
 
         Permission::insert($permissions);
