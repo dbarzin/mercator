@@ -111,6 +111,11 @@ class LogicalServer extends Model
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
+    public function cluster()
+    {
+        return $this->belongsTo(Cluster::class, 'cluster_id');
+    }
+
     public function certificates()
     {
         return $this->belongsToMany(Certificate::class)->orderBy('name');
