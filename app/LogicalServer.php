@@ -43,6 +43,7 @@ class LogicalServer extends Model
         'memory',
         'disk',
         'disk_used',
+        'cluster_id',
         'environment',
         'net_services',
         'configuration',

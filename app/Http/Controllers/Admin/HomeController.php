@@ -557,6 +557,9 @@ class HomeController extends Controller
                             ->from('logical_server_physical_server')
                             ->whereRaw(
                                 'logical_server_physical_server.logical_server_id = logical_servers.id'
+                            )
+                            ->orWhereRaw(
+                                'logical_servers.cluster_id is not null'
                             );
                     })
                     ->count(),

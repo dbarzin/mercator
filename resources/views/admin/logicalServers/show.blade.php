@@ -22,7 +22,7 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
         </form>
-    @endcan    
+    @endcan
 </div>
 
 <div class="card">
@@ -50,23 +50,31 @@
         {{ trans("cruds.menu.logical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">    
+    <div class="card-body">
         <div class="row">
-            <div class="col-sm">      
+            <div class="col-sm-3">
                 <dt>{{ trans('cruds.logicalServer.fields.operating_system') }}</dt>
                 {!! $logicalServer->operating_system !!}
             </div>
-            <div class="col-sm">
+            <div class="col-sm-3">
                 <dt>{{ trans('cruds.logicalServer.fields.install_date') }}</dt>
                 {!! $logicalServer->install_date !!}
             </div>
-            <div class="col-sm">
+            <div class="col-sm-3">
                 <dt>{{ trans('cruds.logicalServer.fields.update_date') }}</dt>
                 {!! $logicalServer->update_date !!}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-sm-3">
+                <dt>{{ trans('cruds.logicalServer.fields.cluster') }}</dt>
+                @if ($logicalServer->cluster!=null)
+                <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
+                    {!! $logicalServer->cluster->name ?? "" !!}
+                </a>
+                @endif
+            </div>
+            <div class="col-md-3">
                 <dt>{{ trans('cruds.logicalServer.fields.environment') }}</dt>
                 {!! $logicalServer->environment !!}
             </div>
@@ -87,7 +95,7 @@
         {{ trans("cruds.logicalServer.fields.configuration") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">    
+    <div class="card-body">
         <div class="row">
             <div class="col-sm-2">
                 <b>{{ trans('cruds.logicalServer.fields.cpu') }}</b>
@@ -120,7 +128,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm-4">
                 <dt>{{ trans('cruds.logicalServer.fields.applications') }}</dt>
                 @foreach($logicalServer->applications as $application)
                     <a href="{{ route('admin.applications.show', $application->id) }}">
@@ -128,10 +136,10 @@
                     </a>
                     @if(!$loop->last)
                     ,
-                    @endif                                
+                    @endif
                 @endforeach
             </div>
-            <div class="col-sm">
+            <div class="col-sm-4">
                 <dt>{{ trans('cruds.logicalServer.fields.databases') }}</dt>
                 @foreach($logicalServer->databases as $database)
                     <a href="{{ route('admin.databases.show', $database->id) }}">
@@ -149,7 +157,7 @@
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">    
+    <div class="card-body">
         <div class="row">
             <div class="col-sm">
                 <dt>{{ trans('cruds.logicalServer.fields.servers') }}</dt>
@@ -159,14 +167,14 @@
                     </a>
                     @if(!$loop->last)
                     ,
-                    @endif                                
+                    @endif
                 @endforeach
             </div>
         </div>
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $logicalServer->created_at ? $logicalServer->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $logicalServer->updated_at ? $logicalServer->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $logicalServer->updated_at ? $logicalServer->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
     <div class="form-group">

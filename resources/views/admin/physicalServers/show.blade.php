@@ -95,7 +95,7 @@
                     </a>
                     @if(!$loop->last)
                     ,
-                    @endif                                
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -107,7 +107,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-sm">      
+            <div class="col-sm">
                 <dt>{{ trans('cruds.physicalServer.fields.operating_system') }}</dt>
                 {!! $physicalServer->operating_system !!}
             </div>
@@ -121,7 +121,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm-4">
+                <b>{{ trans('cruds.physicalServer.fields.cluster') }}</b>
+                @if ($physicalServer->cluster!=null)
+                <a href="{{ route('admin.clusters.show', $physicalServer->cluster_id) }}">
+                    {!! $physicalServer->cluster->name ?? "" !!}
+                </a>
+                @endif
+            </div>
+            <div class="col-sm-4">
                 <b>{{ trans('cruds.physicalServer.fields.address_ip') }}</b>
                 {{ $physicalServer->address_ip }}
             </div>
@@ -140,7 +148,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-lg">
+            <div class="col-lg-3">
                 <b>{{ trans('cruds.physicalServer.fields.site') }}</b>
                 @if ($physicalServer->site!=null)
                     <a href="{{ route('admin.sites.show', $physicalServer->site->id) }}">
@@ -148,9 +156,7 @@
                     </a>
                 @endif
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg"> 
+            <div class="col-lg-3">
                 <b>{{ trans('cruds.physicalServer.fields.building') }}</b>
                 @if ($physicalServer->building!=null)
                     <a href="{{ route('admin.buildings.show', $physicalServer->building->id) }}">
@@ -158,9 +164,7 @@
                     </a>
                 @endif
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg"> 
+            <div class="col-lg-3">
                 <b>{{ trans('cruds.physicalServer.fields.bay') }}</b>
                 @if ($physicalServer->bay!=null)
                     <a href="{{ route('admin.bays.show', $physicalServer->bay->id) }}">
@@ -172,7 +176,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $physicalServer->created_at ? $physicalServer->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $physicalServer->updated_at ? $physicalServer->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $physicalServer->updated_at ? $physicalServer->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 

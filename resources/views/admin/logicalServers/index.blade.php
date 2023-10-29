@@ -51,12 +51,13 @@
                             ($logicalServer->environment==null)||
                             ($logicalServer->address_ip==null)||
                             ($logicalServer->applications->count()==0)||
-                            ($logicalServer->servers->count()==0)
-                            )
+                            (
+                                ($logicalServer->servers->count()==0) && ($logicalServer->cluster_id==null)
+                            ))
                                 class="table-warning"
                         @endif
 
-                          >                          
+                          >
                             <td>
 
                             </td>
@@ -171,7 +172,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
