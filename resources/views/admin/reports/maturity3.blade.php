@@ -27,7 +27,7 @@
                 <th>{{ trans("cruds.menu.ecosystem.title_short") }}</th>
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
-                <th><center>{{ number_format( ($entities+$relations)>0 
+                <th><center>{{ number_format( ($entities+$relations)>0
                         ? ($entities_lvl1+$relations_lvl1) * 100 / ($entities+$relations) : 0, 0) }} %</center></th>
             </thead>
             <tbody>
@@ -114,25 +114,25 @@
                     <td><center>{{ $applicationBlocks }}</center></td>
                     <td><center>{{ $applicationBlocks_lvl2 }}</center></td>
                     <td><center>{{ $applicationBlocks>0 ? number_format($applicationBlocks_lvl2*100/$applicationBlocks,0):0 }}%</center></td>
-                </tr>            
+                </tr>
                 <tr>
                     <td><a href="/admin/applications">{{ trans("cruds.application.title") }}</a></td>
                     <td><center>{{ $applications }}</center></td>
                     <td><center>{{ $applications_lvl3 }}</center></td>
                     <td><center>{{ $applications>0 ? number_format($applications_lvl3*100/$applications,0):0 }}%</center></td>
-                </tr>            
+                </tr>
                 <tr>
                     <td><a href="/admin/application-services">{{ trans("cruds.applicationService.title") }}</a></td>
                     <td><center>{{ $applicationServices }}</center></td>
                     <td><center>{{ $applicationServices_lvl2 }}</center></td>
                     <td><center>{{ $applicationServices>0 ? number_format($applicationServices_lvl2*100/$applicationServices,0):0 }}%</center></td>
-                </tr>            
+                </tr>
                 <tr>
                     <td><a href="/admin/application-modules">{{ trans("cruds.applicationModule.title") }}</a></td>
                     <td><center>{{ $applicationModules }}</center></td>
                     <td><center>{{ $applicationModules_lvl2 }}</center></td>
                     <td><center>{{ $applicationModules>0 ? number_format($applicationModules_lvl2*100/$applicationModules,0):0 }}%</center></td>
-                </tr>            
+                </tr>
                 <tr>
                     <td><a href="/admin/databases">{{ trans("cruds.database.title") }}</a></td>
                     <td><center>{{ $databases }}</center></td>
@@ -192,12 +192,12 @@
                 <th>
                     <center>
                     {{
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$logicalServers+$certificates)>0
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$switches+$routers+$securityDevices+$DHCPServers+$DNSServers+$clusters+$logicalServers+$certificates)>0
                         ?
                         number_format(
-                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$logicalServers_lvl1+$certificates_lvl2) 
+                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$externalConnectedEntities_lvl2+$DHCPServers_lvl2+$DNSServers_lvl2+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$clusters_lvl1+$logicalServers_lvl1+$certificates_lvl2)
                         *100 /
-                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$logicalServers+$certificates),0)
+                        ($networks+$subnetworks+$gateways+$externalConnectedEntities+$DHCPServers+$DNSServers+$switches+$routers+$securityDevices+$clusters+$logicalServers+$certificates),0)
                         : 0
                     }}
                     %
@@ -262,6 +262,12 @@
                     <td><center>{{ $DNSServers>0 ? number_format($DNSServers_lvl2*100/$DNSServers,0):0 }}%</center></td>
                 </tr>
                 <tr>
+                    <td><a href="/admin/clusters">{{ trans("cruds.cluster.title") }}</a></td>
+                    <td><center>{{ $clusters }}</center></td>
+                    <td><center>{{ $clusters_lvl1 }}</center></td>
+                    <td><center>{{ $clusters>0 ? number_format($clusters_lvl1*100/$clusters,0):0 }}%</center></td>
+                </tr>
+                <tr>
                     <td><a href="/admin/logical-servers">{{ trans("cruds.logicalServer.title") }}</a></td>
                     <td><center>{{ $logicalServers }}</center></td>
                     <td><center>{{ $logicalServers_lvl1 }}</center></td>
@@ -280,23 +286,23 @@
                 <th><center>#</center></th>
                 <th><center>{{ trans("global.mature") }}</center></th>
                 <th><center>
-                        {{                             
+                        {{
                             ($sites + $buildings + $bays + $physicalServers + $workstations + $storageDevices +
-                            $peripherals + $phones + $physicalRouters + $physicalSwitchs + 
+                            $peripherals + $phones + $physicalRouters + $physicalSwitchs +
                             $wifiTerminals + $physicalSecurityDevices +
                             $wans + $mans + $lans + $vlans)>0
                             ?
                             number_format (
                             ($sites_lvl1 + $buildings_lvl1 + $bays_lvl1 + $physicalServers_lvl1 + $workstations_lvl1 + $storageDevices_lvl1 +
-                            $peripherals_lvl1 + $phones + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 + 
+                            $peripherals_lvl1 + $phones + $physicalRouters_lvl1 + $physicalSwitchs_lvl1 +
                             $wifiTerminals_lvl1 + $physicalSecurityDevices_lvl1 +
                             $wans_lvl1 + $mans_lvl1 + $lans_lvl1 + $vlans_lvl1) * 100 /
                             ($sites + $buildings + $bays + $physicalServers + $workstations + $storageDevices +
-                            $peripherals + $phones + $physicalRouters + $physicalSwitchs + 
+                            $peripherals + $phones + $physicalRouters + $physicalSwitchs +
                             $wifiTerminals + $physicalSecurityDevices +
-                            $wans + $mans + $lans + $vlans) 
+                            $wans + $mans + $lans + $vlans)
                             ,0):0
-                        }} 
+                        }}
 
                     %
                     </center>
