@@ -30,14 +30,14 @@ use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Information;
 use App\Lan;
-use App\LogicalServer;
 use App\MacroProcessus;
-use App\Man;
 use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
+use App\Cluster;
+use App\LogicalServer;
 // Physique
 use App\Phone;
 use App\PhysicalRouter;
@@ -54,6 +54,7 @@ use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
 use App\Vlan;
+use App\Man;
 use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
@@ -539,6 +540,12 @@ class HomeController extends Controller
                 ::where('description', '<>', null)
                     ->count(),
 
+            'clusters' => Cluster::count(),
+            'clusters_lvl1' => Cluster
+                ::where('description', '<>', null)
+                ->where('type', '<>', null)
+                ->count(),
+
             'logicalServers' => LogicalServer::count(),
             'logicalServers_lvl1' => LogicalServer
                 ::where('description', '<>', null)
@@ -557,6 +564,9 @@ class HomeController extends Controller
                             ->from('logical_server_physical_server')
                             ->whereRaw(
                                 'logical_server_physical_server.logical_server_id = logical_servers.id'
+                            )
+                            ->orWhereRaw(
+                                'logical_servers.cluster_id is not null'
                             );
                     })
                     ->count(),
@@ -705,7 +715,7 @@ class HomeController extends Controller
             $levels['processes'] + $levels['operations'] + $levels['informations'] +
             $levels['applications'] + $levels['databases'] + $levels['fluxes'] +
             $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'] +
-            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['logicalServers'] +
+            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['clusters'] + $levels['logicalServers'] +
             $levels['sites'] + $levels['buildings'] + $levels['bays'] + $levels['physicalServers'] + $levels['physicalRouters'] + $levels['physicalSwitchs'] + $levels['physicalSecurityDevices'] +
             $levels['wans'] + $levels['mans'] + $levels['lans'] + $levels['vlans'];
 
@@ -716,7 +726,7 @@ class HomeController extends Controller
             $levels['processes_lvl1'] + $levels['operations_lvl1'] + $levels['informations_lvl1'] +
             $levels['applications_lvl1'] + $levels['databases_lvl1'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
-            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['logicalServers_lvl1'] +
+            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['clusters_lvl1'] + $levels['logicalServers_lvl1'] +
             $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + $levels['physicalSecurityDevices_lvl1'] +
             $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) * 100 / $denominator,
                 0
@@ -728,7 +738,7 @@ class HomeController extends Controller
             $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['operations'] + $levels['actors'] + $levels['informations'] +
             $levels['applicationBlocks'] + $levels['applications'] + $levels['applicationServices'] + $levels['applicationModules'] + $levels['databases'] + $levels['fluxes'] +
             $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'] +
-            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['logicalServers'] + $levels['certificates'] +
+            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['clusters'] + $levels['logicalServers'] + $levels['certificates'] +
             $levels['sites'] + $levels['buildings'] + $levels['bays'] + $levels['physicalServers'] + $levels['physicalRouters'] + $levels['physicalSwitchs'] + $levels['physicalSecurityDevices'] +
             $levels['wans'] + $levels['mans'] + $levels['lans'] + $levels['vlans'];
 
@@ -739,7 +749,7 @@ class HomeController extends Controller
             $levels['macroProcessuses_lvl2'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
             $levels['applicationBlocks_lvl2'] + $levels['applications_lvl2'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
-            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
+            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['clusters_lvl1'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
             $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + $levels['physicalSecurityDevices_lvl1'] +
             $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) * 100 / $denominator,
                 0
@@ -751,7 +761,7 @@ class HomeController extends Controller
             $levels['macroProcessuses'] + $levels['processes'] + $levels['activities'] + $levels['tasks'] + $levels['operations'] + $levels['actors'] + $levels['informations'] +
             $levels['applicationBlocks'] + $levels['applications'] + $levels['applicationServices'] + $levels['applicationModules'] + $levels['databases'] + $levels['fluxes'] +
             $levels['zones'] + $levels['annuaires'] + $levels['forests'] + $levels['domaines'] +
-            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['logicalServers'] + $levels['certificates'] +
+            $levels['networks'] + $levels['subnetworks'] + $levels['gateways'] + $levels['externalConnectedEntities'] + $levels['switches'] + $levels['routers'] + $levels['securityDevices'] + $levels['DHCPServers'] + $levels['DNSServers'] + $levels['clusters'] + $levels['logicalServers'] + $levels['certificates'] +
             $levels['sites'] + $levels['buildings'] + $levels['bays'] + $levels['physicalServers'] + $levels['physicalRouters'] + $levels['physicalSwitchs'] + $levels['physicalSecurityDevices']
             + $levels['wans'] + $levels['mans'] + $levels['lans'] + $levels['vlans'];
 
@@ -762,7 +772,7 @@ class HomeController extends Controller
             $levels['macroProcessuses_lvl3'] + $levels['processes_lvl2'] + $levels['activities_lvl2'] + $levels['tasks_lvl3'] + $levels['operations_lvl2'] + $levels['actors_lvl2'] + $levels['informations_lvl2'] +
             $levels['applicationBlocks_lvl2'] + $levels['applications_lvl3'] + $levels['applicationServices_lvl2'] + $levels['applicationModules_lvl2'] + $levels['databases_lvl2'] + $levels['fluxes_lvl1'] +
             $levels['zones_lvl1'] + $levels['annuaires_lvl1'] + $levels['forests_lvl1'] + $levels['domaines_lvl1'] +
-            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
+            $levels['networks_lvl1'] + $levels['subnetworks_lvl1'] + $levels['gateways_lvl1'] + $levels['externalConnectedEntities_lvl2'] + $levels['switches_lvl1'] + $levels['routers_lvl1'] + $levels['securityDevices_lvl1'] + $levels['DHCPServers_lvl2'] + $levels['DNSServers_lvl2'] + $levels['clusters_lvl1'] + $levels['logicalServers_lvl1'] + $levels['certificates_lvl2'] +
             $levels['sites_lvl1'] + $levels['buildings_lvl1'] + $levels['bays_lvl1'] + $levels['physicalServers_lvl1'] + $levels['physicalRouters_lvl1'] + $levels['physicalSwitchs_lvl1'] + $levels['physicalSecurityDevices_lvl1'] + $levels['wans_lvl1'] + $levels['mans_lvl1'] + $levels['lans_lvl1'] + $levels['vlans_lvl1']) * 100 / $denominator,
                 0
             ) : 0;

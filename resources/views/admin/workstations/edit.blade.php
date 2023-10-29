@@ -133,7 +133,7 @@
                     <span class="help-block">{{ trans('cruds.workstation.fields.applications_helper') }}</span>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -182,7 +182,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-lg">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="site_id">{{ trans('cruds.workstation.fields.site') }}</label>
                     <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
@@ -197,6 +197,8 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.workstation.fields.site_helper') }}</span>
                 </div>
+            </div>
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="building_id">{{ trans('cruds.workstation.fields.building') }}</label>
                     <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
@@ -238,7 +240,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>

@@ -26,15 +26,15 @@ class AddPhysicalLink extends Migration
             $table->string('dest_port')->nullable()->default(null);
             /*
             Note:
-            Some switches do use letters to label their ports instead of numbers. For example, 
-            some switches use a combination of letters and numbers to label their ports. For example, 
-            a switch might have ports labeled "G1", "G2", "G3", and so on, where the "G" stands for 
-            "gigabit" and indicates that the port is a high-speed port. Other switches might use letters 
-            to indicate the type of port, such as "F" for fiber optic ports or "T" for copper twisted 
+            Some switches do use letters to label their ports instead of numbers. For example,
+            some switches use a combination of letters and numbers to label their ports. For example,
+            a switch might have ports labeled "G1", "G2", "G3", and so on, where the "G" stands for
+            "gigabit" and indicates that the port is a high-speed port. Other switches might use letters
+            to indicate the type of port, such as "F" for fiber optic ports or "T" for copper twisted
             pair ports.
 
-            It's also worth noting that some switches use a combination of letters and numbers to label 
-            their ports, such as "Gi1", "Gi2", "Gi3", and so on, where the "Gi" stands for "gigabit interface" 
+            It's also worth noting that some switches use a combination of letters and numbers to label
+            their ports, such as "Gi1", "Gi2", "Gi3", and so on, where the "Gi" stands for "gigabit interface"
             and indicates that the port is a high-speed port.
             */
 
@@ -133,7 +133,7 @@ class AddPhysicalLink extends Migration
             // User
             Role::findOrFail(2)->permissions()->sync([263,264,265,266,267], false);
             // Auditor
-            Role::findOrFail(3)->permissions()->sync([266,267], false);
+            Role::findOrFail(3)->permissions()->sync([265,267], false);
         }
 
     }

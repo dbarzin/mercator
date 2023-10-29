@@ -111,9 +111,9 @@
                 return null;
               }
             }
-          }          
+          }
         }
-      };      
+      };
 
       var ctx2 = document.getElementById('gauge_chart2_div').getContext('2d');
 
@@ -193,9 +193,9 @@
                 return null;
               }
             }
-          }          
+          }
         }
-      };    
+      };
 
     var ctx4 = document.getElementById('bar_chart_div').getContext('2d');
 
@@ -209,11 +209,11 @@
             "{!! trans('cruds.menu.gdpr.title_short') !!}",
           @endcan
             "{!! trans('cruds.menu.ecosystem.title_short') !!}",
-            "{!! trans('cruds.menu.metier.title_short') !!}", 
-            "{!! trans('cruds.menu.application.title_short') !!}", 
-            "{!! trans('cruds.menu.administration.title_short') !!}", 
-            "{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", 
-            "{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", 
+            "{!! trans('cruds.menu.metier.title_short') !!}",
+            "{!! trans('cruds.menu.application.title_short') !!}",
+            "{!! trans('cruds.menu.administration.title_short') !!}",
+            "{!! trans('cruds.menu.logical_infrastructure.title_short') !!}",
+            "{!! trans('cruds.menu.physical_infrastructure.title_short') !!}",
             ],
         datasets: [
         @can('gdpr_access')
@@ -228,7 +228,7 @@
           value: {!! $security_controls !!},
           url: "/admin/security-controls"
         },
-        @endcan 
+        @endcan
         {
           label: "{!! trans('cruds.entity.title') !!}",
           data: [@can('gdpr_access') 0, @endcan {!! $entities !!}, 0, 0, 0, 0, 0],
@@ -360,6 +360,11 @@
           value: {!! $securityDevices !!},
           url: "/admin/security-devices"
         }, {
+        label: "{!! trans('cruds.cluster.title_short') !!}",
+        data: [@can('cluster_access') 0, @endcan 0, 0, 0, 0, {!! $clusters !!}, 0],
+        value: {!! $clusters !!},
+        url: "/admin/clusters"
+        }, {
           label: "{!! trans('cruds.logicalServer.title_short') !!}",
           data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $logicalServers !!}, 0],
           value: {!! $logicalServers !!},
@@ -388,7 +393,7 @@
           label: "{!! trans('cruds.physicalServer.title_short') !!}",
           data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalServers !!}],
           value: {!! $physicalServers !!},
-          url: "/admin/physical-servers"          
+          url: "/admin/physical-servers"
         }, {
           label: "{!! trans('cruds.workstation.title') !!}",
           data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $workstations !!}],
@@ -441,7 +446,7 @@
           url: "/admin/lans"
         }, {
           label: "{!! trans('cruds.vlan.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $vlans !!}, 0], 
+          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $vlans !!}, 0],
           value: {!! $vlans !!},
           url: "/admin/vlans"
         }
@@ -468,7 +473,7 @@
           xAxes: [{
             stacked: true,
           }],
-          yAxes: [{ 
+          yAxes: [{
             ticks: {
               barPercentage: 1.0,
               beginAtZero: true,
@@ -486,7 +491,7 @@
         },
         plugins: {
           colorschemes: {
-            scheme: 'tableau.Tableau20'            
+            scheme: 'tableau.Tableau20'
           },
           datalabels: {
             color: 'white',
@@ -496,7 +501,7 @@
             formatter: function(value, context) {
               return value>1 ? context['dataset']['label']: '';
             }
-          }    
+          }
         },
         legend : {
           display : false,
@@ -519,10 +524,10 @@
     // Normalize data (%)
     for (let i = 0; i < (cnf4.data.labels.length); i++) {
       var sum=0;
-      for (let j = 0; j < cnf4.data.datasets.length; j++) 
+      for (let j = 0; j < cnf4.data.datasets.length; j++)
         sum += cnf4.data.datasets[j].data[i];
       if (sum>0) {
-      for (let j = 0; j < cnf4.data.datasets.length; j++) 
+      for (let j = 0; j < cnf4.data.datasets.length; j++)
         cnf4.data.datasets[j].data[i] =
           Math.floor(cnf4.data.datasets[j].data[i]*1000/sum)/10;
         }
@@ -555,6 +560,7 @@
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.networkSwitch.title_short') !!}" , num:{!! $switches !!}, url: "/admin/network-switches" },
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.router.title_short') !!}" , num:{!! $routers !!}, url: "/admin/routers" },
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.securityDevice.title_short') !!}" , num:{!! $securityDevices !!}, url: "/admin/security-devices" },
+     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.cluster.title_short') !!}" , num:{!! $clusters !!}, url: "/admin/clusters" },
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.logicalServer.title_short') !!}" , num:{!! $logicalServers !!}, url: "/admin/logical-servers" },
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.vlan.title_short') !!}" , num:{!! $vlans !!}, url: "/admin/vlans" },
      {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.certificate.title_short') !!}" , num:{!! $certificates !!}, url: "/admin/certificates" },
@@ -621,7 +627,7 @@ var cnf5 = {
     legend: { display: false },
     tooltips: { enabled: false },
     animation: { duration: 600 },
-    
+
     onClick: function (event, active) {
       var chart = this;
       for (let i = 0; i < active.length; i++) {
@@ -638,7 +644,7 @@ var cnf5 = {
         onHover: function(e, el) {
           $("#treemap_chart_div").css("cursor", el[0] ? "pointer" : "default");
           }
-        }    
+        }
     }
   };
 
@@ -648,7 +654,7 @@ var cnf5 = {
       // Gauges
       new Chart(ctx1, cnf1);
       new Chart(ctx2, cnf2);
-      new Chart(ctx3, cnf3);      
+      new Chart(ctx3, cnf3);
       //
       window.barchart=new Chart(ctx4, cnf4);
       window.treemap=new Chart(ctx5, cnf5);

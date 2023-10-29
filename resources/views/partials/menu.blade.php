@@ -405,6 +405,16 @@
                             </li>
                         @endcan
                         @endif
+                        @can('cluster_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.clusters.index") }}" class="nav-link {{ request()->is('admin/clusters*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.cluster.title') }}
+                                </a>
+                            </li>
+                        @endcan
                         @can('logical_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.logical-servers.index") }}" class="nav-link {{ request()->is('admin/logical-servers*') ? 'active' : '' }}">
