@@ -67,10 +67,16 @@ return new class extends Migration
             Role::findOrFail(3)->permissions()->sync([283,285], false);
         }
 
-    Schema::table('logical_servers', function (Blueprint $table) {
-        // link to cluster
-        $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5435359')->nullable();
-        $table->foreign('cluster_id','cluster_id_fk_5435359')->references('id')->on('clusters')->onUpdate('NO ACTION')->onDelete('CASCADE');
+        Schema::table('logical_servers', function (Blueprint $table) {
+            // link to cluster
+            $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5435359')->nullable();
+            $table->foreign('cluster_id','cluster_id_fk_5435359')->references('id')->on('clusters')->onUpdate('NO ACTION')->onDelete('CASCADE');
+        });
+
+        Schema::table('physical_servers', function (Blueprint $table) {
+            // link to cluster
+            $table->unsignedInteger('cluster_id')->index('cluster_id_fk_5438543')->nullable();
+            $table->foreign('cluster_id','cluster_id_fk_5438543')->references('id')->on('clusters')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
 
@@ -86,6 +92,16 @@ return new class extends Migration
         });
 
         Schema::table('logical_servers', function (Blueprint $table) {
+            $table->dropColumn('cluster_id');
+        });
+
+        Schema::table('physical_servers', function (Blueprint $table) {
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropForeign('cluster_id_fk_5438543');
+            }
+        });
+
+        Schema::table('physical_servers', function (Blueprint $table) {
             $table->dropColumn('cluster_id');
         });
 
