@@ -34,8 +34,10 @@ class PhysicalSwitchController extends Controller
 
         $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.physicalSwitches.create',
-            compact('sites', 'buildings', 'bays','type_list'));
+        return view(
+            'admin.physicalSwitches.create',
+            compact('sites', 'buildings', 'bays', 'type_list')
+        );
     }
 
     public function store(StorePhysicalSwitchRequest $request)
@@ -57,8 +59,10 @@ class PhysicalSwitchController extends Controller
 
         $physicalSwitch->load('site', 'building', 'bay');
 
-        return view('admin.physicalSwitches.edit',
-            compact('sites', 'buildings', 'bays', 'physicalSwitch','type_list'));
+        return view(
+            'admin.physicalSwitches.edit',
+            compact('sites', 'buildings', 'bays', 'physicalSwitch', 'type_list')
+        );
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)

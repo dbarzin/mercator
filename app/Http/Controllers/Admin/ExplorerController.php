@@ -327,7 +327,7 @@ class ExplorerController extends Controller
         }
 
         // Logical Servers
-        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip','cluster_id')->get();
+        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip', 'cluster_id')->get();
         foreach ($logicalServers as $logicalServer) {
             $this->addNode($nodes, 5, $this->formatId('LSERVER_', $logicalServer->id), $logicalServer->name, '/images/lserver.png', 'logical-servers');
             if ($logicalServer->cluster_id !== null) {

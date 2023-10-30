@@ -14,31 +14,32 @@ use App\ApplicationService;
 use App\Bay;
 use App\Building;
 use App\Certificate;
-use App\Database;
+use App\Cluster;
 // Applications
+use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
-use App\ExternalConnectedEntity;
 // Administration
+use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
-use App\Gateway;
 // Logique
+use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Information;
 use App\Lan;
+use App\LogicalServer;
 use App\MacroProcessus;
+use App\Man;
 use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
-use App\Peripheral;
-use App\Cluster;
-use App\LogicalServer;
 // Physique
+use App\Peripheral;
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
@@ -54,7 +55,6 @@ use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
 use App\Vlan;
-use App\Man;
 use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
@@ -543,8 +543,8 @@ class HomeController extends Controller
             'clusters' => Cluster::count(),
             'clusters_lvl1' => Cluster
                 ::where('description', '<>', null)
-                ->where('type', '<>', null)
-                ->count(),
+                    ->where('type', '<>', null)
+                    ->count(),
 
             'logicalServers' => LogicalServer::count(),
             'logicalServers_lvl1' => LogicalServer
