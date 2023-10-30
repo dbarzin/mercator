@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['name', 'deleted_at'], 'peripherals_name_unique');
+            $table->unique(['name', 'deleted_at'], 'cluster_name_unique');
         });
 
         // if not initial migration -> add permissions
