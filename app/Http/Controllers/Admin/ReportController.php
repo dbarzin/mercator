@@ -2874,9 +2874,9 @@ class ReportController extends Controller
                     $sheet->setCellValue("E{$row}", $cve->id);
                     $sheet->setCellValue("F{$row}", $cve->summary);
                     $sheet->setCellValue("G{$row}", implode("\n", $cve->references));
-                    $sheet->setCellValue("H{$row}", $cve->impactScore);
-                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore);
-                    $sheet->setCellValue("J{$row}", $cve->Published);
+                    $sheet->setCellValue("H{$row}", $cve->impactScore ?? "");
+                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore ?? "");
+                    $sheet->setCellValue("J{$row}", $cve->Published ?? "");
                     $row++;
                 }
             } else {
