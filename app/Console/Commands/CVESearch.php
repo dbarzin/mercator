@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CVESearch extends Command
 {
@@ -35,14 +35,14 @@ class CVESearch extends Command
         Log::debug('CVESearch - day '. Carbon::now()->day);
 
         if (false) {
-        //if ($this->needCheck()) {
+            //if ($this->needCheck()) {
             Log::debug('CVESearch - no check needed');
         } else {
             // Check for CVE
             Log::debug('CVESearch - check');
 
             // Be nice with CIRCL, wait few seconds !
-            $seconds = rand(1,600);
+            $seconds = rand(1, 600);
             Log::debug('CVESearch - wait ' . $seconds . 's');
             // sleep($seconds);
 
@@ -54,13 +54,13 @@ class CVESearch extends Command
             // update provider
             if ($provider === 'https//cve.circl.lu') {
                 // change variable
-                $provider = "https://cvepremium.circl.lu";
+                $provider = 'https://cvepremium.circl.lu';
                 config(['mercator-config.cve.provider' => $provider]);
 
                 // Save configuration
                 $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
                 file_put_contents(config_path('mercator-config.php'), $text);
-                }
+            }
 
             $client = curl_init($provider . '/api/dbinfo');
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
@@ -182,18 +182,18 @@ class CVESearch extends Command
                 ];
 
                 $message = '<html><body>';
-                if (count($cpe_match)>0) {
+                if (count($cpe_match) > 0) {
                     $message = '<h1>CPE Matching</h1>';
                     foreach ($cpe_match as $cve) {
                         $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
-                       }
                     }
-                if (count($cve_match)>0) {
+                }
+                if (count($cve_match) > 0) {
                     $message = '<h1>String matching</h1>';
                     foreach ($cve_match as $cve) {
                         $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->summary . '<br>';
-                        }
                     }
+                }
                 $message .= '</body></html>';
 
                 // Log::debug('CVESearch - '. $message);

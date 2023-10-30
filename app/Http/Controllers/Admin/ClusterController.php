@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Cluster;
-use App\LogicalServer;
-use App\PhysicalServer;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
+use App\LogicalServer;
+use App\PhysicalServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -73,7 +72,7 @@ class ClusterController extends Controller
 
         return view(
             'admin.clusters.edit',
-            compact('cluster','logical_servers', 'physical_servers', 'type_list')
+            compact('cluster', 'logical_servers', 'physical_servers', 'type_list')
         );
     }
 

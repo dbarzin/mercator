@@ -16,7 +16,6 @@ use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
 /**
  * App\User
- *
  */
 class User extends Authenticatable implements LdapAuthenticatable
 {
@@ -48,6 +47,9 @@ class User extends Authenticatable implements LdapAuthenticatable
         'updated_at',
         'deleted_at',
     ];
+
+    // Add some caching for roles
+    private $roles = null;
 
     public function getIsAdminAttribute(): bool
     {
@@ -110,15 +112,12 @@ class User extends Authenticatable implements LdapAuthenticatable
         $this->notify(new ResetPassword($token));
     }
 
-    // Add some caching for roles
-    private $roles = null;
-
     public function roles()
     {
-        if ($this->roles === null)
-            return ($this->roles=$this->belongsToMany(Role::class)->orderBy('title'));
-        else
-            return $this->roles;
+        if ($this->roles === null) {
+            return $this->roles = $this->belongsToMany(Role::class)->orderBy('title');
+        }
+        return $this->roles;
     }
 
     public function m_applications()

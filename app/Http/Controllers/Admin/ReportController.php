@@ -2884,7 +2884,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("B{$row}", $app->vendor);
                 $sheet->setCellValue("C{$row}", $app->product);
                 $sheet->setCellValue("D{$row}", $app->version);
-                $sheet->setCellValue("E{$row}", $http_status == 404 ? "Not found" : $http_status);
+                $sheet->setCellValue("E{$row}", $http_status === 404 ? 'Not found' : $http_status);
                 $row++;
             }
 
