@@ -57,6 +57,10 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="recommended" for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
                         <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                             @foreach($logical_servers as $id => $logical_server)
                                 <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $cluster->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $logical_server }}</option>
@@ -76,6 +80,10 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="recommended" for="physical_servers">{{ trans('cruds.cluster.fields.physical_servers') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
                         <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="physical_servers[]" id="physical_servers" multiple>
                             @foreach($physical_servers as $id => $physical_server)
                                 <option value="{{ $id }}" {{ (in_array($id, old('physical_servers', [])) || $cluster->physicalServers->contains($id)) ? 'selected' : '' }}>{{ $physical_server }}</option>
