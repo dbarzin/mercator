@@ -5,57 +5,59 @@ namespace App\Http\Controllers\Admin;
 // GDPR
 use App\Activity;
 // ecosystem
-use App\Actor;
-use App\Annuaire;
-use App\ApplicationBlock;
-use App\ApplicationModule;
-// information system
-use App\ApplicationService;
-use App\Bay;
-use App\Building;
-use App\Certificate;
-use App\Database;
-use App\DataProcessing;
-use App\DhcpServer;
-// Applications
-use App\Dnsserver;
-use App\DomaineAd;
 use App\Entity;
-use App\ExternalConnectedEntity;
-use App\Flux;
+use App\Relation;
+use App\Actor;
+// information system
+use App\MacroProcessus;
+use App\Process;
+use App\Operation;
+use App\Task;
+use App\DataProcessing;
+// Applications
+use App\ApplicationBlock;
+use App\MApplication;
+use App\ApplicationService;
+use App\ApplicationModule;
+use App\Database;
+use App\Information;
 // Administration
+use App\DomaineAd;
+use App\Annuaire;
 use App\ForestAd;
 use App\Gateway;
-use App\Http\Controllers\Controller;
-use App\Information;
-use App\LogicalServer;
-use App\MacroProcessus;
+use App\ZoneAdmin;
 // Logique
-use App\MApplication;
+use App\ExternalConnectedEntity;
 use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
 use App\Peripheral;
-use App\Phone;
-use App\PhysicalLink;
-use App\PhysicalRouter;
-use App\PhysicalSecurityDevice;
+use App\DhcpServer;
+use App\Dnsserver;
+use App\Cluster;
+use App\Certificate;
+use App\LogicalServer;
+use App\Flux;
+use App\Vlan;
 // Physique
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
+use App\PhysicalLink;
+use App\PhysicalRouter;
+use App\PhysicalSecurityDevice;
+use App\Phone;
 use App\Router;
 use App\SecurityDevice;
-use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
-use App\Task;
-use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
+use App\Site;
+use App\Building;
+use App\Bay;
+//
 use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -821,6 +823,8 @@ class ReportController extends Controller
                     return false;
                 });
 
+            $clusters = Cluster::All()->sortBy('name');
+
             // TODO: improve me
             $logicalServers = LogicalServer::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
@@ -865,6 +869,7 @@ class ReportController extends Controller
             $securityDevices = SecurityDevice::All()->sortBy('name');
             $dhcpServers = DhcpServer::All()->sortBy('name');
             $dnsservers = Dnsserver::All()->sortBy('name');
+            $clusters = Cluster::All()->sortBy('name');
             $logicalServers = LogicalServer::All()->sortBy('name');
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
@@ -884,6 +889,7 @@ class ReportController extends Controller
                 'securityDevices',
                 'dhcpServers',
                 'dnsservers',
+                'clusters',
                 'logicalServers',
                 'certificates',
                 'vlans'

@@ -41,21 +41,15 @@ class ClusterController extends Controller
 
     public function store(StoreClusterRequest $request)
     {
-        $Cluster = Cluster::create($request->all());
+        $cluster = Cluster::create($request->all());
 
         // update logical servers
-        LogicalServer::where('cluster_id', $request->id)
-            ->update(['cluster_id' => null]);
-
         LogicalServer::whereIn('id', $request->input('logical_servers', []))
-            ->update(['cluster_id' => $request->id]);
+            ->update(['cluster_id' => $cluster->id]);
 
         // update physical servers
-        PhysicalServer::where('cluster_id', $request->id)
-            ->update(['cluster_id' => null]);
-
         PhysicalServer::whereIn('id', $request->input('physical_servers', []))
-            ->update(['cluster_id' => $request->id]);
+            ->update(['cluster_id' => $cluster->id]);
 
         return redirect()->route('admin.clusters.index');
     }
