@@ -133,7 +133,7 @@ return [
     'list' => 'Listing',
     'location' => 'Location',
     'locations' => 'Locations',
-    'login' => 'Log In',
+    'login' => 'Login',
     'login_id' => 'Email address',
     'login_email' => 'e-mail',
     'login_password' => 'Password',
