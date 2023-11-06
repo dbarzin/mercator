@@ -92,12 +92,12 @@ Enfin, vous pouvez remplir la base de données avec des données de démonstrati
 
 ```shell
 touch ./db.sqlite && chmod a+w ./db.sqlite
-docker run -it --rm \N --name mercator \N
-           --name mercator \N- -e APP_ENV=de_sur_le_milieu \N
-           -e APP_ENV=développement \N- -p "127.0.0.0.1" \N
+docker run -it --rm \
+           --name mercator \
+           -e APP_ENV=development \
            -p "127.0.0.1:8000":80 \
-           -v $PWD/db.sqlite:/var/www/mercator/db.sqlite \N- -e USE_DEMO_DDISQUE
-           -e USE_DEMO_DATA=1 \N- -e USE_DEMO_DATA=1 \N- -e USE_DEMO_DATA=1
+           -v $PWD/db.sqlite:/var/www/mercator/db.sqlite \
+           -e USE_DEMO_DATA=1 \
            ghcr.io/dbarzin/mercator:latest
 ```
 
