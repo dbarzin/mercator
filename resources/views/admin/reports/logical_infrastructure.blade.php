@@ -385,7 +385,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
-                                    <thead id="LOGICAL_SERVER{{ $cluster->id }}">
+                                    <thead id="CLUSTER{{ $cluster->id }}">
                                         <th colspan="2">
                                             <a href="/admin/clusters/{{ $cluster->id }}">{{ $cluster->name }}</a>
                                         </th>
