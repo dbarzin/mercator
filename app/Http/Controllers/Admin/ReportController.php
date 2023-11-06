@@ -5,59 +5,59 @@ namespace App\Http\Controllers\Admin;
 // GDPR
 use App\Activity;
 // ecosystem
-use App\Entity;
-use App\Relation;
 use App\Actor;
-// information system
-use App\MacroProcessus;
-use App\Process;
-use App\Operation;
-use App\Task;
-use App\DataProcessing;
-// Applications
-use App\ApplicationBlock;
-use App\MApplication;
-use App\ApplicationService;
-use App\ApplicationModule;
-use App\Database;
-use App\Information;
-// Administration
-use App\DomaineAd;
 use App\Annuaire;
-use App\ForestAd;
-use App\Gateway;
-use App\ZoneAdmin;
-// Logique
-use App\ExternalConnectedEntity;
-use App\Network;
-use App\NetworkSwitch;
-use App\Peripheral;
+use App\ApplicationBlock;
+// information system
+use App\ApplicationModule;
+use App\ApplicationService;
+use App\Bay;
+use App\Building;
+use App\Certificate;
+// Applications
+use App\Cluster;
+use App\Database;
+use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
-use App\Cluster;
-use App\Certificate;
-use App\LogicalServer;
+use App\DomaineAd;
+// Administration
+use App\Entity;
+use App\ExternalConnectedEntity;
 use App\Flux;
-use App\Vlan;
-// Physique
-use App\PhysicalServer;
-use App\PhysicalSwitch;
+use App\ForestAd;
+use App\Gateway;
+// Logique
+use App\Http\Controllers\Controller;
+use App\Information;
+use App\LogicalServer;
+use App\MacroProcessus;
+use App\MApplication;
+use App\Network;
+use App\NetworkSwitch;
+use App\Operation;
+use App\Peripheral;
+use App\Phone;
 use App\PhysicalLink;
+// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
-use App\Phone;
+use App\PhysicalServer;
+use App\PhysicalSwitch;
+use App\Process;
+use App\Relation;
 use App\Router;
 use App\SecurityDevice;
+use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
+use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\Site;
-use App\Building;
-use App\Bay;
-//
+
+use App\ZoneAdmin;
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -2880,9 +2880,9 @@ class ReportController extends Controller
                     $sheet->setCellValue("E{$row}", $cve->id);
                     $sheet->setCellValue("F{$row}", $cve->summary);
                     $sheet->setCellValue("G{$row}", implode("\n", $cve->references));
-                    $sheet->setCellValue("H{$row}", $cve->impactScore ?? "");
-                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore ?? "");
-                    $sheet->setCellValue("J{$row}", $cve->Published ?? "");
+                    $sheet->setCellValue("H{$row}", $cve->impactScore ?? '');
+                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore ?? '');
+                    $sheet->setCellValue("J{$row}", $cve->Published ?? '');
                     $row++;
                 }
             } else {
