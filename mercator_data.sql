@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.35, for Linux (x86_64)
 --
 -- Host: localhost    Database: mercator
 -- ------------------------------------------------------
--- Server version	8.0.33-0ubuntu0.22.04.2
+-- Server version	8.0.35-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -203,6 +203,16 @@ INSERT INTO `certificates` (`id`, `name`, `type`, `description`, `start_validity
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `clusters`
+--
+
+LOCK TABLES `clusters` WRITE;
+/*!40000 ALTER TABLE `clusters` DISABLE KEYS */;
+INSERT INTO `clusters` (`id`, `name`, `type`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','Alice','<p>The big Alice cluster</p>',NULL,'2023-11-03 09:19:01','2023-11-03 09:19:01',NULL),(2,'CLUSTER02','Bob','<p>The Bob Cluster</p>',NULL,'2023-11-03 09:19:23','2023-11-03 09:23:39',NULL),(3,'CLUSTER03',NULL,NULL,NULL,'2023-11-03 09:21:46','2023-11-03 09:22:50','2023-11-03 09:22:50'),(4,'CLUSTER03','Nestor','<p>The nestor cluster</p>',NULL,'2023-11-03 09:23:14','2023-11-03 09:23:14',NULL);
+/*!40000 ALTER TABLE `clusters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `data_processing`
 --
 
@@ -278,7 +288,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `database_logical_server` WRITE;
 /*!40000 ALTER TABLE `database_logical_server` DISABLE KEYS */;
-INSERT INTO `database_logical_server` (`database_id`, `logical_server_id`) VALUES (3,1),(1,2);
+INSERT INTO `database_logical_server` (`database_id`, `logical_server_id`) VALUES (1,2),(1,1);
 /*!40000 ALTER TABLE `database_logical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,6 +330,15 @@ LOCK TABLES `dnsservers` WRITE;
 /*!40000 ALTER TABLE `dnsservers` DISABLE KEYS */;
 INSERT INTO `dnsservers` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `address_ip`) VALUES (1,'DNS_1','<p>Serveur DNS primaire</p>','2020-07-23 08:31:39','2021-11-16 16:55:11',NULL,'10.10.3.4'),(2,'DNS_2','<p>Serveur DNS secondaire</p>','2020-07-23 08:31:50','2021-10-19 09:10:45',NULL,'10.30.2.3'),(3,'DNS_3','<p>Troisième serveur DNS</p>','2021-10-19 08:39:25','2021-10-19 08:41:09',NULL,'10.10.10.1');
 /*!40000 ALTER TABLE `dnsservers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `document_logical_server`
+--
+
+LOCK TABLES `document_logical_server` WRITE;
+/*!40000 ALTER TABLE `document_logical_server` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document_logical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -377,7 +396,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `entity_m_application` WRITE;
 /*!40000 ALTER TABLE `entity_m_application` DISABLE KEYS */;
-INSERT INTO `entity_m_application` (`m_application_id`, `entity_id`) VALUES (2,1),(1,2),(1,8),(3,8),(4,8),(4,4),(16,2),(19,2),(19,8),(19,4),(19,6),(19,7),(35,2),(37,18);
+INSERT INTO `entity_m_application` (`m_application_id`, `entity_id`) VALUES (2,1),(1,2),(1,8),(3,8),(4,8),(4,4),(16,2),(19,2),(19,8),(19,4),(19,6),(19,7),(35,2),(37,18),(18,8);
 /*!40000 ALTER TABLE `entity_m_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,7 +506,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_server_m_application` WRITE;
 /*!40000 ALTER TABLE `logical_server_m_application` DISABLE KEYS */;
-INSERT INTO `logical_server_m_application` (`m_application_id`, `logical_server_id`) VALUES (2,2),(3,2),(1,1),(18,4),(15,3),(4,2),(4,5),(18,6),(35,3);
+INSERT INTO `logical_server_m_application` (`m_application_id`, `logical_server_id`) VALUES (2,2),(3,2),(18,4),(15,3),(4,2),(4,5),(18,6),(35,3),(3,1);
 /*!40000 ALTER TABLE `logical_server_m_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,7 +516,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_server_physical_server` WRITE;
 /*!40000 ALTER TABLE `logical_server_physical_server` DISABLE KEYS */;
-INSERT INTO `logical_server_physical_server` (`logical_server_id`, `physical_server_id`) VALUES (2,1),(2,2),(1,1),(1,7),(3,8),(4,7),(5,8),(6,6);
+INSERT INTO `logical_server_physical_server` (`logical_server_id`, `physical_server_id`) VALUES (2,2),(3,8),(4,7),(5,8),(1,9),(2,9),(3,9);
 /*!40000 ALTER TABLE `logical_server_physical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -507,7 +526,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logical_servers` WRITE;
 /*!40000 ALTER TABLE `logical_servers` DISABLE KEYS */;
-INSERT INTO `logical_servers` (`id`, `name`, `description`, `net_services`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `install_date`, `update_date`) VALUES (1,'SRV-1','<p>Description du serveur 1</p>','DNS, HTTP, HTTPS','<p>Configuration du serveur 1</p>','2020-07-12 16:57:42','2021-08-17 13:13:21',NULL,'Windows 3.1','10.10.1.1, 10.10.10.1','2','8','PROD',60,NULL,NULL),(2,'SRV-2','<p>Description du serveur 2</p>','HTTPS, SSH','<p>Configuration par défaut</p>','2020-07-30 10:00:16','2021-08-17 18:17:41',NULL,'Windows 10','10.50.1.2','2','5','PROD',100,NULL,NULL),(3,'SRV-3','<p>Description du serveur 3</p>','HTTP, HTTPS',NULL,'2021-08-26 14:33:03','2021-08-26 14:33:38',NULL,'Ubuntu 20.04','10.70.8.3','4','16','PROD',80,NULL,NULL),(4,'SRV-42','<p><i>The Ultimate Question of Life, the Universe and Everything</i></p>',NULL,'<p>Full configuration</p>','2021-11-15 16:03:59','2022-03-20 11:39:54',NULL,'OS 42','10.0.0.42','42','42 G','PROD',42,NULL,NULL),(5,'SRV-4','<p>Description du serveur 4</p>',NULL,NULL,'2022-05-02 16:43:02','2022-05-02 16:49:34',NULL,'Ubunti 22.04 LTS','10.10.3.2','4','2','Dev',NULL,'2022-05-01 20:47:41','2022-05-02 20:47:47'),(6,'SRV-5','<p>Description server 5</p>',NULL,'<p>configuration goes here !</p>','2022-06-27 10:27:02','2022-06-27 10:27:02',NULL,'Ubunti 22.04 LTS','10.10.43.3','18','12','Integration',500,'2022-06-27 14:26:37',NULL);
+INSERT INTO `logical_servers` (`id`, `name`, `description`, `net_services`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `operating_system`, `address_ip`, `cpu`, `memory`, `environment`, `disk`, `disk_used`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `cluster_id`) VALUES (1,'SRV-1','<p>Description du serveur 1</p>','DNS, HTTP, HTTPS','<p>Configuration du serveur 1</p>','2020-07-12 16:57:42','2023-11-03 09:20:16',NULL,'Ubuntu 20.04','10.10.1.1, 10.10.10.1','2','8','PROD',60,NULL,NULL,NULL,NULL,NULL,NULL,1),(2,'SRV-2','<p>Description du serveur 2</p>','HTTPS, SSH','<p>Configuration par défaut</p>','2020-07-30 10:00:16','2023-11-03 09:23:14',NULL,'Windows 10','10.50.1.2','2','5','PROD',100,NULL,NULL,NULL,NULL,NULL,NULL,4),(3,'SRV-3','<p>Description du serveur 3</p>','HTTP, HTTPS',NULL,'2021-08-26 14:33:03','2023-11-03 09:23:14',NULL,'Ubuntu 20.04','10.70.8.3','4','16','PROD',80,NULL,NULL,NULL,NULL,NULL,NULL,4),(4,'SRV-42','<p><i>The Ultimate Question of Life, the Universe and Everything</i></p>',NULL,'<p>Full configuration</p>','2021-11-15 16:03:59','2023-11-03 09:21:46',NULL,'OS 42','10.0.0.42','42','42 G','PROD',42,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'SRV-4','<p>Description du serveur 4</p>',NULL,NULL,'2022-05-02 16:43:02','2023-11-03 09:23:39',NULL,'Ubunti 22.04 LTS','10.10.3.2','4','2','Dev',NULL,NULL,'2022-05-01 20:47:41','2022-05-02 20:47:47',NULL,NULL,NULL,2),(6,'SRV-5','<p>Description server 5</p>',NULL,'<p>configuration goes here !</p>','2022-06-27 10:27:02','2023-11-03 09:21:46',NULL,'Ubunti 22.04 LTS','10.10.43.3','18','12','Integration',500,NULL,'2022-06-27 14:26:37',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `logical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,12 +541,32 @@ INSERT INTO `m_application_events` (`id`, `user_id`, `m_application_id`, `messag
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `m_application_peripheral`
+--
+
+LOCK TABLES `m_application_peripheral` WRITE;
+/*!40000 ALTER TABLE `m_application_peripheral` DISABLE KEYS */;
+INSERT INTO `m_application_peripheral` (`m_application_id`, `peripheral_id`) VALUES (15,1);
+/*!40000 ALTER TABLE `m_application_peripheral` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `m_application_physical_server`
+--
+
+LOCK TABLES `m_application_physical_server` WRITE;
+/*!40000 ALTER TABLE `m_application_physical_server` DISABLE KEYS */;
+INSERT INTO `m_application_physical_server` (`m_application_id`, `physical_server_id`) VALUES (18,6),(2,9);
+/*!40000 ALTER TABLE `m_application_physical_server` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `m_application_process`
 --
 
 LOCK TABLES `m_application_process` WRITE;
 /*!40000 ALTER TABLE `m_application_process` DISABLE KEYS */;
-INSERT INTO `m_application_process` (`m_application_id`, `process_id`) VALUES (2,1),(2,2),(3,2),(1,1),(14,2),(4,3),(12,4),(16,1),(16,2),(16,3),(16,4),(16,9),(19,3),(19,4),(35,4);
+INSERT INTO `m_application_process` (`m_application_id`, `process_id`) VALUES (2,1),(2,2),(3,2),(1,1),(14,2),(4,3),(12,4),(16,1),(16,2),(16,3),(16,4),(16,9),(19,3),(19,4),(35,4),(18,3);
 /*!40000 ALTER TABLE `m_application_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +576,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `m_application_workstation` WRITE;
 /*!40000 ALTER TABLE `m_application_workstation` DISABLE KEYS */;
-INSERT INTO `m_application_workstation` (`m_application_id`, `workstation_id`) VALUES (1,1),(3,1),(15,4),(2,6),(2,12),(35,12);
+INSERT INTO `m_application_workstation` (`m_application_id`, `workstation_id`) VALUES (1,1),(3,1),(15,4),(2,6),(2,12),(35,12),(3,2),(3,4),(15,11);
 /*!40000 ALTER TABLE `m_application_workstation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -547,7 +586,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `m_applications` WRITE;
 /*!40000 ALTER TABLE `m_applications` DISABLE KEYS */;
-INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, `security_need_c`, `responsible`, `functional_referent`, `type`, `technology`, `external`, `users`, `editor`, `created_at`, `updated_at`, `deleted_at`, `entity_resp_id`, `application_block_id`, `documentation`, `security_need_i`, `security_need_a`, `security_need_t`, `version`, `rto`, `rpo`, `install_date`, `update_date`) VALUES (1,'central_wifimanager','<p>Description de l\'application 1</p>',NULL,NULL,1,'Jacques, RSSI',NULL,'logiciel','Microsoft',NULL,'> 20',NULL,'2020-06-14 09:20:15','2023-03-26 07:32:50',NULL,23,3,'//Documentation/application1.docx',1,1,1,'1.03',3120,1800,NULL,NULL),(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2</p>','cisco',NULL,2,'Jacques',NULL,NULL,NULL,'SaaS',NULL,NULL,'2020-06-14 09:31:16','2023-03-26 10:38:48',NULL,NULL,1,'None',2,2,2,'1.0',3120,1800,NULL,NULL),(3,'Application 3','<p>Test application 3</p>',NULL,NULL,1,'RSSI',NULL,'progiciel','Microsoft','Interne','>100',NULL,'2020-06-17 17:33:41','2021-05-15 08:06:53',NULL,12,2,'Aucune',2,3,3,NULL,3120,1800,NULL,NULL),(4,'EG350','<p>Description app4</p>',NULL,NULL,2,'Pierre',NULL,'logiciel','Microsoft','Internl','>100',NULL,'2020-08-11 14:13:02','2022-06-25 12:31:56',NULL,1,2,'None',2,3,2,'1.0',3120,1800,NULL,NULL),(12,'SuperApp','<p>Super super application !</p>',NULL,NULL,1,'RSSI',NULL,'Web','Oracle','Interne',NULL,NULL,'2021-04-12 17:10:59','2021-06-23 19:33:15',NULL,1,2,NULL,1,1,1,NULL,3120,1800,NULL,NULL),(14,'Windows Calc','<p>Calculatrice windows</p>',NULL,NULL,2,'RSSI',NULL,'logiciel','Microsoft','Internl',NULL,NULL,'2021-05-13 08:15:27','2022-03-20 17:53:29',NULL,1,3,NULL,0,0,0,NULL,3120,1800,NULL,NULL),(15,'Compta','<p>Application de comptabilité</p>',NULL,NULL,3,'RSSI',NULL,'progiciel','Microsoft','Interne','>100',NULL,'2021-05-15 07:53:15','2021-05-15 07:53:15',NULL,1,2,NULL,4,2,3,NULL,3120,1800,NULL,NULL),(16,'Queue Manager','<p>Queue manager</p>',NULL,NULL,4,'Jacques',NULL,'logiciel','Internal Dev','Interne','>100',NULL,'2021-08-02 15:17:11','2022-06-11 09:49:17',NULL,1,1,'//Portal/QueueManager.doc',4,4,4,NULL,3120,1800,NULL,NULL),(18,'Application 42','<p>The Ultimate Question of Life, the Universe and Everything</p>',NULL,NULL,-1,'Johan, Marc',NULL,NULL,NULL,NULL,NULL,NULL,'2021-11-15 16:03:20','2022-06-11 10:51:56',NULL,2,NULL,NULL,-1,-1,0,NULL,3120,1800,NULL,NULL),(19,'Windows Word 98','<p>Traitement de texte Word</p>',NULL,NULL,1,'Johan, Marc',NULL,'progiciel','Microsoft','Interne',NULL,NULL,'2022-06-14 11:52:36','2022-06-14 11:52:58',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2022-06-14 15:52:14',NULL),(35,'Vulnerability','<p>Vulnerable test application</p>',NULL,NULL,0,'',NULL,NULL,'Microsoft','Interne','>100',NULL,'2022-06-28 05:59:28','2023-02-21 19:13:17',NULL,4,2,NULL,0,0,0,'1.5',3120,1800,NULL,NULL),(36,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'RSSI',NULL,'Web','Microsoft','Internl','>100',NULL,'2022-12-17 14:11:18','2022-12-17 14:12:03','2022-12-17 14:12:03',NULL,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL),(37,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'',NULL,'Web','Microsoft','Internl','>100',NULL,'2022-12-17 14:12:12','2022-12-17 14:12:12',NULL,18,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL),(38,'excel',NULL,NULL,NULL,0,'',NULL,NULL,NULL,NULL,NULL,NULL,'2023-03-26 07:38:20','2023-03-26 07:38:20',NULL,NULL,NULL,NULL,0,0,0,'2019',0,0,NULL,NULL);
+INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, `security_need_c`, `responsible`, `functional_referent`, `type`, `technology`, `external`, `users`, `editor`, `created_at`, `updated_at`, `deleted_at`, `entity_resp_id`, `application_block_id`, `documentation`, `security_need_i`, `security_need_a`, `security_need_t`, `version`, `rto`, `rpo`, `install_date`, `update_date`) VALUES (1,'central_wifimanager','<p>Description de l\'application 1</p>',NULL,NULL,1,'Jacques, RSSI',NULL,'logiciel','Microsoft',NULL,'> 20',NULL,'2020-06-14 09:20:15','2023-03-26 07:32:50',NULL,23,3,'//Documentation/application1.docx',1,1,1,'1.03',3120,1800,NULL,NULL),(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2</p>','cisco',NULL,2,'Jacques',NULL,'Web','Microsoft','SaaS','>10',NULL,'2020-06-14 09:31:16','2023-10-28 07:43:23',NULL,2,1,'None',2,2,2,'1.0',3120,1800,NULL,NULL),(3,'Application 3','<p>Test application 3</p>',NULL,NULL,1,'RSSI',NULL,'progiciel','Microsoft','Interne','>100',NULL,'2020-06-17 17:33:41','2021-05-15 08:06:53',NULL,12,2,'Aucune',2,3,3,NULL,3120,1800,NULL,NULL),(4,'EG350','<p>Description app4</p>',NULL,NULL,2,'Pierre',NULL,'logiciel','Microsoft','Internl','>100',NULL,'2020-08-11 14:13:02','2022-06-25 12:31:56',NULL,1,2,'None',2,3,2,'1.0',3120,1800,NULL,NULL),(12,'SuperApp','<p>Super super application !</p>',NULL,NULL,1,'RSSI',NULL,'Web','Oracle','Interne',NULL,NULL,'2021-04-12 17:10:59','2021-06-23 19:33:15',NULL,1,2,NULL,1,1,1,NULL,3120,1800,NULL,NULL),(14,'Windows Calc','<p>Calculatrice windows</p>',NULL,NULL,2,'RSSI',NULL,'logiciel','Microsoft','Internl',NULL,NULL,'2021-05-13 08:15:27','2022-03-20 17:53:29',NULL,1,3,NULL,0,0,0,NULL,3120,1800,NULL,NULL),(15,'Compta','<p>Application de comptabilité</p>',NULL,NULL,3,'RSSI',NULL,'progiciel','Microsoft','Interne','>100',NULL,'2021-05-15 07:53:15','2021-05-15 07:53:15',NULL,1,2,NULL,4,2,3,NULL,3120,1800,NULL,NULL),(16,'Queue Manager','<p>Queue manager</p>',NULL,NULL,4,'Jacques',NULL,'logiciel','Internal Dev','Interne','>100',NULL,'2021-08-02 15:17:11','2022-06-11 09:49:17',NULL,1,1,'//Portal/QueueManager.doc',4,4,4,NULL,3120,1800,NULL,NULL),(18,'Application 42','<p>The Ultimate Question of Life, the Universe and Everything</p>',NULL,NULL,1,'Johan, Marc',NULL,'logiciel','COBOL','Interne','>50',NULL,'2021-11-15 16:03:20','2023-10-28 07:44:49',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2023-10-19 11:44:20','2023-10-28 11:44:13'),(19,'Windows Word 98','<p>Traitement de texte Word</p>',NULL,NULL,1,'Johan, Marc',NULL,'progiciel','Microsoft','Interne',NULL,NULL,'2022-06-14 11:52:36','2022-06-14 11:52:58',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2022-06-14 15:52:14',NULL),(35,'Vulnerability','<p>Vulnerable test application</p>',NULL,NULL,0,'',NULL,NULL,'Microsoft','Interne','>100',NULL,'2022-06-28 05:59:28','2023-02-21 19:13:17',NULL,4,2,NULL,0,0,0,'1.5',3120,1800,NULL,NULL),(36,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'RSSI',NULL,'Web','Microsoft','Internl','>100',NULL,'2022-12-17 14:11:18','2022-12-17 14:12:03','2022-12-17 14:12:03',NULL,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL),(37,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'',NULL,'Web','Microsoft','Internl','>100',NULL,'2022-12-17 14:12:12','2022-12-17 14:12:12',NULL,18,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL),(38,'excel',NULL,NULL,NULL,0,'',NULL,NULL,NULL,NULL,NULL,NULL,'2023-03-26 07:38:20','2023-03-26 07:38:20',NULL,NULL,NULL,NULL,0,0,0,'2019',0,0,NULL,NULL);
 /*!40000 ALTER TABLE `m_applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,7 +675,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `peripherals` WRITE;
 /*!40000 ALTER TABLE `peripherals` DISABLE KEYS */;
-INSERT INTO `peripherals` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `responsible`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `address_ip`) VALUES (1,'PER_01','IBM 3400','<p>important peripheral</p>',NULL,NULL,NULL,'Marcel','2020-07-25 06:18:40','2020-07-25 06:19:46',NULL,1,2,NULL,NULL),(2,'PER_02','IBM 5600','<p>Description</p>',NULL,NULL,NULL,'Nestor','2020-07-25 06:19:18','2020-07-25 06:19:18',NULL,3,5,NULL,NULL),(3,'PER_03','HAL 8100','<p>Space device</p>',NULL,NULL,NULL,'Niel','2020-07-25 06:19:58','2020-07-25 06:20:18',NULL,3,4,NULL,NULL);
+INSERT INTO `peripherals` (`id`, `name`, `type`, `description`, `vendor`, `product`, `version`, `responsible`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `address_ip`, `domain`, `provider_id`) VALUES (1,'PER_01','IBM 4703','<p>important peripheral</p>','hal',NULL,NULL,'Marcel','2020-07-25 06:18:40','2023-10-01 08:50:54',NULL,2,4,4,NULL,'IT',8),(2,'PER_02','IBM 5600','<p>Description</p>',NULL,NULL,NULL,'Nestor','2020-07-25 06:19:18','2020-07-25 06:19:18',NULL,3,5,NULL,NULL,NULL,NULL),(3,'PER_03','HAL 8100','<p>Space device</p>',NULL,NULL,NULL,'Niel','2020-07-25 06:19:58','2020-07-25 06:20:18',NULL,3,4,NULL,NULL,NULL,NULL),(4,'PER_42','IBM 4703','<p>The peripheral</p>',NULL,NULL,NULL,'Niel','2023-10-01 08:37:26','2023-10-01 08:37:26',NULL,1,7,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `peripherals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -705,7 +744,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_servers` WRITE;
 /*!40000 ALTER TABLE `physical_servers` DISABLE KEYS */;
-INSERT INTO `physical_servers` (`id`, `name`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `type`, `address_ip`) VALUES (1,'Serveur A1','<p>Description du serveur A1</p>',NULL,NULL,NULL,'Marc','<p>OS: OS2<br>IP : 127.0.0.1<br>&nbsp;</p>','2020-06-21 05:27:02','2021-11-27 11:12:00',NULL,1,2,4,NULL,'System 840',NULL),(2,'Serveur A2','<p>Description du serveur A2</p>',NULL,NULL,NULL,'Marc','<p>Configuration du serveur A<br>OS : Linux 23.4<br>RAM: 32G</p>','2020-06-21 05:27:58','2021-11-27 11:12:12',NULL,3,5,6,NULL,'System 840',NULL),(3,'Serveur A3','<p>Serveur mobile</p>',NULL,NULL,NULL,'Marc','<p>None</p>','2020-07-14 15:30:48','2021-11-27 11:12:24',NULL,1,1,3,NULL,'System 840',NULL),(4,'ZZ99','<p>Zoro server</p>',NULL,NULL,NULL,NULL,NULL,'2020-07-14 15:37:50','2020-08-25 14:54:58','2020-08-25 14:54:58',3,5,NULL,NULL,NULL,NULL),(5,'K01','<p>Serveur K01</p>',NULL,NULL,NULL,NULL,'<p>TOP CPU<br>TOP RAM</p>','2020-07-15 14:37:04','2020-08-29 12:08:09','2020-08-29 12:08:09',1,1,3,NULL,NULL,NULL),(6,'Mainframe 01','<p>Central accounting system</p>',NULL,NULL,NULL,'Marc','<p>40G RAM<br>360P Disk<br>CICS / Cobol</p>','2020-09-05 08:02:49','2021-11-27 11:11:43',NULL,1,1,1,2,'Type 404',NULL),(7,'Mainframe T1','<p>Mainframe de test</p>',NULL,NULL,NULL,'Marc','<p>IDEM prod</p>','2020-09-05 08:22:18','2021-11-27 11:11:01',NULL,2,3,4,2,'HAL 340',NULL),(8,'Serveur A4','<p>Departmental server</p>',NULL,NULL,NULL,'Marc','<p>Standard configuration</p>','2021-06-22 15:34:33','2021-11-27 11:12:50',NULL,2,3,5,NULL,'Mini 900/2',NULL);
+INSERT INTO `physical_servers` (`id`, `name`, `description`, `vendor`, `product`, `version`, `responsible`, `configuration`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`, `physical_switch_id`, `type`, `address_ip`, `cpu`, `memory`, `disk`, `disk_used`, `operating_system`, `install_date`, `update_date`, `patching_group`, `paching_frequency`, `next_update`, `cluster_id`) VALUES (1,'Serveur A1','<p>Description du serveur A1</p>',NULL,NULL,NULL,'Marc','<p>OS: OS2<br>IP : 127.0.0.1<br>&nbsp;</p>','2020-06-21 05:27:02','2023-11-07 11:08:43',NULL,NULL,4,4,NULL,'System 840','128.1.61.150',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Serveur A2','<p>Description du serveur A2</p>',NULL,NULL,NULL,'Marc','<p>Configuration du serveur A<br>OS : Linux 23.4<br>RAM: 32G</p>','2020-06-21 05:27:58','2023-11-03 09:19:23',NULL,3,5,6,NULL,'System 840',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Serveur A3','<p>Serveur mobile</p>',NULL,NULL,NULL,'Marc','<p>None</p>','2020-07-14 15:30:48','2023-11-03 09:23:39',NULL,1,1,3,NULL,'System 840',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2),(4,'ZZ99','<p>Zoro server</p>',NULL,NULL,NULL,NULL,NULL,'2020-07-14 15:37:50','2020-08-25 14:54:58','2020-08-25 14:54:58',3,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'K01','<p>Serveur K01</p>',NULL,NULL,NULL,NULL,'<p>TOP CPU<br>TOP RAM</p>','2020-07-15 14:37:04','2020-08-29 12:08:09','2020-08-29 12:08:09',1,1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'Mainframe 01','<p>Central accounting system</p>',NULL,NULL,NULL,'Marc','<p>CICS / Cobol</p>','2020-09-05 08:02:49','2023-11-03 09:19:23',NULL,1,1,1,2,'Type 404','127.0.0.1','6','40','120','60','SYSTEM 42','2023-10-28 12:03:14',NULL,NULL,NULL,NULL,NULL),(7,'Mainframe T1','<p>Mainframe de test</p>',NULL,NULL,NULL,'Marc','<p>IDEM prod</p>','2020-09-05 08:22:18','2023-11-03 09:19:23',NULL,2,3,4,2,'HAL 340',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'Serveur A4','<p>Departmental server</p>',NULL,NULL,NULL,'Marc','<p>Standard configuration</p>','2021-06-22 15:34:33','2023-11-03 09:19:23',NULL,2,3,5,NULL,'Mini 900/2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'Test',NULL,NULL,NULL,NULL,NULL,NULL,'2023-11-07 12:16:11','2023-11-07 12:26:23',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `physical_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -715,7 +754,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `physical_switches` WRITE;
 /*!40000 ALTER TABLE `physical_switches` DISABLE KEYS */;
-INSERT INTO `physical_switches` (`id`, `name`, `description`, `vendor`, `product`, `version`, `type`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`) VALUES (1,'SW01','<p>Master test switch.</p>',NULL,NULL,NULL,'Nortel A39','2020-07-17 13:29:09','2023-01-11 15:35:46',NULL,1,2,4),(2,'SW03','<p>Description switch 2</p>',NULL,NULL,NULL,'Alcatel 430','2020-07-17 13:31:41','2023-01-11 15:36:27',NULL,1,1,1),(3,'SW02','<p>Desription du premier switch.</p>',NULL,NULL,NULL,'Nortel 2300','2020-07-25 05:27:27','2023-01-11 15:36:17',NULL,2,3,5),(4,'SW04','<p>Desciption du switch 3</p>',NULL,NULL,NULL,'Alcatel 3500','2020-07-25 07:42:51','2023-01-11 15:36:38',NULL,3,5,6),(5,'AB','<p>Test 2 chars switch</p>',NULL,NULL,NULL,NULL,'2020-08-22 04:19:45','2020-08-27 16:04:20','2020-08-27 16:04:20',NULL,NULL,NULL),(6,'SW05','<p>Description du switch 05</p>',NULL,NULL,NULL,NULL,'2023-01-11 15:38:44','2023-01-11 15:38:44',NULL,1,1,3);
+INSERT INTO `physical_switches` (`id`, `name`, `description`, `vendor`, `product`, `version`, `type`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `bay_id`) VALUES (1,'SW01','<p>Master test switch.</p>',NULL,NULL,NULL,'Nortel A39','2020-07-17 13:29:09','2023-01-11 15:35:46',NULL,1,2,4),(2,'SW03','<p>Description switch 2</p>',NULL,NULL,NULL,'Alcatel 430','2020-07-17 13:31:41','2023-01-11 15:36:27',NULL,1,1,1),(3,'SW02','<p>Desription du premier switch.</p>',NULL,NULL,NULL,'Nortel 2300','2020-07-25 05:27:27','2023-01-11 15:36:17',NULL,2,3,5),(4,'SW04','<p>Desciption du switch 3</p>',NULL,NULL,NULL,'Alcatel 3500','2020-07-25 07:42:51','2023-01-11 15:36:38',NULL,3,5,6),(5,'AB','<p>Test 2 chars switch</p>',NULL,NULL,NULL,NULL,'2020-08-22 04:19:45','2020-08-27 16:04:20','2020-08-27 16:04:20',NULL,NULL,NULL),(6,'SW05','<p>Description du switch 05</p>',NULL,NULL,NULL,'Alcatel 430','2023-01-11 15:38:44','2023-10-28 09:06:26',NULL,1,1,3);
 /*!40000 ALTER TABLE `physical_switches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -865,7 +904,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `workstations` WRITE;
 /*!40000 ALTER TABLE `workstations` DISABLE KEYS */;
-INSERT INTO `workstations` (`id`, `name`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`) VALUES (1,'Workstation 1','<p>Station de travail compta</p>',NULL,NULL,NULL,'2020-06-21 15:09:04','2022-06-27 09:35:27',NULL,1,7,NULL,'ThinThink 460','Windows 11','10.10.43.2','Intel i5','4',120),(2,'Workstation 2','<p>Station de travail accueil</p>',NULL,NULL,NULL,'2020-06-21 15:09:54','2021-10-20 07:14:59',NULL,2,3,NULL,'ThinThink 410',NULL,NULL,NULL,NULL,NULL),(3,'Workstation 3','<p>Station de travail back-office</p>',NULL,NULL,NULL,'2020-06-21 15:17:57','2021-10-20 07:15:25',NULL,2,4,NULL,'ThinThink 420',NULL,NULL,NULL,NULL,NULL),(4,'Workstation 4','<p>Description goes here</p>',NULL,NULL,NULL,'2022-06-27 08:53:58','2022-06-27 09:36:01',NULL,3,2,NULL,'ThinThink 420','Windows 10','10.10.21.3','Intel i7','4',250),(5,'Workstation 5','<p>Description here</p>',NULL,NULL,NULL,'2022-06-27 09:36:52','2022-06-27 09:36:52',NULL,1,7,NULL,'ThinThink 420','Windows 10','10.10.43.4','Intel i7','8',250),(6,'Workstation 6','<p>Description of workstation 6</p>',NULL,NULL,NULL,'2022-06-27 09:37:54','2022-06-27 09:37:54',NULL,1,2,NULL,'ThinThink 420','Windows 11','10.23.54.3','Intel i7','4',500),(7,'Workstation 7',NULL,NULL,NULL,NULL,'2022-12-22 22:05:24','2022-12-22 22:05:24',NULL,1,7,NULL,'ThinThink 410',NULL,NULL,NULL,NULL,NULL),(8,'Workstation 8',NULL,NULL,NULL,NULL,'2022-12-22 22:05:42','2023-01-11 18:41:37',NULL,3,5,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(9,'Workstation 9',NULL,NULL,NULL,NULL,'2022-12-22 22:06:00','2023-01-11 18:41:23',NULL,3,5,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(10,'Workstation 10',NULL,NULL,NULL,NULL,'2022-12-22 22:06:17','2023-01-11 18:42:01',NULL,3,5,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(11,'Workstation 11',NULL,NULL,NULL,NULL,'2023-01-12 17:47:14','2023-01-12 17:47:14',NULL,1,1,NULL,'ThinThink 420','Windows 11',NULL,'Intel i7',NULL,NULL),(12,'Workstation 12','<p>Description workstation 12</p>',NULL,NULL,NULL,'2023-01-14 17:57:50','2023-01-14 17:57:50',NULL,3,5,NULL,'ThinThink 420','Windows 11','10.10.12.1','Intel i7',NULL,NULL),(13,'Workstation 13','<p>Description workstation 13</p>',NULL,NULL,NULL,'2023-01-14 17:58:27','2023-01-14 17:58:27',NULL,3,5,NULL,'ThinThink 420','Windows 11',NULL,'Intel i5',NULL,NULL);
+INSERT INTO `workstations` (`id`, `name`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`) VALUES (1,'Workstation compta','<p>10 stations de travail de la compta</p><p>Modèle HAL 6740</p>',NULL,NULL,NULL,'2020-06-21 15:09:04','2023-10-26 12:02:00',NULL,1,7,NULL,'ThinThink 460','Windows 11','10.10.43.2','Intel i5','4',120),(2,'Workstation accueil','<p>10 stations de travail de l\'accueil</p><p>Model HAL 2832</p>',NULL,NULL,NULL,'2020-06-21 15:09:54','2023-10-26 12:00:49',NULL,2,3,NULL,'ThinThink 410','Windows 10',NULL,'Intel i5','6',10),(3,'Workstation back-office','<p>12 Stations de travail back-office</p><p>Modèle HAL 8760</p>',NULL,NULL,NULL,'2020-06-21 15:17:57','2023-10-26 12:03:35',NULL,2,4,NULL,'ThinThink 420','Windows 10',NULL,'Intel i5','6',500),(4,'Workstation RH','<p>2 workstations RH</p><p>Modèle HAL 7690</p>',NULL,NULL,NULL,'2022-06-27 08:53:58','2023-10-26 12:04:14',NULL,3,2,NULL,'ThinThink 420','Windows 10','10.10.21.3','Intel i7','4',250),(5,'Workstations helpdesk','<p>3 workstation helpdesk</p><p>Modèle HAL 5850</p>',NULL,NULL,NULL,'2022-06-27 09:36:52','2023-10-26 12:04:49',NULL,1,7,NULL,'ThinThink 420','Windows 10','10.10.43.4','Intel i7','8',250),(6,'Workstation analyse','<p>3 workstations analyse</p><p>Model HAL 4680</p>',NULL,NULL,NULL,'2022-06-27 09:37:54','2023-10-26 12:05:35',NULL,1,2,NULL,'ThinThink 420','Windows 11','10.23.54.3','Intel i7','4',500),(7,'Workstation IT','<p>3 workstations IT</p><p>Model HAL 5730</p>',NULL,NULL,NULL,'2022-12-22 22:05:24','2023-10-26 12:06:12',NULL,1,7,NULL,'ThinThink 410','Windows 10',NULL,'Intel i5','8',500),(8,'Workstation 8',NULL,NULL,NULL,NULL,'2022-12-22 22:05:42','2023-01-11 18:41:37',NULL,3,5,NULL,'ThinThink 460',NULL,NULL,NULL,NULL,NULL),(9,'Workstation Management','<p>3 workstation management</p><p>Model HAL 4730</p>',NULL,NULL,NULL,'2022-12-22 22:06:00','2023-10-26 12:06:48',NULL,3,5,NULL,'ThinThink 460',NULL,NULL,'Intel i5','10',120),(10,'Workstations R&D','<p>5 stations de travails&nbsp;</p><p>Recherche et développement</p><p>Modèle HAL 3740</p>',NULL,NULL,NULL,'2022-12-22 22:06:17','2023-10-26 12:05:01',NULL,3,5,NULL,'ThinThink 460','Windows 10',NULL,'Intel i5','8',120),(11,'Workstation 11',NULL,NULL,NULL,NULL,'2023-01-12 17:47:14','2023-01-12 17:47:14',NULL,1,1,NULL,'ThinThink 420','Windows 11',NULL,'Intel i7',NULL,NULL),(12,'Workstation 12','<p>Description workstation 12</p>',NULL,NULL,NULL,'2023-01-14 17:57:50','2023-01-14 17:57:50',NULL,3,5,NULL,'ThinThink 420','Windows 11','10.10.12.1','Intel i7',NULL,NULL),(13,'Workstation 13','<p>Description workstation 13</p>',NULL,NULL,NULL,'2023-01-14 17:58:27','2023-01-14 17:58:27',NULL,3,5,NULL,'ThinThink 420','Windows 11',NULL,'Intel i5',NULL,NULL);
 /*!40000 ALTER TABLE `workstations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -888,4 +927,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-13 14:04:38
+-- Dump completed on 2023-11-07 15:24:24

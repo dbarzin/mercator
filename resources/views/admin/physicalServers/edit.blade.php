@@ -228,6 +228,42 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="cluster_id">{{ trans('cruds.physicalServer.fields.cluster') }}</label>
+                    <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="cluster_id" id="cluster_id">
+                        <option></option>
+                        @foreach($clusters as $id => $name)
+                            <option value="{{ $id }}" {{ ($physicalServer->cluster ? $physicalServer->cluster->id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cluster'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cluster') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalServer.fields.cluster_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label for="applications">{{ trans('cruds.physicalServer.fields.logical_servers') }}</label>
+                    <select class="form-control select2 {{ $errors->has('logicalServers') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
+                        @foreach($logical_server_list as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('logicalServers', [])) || $physicalServer->serversLogicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('logicalServers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('logicalServers') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalServer.fields.logical_servers_helper') }}</span>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -240,6 +276,7 @@
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
+                    <option></option>
                     @foreach($sites as $id => $site)
                         <option value="{{ $id }}" {{ ($physicalServer->site ? $physicalServer->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
                     @endforeach
@@ -256,6 +293,7 @@
             <div class="form-group">
                 <label for="building_id">{{ trans('cruds.physicalServer.fields.building') }}</label>
                 <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
+                    <option></option>
                     @foreach($buildings as $id => $building)
                         <option value="{{ $id }}" {{ ($physicalServer->building ? $physicalServer->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
                     @endforeach
@@ -272,6 +310,7 @@
             <div class="form-group">
                 <label for="bay_id">{{ trans('cruds.physicalServer.fields.bay') }}</label>
                 <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
+                    <option></option>
                     @foreach($bays as $id => $bay)
                         <option value="{{ $id }}" {{ ($physicalServer->bay ? $physicalServer->bay->id : old('bay_id')) == $id ? 'selected' : '' }}>{{ $bay }}</option>
                     @endforeach

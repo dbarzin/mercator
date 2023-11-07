@@ -2291,7 +2291,8 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.configuration'),      // K
             trans('cruds.logicalServer.fields.applications'),       // L
             trans('cruds.application.fields.application_block'),    // M
-            trans('cruds.logicalServer.fields.servers'),            // N
+            trans('cruds.logicalServer.fields.cluster'),            // N
+            trans('cruds.logicalServer.fields.servers'),            // O
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -2316,6 +2317,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
         $sheet->getColumnDimension('N')->setAutoSize(true);
+        $sheet->getColumnDimension('O')->setAutoSize(true);
 
         // center (CPU, Men, Disk)
         $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -2342,7 +2344,8 @@ class ReportController extends Controller
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
             $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
                 ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
-            $sheet->setCellValue("N{$row}", $logicalServer->servers->implode('name', ', '));
+            $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? "");
+            $sheet->setCellValue("O{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
         }
