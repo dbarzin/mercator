@@ -88,7 +88,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-lg">
-                <b>{{ trans('cruds.physicalServer.fields.applications') }}</b> :
+                <b>{{ trans('cruds.physicalServer.fields.applications') }}</b>
                 @foreach($physicalServer->applications as $application)
                     <a href="{{ route('admin.applications.show', $application->id) }}">
                         {{ $application->name }}
@@ -122,14 +122,6 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <b>{{ trans('cruds.physicalServer.fields.cluster') }}</b>
-                @if ($physicalServer->cluster!=null)
-                <a href="{{ route('admin.clusters.show', $physicalServer->cluster_id) }}">
-                    {!! $physicalServer->cluster->name ?? "" !!}
-                </a>
-                @endif
-            </div>
-            <div class="col-sm-4">
                 <b>{{ trans('cruds.physicalServer.fields.address_ip') }}</b>
                 {{ $physicalServer->address_ip }}
             </div>
@@ -138,6 +130,27 @@
             <div class="col-sm">
                 <b>{{ trans('cruds.physicalServer.fields.responsible') }}</b>
                 {{ $physicalServer->responsible }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <b>{{ trans('cruds.physicalServer.fields.cluster') }}</b>
+                @if ($physicalServer->cluster!==null)
+                <a href="{{ route('admin.clusters.show', $physicalServer->cluster_id) }}">
+                    {!! $physicalServer->cluster->name !!}
+                </a>
+                @endif
+            </div>
+            <div class="col-sm-8">
+                <b>{{ trans('cruds.physicalServer.fields.logical_servers') }}</b>
+                @foreach($physicalServer->serversLogicalServers as $logicalServer)
+                <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
+                    {!! $logicalServer->name !!}
+                </a>
+                @if (!$loop->last)
+                ,
+                @endif
+                @endforeach
             </div>
         </div>
     </div>

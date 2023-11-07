@@ -235,7 +235,7 @@
                     <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="cluster_id" id="cluster_id">
                         <option></option>
                         @foreach($clusters as $id => $name)
-                            <option value="{{ $id }}" {{ ($physicalServer->cluster ? $physicalServer->cluster>id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            <option value="{{ $id }}" {{ ($physicalServer->cluster ? $physicalServer->cluster->id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('cluster'))
@@ -250,7 +250,7 @@
                 <div class="form-group">
                     <label for="applications">{{ trans('cruds.physicalServer.fields.logical_servers') }}</label>
                     <select class="form-control select2 {{ $errors->has('logicalServers') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
-                        @foreach($logicalServer_list as $id => $name)
+                        @foreach($logical_server_list as $id => $name)
                             <option value="{{ $id }}" {{ (in_array($id, old('logicalServers', [])) || $physicalServer->serversLogicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
