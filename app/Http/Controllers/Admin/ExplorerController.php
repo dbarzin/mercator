@@ -41,11 +41,14 @@ class ExplorerController extends Controller
             }
         }
         // Physical Server
-        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'bay_id')->whereNull('deleted_at')->get();
+        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'bay_id', 'cluster_id')->whereNull('deleted_at')->get();
         foreach ($physicalServers as $physicalServer) {
             $this->addNode($nodes, 6, $this->formatId('PSERVER_', $physicalServer->id), $physicalServer->name, '/images/server.png', 'physical-servers');
             if ($physicalServer->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
+            }
+            if ($physicalServer->cluster_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('CLUSTER_', $physicalServer->cluster_id));
             }
         }
         // Workstation
@@ -106,7 +109,7 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BUILDING_', $peripheral->building_id));
             } elseif ($peripheral->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('SITE_', $peripheral->site_id));
-            } 
+            }
             if ($peripheral->provider_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('ENTITY_', $peripheral->provider_id));
             }
@@ -317,11 +320,19 @@ class ExplorerController extends Controller
             }
         }
 
+        // Clusters
+        $clusters = DB::table('clusters')->select('id', 'name')->get();
+        foreach ($clusters as $cluster) {
+            $this->addNode($nodes, 5, $this->formatId('CLUSTER_', $cluster->id), $cluster->name, '/images/cluster.png', 'clusters');
+        }
+
         // Logical Servers
-        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip')->get();
+        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip', 'cluster_id')->get();
         foreach ($logicalServers as $logicalServer) {
             $this->addNode($nodes, 5, $this->formatId('LSERVER_', $logicalServer->id), $logicalServer->name, '/images/lserver.png', 'logical-servers');
-
+            if ($logicalServer->cluster_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('LSERVER_', $logicalServer->id), $this->formatId('CLUSTER_', $logicalServer->cluster_id));
+            }
             if ($logicalServer->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalServer->address_ip) as $address) {

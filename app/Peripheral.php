@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Peripheral
- *
  */
 class Peripheral extends Model
 {

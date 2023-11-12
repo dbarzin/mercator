@@ -48,6 +48,7 @@ class PhysicalServer extends Model
         'site_id',
         'building_id',
         'bay_id',
+        'cluster_id',
         'responsible',
         'created_at',
         'updated_at',
@@ -83,6 +84,11 @@ class PhysicalServer extends Model
     public function applications()
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
+    }
+
+    public function cluster()
+    {
+        return $this->belongsTo(Cluster::class, 'cluster_id');
     }
 
     public function serversLogicalServers()

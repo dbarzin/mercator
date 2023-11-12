@@ -23,14 +23,14 @@ Changements prévus en 2023 :
 ## Evolutions majeures
 
 - [x] Maintenir le registre des traitements
-- [ ] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la catographie.
-- [ ] Intégrer [CPE Guesser](https://github.com/cve-search/cpe-guesser)
+- [ ] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la cartographie.
+- [x] Intégrer [CPE Guesser](https://github.com/cve-search/cpe-guesser)
 - [ ] Générer un annuaire de crise
 - [ ] Identifier les chemins critiques
-- [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques 
+- [ ] Lien avec Monarc : identifier les assets qui peuvent être sujet d'une analyse de risques
 - [x] schémas de l'infrastructure réseau physique
-- [ ] Exploiter les logs - recherche et affihcer tout les changements d'un objet
-- [x] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques 
+- [ ] Exploiter les logs - recherche et afficher tout les changements d'un objet
+- [x] Lien entre router physique et logique ainsi que les commutateurs logiques et physiques
 - [x] Carte des actifs par rack, bâtiment/salle et site
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 - [x] Ajouter un objet "lien physique" (câble) et dessiner un plan de l'infrastructure réseau
@@ -45,16 +45,17 @@ Changements prévus en 2023 :
 ## Evolutions mineurs
 
 - [x] Support des adresses IPv6
-- [ ] Remplacer le champ libre editeur par un lien vers la table entités et migrer la base de données
-- [ ] Packaging des librairies javascript avec [Laravel Mix](https://laravel-mix.com/).
+- [ ] Ajouter l'objet cluster de serveurs logiques
+- [ ] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
+- [ ] Packaging des librairies JavaScript avec [Laravel Mix](https://laravel-mix.com/).
 - [x] Mise à jour du framework vers [Laravel 10.x](https://laravel.com/docs/10.x)
-- [ ] Dessiner un nouveu jeu d'icônes en SVG
-- [ ] Améliorer la documentation, notemment les niveaux de maturité pour chaque objet.
+- [ ] Dessiner un nouveau jeu d'icônes en SVG
+- [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [x] Lien entre bases de données et serveurs logiques
-- [ ] Restaurer les objects supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
+- [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [ ] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
 - [ ] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 

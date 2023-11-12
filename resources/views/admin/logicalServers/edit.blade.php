@@ -13,7 +13,7 @@
 
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">      
+        <div class="col-md-6">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required>
@@ -67,14 +67,14 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.operating_system_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
                     <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $logicalServer->install_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
                     <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $logicalServer->update_date) }}">
@@ -83,6 +83,23 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="recommended" for="cluster_id">{{ trans('cruds.logicalServer.fields.cluster') }}</label>
+                    <select class="form-control select2 {{ $errors->has('cluster') ? 'is-invalid' : '' }}" name="cluster_id" id="cluster_id">
+                        <option></option>
+                        @foreach($clusters as $id => $cluster)
+                        <option value="{{ $id }}" {{ ($logicalServer->cluster ? $logicalServer->cluster->id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $cluster }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cluster'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cluster') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.cluster_helper') }}</span>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="recommended" for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
@@ -102,6 +119,8 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label class="recommended" for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
@@ -117,7 +136,7 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <div class="form-group">                
+                <div class="form-group">
                     <label for="net_services">{{ trans('cruds.logicalServer.fields.net_services') }}</label>
                     <input class="form-control {{ $errors->has('net_services') ? 'is-invalid' : '' }}" type="text" name="net_services" id="net_services" value="{{ old('net_services', $logicalServer->net_services) }}">
                     @if($errors->has('net_services'))
@@ -151,7 +170,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.cpu_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="memory">{{ trans('cruds.logicalServer.fields.memory') }}</label>
                     <input class="form-control {{ $errors->has('memory') ? 'is-invalid' : '' }}" type="text" name="memory" id="memory" value="{{ old('memory', $logicalServer->memory) }}">
@@ -163,7 +182,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.memory_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk">{{ trans('cruds.logicalServer.fields.disk') }}</label>
                     <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', $logicalServer->disk) }}">
@@ -175,7 +194,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.disk_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk_used">{{ trans('cruds.logicalServer.fields.disk_used') }}</label>
                     <input class="form-control {{ $errors->has('disk_used') ? 'is-invalid' : '' }}" type="text" name="disk_used" id="disk_used" value="{{ old('disk_used', $logicalServer->disk_used) }}">
@@ -207,7 +226,7 @@
         {{ trans("cruds.menu.application.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">    
+    <div class="card-body">
 
             <div class="row">
                 <div class="col-sm">
@@ -259,7 +278,7 @@
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">    
+    <div class="card-body">
         <div class="row">
             <div class="col-md-6">
                     <div class="form-group">
@@ -316,7 +335,7 @@ $(document).ready(function() {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
-  }); 
+    })
+  });
 </script>
 @endsection

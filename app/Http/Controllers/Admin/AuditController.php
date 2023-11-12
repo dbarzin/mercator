@@ -412,18 +412,18 @@ class AuditController extends HomeController
         $sheet->getStyle("A{$row}:J{$row}")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFAEC7E8');
 
         // L1
-        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 10) .')');
-        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 10) .')');
+        $sheet->setCellValue("B{$row}", '=sum(B' . ($row + 1) . ':B' . ($row + 11) .')');
+        $sheet->setCellValue("C{$row}", '=sum(C' . ($row + 1) . ':C' . ($row + 11) .')');
         $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
 
         // L2
-        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 10) .')');
-        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 10) .')');
+        $sheet->setCellValue("E{$row}", '=sum(E' . ($row + 1) . ':E' . ($row + 11) .')');
+        $sheet->setCellValue("F{$row}", '=sum(F' . ($row + 1) . ':F' . ($row + 11) .')');
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
 
         // L3
-        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 10) .')');
-        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 10) .')');
+        $sheet->setCellValue("H{$row}", '=sum(H' . ($row + 1) . ':H' . ($row + 11) .')');
+        $sheet->setCellValue("I{$row}", '=sum(I' . ($row + 1) . ':I' . ($row + 11) .')');
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
@@ -528,6 +528,19 @@ class AuditController extends HomeController
         $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
         $sheet->setCellValue("H{$row}", $levels['DHCPServers_lvl2']);
         $sheet->setCellValue("I{$row}", $levels['DHCPServers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
+        $row++;
+
+        // Clusters
+        $sheet->setCellValue("A{$row}", trans('cruds.cluster.title'));
+        $sheet->setCellValue("B{$row}", $levels['clusters_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['clusters']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['clusters_lvl1']);
+        $sheet->setCellValue("F{$row}", $levels['clusters']);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['clusters_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['clusters']);
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 

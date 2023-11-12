@@ -27,8 +27,6 @@ class PhysicalSwitchController extends Controller
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalswitch = PhysicalSwitch::create($request->all());
-        // syncs
-        // $physicalswitch->roles()->sync($request->input('roles', []));
 
         return response()->json($physicalswitch, 201);
     }
@@ -45,8 +43,6 @@ class PhysicalSwitchController extends Controller
         abort_if(Gate::denies('physical_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalSwitch->update($request->all());
-        // syncs
-        // $physicalSwitch->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

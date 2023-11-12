@@ -35,6 +35,7 @@
                             {{ trans('cruds.logicalServer.fields.applications') }}
                         </th>
                         <th>
+                            {{ trans('cruds.logicalServer.fields.cluster') }} /
                             {{ trans('cruds.logicalServer.fields.servers') }}
                         </th>
                         <th>
@@ -51,12 +52,13 @@
                             ($logicalServer->environment==null)||
                             ($logicalServer->address_ip==null)||
                             ($logicalServer->applications->count()==0)||
-                            ($logicalServer->servers->count()==0)
-                            )
+                            (
+                                ($logicalServer->servers->count()==0) && ($logicalServer->cluster_id==null)
+                            ))
                                 class="table-warning"
                         @endif
 
-                          >                          
+                          >
                             <td>
 
                             </td>
@@ -82,14 +84,24 @@
                               @endforeach
                             </td>
                             <td>
-                              @foreach($logicalServer->servers as $server)
-                                <a href="{{ route('admin.physical-servers.show', $server->id) }}">
-                                  {{ $server->name }}
+                                @if ($logicalServer->cluster_id!==null)
+                                <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
+                                  {{ $logicalServer->cluster->name }}
                                 </a>
-                                  @if(!$loop->last)
-                                  ,
-                                  @endif
-                              @endforeach
+                                @endif
+                                @if(count($logicalServer->servers)>0)
+                                    @if ($logicalServer->cluster_id!==null)
+                                    /
+                                    @endif
+                                    @foreach($logicalServer->servers as $server)
+                                    <a href="{{ route('admin.physical-servers.show', $server->id) }}">
+                                        {{ $server->name }}
+                                    </a>
+                                        @if(!$loop->last)
+                                        ,
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             <td>
                                 @can('logical_server_show')
@@ -171,7 +183,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

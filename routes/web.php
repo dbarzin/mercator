@@ -152,6 +152,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('dnsservers', Admin\DnsserverController::class);
     Route::delete('dnsservers-destroy', [Admin\DnsserverController::class,'massDestroy'])->name('dnsservers.massDestroy');
 
+    // Clusters
+    Route::resource('clusters', Admin\ClusterController::class);
+    Route::delete('clusters-destroy', [Admin\ClusterController::class,'massDestroy'])->name('clusters.massDestroy');
+
     // Logical Servers
     Route::resource('logical-servers', Admin\LogicalServerController::class);
     Route::delete('logical-servers-destroy', [Admin\LogicalServerController::class,'massDestroy'])->name('logical-servers.massDestroy');

@@ -225,7 +225,6 @@
                             <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
                         @endforeach
                     </select>
-
                     @if($errors->has('type'))
                         <div class="invalid-feedback">
                             {{ $errors->first('type') }}
@@ -754,12 +753,12 @@ $(document).ready(function () {
                         e.preventDefault();
                         let vendor = $(this).data('vendor');
                         $("#vendor-selector").append('<option>'+vendor+'</option>');
-                        $("#vendor-selector").val(vendor);                        
+                        $("#vendor-selector").val(vendor);
                         let product = $(this).data('product');
                         $("#product-selector").append('<option>'+product+'</option>');
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
-                        $("#version-selector").val(null);                        
+                        $("#version-selector").val(null);
                         swal.close();
                     })
                 },
@@ -767,7 +766,7 @@ $(document).ready(function () {
                 showCancelButton: true,
                 customClass: {
                     container:   {
-                        'max-height': "6em", 
+                        'max-height': "6em",
                         'overflow-y': 'scroll',
                         'width': '100%',
                     }

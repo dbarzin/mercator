@@ -8,29 +8,30 @@ use App\Activity;
 use App\Actor;
 use App\Annuaire;
 use App\ApplicationBlock;
-use App\ApplicationModule;
 // information system
+use App\ApplicationModule;
 use App\ApplicationService;
 use App\Bay;
 use App\Building;
 use App\Certificate;
+// Applications
+use App\Cluster;
 use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
-// Applications
 use App\Dnsserver;
 use App\DomaineAd;
+// Administration
 use App\Entity;
 use App\ExternalConnectedEntity;
 use App\Flux;
-// Administration
 use App\ForestAd;
 use App\Gateway;
+// Logique
 use App\Http\Controllers\Controller;
 use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
-// Logique
 use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
@@ -38,9 +39,9 @@ use App\Operation;
 use App\Peripheral;
 use App\Phone;
 use App\PhysicalLink;
+// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
-// Physique
 use App\PhysicalServer;
 use App\PhysicalSwitch;
 use App\Process;
@@ -54,6 +55,7 @@ use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
+
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -821,6 +823,8 @@ class ReportController extends Controller
                     return false;
                 });
 
+            $clusters = Cluster::All()->sortBy('name');
+
             // TODO: improve me
             $logicalServers = LogicalServer::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
@@ -865,6 +869,7 @@ class ReportController extends Controller
             $securityDevices = SecurityDevice::All()->sortBy('name');
             $dhcpServers = DhcpServer::All()->sortBy('name');
             $dnsservers = Dnsserver::All()->sortBy('name');
+            $clusters = Cluster::All()->sortBy('name');
             $logicalServers = LogicalServer::All()->sortBy('name');
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
@@ -884,6 +889,7 @@ class ReportController extends Controller
                 'securityDevices',
                 'dhcpServers',
                 'dnsservers',
+                'clusters',
                 'logicalServers',
                 'certificates',
                 'vlans'
@@ -2285,7 +2291,8 @@ class ReportController extends Controller
             trans('cruds.logicalServer.fields.configuration'),      // K
             trans('cruds.logicalServer.fields.applications'),       // L
             trans('cruds.application.fields.application_block'),    // M
-            trans('cruds.logicalServer.fields.servers'),            // N
+            trans('cruds.logicalServer.fields.cluster'),            // N
+            trans('cruds.logicalServer.fields.servers'),            // O
         ];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -2310,6 +2317,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
         $sheet->getColumnDimension('N')->setAutoSize(true);
+        $sheet->getColumnDimension('O')->setAutoSize(true);
 
         // center (CPU, Men, Disk)
         $sheet->getStyle('F')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -2336,7 +2344,8 @@ class ReportController extends Controller
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
             $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
                 ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
-            $sheet->setCellValue("N{$row}", $logicalServer->servers->implode('name', ', '));
+            $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? "");
+            $sheet->setCellValue("O{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;
         }
@@ -2874,9 +2883,9 @@ class ReportController extends Controller
                     $sheet->setCellValue("E{$row}", $cve->id);
                     $sheet->setCellValue("F{$row}", $cve->summary);
                     $sheet->setCellValue("G{$row}", implode("\n", $cve->references));
-                    $sheet->setCellValue("H{$row}", $cve->impactScore);
-                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore);
-                    $sheet->setCellValue("J{$row}", $cve->Published);
+                    $sheet->setCellValue("H{$row}", $cve->impactScore ?? '');
+                    $sheet->setCellValue("I{$row}", $cve->exploitabilityScore ?? '');
+                    $sheet->setCellValue("J{$row}", $cve->Published ?? '');
                     $row++;
                 }
             } else {
@@ -2884,7 +2893,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("B{$row}", $app->vendor);
                 $sheet->setCellValue("C{$row}", $app->product);
                 $sheet->setCellValue("D{$row}", $app->version);
-                $sheet->setCellValue("E{$row}", $http_status == 404 ? "Not found" : $http_status);
+                $sheet->setCellValue("E{$row}", $http_status === 404 ? 'Not found' : $http_status);
                 $row++;
             }
 

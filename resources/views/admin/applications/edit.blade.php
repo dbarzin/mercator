@@ -196,7 +196,7 @@
         Technique
     </div>
     <!------------------------------------------------------------------------------------------------------------->
-        <div class="card-body">
+    <div class="card-body">
 
             <div class="row">
                 <div class="col-md-4">
@@ -616,7 +616,7 @@
                 ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
                 ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
                 ret += '<i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
-                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY') 
+                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY')
                 ret += ' | Utilisateur : '+event.user.name+'</span>';
             });
             ret += '</ul>';
@@ -850,12 +850,12 @@
                         e.preventDefault();
                         let vendor = $(this).data('vendor');
                         $("#vendor-selector").append('<option>'+vendor+'</option>');
-                        $("#vendor-selector").val(vendor);                        
+                        $("#vendor-selector").val(vendor);
                         let product = $(this).data('product');
                         $("#product-selector").append('<option>'+product+'</option>');
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
-                        $("#version-selector").val(null);                        
+                        $("#version-selector").val(null);
                         swal.close();
                     })
                 },
@@ -863,7 +863,7 @@
                 showCancelButton: true,
                 customClass: {
                     container:   {
-                        'max-height': "6em", 
+                        'max-height': "6em",
                         'overflow-y': 'scroll',
                         'width': '100%',
                     }
