@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,16 +53,29 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
-    // Add some caching for roles
-    private $roles = null;
-
     /**
      * Check if the User has the 'Admin' role, which is the first role in the app
      * @return bool
      */
     public function isAdmin(): bool
     {
-        return $this->roles()->where('id', 1)->exists();
+        foreach ($this->roles()->get() as $role) {
+            if ($role->id === 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Add some caching for roles
+    private ?BelongsToMany $cachedRoles = null;
+
+    public function roles(): BelongsToMany
+    {
+        if ($this->cachedRoles === null) {
+            $this->cachedRoles = $this->belongsToMany(Role::class);
+        }
+        return $this->cachedRoles;
     }
 
     /**
@@ -119,15 +133,6 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         $this->notify(new ResetPassword($token));
     }
-
-    public function roles()
-    {
-        if ($this->roles === null) {
-            return $this->roles = $this->belongsToMany(Role::class)->orderBy('title');
-        }
-        return $this->roles;
-    }
-
     public function m_applications()
     {
         return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
