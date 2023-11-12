@@ -18,16 +18,19 @@ La vue des applications décrit les composants logiciels du système d’informa
 
 La vue des flux applicatifs décrits les flux d’information entre les différentes applications, services, modules et bases de données.
 
+### Vision administrative
+
 La vue de l’administration répertorie les périmètres et les niveaux de privilèges des utilisateurs et des administrateurs.
 
-
-### Vision infrastructure
+### Vision logique
 
 La vue des infrastructures logiques illustre le cloisonnement logique des réseaux, notamment par la définition des plages d’adresses IP, des VLAN et des fonctions de filtrage et routage ;
 
+### Vision infrastructure
+
 La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou utilisés par celui-ci.
 
-### Niveaux de maturité
+## Niveaux de maturité
 
 Les niveaux de maturité représentent le pourcentage d'exhaustivité de la cartographie. 
 C’est un indicateur de l’effort restant à fournir pour atteindre une cartographie complète. 
@@ -40,7 +43,7 @@ Cette maturité est divisée en trois niveaux :
 * La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;
 * La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
 
-### Besoins de sécurité
+## Besoins de sécurité
 
 Les besoins de sécurité de l'information sont exprimés en termes de confidentialité, intégrité, disponibilité et traçabilité avec l'échelle suivante :
 

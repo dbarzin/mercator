@@ -18,16 +18,19 @@ The application view describes the information system's software components, the
 
 The application flow view describes the information flows between different applications, services, modules and databases.
 
+### Administrative view
+
 The administration view lists the perimeters and privilege levels of users and administrators.
 
-
-### Infrastructure view
+### Loggical view
 
 The logical infrastructure view illustrates the logical partitioning of networks, notably through the definition of IP address ranges, VLANs and filtering and routing functions;
 
+### Infrastructure view
+
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-### Maturity levels
+## Maturity levels
 
 The maturity levels represent the percentage of completeness of the mapping. It is an indicator of the effort remaining to be provided to achieve complete mapping.
 
@@ -39,7 +42,7 @@ This maturity is divided into three levels:
 * Level 2 intermediate granularity which contains important information for mapping;
 * Level 3 fine granularity which contains useful information for the management of information system security.
 
-### Security needs
+## Security needs
 
 Information security needs are expressed in terms of confidentiality, integrity, availability and traceability with the following scale:
 

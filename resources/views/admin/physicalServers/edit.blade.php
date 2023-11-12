@@ -78,7 +78,7 @@
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.cpu_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="memory">{{ trans('cruds.physicalServer.fields.memory') }}</label>
                     <input class="form-control {{ $errors->has('memory') ? 'is-invalid' : '' }}" type="text" name="memory" id="memory" value="{{ old('memory', $physicalServer->memory) }}">
@@ -90,7 +90,7 @@
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.memory_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk">{{ trans('cruds.physicalServer.fields.disk') }}</label>
                     <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', $physicalServer->disk) }}">
@@ -102,7 +102,7 @@
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.disk_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk_used">{{ trans('cruds.physicalServer.fields.disk_used') }}</label>
                     <input class="form-control {{ $errors->has('disk_used') ? 'is-invalid' : '' }}" type="text" name="disk_used" id="disk_used" value="{{ old('disk_used', $physicalServer->disk_used) }}">
@@ -180,14 +180,14 @@
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.operating_system_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.physicalServer.fields.install_date') }}</label>
                     <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $physicalServer->install_date) }}">
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.physicalServer.fields.update_date') }}</label>
                     <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $physicalServer->update_date) }}">
@@ -228,6 +228,42 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="cluster_id">{{ trans('cruds.physicalServer.fields.cluster') }}</label>
+                    <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="cluster_id" id="cluster_id">
+                        <option></option>
+                        @foreach($clusters as $id => $name)
+                            <option value="{{ $id }}" {{ ($physicalServer->cluster ? $physicalServer->cluster->id : old('cluster_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cluster'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('cluster') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalServer.fields.cluster_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label for="applications">{{ trans('cruds.physicalServer.fields.logical_servers') }}</label>
+                    <select class="form-control select2 {{ $errors->has('logicalServers') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
+                        @foreach($logical_server_list as $id => $name)
+                            <option value="{{ $id }}" {{ (in_array($id, old('logicalServers', [])) || $physicalServer->serversLogicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('logicalServers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('logicalServers') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalServer.fields.logical_servers_helper') }}</span>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -235,9 +271,12 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
+      <div class="row">
+          <div class="col-md-4">
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.physicalServer.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
+                    <option></option>
                     @foreach($sites as $id => $site)
                         <option value="{{ $id }}" {{ ($physicalServer->site ? $physicalServer->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
                     @endforeach
@@ -249,9 +288,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.site_helper') }}</span>
             </div>
+          </div>
+          <div class="col-md-4">
             <div class="form-group">
                 <label for="building_id">{{ trans('cruds.physicalServer.fields.building') }}</label>
                 <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
+                    <option></option>
                     @foreach($buildings as $id => $building)
                         <option value="{{ $id }}" {{ ($physicalServer->building ? $physicalServer->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
                     @endforeach
@@ -263,9 +305,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.building_helper') }}</span>
             </div>
+          </div>
+          <div class="col-md-4">
             <div class="form-group">
                 <label for="bay_id">{{ trans('cruds.physicalServer.fields.bay') }}</label>
                 <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
+                    <option></option>
                     @foreach($bays as $id => $bay)
                         <option value="{{ $id }}" {{ ($physicalServer->bay ? $physicalServer->bay->id : old('bay_id')) == $id ? 'selected' : '' }}>{{ $bay }}</option>
                     @endforeach
@@ -277,17 +322,16 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalServer.fields.bay_helper') }}</span>
             </div>
-
-            </div>
+          </div>
         </div>
-        <div class="form-group">
-            <button class="btn btn-danger" type="submit">
-                {{ trans('global.save') }}
-            </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-danger" type="submit">
+          {{ trans('global.save') }}
+      </button>
     </div>
 </form>
-
-
 @endsection
 
 @section('scripts')
@@ -307,7 +351,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>

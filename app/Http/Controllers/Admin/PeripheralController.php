@@ -1,19 +1,19 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Bay;
 use App\Building;
-use App\Peripheral;
-use App\Site;
 use App\Entity;
-use App\MApplication;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
 use App\Http\Requests\StorePeripheralRequest;
 use App\Http\Requests\UpdatePeripheralRequest;
-use Symfony\Component\HttpFoundation\Response;
+use App\MApplication;
+use App\Peripheral;
+use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
 {
@@ -41,8 +41,10 @@ class PeripheralController extends Controller
         $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
         $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
-        return view('admin.peripherals.create', 
-            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list','domain_list','responsible_list'));
+        return view(
+            'admin.peripherals.create',
+            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list', 'domain_list', 'responsible_list')
+        );
     }
 
     public function store(StorePeripheralRequest $request)
@@ -70,8 +72,10 @@ class PeripheralController extends Controller
 
         $peripheral->load('site', 'building', 'bay');
 
-        return view('admin.peripherals.edit', 
-            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'peripheral','type_list','domain_list','responsible_list'));
+        return view(
+            'admin.peripherals.edit',
+            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'peripheral', 'type_list', 'domain_list', 'responsible_list')
+        );
     }
 
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)

@@ -66,7 +66,44 @@ Modèle de données
 ## Installation
 
 - Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md) 
-- Déploiement sous [Docker](https://github.com/dbarzin/mercator/blob/master/docker/README.fr.md)
+
+### Docker
+
+Téléchargez d'abord l'image Docker.
+
+```Shell
+docker pull ghcr.io/dbarzin/mercator:latest
+```
+
+Ensuite, vous pouvez lancer une instance locale éphémère en mode développement (i.e. http) :
+
+```shell
+docker run -it --rm --name mercator -e APP_ENV=development -p "127.0.0.1:8000":80 ghcr.io/dbarzin/mercator:latest
+```
+
+Par défaut, il utilise un backend SQLite. Si vous voulez rendre les données persistantes :
+
+```Shell
+touch ./db.sqlite && chmod a+w ./db.sqlite
+docker run -it --rm --name mercator -e APP_ENV=development -p "127.0.0.1:8000":80 -v $PWD/db.sqlite:/var/www/mercator/db.sqlite ghcr.io/dbarzin/mercator:latest
+```
+
+Enfin, vous pouvez remplir la base de données avec des données de démonstration grâce à la variable d'environnement `USE_DEMO_DATA` :
+
+```shell
+touch ./db.sqlite && chmod a+w ./db.sqlite
+docker run -it --rm \
+           --name mercator \
+           -e APP_ENV=development \
+           -p "127.0.0.1:8000":80 \
+           -v $PWD/db.sqlite:/var/www/mercator/db.sqlite \
+           -e USE_DEMO_DATA=1 \
+           ghcr.io/dbarzin/mercator:latest
+```
+
+Visitez http://127.0.0.1:8000 !
+
+Si vous recherchez un environnement plus robuste (https) et automatisé, jetez un oeil au dossier [docker-compose](docker-compose/).
 
 ## Changelog
 

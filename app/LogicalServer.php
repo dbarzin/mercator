@@ -43,6 +43,7 @@ class LogicalServer extends Model
         'memory',
         'disk',
         'disk_used',
+        'cluster_id',
         'environment',
         'net_services',
         'configuration',
@@ -109,6 +110,11 @@ class LogicalServer extends Model
     public function databases()
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
+    }
+
+    public function cluster()
+    {
+        return $this->belongsTo(Cluster::class, 'cluster_id');
     }
 
     public function certificates()

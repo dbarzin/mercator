@@ -16,7 +16,6 @@ use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 
 /**
  * App\User
- *
  */
 class User extends Authenticatable implements LdapAuthenticatable
 {
@@ -120,7 +119,10 @@ class User extends Authenticatable implements LdapAuthenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class)->orderBy('title');
+        if ($this->roles === null) {
+            return $this->roles = $this->belongsToMany(Role::class)->orderBy('title');
+        }
+        return $this->roles;
     }
 
     public function m_applications()
