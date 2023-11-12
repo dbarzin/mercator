@@ -411,7 +411,7 @@
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
-                                    {{ trans('cruds.cluster.title') }}
+                                    {{ trans('cruds.cluster.title_short') }}
                                 </a>
                             </li>
                         @endcan

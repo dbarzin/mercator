@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-LogicalServer">
+            <table class="table table-bordered table-striped table-hover datatable datatable-LogicalServer">
                 <thead>
                     <tr>
                         <th width="10">

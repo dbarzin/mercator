@@ -32,18 +32,26 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <dt>{{ trans('cruds.logicalServer.fields.name') }}</dt>
-                {{ $logicalServer->name }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <dt>{{ trans('cruds.logicalServer.fields.description') }}</dt>
-                {!! $logicalServer->description !!}
-            </div>
-        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.logicalServer.fields.name') }}
+                    </th>
+                    <td>
+                        {{ $logicalServer->name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.description') }}
+                    </th>
+                    <td>
+                        {!! $logicalServer->description !!}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -51,44 +59,63 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-3">
-                <dt>{{ trans('cruds.logicalServer.fields.operating_system') }}</dt>
-                {!! $logicalServer->operating_system !!}
-            </div>
-            <div class="col-sm-3">
-                <dt>{{ trans('cruds.logicalServer.fields.install_date') }}</dt>
-                {!! $logicalServer->install_date !!}
-            </div>
-            <div class="col-sm-3">
-                <dt>{{ trans('cruds.logicalServer.fields.update_date') }}</dt>
-                {!! $logicalServer->update_date !!}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <dt>{{ trans('cruds.logicalServer.fields.cluster') }}</dt>
-                @if ($logicalServer->cluster!=null)
-                <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
-                    {!! $logicalServer->cluster->name ?? "" !!}
-                </a>
-                @endif
-            </div>
-            <div class="col-md-3">
-                <dt>{{ trans('cruds.logicalServer.fields.environment') }}</dt>
-                {!! $logicalServer->environment !!}
-            </div>
-            <div class="col-md-8">
-                <dt>{{ trans('cruds.logicalServer.fields.address_ip') }}</dt>
-                {!! $logicalServer->address_ip !!}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <dt>{{ trans('cruds.logicalServer.fields.net_services') }}</dt>
-                {{ $logicalServer->net_services }}
-            </div>
-        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="16%">
+                        {{ trans('cruds.logicalServer.fields.operating_system') }}
+                    </th>
+                    <td width="16%">
+                        {!! $logicalServer->operating_system !!}
+                    </td>
+                    <th width="16%">
+                        {{ trans('cruds.logicalServer.fields.install_date') }}
+                    </th>
+                    <td width="16%">
+                        {!! $logicalServer->install_date !!}
+                    </td>
+                    <th width="16%">
+                        {{ trans('cruds.logicalServer.fields.update_date') }}
+                    </th>
+                    <td width="20%">
+                        {!! $logicalServer->update_date !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.cluster') }}
+                    </th>
+                    <td>
+                        @if ($logicalServer->cluster!=null)
+                        <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
+                            {!! $logicalServer->cluster->name ?? "" !!}
+                        </a>
+                        @endif
+                    </td>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.environment') }}
+                    </th>
+                    <td>
+                        {!! $logicalServer->environment !!}
+                    </td>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.address_ip') }}
+                    </th>
+                    <td>
+                        {!! $logicalServer->address_ip !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.net_services') }}
+                    </th>
+                    <td colspan="5">
+                        {{ $logicalServer->net_services }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -96,30 +123,44 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-2">
-                <b>{{ trans('cruds.logicalServer.fields.cpu') }}</b>
-                {!! $logicalServer->cpu !!}
-            </div>
-            <div class="col-sm-2">
-                <b>{{ trans('cruds.logicalServer.fields.memory') }}</b>
-                {!! $logicalServer->memory !!}
-            </div>
-            <div class="col-sm-2">
-                <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
-                {!! $logicalServer->disk !!}
-            </div>
-            <div class="col-sm-2">
-                <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
-                {!! $logicalServer->disk !!}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                {!! $logicalServer->configuration !!}
-            </div>
-
-        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="12%">
+                        {{ trans('cruds.logicalServer.fields.cpu') }}
+                    </th>
+                    <td width="12%">
+                        {!! $logicalServer->cpu !!}
+                    </td>
+                    <th width="12%">
+                        <b>{{ trans('cruds.logicalServer.fields.memory') }}</b>
+                    </th>
+                    <td width="12%">
+                        {!! $logicalServer->memory !!}
+                    </td>
+                    <th width="12%">
+                        <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
+                    </th>
+                    <td width="12%">
+                        {!! $logicalServer->disk !!}
+                    </td>
+                    <th width="12%">
+                        <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
+                    </th>
+                    <td width="12%">
+                        {!! $logicalServer->disk !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.logicalServer.fields.configuration') }}
+                    </th>
+                    <td colspan="7">
+                        {!! $logicalServer->configuration !!}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -127,30 +168,38 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-4">
-                <dt>{{ trans('cruds.logicalServer.fields.applications') }}</dt>
-                @foreach($logicalServer->applications as $application)
-                    <a href="{{ route('admin.applications.show', $application->id) }}">
-                        {{ $application->name }}
-                    </a>
-                    @if(!$loop->last)
-                    ,
-                    @endif
-                @endforeach
-            </div>
-            <div class="col-sm-4">
-                <dt>{{ trans('cruds.logicalServer.fields.databases') }}</dt>
-                @foreach($logicalServer->databases as $database)
-                    <a href="{{ route('admin.databases.show', $database->id) }}">
-                        {{ $database->name }}
-                    </a>
-                    @if(!$loop->last)
-                    ,
-                    @endif
-                @endforeach
-            </div>
-        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        <dt>{{ trans('cruds.logicalServer.fields.applications') }}</dt>
+                    </th>
+                    <td width="40%">
+                        @foreach($logicalServer->applications as $application)
+                            <a href="{{ route('admin.applications.show', $application->id) }}">
+                                {{ $application->name }}
+                            </a>
+                            @if(!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                    </td>
+                    <th width="10%">
+                        <dt>{{ trans('cruds.logicalServer.fields.databases') }}</dt>
+                    </th>
+                    <td width="40%">
+                        @foreach($logicalServer->databases as $database)
+                            <a href="{{ route('admin.databases.show', $database->id) }}">
+                                {{ $database->name }}
+                            </a>
+                            @if(!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
@@ -158,19 +207,25 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm">
-                <dt>{{ trans('cruds.logicalServer.fields.servers') }}</dt>
-                @foreach($logicalServer->servers as $server)
-                    <a href="{{ route('admin.physical-servers.show', $server->id) }}">
-                        {{ $server->name }}
-                    </a>
-                    @if(!$loop->last)
-                    ,
-                    @endif
-                @endforeach
-            </div>
-        </div>
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        <dt>{{ trans('cruds.logicalServer.fields.servers') }}</dt>
+                    </th>
+                    <td>
+                        @foreach($logicalServer->servers as $server)
+                            <a href="{{ route('admin.physical-servers.show', $server->id) }}">
+                                {{ $server->name }}
+                            </a>
+                            @if(!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $logicalServer->created_at ? $logicalServer->created_at->format(trans('global.timestamp')) : '' }} |
