@@ -52,6 +52,9 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
+    // Add some caching for roles
+    private $roles = null;
+
     /**
      * Check if the User has the 'Admin' role, which is the first role in the app
      * @return bool
