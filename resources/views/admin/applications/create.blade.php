@@ -169,7 +169,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="recommended" for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                    <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
                     <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
                         @foreach($cartographers_list as $key => $cartographer)
                         <option value="{{ $key }}" {{ in_array($key, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>

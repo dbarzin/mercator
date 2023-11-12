@@ -44,31 +44,11 @@ class AuthServiceProvider extends ServiceProvider
             Passport::personalAccessTokensExpireIn(now()->addHours(4));
         }
 
-        /*
-         *  Register one Gate per model for cartographers.
-         * */
-        /**
-         * Before check
-         */
-        /*
-        Gate::before(function (User $user, $ability) {
-            // check $ability before
-            if (!config('app.cartographers', false))
-                return false;
-            if ($ability==="is-cartographer-m-application")
-                // Si c'est un admin, on lui autorise toutes les applications
-                if ($user->getIsAdminAttribute())
-                    return true;
-                else
-                    return false;
-        });
-        */
-
         /**
          * MApplication
          */
         Gate::define('is-cartographer-m-application', function (User $user, MApplication $application) {
-            if (! config('app.cartographers', false)) {
+            if (! config('app.cartographers', false) || $user->isAdmin()) {
                 return true;
             }
             return $application->hasCartographer($user);

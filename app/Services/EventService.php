@@ -15,16 +15,18 @@ class EventService
     public function getLoadAppEvents(MApplication $application)
     {
         // Chargement des évènements triés
-        $application->load(['events' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        },
+        $application->load([
+            'events' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
         ]);
 
         // On veut le nom utilisateur pour chaque évènements
         foreach ($application->events as $event) {
-            $event->load(['user' => function ($query) {
-                $query->select('id', 'name');
-            },
+            $event->load([
+                'user' => function ($query) {
+                    $query->select('id', 'name');
+                },
             ]);
         }
     }
