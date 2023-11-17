@@ -2,7 +2,7 @@ name: Continuous Integration
 
 on:
   push:
-    branches: 
+    branches:
       - master
   pull_request:
     branches: [master, develop]
@@ -10,7 +10,7 @@ on:
 jobs:
 
   deploy:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     services:
       mysql:
@@ -61,7 +61,7 @@ jobs:
 
       - name: Migrate and seed the database
         run: |
-          php artisan migrate --seed 
+          php artisan migrate --seed
 
       - name: Insert test data
         run: |
@@ -72,10 +72,10 @@ jobs:
           php artisan insights
 
       - name: Upgrade Chrome Driver
-        run: php artisan dusk:chrome-driver 117
+        run: php artisan dusk:chrome-driver 119
 
       - name: Start Chrome Driver Version
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v 
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
 
       - name: Start Chrome Driver
         run: ./vendor/laravel/dusk/bin/chromedriver-linux &
@@ -107,4 +107,3 @@ jobs:
         with:
           name: console
           path: tests/Browser/console
-
