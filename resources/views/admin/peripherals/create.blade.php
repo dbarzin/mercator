@@ -35,6 +35,7 @@
                 <div class="form-group">
                     <label for="domain">{{ trans('cruds.peripheral.fields.domain') }}</label>
                     <select class="form-control select2-free {{ $errors->has('domain') ? 'is-invalid' : '' }}" name="domain" id="domain">
+
                         @if (!$domain_list->contains(old('domain')))
                         <option> {{ old('domain') }}</option>'
                         @endif
@@ -76,7 +77,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans("cruds.menu.ecosystem.title_short") }}        
+        {{ trans("cruds.menu.ecosystem.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -85,6 +86,7 @@
                 <div class="form-group">
                     <label class="recommended" for="provider_id">{{ trans('cruds.peripheral.fields.provider') }}</label>
                     <select class="form-control select2 {{ $errors->has('provider') ? 'is-invalid' : '' }}" name="provider_id" id="provider_id">
+                        <option></option>
                         @foreach($entities as $id => $name)
                         <option value="{{ $id }}" {{ old('provider_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
@@ -122,7 +124,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans("cruds.menu.application.title_short") }}        
+        {{ trans("cruds.menu.application.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -151,7 +153,7 @@
         <div class="row">
             <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="vendor">{{ trans('cruds.peripheral.fields.vendor') }}</label>
+                        <label for="vendor">{{ trans('cruds.peripheral.fields.vendor') }}</label>
                         <div class="form-group">
                             <select id="vendor-selector" class="form-control select2-free" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
@@ -163,7 +165,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="recommended" for="product">{{ trans('cruds.peripheral.fields.product') }}</label>
+                        <label for="product">{{ trans('cruds.peripheral.fields.product') }}</label>
                         <select id="product-selector" class="form-control select2-free" name="product">
                             <option>{{ old('product', '') }}</option>
                         </select>
@@ -177,7 +179,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label class="recommended" for="version">{{ trans('cruds.peripheral.fields.version') }}</label>
+                        <label for="version">{{ trans('cruds.peripheral.fields.version') }}</label>
                         <select id="version-selector" class="form-control select2-free" name="version">
                             <option>{{ old('version', '') }}</option>
                         </select>
@@ -211,6 +213,7 @@
                 <div class="form-group">
                     <label for="site_id">{{ trans('cruds.peripheral.fields.site') }}</label>
                     <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
+                        <option></option>
                         @foreach($sites as $id => $site)
                             <option value="{{ $id }}" {{ old('site_id') == $id ? 'selected' : '' }}>{{ $site }}</option>
                         @endforeach
@@ -227,6 +230,7 @@
                 <div class="form-group">
                     <label for="building_id">{{ trans('cruds.peripheral.fields.building') }}</label>
                     <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
+                        <option></option>
                         @foreach($buildings as $id => $building)
                             <option value="{{ $id }}" {{ old('building_id') == $id ? 'selected' : '' }}>{{ $building }}</option>
                         @endforeach
@@ -243,6 +247,7 @@
                 <div class="form-group">
                     <label for="bay_id">{{ trans('cruds.peripheral.fields.bay') }}</label>
                     <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
+                        <option></option>
                         @foreach($bays as $id => $bay)
                             <option value="{{ $id }}" {{ old('bay_id') == $id ? 'selected' : '' }}>{{ $bay }}</option>
                         @endforeach
@@ -286,7 +291,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
     // CPE
     // ------------------------------------------------
@@ -415,12 +420,12 @@ $(document).ready(function () {
                         e.preventDefault();
                         let vendor = $(this).data('vendor');
                         $("#vendor-selector").append('<option>'+vendor+'</option>');
-                        $("#vendor-selector").val(vendor);                        
+                        $("#vendor-selector").val(vendor);
                         let product = $(this).data('product');
                         $("#product-selector").append('<option>'+product+'</option>');
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
-                        $("#version-selector").val(null);                        
+                        $("#version-selector").val(null);
                         swal.close();
                     })
                 },
@@ -428,7 +433,7 @@ $(document).ready(function () {
                 showCancelButton: true,
                 customClass: {
                     container:   {
-                        'max-height': "6em", 
+                        'max-height': "6em",
                         'overflow-y': 'scroll',
                         'width': '100%',
                     }

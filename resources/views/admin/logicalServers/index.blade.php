@@ -123,9 +123,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -133,10 +131,8 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
+
 @section('scripts')
 @parent
 <script>
@@ -171,7 +167,6 @@
   }
   dtButtons.push(deleteButton)
 @endcan
-
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
@@ -183,8 +178,6 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
 })
-
 </script>
 @endsection

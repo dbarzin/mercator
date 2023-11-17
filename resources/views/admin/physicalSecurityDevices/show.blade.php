@@ -38,12 +38,10 @@
                         <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.name') }}
                         </th>
-                        <td>
+                        <td colspan='3'>
                             {{ $physicalSecurityDevice->name }}
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.type') }}
                         </th>
                         <td>
@@ -54,12 +52,12 @@
                         <th>
                             {{ trans('cruds.physicalSecurityDevice.fields.description') }}
                         </th>
-                        <td>
+                        <td colspan='5'>
                             {!! $physicalSecurityDevice->description !!}
                         </td>
                     </tr>
                     <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.site') }}
                         </th>
                         <td>
@@ -69,9 +67,7 @@
                                 </a>
                                 @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.building') }}
                         </th>
                         <td>
@@ -81,9 +77,7 @@
                                 </a>
                                 @endif
                         </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.physicalSecurityDevice.fields.bay') }}
                         </th>
                         <td>
@@ -105,7 +99,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $physicalSecurityDevice->created_at ? $physicalSecurityDevice->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $physicalSecurityDevice->updated_at ? $physicalSecurityDevice->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $physicalSecurityDevice->updated_at ? $physicalSecurityDevice->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 @endsection
