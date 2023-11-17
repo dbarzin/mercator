@@ -28,9 +28,9 @@ class PhysicalSecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('physical_security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
