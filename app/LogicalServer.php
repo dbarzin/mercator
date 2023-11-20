@@ -62,7 +62,7 @@ class LogicalServer extends Model
 
     public function setInstallDateAttribute($value)
     {
-        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     /**
