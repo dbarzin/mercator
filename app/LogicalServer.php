@@ -84,12 +84,13 @@ class LogicalServer extends Model
      */
     public function getUpdateDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
     }
 
     public function setUpdateDateAttribute($value)
     {
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        //dd($value);
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function applications()
