@@ -93,23 +93,6 @@
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-sm">
-
-                    <div class="form-group">
-                        <label class="recommended" for="controls">{{ trans('cruds.dataProcessing.fields.documents') }}</label>
-                        <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
-                        @if($errors->has('documents'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('documents') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.dataProcessing.fields.documents_helper') }}</span>
-                    </div>
-                </div>
             </div>
         </div>
     <!---------------------------------------------------------------------------------------------------->
@@ -266,6 +249,22 @@
                 </div>
             </div>
         </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="row">
+            <div class="col-sm">
+                <div class="form-group">
+                    <label class="recommended" for="controls">{{ trans('cruds.dataProcessing.fields.documents') }}</label>
+                    <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
+                    @if($errors->has('documents'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('documents') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.dataProcessing.fields.documents_helper') }}</span>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------->        
         <div class="row">
             <div class="col-sm">
                 <div class="form-group">
