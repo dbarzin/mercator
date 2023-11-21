@@ -4,7 +4,7 @@
     <div class="col-lg-2">
         <form method="get" action="/admin/patching/index">
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-            <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" 
+            <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
                 <option value="None"></option>
@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                     @foreach($servers as $server)
-                        <tr data-entry-id="{{ $server->id }}">  
+                        <tr data-entry-id="{{ $server->id }}">
                             <td>
 
                             </td>
@@ -160,7 +160,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

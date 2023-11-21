@@ -12,16 +12,86 @@
         </div>
     <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th width="10%">
+                            {{ trans('cruds.logicalServer.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $server->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.logicalServer.fields.description') }}
+                        </th>
+                        <td>
+                            {!! $server->description !!}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            Patching
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+
             <div class="row">
-                <div class="col-md-6">
-                    <dt>{{ trans('cruds.logicalServer.fields.name') }}</dt>
-                    {{ $server->name }}
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="patching_group" id="patching_group">
+                            @if (!$environment_list->contains(old('patching_group')))
+                                <option> {{ old('patching_group') }}</option>'
+                            @endif
+                            @foreach($patching_group_list as $t)
+                                <option {{ (old('patching_group') ? old('patching_group') : $server->patching_group) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('patching_group'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('patching_group') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.patching_group_helper') }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <dt>{{ trans('cruds.logicalServer.fields.description') }}</dt>
-                    {!! $server->description !!}
+
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
+                        <table width="100%">
+                            <tr>
+                                <td width="90%">
+                                <input class="date form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
+                                </td>
+                                <td>
+                                    <a href='' class="nav-link" onclick="document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';return false;">
+                                        <i class=" nav-icon fas fa-clock">
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
+                        <table width="100%">
+                            <tr>
+                                <td width="90%">
+                                <input class="date form-control" type="text" id="next_update" name="next_update" value="{{ old('next_update', $server->next_update) }}">
+                                </td>
+                            </tr>
+                        </table>
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,10 +122,10 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.operating_system_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
-                    <input class="form-control datetime" type="text" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
+                    <input class="form-control date" type="text" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
@@ -95,7 +165,7 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <div class="form-group">                
+                <div class="form-group">
                     <label for="net_services">{{ trans('cruds.logicalServer.fields.net_services') }}</label>
                     <input class="form-control {{ $errors->has('net_services') ? 'is-invalid' : '' }}" type="text" name="net_services" id="net_services" value="{{ old('net_services', $server->net_services) }}">
                     @if($errors->has('net_services'))
@@ -129,7 +199,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.cpu_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="memory">{{ trans('cruds.logicalServer.fields.memory') }}</label>
                     <input class="form-control {{ $errors->has('memory') ? 'is-invalid' : '' }}" type="text" name="memory" id="memory" value="{{ old('memory', $server->memory) }}">
@@ -141,7 +211,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.memory_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk">{{ trans('cruds.logicalServer.fields.disk') }}</label>
                     <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', $server->disk) }}">
@@ -153,7 +223,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.disk_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk_used">{{ trans('cruds.logicalServer.fields.disk_used') }}</label>
                     <input class="form-control {{ $errors->has('disk_used') ? 'is-invalid' : '' }}" type="text" name="disk_used" id="disk_used" value="{{ old('disk_used', $server->disk_used) }}">
@@ -179,73 +249,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!---------------------------------------------------------------------------------------------------->
-    <div class="card-header">
-        Patching
-    </div>
-    <!---------------------------------------------------------------------------------------------------->
-    <div class="card-body">
-
-        <div class="row">
-            <div class="col-sm">      
-                <div class="form-group">
-                    <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="patching_group" id="patching_group">
-                        @if (!$environment_list->contains(old('patching_group')))
-                            <option> {{ old('patching_group') }}</option>'
-                        @endif
-                        @foreach($patching_group_list as $t)
-                            <option {{ (old('patching_group') ? old('patching_group') : $server->patching_group) == $t ? 'selected' : '' }}>{{$t}}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('patching_group'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('patching_group') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.logicalServer.fields.patching_group_helper') }}</span>
-                </div>
-            </div>
-
-            <div class="col-sm">      
-                <div class="form-group">
-                    <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                    <table width="100%">
-                        <tr>
-                            <td width="90%">
-                            <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
-                            </td>
-                            <td>
-                                <a href='' class="nav-link" onclick="document.getElementById('update_date').value='{{ now()->format('m/d/Y H:i:s') }}';return false;">
-                                    <i class=" nav-icon fas fa-clock">
-                                    </i>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                    <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
-                </div>
-            </div>
-            <div class="col-sm">      
-                <div class="form-group">
-                    <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
-                    <table width="100%">
-                        <tr>
-                            <td width="90%">
-                            <input class="date form-control" type="text" id="next_update" name="next_update" value="{{ old('next_update', $server->next_update) }}">
-                            </td>
-                        </tr>
-                    </table>
-                    <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
-                </div>
-            </div>
-
-        </div>
-
+        <!---------------------------------------------------------------------------------------------------->
         <div class="row">
             <div class="col-sm">
-
                 <div class="form-group">
                     <label class="recommended" for="controls">{{ trans('cruds.dataProcessing.fields.documents') }}</label>
                     <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
@@ -258,7 +264,7 @@
                 </div>
             </div>
         </div>
-
+        <!---------------------------------------------------------------------------------------------------->        
         <div class="row">
             <div class="col-sm">
                 <div class="form-group">
@@ -278,7 +284,6 @@
 <script>
 Dropzone.autoDiscover = false;
 
-
 $(document).ready(function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
@@ -294,10 +299,10 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 
-    var image_uploader = new Dropzone("#dropzoneFileUpload", { 
+    var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
         params: { },
@@ -305,7 +310,7 @@ $(document).ready(function () {
             // acceptedFiles: ".jpeg,.jpg,.png,.gif",
             addRemoveLinks: true,
             timeout: 50000,
-            removedfile: function(file) 
+            removedfile: function(file)
             {
                 console.log("remove file " + file.name + " " + file.id);
                 $.ajax({
@@ -323,10 +328,10 @@ $(document).ready(function () {
                     }});
                     // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
                     var fileRef;
-                    return (fileRef = file.previewElement) != null ? 
+                    return (fileRef = file.previewElement) != null ?
                     fileRef.parentNode.removeChild(file.previewElement) : void 0;
             },
-            success: function(file, response) 
+            success: function(file, response)
             {
                 file.id=response.id;
                 console.log("success response");
@@ -339,23 +344,18 @@ $(document).ready(function () {
                return false;
             },
             init: function () {
-            //Add existing files into dropzone            
+            //Add existing files into dropzone
             var existingFiles = [
                 @foreach($server->documents as $document)
-                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },                    
+                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },
                 @endforeach
             ];
             for (i = 0; i < existingFiles.length; i++) {
-                this.emit("addedfile", existingFiles[i]);                
-                this.emit("complete", existingFiles[i]);                
+                this.emit("addedfile", existingFiles[i]);
+                this.emit("complete", existingFiles[i]);
                 }
             }
         });
     });
-</script>
-
-
-
-});
 </script>
 @endsection

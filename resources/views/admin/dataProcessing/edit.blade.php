@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.dataProcessing.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.dataProcessing.title_singular') }}
     </div>
 
     <div class="card-body">
@@ -205,7 +205,7 @@ $(document).ready(function () {
         }
     );
 
-var image_uploader = new Dropzone("#dropzoneFileUpload", { 
+var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
         params: { },
@@ -213,7 +213,7 @@ var image_uploader = new Dropzone("#dropzoneFileUpload", {
             // acceptedFiles: ".jpeg,.jpg,.png,.gif",
             addRemoveLinks: true,
             timeout: 50000,
-            removedfile: function(file) 
+            removedfile: function(file)
             {
                 console.log("remove file " + file.name + " " + file.id);
                 $.ajax({
@@ -231,10 +231,10 @@ var image_uploader = new Dropzone("#dropzoneFileUpload", {
                     }});
                     // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
                     var fileRef;
-                    return (fileRef = file.previewElement) != null ? 
+                    return (fileRef = file.previewElement) != null ?
                     fileRef.parentNode.removeChild(file.previewElement) : void 0;
             },
-            success: function(file, response) 
+            success: function(file, response)
             {
                 file.id=response.id;
                 console.log("success response");
@@ -247,15 +247,15 @@ var image_uploader = new Dropzone("#dropzoneFileUpload", {
                return false;
             },
             init: function () {
-            //Add existing files into dropzone            
+            //Add existing files into dropzone
             var existingFiles = [
                 @foreach($dataProcessing->documents as $document)
-                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },                    
+                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },
                 @endforeach
             ];
             for (i = 0; i < existingFiles.length; i++) {
-                this.emit("addedfile", existingFiles[i]);                
-                this.emit("complete", existingFiles[i]);                
+                this.emit("addedfile", existingFiles[i]);
+                this.emit("complete", existingFiles[i]);
                 }
             }
         });
