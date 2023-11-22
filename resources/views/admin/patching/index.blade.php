@@ -93,10 +93,10 @@
                                 {{ $server->patching_group ?? '' }}
                             </td>
                             <td>
-                                {{ $server->update_date ?? '' }}
+                                {{ ($server->update_date!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->update_date)->format('Y-m-d') : '' }}
                             </td>
                             <td>
-                                {{ $server->next_update ?? '' }}
+                                {{ ($server->next_update!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->next_update)->format('Y-m-d') : '' }}
                             </td>
                             <td>
                                 @can('logical_server_show')
