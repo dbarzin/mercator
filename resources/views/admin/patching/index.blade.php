@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <form method="get" action="/admin/patching/index">
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
             <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
@@ -81,11 +81,11 @@
                             </td>
                             <td>
                               @foreach($server->applications as $application)
-                                <a href="{{ route('admin.applications.show', $application->id) }}">
-                                  {{ $application->responsible }}
-                                </a>
-                                  @if(!$loop->last)
-                                  ,
+                                  @if ($application->responsible!=null)
+                                      {{ $application->responsible }}
+                                      @if(!$loop->last)
+                                      ,
+                                      @endif
                                   @endif
                               @endforeach
                             </td>
@@ -93,10 +93,10 @@
                                 {{ $server->patching_group ?? '' }}
                             </td>
                             <td>
-                                {{ $server->update_date ?? '' }}
+                                {{ ($server->update_date!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->update_date)->format('Y-m-d') : '' }}
                             </td>
                             <td>
-                                {{ $server->next_update ?? '' }}
+                                {{ ($server->next_update!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->next_update)->format('Y-m-d') : '' }}
                             </td>
                             <td>
                                 @can('logical_server_show')

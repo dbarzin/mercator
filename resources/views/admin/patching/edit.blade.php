@@ -264,10 +264,13 @@
                 </div>
             </div>
         </div>
-        <!---------------------------------------------------------------------------------------------------->        
+        <!---------------------------------------------------------------------------------------------------->
         <div class="row">
             <div class="col-sm">
                 <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
