@@ -56,10 +56,10 @@
                         </th>
                         <td>
                             @foreach($activity->activitiesProcesses as $process)
-                                <a href="{{ route('admin.operations.show', $process->id) }}">{{ $process->identifiant }}</a>
+                                <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>
                                 @if (!$loop->last)
                                     ,
-                                @endif                                    
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -73,7 +73,7 @@
                                 <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
                                 @if (!$loop->last)
                                     ,
-                                @endif                                    
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -90,7 +90,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $activity->created_at ? $activity->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $activity->updated_at ? $activity->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $activity->updated_at ? $activity->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 
