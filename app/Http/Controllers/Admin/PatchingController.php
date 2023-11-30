@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\LogicalServer;
 use Gate;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -63,6 +64,17 @@ class PatchingController extends Controller
         $logicalServer->update($request->all());
         $logicalServer->documents()->sync(session()->get('documents'));
         session()->forget('documents');
+
+        // Update frequency
+        if ($request->get('global_periodicity')!=null) {
+            $lservers = LogicalServer::where('patching_group','=',$logicalServer->patching_group)->get();
+            foreach ($lservers as $s) {
+                $s->patching_frequency = $logicalServer->patching_frequency;
+                if ($s->update_date!=null)
+                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'),$s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                $s->save();
+            }
+        }
 
         return redirect()->route('admin.patching.index');
     }

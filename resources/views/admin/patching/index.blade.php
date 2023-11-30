@@ -7,7 +7,7 @@
             <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
-                <option value="None"></option>
+                <option value="None">&nbsp;</option>
                 @foreach($patching_group_list as $group)
                     <option {{ session()->get('patching_group') == $group ? 'selected' : '' }}>{{ $group }}</option>
                 @endforeach
@@ -57,7 +57,15 @@
                 </thead>
                 <tbody>
                     @foreach($servers as $server)
-                        <tr data-entry-id="{{ $server->id }}">
+                        <tr data-entry-id="{{ $server->id }}"
+                            @if ($server->next_update===null)
+                                class="table-secondary"
+                            @elseif (Carbon\Carbon::now()->startOfDay()->gte(Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)))
+                                class="table-danger"
+                            @else
+                                class="table-success"
+                            @endif
+                            >
                             <td>
 
                             </td>
@@ -93,10 +101,10 @@
                                 {{ $server->patching_group ?? '' }}
                             </td>
                             <td>
-                                {{ ($server->update_date!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->update_date)->format('Y-m-d') : '' }}
+                                {{ $server->update_date!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$server->update_date)->format("Y-m-d") : ""}}
                             </td>
                             <td>
-                                {{ ($server->next_update!=null) ? \Carbon\Carbon::createFromFormat(config('panel.date_format'), $server->next_update)->format('Y-m-d') : '' }}
+                                {{ $server->next_update!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)->format("Y-m-d") : ""}}
                             </td>
                             <td>
                                 @can('logical_server_show')
