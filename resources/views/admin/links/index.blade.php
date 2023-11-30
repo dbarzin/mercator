@@ -46,51 +46,51 @@
 
                             </td>
                             <td>
-                                @if ($physicalLink->peripheral_src_id!=null)
+                                @if ($physicalLink->peripheralSrc!=null)
                                 <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_src_id) }}">
                                     {{ $physicalLink->peripheralSrc->name; }}
                                 </a>
-                                @elseif ($physicalLink->phone_src_id!=null)
+                                @elseif ($physicalLink->phoneSrc!=null)
                                 <a href="{{ route('admin.phones.show', $physicalLink->phone_src_id) }}">
                                     {{ $physicalLink->phoneSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_router_src_id!=null)
+                                @elseif ($physicalLink->physicalRouterSrc!=null)
                                 <a href="{{ route('admin.physical-routers.show', $physicalLink->physical_router_src_id) }}">
                                     {{ $physicalLink->physicalRouterSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_security_device_src_id!=null)
+                                @elseif ($physicalLink->physicalSecurityDeviceSrc!=null)
                                 <a href="{{ route('admin.physical-security-devices.show', $physicalLink->physical_security_device_src_id) }}">
                                     {{ $physicalLink->physicalSecurityDeviceSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_server_src_id!=null)
+                                @elseif ($physicalLink->physicalServerSrc!=null)
                                 <a href="{{ route('admin.physical-servers.show', $physicalLink->physical_server_src_id) }}">
                                     {{ $physicalLink->physicalServerSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_switch_src_id!=null)
+                                @elseif ($physicalLink->physicalSwitchSrc!=null)
                                 <a href="{{ route('admin.physical-switches.show', $physicalLink->physical_switch_src_id) }}">
                                     {{ $physicalLink->physicalSwitchSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->storage_device_src_id!=null)
+                                @elseif ($physicalLink->storageDeviceSrc!=null)
                                 <a href="{{ route('admin.storage-devices.show', $physicalLink->storage_device_src_id) }}">
                                     {{ $physicalLink->storageDeviceSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->wifi_terminal_src_id!=null)
+                                @elseif ($physicalLink->wifiTerminalSrc!=null)
                                 <a href="{{ route('admin.wifi-terminals.show', $physicalLink->wifi_terminal_src_id) }}">
                                     {{ $physicalLink->wifiTerminalSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->workstation_src_id!=null)
+                                @elseif ($physicalLink->workstationSrc!=null)
                                 <a href="{{ route('admin.workstations.show', $physicalLink->workstation_src_id) }}">
                                     {{ $physicalLink->workstationSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->router_src_id!=null)
+                                @elseif ($physicalLink->routerSrc!=null)
                                 <a href="{{ route('admin.routers.show', $physicalLink->router_src_id) }}">
                                     {{ $physicalLink->routerSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->network_switch_src_id!=null)
+                                @elseif ($physicalLink->networkSwitchSrc!=null)
                                 <a href="{{ route('admin.network-switches.show', $physicalLink->network_switch_src_id) }}">
                                     {{ $physicalLink->networkSwitchSrc->name }}
                                 </a>
-                                @elseif ($physicalLink->logical_server_src_id!=null)
+                                @elseif ($physicalLink->logicalServerSrc!=null)
                                 <a href="{{ route('admin.logical-servers.show', $physicalLink->logical_server_src_id) }}">
                                     {{ $physicalLink->logicalServerSrc->name }}
                                 </a>
@@ -101,51 +101,51 @@
                                 {{ $physicalLink->src_port }}
                             </td>
                             <td>
-                                @if ($physicalLink->peripheral_dest_id!=null)
+                                @if ($physicalLink->peripheralDest!=null)
                                 <a href="{{ route('admin.peripherals.show', $physicalLink->peripheral_dest_id) }}">
                                     {{ $physicalLink->peripheralDest->name; }}
                                 </a>
-                                @elseif ($physicalLink->phone_dest_id!=null)
+                                @elseif ($physicalLink->phoneDest!=null)
                                 <a href="{{ route('admin.phones.show', $physicalLink->phone_dest_id) }}">
                                     {{ $physicalLink->phoneDest->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_router_dest_id!=null)
+                                @elseif ($physicalLink->physicalRouterDest!=null)
                                 <a href="{{ route('admin.physical-routers.show', $physicalLink->physical_router_dest_id) }}">
                                     {{ $physicalLink->physicalRouterDest->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_security_device_dest_id!=null)
+                                @elseif ($physicalLink->physicalSecurityDeviceDest!=null)
                                 <a href="{{ route('admin.physical-security-devices.show', $physicalLink->physical_security_device_dest_id) }}">
                                     {{ $physicalLink->physicalSecurityDeviceDest->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_server_dest_id!=null)
+                                @elseif ($physicalLink->physicalServerDest!=null)
                                 <a href="{{ route('admin.physical-servers.show', $physicalLink->physical_server_dest_id) }}">
                                     {{ $physicalLink->physicalServerDest->name }}
                                 </a>
-                                @elseif ($physicalLink->physical_switch_dest_id!=null)
+                                @elseif ($physicalLink->physicalSwitchDest!=null)
                                 <a href="{{ route('admin.physical-switches.show', $physicalLink->physical_switch_dest_id) }}">
                                     {{ $physicalLink->physicalSwitchDest->name }}
                                 </a>
-                                @elseif ($physicalLink->storage_device_dest_id!=null)
+                                @elseif ($physicalLink->storageDeviceDest!=null)
                                 <a href="{{ route('admin.storage-devices.show', $physicalLink->storage_device_dest_id) }}">
                                     {{ $physicalLink->storageDeviceDest->name }}
                                 </a>
-                                @elseif ($physicalLink->wifi_terminal_dest_id!=null)
+                                @elseif ($physicalLink->wifiTerminalDest!=null)
                                 <a href="{{ route('admin.wifi-terminals.show', $physicalLink->wifi_terminal_dest_id) }}">
                                     {{ $physicalLink->wifiTerminalDest->name }}
                                 </a>
-                                @elseif ($physicalLink->workstation_dest_id!=null)
+                                @elseif ($physicalLink->workstationDest!=null)
                                 <a href="{{ route('admin.workstations.show', $physicalLink->workstation_dest_id) }}">
                                     {{ $physicalLink->workstationDest->name }}
                                 </a>
-                                @elseif ($physicalLink->router_dest_id!=null)
+                                @elseif ($physicalLink->routerDest!=null)
                                 <a href="{{ route('admin.routers.show', $physicalLink->router_dest_id) }}">
                                     {{ $physicalLink->routerDest->name }}
                                 </a>
-                                @elseif ($physicalLink->network_switch_dest_id!=null)
+                                @elseif ($physicalLink->networkSwitchDest!=null)
                                 <a href="{{ route('admin.network-switches.show', $physicalLink->network_switch_dest_id) }}">
                                     {{ $physicalLink->networkSwitchDest->name }}
                                 </a>
-                                @elseif ($physicalLink->logical_server_dest_id!=null)
+                                @elseif ($physicalLink->logicalServerDest!=null)
                                 <a href="{{ route('admin.logical-servers.show', $physicalLink->logical_server_dest_id) }}">
                                     {{ $physicalLink->logicalServerDest->name }}
                                 </a>
@@ -234,7 +234,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
