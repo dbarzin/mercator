@@ -134,7 +134,7 @@
             if (target_node !== undefined) {
                 // Check node already present
                 // console.log(target_node);
-                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
+                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id, edge.name).length==0)) {
                     // console.log("add edge: ", new_node.id, " -> ", target_node.id);
                     if (edge.edgeType === 'FLUX') {
                         // console.log('edge.label=', edge.name)
@@ -226,9 +226,10 @@
     }
 
     // check if edge between node1 and node2 already exists
-    function exists(node1, node2) {
+    function exists(node1, node2, name) {
+        //console.log("Check exists link ",name)
         return edges.get().filter(function (edge) {
-           return (edge.from === node1 && edge.to === node2) || (edge.from === node2 && edge.to === node1);
+           return (edge.name == name)&&(edge.from === node1 && edge.to === node2) || (edge.from === node2 && edge.to === node1);
         });
     }
 
@@ -268,7 +269,7 @@
                     newlyAddedNodes.push(new_node.id);
                 }
 
-                if (exists(params.nodes[0], edge.attachedNodeId).length==0)
+                if (exists(params.nodes[0], edge.attachedNodeId, edge.name).length==0)
 {
     if(edge.edgeType === 'FLUX') {
         if(edge.edgeDirection === 'TO') {
@@ -474,7 +475,7 @@
           nodes.add(targetNode);
         }
 
-        if (exists(nodeId, targetNodeId).length === 0) {
+        if (exists(nodeId, targetNodeId, edge.name).length === 0) {
           addEdge(nodeId, targetNodeId);
         }
        setTimeout(function() {
