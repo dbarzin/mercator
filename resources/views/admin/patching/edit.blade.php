@@ -5,6 +5,21 @@
     @method('PUT')
     @csrf
     <input type='hidden' name="id" value='{{$server->id}}'/>
+
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
     <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
@@ -39,7 +54,6 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
-
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
@@ -60,36 +74,68 @@
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.patching_group_helper') }}</span>
                     </div>
                 </div>
-
+                <div class="col-sm">
+                    <table width="100%">
+                        <tr>
+                            <td width="90%">
+                                <div class="form-group">
+                                    <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
+                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
+                                    <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <a href='' class="nav-link" onclick="
+                                    document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
+                                    let d = new Date();
+                                    d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
+                                    document.getElementById('next_update').value=d.toLocaleDateString();
+                                    return false;">
+                                    <i class=" nav-icon fas fa-clock">
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="col-sm">
                     <div class="form-group">
-                        <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                        <table width="100%">
-                            <tr>
-                                <td width="90%">
-                                <input class="date form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
-                                </td>
-                                <td>
-                                    <a href='' class="nav-link" onclick="document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';return false;">
-                                        <i class=" nav-icon fas fa-clock">
-                                        </i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                        <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
+                        <label for="update_date">
+                            <div class="row">
+                                <div class="col-sm">
+                                    Periodicité
+                                </div>
+                                <div class="col-lg">
+                                    &nbsp; &nbsp;
+                                    <input class="form-check-input" type="checkbox" name="global_periodicity" />
+                                    <label class="form-check-label" >
+                                        Global
+                                    </label>
+                                </div>
+                            </div>
+                        </label>
+                        <select class="form-control select2" name="patching_frequency" id="patching_frequency"
+                        onchange="
+                            document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
+                            let d = new Date();
+                            d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
+                            document.getElementById('next_update').value=d.toLocaleDateString();
+                            return false;">
+                            <option vlaue="0"></option>
+                            <option value="1" {{ ($server->patching_frequency===1) ? "selected" : ""}}>1 month</option>
+                            <option value="2" {{ ($server->patching_frequency===2) ? "selected" : ""}}>2 months</option>
+                            <option value="3" {{ ($server->patching_frequency===3) ? "selected" : ""}}>3 months</option>
+                            <option value="4" {{ ($server->patching_frequency===4) ? "selected" : ""}}>4 months</option>
+                            <option value="6" {{ ($server->patching_frequency===6) ? "selected" : ""}}>6 months</option>
+                            <option value="12" {{ ($server->patching_frequency===12) ? "selected" : ""}}>12 months</option>
+                        </select>
+                        <span class="help-block">Fréquence de mise à jour</span>
                     </div>
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
                         <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
-                        <table width="100%">
-                            <tr>
-                                <td width="90%">
-                                <input class="date form-control" type="text" id="next_update" name="next_update" value="{{ old('next_update', $server->next_update) }}">
-                                </td>
-                            </tr>
-                        </table>
+                        <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $server->next_update) }}">
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
@@ -265,16 +311,16 @@
             </div>
         </div>
         <!---------------------------------------------------------------------------------------------------->
-        <div class="row">
-            <div class="col-sm">
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
-                        {{ trans('global.back_to_list') }}
-                    </a>
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
             </div>
         </div>
     </div>

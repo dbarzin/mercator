@@ -36,6 +36,7 @@ class LogicalServer extends Model
         'operating_system',
         'install_date',
         'patching_group',
+        'patching_frequency',
         'update_date',
         'next_update',
         'address_ip',
@@ -57,7 +58,7 @@ class LogicalServer extends Model
      */
     public function getInstallDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.date_format')) : null;
     }
 
     public function setInstallDateAttribute($value)
@@ -75,7 +76,7 @@ class LogicalServer extends Model
 
     public function setNextUpdateAttribute($value)
     {
-        //dd($value);
+        // dd($value);
         $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
@@ -125,6 +126,6 @@ class LogicalServer extends Model
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->format('Y-m-d');
     }
 }
