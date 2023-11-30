@@ -289,7 +289,7 @@ Pour exécuter les tests de non-régression de Mercator, vous devez d'abord inst
 
 Installer le pluggin dusk
 
-    sudo www-data php artisan dusk:chrome-driver
+    sudo -u www-data php artisan dusk:chrome-driver
 
 Configurer l'environement
 
