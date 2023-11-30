@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">        
+        <div class="row">
             <div class="col-lg">
                 <div class="form-group">
                     <label for="description">{{ trans('cruds.logicalServer.fields.description') }}</label>
@@ -69,14 +69,14 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
-                    <input class="datetime form-control" type="text" name="install_date" id="install_date" value="{{ old('install_date') }}">
+                    <input class="date form-control" type="text" name="install_date" id="install_date" value="{{ old('install_date') }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
             <div class="col-sm">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date') }}">
+                    <input class="date form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date') }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">            
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}">
@@ -115,7 +115,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg">            
+            <div class="col-lg">
                 <div class="form-group">
                     <label for="net_services">{{ trans('cruds.logicalServer.fields.net_services') }}</label>
                     <input class="form-control {{ $errors->has('net_services') ? 'is-invalid' : '' }}" type="text" name="net_services" id="net_services" value="{{ old('net_services', '') }}">
@@ -138,7 +138,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-sm">    
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="cpu">{{ trans('cruds.logicalServer.fields.cpu') }}</label>
                     <input class="form-control {{ $errors->has('cpu') ? 'is-invalid' : '' }}" type="text" name="cpu" id="cpu" value="{{ old('cpu', '') }}">
@@ -150,7 +150,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.cpu_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="memory">{{ trans('cruds.logicalServer.fields.memory') }}</label>
                     <input class="form-control {{ $errors->has('memory') ? 'is-invalid' : '' }}" type="text" name="memory" id="memory" value="{{ old('memory', '') }}">
@@ -162,7 +162,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.memory_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk">{{ trans('cruds.logicalServer.fields.disk') }}</label>
                     <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk" id="disk" value="{{ old('disk', '') }}">
@@ -174,7 +174,7 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.disk_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">      
+            <div class="col-sm">
                 <div class="form-group">
                     <label for="disk">{{ trans('cruds.logicalServer.fields.disk_used') }}</label>
                     <input class="form-control {{ $errors->has('disk') ? 'is-invalid' : '' }}" type="text" name="disk_used" id="disk_used" value="{{ old('disk_used', '') }}">
@@ -188,7 +188,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg">    
+            <div class="col-lg">
                 <div class="form-group">
                     <label for="configuration">{{ trans('cruds.logicalServer.fields.configuration') }}</label>
                     <textarea class="form-control ckeditor {{ $errors->has('configuration') ? 'is-invalid' : '' }}" name="configuration" id="configuration">{!! old('configuration') !!}</textarea>
@@ -309,7 +309,7 @@ $(document).ready(function() {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
-  }); 
+    })
+  });
 </script>
 @endsection
