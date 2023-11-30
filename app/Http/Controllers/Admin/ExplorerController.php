@@ -489,7 +489,7 @@ class ExplorerController extends Controller
             } elseif ($flux->service_dest_id !== null) {
                 $dest_id = 'SERV_' . $flux->service_dest_id;
             } elseif ($flux->module_dest_id !== null) {
-                $dest_id = 'MOD_ ' . $flux->module_dest_id;
+                $dest_id = 'MOD_' . $flux->module_dest_id;
             } elseif ($flux->database_dest_id !== null) {
                 $dest_id = 'DATABASE_' . $flux->database_dest_id;
             } else {

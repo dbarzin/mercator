@@ -9,55 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Flux
- *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int|null $application_source_id
- * @property int|null $service_source_id
- * @property int|null $module_source_id
- * @property int|null $database_source_id
- * @property int|null $application_dest_id
- * @property int|null $service_dest_id
- * @property int|null $module_dest_id
- * @property int|null $database_dest_id
- * @property int|null $crypted
- *
- * @property-read \App\MApplication|null $application_dest
- * @property-read \App\MApplication|null $application_source
- * @property-read \App\Database|null $database_dest
- * @property-read \App\Database|null $database_source
- * @property-read \App\ApplicationModule|null $module_dest
- * @property-read \App\ApplicationModule|null $module_source
- * @property-read \App\ApplicationService|null $service_dest
- * @property-read \App\ApplicationService|null $service_source
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Flux newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Flux newQuery()
- * @method static \Illuminate\Database\Query\Builder|Flux onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Flux query()
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereApplicationDestId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereApplicationSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereCrypted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereDatabaseDestId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereDatabaseSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereModuleDestId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereModuleSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereServiceDestId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereServiceSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Flux whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Flux withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Flux withoutTrashed()
- *
- * @mixin \Eloquent
  */
 class Flux extends Model
 {
@@ -78,6 +29,32 @@ class Flux extends Model
 
     protected $fillable = [
     ];
+
+    public function source_id() : string {
+        if ($this->application_source_id!=null)
+            return 'APP_' . $this->application_source_id;
+        if (auth()->user()->granularity>=2) {
+            if($this->service_source_id!=null)
+                return 'SERV_' . $this->service_source_id;
+            if ($this->module_source_id!=null)
+                return 'MOD_' . $this->module_source_id;
+            }
+        if ($this->database_source_id!=null)
+            return 'DATABASE_' . $this->database_source_id;
+    }
+
+    public function dest_id() : string {
+        if ($this->application_dest_id!=null)
+            return 'APP_' . $this->application_dest_id;
+        if (auth()->user()->granularity>=2) {
+            if($this->service_dest_id!=null)
+                return 'SERV_' . $this->service_dest_id;
+            if ($this->module_dest_id!=null)
+                return 'MOD_' . $this->module_dest_id;
+            }
+        if ($this->database_dest_id!=null)
+            return 'DATABASE_' . $this->database_dest_id;
+    }
 
     public function application_source()
     {

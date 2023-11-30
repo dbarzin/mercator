@@ -33,7 +33,7 @@
                                     <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
                                     <select class="form-control select2" id="node" >
                                         <option></option>
-                                        @foreach($nodes as $node) 
+                                        @foreach($nodes as $node)
                                         <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
                                         @endforeach
                                     </select>
@@ -41,7 +41,7 @@
                                 </div>
                             </td>
                             <td style="text-align: left; vertical-align: middle;">
-                                <a href="#" id="add_node_button" onclick="addNode()">
+                                <a href="#" id="add_node_button" onclick="addNode(document.getElementById('node').value)">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </td>
@@ -57,14 +57,14 @@
                             <td colspan="3">
                         <a href="#" onclick="network.deleteSelected()" class="command">
                             <i class="fas fa-minus-circle"></i>
-                            {{ trans("cruds.report.explorer.delete") }}                                    
+                            {{ trans("cruds.report.explorer.delete") }}
                         </a>
                         &nbsp;
                         <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
                             <i class="fas fa-repeat"></i>
                             {{ trans("cruds.report.explorer.reload") }}
                         </a>
-                        <input type="checkbox" id="physicsCheckbox" class="command" checked> 
+                        <input type="checkbox" id="physicsCheckbox" class="command" checked>
                         <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
                         &nbsp;
                         &nbsp;
@@ -77,11 +77,11 @@
                         </select>
                             <a href="#" onclick="deployAll()">
                                 <i class="fas fa-star"></i>
-                                {{ trans("cruds.report.explorer.deploy") }}                                    
+                                {{ trans("cruds.report.explorer.deploy") }}
                             </a>
                          </td>
                     </tr>
-                </table>                 
+                </table>
                 </div>
                 <div id="mynetwork" style="height:700px;"></div>
               </div>
@@ -103,20 +103,21 @@
     let needSavePNG = false;
 
     let _nodes = new Map();
-    @foreach($nodes as $node) 
-        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php 
+    @foreach($nodes as $node)
+        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
                 echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
             if ($edge["to"]==$node["id"])
                 echo '{attachedNodeId:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
-            } ?> ]}); 
+            } ?> ]});
     @endforeach
 
     // Add a node base on the node.id
-    function addNode() {
-        var id=document.getElementById('node').value
+    function addNode(id) {
         var new_node = _nodes.get(id);
+        if (new_node==null)
+            return;
         // add node
         // console.log("add node: ",new_node.id);
         network.body.data.nodes.add(new_node);
@@ -130,8 +131,9 @@
             // Get destination node
             var target_node = _nodes.get(edge.attachedNodeId);
             // check node exists
-            if (target_node !== null) {
+            if (target_node !== undefined) {
                 // Check node already present
+                // console.log(target_node);
                 if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id).length==0)) {
                     // console.log("add edge: ", new_node.id, " -> ", target_node.id);
                     if (edge.edgeType === 'FLUX') {
@@ -148,7 +150,7 @@
                                 edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
                     } else if(edge.edgeType === 'CABLE') {
-                        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5 });                          
+                        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5 });
                     } else if (edge.edgeType === 'LINK') {
                         // do not add links if "network infrastructure" is selected
                         if (!$('#filters').val().includes("7"))
@@ -163,13 +165,8 @@
 
     // Called when the Visualization API is loaded.
     function draw() {
-        // Start node 
-        @if (Request::get("node") !== null)
-            nodes = new vis.DataSet([_nodes.get("{{ Request::get("node") }}")]);
-        @else
-            nodes = new vis.DataSet();
 
-        @endif
+        nodes = new vis.DataSet();
 
         // create an array with edges
         edges = new vis.DataSet([]);
@@ -219,6 +216,13 @@
         };
 
         network = new vis.Network(container, data, options);
+
+        // Add Nodes from parameter
+        @if (Request::get("node")!==null)
+            @foreach(explode(',',Request::get("node")) as $node)
+                addNode("{{$node}}");
+            @endforeach
+        @endif
     }
 
     // check if edge between node1 and node2 already exists
@@ -261,10 +265,10 @@
                 // Check node already present
                 if (nodes.get(edge.attachedNodeId) == null) {
                     nodes.add({ ...new_node, physics: true });
-                    newlyAddedNodes.push(new_node.id); 
+                    newlyAddedNodes.push(new_node.id);
                 }
 
-                if (exists(params.nodes[0], edge.attachedNodeId).length==0) 
+                if (exists(params.nodes[0], edge.attachedNodeId).length==0)
 {
     if(edge.edgeType === 'FLUX') {
         if(edge.edgeDirection === 'TO') {
@@ -279,7 +283,7 @@
                 edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
         }
     } else if(edge.edgeType === 'CABLE') {
-        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5, physics: true });                          
+        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5, physics: true });
     } else if(edge.edgeType === 'LINK') {
         edges.add({ from: params.nodes[0], to: edge.attachedNodeId, physics: true });
     }
@@ -292,17 +296,17 @@
     if (!physicsCheckbox.checked) {
         setTimeout(() => {
             nodes.update(newlyAddedNodes.map(id => ({ id, physics: false })));
-        }, 1500); 
+        }, 1500);
     }
 
     network.redraw();
 });
-        // Adds a contextmenu for quickaccess from nodes 
+        // Adds a contextmenu for quickaccess from nodes
 
         let contextMenu = document.getElementById("explore_context");
         let x = null;
         let y = null;
-    
+
         document.addEventListener('mousemove', onMouseUpdate, false);
         document.addEventListener('mouseenter', onMouseUpdate, false);
 
@@ -338,11 +342,11 @@
             // console.log(nodeId);
             let node = _nodes.get(link);
             let type = node.type;
-            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" + 
+            contextMenu.innerHTML = "<li><a href='/admin/"+type+"/"+nodeId+"'>{{ trans("global.view") }}</a></li>" +
                                     "<li><a href='/admin/"+type+"/"+nodeId+"/edit'>{{ trans("global.edit") }}</a></li>" +
                                     "<li id='hideNode' style='color: #167495; cursor: pointer;' ><span>{{ trans("global.hide") }}</span></li>"
             displayContext();
-            
+
             let hideNode = document.getElementById("hideNode");
             hideNode.addEventListener("click", function(){
                 let node = _nodes.get(link);
@@ -402,7 +406,7 @@
           smooth: {
           type: "dynamic"
       }
-          }  
+          }
         });
         // update all nodes
         nodes.update(nodes.getIds().map(id => ({ id, physics: true })));
@@ -410,12 +414,12 @@
         network.setOptions({
            nodes: {
              physics: false
-      },          
+      },
         edges: {
             smooth: {
               type: "continuous"
-            } 
-          }  
+            }
+          }
         });
         // update all nodes
         nodes.update(nodes.getIds().map(id => ({ id, physics: false  })));
@@ -509,7 +513,7 @@ function addEdge(sourceNodeId, targetNodeId) {
 function getFilter(){
             let filter = [];
             for (let option of document.getElementById('filters').options)
-                if (option.selected) 
+                if (option.selected)
                   filter.push(option.value);
             return filter
 }
@@ -524,10 +528,10 @@ function getFilter(){
         // Get filter size
         console.log("filter_size= ",cur_filter.length);
         if (cur_filter.length==0) {
-            for (let [node, value] of _nodes) 
+            for (let [node, value] of _nodes)
                 $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
         }
-        else 
+        else
         {
             // filter nodes
             let activated=0, disabled=0;
@@ -537,7 +541,7 @@ function getFilter(){
                     $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
                     activated++;
                     }
-                else 
+                else
                     disabled++;
             }
             console.log("disable= ",disabled," activated= ",activated);
@@ -565,7 +569,7 @@ function getFilter(){
             console.log('val: ' ,   $('#filters').val());
             apply_filter();
         });
-    
+
 
 </script>
 
