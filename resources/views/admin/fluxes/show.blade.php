@@ -13,6 +13,10 @@
                     {{ trans('global.back_to_list') }}
                 </a>
 
+                <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$flux->source_id()}},{{$flux->dest_id()}}">
+                    {{ trans('global.explore') }}
+                </a>
+
                 @can('flux_edit')
                     <a class="btn btn-info" href="{{ route('admin.fluxes.edit', $flux->id) }}">
                         {{ trans('global.edit') }}
@@ -149,7 +153,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $flux->created_at ? $flux->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $flux->updated_at ? $flux->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $flux->updated_at ? $flux->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 @endsection
