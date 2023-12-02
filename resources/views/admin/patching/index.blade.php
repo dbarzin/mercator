@@ -90,8 +90,12 @@
                             <td>
                                 @php($responsibles = array())
                                 @foreach($server->applications as $application)
-                                    @if (($application->responsible!=null) && (!in_array($application->responsible, $responsibles)))
-                                        @php(array_push($responsibles, $application->responsible))
+                                    @if ($application->responsible!=null)
+                                        @foreach(explode(",",$application->responsible) as $responsible)
+                                            @if (!in_array($responsible, $responsibles))
+                                                @php(array_push($responsibles, $responsible))
+                                            @endif
+                                        @endforeach
                                      @endif
                                 @endforeach
                                 @foreach($responsibles as $responsible)
