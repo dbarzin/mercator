@@ -88,14 +88,22 @@
                               @endforeach
                             </td>
                             <td>
-                              @foreach($server->applications as $application)
-                                  @if ($application->responsible!=null)
-                                      {{ $application->responsible }}
-                                      @if(!$loop->last)
-                                      ,
-                                      @endif
-                                  @endif
-                              @endforeach
+                                @php($responsibles = array())
+                                @foreach($server->applications as $application)
+                                    @if ($application->responsible!=null)
+                                        @foreach(explode(",",$application->responsible) as $responsible)
+                                            @if (!in_array($responsible, $responsibles))
+                                                @php(array_push($responsibles, $responsible))
+                                            @endif
+                                        @endforeach
+                                     @endif
+                                @endforeach
+                                @foreach($responsibles as $responsible)
+                                    {{ $responsible }}
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 {{ $server->patching_group ?? '' }}
