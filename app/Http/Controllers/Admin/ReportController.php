@@ -3149,7 +3149,7 @@ class ReportController extends Controller
         }
     }
 
-    private function addSecurityNeedColor(Worksheet $sheet, string $cell, int $i)
+    private function addSecurityNeedColor(Worksheet $sheet, string $cell, int $i=0)
     {
         static $colors = [-1 => 'FFFFFF', 0 => 'FFFFFF',1 => '8CD17D',2 => 'F1CE63',3 => 'F28E2B',4 => 'E15759'];
         $sheet->getStyle($cell)
@@ -3172,20 +3172,16 @@ class ReportController extends Controller
         $sheet->setCellValue("A{$row}", $macroprocess->name);
 
         $sheet->setCellValue("B{$row}", $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
-        if ($macroprocess->security_need_c!=null)
-            $this->addSecurityNeedColor($sheet, "B{$row}", $macroprocess->security_need_c);
+        $this->addSecurityNeedColor($sheet, "B{$row}", $macroprocess->security_need_c);
 
         $sheet->setCellValue("C{$row}", $macroprocess->security_need_i >= 0 ? $macroprocess->security_need_i : '');
-        if ($macroprocess->security_need_i!=null)
-            $this->addSecurityNeedColor($sheet, "C{$row}", $macroprocess->security_need_i);
+        $this->addSecurityNeedColor($sheet, "C{$row}", $macroprocess->security_need_i);
 
         $sheet->setCellValue("D{$row}", $macroprocess->security_need_a >= 0 ? $macroprocess->security_need_a : '');
-            $this->addSecurityNeedColor($sheet, "D{$row}", $macroprocess->security_need_a);
-            if ($macroprocess->security_need_a!=null)
+        $this->addSecurityNeedColor($sheet, "D{$row}", $macroprocess->security_need_a);
 
         $sheet->setCellValue("E{$row}", $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
-        if ($macroprocess->security_need_t!=null)
-            $this->addSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
+        $this->addSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
 
         if ($process !== null) {
             // Processus
