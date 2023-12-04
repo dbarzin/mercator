@@ -3149,7 +3149,7 @@ class ReportController extends Controller
         }
     }
 
-    private function addSecurityNeedColor(Worksheet $sheet, string $cell, integer $i)
+    private function addSecurityNeedColor(Worksheet $sheet, string $cell, int|null $i)
     {
         static $colors = [-1 => 'FFFFFF', 0 => 'FFFFFF',1 => '8CD17D',2 => 'F1CE63',3 => 'F28E2B',4 => 'E15759'];
         $sheet->getStyle($cell)
