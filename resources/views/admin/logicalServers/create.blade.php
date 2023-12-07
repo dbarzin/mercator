@@ -82,7 +82,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="recommended" for="cluster_id">{{ trans('cruds.logicalServer.fields.cluster') }}</label>
+                    <select class="form-control select2 {{ $errors->has('cluster') ? 'is-invalid' : '' }}" name="cluster_id" id="cluster_id">
+                        <option></option>
+                        @foreach($clusters as $id => $cluster)
+                        <option value="{{ $id }}" {{ old('cluster_id') == $id ? 'selected' : '' }}>{{ $cluster }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('cluster'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cluster') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.cluster_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="environment">{{ trans('cruds.logicalServer.fields.environment') }}</label>
                     <select class="form-control select2-free {{ $errors->has('environment') ? 'is-invalid' : '' }}" name="environment" id="environment">
@@ -101,7 +118,9 @@
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.environment_helper') }}</span>
                 </div>
             </div>
-            <div class="col-sm">
+        </div>
+        <div class="row">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="address_ip">{{ trans('cruds.logicalServer.fields.address_ip') }}</label>
                     <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}">
