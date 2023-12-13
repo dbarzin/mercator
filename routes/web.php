@@ -303,6 +303,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/patching/index', [Admin\PatchingController::class,'index'])->name('patching.index');
     Route::get('/patching/edit/{id}', [Admin\PatchingController::class,'edit'])->name('patching.edit');
     Route::put('/patching/update', [Admin\PatchingController::class,'update'])->name('patching.update');
+    Route::get('/patching/dashboard', [Admin\PatchingController::class,'dashboard'])->name('patching.dashboard');
 
     // Auditing
     Route::get('audit/maturity', [Admin\AuditController::class,'maturity'])->name('audit.maturity');
@@ -314,6 +315,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/documents/show/{id}', [Admin\DocumentController::class,'get'])->name('documents.show');
     Route::get('/config/documents', [Admin\DocumentController::class,'stats'])->name('config.documents');
     Route::get('/config/documents/check', [Admin\DocumentController::class,'check'])->name('config.documents.check');
+
+    // Monarc
+    Route::get('monarc', [Admin\MonarcController::class,'index'])->name('monarc');
 
     // Reporting
     Route::get('doc/report', function () {

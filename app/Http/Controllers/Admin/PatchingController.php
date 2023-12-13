@@ -16,7 +16,12 @@ class PatchingController extends Controller
         abort_if(Gate::denies('patching_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // All patching groups
-        $patching_group_list = LogicalServer::select('patching_group')->where('patching_group', '<>', null)->distinct()->orderBy('patching_group')->pluck('patching_group');
+        $patching_group_list = LogicalServer::select('patching_group')
+            ->whereNull('deleted_at')
+            ->where('patching_group', '<>', null)
+            ->distinct()
+            ->orderBy('patching_group')
+            ->pluck('patching_group');
 
         // TODO : Physical servers
         $group = $request->group;
@@ -78,4 +83,24 @@ class PatchingController extends Controller
 
         return redirect()->route('admin.patching.index');
     }
+
+    public function dashboard(Request $request) {
+
+        // All patching groups
+        $patching_group_list = LogicalServer::select('patching_group')
+            ->where('patching_group', '<>', null)
+            ->whereNull('deleted_at')
+            ->distinct()
+            ->orderBy('patching_group')
+            ->pluck('patching_group');
+
+        // Get pacthes
+        $patches = LogicalServer::select('id','name','patching_group','update_date','next_update');
+        if ($request->get('group')!=null)
+            $patches = $patches->where('patching_group','=',$request->get('group'));
+        $patches = $patches->get();
+
+        return view('admin.patching.dashboard', compact('patches','patching_group_list'));
+    }
+
 }
