@@ -77,7 +77,6 @@ Create the database _mercator_ and the user _mercator_user_.
 Create an .env file in the root directory of the project:
 
     cd /var/www/mercator
-
     cp .env.example .env
 
 Put the connection parameters to the database :
