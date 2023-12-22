@@ -242,6 +242,31 @@ Finally, restart the Apache service to activate the changes:
 
     sudo systemctl restart apache2
 
+### HTTPS
+
+Here is the configuration file for HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+<Directory /var/www/mercator/public>
+AllowOverride All
+ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+```
+
+To force HTTPS redirection you have to set this parameter in .env 
+
+    APP_ENV=production
+
 ## Problems
 
 ### Restore the administrator password
