@@ -25,7 +25,7 @@ class PatchingController extends Controller
 
         // TODO : Physical servers
         $group = $request->group;
-        if ($group === 'None') {
+        if ($group === null) {
             $servers = LogicalServer::All();
             session()->forget('patching_group');
         } elseif ($group === null) {
@@ -96,8 +96,20 @@ class PatchingController extends Controller
 
         // Get pacthes
         $patches = LogicalServer::select('id','name','patching_group','update_date','next_update');
-        if ($request->get('group')!=null)
-            $patches = $patches->where('patching_group','=',$request->get('group'));
+
+        $group = $request->get('group');
+        if ($group==null)
+            $group=session()->get("patching_group");
+
+        if ($group!=null)
+            if ($group=="All")
+                session()->forget('patching_group');
+
+            else {
+                $patches = $patches->where('patching_group','=',$group);
+                session()->put('patching_group',$group);
+            }
+
         $patches = $patches->get();
 
         return view('admin.patching.dashboard', compact('patches','patching_group_list'));

@@ -21,7 +21,7 @@
             <select name="group" class="form-control select2"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
-                <option value="None">&nbsp;</option>
+                <option value="">&nbsp;</option>
                 @foreach($patching_group_list as $group)
                     <option {{ session()->get('patching_group') == $group ? 'selected' : '' }}>{{ $group }}</option>
                 @endforeach
