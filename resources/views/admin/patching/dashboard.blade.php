@@ -57,7 +57,7 @@
                         foreach($patches as $patch) {
                             if ($patch->next_update==null)
                                 $undef++;
-                            elseif ($patch->next_update<today())
+                            elseif (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
                                 $late++;
                             else
                                 $made++;
