@@ -1,10 +1,24 @@
 @extends('layouts.admin')
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-9">
+    <table>
+        <tr>
+            <td>
+        <br>
+        <form method="get" action="/admin/patching/dashboard">
+            <button class="btn btn-primary" type="submit">
+                Dashboard
+            </button>
+        </form>
+    </td>
+    <td>
+        &nbsp;
+    </td>
+    <td>
         <form method="get" action="/admin/patching/index">
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-            <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+            <select name="group" class="form-control select2"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
                 <option value="None">&nbsp;</option>
@@ -13,6 +27,7 @@
                 @endforeach
             </select>
         </form>
+    </td></tr></table>
     </div>
 </div>
 
@@ -60,16 +75,16 @@
                         <tr data-entry-id="{{ $server->id }}"
                             @if ($server->next_update===null)
                                 class="table-secondary"
-                            @elseif (Carbon\Carbon::now()->startOfDay()->gte(Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)))
+                            @elseif (Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)->lt(today()))
                                 class="table-danger"
                             @else
                                 class="table-success"
                             @endif
                             >
                             <td>
-
                             </td>
                             <td>
+
                                 <a href="{{ route('admin.logical-servers.show', $server->id) }}">
                                 {{ $server->name ?? '' }}
                                 </a>
