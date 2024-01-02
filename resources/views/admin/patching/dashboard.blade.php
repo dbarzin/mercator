@@ -69,14 +69,14 @@
                         echo $undef;
                     @endphp
                 ],
-                backgroundColor: ['#4bc0c0','#ff6384','#e4e5e6'],
+                backgroundColor: ['#59A14F','#E15759','#e4e5e6'],
                 }
             ]
         },
         options: {
           responsive: true,
           legend: {
-                     display: false,
+                     display: true,
                  },
         },
     };
@@ -120,7 +120,7 @@
                     }
                 ?>
                 ],
-                backgroundColor: '#4bc0c0',
+                backgroundColor: '#59A14F',
             },
             {
                 label: 'late',
@@ -146,7 +146,7 @@
                     }
                 ?>
                 ],
-                backgroundColor: '#ff6384',
+                backgroundColor: '#E15759',
             },
             {
                 label: 'plan',
