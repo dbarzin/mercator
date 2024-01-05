@@ -630,6 +630,8 @@ return [
             'servers_helper' => 'Support physical server',
             'install_date' => 'Installation date',
             'install_date_helper' => 'Logical server installation date',
+            'next_update' => 'Next update',
+            'next_update_helper' => 'Date of the next planned update',
             'update_date' => 'Update date',
             'update_date_helper' => 'Last logical server update',
             'databases' => 'Databases',
