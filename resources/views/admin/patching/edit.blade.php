@@ -405,6 +405,18 @@ $(document).ready(function () {
                 }
             }
         });
+
+        document.onpaste = function(event) {
+          const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+          items.forEach((item) => {
+          	console.log(item.kind);
+            if (item.kind === 'file') {
+              	// adds the file to your dropzone instance
+              	image_uploader.addFile(item.getAsFile())
+            	}
+          	})
+        }
+        
     });
 </script>
 @endsection
