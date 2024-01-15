@@ -22,6 +22,7 @@ class MApplication extends Model
         'name',
         'description',
         'responsible',
+        'editor',
         'functional_referent',
     ];
 
