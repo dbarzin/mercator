@@ -10,50 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Information
  *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property string|null $owner
- * @property string|null $administrator
- * @property string|null $storage
- * @property int|null $security_need_c
- * @property string|null $sensitivity
- * @property string|null $constraints
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int|null $security_need_i
- * @property int|null $security_need_a
- * @property int|null $security_need_t
- *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Database> $informationsDatabases
- * @property-read int|null $informations_databases_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Process> $processes
- * @property-read int|null $processes_count
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Information newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Information newQuery()
- * @method static \Illuminate\Database\Query\Builder|Information onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Information query()
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereAdministrator($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereConstraints($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereOwner($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereSecurityNeedA($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereSecurityNeedC($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereSecurityNeedI($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereSecurityNeedT($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereSensitivity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereStorage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Information whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Information withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Information withoutTrashed()
- *
- * @mixin \Eloquent
  */
 class Information extends Model
 {

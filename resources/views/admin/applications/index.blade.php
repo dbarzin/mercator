@@ -63,7 +63,7 @@
                                     ($application->application_block==null)
                                     )
                                 )
-                                /* 
+                                /*
                                 ||
                                 ((auth()->user()->granularity==3)&&
                                     (
@@ -135,10 +135,8 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
+
 @section('scripts')
 @parent
 <script>
@@ -180,7 +178,7 @@
     pageLength: 100, stateSave: true, stateSave: true,
     "lengthMenu": [ 10, 50, 100, 500 ],
   });
-  let table = $('.datatable-MApplication:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+ $('.datatable-MApplication:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

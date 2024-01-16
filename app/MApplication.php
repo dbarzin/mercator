@@ -18,9 +18,9 @@ class MApplication extends Model
     public $table = 'm_applications';
 
     public static $searchable = [
-        'vendor',
         'name',
         'description',
+        'vendor',
         'responsible',
         'editor',
         'functional_referent',

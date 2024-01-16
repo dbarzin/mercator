@@ -3,9 +3,19 @@
 
         <ul class="nav">
             <li>
-                <select class="searchable-field form-control">
-
-                </select>
+                <form id="search-form" action="/admin/global-search" method="GET">
+                <div class="input-group">
+                  <div class="custom-file">
+                        <input name="search" type="text" class="form-control" style="padding: 0px 10px;" placeholder="Search..." id="search-field" tabindex="-1" value="{{ request()->get("search") }}">
+                  </div>
+                  <div class="input-group-prepend">
+                     <button class="btn btn-outline-secondary" type="submit" id="search-button">
+                         <i class="fa-fw fas fa-align-justify fa-search">
+                         </i>
+                     </button>
+                  </div>
+                </div>
+            </form>
             </li>
             <li class="nav-item">
                 <a href='{{ route("admin.home") }}' class="nav-link">
