@@ -8,35 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Annuaire
- *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property string|null $solution
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int|null $zone_admin_id
- *
- * @property-read \App\ZoneAdmin|null $zone_admin
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire newQuery()
- * @method static \Illuminate\Database\Query\Builder|Annuaire onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire query()
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereSolution($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Annuaire whereZoneAdminId($value)
- * @method static \Illuminate\Database\Query\Builder|Annuaire withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Annuaire withoutTrashed()
- *
- * @mixin \Eloquent
+ * App\Annuaire *
  */
 class Annuaire extends Model
 {

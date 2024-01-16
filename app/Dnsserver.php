@@ -10,25 +10,6 @@ use \DateTimeInterface;
 /**
  * App\Dnsserver
  *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver newQuery()
- * @method static \Illuminate\Database\Query\Builder|Dnsserver onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver query()
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Dnsserver whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Dnsserver withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Dnsserver withoutTrashed()
- * @mixin \Eloquent
  */
 class Dnsserver extends Model
 {

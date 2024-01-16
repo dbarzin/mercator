@@ -55,17 +55,20 @@ class GlobalSearchController extends Controller
         'ApplicationModule' => 'cruds.applicationModule.title',
         'MacroProcessus' => 'cruds.macroProcessus.title',
         'Certificate' => 'cruds.certificate.title',
+        'Activity' =>  'cruds.activity.title',
+        'DataProcessing' =>  'cruds.dataProcessing.title',
+        'SecurityControl' =>  'cruds.securityControl.title',
     ];
 
     public function search(Request $request)
     {
         $term = $request->input('search');
 
-        if ($term === null) {
-            return;
-        }
-
         $searchableData = [];
+
+        if (($term === null)||(strlen($term)<3)) {
+            return view('admin.search', compact('searchableData'));
+        }
 
         foreach ($this->models as $model => $translation) {
             $modelClass = 'App\\' . $model;
@@ -77,12 +80,12 @@ class GlobalSearchController extends Controller
                 $query->orWhere($field, 'LIKE', '%' . $term . '%');
             }
 
-            $results = $query->take(10)
-                ->get();
+            $results = $query->take(100)->get();
 
             foreach ($results as $result) {
-                $parsedData = $result->only($fields);
-                $parsedData['model'] = trans($translation);
+                $parsedData['data'] = $result->only($fields);
+                $parsedData['model'] = $model;
+                $parsedData['name'] = trans($translation);
                 $parsedData['fields'] = $fields;
                 $formattedFields = [];
 
@@ -102,6 +105,6 @@ class GlobalSearchController extends Controller
             }
         }
 
-        return response()->json(['results' => $searchableData]);
+        return view('admin.search', compact('searchableData'));
     }
 }

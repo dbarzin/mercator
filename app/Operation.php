@@ -10,34 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Operation
  *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- *
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Actor> $actors
- * @property-read int|null $actors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Activity> $activities
- * @property-read int|null $operations_activities_count
- * @property-read \Illuminate\Database\Eloquent\Collection|array<\App\Task> $tasks
- * @property-read int|null $tasks_count
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Operation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Operation newQuery()
- * @method static \Illuminate\Database\Query\Builder|Operation onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Operation query()
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Operation whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Operation withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Operation withoutTrashed()
- *
- * @mixin \Eloquent
  */
 class Operation extends Model
 {
