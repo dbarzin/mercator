@@ -10,7 +10,7 @@ services:
       # SMTP conf
       - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
       # Mercator entry point
-      - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
+      # - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
       # ne peut pas être read-only (commande php artisan key:generate le modifie)
       - ./.env:/var/www/mercator/.env
       # map la database sqlite sur le disque de l'hôte
