@@ -68,9 +68,6 @@ RUN set -ex ; \
 # Publish Laravel Vendor resources
 RUN php artisan vendor:publish --all
 
-# Install passport
-RUN php artisan passport:install
-
 EXPOSE 8000
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
