@@ -17,6 +17,7 @@ _wait_for_mysql_ready
 
 # initialisation de la base de données si elle n'existe pas
 if [ -f "./sql/db.sqlite" ] && [ -s "./sql/db.sqlite" ]
+then
     php artisan --no-interaction migrate --seed
 fi
 
