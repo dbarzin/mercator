@@ -30,7 +30,7 @@ RUN apk add php8-zip \
   php8-fileinfo \
   php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
   php8-tokenizer
-  
+
 RUN apk update && \
     apk add --no-cache \
     libzip-dev \
@@ -45,22 +45,18 @@ RUN curl -sS https://getcomposer.org/installer | php \
 COPY . /var/www/mercator
 WORKDIR /var/www/mercator
 
-# the sqlite file must exist
-# RUN touch ${DB_DATABASE}
-
 # add mercator:www user
 RUN addgroup --g 1000 -S www && \
   adduser -u 1000 -S mercator -G www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # COPY nginx.conf /etc/nginx/http.d/mercator.conf
-# RUN chown -R mercator:www 
+# RUN chown -R mercator:www
 
 RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
 RUN cp docker/supervisord.conf /etc/supervisord.conf
 RUN chown -R mercator:www /etc/nginx/http.d/default.conf
 RUN chown -R mercator:www /etc/supervisord.conf
-
 
 USER mercator:www
 
@@ -68,6 +64,12 @@ USER mercator:www
 RUN set -ex ; \
     composer -n validate --strict ; \
     composer -n install --no-scripts --ignore-platform-reqs --no-dev
+
+# Publish Laravel Vendor resources
+RUN php artisan vendor:publish --all
+
+# Install passport
+RUN php artisan passport:install
 
 EXPOSE 8000
 
