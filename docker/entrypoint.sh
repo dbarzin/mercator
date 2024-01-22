@@ -9,6 +9,7 @@ _wait_for_db_ready() {
         echo "done."
 }
 
+
 cd /var/www/mercator
 . .env
 
