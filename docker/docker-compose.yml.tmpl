@@ -9,47 +9,15 @@ services:
     volumes:
       # SMTP conf
       - ./ssmtp.conf:/etc/ssmtp/ssmtp.conf
-      # Mercator entry point
-      - ./entrypoint.sh:/var/www/mercator/docker/entrypoint.sh:ro
       # ne peut pas être read-only (commande php artisan key:generate le modifie)
       - ./.env:/var/www/mercator/.env
       # map la database sqlite sur le disque de l'hôte
       - ./data/sql/:/var/www/mercator/sql/
-      # entrypoint: /bin/sleep 3600 # pour debug
-      #   - ./:/var/www
-    #nginx conf listen port 80 or other if custom
+    # nginx conf listen port 80 or other if custom
     ports:
       - 8000:80
     networks:
       - local
-  # Non fonctionnel pour le moment la database utilisé par défaut est interne au conteneur APP
-  #db:
-  #  image: mysql:5.7
-  #  restart: unless-stopped
-  #  environment:
-  #    MYSQL_DATABASE: ${DB_DATABASE}
-  #    MYSQL_USER: ${DB_USERNAME}
-  #    MYSQL_PASSWORD: ${DB_PASSWORD}
-  #    MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-  #    # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-  #  volumes:
-  #    - db:/var/lib/mysql
-  #    - ./data/backup:/backup
-  #    - ./bin/mysql:/app/
-  #  networks:
-  #    - local
-
-#   nginx:
-#     image: nginx:alpine
-#     container_name: travellist-nginx
-#     restart: unless-stopped
-#     ports:
-#       - 8000:80
-#     volumes:
-#       - ./:/var/www
-#       - ./docker-compose/nginx:/etc/nginx/conf.d/
-#     networks:
-#       - local
 
 networks:
   local:
