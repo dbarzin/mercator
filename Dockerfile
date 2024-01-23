@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine3.16
+FROM php:8.3-fpm-alpine3.19
 
 # apparently you cannot pass both env variables
 # and .env file
@@ -14,21 +14,21 @@ RUN apk update && apk add curl nano bash ssmtp graphviz fontconfig ttf-freefont 
 RUN fc-cache -f
 
 # php deps
-RUN apk add php8-zip \
-  php8-curl \
-  php8-mbstring \
-  php8-dom php8-ldap \
-  php8-soap \
-  php8-xdebug \
-  php8-sqlite3 \
-  php8-gd \
-  php8-xdebug \
-  php8-gd \
-  php8-pdo php8-pdo_sqlite \
-  php8-fileinfo \
-  php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
-  php8-tokenizer \
-  php8-ldap \
+RUN apk add php-zip \
+  php-curl \
+  php-mbstring \
+  php-dom \
+  php-ldap \
+  php-soap \
+  php-xdebug \
+  php-sqlite3 \
+  php-gd \
+  php-xdebug \
+  php-gd \
+  php-pdo php-pdo_sqlite \
+  php-fileinfo \
+  php-simplexml php-xml php-xmlreader php-xmlwriter \
+  php-tokenizer \
   libzip-dev \
   openldap-dev \
   libpng \
