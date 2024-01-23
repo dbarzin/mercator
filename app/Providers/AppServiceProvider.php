@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //Ignore default migration from here
-        Sanctum::ignoreMigrations();
+        // Sanctum::ignoreMigrations();
     }
 
     /**
