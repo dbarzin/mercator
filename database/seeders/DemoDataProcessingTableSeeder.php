@@ -65,7 +65,7 @@ class DemoDataProcessingTableSeeder extends Seeder
                 'controls' => NULL,
                 'created_at' => '2023-05-23 08:35:05',
                 'updated_at' => '2023-05-23 08:35:22',
-                'deleted_at' => 'NULL',
+                'deleted_at' => NULL,
             ),
 
             array (
