@@ -61,9 +61,11 @@ RUN chown -R mercator:www /etc/supervisord.conf
 USER mercator:www
 
 # Install mercator deps
-RUN set -ex ; \
-    composer -n validate --strict ; \
-    composer -n install --no-scripts --ignore-platform-reqs --no-dev
+# RUN set -ex ; \
+#    composer -n validate --strict ; \
+#    composer -n install --no-scripts --ignore-platform-reqs --no-dev
+RUN composer -n update
+
 
 # Publish Laravel Vendor resources
 RUN php artisan vendor:publish --all
