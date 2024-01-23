@@ -56,20 +56,16 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoOperationsTableSeeder::class);
             $this->call(DemoNetworkSwitchesTableSeeder::class);
             $this->call(DemoPasswordResetsTableSeeder::class);
-            // $this->call(DemoPermissionsTableSeeder::class);
             $this->call(DemoOperationTaskTableSeeder::class);
             $this->call(DemoPeripheralsTableSeeder::class);
             $this->call(DemoNetworksTableSeeder::class);
             $this->call(DemoPhysicalSecurityDevicesTableSeeder::class);
             $this->call(DemoPhysicalRouterVlanTableSeeder::class);
             $this->call(DemoSitesTableSeeder::class);
-            // $this->call(DemoRoleUserTableSeeder::class);
             $this->call(DemoRoutersTableSeeder::class);
-            // $this->call(DemoRolesTableSeeder::class);
             $this->call(DemoRelationsTableSeeder::class);
             $this->call(DemoTasksTableSeeder::class);
             $this->call(DemoVlansTableSeeder::class);
-            // $this->call(DemoUsersTableSeeder::class);
             $this->call(DemoWansTableSeeder::class);
             $this->call(DemoActivityOperationTableSeeder::class);
             $this->call(DemoZoneAdminsTableSeeder::class);
@@ -78,7 +74,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoDomaineAdForestAdTableSeeder::class);
             $this->call(DemoLanManTableSeeder::class);
             $this->call(DemoLogicalServerMApplicationTableSeeder::class);
-            // $this->call(DemoPermissionRoleTableSeeder::class);
             $this->call(DemoMacroProcessusesTableSeeder::class);
             $this->call(DemoProcessesTableSeeder::class);
             $this->call(DemoCertificatesTableSeeder::class);
@@ -111,6 +106,14 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoSecurityDevicesTableSeeder::class);
             $this->call(DemoPhysicalServersTableSeeder::class);
             $this->call(DemoStorageDevicesTableSeeder::class);
+            $this->call(DataProcessingTableSeeder::class);
+            $this->call(DemoDataProcessingTableSeeder::class);
+            $this->call(DemoSecurityControlsTableSeeder::class);
+            $this->call(DemoSecurityControlProcessTableSeeder::class);
+            $this->call(DemoSecurityControlMApplicationTableSeeder::class);
+            $this->call(DemoDataProcessingInformationTableSeeder::class);
+            $this->call(DemoDataProcessingMApplicationTableSeeder::class);
+            $this->call(DemoDataProcessingProcessTableSeeder::class);
         }
     }
 }
