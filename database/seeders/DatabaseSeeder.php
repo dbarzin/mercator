@@ -106,7 +106,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoSecurityDevicesTableSeeder::class);
             $this->call(DemoPhysicalServersTableSeeder::class);
             $this->call(DemoStorageDevicesTableSeeder::class);
-            $this->call(DataProcessingTableSeeder::class);
             $this->call(DemoDataProcessingTableSeeder::class);
             $this->call(DemoSecurityControlsTableSeeder::class);
             $this->call(DemoSecurityControlProcessTableSeeder::class);
