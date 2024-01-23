@@ -8,7 +8,7 @@ ENV DB_DATABASE=/var/www/mercator/sql/db.sqlite
 ENV SERVER_NAME="127.0.0.1 localhost"
 
 # system deps
-RUN apk update && apk add curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev postgresql12 postgresql12-dev nginx gettext supervisor
+RUN apk update && apk add curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev nginx gettext supervisor
 
 # run font cache
 RUN fc-cache -f
@@ -20,38 +20,35 @@ RUN apk add php8-zip \
   php8-dom php8-ldap \
   php8-soap \
   php8-xdebug \
-  php8-mysqli \
   php8-sqlite3 \
-  php8-pgsql \
   php8-gd \
   php8-xdebug \
   php8-gd \
-  php8-pdo php8-pdo_sqlite php8-pdo_mysql php8-pdo_pgsql \
+  php8-pdo php8-pdo_sqlite \
   php8-fileinfo \
   php8-simplexml php8-xml php8-xmlreader php8-xmlwriter \
-  php8-tokenizer
+  php8-tokenizer \
+  php8-ldap \
+  libzip-dev \
+  openldap-dev \
+  libpng \
+  libpng-dev
 
-RUN apk update && \
-    apk add --no-cache \
-    libzip-dev \
-    && docker-php-ext-install zip
+# Install extensions
+RUN docker-php-ext-install ldap gd zip
 
-RUN docker-php-ext-install pgsql pdo_pgsql
-
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
   && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
-# sources
+# Copy sources
 COPY . /var/www/mercator
 WORKDIR /var/www/mercator
 
-# add mercator:www user
+# Add mercator:www user
 RUN addgroup --g 1000 -S www && \
   adduser -u 1000 -S mercator -G www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
-
-# COPY nginx.conf /etc/nginx/http.d/mercator.conf
-# RUN chown -R mercator:www
 
 RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
 RUN cp docker/supervisord.conf /etc/supervisord.conf
@@ -60,12 +57,8 @@ RUN chown -R mercator:www /etc/supervisord.conf
 
 USER mercator:www
 
-# Install mercator deps
-# RUN set -ex ; \
-#    composer -n validate --strict ; \
-#    composer -n install --no-scripts --ignore-platform-reqs --no-dev
+# Run composer
 RUN composer -n update
-
 
 # Publish Laravel Vendor resources
 RUN php artisan vendor:publish --all
