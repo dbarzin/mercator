@@ -54,18 +54,18 @@ RUN chown -R mercator:www /var/www/mercator
 # Now work with Mercator user
 USER mercator:www
 
-# Set environment variables
-cp .env.sqlite .env
-
 # Run composer
 RUN composer -n update
 
 # Publish Laravel Vendor resources
-# RUN php artisan vendor:publish --all
+RUN php artisan vendor:publish --all
 
 # Create database folder
 RUN mkdir sql
 
-EXPOSE 8000
+# copy environement varaibles file
+cp .env.sqlite .env
 
+# Start surpervisord
+EXPOSE 8000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
