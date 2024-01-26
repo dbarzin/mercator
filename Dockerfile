@@ -64,7 +64,7 @@ RUN php artisan vendor:publish --all
 RUN mkdir sql
 
 # copy environement varaibles file
-cp .env.sqlite .env
+RUN cp .env.sqlite .env
 
 # Start surpervisord
 EXPOSE 8000
