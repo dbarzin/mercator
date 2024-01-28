@@ -37,7 +37,7 @@
                     <ul class="nav-dropdown-items">
                         @can('data_processing_register_access')
                             <li class="nav-item">
-                                <a href='{{ route("admin.data-processing.index") }}' class="nav-link {{ request()->is('admin/data-processing*') ? 'active' : '' }}">
+                                <a href='{{ route("admin.data-processings.index") }}' class="nav-link {{ request()->is('admin/data-processings*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>

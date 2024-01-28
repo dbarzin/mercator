@@ -3,7 +3,7 @@
 @can('data_processing_register_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.data-processing.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.data-processings.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.dataProcessing.title_singular') }}
             </a>
         </div>
@@ -61,7 +61,7 @@
 
                             </td>
                             <td>
-                                <a href="{{ route('admin.data-processing.show', $processing->id) }}">
+                                <a href="{{ route('admin.data-processings.show', $processing->id) }}">
                                 {{ $processing->name ?? '' }}
                                 </a>
                             </td>
@@ -70,10 +70,10 @@
                             </td>
                             <td>
                                 @foreach($processing->processes as $p)
-                                    <a href="{{ route('admin.processes.show', $p->id) }}">{{ $p->identifiant }}</a>                                    
+                                    <a href="{{ route('admin.processes.show', $p->id) }}">{{ $p->identifiant }}</a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                    
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
@@ -94,19 +94,19 @@
                             </td>
                             <td>
                                 @can('data_processing_register_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.data-processing.show', $processing->id) }}">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.data-processings.show', $processing->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
                                 @can('data_processing_register_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.data-processing.edit', $processing->id) }}">
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.data-processings.edit', $processing->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
                                 @can('data_processing_register_delete')
-                                    <form action="{{ route('admin.data-processing.destroy', $processing->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.data-processings.destroy', $processing->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -133,7 +133,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.data-processing.massDestroy') }}",
+    url: "{{ route('admin.data-processings.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -169,7 +169,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

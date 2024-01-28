@@ -51,7 +51,7 @@ class DataProcessingController extends Controller
 
         session()->forget('documents');
 
-        return redirect()->route('admin.data-processing.index');
+        return redirect()->route('admin.data-processings.index');
     }
 
     public function edit(DataProcessing $dataProcessing)
@@ -87,7 +87,7 @@ class DataProcessingController extends Controller
 
         session()->forget('documents');
 
-        return redirect()->route('admin.data-processing.index');
+        return redirect()->route('admin.data-processings.index');
     }
 
     public function show(DataProcessing $dataProcessing)
@@ -105,7 +105,7 @@ class DataProcessingController extends Controller
 
         $dataProcessing->delete();
 
-        return redirect()->route('admin.data-processing.index');
+        return redirect()->route('admin.data-processings.index');
     }
 
     public function massDestroy(MassDestroyDataProcessingRequest $request)

@@ -35,8 +35,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('users-destroy', [Admin\UsersController::class,'massDestroy'])->name('users.massDestroy');
 
     // DataProcessing
-    Route::resource('data-processing', Admin\DataProcessingController::class);
-    Route::delete('data-processing-destroy', [Admin\DataProcessingController::class,'massDestroy'])->name('data-processing.massDestroy');
+    Route::resource('data-processings', Admin\DataProcessingController::class);
+    Route::delete('data-processings-destroy', [Admin\DataProcessingController::class,'massDestroy'])->name('data-processings.massDestroy');
 
     // SecurityControls
     Route::resource('security-controls', Admin\SecurityControlController::class);

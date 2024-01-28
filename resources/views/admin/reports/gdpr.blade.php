@@ -59,11 +59,11 @@
                     <p>{{ trans('cruds.dataProcessing.description') }}</p>
                       @foreach($dataProcessings as $dataProcessing)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="DATAPROCESSING{{ $dataProcessing->id }}">
                                 <th colspan="2">
-                                    <a href="/admin/data-processing/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>
+                                    <a href="/admin/data-processings/{{ $dataProcessing->id }}">{{ $dataProcessing->name }}</a>
                                 </th>
                             </thead>
                             <tbody>
@@ -135,7 +135,7 @@
                                             <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>
                                             @if (!$loop->last)
                                                 ,
-                                            @endif                                    
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -149,7 +149,7 @@
                                             <a href="{{ route('admin.applications.show', $application->id) }}">{{ $application->name }}</a>
                                             @if (!$loop->last)
                                                 ,
-                                            @endif                                    
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -163,7 +163,7 @@
                                             <a href="{{ route('admin.information.show', $information->id) }}">{{ $information->name }}</a>
                                             @if (!$loop->last)
                                                 ,
-                                            @endif                                    
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -177,7 +177,7 @@
                                             <a href="{{ route('admin.documents.show', $document->id) }}">{{ $document->filename }}</a>
                                             @if (!$loop->last)
                                                 ,
-                                            @endif                                    
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -207,7 +207,7 @@
 <script>
 let dotSrc=`
 digraph  {
-    @foreach($macroProcessuses as $macroProcess) 
+    @foreach($macroProcessuses as $macroProcess)
         MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#MACROPROCESS{{ $macroProcess->id }}"]
     @endforeach
     @foreach($processes as $process)
