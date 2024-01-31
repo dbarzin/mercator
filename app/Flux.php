@@ -33,7 +33,7 @@ class Flux extends Model
     public function source_id() : string {
         if ($this->application_source_id!==null)
             return 'APP_' . $this->application_source_id;
-        if (auth()->user()->granularity>==2) {
+        if (auth()->user()->granularity>=2) {
             if($this->service_source_id!=null)
                 return 'SERV_' . $this->service_source_id;
             if ($this->module_source_id!==null)
@@ -47,7 +47,7 @@ class Flux extends Model
     public function dest_id() : string {
         if ($this->application_dest_id!==null)
             return 'APP_' . $this->application_dest_id;
-        if (auth()->user()->granularity>==2) {
+        if (auth()->user()->granularity>=2) {
             if($this->service_dest_id!==null)
                 return 'SERV_' . $this->service_dest_id;
             if ($this->module_dest_id!==null)
