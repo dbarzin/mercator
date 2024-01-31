@@ -4,7 +4,7 @@
     <div class="col-lg-3">
         <form method="get" action="/admin/patching/dashboard">
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-            <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+            <select name="group" class="form-control select2"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
                 <option value="All">&nbsp;</option>
@@ -92,7 +92,7 @@
                 <?php
                 for($i=-12; $i<=12; $i++) {
                     echo "'";
-                    echo Carbon\Carbon::today()->addMonth($i)->format('M y');
+                    echo Carbon\Carbon::today()->startOfMonth()->addMonth($i)->format('M y');
                     echo "', ";
                     }
                 ?>
@@ -104,8 +104,8 @@
                 <?php
                 for($i=-12; $i<=12; $i++) {
                     $count = 0;
-                    $year = today()->addMonth($i)->year;
-                    $month = today()->addMonth($i)->month;
+                    $year = today()->startOfMonth()->addMonth($i)->year;
+                    $month = today()->startOfMonth()->addMonth($i)->month;
                     foreach($patches as $patch) {
                         if (
                             ($patch->update_date!==null) &&
@@ -128,8 +128,8 @@
                 <?php
                 for($i=-12; $i<=12; $i++) {
                     $count = 0;
-                    $year = today()->addMonth($i)->year;
-                    $month = today()->addMonth($i)->month;
+                    $year = today()->startOfMonth()->addMonth($i)->year;
+                    $month = today()->startOfMonth()->addMonth($i)->month;
                     foreach($patches as $patch) {
                         if (
                             ($patch->next_update!==null) &&
@@ -154,8 +154,8 @@
                 <?php
                 for($i=-12; $i<=12; $i++) {
                     $count = 0;
-                    $year = today()->addMonth($i)->year;
-                    $month = today()->addMonth($i)->month;
+                    $year = today()->startOfMonth()->addMonth($i)->year;
+                    $month = today()->startOfMonth()->addMonth($i)->month;
                     foreach($patches as $patch) {
                         if (
                             ($patch->next_update!==null) &&
