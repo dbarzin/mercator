@@ -23,10 +23,10 @@
     <div class="card-body" >
         <table width="100%">
             <tr>
-                <td width="20%">
+                <td width="30%">
                       <canvas id="doughnut_chart1_div"></canvas>
                 </td>
-                <td width="80%">
+                <td width="70%">
                       <canvas id="bar_chart2_div"></canvas>
                 </td>
             </tr>
