@@ -37,11 +37,11 @@ Clone the project from Github
 
 Update composer
 
+    cd /var/www/mercator
     composer update
 
 Install packages with composer :
-
-    cd /var/www/mercator
+    
     composer update
 
 Publish all publishable assets from vendor packages
@@ -77,7 +77,6 @@ Create the database _mercator_ and the user _mercator_user_.
 Create an .env file in the root directory of the project:
 
     cd /var/www/mercator
-
     cp .env.example .env
 
 Put the connection parameters to the database :
@@ -222,16 +221,18 @@ Next, create a new Apache virtual host configuration file to serve the Mercator 
 
 Add the following lines:
 
-    <VirtualHost *:80>
+```xml
+<VirtualHost *:80>
     ServerName mercator.local
     ServerAdmin admin@example.com
     DocumentRoot /var/www/mercator/public
     <Directory /var/www/mercator>
-    AllowOverride All
+        AllowOverride All
     </Directory>
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-    </VirtualHost>
+</VirtualHost>
+```
 
 Save and close the file when you are done. Next, enable the Apache virtual host and the rewrite module with the following command:
 
@@ -242,6 +243,33 @@ Save and close the file when you are done. Next, enable the Apache virtual host 
 Finally, restart the Apache service to activate the changes:
 
     sudo systemctl restart apache2
+
+### HTTPS
+
+Here is the configuration file for HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+</VirtualHost>
+```
+
+To force HTTPS redirection you have to set this parameter in .env 
+
+    APP_ENV=production
 
 ## Problems
 

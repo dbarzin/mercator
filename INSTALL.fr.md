@@ -37,11 +37,11 @@ Cloner le projet depuis Github
 
 Mettre à jour composer
 
+    cd /var/www/mercator
     composer self-update
 
 Installer les packages avec composer :
 
-    cd /var/www/mercator
     composer update
 
 Publier tous les actifs publiables à partir des packages des fournisseurs
@@ -221,16 +221,18 @@ Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour 
 
 Ajouter les lignes suivantes :
 
-    <VirtualHost *:80>
+```xml
+<VirtualHost *:80>
     ServerName mercator.local
     ServerAdmin admin@example.com
     DocumentRoot /var/www/mercator/public
     <Directory /var/www/mercator>
-    AllowOverride All
+        AllowOverride All
     </Directory>
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-    </VirtualHost>
+</VirtualHost>
+```
 
 Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'hôte virtuel Apache et le module de réécriture avec la commande suivante :
 
@@ -241,6 +243,33 @@ Enregistrez et fermez le fichier lorsque vous avez terminé. Ensuite, activez l'
 Enfin, redémarrez le service Apache pour activer les modifications :
 
     sudo systemctl restart apache2
+
+### HTTPS
+
+Voici le fichier de configuration pour HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+</VirtualHost>
+```
+
+Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichier .env :
+
+    APP_ENV=production
 
 ## Problèmes
 
@@ -289,7 +318,7 @@ Pour exécuter les tests de non-régression de Mercator, vous devez d'abord inst
 
 Installer le pluggin dusk
 
-    sudo www-data php artisan dusk:chrome-driver
+    sudo -u www-data php artisan dusk:chrome-driver
 
 Configurer l'environement
 
