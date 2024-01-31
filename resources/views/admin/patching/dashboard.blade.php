@@ -4,7 +4,7 @@
     <div class="col-lg-3">
         <form method="get" action="/admin/patching/dashboard">
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-            <select name="group" class="form-control select2 {{ $errors->has('patching_group') ? 'is-invalid' : '' }}"
+            <select name="group" class="form-control select2"
                     name="patching_group" id="patching_group"
                     onchange="this.form.submit()">
                 <option value="All">&nbsp;</option>
@@ -23,10 +23,10 @@
     <div class="card-body" >
         <table width="100%">
             <tr>
-                <td width="20%">
+                <td width="30%">
                       <canvas id="doughnut_chart1_div"></canvas>
                 </td>
-                <td width="80%">
+                <td width="70%">
                       <canvas id="bar_chart2_div"></canvas>
                 </td>
             </tr>

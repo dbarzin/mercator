@@ -25,7 +25,7 @@ class PatchingController extends Controller
 
         // TODO : Physical servers
         $group = $request->group;
-        if ($group === null) {
+        if ($group === "NONE") {
             $servers = LogicalServer::All();
             session()->forget('patching_group');
         } elseif ($group === null) {
