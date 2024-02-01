@@ -1017,8 +1017,10 @@ digraph  {
             ($link->router_src_id === null) &&
             ($link->logical_server_dest_id === null) &&
             ($link->network_switch_dest_id === null) &&
-            ($link->router_desr_id === null)
-        )
+            ($link->router_dest_id === null) &&
+            (($link->workstation_src_id === null) || ($workstations->contains("id",$link->workstation_src_id))) &&
+            (($link->workstation_dest_id === null) || ($workstations->contains("id",$link->workstation_dest_id)))
+            )
 
             @if($link->peripheral_src_id!=null)
                 PER{{$link->peripheral_src_id }}
