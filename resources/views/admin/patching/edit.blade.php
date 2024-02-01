@@ -80,7 +80,8 @@
                             <td width="90%">
                                 <div class="form-group">
                                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
+                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}"
+                                    onchange="console.log('test');"/>
                                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                                 </div>
                             </td>
@@ -89,7 +90,7 @@
                                     document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
                                     let d = new Date();
                                     d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
-                                    document.getElementById('next_update').value=d.toLocaleDateString();
+                                    document.getElementById('next_update').value=d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
                                     return false;">
                                     <i class=" nav-icon fas fa-clock">
                                     </i>
@@ -416,7 +417,7 @@ $(document).ready(function () {
             	}
           	})
         }
-        
+
     });
 </script>
 @endsection
