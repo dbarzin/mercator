@@ -30,6 +30,7 @@ return [
         'information_system' => 'Information system',
         'network_schema' => 'Network schema',
         'logical_infrastructure' => 'Logical infrastructure',
+        'network_infrastructure' => 'Network infrastructure',
         'options' => 'Options',
         'password' => 'Password',
         'physical_infrastructure' => 'Physical infrastructure',

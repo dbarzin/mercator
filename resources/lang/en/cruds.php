@@ -1019,6 +1019,7 @@ return [
             'ecosystem' => 'Ecosystem',
             'granularity' => 'Granularity',
             'granularity_helper' => 'Report granularity level',
+            'network_infrastructure' => 'Network infrastructure',
             'information_system' => 'Information system',
             'logical_infrastructure' => 'Logical infrastructure',
             'physical_infrastructure' => 'Physical infrastructure',
