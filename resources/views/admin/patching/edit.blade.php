@@ -89,7 +89,7 @@
                                     document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
                                     let d = new Date();
                                     d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
-                                    document.getElementById('next_update').value=d.toLocaleDateString();
+                                    document.getElementById('next_update').value=d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
                                     return false;">
                                     <i class=" nav-icon fas fa-clock">
                                     </i>
@@ -416,7 +416,7 @@ $(document).ready(function () {
             	}
           	})
         }
-        
+
     });
 </script>
 @endsection
