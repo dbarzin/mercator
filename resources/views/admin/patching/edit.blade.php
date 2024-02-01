@@ -80,8 +80,7 @@
                             <td width="90%">
                                 <div class="form-group">
                                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}"
-                                    onchange="console.log('test');"/>
+                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
                                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                                 </div>
                             </td>
