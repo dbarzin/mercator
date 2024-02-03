@@ -1,0 +1,461 @@
+# Procédure d'installation de Mercator
+
+## Configuration recommandée
+
+- OS : RedHat 9.3 - Server
+- RAM : 2G
+- Disque : 10G
+- VCPU 2
+
+## Installation
+
+Mettre à jour la distribution linux
+
+	sudo dnf update && sudo dnf upgrade
+
+Installer Httpd, GIT, Graphviz, Vim et Php
+
+	sudo dnf install vim httpd git graphviz php
+
+Vérifier que le module php 8.1 est disponible
+
+	sudo dnf module list php
+
+Installer php 8.1
+
+	sudo dnf module reset php
+	sudo dnf module enable php:8.1
+	sudo dnf install php
+
+Vérifier la version php
+
+	php --version
+
+Installer PHP et les librairies
+
+	sudo dnf install php-json php-dbg php-mysqlnd php-gd php-zip php-curl php-mbstring php-xml php-ldap php-soap
+
+Installer Composer
+
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+Vérifier que Composer est installé
+
+	composer --version
+
+## Project
+
+Créer le répertoire du projet
+
+	cd /var/www
+	sudo mkdir mercator
+	sudo chown $USER:$GROUP mercator
+
+Cloner le projet depuis Github
+
+	git clone https://www.github.com/dbarzin/mercator
+
+
+## Composer
+
+Mettre à jour composer
+
+	cd /var/www/mercator
+	composer self-update
+
+Installer les packages avec composer
+
+	composer update
+
+Publier tous les actifs publiables à partir des packages des fournisseurs
+
+	php artisan vendor:publish --all
+
+## MySQL
+
+Installer MySQL
+
+	sudo dnf install mysql-server
+
+Vérifier que vous utilisez MySQL
+
+	sudo mysql --version
+
+Démarrer le service MySQL
+
+	systemctl start mysqld.service
+	systemctl enable mysqld.service
+
+Lancer MySQL avec les droits root
+
+	sudo mysql
+
+Créer la base de données _mercator_ et l'utilisateur _mercator_user_
+
+	CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;
+	CREATE USER 'mercator_user'@'localhost' IDENTIFIED BY 's3cr3t';
+	GRANT ALL PRIVILEGES ON mercator.* TO 'mercator_user'@'localhost';
+	GRANT PROCESS ON *.* TO 'mercator_user'@'localhost';
+
+	FLUSH PRIVILEGES;
+	EXIT;
+
+## Configuration
+
+Créer un fichier .env dans le répertoire racine du projet :
+
+	cd /var/www/mercator
+	cp .env.example .env
+
+Modifier les paramètres de connexion à la base de données dans le fichier .env :
+
+	## .env file
+	DB_CONNECTION=mysql
+	# DB_CONNECTION=pgsql
+	DB_HOST=127.0.0.1
+	DB_PORT=3306
+	# Commenter DB_PORT pour pgsql
+	DB_DATABASE=mercator
+	DB_USERNAME=mercator_user
+	DB_PASSWORD=s3cr3t
+
+## Créer la base de données
+
+Exécuter les migrations
+
+	php artisan migrate --seed
+
+Remarque: la graine est importante (--seed), car elle créera le premier utilisateur administrateur pour vous.
+
+Générer la clé de l'application
+
+	php artisan key:generate
+
+Vider la cache
+
+	php artisan config:clear
+
+Pour importer la base de données de test (facultatif)
+
+	sudo mysql mercator < mercator_data.sql
+
+ou (Postgres):
+
+    psql mercator < pg_mercator_data.sql
+
+## Importer la base de données des CPE
+
+Décompresse la base de données
+
+    gzip -d mercator_cpe.sql.gz
+
+Importer la base de données
+
+    sudo mysql mercator < mercator_cpe.sql
+
+## Démarrage
+
+Démarrer l'application avec php
+
+    php artisan serve
+
+ou pour y accéder à l'application depuis un autre serveur
+
+    php artisan serve --host 0.0.0.0 --port 8000
+
+L'application est accessible à l'URL [http://127.0.0.1:8000]
+
+    utilisateur : admin@admin.com
+    mot de passe : password
+
+## Configurer Passport
+
+Pour l'API JSON, il faut installer Laravel Passport
+
+    php artisan passport:install
+
+Générer les clés de l'API
+
+    php artisan passport:keys
+
+Changer les permission d'accès à la clé
+
+    sudo chown apache:apache storage/oauth-*.key
+    sudo chmod 600 storage/oauth-*.key
+
+## Configuration du mail
+
+Si vous souhaitez envoyer des mails de notification depuis Mercator.
+
+Installer postfix et mailx
+
+    sudo apt install postfix mutt
+
+Configurer postfix
+
+    sudo vi /etc/postfix/main.cf
+
+Redémarrer le service Postfix
+
+	sudo systemctl restart postfix
+
+Envoyer un mail de test avec
+
+    echo "Test mail body" | mailx -r "mercator@yourdomain.local" -s "Subject Test" yourname@yourdomain.local
+
+## Sheduler
+
+Modifier le crontab
+
+    sudo crontab -e
+
+ajouter cette ligne dans le crontab
+
+    * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
+
+## Configuration de la connexion LDAP
+
+Si vous souhaitez connecter Mercator avec un Active Diretory ou un serveur LDAP,
+dans le fichier .env, mettez les paramètres de connexion en décommentant les lignes :
+
+    # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
+    LDAP_TYPE="AD"
+    # If true, LDAP actions will be written to the application's default log file
+    LDAP_LOGGING=true
+    LDAP_CONNECTION=default
+    LDAP_HOST=127.0.0.1
+    # Identifiers of the user who will connect to the LDAP in order to perform queries
+    LDAP_USERNAME="cn=user,dc=local,dc=com"
+    LDAP_PASSWORD=secret
+    LDAP_PORT=389
+    LDAP_BASE_DN="dc=local,dc=com"
+    LDAP_TIMEOUT=5
+    LDAP_SSL=false
+    LDAP_TLS=false
+    # Allows you to restrict access to a tree structure
+    LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
+    # Allows you to restrict access to groups
+    LDAP_GROUPS="Delivering,Help Desk"
+
+Retrouvez une documentation plus complète sur la configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+
+## Apache
+
+Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
+
+    sudo chown -R apache:apache /var/www/mercator
+    sudo chmod -R 775 /var/www/mercator/storage
+
+Vérifier si le module SELinux est activé (Pour que l'application soit accessible il faut que SELinux soit désactivé)
+
+	sestatus
+
+Si le module est activé, procéder ainsi :
+
+	sudo vi /etc/selinux/config
+
+Trouvez la ligne qui commence par SELINUX= dans le fichier. Elle devrait ressembler à ceci :
+
+	SELINUX=enforcing
+
+Changez enforcing en disabled. Votre ligne devrait maintenant ressembler à ceci :
+
+	SELINUX=disabled
+
+Redémarrer le système
+
+	sudo reboot
+
+Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour servir l'application Mercator :
+
+Ajouter les lignes suivantes :
+
+```xml
+<VirtualHost *:80>
+    ServerName mercator.local
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/mercator/public
+    <Directory /var/www/mercator>
+        AllowOverride All
+    </Directory>
+    ErrorLog /var/log/httpd/mercator_error.log
+    CustomLog /var/log/httpd/mercator_access.log combined
+</VirtualHost>
+```
+
+Enfin, redémarrez le service Apache pour activer les modifications :
+
+    sudo systemctl restart httpd
+
+### HTTPS
+
+Voici le fichier de configuration pour HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    ErrorLog /var/log/httpd/mercator_error.log
+    CustomLog /var/log/httpd/mercator_access.log combined
+</VirtualHost>
+```
+
+Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichier .env :
+
+    APP_ENV=production
+
+## Problèmes
+
+### Restaurer le mot de passe administrateur
+
+    mysql mercator -e "update users set password=$(php -r "echo password_hash('n3w-p4sSw0rD.', PASSWORD_BCRYPT, ['cost' => 10]);") where id=1;"
+
+### PHP Memory
+
+Si vous générez de gros rapports, vous devrez mettre augmenter la mémoire allouée à PHP dans /etc/php/8.x/apache2/php.ini
+
+    memory_limit = 512M
+
+## Mise à jour
+
+Avant de mettre à jour l'application prenez un backup de la base de données et du projet.
+
+    mysqldump mercator > mercator_backup.sql
+
+ou (Postgres)
+
+    pg_dump mercator > mercator_backup.sql
+
+Récupérer les sources de GIT
+
+    cd /var/www/mercator
+    sudo -u apache git pull
+
+Migrer la base de données
+
+    sudo -u apache php artisan migrate
+
+Mettre à jour les librairies
+
+    sudo -u apache composer update
+
+Vider les caches
+
+    sudo -u apache php artisan config:clear &&  php artisan view:clear
+
+## Tests de non-régression
+
+Pour exécuter les tests de non-régression de Mercator, vous devez d'abord instaler Chromium :
+
+    sudo apt install chromium-browser
+
+Installer le pluggin dusk
+
+    sudo -u apache php artisan dusk:chrome-driver
+
+Configurer l'environement
+
+    sudo -u apache cp .env .env.dusk.local
+
+Lancer l'application
+
+    sudo -u apache php artisan serve
+
+Dans un autre terminal, lancer les tests
+
+    sudo -u apache php artisan dusk
+
+## Réparer les problèmes de migraton
+
+Mettre à jour les librairies
+
+    sudo -u apache composer update
+
+Sauvegarder la base de données
+
+    sudo mysqldump mercator \
+        --ignore-table=mercator.users \
+        --ignore-table=mercator.roles \
+        --ignore-table=mercator.permissions \
+        --ignore-table=mercator.permission_role \
+        --ignore-table=mercator.role_user \
+        --ignore-table=mercator.migrations \
+        --no-create-db \
+        --no-create-info \
+        > backup_mercator_data.sql
+
+ou (Postgres) :
+
+    pg_dump --exclude-table=users \
+      --exclude-table=roles \
+      --exclude-table=permissions \
+      --exclude-table=permission_role \
+      --exclude-table=role_user  \
+      --exclude-table=migrations  \
+      mercator > backup_mercator_data.sql
+
+Then backup database users
+
+    sudo mysqldump mercator \
+        --tables users roles role_user \
+        --add-drop-table \
+        > backup_mercator_users.sql
+
+ou (Postgres):
+
+    pg_dump --clean \
+      -t users -t roles -t role_user \
+      > backup_mercator_users.sql
+
+Supprimer la base de données de Mercator
+
+    sudo mysql -e "drop database mercator;"
+
+ou (Postgres)
+
+    dropdb mercator
+
+Créer une nouvelle base de données
+
+    sudo mysql -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"
+
+ou (Postgres)
+
+    createdb mercator
+
+Exécuter les migrations
+
+    sudo -u apache php artisan migrate --seed
+
+Générer la clé
+
+    sudo -u apache php artisan key:generate
+
+Restaurer les données
+
+    sudo mysql mercator < backup_mercator_data.sql
+
+ou (Postgres)
+
+    psql mercator < backup_mercator_data.sql
+
+Restaurer les utilisateurs
+
+    sudo mysql mercator < backup_mercator_users.sql
+
+ou (Postgres)
+
+    psql mercator < backup_mercator_users.sql
+
+Tous les problèmes de migration devraient être résolus.

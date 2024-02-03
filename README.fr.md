@@ -65,7 +65,8 @@ Modèle de données
 
 ## Installation
 
-- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md)
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.fr.md) sous Ubuntu
+- Procédure d'[installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.fr.md) sous RedHat
 
 ### Docker
 
