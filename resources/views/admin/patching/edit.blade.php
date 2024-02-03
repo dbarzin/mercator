@@ -350,6 +350,9 @@ $(document).ready(function () {
         tags: true
     })
 
+    $('#update_date').change(function () {
+        console.log($('#update_date').val());
+    });
 
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
