@@ -69,8 +69,8 @@ Data model
 
 ### Manual
 
-See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) on Ubuntu
-See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md) on RedHat
+- See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) on Ubuntu
+- See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md) on RedHat
 
 ### Docker
 
