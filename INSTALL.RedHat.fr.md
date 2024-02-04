@@ -269,6 +269,8 @@ Redémarrer le système
 
 Ensuite, créez un nouveau fichier de configuration d'hôte virtuel Apache pour servir l'application Mercator :
 
+    sudo vi /etc/httpd/conf.d/mercator.conf
+
 Ajouter les lignes suivantes :
 
 ```xml
