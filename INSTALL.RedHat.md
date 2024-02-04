@@ -214,24 +214,182 @@ add this line to the crontab
 
      * * * * * cd /var/www/mercator && php artisan schedule:run >> /dev/null 2>&1
 
-## Configuring the LDAP connection
+ ## Configuring the LDAP connection
 
-If you want to connect Mercator with an Active Directory or an LDAP server,
-in the .env file, put the connection parameters by uncommenting the lines:
+ If you want to connect Mercator with an Active Directory or an LDAP server,
+ in the .env file, put the connection parameters by uncommenting the lines:
 
-     # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer
-     LDAP_TYPE="AD"
-     # If true, LDAP actions will be written to the application's default log file
-     LDAP_LOGGING=true
-     LDAP_CONNECTION=default
-     LDAP_HOST=127.0.0.1
-     # Identifiers of the user who will connect to the LDAP in order to perform queries
-     LDAP_USERNAME="cn=user,dc=local,dc=com"
-     LDAP_PASSWORD=secret
-     LDAP_PORT=389
-     LDAP_BASE_DN="dc=local,dc=com"
-     LDAP_TIMEOUT=5
-     LDAP_SSL=false
-     LDAP_TLS=false
-     # Allows you to restrict access to a tree structure
-     LDAP_SCOPE="ou=Accounting,ou=Grou
+      # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer
+      LDAP_TYPE="AD"
+      # If true, LDAP actions will be written to the application's default log file
+      LDAP_LOGGING=true
+      LDAP_CONNECTION=default
+      LDAP_HOST=127.0.0.1
+      # Identifiers of the user who will connect to the LDAP in order to perform queries
+      LDAP_USERNAME="cn=user,dc=local,dc=com"
+      LDAP_PASSWORD=secret
+      LDAP_PORT=389
+      LDAP_BASE_DN="dc=local,dc=com"
+      LDAP_TIMEOUT=5
+      LDAP_SSL=false
+      LDAP_TLS=false
+      # Allows you to restrict access to a tree structure
+      LDAP_SCOPE="ou=Accounting,ou=Groups,dc=planetexpress,dc=com"
+      # Allows you to restrict access to groups
+      LDAP_GROUPS="Delivering,Help Desk"
+
+ Find more complete documentation on configuring [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+
+ ##Apache
+
+ To configure Apache, modify the properties of the mercator directory and grant the appropriate permissions to the storage directory with the following command
+
+      sudo chown -R apache:apache /var/www/mercator
+      sudo chmod -R 775 /var/www/mercator/storage
+
+ Check if the SELinux module is activated (For the application to be accessible, SELinux must be deactivated)
+
+ status
+
+ If the module is activated, proceed as follows:
+
+ sudo vi /etc/selinux/config
+
+ Find the line that starts with SELINUX= in the file. It should look like this:
+
+ SELINUX=enforcing
+
+ Change enforcing to disabled. Your line should now look like this:
+
+ SELINUX=disabled
+
+ Restart the system
+
+ sudo reboot
+
+ Next, create a new Apache virtual host configuration file to serve the Mercator application:
+
+      sudo vi /etc/httpd/conf.d/mercator.conf
+
+ Add the following lines:
+
+ ```xml
+ <VirtualHost *:80>
+      ServerName mercator.local
+      ServerAdmin admin@example.com
+      DocumentRoot /var/www/mercator/public
+      <Directory /var/www/mercator>
+          AllowOverride All
+      </Directory>
+      ErrorLog /var/log/httpd/mercator_error.log
+      CustomLog /var/log/httpd/mercator_access.log combined
+ </VirtualHost>
+ ```
+
+ Finally, restart the Apache service to activate the changes:
+
+      sudo systemctl restart httpd
+
+ ### HTTPS
+
+ Here is the configuration file for HTTPS
+
+ ```xml
+ <VirtualHost *:443>
+      ServerName map.XXXXXXXX
+      ServerAdmin
+      DocumentRoot /var/www/mercator/public
+      SSLEngine on
+      SSLProtocol all -SSLv2 -SSLv3
+      SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+      SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+      SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+      SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+      <Directory /var/www/mercator/public>
+          AllowOverride All
+      </Directory>
+      ErrorLog /var/log/httpd/mercator_error.log
+      CustomLog /var/log/httpd/mercator_access.log combined
+ </VirtualHost>
+ ```
+
+ To force HTTPS redirection, you must put this parameter in the .env file:
+
+      APP_ENV=production
+
+ ## Problems
+
+ ### Restore administrator password
+
+      mysql mercator -e "update users set password=$(php -r "echo password_hash('n3w-p4sSw0rD.', PASSWORD_BCRYPT, ['cost' => 10]);") where id=1;"
+
+ ### PHP Memory
+
+ If you are generating large reports, you will need to increase the memory allocated to PHP in /etc/php/8.x/apache2/php.ini
+
+      memory_limit = 512M
+
+ ## Update
+
+ Before updating the application, take a backup of the database and the project.
+
+      mysqldump mercator > mercator_backup.sql
+
+ or (Postgres)
+
+      pg_dump mercator > mercator_backup.sql
+
+ Retrieve GIT sources
+
+      cd /var/www/mercator
+      sudo -u apache git pull
+
+ Migrate the database
+
+      sudo -u apache php artisan migrate
+
+ Update libraries
+
+      sudo -u apache composer update
+
+ Clear caches
+
+      sudo -u apache php artisan config:clear && php artisan view:clear
+
+ ## Non regression tests
+
+ To run Mercator regression tests, you must first install Chromium:
+
+      sudo apt install chromium-browser
+
+ Install the dusk plugin
+
+      sudo -u apache php artisan dusk:chrome-driver
+
+ Configure the environment
+
+      sudo -u apache cp .env .env.dusk.local
+
+ Launch the application
+
+      sudo -u apache php artisan serve
+
+ In another terminal, run the tests
+
+      sudo -u apache php artisan dusk
+
+ ## Fix migration issues
+
+ Update libraries
+
+      sudo -u apache composer update
+
+ Back up the database
+
+      sudo mysqldump mercator \
+          --ignore-table=mercator.users \
+          --ignore-table=mercator.roles \
+          --ignore-table=mercator.permissions \
+          --ignore-table=mercator.permission_role \
+          --ignore-table=mercator.role_user \
+          --ignore-table=mercator.m
