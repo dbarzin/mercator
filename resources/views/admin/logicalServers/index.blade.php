@@ -84,7 +84,7 @@
                               @endforeach
                             </td>
                             <td>
-                                @if ($logicalServer->cluster_id!==null)
+                                @if ($logicalServer->cluster!==null)
                                 <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
                                   {{ $logicalServer->cluster->name }}
                                 </a>
