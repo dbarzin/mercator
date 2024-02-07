@@ -14,20 +14,23 @@ class AddVpnFields extends Migration
     public function up()
     {
         Schema::table('external_connected_entities', function (Blueprint $table) {
-            $table->longText('description')->nullable()->after("name");
-
-            $table->string("type")->nullable()->after("description");
             $table->dropColumn("responsible_sec");
+        });
 
+        Schema::table('external_connected_entities', function (Blueprint $table) {
+            $table->longText('description')->nullable()->after("name");
+            $table->string("type")->nullable()->after("description");
             $table->unsignedInteger('entity_id')->after('type')->nullable()->index('entity_id_fk_1295034');
-            $table->foreign('entity_id', 'entity_id_fk_1295034')->references('id')->on('entities')->onUpdate('NO ACTION')->onDelete('CASCADE');
-
             $table->unsignedInteger('network_id')->after('entity_id')->nullable()->index('network_id_fk_8596554');
-            $table->foreign('network_id', 'network_id_fk_8596554')->references('id')->on('networks')->onUpdate('NO ACTION')->onDelete('CASCADE');
-
             $table->string("src")->nullable()->after("network_id");
             $table->string("dest")->nullable()->after("src");
         });
+
+        Schema::table('external_connected_entities', function (Blueprint $table) {
+            $table->foreign('entity_id', 'entity_id_fk_1295034')->references('id')->on('entities')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('network_id', 'network_id_fk_8596554')->references('id')->on('networks')->onUpdate('NO ACTION')->onDelete('CASCADE');
+        });
+
         Schema::dropIfExists('external_connected_entity_network');
     }
 
@@ -60,6 +63,3 @@ class AddVpnFields extends Migration
         });
     }
 }
-
-
-
