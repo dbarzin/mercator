@@ -30,7 +30,7 @@ class Flux extends Model
     protected $fillable = [
     ];
 
-    public function source_id() : string {
+    public function source_id() : ?string {
         if ($this->application_source_id!==null)
             return 'APP_' . $this->application_source_id;
         if (auth()->user()->granularity>=2) {
@@ -44,7 +44,7 @@ class Flux extends Model
         return null;
     }
 
-    public function dest_id() : string {
+    public function dest_id() : ?string {
         if ($this->application_dest_id!==null)
             return 'APP_' . $this->application_dest_id;
         if (auth()->user()->granularity>=2) {
