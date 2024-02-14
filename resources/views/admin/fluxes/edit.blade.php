@@ -59,7 +59,7 @@
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id">
                             <option></option>
                             @foreach($items as $id => $name)
-                                <option value="{{ $id }}" {{ ($flux->src_id ? $flux->src_id : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ ($flux->source_id() ? $flux->source_id() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('src_id'))
@@ -76,7 +76,7 @@
                         <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="dest_id" id="dest_id">
                             <option></option>
                             @foreach($items as $id => $name)
-                                <option value="{{ $id }}" {{ ($flux->dest_id ? $flux->dest_id : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ ($flux->dest_id() ? $flux->dest_id() : old('dest_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('src_id'))
@@ -141,4 +141,3 @@ $(document).ready(function () {
 
 </script>
 @endsection
-
