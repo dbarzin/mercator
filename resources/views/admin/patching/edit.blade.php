@@ -351,8 +351,11 @@ $('#update_date')
    .on('dp.change', function (e) {
        var frequency = $("#patching_frequency").find(':selected')[0].value;
        if (frequency!=null) {
-           var d = new Date(e.date);
-           d.setMonth(d.getMonth() + frequency + 0 );
+           var parts = $('#update_date.datepicker').val().split("/");
+           var d = new Date(parseInt(parts[2], 10),
+                             parseInt(parts[1], 10) - 1,
+                             parseInt(parts[0], 10));
+           d.setMonth(d.getMonth()+parseInt(frequency));
            $("#next_update").val(
                (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
                (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
