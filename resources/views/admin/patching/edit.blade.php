@@ -80,17 +80,14 @@
                             <td width="90%">
                                 <div class="form-group">
                                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                                    <input class="form-control date" type="text" id="update_date" name="update_date" value="{{ old('update_date', $server->update_date) }}">
+                                    <input class="form-control datepicker" type="text" id="update_date" name="update_date"
+                                    value="{{ old('update_date', $server->update_date) }}"
+                                    >
                                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                                 </div>
                             </td>
                             <td>
-                                <a href='' class="nav-link" onclick="
-                                    document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
-                                    let d = new Date();
-                                    d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
-                                    document.getElementById('next_update').value=d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
-                                    return false;">
+                                <a href='' class="nav-link" id="clock">
                                     <i class=" nav-icon fas fa-clock">
                                     </i>
                                 </a>
@@ -114,13 +111,7 @@
                                 </div>
                             </div>
                         </label>
-                        <select class="form-control select2" name="patching_frequency" id="patching_frequency"
-                        onchange="
-                            document.getElementById('update_date').value='{{ now()->format('d/m/Y') }}';
-                            let d = new Date();
-                            d.setMonth({{ date('m')-1 }} + parseInt(document.getElementById('patching_frequency').value));
-                            document.getElementById('next_update').value=d.toLocaleDateString();
-                            return false;">
+                        <select class="form-control select2" name="patching_frequency" id="patching_frequency">
                             <option vlaue="0"></option>
                             <option value="1" {{ ($server->patching_frequency===1) ? "selected" : ""}}>1 month</option>
                             <option value="2" {{ ($server->patching_frequency===2) ? "selected" : ""}}>2 months</option>
@@ -348,11 +339,52 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    })
-
-    $('#update_date').change(function () {
-        console.log($('#update_date').val());
     });
+
+
+//=============================================================================
+
+$('#update_date')
+    .datetimepicker({
+        format: 'DD/MM/YYYY'
+    })
+   .on('dp.change', function (e) {
+       var frequency = $("#patching_frequency").find(':selected')[0].value;
+       if (frequency!=null) {
+           var d = new Date(e.date);
+           d.setMonth(d.getMonth() + frequency + 0 );
+           $("#next_update").val(
+               (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
+               (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
+       }
+   });
+
+$('#clock').click(function (e) {
+    var frequency = $("#patching_frequency").find(':selected')[0].value;
+    if (frequency!=null) {
+       $('#update_date').val('{{ now()->format('d/m/Y') }}');
+       let d = new Date();
+       d.setMonth(d.getMonth() + frequency);
+       $('#next_update').val(
+           (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
+           (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
+       return false;
+   }
+});
+
+$('#patching_frequency').on('select2:select', function (e) {
+    var parts = $('#update_date.datepicker').val().split("/");
+    var d = new Date(parseInt(parts[2], 10),
+                      parseInt(parts[1], 10) - 1,
+                      parseInt(parts[0], 10));
+    d.setMonth(d.getMonth() + parseInt(document.getElementById('patching_frequency').value));
+    $('#next_update').val(
+        (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
+        (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
+    return false;
+});
+
+//=============================================================================
 
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
@@ -419,6 +451,10 @@ $(document).ready(function () {
             	}
           	})
         }
+
+        $("#update_date").on("change", function() {
+                    alert('changed');
+                });
 
     });
 </script>
