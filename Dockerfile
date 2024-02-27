@@ -28,7 +28,7 @@ RUN apk add php-zip \
   libpng-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install gd zip ldap
+RUN docker-php-ext-install gd zip ldap pdo pdo_mysql
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
