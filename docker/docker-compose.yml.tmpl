@@ -4,6 +4,9 @@ services:
     build:
       context: ../
     image: mercator
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
     # working_dir: /var/www/
     volumes:
@@ -16,13 +19,36 @@ services:
       # entrypoint: /bin/sleep 3600 # pour debug
       #   - ./:/var/www
     #nginx conf listen port 80 or other if custom
+    environment:
+      - DB_CONNECTION=$DB_CONNECTION
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - DB_DATABASE=$DB_DATABASE
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$DB_PASSWORD
+      - APP_ENV=$APP_ENV
+      - USE_DEMO_DATA=1
     ports:
       - 8000:80
     networks:
       - local
 
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_USER=$DB_USERNAME
+      - MYSQL_PASSWORD=$DB_PASSWORD
+    networks:
+      - local
+    # create healthcheck to start mercator only when db is ready
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
 networks:
   local:
-
-volumes:
- db:
