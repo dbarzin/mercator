@@ -18,6 +18,10 @@ Route::get('/test', function () {
     return view('test');
 });
 
+// Cytoscape tests
+Route::get('/cytoscape1', function () { return view('cytoscape1'); });
+Route::get('/cytoscape2', function () { return view('cytoscape2'); });
+
 Auth::routes();
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
 
@@ -301,8 +305,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Patching
     Route::get('/patching/index', [Admin\PatchingController::class,'index'])->name('patching.index');
-    Route::get('/patching/edit/{id}', [Admin\PatchingController::class,'edit'])->name('patching.edit');
-    Route::put('/patching/update', [Admin\PatchingController::class,'update'])->name('patching.update');
+    Route::get('/patching/edit/server/{id}', [Admin\PatchingController::class,'editServer'])->name('patching.edit.server');
+    Route::put('/patching/server', [Admin\PatchingController::class,'updateServer'])->name('patching.server');
+    Route::get('/patching/edit/application/{id}', [Admin\PatchingController::class,'editApplication'])->name('patching.edit.application');
+    Route::put('/patching/application', [Admin\PatchingController::class,'updateApplication'])->name('patching.application');
     Route::get('/patching/dashboard', [Admin\PatchingController::class,'dashboard'])->name('patching.dashboard');
 
     // Auditing

@@ -132,6 +132,7 @@
     "cssnano-preset-default": "^5.2.14",
     "cssnano-utils": "^3.1.0",
     "csso": "^4.2.0",
+    "cytoscape": "^3.28.1",
     "d": "^1.0.1",
     "debug": "^2.6.9",
     "decode-uri-component": "^0.2.2",

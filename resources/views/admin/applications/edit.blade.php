@@ -5,9 +5,11 @@
     @method('PUT')
     @csrf
     <div class="card">
+        <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
             {{ trans('global.edit') }} {{ trans('cruds.application.title_singular') }}
         </div>
+        <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
