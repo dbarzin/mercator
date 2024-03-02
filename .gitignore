@@ -10,7 +10,6 @@ npm-debug.log
 yarn-error.log
 mercator.sublime-project
 mercator.sublime-workspace
-composer.lock
 .idea/
 config/datatables-buttons.php
 config/datatables-fractal.php
