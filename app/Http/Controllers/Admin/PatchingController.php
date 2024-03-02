@@ -53,6 +53,8 @@ class PatchingController extends Controller
             $attributes_filter = $request->get('attributes_filter');
             if ($attributes_filter === null) {
                 $attributes_filter = session()->get('attributes_filter');
+                if ($attributes_filter === null)
+                    $attributes_filter = [];
             } else {
                 session()->put('attributes_filter', $attributes_filter);
             }
@@ -261,6 +263,8 @@ class PatchingController extends Controller
             $attributes_filter = $request->get('attributes_filter');
             if ($attributes_filter === null) {
                 $attributes_filter = session()->get('attributes_filter');
+                if ($attributes_filter === null)
+                    $attributes_filter = [];
             } else {
                 session()->put('attributes_filter', $attributes_filter);
             }
