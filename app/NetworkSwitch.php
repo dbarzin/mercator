@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\NetworkSwitch
- *
  */
 class NetworkSwitch extends Model
 {

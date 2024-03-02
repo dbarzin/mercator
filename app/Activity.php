@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Activity
- *
  */
 class Activity extends Model
 {

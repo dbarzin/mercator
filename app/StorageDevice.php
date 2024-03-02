@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\StorageDevice
- *
  */
 class StorageDevice extends Model
 {

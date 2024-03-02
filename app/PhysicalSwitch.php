@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\PhysicalSwitch
- *
  */
 class PhysicalSwitch extends Model
 {

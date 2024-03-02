@@ -55,7 +55,6 @@ use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -2344,7 +2343,7 @@ class ReportController extends Controller
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
             $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
                 ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
-            $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? "");
+            $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? '');
             $sheet->setCellValue("O{$row}", $logicalServer->servers->implode('name', ', '));
 
             $row++;

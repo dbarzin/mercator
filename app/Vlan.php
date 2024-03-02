@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Vlan
- *
  */
 class Vlan extends Model
 {

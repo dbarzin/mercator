@@ -52,7 +52,7 @@ class ExplorerController extends Controller
             }
         }
         // Workstation
-        $workstations = DB::table('workstations')->select('id', 'name','building_id','site_id')->whereNull('deleted_at')->get();
+        $workstations = DB::table('workstations')->select('id', 'name', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($workstations as $workstation) {
             $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations');
             if ($workstation->building_id !== null) {

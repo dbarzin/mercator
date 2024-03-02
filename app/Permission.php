@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Permission
- *
  */
 class Permission extends Model
 {

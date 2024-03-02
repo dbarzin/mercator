@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\PhysicalSecurityDevice
- *
  */
 class PhysicalSecurityDevice extends Model
 {

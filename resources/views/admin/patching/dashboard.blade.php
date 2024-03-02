@@ -26,16 +26,14 @@
         {{ trans('panel.menu.patching') }}
     </div>
     <div class="card-body" >
-        <table width="100%">
-            <tr>
-                <td width="30%">
-                      <canvas id="doughnut_chart1_div"></canvas>
-                </td>
-                <td width="70%">
-                      <canvas id="bar_chart2_div"></canvas>
-                </td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-md-4">
+                <canvas id="doughnut_chart1_div"></canvas>
+            </div>
+            <div class="col-md-8">
+                <canvas id="bar_chart2_div"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

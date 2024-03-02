@@ -19,8 +19,12 @@ Route::get('/test', function () {
 });
 
 // Cytoscape tests
-Route::get('/cytoscape1', function () { return view('cytoscape1'); });
-Route::get('/cytoscape2', function () { return view('cytoscape2'); });
+Route::get('/cytoscape1', function () {
+    return view('cytoscape1');
+});
+Route::get('/cytoscape2', function () {
+    return view('cytoscape2');
+});
 
 Auth::routes();
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
