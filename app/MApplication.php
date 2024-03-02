@@ -55,8 +55,10 @@ class MApplication extends Model
         'created_at',
         'updated_at',
         'deleted_at',
-        'install_date',
+        'attributes',
+        'patching_frequency',
         'update_date',
+        'next_update',
     ];
 
     /**
@@ -76,27 +78,29 @@ class MApplication extends Model
     /**
      * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
      */
-    public function getInstallDateAttribute($value)
+    public function getUpdateDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
     }
 
-    public function setInstallDateAttribute($value)
+    public function setUpdateDateAttribute($value)
     {
-        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        //dd($value);
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     /**
      * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
      */
-    public function getUpdateDateAttribute($value)
+    public function getNextUpdateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
     }
 
-    public function setUpdateDateAttribute($value)
+    public function setNextUpdateAttribute($value)
     {
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        // dd($value);
+        $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function applicationSourceFluxes()
@@ -166,6 +170,6 @@ class MApplication extends Model
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->format('Y-m-d');
     }
 }

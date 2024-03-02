@@ -35,7 +35,7 @@ class LogicalServer extends Model
         'description',
         'operating_system',
         'install_date',
-        'patching_group',
+        'attributes',
         'patching_frequency',
         'update_date',
         'next_update',

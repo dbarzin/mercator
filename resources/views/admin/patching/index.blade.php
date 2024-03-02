@@ -16,14 +16,19 @@
         &nbsp;
     </td>
     <td>
-        <form method="get" action="/admin/patching/index">
-            <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.patching_group') }}</label>
-            <select name="group" class="form-control select2"
-                    name="patching_group" id="patching_group"
-                    onchange="this.form.submit()">
-                <option value="NONE">&nbsp;</option>
-                @foreach($patching_group_list as $group)
-                    <option {{ session()->get('patching_group') == $group ? 'selected' : '' }}>{{ $group }}</option>
+        <form method="get" action="/admin/patching/index" name="myform">
+            <input type="hidden" name="clear"/>
+            <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
+            <select name="attributes_filter[]" class="form-control select2-free"
+                    id="attributes_filter"
+                    multiple onchange="if (this.value.length==0) document.myform.clear.value = '1'; this.form.submit()">
+                @foreach($attributes_filter as $a)
+                    @if (!in_array($a, $attributes_list))
+                        <option selected>{{$a}}</option>
+                    @endif
+                @endforeach
+                @foreach($attributes_list as $a)
+                    <option {{ ($attributes_filter ? in_array($a, $attributes_filter) : false) ? "selected" : "" }}>{{ $a }}</option>
                 @endforeach
             </select>
         </form>
@@ -49,6 +54,8 @@
                         </th>
                         <th>
                             {{ trans('cruds.logicalServer.fields.operating_system') }}
+                            /
+                            CPE
                         </th>
                         <th>
                             {{ trans('cruds.logicalServer.fields.applications') }}
@@ -57,7 +64,7 @@
                             {{ trans('cruds.application.fields.responsible') }}
                         </th>
                         <th>
-                            {{ trans('cruds.logicalServer.fields.patching_group') }}
+                            {{ trans('cruds.logicalServer.fields.attributes') }}
                         </th>
                         <th>
                             {{ trans('cruds.logicalServer.fields.update_date') }}
@@ -71,11 +78,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($servers as $server)
-                        <tr data-entry-id="{{ $server->id }}"
-                            @if ($server->next_update===null)
+                    @foreach($patches as $patch)
+                        <tr data-entry-id="{{ $patch->id }}"
+                            @if ($patch->next_update===null)
                                 class="table-secondary"
-                            @elseif (Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)->lt(today()))
+                            @elseif (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
                                 class="table-danger"
                             @else
                                 class="table-success"
@@ -84,16 +91,28 @@
                             <td>
                             </td>
                             <td>
-
-                                <a href="{{ route('admin.logical-servers.show', $server->id) }}">
-                                {{ $server->name ?? '' }}
+                            @if ($patch->type === "SRV")
+                                <a href="{{ route('admin.logical-servers.show', $patch->id) }}">
+                                {{ $patch->name ?? '' }}
                                 </a>
+                            @else
+                            <a href="{{ route('admin.applications.show', $patch->id) }}">
+                                {{ $patch->name ?? '' }}
+                            </a>
+                            @endif
                             </td>
                             <td>
-                                {{ $server->operating_system ?? '' }}
+                                @if ($patch->type === "SRV")
+                                {{ $patch->version ?? '' }}
+                                @else
+                                {{ $patch->vendor ?? '' }} :
+                                {{ $patch->product ?? '' }} :
+                                {{ $patch->version ?? '' }}
+                                @endif
                             </td>
                             <td>
-                              @foreach($server->applications as $application)
+                            @if ($patch->type==="SRV")
+                              @foreach($patch->applications as $application)
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
                                   {{ $application->name }}
                                 </a>
@@ -101,10 +120,14 @@
                                   ,
                                   @endif
                               @endforeach
+                            @else
+                                -
+                            @endif
                             </td>
                             <td>
+                            @if ($patch->type=="SRV")
                                 @php($responsibles = array())
-                                @foreach($server->applications as $application)
+                                @foreach($patch->applications as $application)
                                     @if ($application->responsible!=null)
                                         @foreach(explode(",",$application->responsible) as $responsible)
                                             @if (!in_array($responsible, $responsibles))
@@ -119,22 +142,33 @@
                                     ,
                                     @endif
                                 @endforeach
+                            @else
+                                {{ $patch->responsible }}
+                            @endif
                             </td>
                             <td>
-                                {{ $server->patching_group ?? '' }}
+                                {{ $patch->attributes ?? '' }}
                             </td>
                             <td>
-                                {{ $server->update_date!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$server->update_date)->format("Y-m-d") : ""}}
+                                {{ $patch->update_date!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->format("Y-m-d") : ""}}
                             </td>
                             <td>
-                                {{ $server->next_update!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$server->next_update)->format("Y-m-d") : ""}}
+                                {{ $patch->next_update!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->format("Y-m-d") : ""}}
                             </td>
                             <td>
-                                @can('logical_server_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.patching.edit', $server->id) }}">
+                                @if ($patch->type=="SRV")
+                                    @can('logical_server_show')
+                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.patching.edit.server', $patch->id) }}">
+                                            {{ trans('global.patch') }}
+                                        </a>
+                                    @endcan
+                                @else
+                                @can('m_application_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.patching.edit.application', $patch->id) }}">
                                         {{ trans('global.patch') }}
                                     </a>
                                 @endcan
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -156,12 +190,21 @@
     order: [[ 1, 'asc' ]],
     pageLength: 100, stateSave: true,
     "lengthMenu": [ 10, 50, 100, 500 ],
-  });
+    search: {
+        regex: true
+        }
+    });
   let table = $('.datatable-LogicalServer:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
+
+  $(".select2-free").select2({
+      placeholder: "{{ trans('global.pleaseSelect') }}",
+      allowClear: true,
+      tags: true
+  })
 
 })
 
