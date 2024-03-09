@@ -55,9 +55,9 @@ class GlobalSearchController extends Controller
         'ApplicationModule' => 'cruds.applicationModule.title',
         'MacroProcessus' => 'cruds.macroProcessus.title',
         'Certificate' => 'cruds.certificate.title',
-        'Activity' =>  'cruds.activity.title',
-        'DataProcessing' =>  'cruds.dataProcessing.title',
-        'SecurityControl' =>  'cruds.securityControl.title',
+        'Activity' => 'cruds.activity.title',
+        'DataProcessing' => 'cruds.dataProcessing.title',
+        'SecurityControl' => 'cruds.securityControl.title',
     ];
 
     public function search(Request $request)
@@ -66,7 +66,7 @@ class GlobalSearchController extends Controller
 
         $searchableData = [];
 
-        if (($term === null)||(strlen($term)<3)) {
+        if (($term === null) || (strlen($term) < 3)) {
             return view('admin.search', compact('searchableData'));
         }
 

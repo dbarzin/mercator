@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Subnetwork
- *
  */
 class Subnetwork extends Model
 {

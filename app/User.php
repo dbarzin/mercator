@@ -53,8 +53,12 @@ class User extends Authenticatable implements LdapAuthenticatable
         'deleted_at',
     ];
 
+    // Add some caching for roles
+    private ?BelongsToMany $cachedRoles = null;
+
     /**
      * Check if the User has the 'Admin' role, which is the first role in the app
+     *
      * @return bool
      */
     public function isAdmin(): bool
@@ -66,9 +70,6 @@ class User extends Authenticatable implements LdapAuthenticatable
         }
         return false;
     }
-
-    // Add some caching for roles
-    private ?BelongsToMany $cachedRoles = null;
 
     public function roles(): BelongsToMany
     {

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\MacroProcessus
- *
  */
 class MacroProcessus extends Model
 {

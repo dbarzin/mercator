@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +23,11 @@ class UpdateDhcpServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:dhcp_servers,name,' . request()->route('dhcp_server')->id,
                 'unique:dhcp_servers,name,'.request()->route('dhcp_server')->id.',id,deleted_at,NULL',
             ],
             'address_ip' => [
                 'nullable',
-                'ip',
+                new IPList(),
             ],
         ];
     }

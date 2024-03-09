@@ -30,31 +30,41 @@ class Flux extends Model
     protected $fillable = [
     ];
 
-    public function source_id() : ?string {
-        if ($this->application_source_id!==null)
+    public function source_id(): ?string
+    {
+        if ($this->application_source_id !== null) {
             return 'APP_' . $this->application_source_id;
-        if (auth()->user()->granularity>=2) {
-            if($this->service_source_id!=null)
+        }
+        if (auth()->user()->granularity >= 2) {
+            if ($this->service_source_id !== null) {
                 return 'SERV_' . $this->service_source_id;
-            if ($this->module_source_id!==null)
+            }
+            if ($this->module_source_id !== null) {
                 return 'MOD_' . $this->module_source_id;
             }
-        if ($this->database_source_id!==null)
+        }
+        if ($this->database_source_id !== null) {
             return 'DATABASE_' . $this->database_source_id;
+        }
         return null;
     }
 
-    public function dest_id() : ?string {
-        if ($this->application_dest_id!==null)
+    public function dest_id(): ?string
+    {
+        if ($this->application_dest_id !== null) {
             return 'APP_' . $this->application_dest_id;
-        if (auth()->user()->granularity>=2) {
-            if($this->service_dest_id!==null)
+        }
+        if (auth()->user()->granularity >= 2) {
+            if ($this->service_dest_id !== null) {
                 return 'SERV_' . $this->service_dest_id;
-            if ($this->module_dest_id!==null)
+            }
+            if ($this->module_dest_id !== null) {
                 return 'MOD_' . $this->module_dest_id;
             }
-        if ($this->database_dest_id!==null)
+        }
+        if ($this->database_dest_id !== null) {
             return 'DATABASE_' . $this->database_dest_id;
+        }
         return null;
     }
 

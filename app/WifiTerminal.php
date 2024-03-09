@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\WifiTerminal
- *
  */
 class WifiTerminal extends Model
 {

@@ -202,15 +202,7 @@
 
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        $(function() {
-  let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
-  let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
-  let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
-  let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
-  let printButtonTrans = '{{ trans('global.datatables.print') }}'
-  let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
-  let selectAllButtonTrans = '{{ trans('global.select_all') }}'
-  let selectNoneButtonTrans = '{{ trans('global.deselect_all') }}'
+$(function() {
 
   let languages = {
     'fr': '/i18n/French.json'
@@ -242,7 +234,7 @@
       {
         extend: 'selectAll',
         className: 'btn-primary',
-        text: selectAllButtonTrans,
+        text: '{{ trans('global.select_all') }}',
         exportOptions: {
           columns: ':visible'
         },
@@ -255,7 +247,7 @@
       {
         extend: 'selectNone',
         className: 'btn-primary',
-        text: selectNoneButtonTrans,
+        text: '{{ trans('global.deselect_all') }}',
         exportOptions: {
           columns: ':visible'
         }
@@ -263,7 +255,7 @@
       {
         extend: 'copy',
         className: 'btn-default',
-        text: copyButtonTrans,
+        text: '{{ trans('global.datatables.copy') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -271,7 +263,7 @@
       {
         extend: 'csv',
         className: 'btn-default',
-        text: csvButtonTrans,
+        text: '{{ trans('global.datatables.csv') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -279,7 +271,7 @@
       {
         extend: 'excel',
         className: 'btn-default',
-        text: excelButtonTrans,
+        text: '{{ trans('global.datatables.excel') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -287,7 +279,7 @@
       {
         extend: 'pdf',
         className: 'btn-default',
-        text: pdfButtonTrans,
+        text: '{{ trans('global.datatables.pdf') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -295,7 +287,7 @@
       {
         extend: 'print',
         className: 'btn-default',
-        text: printButtonTrans,
+        text: '{{ trans('global.datatables.print') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -303,7 +295,7 @@
       {
         extend: 'colvis',
         className: 'btn-default',
-        text: colvisButtonTrans,
+        text: '{{ trans('global.datatables.colvis') }}',
         exportOptions: {
           columns: ':visible'
         }
@@ -312,9 +304,8 @@
   });
   $.fn.dataTable.ext.classes.sPageButton = '';
 });
-
     </script>
-    @yield('scripts')
-</body>
+@yield('scripts')
 
+</body>
 </html>

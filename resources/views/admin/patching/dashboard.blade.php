@@ -26,16 +26,17 @@
         {{ trans('panel.menu.patching') }}
     </div>
     <div class="card-body" >
-        <table width="100%">
-            <tr>
-                <td width="30%">
-                      <canvas id="doughnut_chart1_div"></canvas>
-                </td>
-                <td width="70%">
-                      <canvas id="bar_chart2_div"></canvas>
-                </td>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-md-4">
+                <canvas id="doughnut_chart1_div"></canvas>
+            </div>
+            <div class="col-md-8">
+                <canvas id="bar_chart2_div"></canvas>
+            </div>
+        </div>
+            <div class="chart-container" style="position: relative; height: {{ count($attributes_list) * 50}}px; border:1px solid">
+                <canvas id="bar_chart3_div"></canvas>
+            </div>
     </div>
 </div>
 @endsection
@@ -116,7 +117,6 @@
                         ($patch->update_date!==null) &&
                         (Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->month===$month) &&
                         (Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->year===$year)
-
                     )
                         $count++;
                     }
@@ -180,7 +180,6 @@
         ]
     },
 
-
     options: {
         responsive: true,
         legend: {
@@ -197,10 +196,158 @@
     }
   };
 
+  // --------------------------------------------------------------------
+
+ <?php
+      // select distinct attributes
+      $res = [];
+      foreach ($patches as $p) {
+          foreach (explode(' ', $p->attributes) as $j) {
+              if (strlen(trim($j)) > 0) {
+                  $res[] = trim($j);
+              }
+          }
+      }
+      $attributes_list = array_unique($res);
+?>
+
+  // --------------------------------------------------------------------
+  const ctx3 = document.getElementById('bar_chart3_div').getContext('2d');
+
+  const cfg3 = {
+    type: 'horizontalBar',
+    data: {
+        labels: [
+            <?php
+            foreach($attributes_list as $attribute) {
+                echo "'";
+                echo $attribute;
+                echo "', ";
+                }
+            ?>
+        ],
+        datasets: [
+        {
+            data: [
+            <?php
+            $year = today()->year;
+            $month = today()->month;
+            foreach($attributes_list as $attribute) {
+                $count = 0;
+                foreach($patches as $patch) {
+                    if (str_contains($patch->attributes, $attribute)) {
+                        if (
+                            ($patch->next_update!==null) &&
+                            (!Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                        )
+                            $count++;
+                        }
+                    }
+                echo $count;
+                echo ", ";
+                }
+            ?>
+            ],
+            backgroundColor: '#59A14F',
+        },
+        {
+            data: [
+            <?php
+            $year = today()->year;
+            $month = today()->month;
+            foreach($attributes_list as $attribute) {
+                $count = 0;
+                foreach($patches as $patch) {
+                    if (str_contains($patch->attributes, $attribute)) {
+                        if (
+                        ($patch->next_update!==null) &&
+                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                        )
+                    {
+                        $count++;
+                        }
+                    }
+                }
+                echo $count;
+                echo ", ";
+                }
+            ?>
+            ],
+            backgroundColor: '#E15759',
+        },
+        {
+            data: [
+            <?php
+            $year = today()->year;
+            $month = today()->month;
+            foreach($attributes_list as $attribute) {
+                $count = 0;
+                foreach($patches as $patch) {
+                    if (str_contains($patch->attributes, $attribute)) {
+                        if (
+                            ($patch->next_update===null)
+                        )
+                            $count++;
+                        }
+                    }
+                echo $count;
+                echo ", ";
+                }
+            ?>
+            ],
+            backgroundColor: '#e4e5e6',
+        },
+    ]},
+    options: {
+
+   responsive: true,
+   maintainAspectRatio: false,
+
+  tooltips: {
+    enabled: false },
+
+  hover: {
+    animationDuration: 0 },
+
+  scales: {
+    xAxes: [{
+      ticks: {
+        beginAtZero: true,
+        fontFamily: "'Open Sans Bold', sans-serif",
+        fontSize: 11 },
+
+      scaleLabel: {
+        display: false },
+
+      gridLines: {},
+
+      stacked: true }],
+
+    yAxes: [{
+      gridLines: {
+        display: false,
+        color: "#fff",
+        zeroLineColor: "#fff",
+        zeroLineWidth: 0 },
+
+      ticks: {
+        fontFamily: "'Open Sans Bold', sans-serif",
+        fontSize: 11 },
+
+      stacked: true }]
+      },
+  legend: {
+    display: false },
+    }
+
+};
+
+// --------------------------------------------------------------------
 
   window.onload = function() {
       new Chart(ctx1, cfg1);
       new Chart(ctx2, cfg2);
+      new Chart(ctx3, cfg3);
     };
 
     // --------------------------------------------------------------------
@@ -212,6 +359,7 @@
             tags: true
         });
     });
+
 
 </script>
 @endsection

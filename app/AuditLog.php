@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 
 /**
  * App\AuditLog
- *
  */
 class AuditLog extends Model
 {

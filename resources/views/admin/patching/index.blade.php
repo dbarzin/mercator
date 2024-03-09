@@ -1,21 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div style="margin-bottom: 10px;" class="row">
-    <div class="col-lg-9">
-    <table>
-        <tr>
-            <td>
-        <br>
-        <form method="get" action="/admin/patching/dashboard">
-            <button class="btn btn-primary" type="submit">
-                Dashboard
-            </button>
-        </form>
-    </td>
-    <td>
-        &nbsp;
-    </td>
-    <td>
+    <div class="col-sm-3">
         <form method="get" action="/admin/patching/index" name="myform">
             <input type="hidden" name="clear"/>
             <label class="recommended" for="patching_group">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
@@ -32,7 +18,18 @@
                 @endforeach
             </select>
         </form>
-    </td></tr></table>
+    </div>
+    <div class="col-md-8">
+    </div>
+    <div class="col-sm-1">
+        <span class="pull-right">
+        <label class="recommended" for="patching_group">&nbsp;</label>
+        <form method="get" action="/admin/patching/dashboard">
+            <button class="btn btn-primary" type="submit">
+                Dashboard
+            </button>
+        </form>
+        </spam>
     </div>
 </div>
 

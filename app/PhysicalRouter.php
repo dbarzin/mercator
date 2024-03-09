@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\PhysicalRouter
- *
  */
 class PhysicalRouter extends Model
 {

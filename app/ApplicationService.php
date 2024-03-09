@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ApplicationService
- *
  */
 class ApplicationService extends Model
 {

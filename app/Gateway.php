@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Gateway
- *
  */
 class Gateway extends Model
 {

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ExternalConnectedEntity
- *
  */
 class ExternalConnectedEntity extends Model
 {

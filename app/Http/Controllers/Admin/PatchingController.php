@@ -5,23 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\LogicalServer;
 use App\MApplication;
-use App\ApplicationBlock;
-use App\ApplicationService;
-use App\Database;
-use App\Entity;
-use App\Http\Requests\MassDestroyMApplicationRequest;
-use App\Http\Requests\StoreMApplicationRequest;
-use App\Http\Requests\UpdateMApplicationRequest;
-use App\Process;
-use App\Services\CartographerService;
-use App\Services\EventService;
-use App\User;
-use Gate;
 use Carbon\Carbon;
+use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Log;
 
 class PatchingController extends Controller
 {
@@ -58,47 +46,61 @@ class PatchingController extends Controller
         $attributes_list = array_unique($res);
 
         // Get attributes
-        if ($request->get("clear")!=null) {
+        if ($request->get('clear') !== null) {
             session()->forget('attributes_filter');
             $attributes_filter = [];
-        }
-        else {
+        } else {
             $attributes_filter = $request->get('attributes_filter');
             if ($attributes_filter === null) {
-                    $attributes_filter = session()->get('attributes_filter');
+                $attributes_filter = session()->get('attributes_filter');
+                if ($attributes_filter === null) {
+                    $attributes_filter = [];
                 }
-            else
+            } else {
                 session()->put('attributes_filter', $attributes_filter);
+            }
         }
 
         // Select
         $servers = LogicalServer::select(
             DB::raw("'SRV' as type"),
-            "id", "name",
-            DB::raw("null as vendor"),
-            DB::raw("null as product"),
-            "operating_system as version",
-            DB::raw("null as responsible"),
-            "attributes", "update_date", "next_update");
-        $applications = MApplication::select(DB::raw(
-            "'APP' as type"),
-            "id", "name", "vendor", "product", "version", "responsible",
-            "attributes", "update_date", "next_update");
+            'id',
+            'name',
+            DB::raw('null as vendor'),
+            DB::raw('null as product'),
+            'operating_system as version',
+            DB::raw('null as responsible'),
+            'attributes',
+            'update_date',
+            'next_update'
+        );
+        $applications = MApplication::select(
+            DB::raw(
+                "'APP' as type"
+            ),
+            'id',
+            'name',
+            'vendor',
+            'product',
+            'version',
+            'responsible',
+            'attributes',
+            'update_date',
+            'next_update'
+        );
 
         // Filter on attributes
         if ($attributes_filter !== null) {
             foreach ($attributes_filter as $a) {
-                if (str_starts_with($a,'-')) {
-                    $servers->where("attributes","not like",'%' . substr($a,1) . '%');
-                    $applications->where("attributes","not like",'%' . substr($a,1) . '%');
-                    }
-                else {
-                    $servers->where("attributes","like",'%' . $a . '%');
-                    $applications->where("attributes","like",'%' . $a . '%');
-                    }
+                if (str_starts_with($a, '-')) {
+                    $servers->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                    $applications->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                } else {
+                    $servers->where('attributes', 'like', '%' . $a . '%');
+                    $applications->where('attributes', 'like', '%' . $a . '%');
+                }
             }
-        }
-        else {
+        } else {
             $attributes_filter = [];
         }
         // Union
@@ -137,12 +139,15 @@ class PatchingController extends Controller
         }
         session()->put('documents', $documents);
 
-        return view('admin.patching.server',
+        return view(
+            'admin.patching.server',
             compact(
                 'server',
                 'operating_system_list',
                 'environment_list',
-                'attributes_list'));
+                'attributes_list'
+            )
+        );
     }
 
     public function editApplication(Request $request)
@@ -167,26 +172,28 @@ class PatchingController extends Controller
         }
         $attributes_list = array_unique($res);
 
-        return view('admin.patching.application',
-            compact('application','attributes_list')
+        return view(
+            'admin.patching.application',
+            compact('application', 'attributes_list')
         );
     }
 
     public function updateServer(Request $request)
     {
         $logicalServer = LogicalServer::find($request->id);
-        $request["attributes"]= implode(' ', $request->get("attributes") !== null ? $request->get("attributes") : []);
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $logicalServer->update($request->all());
         $logicalServer->documents()->sync(session()->get('documents'));
         session()->forget('documents');
 
         // Update frequency
-        if ($request->get('global_periodicity')!=null) {
-            $lservers = LogicalServer::where('patching_group','=',$logicalServer->patching_group)->get();
+        if ($request->get('global_periodicity') !== null) {
+            $lservers = LogicalServer::where('patching_group', '=', $logicalServer->patching_group)->get();
             foreach ($lservers as $s) {
                 $s->patching_frequency = $logicalServer->patching_frequency;
-                if ($s->update_date!=null)
-                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'),$s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                if ($s->update_date !== null) {
+                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                }
                 $s->save();
             }
         }
@@ -198,19 +205,20 @@ class PatchingController extends Controller
     {
         $application = MApplication::find($request->id);
 
-        $request["attributes"]= implode(' ', $request->get("attributes") !== null ? $request->get("attributes") : []);
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $application->update($request->all());
 
         // $logicalServer->documents()->sync(session()->get('documents'));
         // session()->forget('documents');
 
         // Update frequency
-        if ($request->get('global_periodicity')!=null) {
-            $apps = MApplication::where('patching_group','=',$application->patching_group)->get();
+        if ($request->get('global_periodicity') !== null) {
+            $apps = MApplication::where('patching_group', '=', $application->patching_group)->get();
             foreach ($apps as $s) {
                 $s->patching_frequency = $logicalServer->patching_frequency;
-                if ($s->update_date!=null)
-                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'),$s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                if ($s->update_date !== null) {
+                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                }
                 $s->save();
             }
         }
@@ -218,9 +226,8 @@ class PatchingController extends Controller
         return redirect()->route('admin.patching.index');
     }
 
-
-    public function dashboard(Request $request) {
-
+    public function dashboard(Request $request)
+    {
         // Get Attributes
         $attributes_list = LogicalServer::select('attributes')
             ->where('attributes', '<>', null)
@@ -250,44 +257,59 @@ class PatchingController extends Controller
         $attributes_list = array_unique($res);
 
         // Get attributes
-        if ($request->get("clear")!=null) {
+        if ($request->get('clear') !== null) {
             session()->forget('attributes_filter');
             $attributes_filter = [];
-        }
-        else {
+        } else {
             $attributes_filter = $request->get('attributes_filter');
             if ($attributes_filter === null) {
-                    $attributes_filter = session()->get('attributes_filter');
+                $attributes_filter = session()->get('attributes_filter');
+                if ($attributes_filter === null) {
+                    $attributes_filter = [];
                 }
-            else
+            } else {
                 session()->put('attributes_filter', $attributes_filter);
+            }
         }
 
         // Select
         $servers = LogicalServer::select(
             DB::raw("'SRV' as type"),
-            "id", "name",
-            DB::raw("null as vendor"),
-            DB::raw("null as product"),
-            "operating_system as version",
-            DB::raw("null as responsible"),
-            "attributes", "update_date", "next_update");
-        $applications = MApplication::select(DB::raw(
-            "'APP' as type"),
-            "id", "name", "vendor", "product", "version", "responsible",
-            "attributes", "update_date", "next_update");
+            'id',
+            'name',
+            DB::raw('null as vendor'),
+            DB::raw('null as product'),
+            'operating_system as version',
+            DB::raw('null as responsible'),
+            'attributes',
+            'update_date',
+            'next_update'
+        );
+        $applications = MApplication::select(
+            DB::raw(
+                "'APP' as type"
+            ),
+            'id',
+            'name',
+            'vendor',
+            'product',
+            'version',
+            'responsible',
+            'attributes',
+            'update_date',
+            'next_update'
+        );
 
         // Filter on attributes
         if ($attributes_filter !== null) {
             foreach ($attributes_filter as $a) {
-                if (str_starts_with($a,'-')) {
-                    $servers->where("attributes","not like",'%' . substr($a,1) . '%');
-                    $applications->where("attributes","not like",'%' . substr($a,1) . '%');
-                    }
-                else {
-                    $servers->where("attributes","like",'%' . $a . '%');
-                    $applications->where("attributes","like",'%' . $a . '%');
-                    }
+                if (str_starts_with($a, '-')) {
+                    $servers->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                    $applications->where('attributes', 'not like', '%' . substr($a, 1) . '%');
+                } else {
+                    $servers->where('attributes', 'like', '%' . $a . '%');
+                    $applications->where('attributes', 'like', '%' . $a . '%');
+                }
             }
         }
 
@@ -296,5 +318,4 @@ class PatchingController extends Controller
 
         return view('admin.patching.dashboard', compact('patches', 'attributes_list', 'attributes_filter'));
     }
-
 }

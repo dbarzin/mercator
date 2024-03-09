@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ForestAd
- *
  */
 class ForestAd extends Model
 {

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\DhcpServer
- *
  */
 class DhcpServer extends Model
 {

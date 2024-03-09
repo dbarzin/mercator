@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\DomaineAd
- *
  */
 class DomaineAd extends Model
 {
