@@ -255,7 +255,7 @@ $(function() {
       {
         extend: 'copy',
         className: 'btn-default',
-        text: '{{ trans('global.datatables.copy') }},
+        text: '{{ trans('global.datatables.copy') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }
@@ -263,7 +263,7 @@ $(function() {
       {
         extend: 'csv',
         className: 'btn-default',
-        text: {{ trans('global.datatables.csv') }},
+        text: '{{ trans('global.datatables.csv') }}',
         exportOptions: {
           columns: [':visible:not(:last-child):gt(0)']
         }

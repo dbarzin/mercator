@@ -26,7 +26,7 @@
         {{ trans('panel.menu.patching') }}
     </div>
     <div class="card-body" >
-        <div class="row align-items-center">
+        <div class="row">
             <div class="col-md-4">
                 <canvas id="doughnut_chart1_div"></canvas>
             </div>
@@ -34,11 +34,9 @@
                 <canvas id="bar_chart2_div"></canvas>
             </div>
         </div>
-        <div class="row align-items-center">
-            <div class="col-md-12">
+            <div class="chart-container" style="position: relative; height: {{ count($attributes_list) * 50}}px; border:1px solid">
                 <canvas id="bar_chart3_div"></canvas>
             </div>
-        </div>
     </div>
 </div>
 @endsection
@@ -217,7 +215,7 @@
   const ctx3 = document.getElementById('bar_chart3_div').getContext('2d');
 
   const cfg3 = {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
         labels: [
             <?php
@@ -230,7 +228,6 @@
         ],
         datasets: [
         {
-            label: 'made',
             data: [
             <?php
             $year = today()->year;
@@ -254,7 +251,6 @@
             backgroundColor: '#59A14F',
         },
         {
-            label: 'late',
             data: [
             <?php
             $year = today()->year;
@@ -280,7 +276,6 @@
             backgroundColor: '#E15759',
         },
         {
-            label: 'undefined',
             data: [
             <?php
             $year = today()->year;
@@ -302,20 +297,50 @@
             ],
             backgroundColor: '#e4e5e6',
         },
-    ],
+    ]},
     options: {
-        responsive: true,
-        indexAxis: 'y',
-        legend: {
-               display: false,
-           },
-        scales: {
-            xAxes: [{
-                stacked: true
-            }],
-        }
+
+   responsive: true,
+   maintainAspectRatio: false,
+
+  tooltips: {
+    enabled: false },
+
+  hover: {
+    animationDuration: 0 },
+
+  scales: {
+    xAxes: [{
+      ticks: {
+        beginAtZero: true,
+        fontFamily: "'Open Sans Bold', sans-serif",
+        fontSize: 11 },
+
+      scaleLabel: {
+        display: false },
+
+      gridLines: {},
+
+      stacked: true }],
+
+    yAxes: [{
+      gridLines: {
+        display: false,
+        color: "#fff",
+        zeroLineColor: "#fff",
+        zeroLineWidth: 0 },
+
+      ticks: {
+        fontFamily: "'Open Sans Bold', sans-serif",
+        fontSize: 11 },
+
+      stacked: true }]
+      },
+  legend: {
+    display: false },
     }
-}};
+
+};
 
 // --------------------------------------------------------------------
 
