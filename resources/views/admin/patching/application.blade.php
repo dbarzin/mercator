@@ -56,7 +56,7 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label class="recommended" for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
@@ -72,7 +72,7 @@
                         <span class="help-block">{{ trans('cruds.application.fields.attributes_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-3">
                     <table width="100%">
                         <tr>
                             <td width="90%">
@@ -93,7 +93,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="update_date">
                             <div class="row">
@@ -121,7 +121,7 @@
                         <span class="help-block">Fréquence de mise à jour</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="next_update">{{ trans('cruds.application.fields.next_update') }}</label>
                         <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
