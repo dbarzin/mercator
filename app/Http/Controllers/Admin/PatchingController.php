@@ -13,15 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PatchingController extends Controller
 {
-    public function index(Request $request)
-    {
-        abort_if(Gate::denies('patching_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+    private function getAttributes() : array {
         // Get Attributes
         $attributes_list = LogicalServer::select('attributes')
             ->where('attributes', '<>', null)
             ->distinct()
-            ->orderBy('attributes')
             ->pluck('attributes');
         $res = [];
         foreach ($attributes_list as $i) {
@@ -34,7 +31,6 @@ class PatchingController extends Controller
         $attributes_list = MApplication::select('attributes')
             ->where('attributes', '<>', null)
             ->distinct()
-            ->orderBy('attributes')
             ->pluck('attributes');
         foreach ($attributes_list as $i) {
             foreach (explode(' ', $i) as $j) {
@@ -43,7 +39,15 @@ class PatchingController extends Controller
                 }
             }
         }
-        $attributes_list = array_unique($res);
+        return array_unique($res);
+    }
+
+    public function index(Request $request)
+    {
+        abort_if(Gate::denies('patching_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get Attributes
+        $attributes_list = $this->getAttributes();
 
         // Get attributes
         if ($request->get('clear') !== null) {
@@ -115,20 +119,7 @@ class PatchingController extends Controller
         $server = LogicalServer::find($request->id);
 
         // Lists
-        $attributes_list = LogicalServer::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->orderBy('attributes')
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $attributes_list = array_unique($res);
+        $attributes_list = $this->getAttributes();
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
 
@@ -157,20 +148,7 @@ class PatchingController extends Controller
         $application = MApplication::find($request->id);
 
         // Lists
-        $attributes_list = MApplication::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->orderBy('attributes')
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $attributes_list = array_unique($res);
+        $attributes_list = $this->getAttributes();
 
         return view(
             'admin.patching.application',
@@ -229,32 +207,7 @@ class PatchingController extends Controller
     public function dashboard(Request $request)
     {
         // Get Attributes
-        $attributes_list = LogicalServer::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->orderBy('attributes')
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $attributes_list = MApplication::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->orderBy('attributes')
-            ->pluck('attributes');
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $attributes_list = array_unique($res);
+        $attributes_list = $this->getAttributes();
 
         // Get attributes
         if ($request->get('clear') !== null) {

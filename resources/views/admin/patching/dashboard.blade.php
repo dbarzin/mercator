@@ -208,6 +208,7 @@
               }
           }
       }
+      sort($res);
       $attributes_list = array_unique($res);
 ?>
 
