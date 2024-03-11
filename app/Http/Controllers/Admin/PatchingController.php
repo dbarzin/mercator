@@ -39,6 +39,7 @@ class PatchingController extends Controller
                 }
             }
         }
+        sort($res);
         return array_unique($res);
     }
 
