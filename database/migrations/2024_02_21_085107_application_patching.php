@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('patching_group')->nullable();
             $table->integer('patching_frequency')->nullable();
             $table->date('next_update')->nullable();
-            $table->date('update_date')->change();
-            $table->date('install_date')->change();
+            // $table->date('update_date')->change();
+            // $table->date('install_date')->change();
         });
     }
 
@@ -29,8 +29,8 @@ return new class extends Migration
             $table->dropColumn('patching_group');
             $table->dropColumn('patching_frequency');
             $table->dropColumn('next_update');
-            $table->datetime('update_date')->change();
-            $table->datetime('install_date')->change();
+            // $table->datetime('update_date')->change();
+            // $table->datetime('install_date')->change();
         });
     }
 };
