@@ -14,35 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 class PatchingController extends Controller
 {
 
-    private function getAttributes() : array {
-        // Get Attributes
-        $attributes_list = LogicalServer::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        $attributes_list = MApplication::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->pluck('attributes');
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        sort($res);
-        return array_unique($res);
-    }
-
     public function index(Request $request)
     {
         abort_if(Gate::denies('patching_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -271,5 +242,34 @@ class PatchingController extends Controller
         $patches = $servers->union($applications)->orderBy('name')->get();
 
         return view('admin.patching.dashboard', compact('patches', 'attributes_list', 'attributes_filter'));
+    }
+    private function getAttributes(): array
+    {
+        // Get Attributes
+        $attributes_list = LogicalServer::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        $attributes_list = MApplication::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
     }
 }

@@ -17,6 +17,7 @@ Route::post('login', [API\AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('data-processings', API\DataProcessingController::class);
+    Route::resource('security-controls', API\SecurityControlController::class);
 
     Route::resource('entities', API\EntityController::class);
     Route::resource('relations', API\RelationController::class);
