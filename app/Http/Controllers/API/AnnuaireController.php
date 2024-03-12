@@ -58,6 +58,8 @@ class AnnuaireController extends Controller
 
     public function massDestroy(MassDestroyAnnuaireRequest $request)
     {
+        abort_if(Gate::denies('annuaire_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Annuaire::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

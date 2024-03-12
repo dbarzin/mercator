@@ -62,6 +62,8 @@ class PhysicalServerController extends Controller
 
     public function massDestroy(MassDestroyPhysicalServerRequest $request)
     {
+        abort_if(Gate::denies('physical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         PhysicalServer::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

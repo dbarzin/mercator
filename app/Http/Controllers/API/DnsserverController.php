@@ -62,6 +62,8 @@ class DnsserverController extends Controller
 
     public function massDestroy(MassDestroyDnsserverRequest $request)
     {
+        abort_if(Gate::denies('dnsserver_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Dnsserver::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

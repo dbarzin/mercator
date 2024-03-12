@@ -15,7 +15,7 @@ class ZoneAdminController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('zoneadmin_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('zone_admin_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $zoneadmins = ZoneAdmin::all();
 
@@ -24,7 +24,7 @@ class ZoneAdminController extends Controller
 
     public function store(StoreZoneAdminRequest $request)
     {
-        abort_if(Gate::denies('zoneadmin_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('zone_admin_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $zoneadmin = ZoneAdmin::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class ZoneAdminController extends Controller
 
     public function show(ZoneAdmin $zoneAdmin)
     {
-        abort_if(Gate::denies('zoneadmin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('zone_admin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ZoneAdminResource($zoneAdmin);
     }
 
     public function update(UpdateZoneAdminRequest $request, ZoneAdmin $zoneAdmin)
     {
-        abort_if(Gate::denies('zoneadmin_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('zone_admin_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $zoneAdmin->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class ZoneAdminController extends Controller
 
     public function destroy(ZoneAdmin $zoneAdmin)
     {
-        abort_if(Gate::denies('zoneadmin_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('zone_admin_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $zoneAdmin->delete();
 
@@ -62,6 +62,8 @@ class ZoneAdminController extends Controller
 
     public function massDestroy(MassDestroyZoneAdminRequest $request)
     {
+        abort_if(Gate::denies('zone_admin_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ZoneAdmin::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

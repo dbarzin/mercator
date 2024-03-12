@@ -62,6 +62,8 @@ class WanController extends Controller
 
     public function massDestroy(MassDestroyWanRequest $request)
     {
+        abort_if(Gate::denies('wan_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Wan::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

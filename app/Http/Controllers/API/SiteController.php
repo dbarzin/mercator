@@ -62,6 +62,8 @@ class SiteController extends Controller
 
     public function massDestroy(MassDestroySiteRequest $request)
     {
+        abort_if(Gate::denies('site_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Site::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

@@ -67,6 +67,8 @@ class LogicalServerController extends Controller
 
     public function massDestroy(MassDestroyLogicalServerRequest $request)
     {
+        abort_if(Gate::denies('logical_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         LogicalServer::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

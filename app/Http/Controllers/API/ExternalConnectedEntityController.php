@@ -62,6 +62,8 @@ class ExternalConnectedEntityController extends Controller
 
     public function massDestroy(MassDestroyExternalConnectedEntityRequest $request)
     {
+        abort_if(Gate::denies('external_connected_entity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ExternalConnectedEntity::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

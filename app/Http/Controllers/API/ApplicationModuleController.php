@@ -62,6 +62,8 @@ class ApplicationModuleController extends Controller
 
     public function massDestroy(MassDestroyApplicationModuleRequest $request)
     {
+        abort_if(Gate::denies('application_module_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ApplicationModule::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

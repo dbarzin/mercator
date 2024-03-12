@@ -68,6 +68,8 @@ class GatewayController extends Controller
 
     public function massDestroy(MassDestroyGatewayRequest $request)
     {
+        abort_if(Gate::denies('gateway_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Gateway::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

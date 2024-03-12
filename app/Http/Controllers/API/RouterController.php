@@ -62,6 +62,8 @@ class RouterController extends Controller
 
     public function massDestroy(MassDestroyRouterRequest $request)
     {
+        abort_if(Gate::denies('router_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Router::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

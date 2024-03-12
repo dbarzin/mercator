@@ -62,6 +62,8 @@ class LanController extends Controller
 
     public function massDestroy(MassDestroyLanRequest $request)
     {
+        abort_if(Gate::denies('lan_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Lan::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

@@ -62,6 +62,8 @@ class PeripheralController extends Controller
 
     public function massDestroy(MassDestroyPeripheralRequest $request)
     {
+        abort_if(Gate::denies('peripheral_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Peripheral::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

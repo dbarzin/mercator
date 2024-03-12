@@ -62,6 +62,8 @@ class CertificateController extends Controller
 
     public function massDestroy(MassDestroyCertificateRequest $request)
     {
+        abort_if(Gate::denies('certificate_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Certificate::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

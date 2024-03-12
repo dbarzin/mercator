@@ -62,6 +62,8 @@ class DhcpServerController extends Controller
 
     public function massDestroy(MassDestroyDhcpServerRequest $request)
     {
+        abort_if(Gate::denies('dhcp_server_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DhcpServer::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

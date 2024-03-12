@@ -15,7 +15,7 @@ class ApplicationServiceController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('applicationservice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationservices = ApplicationService::all();
 
@@ -24,7 +24,7 @@ class ApplicationServiceController extends Controller
 
     public function store(StoreApplicationServiceRequest $request)
     {
-        abort_if(Gate::denies('applicationservice_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationService = ApplicationService::create($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
@@ -35,14 +35,14 @@ class ApplicationServiceController extends Controller
 
     public function show(ApplicationService $applicationService)
     {
-        abort_if(Gate::denies('applicationservice_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ApplicationServiceResource($applicationService);
     }
 
     public function update(UpdateApplicationServiceRequest $request, ApplicationService $applicationService)
     {
-        abort_if(Gate::denies('applicationservice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationService->update($request->all());
         $applicationService->modules()->sync($request->input('modules', []));
@@ -53,7 +53,7 @@ class ApplicationServiceController extends Controller
 
     public function destroy(ApplicationService $applicationService)
     {
-        abort_if(Gate::denies('applicationservice_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('application_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationService->delete();
 
@@ -62,6 +62,8 @@ class ApplicationServiceController extends Controller
 
     public function massDestroy(MassDestroyApplicationServiceRequest $request)
     {
+        abort_if(Gate::denies('application_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ApplicationService::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

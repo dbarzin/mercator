@@ -15,7 +15,7 @@ class SecurityDeviceController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('securitydevice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_device_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securitydevices = SecurityDevice::all();
 
@@ -24,7 +24,7 @@ class SecurityDeviceController extends Controller
 
     public function store(StoreSecurityDeviceRequest $request)
     {
-        abort_if(Gate::denies('securitydevice_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securitydevice = SecurityDevice::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class SecurityDeviceController extends Controller
 
     public function show(SecurityDevice $securityDevice)
     {
-        abort_if(Gate::denies('securitydevice_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_device_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new SecurityDeviceResource($securityDevice);
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)
     {
-        abort_if(Gate::denies('securitydevice_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityDevice->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class SecurityDeviceController extends Controller
 
     public function destroy(SecurityDevice $securityDevice)
     {
-        abort_if(Gate::denies('securitydevice_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityDevice->delete();
 
@@ -62,6 +62,8 @@ class SecurityDeviceController extends Controller
 
     public function massDestroy(MassDestroySecurityDeviceRequest $request)
     {
+        abort_if(Gate::denies('security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         SecurityDevice::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

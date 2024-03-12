@@ -62,6 +62,8 @@ class DatabaseController extends Controller
 
     public function massDestroy(MassDestroyDatabaseRequest $request)
     {
+        abort_if(Gate::denies('database_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Database::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

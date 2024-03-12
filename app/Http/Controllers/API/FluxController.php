@@ -58,6 +58,8 @@ class FluxController extends Controller
 
     public function massDestroy(MassDestroyFluxRequest $request)
     {
+        abort_if(Gate::denies('flux_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Flux::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

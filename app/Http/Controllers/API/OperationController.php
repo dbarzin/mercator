@@ -62,6 +62,8 @@ class OperationController extends Controller
 
     public function massDestroy(MassDestroyOperationRequest $request)
     {
+        abort_if(Gate::denies('operation_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Operation::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

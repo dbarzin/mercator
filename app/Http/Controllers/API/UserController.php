@@ -62,6 +62,8 @@ class UserController extends Controller
 
     public function massDestroy(MassDestroyUserRequest $request)
     {
+        abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         User::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

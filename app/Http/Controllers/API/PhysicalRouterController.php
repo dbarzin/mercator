@@ -62,6 +62,8 @@ class PhysicalRouterController extends Controller
 
     public function massDestroy(MassDestroyPhysicalRouterRequest $request)
     {
+        abort_if(Gate::denies('physical_router_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         PhysicalRouter::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
