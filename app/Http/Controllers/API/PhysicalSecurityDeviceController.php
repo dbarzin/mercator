@@ -60,6 +60,8 @@ class PhysicalSecurityDeviceController extends Controller
 
     public function massDestroy(MassDestroyPhysicalSecurityDeviceRequest $request)
     {
+        abort_if(Gate::denies('physical_security_device_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         PhysicalSecurityDevice::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

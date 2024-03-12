@@ -15,7 +15,7 @@ class NetworkSwitchController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('networkswitch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_switch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkswitchs = NetworkSwitch::all();
 
@@ -24,7 +24,7 @@ class NetworkSwitchController extends Controller
 
     public function store(StoreNetworkSwitchRequest $request)
     {
-        abort_if(Gate::denies('networkswitch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkswitch = NetworkSwitch::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class NetworkSwitchController extends Controller
 
     public function show(NetworkSwitch $networkswitch)
     {
-        abort_if(Gate::denies('networkswitch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_switch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new NetworkSwitchResource($networkswitch);
     }
 
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
-        abort_if(Gate::denies('networkswitch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkSwitch->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class NetworkSwitchController extends Controller
 
     public function destroy(NetworkSwitch $networkSwitch)
     {
-        abort_if(Gate::denies('networkswitch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('network_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkSwitch->delete();
 
@@ -62,6 +62,8 @@ class NetworkSwitchController extends Controller
 
     public function massDestroy(MassDestroyNetworkSwitchRequest $request)
     {
+        abort_if(Gate::denies('network_switch_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         NetworkSwitch::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

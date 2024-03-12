@@ -15,7 +15,7 @@ class ForestAdController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('forestad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('forest_ad_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestads = ForestAd::all();
 
@@ -24,7 +24,7 @@ class ForestAdController extends Controller
 
     public function store(StoreForestAdRequest $request)
     {
-        abort_if(Gate::denies('forestad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('forest_ad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestad = ForestAd::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class ForestAdController extends Controller
 
     public function show(ForestAd $forestad)
     {
-        abort_if(Gate::denies('forestad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('forest_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ForestAdResource($forestad);
     }
 
     public function update(UpdateForestAdRequest $request, ForestAd $forestAd)
     {
-        abort_if(Gate::denies('forestad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('forest_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestAd->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class ForestAdController extends Controller
 
     public function destroy(ForestAd $forestAd)
     {
-        abort_if(Gate::denies('forestad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('forest_ad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $forestAd->delete();
 
@@ -62,6 +62,8 @@ class ForestAdController extends Controller
 
     public function massDestroy(MassDestroyForestAdRequest $request)
     {
+        abort_if(Gate::denies('forest_ad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ForestAd::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

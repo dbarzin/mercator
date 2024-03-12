@@ -58,6 +58,8 @@ class BuildingController extends Controller
 
     public function massDestroy(MassDestroyBuildingRequest $request)
     {
+        abort_if(Gate::denies('building_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Building::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

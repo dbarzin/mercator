@@ -60,6 +60,8 @@ class DomaineAdController extends Controller
 
     public function massDestroy(MassDestroyDomaineAdRequest $request)
     {
+        abort_if(Gate::denies('domaine_ad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         DomaineAd::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

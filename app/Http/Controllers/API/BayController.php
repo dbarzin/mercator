@@ -58,6 +58,8 @@ class BayController extends Controller
 
     public function massDestroy(MassDestroyBayRequest $request)
     {
+        abort_if(Gate::denies('bay_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Bay::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

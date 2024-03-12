@@ -62,6 +62,8 @@ class NetworkController extends Controller
 
     public function massDestroy(MassDestroyNetworkRequest $request)
     {
+        abort_if(Gate::denies('network_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Network::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

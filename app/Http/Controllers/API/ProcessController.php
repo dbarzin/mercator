@@ -66,6 +66,8 @@ class ProcessController extends Controller
 
     public function massDestroy(MassDestroyProcessRequest $request)
     {
+        abort_if(Gate::denies('process_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Process::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

@@ -58,6 +58,8 @@ class ApplicationBlockController extends Controller
 
     public function massDestroy(MassDestroyApplicationBlockRequest $request)
     {
+        abort_if(Gate::denies('application_block_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         ApplicationBlock::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

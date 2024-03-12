@@ -15,7 +15,7 @@ class MacroProcessusController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('macroprocessus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macro_processus_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroprocessuss = MacroProcessus::all();
 
@@ -24,7 +24,7 @@ class MacroProcessusController extends Controller
 
     public function store(StoreMacroProcessusRequest $request)
     {
-        abort_if(Gate::denies('macroprocessus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macro_processus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus = MacroProcessus::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class MacroProcessusController extends Controller
 
     public function show(MacroProcessus $macroProcessus)
     {
-        abort_if(Gate::denies('macroprocessus_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macro_processus_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new MacroProcessusResource($macroProcessus);
     }
 
     public function update(UpdateMacroProcessusRequest $request, MacroProcessus $macroProcessus)
     {
-        abort_if(Gate::denies('macroprocessus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class MacroProcessusController extends Controller
 
     public function destroy(MacroProcessus $macroProcessus)
     {
-        abort_if(Gate::denies('macroprocessus_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('macro_processus_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus->delete();
 
@@ -62,6 +62,8 @@ class MacroProcessusController extends Controller
 
     public function massDestroy(MassDestroyMacroProcessusRequest $request)
     {
+        abort_if(Gate::denies('macro_processus_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         MacroProcessus::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

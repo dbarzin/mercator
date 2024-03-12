@@ -60,6 +60,8 @@ class EntityController extends Controller
 
     public function massDestroy(MassDestroyEntityRequest $request)
     {
+        abort_if(Gate::denies('entity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Entity::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

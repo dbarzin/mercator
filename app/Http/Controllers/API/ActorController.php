@@ -58,6 +58,8 @@ class ActorController extends Controller
 
     public function massDestroy(MassDestroyActorRequest $request)
     {
+        abort_if(Gate::denies('actor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Actor::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

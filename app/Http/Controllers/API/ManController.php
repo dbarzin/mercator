@@ -62,6 +62,8 @@ class ManController extends Controller
 
     public function massDestroy(MassDestroyManRequest $request)
     {
+        abort_if(Gate::denies('man_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Man::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

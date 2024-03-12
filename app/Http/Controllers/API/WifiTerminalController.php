@@ -15,7 +15,7 @@ class WifiTerminalController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('wifiterminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('wifi_terminal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiterminals = WifiTerminal::all();
 
@@ -24,7 +24,7 @@ class WifiTerminalController extends Controller
 
     public function store(StoreWifiTerminalRequest $request)
     {
-        abort_if(Gate::denies('wifiterminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('wifi_terminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiterminal = WifiTerminal::create($request->all());
         // syncs
@@ -35,14 +35,14 @@ class WifiTerminalController extends Controller
 
     public function show(WifiTerminal $wifiTerminal)
     {
-        abort_if(Gate::denies('wifiterminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('wifi_terminal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new WifiTerminalResource($wifiTerminal);
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)
     {
-        abort_if(Gate::denies('wifiterminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('wifi_terminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiTerminal->update($request->all());
         // syncs
@@ -53,7 +53,7 @@ class WifiTerminalController extends Controller
 
     public function destroy(WifiTerminal $wifiTerminal)
     {
-        abort_if(Gate::denies('wifiterminal_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('wifi_terminal_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $wifiTerminal->delete();
 
@@ -62,6 +62,8 @@ class WifiTerminalController extends Controller
 
     public function massDestroy(MassDestroyWifiTerminalRequest $request)
     {
+        abort_if(Gate::denies('wifi_terminal_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         WifiTerminal::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

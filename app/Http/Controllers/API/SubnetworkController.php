@@ -62,6 +62,8 @@ class SubnetworkController extends Controller
 
     public function massDestroy(MassDestroySubnetworkRequest $request)
     {
+        abort_if(Gate::denies('subnetwork_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Subnetwork::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

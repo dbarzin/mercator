@@ -62,6 +62,8 @@ class ActivityController extends Controller
 
     public function massDestroy(MassDestroyActivityRequest $request)
     {
+        abort_if(Gate::denies('activity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Activity::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

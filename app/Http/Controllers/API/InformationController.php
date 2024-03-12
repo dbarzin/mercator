@@ -60,6 +60,8 @@ class InformationController extends Controller
 
     public function massDestroy(MassDestroyInformationRequest $request)
     {
+        abort_if(Gate::denies('information_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         Information::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
