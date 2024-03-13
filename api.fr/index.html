@@ -131,9 +131,9 @@
 </ul>
 <h2 id="api">API</h2>
 <p>La cartographie peut être modifiée ou mise à jour via une REST API.</p>
-<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>) 
-est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
-et permet d'interagir avec les services web RESTful. </p>
+<p>Une API REST (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST
+et permet d'interagir avec les services web RESTful.</p>
 <h3 id="installer-lapi-sur-mercator">Installer l'API sur Mercator</h3>
 <p>pour installer l'API dans Mercator, il est nécessaire d'installer Passport en lançant cette commande :</p>
 <pre><code class="language-bash">php artisan passport:install
@@ -143,6 +143,11 @@ et permet d'interagir avec les services web RESTful. </p>
 </ul>
 <h3 id="les-apis">Les APIs</h3>
 <p>Pour chaque objet du modèle de données de la cartographie, il existe une API.</p>
+<p><strong>Vue du RGPD</strong></p>
+<ul>
+<li>/api/data-processing</li>
+<li>/api/security-controls</li>
+</ul>
 <p><strong>Vues de l'écosystème</strong></p>
 <ul>
 <li>/api/entities</li>
@@ -254,9 +259,9 @@ et permet d'interagir avec les services web RESTful. </p>
 <p>Les champs à fournir sont ceux décrits dans le <a href="/mercator/model/">modèle de données</a>.</p>
 <h3 id="droits-dacces">Droits d'accès</h3>
 <p>Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
-Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
-accédés par l'API. </p>
-<p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
+accédés par l'API.</p>
+<p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.</p>
 <h3 id="exemples">Exemples</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
@@ -402,8 +407,8 @@ vheaders['content-type'] = 'application/x-www-form-urlencoded'
 vheaders['cache-control'] = 'no-cache'
 
 print(&quot;Login&quot;)
-response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;, 
-    headers=vheaders, 
+response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
+    headers=vheaders,
     data= {'email':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 

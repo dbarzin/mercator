@@ -131,9 +131,9 @@
 </ul>
 <h2 id="api">API</h2>
 <p>Cartography can be modified or updated via a REST API.</p>
-<p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>) 
-is an application programming interface that respects the constraints of the REST 
-architecture and enables interaction with RESTful web services. </p>
+<p>A REST API (<a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">Representational State Transfer</a>)
+is an application programming interface that respects the constraints of the REST
+architecture and enables interaction with RESTful web services.</p>
 <h3 id="install-the-api-on-mercator">Install the API on Mercator</h3>
 <p>To install the API in Mercator, you need to install Passport by running this command:</p>
 <pre><code class="language-bash">php artisan passport:install
@@ -145,15 +145,15 @@ architecture and enables interaction with RESTful web services. </p>
 <p>For each object in the cartography data model, there is an API.</p>
 <p><em>GDPR view</em></p>
 <ul>
-<li>/api/data_processing</li>
-<li>/api/security_devices</li>
+<li>/api/data-processing</li>
+<li>/api/security-controls</li>
 </ul>
 <p><em>Ecosystem view</em></p>
 <ul>
 <li>/api/entities</li>
 <li>/api/relations</li>
 </ul>
-<p><em>Information system business view</em> </p>
+<p><em>Information system business view</em></p>
 <ul>
 <li>/api/macro-processes</li>
 <li>/api/macro-processuses</li>
@@ -260,9 +260,9 @@ architecture and enables interaction with RESTful web services. </p>
 <p>The fields to be supplied are those described in the <a href="/mercator/model/">data model</a>.</p>
 <h3 id="access-rights">Access rights</h3>
 <p>To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects 
-objects accessed via the API. </p>
-<p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header. 
+This user must have a role in Mercator that allows him/her to access/modify the objects
+objects accessed via the API.</p>
+<p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
 header of the API request.</p>
 <h3 id="php">PHP</h3>
 <p>Here are a few examples of how to use the API with PHP:</p>
@@ -408,8 +408,8 @@ vheaders['content-type'] = 'application/x-www-form-urlencoded'
 vheaders['cache-control'] = 'no-cache'
 
 print(&quot;Login&quot;)
-response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;, 
-    headers=vheaders, 
+response = requests.post(&quot;http://127.0.0.1:8000/api/login&quot;,
+    headers=vheaders,
     data= {'email':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
