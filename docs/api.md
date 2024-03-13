@@ -2,9 +2,9 @@
 
 Cartography can be modified or updated via a REST API.
 
-A REST API ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer)) 
-is an application programming interface that respects the constraints of the REST 
-architecture and enables interaction with RESTful web services. 
+A REST API ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))
+is an application programming interface that respects the constraints of the REST
+architecture and enables interaction with RESTful web services.
 
 ### Install the API on Mercator
 
@@ -22,15 +22,15 @@ For each object in the cartography data model, there is an API.
 
 _GDPR view_
 
-- /api/data_processing
-- /api/security_devices
+- /api/data-processing
+- /api/security-controls
 
 _Ecosystem view_
 
 - /api/entities
 - /api/relations
 
-_Information system business view_ 
+_Information system business view_
 
 - /api/macro-processes
 - /api/macro-processuses
@@ -113,10 +113,10 @@ The fields to be supplied are those described in the [data model](/mercator/mode
 ### Access rights
 
 To access the APIs, you must identify yourself as a Mercator application user.
-This user must have a role in Mercator that allows him/her to access/modify the objects 
-objects accessed via the API. 
+This user must have a role in Mercator that allows him/her to access/modify the objects
+objects accessed via the API.
 
-When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header. 
+When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
 header of the API request.
 
 ### PHP
@@ -280,8 +280,8 @@ vheaders['content-type'] = 'application/x-www-form-urlencoded'
 vheaders['cache-control'] = 'no-cache'
 
 print("Login")
-response = requests.post("http://127.0.0.1:8000/api/login", 
-    headers=vheaders, 
+response = requests.post("http://127.0.0.1:8000/api/login",
+    headers=vheaders,
     data= {'email':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
@@ -309,4 +309,3 @@ token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:
 curl -s -H "Content-Type: application/json" -H "Authorization: Bearer ${token}" "http://127.0.0.1:8000/api/users" | jq .
 
 ```
-

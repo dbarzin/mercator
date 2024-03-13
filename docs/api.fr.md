@@ -2,9 +2,9 @@
 
 La cartographie peut être modifiée ou mise à jour via une REST API.
 
-Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer)) 
-est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST 
-et permet d'interagir avec les services web RESTful. 
+Une API REST ([Representational State Transfer](https://fr.wikipedia.org/wiki/Representational_state_transfer))
+est une interface de programmation d'application qui respecte les contraintes du style d'architecture REST
+et permet d'interagir avec les services web RESTful.
 
 ### Installer l'API sur Mercator
 
@@ -18,6 +18,11 @@ php artisan passport:install
 ### Les APIs
 
 Pour chaque objet du modèle de données de la cartographie, il existe une API.
+
+__Vue du RGPD__
+
+- /api/data-processing
+- /api/security-controls
 
 __Vues de l'écosystème__
 
@@ -106,10 +111,10 @@ Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator
 ### Droits d'accès
 
 Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir accèder aux API.
-Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets 
-accédés par l'API. 
+Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
+accédés par l'API.
 
-Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans 
+Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
 
 ### Exemples
@@ -273,8 +278,8 @@ vheaders['content-type'] = 'application/x-www-form-urlencoded'
 vheaders['cache-control'] = 'no-cache'
 
 print("Login")
-response = requests.post("http://127.0.0.1:8000/api/login", 
-    headers=vheaders, 
+response = requests.post("http://127.0.0.1:8000/api/login",
+    headers=vheaders,
     data= {'email':'admin@admin.com', 'password':'password'} )
 print(response.status_code)
 
@@ -301,4 +306,3 @@ token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:
 curl -s -H "Content-Type: application/json" -H "Authorization: Bearer ${token}" "http://127.0.0.1:8000/api/users" | jq .
 
 ```
-
