@@ -34,7 +34,7 @@
                 <canvas id="bar_chart2_div"></canvas>
             </div>
         </div>
-            <div class="chart-container" style="position: relative; height: {{ count($attributes_list) * 50}}px; border:1px solid">
+            <div class="chart-container" style="position: relative; height: {{ count($active_attributes_list) * 50 + 50}}px; border:1px solid">
                 <canvas id="bar_chart3_div"></canvas>
             </div>
     </div>
@@ -198,21 +198,6 @@
 
   // --------------------------------------------------------------------
 
- <?php
-      // select distinct attributes
-      $res = [];
-      foreach ($patches as $p) {
-          foreach (explode(' ', $p->attributes) as $j) {
-              if (strlen(trim($j)) > 0) {
-                  $res[] = trim($j);
-              }
-          }
-      }
-      sort($res);
-      $attributes_list = array_unique($res);
-?>
-
-  // --------------------------------------------------------------------
   const ctx3 = document.getElementById('bar_chart3_div').getContext('2d');
 
   const cfg3 = {
@@ -220,7 +205,7 @@
     data: {
         labels: [
             <?php
-            foreach($attributes_list as $attribute) {
+            foreach($active_attributes_list as $attribute) {
                 echo "'";
                 echo $attribute;
                 echo "', ";
@@ -233,7 +218,7 @@
             <?php
             $year = today()->year;
             $month = today()->month;
-            foreach($attributes_list as $attribute) {
+            foreach($active_attributes_list as $attribute) {
                 $count = 0;
                 foreach($patches as $patch) {
                     if (str_contains($patch->attributes, $attribute)) {
@@ -256,7 +241,7 @@
             <?php
             $year = today()->year;
             $month = today()->month;
-            foreach($attributes_list as $attribute) {
+            foreach($active_attributes_list as $attribute) {
                 $count = 0;
                 foreach($patches as $patch) {
                     if (str_contains($patch->attributes, $attribute)) {
@@ -281,7 +266,7 @@
             <?php
             $year = today()->year;
             $month = today()->month;
-            foreach($attributes_list as $attribute) {
+            foreach($active_attributes_list as $attribute) {
                 $count = 0;
                 foreach($patches as $patch) {
                     if (str_contains($patch->attributes, $attribute)) {
