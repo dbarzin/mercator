@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="ip_addresses">{{ trans('cruds.router.fields.ip_addresses') }}</label>
-                <input class="form-control {{ $errors->has('ip_addresses') ? 'is-invalid' : '' }}" type="text" name="ip_addresses" id="ip_addresses" value="{{ old('ip_addresses', '') }}">
+                <textarea class="form-control {{ $errors->has('ip_addresses') ? 'is-invalid' : '' }}" name="ip_addresses" id="ip_addresses">{!! old('ip_addresses') !!}</textarea>
                 @if($errors->has('ip_addresses'))
                     <div class="invalid-feedback">
                         {{ $errors->first('ip_addresses') }}
@@ -79,7 +79,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>
