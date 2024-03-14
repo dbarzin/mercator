@@ -138,7 +138,7 @@ class PatchingController extends Controller
 
         // Update frequency
         if ($request->get('global_periodicity') !== null) {
-            $lservers = LogicalServer::where('patching_group', '=', $logicalServer->patching_group)->get();
+            $lservers = LogicalServer::where('attributes', '=', $logicalServer->attributes)->get();
             foreach ($lservers as $s) {
                 $s->patching_frequency = $logicalServer->patching_frequency;
                 if ($s->update_date !== null) {
@@ -163,11 +163,11 @@ class PatchingController extends Controller
 
         // Update frequency
         if ($request->get('global_periodicity') !== null) {
-            $apps = MApplication::where('patching_group', '=', $application->patching_group)->get();
+            $apps = MApplication::where('attributes', '=', $application->attributes)->get();
             foreach ($apps as $s) {
-                $s->patching_frequency = $logicalServer->patching_frequency;
+                $s->patching_frequency = $application->patching_frequency;
                 if ($s->update_date !== null) {
-                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonth($logicalServer->patching_frequency)->format(config('panel.date_format'));
+                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonth($application->patching_frequency)->format(config('panel.date_format'));
                 }
                 $s->save();
             }
