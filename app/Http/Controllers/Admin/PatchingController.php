@@ -241,7 +241,23 @@ class PatchingController extends Controller
         // Union
         $patches = $servers->union($applications)->orderBy('name')->get();
 
-        return view('admin.patching.dashboard', compact('patches', 'attributes_list', 'attributes_filter'));
+        // select distinct attributes
+        $res = [];
+        foreach ($patches as $p) {
+          foreach (explode(' ', $p->attributes) as $j) {
+              if (strlen(trim($j)) > 0) {
+                  $res[] = trim($j);
+              }
+          }
+        }
+        sort($res);
+        $active_attributes_list = array_unique($res);
+
+
+        return view('admin.patching.dashboard',
+            compact(
+                'patches', 'attributes_list',
+                'attributes_filter', 'active_attributes_list'));
     }
     private function getAttributes(): array
     {
