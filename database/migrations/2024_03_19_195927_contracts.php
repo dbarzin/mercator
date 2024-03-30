@@ -21,6 +21,10 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('comments')->nullable();
+            $table->renameColumn('importance', 'security_need_c');
+            $table->integer('security_need_i')->nullable();
+            $table->integer('security_need_a')->nullable();
+            $table->integer('security_need_t')->nullable();
         });
 
         // Values of a relation
@@ -62,6 +66,10 @@ return new class extends Migration
             $table->dropColumn('start_date');
             $table->dropColumn('end_date');
             $table->dropColumn('comments');
+            $table->renameColumn('security_need_c','importance');
+            $table->dropColumn('security_need_i');
+            $table->dropColumn('security_need_a');
+            $table->dropColumn('security_need_t');
         });
 
         // Values of a relation
