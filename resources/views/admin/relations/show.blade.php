@@ -42,89 +42,23 @@
                         <td>
                             {{ $relation->name }}
                         </td>
-                        <th width="10%">
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.relation.fields.type') }}
                         </th>
                         <td>
                             {{ $relation->type }}
                         </td>
-                        <th width="10%">
-                            {{ trans('cruds.relation.fields.attributes') }}
-                        </th>
-                        <td>
-                            {{ $relation->attributes }}
-                        </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.relation.fields.reference') }}
-                        </th>
-                        <td>
-                            {{ $relation->reference }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.order_number') }}
-                        </th>
-                        <td>
-                            {{ $relation->order_number }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.responsible') }}
-                        </th>
-                        <td>
-                            {{ $relation->responsible }}
-                        </td>
-                    </tr>
-
                     <tr>
                         <th>
                             {{ trans('cruds.relation.fields.description') }}
                         </th>
-                        <td colspan="5">
+                        <td>
                             {!! $relation->description !!}
                         </td>
                     </tr>
-
-                    <tr>
-                        <th>
-                            {{ trans('cruds.relation.fields.source') }}
-                        </th>
-                        <td>
-                            <a href="{{ route('admin.entities.show', $relation->source_id) }}">
-                            {{ $relation->source->name ?? '' }}
-                            </a>
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.destination') }}
-                        </th>
-                        <td>
-                            <a href="{{ route('admin.entities.show', $relation->destination_id) }}">
-                            {{ $relation->destination->name ?? '' }}
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            {{ trans('cruds.relation.fields.start_date') }}
-                        </th>
-                        <td>
-                            {{ $relation->start_date }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.end_date') }}
-                        </th>
-                        <td>
-                            {{ $relation->end_date }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.active') }}
-                        </th>
-                        <td>
-                            {{ $relation->active }}
-                        </td>
-                    </tr>
-
                     <tr>
                         <th>
                             {{ trans('cruds.relation.fields.importance') }}
@@ -141,27 +75,24 @@
                             @endif
                         </td>
                     </tr>
-
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.comments') }}
+                            {{ trans('cruds.relation.fields.source') }}
                         </th>
-                        <td colspan="3">
-                            {!! $relation->comments !!}
+                        <td>
+                            <a href="{{ route('admin.entities.show', $relation->source_id) }}">
+                            {{ $relation->source->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
-
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.documents') }}
+                            {{ trans('cruds.relation.fields.destination') }}
                         </th>
-                        <td colspan="3">
-                            @foreach($relation->documents as $document)
-                                <a href="{{ route('admin.documents.show', $document->id) }}">{{ $document->filename }}</a>
-                                @if (!$loop->last)
-                                    ,
-                                @endif
-                            @endforeach
+                        <td>
+                            <a href="{{ route('admin.entities.show', $relation->destination_id) }}">
+                            {{ $relation->destination->name ?? '' }}
+                            </a>
                         </td>
                     </tr>
                 </tbody>
