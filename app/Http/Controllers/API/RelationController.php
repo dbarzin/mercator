@@ -25,8 +25,6 @@ class RelationController extends Controller
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $relation = Relation::create($request->all());
-        // syncs
-        // $relation->roles()->sync($request->input('roles', []));
 
         return response()->json($relation, 201);
     }
@@ -43,8 +41,6 @@ class RelationController extends Controller
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $relation->update($request->all());
-        // syncs
-        // $relation->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

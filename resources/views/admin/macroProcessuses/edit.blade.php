@@ -47,8 +47,8 @@
                     <tr>
                         <td width='20%'>
                             <label
-                            @if (auth()->user()->granularity>=2) 
-                                class="recommended" 
+                            @if (auth()->user()->granularity>=2)
+                                class="recommended"
                             @endif
                                 for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                         </td>
@@ -184,25 +184,22 @@ $(document).ready(function () {
         placeholder: "Select or enter a new item",
         allowClear: true,
         tags: true
-    }) 
-
-    function template(data, container) {      
-      if (data.id==4) {
-         return '\<span class="highRisk"\>'+data.text+'</span>';
-      } else if (data.id==3) {
-         return '\<span class="mediumRisk"\>'+data.text+'</span>';
-      } else if (data.id==2) {
-         return '\<span class="lowRisk"\>'+data.text+'</span>';
-      } else if (data.id==1) {
-         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-      } else {
-         return data.text;
-      }
-    }
+    })
 
     $('.risk').select2({
-      templateSelection: template,
-      escapeMarkup: function(m) {
+        templateSelection: function(data, container) {
+            if (data.id==4)
+                 return '\<span class="highRisk"\>'+data.text+'</span>';
+            else if (data.id==3)
+                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
+            else if (data.id==2)
+                 return '\<span class="lowRisk"\>'+data.text+'</span>';
+            else if (data.id==1)
+                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
+            else
+                 return data.text;
+        },
+        escapeMarkup: function(m) {
           return m;
       }
     });

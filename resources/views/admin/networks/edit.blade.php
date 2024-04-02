@@ -67,9 +67,9 @@
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
-                                    @if (auth()->user()->granularity>=2)                            
-                                        class="recommended" 
+                                    <label
+                                    @if (auth()->user()->granularity>=2)
+                                        class="recommended"
                                     @endif
                                     for="security_need">{{ trans('cruds.network.fields.security_need') }}</label>
                                 </td>
@@ -131,7 +131,7 @@
                         <span class="help-block">{{ trans('cruds.network.fields.security_need_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">                    
+                <div class="col-sm">
                 </div>
             </div>
 
@@ -152,34 +152,33 @@
 
 $(document).ready(function () {
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-    function template(data, container) {      
-      if (data.id==4) {
-         return '\<span class="highRisk"\>'+data.text+'</span>';
-      } else if (data.id==3) {
-         return '\<span class="mediumRisk"\>'+data.text+'</span>';
-      } else if (data.id==2) {
-         return '\<span class="lowRisk"\>'+data.text+'</span>';
-      } else if (data.id==1) {
-         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-      } else {
-         return data.text;
-      }
+    var allEditors = document.querySelectorAll('.ckeditor');
+        for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(
+          allEditors[i], {
+            extraPlugins: []
+          }
+        );
     }
 
     $('.risk').select2({
-      templateSelection: template,
-      escapeMarkup: function(m) {
+        templateSelection: function(data, container) {
+            if (data.id==4)
+                 return '\<span class="highRisk"\>'+data.text+'</span>';
+            else if (data.id==3)
+                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
+            else if (data.id==2)
+                 return '\<span class="lowRisk"\>'+data.text+'</span>';
+            else if (data.id==1)
+                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
+            else
+                 return data.text;
+        },
+        escapeMarkup: function(m) {
           return m;
       }
     });
+
 });
 </script>
 @endsection

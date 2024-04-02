@@ -31,10 +31,12 @@ class RelationController extends Controller
         // lists
         $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
         $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+        $responsibles_list = Relation::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         return view(
             'admin.relations.create',
-            compact('sources', 'destinations', 'name_list', 'type_list')
+            compact('sources', 'destinations', 'name_list', 'type_list', 'responsibles_list', 'attributes_list')
         );
     }
 
@@ -45,21 +47,41 @@ class RelationController extends Controller
         return redirect()->route('admin.relations.index');
     }
 
+    private function getAttributes() {
+        $attributes_list = Relation::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
+    }
+
     public function edit(Relation $relation)
     {
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $destinations = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         // lists
         $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
         $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+        $responsibles_list = Relation::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
 
         $relation->load('source', 'destination');
 
         return view(
             'admin.relations.edit',
-            compact('sources', 'destinations', 'relation', 'type_list', 'name_list')
+            compact('sources', 'destinations', 'relation', 'type_list', 'name_list','attributes_list', 'responsibles_list')
         );
     }
 
