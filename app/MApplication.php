@@ -57,6 +57,7 @@ class MApplication extends Model
         'deleted_at',
         'attributes',
         'patching_frequency',
+        'install_date',
         'update_date',
         'next_update',
     ];
@@ -80,13 +81,22 @@ class MApplication extends Model
      */
     public function getUpdateDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setUpdateDateAttribute($value)
     {
-        //dd($value);
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getInstallDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setInstallDateAttribute($value)
+    {
+        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     /**
