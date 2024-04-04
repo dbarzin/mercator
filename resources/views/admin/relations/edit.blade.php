@@ -15,14 +15,7 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.relation.fields.name') }}</label>
-                        <select class="form-control select2-free {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name">
-                            @if (!$name_list->contains(old('name')))
-                                <option> {{ old('name') }}</option>'
-                            @endif
-                            @foreach($name_list as $t)
-                                <option {{ (old('name') ? old('name') : $relation->name) == $t ? 'selected' : '' }}>{{$t}}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" id="name" name="name" min="0" value="{{ old('name', $relation->name) }}">
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
@@ -52,7 +45,7 @@
                 </div>
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="attributes">{{ trans('cruds.relation.fields.attributes') }}</label>
+                        <label for="attributes">{{ trans('cruds.relation.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
                             @foreach($attributes_list as $a)
                                 <option {{ str_contains(old('attributes') ? old('attributes') : $relation->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
@@ -99,7 +92,7 @@
                         <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
                             @foreach($responsibles_list as $resp)
-                            <option {{ str_contains($relation->responsible ,$resp) ? 'selected' : '' }}>{{$resp}}</option>
+                            <option {{ str_contains($relation->responsible, $resp) ? 'selected' : '' }}>{{$resp}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('responsible'))
@@ -117,8 +110,9 @@
                     <div class="form-group">
                         <label class="required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
                         <select class="form-control select2 {{ $errors->has('source') ? 'is-invalid' : '' }}" name="source_id" id="source_id" required>
-                            @foreach($sources as $id => $source)
-                                <option value="{{ $id }}" {{ ($relation->source ? $relation->source->id : old('source_id')) == $id ? 'selected' : '' }}>{{ $source }}</option>
+                            <option>{{ trans('global.pleaseSelect') }}</option>
+                            @foreach($sources as $source)
+                                <option value="{{ $source->id }}" {{ ($relation->source ? $relation->source->id : old('source_id')) == $source->id ? 'selected' : '' }}>{{ $source->name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('source'))
@@ -134,8 +128,9 @@
                     <div class="form-group">
                         <label class="required" for="destination_id">{{ trans('cruds.relation.fields.destination') }}</label>
                         <select class="form-control select2 {{ $errors->has('destination') ? 'is-invalid' : '' }}" name="destination_id" id="destination_id" required>
-                            @foreach($destinations as $id => $destination)
-                                <option value="{{ $id }}" {{ ($relation->destination ? $relation->destination->id : old('destination_id')) == $id ? 'selected' : '' }}>{{ $destination }}</option>
+                            <option>{{ trans('global.pleaseSelect') }}</option>
+                            @foreach($destinations as $destination)
+                                <option value="{{ $destination->id }}" {{ ($relation->destination ? $relation->destination->id : old('destination_id')) == $destination->id ? 'selected' : '' }}>{{ $destination->name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('destination'))
@@ -160,106 +155,46 @@
             </div>
             <!---------------------------------------------------------------------------------------------------->
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="install_date">{{ trans('cruds.relation.fields.start_date') }}</label>
                         <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date', $relation->start_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.start_date_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="install_date">{{ trans('cruds.relation.fields.end_date') }}</label>
                         <input class="form-control date" type="text" name="end_date" id="start_date" value="{{ old('end_date', $relation->end_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.end_date_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-1">
                     <div class="form-group">
                         <label for="crypted">{{ trans('cruds.relation.fields.active') }}</label>
                         <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="active" name="active" value="1" {{ $relation->active ? "checked" : "" }}>
+                          <input class="form-check-input" type="checkbox" id="active" name="active" {{ $relation->active ? "checked" : "" }}>
                           <label class="form-check-label" for="active">{{ trans('cruds.relation.fields.active_helper') }}</label>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!---------------------------------------------------------------------------------------------------->
-            <div class="row">
-                <div class="col-lg">
-
-
-
-            <div class="form-group">
-                <table cellspacing="5" cellpadding="5" border="0" width='40%'>
-                    <tr>
-                        <td width='20%'>
-                            <label class="recommended" for="security_need">{{ trans('cruds.database.fields.security_need') }}</label>
-                        </td>
-                        <td align="right" width="10">
-                            <label for="security_need">C</label>
-                        </td>
-                        <td width="120">
-                            <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
-                                <option value="-1" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == -1 ? 'selected' : '' }}></option>
-                                <option value="0" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                <option value="1" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($relation->security_need_c ? $relation->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">I</label>
-                        </td>
-                        <td width="120">
-                            <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
-                                <option value="-1" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == -1 ? 'selected' : '' }}></option>
-                                <option value="0" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                <option value="1" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($relation->security_need_i ? $relation->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">D</label>
-                        </td>
-                        <td width="120">
-                            <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
-                                <option value="-1" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == -1 ? 'selected' : '' }}></option>
-                                <option value="0" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                <option value="1" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($relation->security_need_a ? $relation->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                        <td align="right">
-                            <label for="security_need">T</label>
-                        </td>
-                        <td width="120">
-                            <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
-                                <option value="-1" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == -1 ? 'selected' : '' }}></option>
-                                <option value="0" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
-                                <option value="1" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
-                                <option value="2" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
-                                <option value="3" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
-                                <option value="4" {{ ($relation->security_need_t ? $relation->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                @if($errors->has('security_need'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('security_need') }}
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="recommended" for="importance">{{ trans('cruds.relation.fields.importance') }}</label>
+                        <select class="form-control select2 risk {{ $errors->has('importance') ? 'is-invalid' : '' }}" name="importance" id="importance">
+                            <option value="0"></option>
+                            <option value="1" {{ old('importance',$relation->importance) == 1 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.low') }}</option>
+                            <option value="2" {{ old('importance',$relation->importance) == 2 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.medium') }}</option>
+                            <option value="3" {{ old('importance',$relation->importance) == 3 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.high') }}</option>
+                            <option value="4" {{ old('importance',$relation->importance) == 4 ? 'selected' : '' }}>{{ trans('cruds.relation.fields.importance_level.critical') }}</option>
+                        </select>
+                        @if($errors->has('importance'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('importance') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.relation.fields.importance_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.database.fields.security_need_helper') }}</span>
-            </div>
-
-
 
                 </div>
             </div>
@@ -268,7 +203,7 @@
             <div class="row">
                 <div class="col-lg">
                     <div class="form-group">
-                        <label class="recommended" for="comments">{{ trans('cruds.relation.fields.comments') }}</label>
+                        <label for="comments">{{ trans('cruds.relation.fields.comments') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('comments') ? 'is-invalid' : '' }}" name="comments" id="comments">{!! old('comments', $relation->comments) !!}</textarea>
                         @if($errors->has('comments'))
                             <div class="invalid-feedback">
@@ -283,7 +218,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="controls">{{ trans('cruds.dataProcessing.fields.documents') }}</label>
+                        <label for="documents">{{ trans('cruds.dataProcessing.fields.documents') }}</label>
                         <div class="dropzone dropzone-previews" id="dropzoneFileUpload"></div>
                         @if($errors->has('documents'))
                             <div class="invalid-feedback">
@@ -303,13 +238,15 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection
 
+
 @section('scripts')
+<script src="/js/dropzone.js"></script>
+
 <script>
+Dropzone.autoDiscover = false;
+
 $(document).ready(function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
@@ -344,7 +281,77 @@ $(document).ready(function () {
           return m;
       }
     });
-});
+
+//=============================================================================
+
+    var image_uploader = new Dropzone("#dropzoneFileUpload", {
+        url: '/admin/documents/store',
+        headers: { 'x-csrf-token': '{{csrf_token()}}' },
+        params: { },
+            maxFilesize: 10,
+            // acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            addRemoveLinks: true,
+            timeout: 50000,
+            removedfile: function(file)
+            {
+                console.log("remove file " + file.name + " " + file.id);
+                $.ajax({
+                    headers: {
+                      'X-CSRF-TOKEN': '{{csrf_token()}}'
+                       },
+                    type: 'GET',
+                    url: '{{ url( "/admin/documents/delete" ) }}'+"/"+file.id,
+                    success: function (data){
+                        console.log("File has been successfully removed");
+                    },
+                    error: function(e) {
+                        console.log("File not removed");
+                        console.log(e);
+                    }});
+                    // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
+                    var fileRef;
+                    return (fileRef = file.previewElement) != null ?
+                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
+            },
+            success: function(file, response)
+            {
+                file.id=response.id;
+                console.log("success response");
+                console.log(response);
+            },
+            error: function(file, response)
+            {
+                console.log("error response");
+                console.log(response);
+               return false;
+            },
+            init: function () {
+            //Add existing files into dropzone
+            var existingFiles = [
+                @foreach($relation->documents as $document)
+                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },
+                @endforeach
+            ];
+            for (i = 0; i < existingFiles.length; i++) {
+                this.emit("addedfile", existingFiles[i]);
+                this.emit("complete", existingFiles[i]);
+                }
+            }
+        });
+
+        document.onpaste = function(event) {
+          const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+          items.forEach((item) => {
+          	console.log(item.kind);
+            if (item.kind === 'file') {
+              	// adds the file to your dropzone instance
+              	image_uploader.addFile(item.getAsFile())
+            	}
+          	})
+        }
+
+    //-----------------------------------------
+    });
 </script>
 
 @endsection

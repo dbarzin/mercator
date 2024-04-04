@@ -78,15 +78,6 @@
 
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.description') }}
-                        </th>
-                        <td colspan="5">
-                            {!! $relation->description !!}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
                             {{ trans('cruds.relation.fields.source') }}
                         </th>
                         <td>
@@ -106,6 +97,15 @@
 
                     <tr>
                         <th>
+                            {{ trans('cruds.relation.fields.description') }}
+                        </th>
+                        <td colspan="5">
+                            {!! $relation->description !!}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
                             {{ trans('cruds.relation.fields.start_date') }}
                         </th>
                         <td>
@@ -117,28 +117,30 @@
                         <td>
                             {{ $relation->end_date }}
                         </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.active') }}
-                        </th>
                         <td>
+                            {{ trans('cruds.relation.fields.active') }}
                             {{ $relation->active }}
                         </td>
-                    </tr>
-
-                    <tr>
                         <th>
                             {{ trans('cruds.relation.fields.importance') }}
-                        </th>
-                        <td>
-                            @if ($relation->importance==1)
-                                {{ trans('cruds.relation.fields.importance_level.low') }}
-                            @elseif ($relation->importance==2)
-                                {{ trans('cruds.relation.fields.importance_level.medium') }}
-                            @elseif ($relation->importance==3)
-                                {{ trans('cruds.relation.fields.importance_level.high') }}
-                            @elseif ($relation->importance==4)
+                            &nbsp;
+                              @if ($relation->importance==1)
+                                  <span id=1 class="veryLowRisk">
+                                  {{ trans('cruds.relation.fields.importance_level.low') }}
+                              </span>
+                              @elseif ($relation->importance==2)
+                                  <span id=2 class="lowRisk">
+                                  {{ trans('cruds.relation.fields.importance_level.medium') }}
+                              </span>
+                              @elseif ($relation->importance==3)
+                                <span id=3 class="mediumRisk">
+                                  {{ trans('cruds.relation.fields.importance_level.high') }}
+                                </span>
+                              @elseif ($relation->importance==4)
+                                <span id=4 class="highRisk">
                                 {{ trans('cruds.relation.fields.importance_level.critical') }}
-                            @endif
+                                </span>
+                              @endif
                         </td>
                     </tr>
 
@@ -146,7 +148,7 @@
                         <th>
                             {{ trans('cruds.relation.fields.comments') }}
                         </th>
-                        <td colspan="3">
+                        <td colspan="5">
                             {!! $relation->comments !!}
                         </td>
                     </tr>
@@ -155,7 +157,7 @@
                         <th>
                             {{ trans('cruds.relation.fields.documents') }}
                         </th>
-                        <td colspan="3">
+                        <td colspan="5">
                             @foreach($relation->documents as $document)
                                 <a href="{{ route('admin.documents.show', $document->id) }}">{{ $document->filename }}</a>
                                 @if (!$loop->last)

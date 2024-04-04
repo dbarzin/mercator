@@ -37,6 +37,15 @@ class UpdateRelationRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'start_validity' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'end_validity' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+                'after:start_validity',
+            ],
         ];
     }
 }
