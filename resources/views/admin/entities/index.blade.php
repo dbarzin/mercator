@@ -26,16 +26,13 @@
                             {{ trans('cruds.entity.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.entity.fields.description') }}
+                            {{ trans('cruds.entity.fields.entity_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.entity.fields.is_external') }}
                         </th>
                         <th>
                             {{ trans('cruds.entity.fields.contact_point') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.entity.fields.security_level') }}
                         </th>
                         <th>
                             {{ trans('cruds.entity.fields.exploits') }}
@@ -66,16 +63,13 @@
                                 </a>
                             </td>
                             <td>
-                                {!! $entity->description ?? '' !!}
+                                {{ $entity->entity_type }}
                             </td>
                             <td>
                                 {!!  $entity->is_external  == null ? '' : trans('global.'.($entity->is_external ? 'yes' : 'no'))  !!}
-                            </td>  
+                            </td>
                             <td>
                                 {!! $entity->contact_point  ?? '' !!}
-                            </td>                        
-                            <td>
-                                {!! $entity->security_level ?? '' !!}
                             </td>
                             <td>
                                 @foreach($entity->applications as $application)

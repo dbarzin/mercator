@@ -8,8 +8,10 @@ use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
 use App\Http\Requests\UpdateRelationRequest;
 use App\Relation;
+use App\RelationValue;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class RelationController extends Controller
 {
@@ -26,21 +28,53 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
-        $destinations = Entity::pluck('name', 'id')->sortBy('name')->prepend(trans('global.pleaseSelect'), '');
+        $sources = DB::table('entities')->select(['id','name'])->whereNull('deleted_at')->orderBy('name')->get();
+        $destinations = $sources;
         // lists
-        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
         $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        $responsibles_list = Relation::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $res = [];
+        foreach ($responsibles_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        $responsibles_list = array_unique($res);
+
+        session()->put('documents', []);
 
         return view(
             'admin.relations.create',
-            compact('sources', 'destinations', 'name_list', 'type_list')
+            compact('sources', 'destinations', 'type_list', 'responsibles_list', 'attributes_list')
         );
     }
 
     public function store(StoreRelationRequest $request)
     {
-        Relation::create($request->all());
+        $request['responsible'] = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+        $request['active'] = $request->has('active');
+
+        $relation = Relation::create($request->all());
+        $relation->documents()->sync(session()->get('documents'));
+
+        session()->forget('documents');
+
+        // Save date - values
+        $dates = $request["dates"];
+        $values = $request["values"];
+        if ($dates!=null)
+            for($i =0; $i< count($dates); $i++) {
+                $relationValue = new RelationValue;
+                $relationValue->relation_id = $relation->id;
+                $relationValue->price = floatval($values[$i]);
+                $relationValue->settDatePriceAttribute($dates[$i]);
+                $relationValue->save();
+            }
 
         return redirect()->route('admin.relations.index');
     }
@@ -49,23 +83,63 @@ class RelationController extends Controller
     {
         abort_if(Gate::denies('relation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sources = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $destinations = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        // lists
-        $name_list = Relation::select('name')->where('name', '<>', null)->distinct()->orderBy('name')->pluck('name');
-        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $sources = DB::table('entities')->select(['id','name'])->whereNull('deleted_at')->orderBy('name')->get();
+        $destinations = $sources;
 
-        $relation->load('source', 'destination');
+        // lists
+        $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $attributes_list = $this->getAttributes();
+
+        $responsibles_list = Relation::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $res = [];
+        foreach ($responsibles_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        $responsibles_list = array_unique($res);
+
+        $documents = [];
+        foreach ($relation->documents as $doc) {
+            array_push($documents, $doc->id);
+        }
+        session()->put('documents', $documents);
+
+        $values=DB::table('relation_values')->select(['date_price','price'])->where('relation_id','=',$relation->id)->orderBy('date_price')->get();
 
         return view(
             'admin.relations.edit',
-            compact('sources', 'destinations', 'relation', 'type_list', 'name_list')
+            compact('sources', 'destinations', 'relation', 'type_list', 'attributes_list', 'responsibles_list','values')
         );
     }
 
     public function update(UpdateRelationRequest $request, Relation $relation)
     {
+        $request['responsible'] = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+        $request['active'] = $request->has('active');
+
         $relation->update($request->all());
+        $relation->documents()->sync(session()->get('documents'));
+
+        session()->forget('documents');
+
+        // Delete previous date-values
+        RelationValue::where('relation_id', $relation->id)->delete();
+
+        // Save date - values
+        $dates = $request["dates"];
+        $values = $request["values"];
+        if ($dates!=null)
+            for($i =0; $i< count($dates); $i++) {
+                $relationValue = new RelationValue;
+                $relationValue->relation_id = $relation->id;
+                $relationValue->price = floatval($values[$i]);
+                $relationValue->settDatePriceAttribute($dates[$i]);
+                $relationValue->save();
+            }
 
         return redirect()->route('admin.relations.index');
     }
