@@ -64,6 +64,18 @@ class RelationController extends Controller
 
         session()->forget('documents');
 
+        // Save date - values
+        $dates = $request["dates"];
+        $values = $request["values"];
+        if ($dates!=null)
+            for($i =0; $i< count($dates); $i++) {
+                $relationValue = new RelationValue;
+                $relationValue->relation_id = $relation->id;
+                $relationValue->price = floatval($values[$i]);
+                $relationValue->settDatePriceAttribute($dates[$i]);
+                $relationValue->save();
+            }
+
         return redirect()->route('admin.relations.index');
     }
 
@@ -155,9 +167,7 @@ class RelationController extends Controller
 
         $relation->load('source', 'destination');
 
-        $values=DB::table('relation_values')->select(['date_price','price'])->where('relation_id','=',$relation->id)->orderBy('date_price')->get();
-
-        return view('admin.relations.show', compact('relation','values'));
+        return view('admin.relations.show', compact('relation'));
     }
 
     public function destroy(Relation $relation)

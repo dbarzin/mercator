@@ -83,6 +83,11 @@ class Relation extends Model
         return $this->belongsToMany(Document::class);
     }
 
+    public function values()
+    {
+        return $this->hasMany(RelationValue::class, 'relation_id', 'id')->orderBy('date_price');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

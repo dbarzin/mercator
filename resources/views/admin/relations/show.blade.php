@@ -163,7 +163,7 @@
                 </div>
             </div>
 
-            @if ($values->count()>0)
+            @if ($relation->values()->count()>0)
             <div class="row">
                 <div class="col-4">
 
@@ -173,7 +173,7 @@
                                 <th>Date</th>
                                 <th>Valeur</th>
                             </tr>
-                            @foreach($values as $value)
+                            @foreach($relation->values()->get() as $value)
                             <tr>
                                 <td>{{ $value->date_price }}</td>
                                 <td>
@@ -237,7 +237,7 @@
 @endsection
 
 @section('scripts')
-@if ($values->count()>0)
+@if ($relation->values()->count()>1)
 <script src="/js/Chart.bundle.js"></script>
 <script>
     window.onload = function() {
@@ -245,8 +245,8 @@
       var ctx = document.getElementById('chart_value_canvas').getContext('2d');
 
       const data = [
-        @foreach($values as $value)
-        { x: new Date('{{ $value->date_price }}'), y: {{ $value->price }} },
+        @foreach($relation->values()->get() as $value)
+        { x: new Date('{{ Carbon\Carbon::createFromFormat(config("panel.date_format"), $value->date_price)->format("Y-m-d") }}'), y: {{ $value->price }} },
         @endforeach
       ];
 

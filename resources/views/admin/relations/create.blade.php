@@ -197,7 +197,35 @@
 
                 </div>
             </div>
-
+            <!---------------------------------------------------------------------------------------------------->
+            <div class="col-sm-4">
+                <table class="table-narrow" id="dynamicAddRemove">
+                    <tr>
+                        <th>Date</th>
+                        <th>Valeur</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control date" id="inputDateField"/>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="inputValueField"/>
+                        </td>
+                        <td>
+                            <button type="button" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card">
+        <div class="card-header">
+            Commentaires / Documents
+        </div>
+        <div class="card-body">
             <!---------------------------------------------------------------------------------------------------->
             <div class="row">
                 <div class="col-lg">
@@ -338,6 +366,25 @@ $(document).ready(function () {
         }
 
     //-----------------------------------------
+
+        $("#dynamic-ar").click(function () {
+            if (($("#inputDateField").val()!='')&&($("#inputValueField").val()!='')) {
+                input = $("#dynamicAddRemove")
+                    .append(
+                        '<tr>\
+                        <td><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></td>\
+                        <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
+                        <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
+                        </tr>');
+                $("#inputDateField").val('');
+                $("#inputValueField").val('');
+            }
+        });
+
+        $(document).on('click', '.remove-input-field', function () {
+            $(this).parents('tr').remove();
+        });
+
     });
 </script>
 

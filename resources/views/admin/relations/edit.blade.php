@@ -160,6 +160,7 @@
         <div class="card-header">
             Termes du contrat
         </div>
+    <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-3">
@@ -205,8 +206,9 @@
 
                 </div>
             </div>
+            <!---------------------------------------------------------------------------------------------------->
             <div class="col-sm-4">
-                <table class="table-narrow" id="dynamicAddRemove">
+                <table class="" id="dynamicAddRemove">
                     <tr>
                         <th>Date</th>
                         <th>Valeur</th>
@@ -214,13 +216,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="inputFields[0][date]" class="form-control date" name="start_date" id="dateInputField"/>
+                            <input type="text" class="form-control date" id="inputDateField"/>
                         </td>
                         <td>
-                            <input type="text" name="inputFields[0][value]" class="form-control" id="valueInputField"/>
+                            <input type="text" class="form-control" id="inputValueField"/>
                         </td>
                         <td>
-                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
+                            <button type="button" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
                         </td>
                     </tr>
                     @foreach($values as $value)
@@ -392,17 +394,16 @@ $(document).ready(function () {
         }
     //-----------------------------------------
         $("#dynamic-ar").click(function () {
-            if ($("#valueInputField").val()!='') {
-                dynamicInputRow++;
+            if (($("#inputDateField").val()!='')&&($("#inputValueField").val()!='')) {
                 input = $("#dynamicAddRemove")
                     .append(
                         '<tr>\
-                        <td><input type="text" name="dates[]" value="' + $("#dateInputField").val() + '" class="form-control date" /></td>\
-                        <td><input type="text" name="values[]" value="' + $("#valueInputField").val() + '" class="form-control" /></td>\
+                        <td><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></td>\
+                        <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
                         <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
                         </tr>');
-                $("#dateInputField").val('');
-                $("#valueInputField").val('');
+                $("#inputDateField").val('');
+                $("#inputValueField").val('');
             }
         });
 
