@@ -1199,8 +1199,8 @@ return [
         'fields' => [
             'description' => 'Description',
             'description_helper' => '',
-            'nom' => 'Nom',
-            'nom_helper' => '',
+            'name' => 'Nom',
+            'name_helper' => '',
             'operations' => 'Opérations',
             'operations_helper' => '',
         ],

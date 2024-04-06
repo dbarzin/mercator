@@ -268,7 +268,7 @@ class CartographyController extends Controller
             $processes = Process::orderBy('identifiant')->get();
             $activities = Activity::orderBy('name')->get();
             $operations = Operation::orderBy('name')->get();
-            $tasks = Task::orderBy('nom')->get();
+            $tasks = Task::orderBy('name')->get();
             $actors = Actor::orderBy('name')->get();
             $informations = Information::orderBy('name')->get();
 
@@ -317,7 +317,7 @@ class CartographyController extends Controller
             }
             if ($granularity === 3) {
                 foreach ($tasks as $task) {
-                    $graph .= ' T'. $task->id . ' [label="'. $task->nom . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
+                    $graph .= ' T'. $task->id . ' [label="'. $task->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
                 }
             }
             if ($granularity >= 2) {
@@ -480,7 +480,7 @@ class CartographyController extends Controller
                     if ($granularity === 3) {
                         $textRun = $this->addTextRunRow($table, trans('cruds.operation.fields.tasks'));
                         foreach ($operation->tasks as $task) {
-                            $textRun->addLink('TASK'.$task->id, $task->nom, CartographyController::FANCYLINKSTYLE, null, true);
+                            $textRun->addLink('TASK'.$task->id, $task->name, CartographyController::FANCYLINKSTYLE, null, true);
                             if ($operation->tasks->last() !== $task) {
                                 $textRun->addText(', ');
                             }
@@ -508,7 +508,7 @@ class CartographyController extends Controller
 
                 foreach ($tasks as $task) {
                     $section->addBookmark('TASK'.$task->id);
-                    $table = $this->addTable($section, $task->nom);
+                    $table = $this->addTable($section, $task->name);
                     $this->addHTMLRow($table, trans('cruds.task.fields.description'), $task->description);
 
                     // Operations

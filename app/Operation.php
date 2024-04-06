@@ -53,7 +53,7 @@ class Operation extends Model
 
     public function tasks()
     {
-        return $this->belongsToMany(Task::class)->orderBy('nom');
+        return $this->belongsToMany(Task::class)->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

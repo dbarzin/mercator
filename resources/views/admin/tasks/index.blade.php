@@ -23,7 +23,7 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.task.fields.nom') }}
+                            {{ trans('cruds.task.fields.name') }}
                         </th>
                         <th>
                             {{ trans('cruds.task.fields.description') }}
@@ -44,11 +44,11 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.tasks.show', $task->id) }}">
-                                {{ $task->nom ?? '' }}
+                                {{ $task->name ?? '' }}
                                 </a>
                             </td>
                             <td>
-                                {{ $task->description ?? '' }}
+                                {!! $task->description ?? '' !!}
                             </td>
                             <td>
                                 @foreach($task->operations as $operation)
@@ -57,7 +57,7 @@
                                     </a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
@@ -139,7 +139,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -32,10 +32,10 @@
                 <tbody>
                     <tr>
                         <th width="10%">
-                            {{ trans('cruds.task.fields.nom') }}
+                            {{ trans('cruds.task.fields.name') }}
                         </th>
                         <td>
-                            {{ $task->nom }}
+                            {{ $task->name }}
                         </td>
                     </tr>
                     <tr>
@@ -43,7 +43,7 @@
                             {{ trans('cruds.task.fields.description') }}
                         </th>
                         <td>
-                            {{ $task->description }}
+                            {!! $task->description !!}
                         </td>
                     </tr>
                 </tbody>
@@ -57,7 +57,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $task->created_at ? $task->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $task->updated_at ? $task->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $task->updated_at ? $task->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 @endsection
