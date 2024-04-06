@@ -102,10 +102,9 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                     </div>
-                @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.name_helper') }}</span>
             </div>
-
+        </div>
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
@@ -332,7 +331,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
     $('.risk').select2({
         templateSelection: function(data, container) {
