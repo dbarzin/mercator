@@ -102,9 +102,10 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                     </div>
-                </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.relation.fields.name_helper') }}</span>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
+
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
@@ -142,7 +143,25 @@
                     </div>
                 </div>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
+
+
+            <div class="form-group">
+                <label class="recommended" for="type">{{ trans('cruds.relation.fields.type') }}</label>
+                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                    @if (!$type_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                    @endif
+                    @foreach($type_list as $t)
+                        <option {{ (old('type') ? old('type') : $relation->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('type') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.relation.fields.type_helper') }}</span>
+            </div>
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.relation.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $relation->description) !!}</textarea>
@@ -313,7 +332,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    })
+    }) 
 
     $('.risk').select2({
         templateSelection: function(data, container) {

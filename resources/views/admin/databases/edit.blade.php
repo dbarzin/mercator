@@ -69,7 +69,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.database.fields.entity_resp_helper') }}</span>
                 </div>
-
+                
             </div>
             <div class="col-sm">
 
@@ -147,8 +147,8 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                         @foreach($logical_servers as $id => $name)
-                            <option
-                                value="{{ $id }}"
+                            <option 
+                                value="{{ $id }}" 
                                 {{ (in_array($id, old('logical_servers', [])) || $database->logicalServers->contains($id)) ? 'selected' : '' }}
                                 >{{ $name }}
                             </option>
@@ -295,35 +295,38 @@
 <script>
 $(document).ready(function () {
 
-    var allEditors = document.querySelectorAll('.ckeditor');
-        for (var i = 0; i < allEditors.length; ++i) {
-        ClassicEditor.create(
-          allEditors[i], {
-            extraPlugins: []
-          }
-        );
-    }
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: []
+      }
+    );
+  }
 
-    $(".select2-free").select2({
+  $(".select2-free").select2({
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    })
+    }) 
+
+    function template(data, container) {      
+      if (data.id==4) {
+         return '\<span class="highRisk"\>'+data.text+'</span>';
+      } else if (data.id==3) {
+         return '\<span class="mediumRisk"\>'+data.text+'</span>';
+      } else if (data.id==2) {
+         return '\<span class="lowRisk"\>'+data.text+'</span>';
+      } else if (data.id==1) {
+         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
+      } else {
+         return data.text;
+      }
+    }
 
     $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-        },
-        escapeMarkup: function(m) {
+      templateSelection: template,
+      escapeMarkup: function(m) {
           return m;
       }
     });

@@ -44,6 +44,10 @@ class Relation extends Model
         'importance',
         'source_id',
         'destination_id',
+        'is_hierarchical',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
 
