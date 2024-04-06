@@ -22,7 +22,7 @@ For each object in the cartography data model, there is an API.
 
 _GDPR view_
 
-- /api/data-processing
+- /api/data-processings
 - /api/security-controls
 
 _Ecosystem view_

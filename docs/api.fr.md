@@ -21,7 +21,7 @@ Pour chaque objet du modèle de données de la cartographie, il existe une API.
 
 __Vue du RGPD__
 
-- /api/data-processing
+- /api/data-processings
 - /api/security-controls
 
 __Vues de l'écosystème__
