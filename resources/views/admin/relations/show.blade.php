@@ -42,40 +42,15 @@
                         <td>
                             {{ $relation->name }}
                         </td>
-                        <th width="10%">
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.relation.fields.type') }}
                         </th>
                         <td>
                             {{ $relation->type }}
                         </td>
-                        <th width="10%">
-                            {{ trans('cruds.relation.fields.attributes') }}
-                        </th>
-                        <td>
-                            {{ $relation->attributes }}
-                        </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.relation.fields.reference') }}
-                        </th>
-                        <td>
-                            {{ $relation->reference }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.order_number') }}
-                        </th>
-                        <td>
-                            {{ $relation->order_number }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.relation.fields.responsible') }}
-                        </th>
-                        <td>
-                            {{ $relation->responsible }}
-                        </td>
-                    </tr>
-
                     <tr>
                         <th>
                             {{ trans('cruds.relation.fields.source') }}
@@ -206,10 +181,9 @@
                             {!! $relation->comments !!}
                         </td>
                     </tr>
-
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.documents') }}
+                            {{ trans('cruds.relation.fields.destination') }}
                         </th>
                         <td>
                             @foreach($relation->documents as $document)
