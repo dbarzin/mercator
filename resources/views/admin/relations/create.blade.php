@@ -152,7 +152,15 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.description_helper') }}</span>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
+        </div>
+    </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card">
+            <div class="card-header">
+                Termes du contrat
+            </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">

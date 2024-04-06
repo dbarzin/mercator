@@ -143,24 +143,6 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <label class="recommended" for="type">{{ trans('cruds.relation.fields.type') }}</label>
-                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
-                    @if (!$type_list->contains(old('type')))
-                        <option> {{ old('type') }}</option>'
-                    @endif
-                    @foreach($type_list as $t)
-                        <option {{ (old('type') ? old('type') : $relation->type) == $t ? 'selected' : '' }}>{{$t}}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('type') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.relation.fields.type_helper') }}</span>
-            </div>
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.relation.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $relation->description) !!}</textarea>
@@ -224,7 +206,13 @@
 
                 </div>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
+        </div>
+        <!--------------------------------------------------------------------------->
+        <div class="card-header">
+            Termes du contrat
+        </div>
+        <!--------------------------------------------------------------------------->
+        <div class="card-body">
             <div class="col-sm-4">
                 <table class="table-narrow" id="dynamicAddRemove">
                     <tr>
