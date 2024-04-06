@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
+<form method="POST" action="{{ route("admin.relations.update", [$relation->id]) }}" enctype="multipart/form-data" id="relationForm">
+    @method('PUT')
+    @csrf
 <div class="card">
     <div class="card-header">
         {{ trans('global.edit') }} {{ trans('cruds.relation.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.relations.update", [$relation->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
             <!---------------------------------------------------------------------------------------------------->
             <div class="row">
                 <div class="col-sm">
@@ -153,7 +153,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.relation.fields.description_helper') }}</span>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card">
+        <div class="card-header">
+            Termes du contrat
+        </div>
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
@@ -198,9 +205,42 @@
 
                 </div>
             </div>
-
-            <!---------------------------------------------------------------------------------------------------->
-            <div class="row">
+            <div class="col-sm-4">
+                <table class="table-narrow" id="dynamicAddRemove">
+                    <tr>
+                        <th>Date</th>
+                        <th>Valeur</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="inputFields[0][date]" class="form-control date" name="start_date" id="dateInputField"/>
+                        </td>
+                        <td>
+                            <input type="text" name="inputFields[0][value]" class="form-control" id="valueInputField"/>
+                        </td>
+                        <td>
+                            <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add</button>
+                        </td>
+                    </tr>
+                    @foreach($values as $value)
+                        <tr>
+                        <td><input type="text" name="dates[]" value="{{ \Carbon\Carbon::parse($value->date_price)->format(config('panel.date_format')) }}" class="form-control date" /></td>
+                        <td><input type="text" name="values[]" value="{{ $value->price }}" class="form-control" /></td>
+                        <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card">
+        <div class="card-header">
+            Commentaires / Documents
+        </div>
+        <div class="card-body">
+        <div class="row">
                 <div class="col-lg">
                     <div class="form-group">
                         <label for="comments">{{ trans('cruds.relation.fields.comments') }}</label>
@@ -230,14 +270,14 @@
                 </div>
             </div>
             <!---------------------------------------------------------------------------------------------------->
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
     </div>
 </div>
+<div class="form-group">
+    <button class="btn btn-danger" type="submit">
+        {{ trans('global.save') }}
+    </button>
+</div>
+</form>
 @endsection
 
 
@@ -282,7 +322,8 @@ $(document).ready(function () {
       }
     });
 
-//=============================================================================
+    //=============================================================================
+    var dynamicInputRow = {{ $values->count() }};
 
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
@@ -349,8 +390,26 @@ $(document).ready(function () {
             	}
           	})
         }
-
     //-----------------------------------------
+        $("#dynamic-ar").click(function () {
+            if ($("#valueInputField").val()!='') {
+                dynamicInputRow++;
+                input = $("#dynamicAddRemove")
+                    .append(
+                        '<tr>\
+                        <td><input type="text" name="dates[]" value="' + $("#dateInputField").val() + '" class="form-control date" /></td>\
+                        <td><input type="text" name="values[]" value="' + $("#valueInputField").val() + '" class="form-control" /></td>\
+                        <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
+                        </tr>');
+                $("#dateInputField").val('');
+                $("#valueInputField").val('');
+            }
+        });
+
+        $(document).on('click', '.remove-input-field', function () {
+            $(this).parents('tr').remove();
+        });
+
     });
 </script>
 

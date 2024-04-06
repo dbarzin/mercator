@@ -33,6 +33,8 @@ return new class extends Migration
             $table->foreign('relation_id', 'relation_id_fk_43243244')->references('id')->on('relations')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->date('date_price')->nullable();
             $table->decimal('price',8,2)->nullable();
+            // add timestamp
+            $table->timestamps();
         });
 
         // Link between documents and relations
