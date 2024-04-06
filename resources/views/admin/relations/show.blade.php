@@ -42,13 +42,37 @@
                         <td>
                             {{ $relation->name }}
                         </td>
-                    </tr>
-                    <tr>
                         <th>
                             {{ trans('cruds.relation.fields.type') }}
                         </th>
                         <td>
                             {{ $relation->type }}
+                        </td>
+                        <th>
+                            {{ trans('cruds.relation.fields.attributes') }}
+                        </th>
+                        <td>
+                            {{ $relation->attributes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.relation.fields.reference') }}
+                        </th>
+                        <td>
+                            {{ $relation->reference }}
+                        </td>
+                        <th>
+                            {{ trans('cruds.relation.fields.order_number') }}
+                        </th>
+                        <td>
+                            {{ $relation->order_number }}
+                        </td>
+                        <th>
+                            {{ trans('cruds.relation.fields.responsible') }}
+                        </th>
+                        <td>
+                            {{ $relation->responsible }}
                         </td>
                     </tr>
                     <tr>
