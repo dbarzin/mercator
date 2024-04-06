@@ -19,6 +19,7 @@ php artisan passport:install
 ### APIs
 
 For each object in the cartography data model, there is an API.
+The list of APIs can be found in /route/api.php
 
 _GDPR view_
 
