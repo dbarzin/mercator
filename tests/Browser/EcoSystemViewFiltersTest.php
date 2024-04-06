@@ -68,7 +68,7 @@ class EcoSystemViewFiltersTest extends DuskTestCase
                 $browser->assertSee('Acme corp.');
                 $browser->assertSee('World company');
 
-                $browser->visit('/admin/report/ecosystem?entity_type=Improbable');
+                $browser->visit('/admin/report/ecosystem?entity_type=Producer');
                 $browser->assertRouteIs('admin.report.view.ecosystem');
                 $browser->assertSee('Mercator');
                 $browser->assertSelected('perimeter', 'All');
