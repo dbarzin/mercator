@@ -208,7 +208,7 @@
             </div>
             <!---------------------------------------------------------------------------------------------------->
             <div class="col-sm-4">
-                <table class="" id="dynamicAddRemove">
+                <table class="table-narrow" id="dynamicAddRemove">
                     <tr>
                         <th>Date</th>
                         <th>Valeur</th>
@@ -216,7 +216,9 @@
                     </tr>
                     <tr>
                         <td>
+                            <div class="col">
                             <input type="text" class="form-control date" id="inputDateField"/>
+                            </div>
                         </td>
                         <td>
                             <input type="text" class="form-control" id="inputValueField"/>
@@ -227,9 +229,16 @@
                     </tr>
                     @foreach($values as $value)
                         <tr>
-                        <td><input type="text" name="dates[]" value="{{ \Carbon\Carbon::parse($value->date_price)->format(config('panel.date_format')) }}" class="form-control date" /></td>
-                        <td><input type="text" name="values[]" value="{{ $value->price }}" class="form-control" /></td>
-                        <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
+                        <td>
+                            <div class="col">
+                            <input type="text" name="dates[]" value="{{ \Carbon\Carbon::parse($value->date_price)->format(config('panel.date_format')) }}" class="form-control date" />
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" name="values[]" value="{{ $value->price }}" class="form-control" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>
                         </tr>
                     @endforeach
                 </table>
@@ -398,7 +407,7 @@ $(document).ready(function () {
                 input = $("#dynamicAddRemove")
                     .append(
                         '<tr>\
-                        <td><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></td>\
+                        <td><div class="col"><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
                         <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
                         <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
                         </tr>');

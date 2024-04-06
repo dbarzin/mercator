@@ -207,7 +207,9 @@
                     </tr>
                     <tr>
                         <td>
+                            <div class="col">
                             <input type="text" class="form-control date" id="inputDateField"/>
+                            </div>
                         </td>
                         <td>
                             <input type="text" class="form-control" id="inputValueField"/>
@@ -372,7 +374,7 @@ $(document).ready(function () {
                 input = $("#dynamicAddRemove")
                     .append(
                         '<tr>\
-                        <td><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></td>\
+                        <td><div class="col"><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
                         <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
                         <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
                         </tr>');
