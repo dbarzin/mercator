@@ -553,9 +553,9 @@ class ExplorerController extends Controller
         }
 
         // Tasks
-        $tasks = DB::table('tasks')->select('id', 'nom')->whereNull('deleted_at')->get();
+        $tasks = DB::table('tasks')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($tasks as $task) {
-            $this->addNode($nodes, 2, $this->formatId('TASK_', $task->id), $task->nom, '/images/task.png', 'tasks');
+            $this->addNode($nodes, 2, $this->formatId('TASK_', $task->id), $task->name, '/images/task.png', 'tasks');
         }
 
         // operation_task

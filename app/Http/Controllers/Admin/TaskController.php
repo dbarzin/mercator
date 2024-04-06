@@ -16,7 +16,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tasks = Task::with('operations')->orderBy('nom')->get();
+        $tasks = Task::with('operations')->orderBy('name')->get();
 
         return view('admin.tasks.index', compact('tasks'));
     }
