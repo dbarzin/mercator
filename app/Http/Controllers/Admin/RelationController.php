@@ -24,6 +24,23 @@ class RelationController extends Controller
         return view('admin.relations.index', compact('relations'));
     }
 
+    private function getAttributes() {
+        $attributes_list = Relation::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
+    }
+    
     public function create()
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
