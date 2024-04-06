@@ -49,9 +49,11 @@ class EcoSystemViewFiltersTest extends DuskTestCase
         $this->assertEquals('Producer',$entity->entity_type);
 
         $entity = \App\Entity::where('name','MegaNet System')->first();
-        $this->assertEquals('Producer ',$entity->entity_type);
+        $this->assertTrue($entity!=null);
+        $this->assertEquals('Producer',$entity->entity_type);
 
         $entity = \App\Entity::where('name','World company')->first();
+        $this->assertTrue($entity!=null);
         $this->assertEquals('Producer',$entity->entity_type);
 
         $admin = \App\User::find(1);
