@@ -25,14 +25,14 @@ class TaskTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('tasks')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
                 $browser->visit("/admin/tasks/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/tasks/" . $data->id);
-                $browser->assertSee($data->nom);
+                $browser->assertSee($data->name);
             });
         });
     }
@@ -41,7 +41,7 @@ class TaskTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('tasks')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -61,8 +61,7 @@ class TaskTest extends DuskTestCase
                 $browser->visit("/admin/tasks/create");
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/tasks/create");
-            });        
+            });
         });
     }
 }
-
