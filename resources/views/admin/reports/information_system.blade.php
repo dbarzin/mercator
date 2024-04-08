@@ -59,7 +59,7 @@
                     <p>{{ trans('cruds.macroProcessus.description') }}</p>
                       @foreach($macroProcessuses as $macroProcess)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="MACROPROCESS{{ $macroProcess->id }}">
                                 <th colspan="2">
@@ -92,7 +92,7 @@
                                         <br>
                                         {{ trans('global.tracability') }} :
                                             {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                            [$macroProcess->security_need_t] ?? "" }} 
+                                            [$macroProcess->security_need_t] ?? "" }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,7 +130,7 @@
                     <p>{{ trans('cruds.process.description') }}</p>
                         @foreach($processes as $process)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PROCESS{{ $process->id }}">
                                     <th colspan="2">
@@ -198,7 +198,7 @@
                                         <br>
                                         {{ trans('global.tracability') }} :
                                             {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                            [$process->security_need_t] ?? "" }} 
+                                            [$process->security_need_t] ?? "" }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -209,7 +209,7 @@
                             </table>
                         </div>
                      </div>
-                        @endforeach                    
+                        @endforeach
                 </div>
             </div>
             @endif
@@ -225,7 +225,7 @@
                     <p>{{ trans('cruds.activity.description') }}</p>
                         @foreach($activities as $activity)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ACTIVITY{{ $activity->id }}">
                                 <th colspan="2">
@@ -283,7 +283,7 @@
                     <p>{{ trans('cruds.operation.description') }}</p>
                         @foreach($operations as $operation)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="OPERATION{{ $operation->id }}">
                                 <th colspan="2">
@@ -325,11 +325,11 @@
                                         <b>{{ trans('cruds.operation.fields.tasks') }}</b>
                                     </td>
                                     <td>
-                                        @foreach($operation->tasks as $task)                                
-                                            <a href="#TASK{{$task->id}}">{{$task->nom}}</a>
+                                        @foreach($operation->tasks as $task)
+                                            <a href="#TASK{{$task->id}}">{{$task->name}}</a>
                                             @if (!$loop->last)
                                             ,
-                                            @endif                                        
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -340,7 +340,7 @@
                                             <a href="#ACTOR{{$actor->id}}">{{$actor->name}}</a>
                                             @if (!$loop->last)
                                             ,
-                                            @endif                                        
+                                            @endif
                                         @endforeach
                                     </td>
                                 </tr>
@@ -364,11 +364,11 @@
                     <p>{{ trans('cruds.task.description') }}</p>
                         @foreach($tasks as $task)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="TASK{{ $task->id }}">
                                     <th colspan="2">
-                                        <a href="/admin/tasks/{{ $task->id }}">{{ $task->nom }}</a>
+                                        <a href="/admin/tasks/{{ $task->id }}">{{ $task->name }}</a>
                                     </th>
                                 </thead>
                                 <tbody>
@@ -396,7 +396,7 @@
                     <p>{{ trans('cruds.actor.description') }}</p>
                         @foreach($actors as $actor)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="ACTOR{{ $actor->id }}">
                                     <th colspan="2">
@@ -436,7 +436,7 @@
                     <p>{{ trans('cruds.information.description') }}</p>
                         @foreach($informations as $information)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="INFORMATION{{ $information->id }}">
                                     <th colspan="2">
@@ -467,7 +467,7 @@
                                                 <a href="#PROCESS{{ $process->id}}">{{ $process->identifiant}}</a>
                                                 @if (!$loop->last)
                                                 ,
-                                                @endif                                                                                        
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -488,7 +488,7 @@
                                             <br>
                                             {{ trans('global.tracability') }} :
                                                 {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$information->security_need_t] ?? "" }} 
+                                                [$information->security_need_t] ?? "" }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -525,7 +525,7 @@
 let dotSrc=`
 digraph  {
     @if (auth()->user()->granularity>=2)
-    @foreach($macroProcessuses as $macroProcess) 
+    @foreach($macroProcessuses as $macroProcess)
         MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#MACROPROCESS{{ $macroProcess->id }}"]
     @endforeach
     @endif
@@ -540,7 +540,7 @@ digraph  {
             P{{ $process->id }} -> I{{ $information->id }}
         @endforeach
         @if (auth()->user()->granularity>=2)
-            @if ($process->macroprocess_id!=null) 
+            @if ($process->macroprocess_id!=null)
                 MP{{ $process->macroprocess_id }} -> P{{$process->id}}
             @endif
         @endif
@@ -576,7 +576,7 @@ digraph  {
     @endforeach
     @if (auth()->user()->granularity==3)
     @foreach($tasks as $task)
-        T{{ $task->id }} [label="{{ $task->nom }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#TASK{{ $task->id }}"]
+        T{{ $task->id }} [label="{{ $task->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#TASK{{ $task->id }}"]
     @endforeach
     @endif
     @if (auth()->user()->granularity>=2)
