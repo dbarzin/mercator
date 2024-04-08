@@ -69,7 +69,7 @@
                             <td>
                                 @foreach($operation->tasks as $task)
                                     <a href="{{ route('admin.tasks.show', $task->id) }}">
-                                    {{ $task->nom }}
+                                    {{ $task->name }}
                                     @if (!$loop->last)
                                     ,
                                     @endif
@@ -95,7 +95,7 @@
                                     @endif
                                     </a>
                                 @endforeach
-                            </td>                            
+                            </td>
                             <td>
                                 @can('operation_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.operations.show', $operation->id) }}">
@@ -175,7 +175,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
