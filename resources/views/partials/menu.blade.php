@@ -435,6 +435,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('logical_flow_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.logical-flows.index") }}" class="nav-link {{ request()->is('admin/logical-flows*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.logicalFlow.title_short') }}
+                                </a>
+                            </li>
+                        @endcan
                         @can('vlan_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.vlans.index") }}" class="nav-link {{ request()->is('admin/vlans*') ? 'active' : '' }}">

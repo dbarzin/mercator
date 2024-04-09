@@ -168,6 +168,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('logical-servers', Admin\LogicalServerController::class);
     Route::delete('logical-servers-destroy', [Admin\LogicalServerController::class,'massDestroy'])->name('logical-servers.massDestroy');
 
+    // Logical Flows
+    Route::resource('logical-flows', Admin\LogicalFlowController::class);
+    Route::delete('logical-flows-destroy', [Admin\LogicalFlowController::class,'massDestroy'])->name('logical-flows.massDestroy');
+
     // Certificates
     Route::resource('certificates', Admin\CertificateController::class);
     Route::delete('certificates-destroy', [Admin\CertificateController::class,'massDestroy'])->name('certificates.massDestroy');

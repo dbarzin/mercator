@@ -597,6 +597,28 @@ return [
         'title_short' => 'LAN',
         'title_singular' => 'LAN - Local Area Network',
     ],
+    'logicalFlow' => [
+        'description' => 'Logical flows between logical devices',
+        'fields' => [
+            'name' => 'Flow name',
+            'name_helper' => '',
+            'protocol' => 'Protocol',
+            'protocol_helper' => 'ex: TCP, UPD...',
+            'source_ip_range' => 'Source',
+            'source_ip_range_helper' => 'IPv6/IPv8 range of the source flow (e.g. 10.0.0.1/255)',
+            'dest_ip_range' => 'Recipient',
+            'dest_ip_range_helper' => 'IPv6/IPv8 range of the destination flow (e.g. 10.0.0.2/255)',
+            'source_port' => 'Source port',
+            'source_port_helper' => '',
+            'dest_port' => 'Destination port',
+            'dest_port_helper' => '',
+            'description' => 'Description',
+            'description_helper' => '',
+        ],
+        'title' => 'Logical flows',
+        'title_short' => 'Flow',
+        'title_singular' => 'Logical flow',
+    ],
     'logicalServer' => [
         'description' => 'Logical division of a physical server.',
         'fields' => [

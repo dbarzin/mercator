@@ -603,6 +603,28 @@ return [
         'title_short' => 'LAN',
         'title_singular' => 'LAN - Local Area Network',
     ],
+    'logicalFlow' => [
+        'description' => 'Flux logiques entre équipements logiques',
+        'fields' => [
+            'name' => 'Nom',
+            'name_helper' => 'Nom du flux',
+            'protocol' => 'Protocole',
+            'protocol_helper' => 'ex: TCP, UPD...',
+            'source_ip_range' => 'Source',
+            'source_ip_range_helper' => 'Range IPv6/IPv8 de la source du flux (ex: 10.0.0.1/32)',
+            'dest_ip_range' => 'Destination',
+            'dest_ip_range_helper' => 'Range IPv6/IPv8 de la destination du flux (ex: 10.0.0.2/32)',
+            'source_port' => 'Port source',
+            'source_port_helper' => '',
+            'dest_port' => 'Port destinataire',
+            'dest_port_helper' => '',
+            'description' => 'Description',
+            'description_helper' => '',
+        ],
+        'title' => 'Flux logiques',
+        'title_short' => 'Flux',
+        'title_singular' => 'Flux logique',
+    ],
     'logicalServer' => [
         'description' => 'Découpage logique d’un serveur physique.',
         'fields' => [

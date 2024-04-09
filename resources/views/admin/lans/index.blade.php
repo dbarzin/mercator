@@ -40,10 +40,12 @@
 
                             </td>
                             <td>
-                                {{ $lan->name ?? '' }}
+                                <a href="{{ route('admin.lans.show', $lan->id) }}">
+                                {{ $lan->name }}
+                                </a>
                             </td>
                             <td>
-                                {{ $lan->description ?? '' }}
+                                {!! $lan->description !!}
                             </td>
                             <td>
                                 @can('lan_show')
@@ -124,7 +126,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
