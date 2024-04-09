@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="name">{{ trans('cruds.logicalFlow.fields.name') }}</label>
+                        <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.name') }}</label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name') }}">
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="description">{{ trans('cruds.logicalFlow.fields.description') }}</label>
+                        <label class="recommended" for="description">{{ trans('cruds.logicalFlow.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
                         @if($errors->has('description'))
                             <div class="invalid-feedback">

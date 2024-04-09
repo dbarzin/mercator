@@ -52,7 +52,9 @@
                             {{ trans('cruds.relation.fields.attributes') }}
                         </th>
                         <td>
-                            {{ $relation->attributes }}
+                            @foreach(explode(" ",$relation->attributes) as $attribute)
+                            <span class="badge badge-info">{{ $attribute }}</span>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

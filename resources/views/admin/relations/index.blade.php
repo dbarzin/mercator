@@ -119,16 +119,18 @@
                             </td>
                             <td>
                                 @if($relation->start_date!=null)
-                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $relation->start_date)->format('Y-m-d')  ?? '' !!}
+                                    {{ Carbon\Carbon::createFromFormat('d/m/Y', $relation->start_date)->format('Y-m-d')  ?? '' }}
                                 @endif
                             </td>
                             <td>
                                 @if($relation->end_date!=null)
-                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $relation->end_date)->format('Y-m-d')  ?? '' !!}
+                                    {{ Carbon\Carbon::createFromFormat('d/m/Y', $relation->end_date)->format('Y-m-d')  ?? '' }}
                                 @endif
                             </td>
                             <td>
-                                {{ $relation->attributes }}
+                                @foreach(explode(" ",$relation->attributes) as $attribute)
+                                <span class="badge badge-info">{{ $attribute }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @can('relation_show')
