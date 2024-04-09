@@ -25,7 +25,6 @@ class RelationTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('relations')->first();
-        /* timeout ?
 		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
@@ -36,7 +35,6 @@ class RelationTest extends DuskTestCase
                 $browser->assertSee($data->name);
             });
         });
-        */
     }
 
     public function testEdit()
