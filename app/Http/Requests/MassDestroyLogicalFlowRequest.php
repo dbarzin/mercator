@@ -6,7 +6,7 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class MassDestLogicalFlowRequest extends FormRequest
+class MassDestroyLogicalFlowRequest extends FormRequest
 {
     public function authorize()
     {

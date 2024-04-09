@@ -62,7 +62,7 @@ class LogicalFlowController extends Controller
 
         $logicalFlow->delete();
 
-        return redirect()->route('admin.logicalFlows.index');
+        return redirect()->route('admin.logical-flows.index');
     }
 
     public function massDestroy(MassDestroyLogicalFlowRequest $request)
