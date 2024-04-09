@@ -41,7 +41,7 @@
                         {{ trans('cruds.logicalFlow.fields.description') }}
                     </th>
                     <td colspan='4'>
-                        {{ $logicalFlow->description }}
+                        {!! $logicalFlow->description !!}
                     </td>
                 </tr>
 

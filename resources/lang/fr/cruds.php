@@ -622,7 +622,7 @@ return [
             'description_helper' => '',
         ],
         'title' => 'Flux logiques',
-        'title_short' => 'Flux',
+        'title_short' => 'Flux logiques',
         'title_singular' => 'Flux logique',
     ],
     'logicalServer' => [

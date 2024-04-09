@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="name">{{ trans('cruds.logicalFlow.fields.name') }}</label>
+                        <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.name') }}</label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $logicalFlow->name) }}">
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="description">{{ trans('cruds.logicalFlow.fields.description') }}</label>
+                        <label class="recommended" for="description">{{ trans('cruds.logicalFlow.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $logicalFlow->description) !!}</textarea>
                         @if($errors->has('description'))
                             <div class="invalid-feedback">
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-sm-1">
                     <div class="form-group">
-                        <label for="name">{{ trans('cruds.logicalFlow.fields.protocol') }}</label>
+                        <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.protocol') }}</label>
                         <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text" name="protocol" id="protocol" value="{{ old('protocol', $logicalFlow->protocol) }}" required>
                         @if($errors->has('protocol'))
                             <div class="invalid-feedback">
