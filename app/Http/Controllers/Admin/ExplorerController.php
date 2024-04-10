@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Router;
-// TODO : Why ????
 use App\Subnetwork;
+use App\LogicalFlow;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class ExplorerController extends Controller
@@ -350,6 +351,33 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('PSERVER_', $join->physical_server_id), $this->formatId('LSERVER_', $join->logical_server_id));
         }
+
+        // Logical Flows xxxxxxxxxxxxxxxxxxxxxxx
+        $flows = LogicalFlow::All();
+        foreach ($flows as $flow) {
+            // Get sources
+            $sources = [];
+            foreach ($logicalServers as $server) {
+                foreach(explode(",", $server->address_ip) as $ip)
+                    if ($flow->isSource($ip))
+                        array_push($sources, $server->id);
+            }
+            // Get destinations
+            $destinations = [];
+            foreach ($logicalServers as $server) {
+                foreach(explode(",", $server->address_ip) as $ip)
+                    if ($flow->isDestination($ip))
+                        array_push($destinations, $server->id);
+            }
+
+            // Add source <-> destination flows
+            foreach ($sources as $source) {
+                foreach ($destinations as $destination) {
+                    $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_',$destination));
+                }
+            }
+        }
+
         // Certificates
         $certificates = DB::table('certificates')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($certificates as $certificate) {
