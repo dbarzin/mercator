@@ -1164,6 +1164,27 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '285',
                 'title' => 'cluster_access',
             ],
+            // Logical Flows
+            [
+                'id'    => '286',
+                'title' => 'logical_flow_create',
+            ],
+            [
+                'id'    => '287',
+                'title' => 'logical_flow_edit',
+            ],
+            [
+                'id'    => '288',
+                'title' => 'logical_flow_show',
+            ],
+            [
+                'id'    => '289',
+                'title' => 'logical_flow_delete',
+            ],
+            [
+                'id'    => '290',
+                'title' => 'logical_flow_access',
+            ],
         ];
 
         Permission::insert($permissions);
