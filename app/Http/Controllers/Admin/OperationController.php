@@ -32,7 +32,7 @@ class OperationController extends Controller
 
         $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
-        $tasks = Task::all()->sortBy('nom')->pluck('nom', 'id');
+        $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
@@ -57,7 +57,7 @@ class OperationController extends Controller
 
         $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
-        $tasks = Task::all()->sortBy('nom')->pluck('nom', 'id');
+        $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
 
         $operation->load('actors', 'tasks', 'activities');

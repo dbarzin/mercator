@@ -10,16 +10,53 @@
         <form method="POST" action="{{ route("admin.entities.update", [$entity->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $entity->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $entity->name) }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.entity.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.entity.fields.name_helper') }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="entity_type">{{ trans('cruds.entity.fields.entity_type') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
+                                   name="entity_type" id="entity_type">
+                            @if (!$entityTypes->contains(old('entity_type')))
+                                        <option> {{ old('entity_type') }}</option>'
+                            @endif
+                                    @foreach($entityTypes as $t)
+                                        <option {{ (old('entity_type') ? old('entity_type') : $entity->entity_type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                                    @endforeach
+                        </select>
+                        <span class="help-block">{{ trans('cruds.entity.fields.entity_type_helper') }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <br>
+            	    <div class="form-group">
+                		<div class="form-check form-switch">
+                            <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked' : '' }}>
+                            <label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
+                		</div>
+                		@if($errors->has('is_external'))
+            		    <div class="invalid-feedback">
+            			{{ $errors->first('is_external') }}
+            		    </div>
+                		@endif
+                		<span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
+            	    </div>
+                </div>
             </div>
+
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.entity.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $entity->description) !!}</textarea>
@@ -31,16 +68,6 @@
                 <span class="help-block">{{ trans('cruds.entity.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="recommended" for="security_level">{{ trans('cruds.entity.fields.security_level') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}" name="security_level" id="security_level">{!! old('security_level', $entity->security_level) !!}</textarea>
-                @if($errors->has('security_level'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('security_level') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.entity.fields.security_level_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="recommended" for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}" name="contact_point" id="contact_point">{!! old('contact_point', $entity->contact_point) !!}</textarea>
                 @if($errors->has('contact_point'))
@@ -50,40 +77,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
             </div>
-	    
-        <div class="row">
-            <div class="col-md-1">
-        	    <div class="form-group">
-            		<div class="form-check form-switch">
-                        <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked' : '' }}>
-                        <label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
-            		</div>
-            		@if($errors->has('is_external'))
-        		    <div class="invalid-feedback">
-        			{{ $errors->first('is_external') }}
-        		    </div>
-            		@endif
-            		<span class="help-block">{{ trans('cruds.entity.fields.is_external_helper') }}</span>
-        	    </div>
+            <div class="form-group">
+                <label class="recommended" for="security_level">{{ trans('cruds.entity.fields.security_level') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}" name="security_level" id="security_level">{!! old('security_level', $entity->security_level) !!}</textarea>
+                @if($errors->has('security_level'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('security_level') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.entity.fields.security_level_helper') }}</span>
             </div>
-            <div class="col-md-11">
-                <div class="form-group">
-                <label for="entity_type">{{ trans('cruds.entity.fields.entity_type') }}</label>
-                <select class="form-control select2 {{ $errors->has('entity_type') ? 'is-invalid' : '' }}"
-                           name="entity_type" id="entity_type">
-                    @if (!$entityTypes->contains(old('entity_type')))
-                                <option> {{ old('entity_type') }}</option>'
-                    @endif
-                            @foreach($entityTypes as $t)
-                                <option {{ (old('entity_type') ? old('entity_type') : $entity->entity_type) == $t ? 'selected' : '' }}>{{$t}}</option>
-                            @endforeach
-                </select>
-                <span class="help-block">{{ trans('cruds.entity.fields.entity_type_helper') }}</span>
-                </div>
-            </div>
-        </div>
-	    
-	    
+
+
         <div class="row">
             <div class="col-md-6">
 
@@ -173,7 +178,7 @@ $(document).ready(function() {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
-  }); 
+    })
+  });
 </script>
 @endsection

@@ -18,12 +18,11 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:tasks',
-                'unique:tasks,nom,NULL,id,deleted_at,NULL',
+                'unique:tasks,name,NULL,id,deleted_at,NULL',
             ],
         ];
     }

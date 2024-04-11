@@ -25,7 +25,7 @@ class RelationTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('relations')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -41,7 +41,7 @@ class RelationTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('relations')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -61,9 +61,8 @@ class RelationTest extends DuskTestCase
                 $browser->visit("/admin/relations/create");
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/relations/create");
-            });        
+            });
         });
     }
 
 }
-

@@ -70,7 +70,7 @@
                         <span class="help-block">{{ trans('cruds.physicalLink.fields.dest_port_helper') }}</span>
                     </div>
                 </div>
-                
+
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -80,9 +80,6 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')

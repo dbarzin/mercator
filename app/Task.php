@@ -17,7 +17,7 @@ class Task extends Model
     public $table = 'tasks';
 
     public static $searchable = [
-        'nom',
+        'name',
         'description',
     ];
 
@@ -28,7 +28,7 @@ class Task extends Model
     ];
 
     protected $fillable = [
-        'nom',
+        'name',
         'description',
         'created_at',
         'updated_at',

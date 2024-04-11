@@ -457,10 +457,6 @@ $('#patching_frequency').on('select2:select', function (e) {
           	})
         }
 
-        $("#update_date").on("change", function() {
-                    alert('changed');
-                });
-
     });
 </script>
 @endsection

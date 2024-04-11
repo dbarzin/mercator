@@ -348,7 +348,7 @@ class ReportController extends Controller
                 });
 
             // TODO : improve me
-            $tasks = Task::All()->sortBy('nom')
+            $tasks = Task::All()->sortBy('name')
                 ->filter(function ($item) use ($operations) {
                     foreach ($operations as $operation) {
                         foreach ($operation->tasks as $task) {

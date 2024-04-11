@@ -44,7 +44,7 @@ class Flux extends Model
             }
         }
         if ($this->database_source_id !== null) {
-            return 'DATABASE_' . $this->database_source_id;
+            return 'DB_' . $this->database_source_id;
         }
         return null;
     }
@@ -63,7 +63,7 @@ class Flux extends Model
             }
         }
         if ($this->database_dest_id !== null) {
-            return 'DATABASE_' . $this->database_dest_id;
+            return 'DB_' . $this->database_dest_id;
         }
         return null;
     }

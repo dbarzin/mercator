@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Router;
-// TODO : Why ????
 use App\Subnetwork;
+use App\LogicalFlow;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class ExplorerController extends Controller
@@ -350,6 +351,33 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('PSERVER_', $join->physical_server_id), $this->formatId('LSERVER_', $join->logical_server_id));
         }
+
+        // Logical Flows xxxxxxxxxxxxxxxxxxxxxxx
+        $flows = LogicalFlow::All();
+        foreach ($flows as $flow) {
+            // Get sources
+            $sources = [];
+            foreach ($logicalServers as $server) {
+                foreach(explode(",", $server->address_ip) as $ip)
+                    if ($flow->isSource($ip))
+                        array_push($sources, $server->id);
+            }
+            // Get destinations
+            $destinations = [];
+            foreach ($logicalServers as $server) {
+                foreach(explode(",", $server->address_ip) as $ip)
+                    if ($flow->isDestination($ip))
+                        array_push($destinations, $server->id);
+            }
+
+            // Add source <-> destination flows
+            foreach ($sources as $source) {
+                foreach ($destinations as $destination) {
+                    $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_',$destination));
+                }
+            }
+        }
+
         // Certificates
         $certificates = DB::table('certificates')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($certificates as $certificate) {
@@ -526,7 +554,7 @@ class ExplorerController extends Controller
         // macro_processuses
         $macro_processuses = DB::table('macro_processuses')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($macro_processuses as $macro_process) {
-            $this->addNode($nodes, 2, $this->formatId('MACROPROCESS_', $macro_process->id), $macro_process->name, '/images/macroprocess.png', 'macro_processuses');
+            $this->addNode($nodes, 2, $this->formatId('MACROPROCESS_', $macro_process->id), $macro_process->name, '/images/macroprocess.png', 'macro-processuses');
         }
 
         // Activities
@@ -553,9 +581,9 @@ class ExplorerController extends Controller
         }
 
         // Tasks
-        $tasks = DB::table('tasks')->select('id', 'nom')->whereNull('deleted_at')->get();
+        $tasks = DB::table('tasks')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($tasks as $task) {
-            $this->addNode($nodes, 2, $this->formatId('TASK_', $task->id), $task->nom, '/images/task.png', 'tasks');
+            $this->addNode($nodes, 2, $this->formatId('TASK_', $task->id), $task->name, '/images/task.png', 'tasks');
         }
 
         // operation_task

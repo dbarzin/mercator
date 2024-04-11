@@ -18,12 +18,11 @@ class UpdateTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:tasks,nom,' . request()->route('task')->id,
-                'unique:tasks,nom,'.request()->route('task')->id.',id,deleted_at,NULL',
+                'unique:tasks,name,'.request()->route('task')->id.',id,deleted_at,NULL',
             ],
         ];
     }

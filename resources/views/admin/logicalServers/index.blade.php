@@ -64,14 +64,14 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
-                                {{ $logicalServer->name ?? '' }}
+                                {{ $logicalServer->name }}
                                 </a>
                             </td>
                             <td>
-                                {!! $logicalServer->description ?? '' !!}
+                                {!! $logicalServer->description !!}
                             </td>
                             <td>
-                                {!! $logicalServer->configuration ?? '' !!}
+                                {!! $logicalServer->configuration !!}
                             </td>
                             <td>
                               @foreach($logicalServer->applications as $application)
