@@ -554,7 +554,7 @@ class ExplorerController extends Controller
         // macro_processuses
         $macro_processuses = DB::table('macro_processuses')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($macro_processuses as $macro_process) {
-            $this->addNode($nodes, 2, $this->formatId('MACROPROCESS_', $macro_process->id), $macro_process->name, '/images/macroprocess.png', 'macro_processuses');
+            $this->addNode($nodes, 2, $this->formatId('MACROPROCESS_', $macro_process->id), $macro_process->name, '/images/macroprocess.png', 'macro-processuses');
         }
 
         // Activities

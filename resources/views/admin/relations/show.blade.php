@@ -209,7 +209,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.relation.fields.destination') }}
+                            {{ trans('cruds.relation.fields.documents') }}
                         </th>
                         <td>
                             @foreach($relation->documents as $document)
