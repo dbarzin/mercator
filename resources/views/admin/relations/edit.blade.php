@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <form method="POST" action="{{ route("admin.relations.update", [$relation->id]) }}" enctype="multipart/form-data" id="relationForm">
     @method('PUT')
     @csrf
@@ -48,7 +47,7 @@
                         <label for="attributes">{{ trans('cruds.relation.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
                             @foreach($attributes_list as $a)
-                                <option {{ str_contains(old('attributes') ? old('attributes') : $relation->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
+                                <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($relation->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('attributes'))
@@ -92,7 +91,7 @@
                         <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                         <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
                             @foreach($responsibles_list as $resp)
-                            <option {{ str_contains($relation->responsible, $resp) ? 'selected' : '' }}>{{$resp}}</option>
+                                <option {{ ( (old('responsibles')!=null) && in_array($resp,old('responsibles'))) || str_contains($relation->responsible, $resp) ? 'selected' : '' }}>{{$resp}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('responsible'))
