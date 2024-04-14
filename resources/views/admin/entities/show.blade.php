@@ -40,12 +40,47 @@
                         <td>
                             {{ $entity->name }}
                         </td>
+                        <th width="10%">
+                            {{ trans('cruds.entity.fields.entity_type') }}
+                        </th>
+                        <td>
+                            {!! $entity->entity_type !!}
+                        </td>
+                        <th width="10%">
+                            {{ trans('cruds.entity.fields.parent_entity') }}
+                        </th>
+                        <td>
+                            @if ($entity->parentEntity!=null)
+                                <a href="{{ route('admin.entities.show', $entity->parentEntity->id) }}">{{ $entity->parentEntity->name }}</a>
+                            @endif
+                        </td>
+                        <th width="10%">
+                            {{ trans('cruds.entity.fields.is_external') }}
+                        </th>
+                        <td>
+                            {!! $entity->is_external ? trans('global.yes') : trans('global.yes') !!}
+                        </td>
                     </tr>
+                    @if ($entity->entities()->count()>0)
+                    <tr>
+                        <th>
+                            {{ trans('cruds.entity.fields.subsidiaries') }}
+                        </th>
+                        <td colspan="7">
+                            @foreach($entity->entities as $e)
+                                <a href="{{ route('admin.entities.show', $e->id) }}">{{ $e->name }}</a>
+                                @if(!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    @endif
                     <tr>
                         <th>
                             {{ trans('cruds.entity.fields.description') }}
                         </th>
-                        <td>
+                        <td colspan="7">
                             {!! $entity->description !!}
                         </td>
                     </tr>
@@ -53,7 +88,7 @@
                         <th>
                             {{ trans('cruds.entity.fields.security_level') }}
                         </th>
-                        <td>
+                        <td colspan="7">
                             {!! $entity->security_level !!}
                         </td>
                     </tr>
@@ -61,31 +96,15 @@
                         <th>
                             {{ trans('cruds.entity.fields.contact_point') }}
                         </th>
-                        <td>
+                        <td colspan="7">
                             {!! $entity->contact_point !!}
                         </td>
                     </tr>
 
-                    <tr>
-                        <th>
-                            {{ trans('cruds.entity.fields.is_external') }}
-                        </th>
-                        <td>
-                            {!! $entity->is_external ? trans('global.yes') : trans('global.yes') !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.entity.fields.entity_type') }}
-                        </th>
-                        <td>
-                            {!! $entity->entity_type !!}
-                        </td>
-                    </tr>
 
                     <tr>
-                        <td><b>{{ trans('cruds.entity.fields.relations') }}</b></td>
-                        <td>
+                        <th>{{ trans('cruds.entity.fields.relations') }}</th>
+                        <td colspan="7">
                             @foreach ($entity->sourceRelations as $relation)
                                 <a href="/admin/relations/{{ $relation->id }}">{{ $relation->name }}</a>
                                 ->
@@ -108,8 +127,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ trans('cruds.entity.fields.processes') }}</b></td>
-                        <td>
+                        <th>{{ trans('cruds.entity.fields.processes') }}</th>
+                        <td colspan="7">
                             @foreach ($entity->entitiesProcesses as $process)
                                 <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
                                 @if (!$loop->last)
@@ -119,8 +138,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ trans('cruds.entity.fields.exploits') }}</b></td>
-                        <td>
+                        <th>{{ trans('cruds.entity.fields.exploits') }}</th>
+                        <td colspan="7">
                             @foreach($entity->applications as $application)
                                 <a href="/admin/applications/{{$application->id}}">{{$application->name}}</a>
                                 @if (!$loop->last)

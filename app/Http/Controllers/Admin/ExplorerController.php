@@ -607,9 +607,11 @@ class ExplorerController extends Controller
         // Ecosystem - 1
         // ---------------------------------------------------
         // Entities
-        $entities = DB::table('entities')->select('id', 'name')->whereNull('deleted_at')->get();
+        $entities = DB::table('entities')->select('id', 'name','parent_entity_id')->whereNull('deleted_at')->get();
         foreach ($entities as $entity) {
             $this->addNode($nodes, 1, $this->formatId('ENTITY_', $entity->id), $entity->name, '/images/entity.png', 'entities');
+            if ($entity->parent_entity_id!=null)
+                $this->addFluxEdge($edges, null, false, $this->formatId('ENTITY_', $entity->id), $this->formatId('ENTITY_', $entity->parent_entity_id));
         }
 
         // Relations

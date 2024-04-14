@@ -15,7 +15,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-		    
+
 		    <div class="col-sm-2">
 			<form action="/admin/report/ecosystem">
 			    <table class="table table-bordered table-striped">
@@ -68,7 +68,7 @@
                     <p>{{ trans('cruds.entity.description') }}</p>
                         @foreach($entities as $entity)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="ENTITY{{ $entity->id }}">
                                 <th colspan="2">
@@ -81,16 +81,41 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td width="20%"><b>{{ trans('cruds.entity.fields.description') }}</b></td>
-                                    <td>{!! $entity->description !!}</td>
+                                    <td><b>{{ trans('cruds.entity.fields.entity_type') }}</b></td>
+                                    <td>{{ $entity->entity_type }}</td>
                                 </tr>
+
+                                @if ($entity->parentEntity!=null)
+                                <th>
+                                    {{ trans('cruds.entity.fields.parent_entity') }}
+                                </th>
+                                <td>
+                                        <a href="{{ route('admin.entities.show', $entity->parentEntity->id) }}">{{ $entity->parentEntity->name }}</a>
+                                </td>
+                                @endif
+
+                                @if ($entity->entities()->count()>0)
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.entity.fields.subsidiaries') }}
+                                    </th>
+                                    <td colspan="7">
+                                        @foreach($entity->entities as $e)
+                                            <a href="{{ route('admin.entities.show', $e->id) }}">{{ $e->name }}</a>
+                                            @if(!$loop->last)
+                                            ,
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.is_external') }}</b></td>
                                     <td>{{ $entity->is_external ? trans('global.yes') : trans('global.yes') }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>{{ trans('cruds.entity.fields.entity_type') }}</b></td>
-                                    <td>{{ $entity->entity_type }}</td>
+                                    <td width="20%"><b>{{ trans('cruds.entity.fields.description') }}</b></td>
+                                    <td>{!! $entity->description !!}</td>
                                 </tr>
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.security_level') }}</b></td>
@@ -105,13 +130,13 @@
                                     <td>
                                         @foreach ($entity->sourceRelations as $relation)
                                             <a href="#RELATION{{ $relation->id }}">{{ $relation->name }}</a>
-                                            -> 
+                                            ->
                                             <a href="#ENTITY{{ $relation->destination_id }}">{{ $relation->destination->name ?? '' }}</a>
                                             @if (!$loop->last)
                                             <br>
                                             @endif
                                         @endforeach
-                                        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0)) 
+                                        @if (($entity->sourceRelations->count()>0)&&($entity->destinationRelations->count()>0))
                                         <br>
                                         @endif
                                         @foreach ($entity->destinationRelations as $relation)
@@ -178,15 +203,15 @@
                     <p>{{ trans('cruds.relation.description') }}</p>
                         @foreach($relations as $relation)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="RELATION{{$relation->id}}">
                                 <th colspan="2">
-                                @can('relation_edit')                                    
+                                @can('relation_edit')
                                 <a href="{{ route('admin.relations.edit',$relation->id) }}">{{ $relation->name }}</a>
                                 @else
                                 <a href="{{ route('admin.relations.show',$relation->id) }}">{{ $relation->name }}</a>
-                                @endcan                                
+                                @endcan
                                 </th>
                             </thead>
                             <tbody>
@@ -194,14 +219,14 @@
                                     <td width="20%"><b>{{ trans('cruds.relation.fields.description') }}</b></td>
                                     <td>{!! $relation->description !!}</td>
                                 </tr>
-                                <tr>                                    
+                                <tr>
                                     <td><b>{{ trans('cruds.relation.fields.type') }}</b></td>
                                     <td>{{ $relation->type }}</td>
                                 </tr>
                                 <tr>
                                     <td><b>{{ trans('cruds.relation.fields.importance') }}</b></td>
                                     <td>
-                                    @if ($relation->importance==1) 
+                                    @if ($relation->importance==1)
                                         {{ trans('cruds.relation.fields.importance_level.low') }}
                                     @elseif ($relation->importance==2)
                                         {{ trans('cruds.relation.fields.importance_level.medium') }}
@@ -220,7 +245,7 @@
                                         </a>
                                         ->
                                         <a href="#ENTITY{{ $relation->destination_id }}">
-                                            {{ $relation->destination->name ?? "" }} 
+                                            {{ $relation->destination->name ?? "" }}
                                         </a>
                                     </td>
                                 </tr>
@@ -251,11 +276,14 @@
  let dotSrc = `
   digraph  {
   @can('entity_show')
-  @foreach($entities as $entity)    
+  @foreach($entities as $entity)
     E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]
+    @if (($entity->parentEntity!=null)&&($entities->contains("id",$entity->parentEntity->id)))
+        E{{ $entity->parentEntity->id }} -> E{{ $entity->id }}
+    @endif
   @endforEach
   @endcan
-  
+
   @can('relation_show')
   @foreach($relations as $relation)
     E{{ $relation->source_id }} -> E{{ $relation->destination_id }} [label=\"{{ $relation ->name }}\" href=\"#RELATION{{$relation->id}}\"]
@@ -263,7 +291,7 @@
   @endcan
 }
  `;
- 
+
 d3.select("#graph").graphviz()
     .addImage("/images/entity.png", "64px", "64px")
     .renderDot(dotSrc);
