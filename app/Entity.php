@@ -37,9 +37,7 @@ class Entity extends Model
         'contact_point',
         'is_external',
         'entity_type',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'parent_entity_id',
     ];
 
     public function databases()
@@ -70,6 +68,16 @@ class Entity extends Model
     public function entitiesProcesses()
     {
         return $this->belongsToMany(Process::class)->orderBy('identifiant');
+    }
+
+    public function parentEntity()
+    {
+        return $this->belongsTo(Entity::class, 'parent_entity_id');
+    }
+
+    public function entities()
+    {
+        return $this->hasMany(Entity::class, 'parent_entity_id', 'id')->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

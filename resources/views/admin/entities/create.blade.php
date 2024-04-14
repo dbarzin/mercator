@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("admin.entities.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.entity.fields.name') }}</label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -44,6 +44,22 @@
             	   	   <span class="help-block">{{ trans('cruds.entity.fields.entity_type_helper') }}</span>
     	           </div>
                </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="processes">{{ trans('cruds.entity.fields.parent_entity') }}</label>
+                    <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="parent_entity_id" id="parent_entity_id">
+                        <option></option>
+                        @foreach($entities as $id => $name)
+                            <option value="{{ $id }}" {{ old('entity')==$id ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('processes'))
+                        <span class="text-danger">{{ $errors->first('parent_entity') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.entity.fields.parent_entity_helper') }}</span>
+                </div>
+            </div>
 
                 <div class="col-md-1">
                     <br>

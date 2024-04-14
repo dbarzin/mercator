@@ -2,11 +2,9 @@
 
 namespace App;
 
-use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\RelationValue
@@ -19,12 +17,11 @@ class RelationValue extends Model
     ];
 
     protected $dates = [
-        'date_price'
+        'date_price',
     ];
 
     protected $fillable = [
     ];
-
 
     public function getDatePriceAttribute($value)
     {
@@ -45,5 +42,4 @@ class RelationValue extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
 }

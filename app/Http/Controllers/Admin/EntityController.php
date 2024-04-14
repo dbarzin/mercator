@@ -36,7 +36,9 @@ class EntityController extends Controller
         $entityTypes = Entity::select('entity_type')
             ->where('entity_type', '<>', null)->distinct()
             ->orderBy('entity_type')->pluck('entity_type');
-        return view('admin.entities.create', compact('processes', 'entityTypes', 'applications', 'databases'));
+        $entities = Entity::orderBy('name')->pluck('name', 'id');
+
+        return view('admin.entities.create', compact('processes', 'entityTypes', 'applications', 'databases', 'entities'));
     }
 
     public function store(StoreEntityRequest $request)
@@ -76,8 +78,9 @@ class EntityController extends Controller
             ->where('entity_type', '<>', null)->distinct()
             ->orderBy('entity_type')->pluck('entity_type');
         $entity->load('entitiesProcesses', 'applications', 'databases');
+        $entities = Entity::orderBy('name')->pluck('name', 'id');
 
-        return view('admin.entities.edit', compact('entity', 'entityTypes', 'processes', 'applications', 'databases'));
+        return view('admin.entities.edit', compact('entity', 'entityTypes', 'processes', 'applications', 'databases', 'entities'));
     }
 
     public function update(UpdateEntityRequest $request, Entity $entity)

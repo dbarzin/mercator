@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRelationRequest;
 use App\Http\Requests\StoreRelationRequest;
@@ -10,8 +9,8 @@ use App\Http\Requests\UpdateRelationRequest;
 use App\Relation;
 use App\RelationValue;
 use Gate;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class RelationController extends Controller
 {
@@ -24,23 +23,6 @@ class RelationController extends Controller
         return view('admin.relations.index', compact('relations'));
     }
 
-    private function getAttributes() {
-        $attributes_list = Relation::select('attributes')
-            ->where('attributes', '<>', null)
-            ->distinct()
-            ->pluck('attributes');
-        $res = [];
-        foreach ($attributes_list as $i) {
-            foreach (explode(' ', $i) as $j) {
-                if (strlen(trim($j)) > 0) {
-                    $res[] = trim($j);
-                }
-            }
-        }
-        sort($res);
-        return array_unique($res);
-    }
-    
     public function create()
     {
         abort_if(Gate::denies('relation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -82,16 +64,17 @@ class RelationController extends Controller
         session()->forget('documents');
 
         // Save date - values
-        $dates = $request["dates"];
-        $values = $request["values"];
-        if ($dates!=null)
-            for($i =0; $i< count($dates); $i++) {
-                $relationValue = new RelationValue;
+        $dates = $request['dates'];
+        $values = $request['values'];
+        if ($dates !== null) {
+            for ($i = 0; $i < count($dates); $i++) {
+                $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->settDatePriceAttribute($dates[$i]);
                 $relationValue->save();
             }
+        }
 
         return redirect()->route('admin.relations.index');
     }
@@ -124,11 +107,11 @@ class RelationController extends Controller
         }
         session()->put('documents', $documents);
 
-        $values=DB::table('relation_values')->select(['date_price','price'])->where('relation_id','=',$relation->id)->orderBy('date_price')->get();
+        $values = DB::table('relation_values')->select(['date_price','price'])->where('relation_id', '=', $relation->id)->orderBy('date_price')->get();
 
         return view(
             'admin.relations.edit',
-            compact('sources', 'destinations', 'relation', 'type_list', 'attributes_list', 'responsibles_list','values')
+            compact('sources', 'destinations', 'relation', 'type_list', 'attributes_list', 'responsibles_list', 'values')
         );
     }
 
@@ -147,16 +130,17 @@ class RelationController extends Controller
         RelationValue::where('relation_id', $relation->id)->delete();
 
         // Save date - values
-        $dates = $request["dates"];
-        $values = $request["values"];
-        if ($dates!=null)
-            for($i =0; $i< count($dates); $i++) {
-                $relationValue = new RelationValue;
+        $dates = $request['dates'];
+        $values = $request['values'];
+        if ($dates !== null) {
+            for ($i = 0; $i < count($dates); $i++) {
+                $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
                 $relationValue->settDatePriceAttribute($dates[$i]);
                 $relationValue->save();
             }
+        }
 
         return redirect()->route('admin.relations.index');
     }
@@ -184,5 +168,23 @@ class RelationController extends Controller
         Relation::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Relation::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
     }
 }

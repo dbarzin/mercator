@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\LogicalFlow;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
+use App\LogicalFlow;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,7 +39,7 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.logicalFlows.edit',compact('logicalFlow'));
+        return view('admin.logicalFlows.edit', compact('logicalFlow'));
     }
 
     public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)
