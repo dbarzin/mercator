@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\LogicalFlow;
 use App\Router;
 use App\Subnetwork;
-use App\LogicalFlow;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class ExplorerController extends Controller
@@ -358,22 +357,26 @@ class ExplorerController extends Controller
             // Get sources
             $sources = [];
             foreach ($logicalServers as $server) {
-                foreach(explode(",", $server->address_ip) as $ip)
-                    if ($flow->isSource($ip))
+                foreach (explode(',', $server->address_ip) as $ip) {
+                    if ($flow->isSource($ip)) {
                         array_push($sources, $server->id);
+                    }
+                }
             }
             // Get destinations
             $destinations = [];
             foreach ($logicalServers as $server) {
-                foreach(explode(",", $server->address_ip) as $ip)
-                    if ($flow->isDestination($ip))
+                foreach (explode(',', $server->address_ip) as $ip) {
+                    if ($flow->isDestination($ip)) {
                         array_push($destinations, $server->id);
+                    }
+                }
             }
 
             // Add source <-> destination flows
             foreach ($sources as $source) {
                 foreach ($destinations as $destination) {
-                    $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_',$destination));
+                    $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_', $destination));
                 }
             }
         }
@@ -607,11 +610,12 @@ class ExplorerController extends Controller
         // Ecosystem - 1
         // ---------------------------------------------------
         // Entities
-        $entities = DB::table('entities')->select('id', 'name','parent_entity_id')->whereNull('deleted_at')->get();
+        $entities = DB::table('entities')->select('id', 'name', 'parent_entity_id')->whereNull('deleted_at')->get();
         foreach ($entities as $entity) {
             $this->addNode($nodes, 1, $this->formatId('ENTITY_', $entity->id), $entity->name, '/images/entity.png', 'entities');
-            if ($entity->parent_entity_id!=null)
+            if ($entity->parent_entity_id !== null) {
                 $this->addFluxEdge($edges, null, false, $this->formatId('ENTITY_', $entity->id), $this->formatId('ENTITY_', $entity->parent_entity_id));
+            }
         }
 
         // Relations

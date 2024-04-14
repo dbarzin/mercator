@@ -37,7 +37,7 @@ class Entity extends Model
         'contact_point',
         'is_external',
         'entity_type',
-        'parent_entity_id'
+        'parent_entity_id',
     ];
 
     public function databases()

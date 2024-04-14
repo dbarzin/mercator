@@ -38,13 +38,19 @@ class LogicalFlow extends Model
         'description',
     ];
 
-
-    public function isSource(string $ip): bool {
+    public function isSource(string $ip): bool
+    {
         return $this->contains($this->source_ip_range, $ip);
     }
 
-    public function isDestination(string $ip): bool {
+    public function isDestination(string $ip): bool
+    {
         return $this->contains($this->dest_ip_range, $ip);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -81,10 +87,5 @@ class LogicalFlow extends Model
             return ($ip & $mask) === ($net & $mask);
         }
         return false;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }
