@@ -242,6 +242,7 @@ return [
             "end_validity" => "End date",
             "end_validity_helper" => "Certificate Expiry Date",
             'last_notification' => 'Expiracy notification date',
+            'last_notification_helper' => 'Date on which a notification was last sent about this certificate',
             "logical_servers" => "Logical Servers",
             "logical_servers_helper" => "Logical servers where this certificate is installed",
             "name" => "Name",

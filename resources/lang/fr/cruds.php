@@ -241,6 +241,7 @@ return [
             'end_validity' => 'Date de fin',
             'end_validity_helper' => 'Date de fin de validité du certificat',
             'last_notification' => 'Date de notification d\'expiration',
+            'last_notification_helper' => 'Date à laquelle une notification a été envoyée pour la dernière fois à propos de ce certificat',
             'logical_servers' => 'Serveurs logiques',
             'logical_servers_helper' => 'Serveurs logiques où est installé ce certificat',
             'name' => 'Nom',
