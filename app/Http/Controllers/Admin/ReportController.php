@@ -646,16 +646,16 @@ class ReportController extends Controller
             });
 
         // filter linked objects
-        $application_ids = [];
-        $service_ids = [];
-        $module_ids = [];
+        $application_ids = collect();
+        $service_ids = collect();
+        $module_ids = collect();
 
         // loop on flows
         foreach ($flows as $flux) {
             // applications
             if (($flux->application_source_id !== null) &&
-               (! in_array($flux->application_source_id, $application_ids))) {
-                array_push($application_ids, $flux->application_source_id);
+               (! $application_ids->contains($flux->application_source_id))) {
+                $application_ids->push($flux->application_source_id);
             }
             if (($flux->application_dest_id !== null) &&
                (! in_array($flux->application_dest_id, $application_ids))) {
@@ -664,32 +664,32 @@ class ReportController extends Controller
 
             // services
             if (($flux->service_source_id !== null) &&
-               (! in_array($flux->service_source_id, $service_ids))) {
-                array_push($service_ids, $flux->service_source_id);
+               (! $service_ids->contains($flux->service_source_id))) {
+                $service_ids->push($flux->service_source_id);
             }
             if (($flux->service_dest_id !== null) &&
-               (! in_array($flux->service_dest_id, $service_ids))) {
-                array_push($service_ids, $flux->service_dest_id);
+               (! $service_ids->contains($flux->service_dest_id))) {
+                $service_ids->push($flux->service_dest_id);
             }
 
             // modules
             if (($flux->module_source_id !== null) &&
-               (! in_array($flux->module_source_id, $module_ids))) {
-                array_push($module_ids, $flux->module_source_id);
+               (! $module_ids->contains($flux->module_source_id))) {
+                $module_ids->push($flux->module_source_id);
             }
             if (($flux->module_dest_id !== null) &&
-               (! in_array($flux->module_dest_id, $module_ids))) {
-                array_push($module_ids, $flux->module_dest_id);
+               (! $module_ids->contains($flux->module_dest_id))) {
+                $module_ids->push($flux->module_dest_id);
             }
 
             // databases
             if (($flux->database_source_id !== null) &&
-               (! in_array($flux->database_source_id, $database_ids))) {
-                array_push($database_ids, $flux->database_source_id);
+               (!$database_ids->contains($flux->database_source_id))) {
+                $database_ids->push($flux->database_source_id);
             }
             if (($flux->database_dest_id !== null) &&
-               (! in_array($flux->database_dest_id, $database_ids))) {
-                array_push($database_ids, $flux->database_dest_id);
+               (! $database_ids->contains($flux->database_dest_id))) {
+                $database_ids->push($flux->database_dest_id);
             }
         }
 
@@ -711,18 +711,12 @@ class ReportController extends Controller
         $all_applicationBlocks = ApplicationBlock::All()->sortBy('name')->pluck('name', 'id');
         $all_applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
         $all_databases = Database::All()->sortBy('name')->pluck('name', 'id');
-        // $all_applicationServices = ApplicationService::All()->sortBy("name")->pluck("name","id");
-        // $all_applicationModules = ApplicationModule::All()->sortBy("name")->pluck("name","id");
-        // $all_databases = Database::All()->sortBy("name")->pluck("name","id");
 
         // return
         return view('admin/reports/application_flows')
             ->with('all_applicationBlocks', $all_applicationBlocks)
             ->with('all_applications', $all_applications)
             ->with('all_databases', $all_databases)
-            // ->with("all_applicationModules",$all_applicationModules)
-            // ->with("all_applicationServices",$all_applicationServices)
-            // ->with("all_databases",$all_databases)
             ->with('applications', $applications)
             ->with('applicationServices', $applicationServices)
             ->with('applicationModules', $applicationModules)
