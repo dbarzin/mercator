@@ -619,12 +619,6 @@ class ReportController extends Controller
             ->unique();
 
         $database_ids = collect($databases);
-        /*
-        $database_ids = DB::table('m_applications')
-            ->join('database_m_application', 'm_applications.id', '=', 'database_m_application.m_application_id')
-            ->pluck('database_id')
-            ->unique();
-        */
 
         // get all flows
         $flows = Flux::All()->sortBy('name');
@@ -652,10 +646,9 @@ class ReportController extends Controller
             });
 
         // filter linked objects
-        $application_ids = []; //$application_ids->toArray();
+        $application_ids = [];
         $service_ids = [];
         $module_ids = [];
-        $database_ids = [];
 
         // loop on flows
         foreach ($flows as $flux) {
