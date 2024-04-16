@@ -658,8 +658,8 @@ class ReportController extends Controller
                 $application_ids->push($flux->application_source_id);
             }
             if (($flux->application_dest_id !== null) &&
-               (! in_array($flux->application_dest_id, $application_ids))) {
-                array_push($application_ids, $flux->application_dest_id);
+               (! $application_ids->contains($flux->application_dest_id))) {
+                $application_ids->push($flux->application_dest_id);
             }
 
             // services
