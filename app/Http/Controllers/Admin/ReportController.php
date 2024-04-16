@@ -583,30 +583,48 @@ class ReportController extends Controller
             }
         }
 
+        // Databases
+        if ($request->databases === null) {
+            $request->session()->put('databases', []);
+            $databases = [];
+        } else {
+            if ($request->databases !== null) {
+                $databases = $request->databases;
+                $request->session()->put('databases', $databases);
+            } else {
+                $databases = $request->session()->get('databases');
+            }
+        }
+
         // Get assets
         $application_ids = DB::table('m_applications')
             ->whereIn('application_block_id', $applicationBlocks)
+            ->whereNull('deleted_at')
             ->orWhereIn('id', $applications)
             ->pluck('id');
 
         $applicationservice_ids = DB::table('m_applications')
             ->join('application_service_m_application', 'm_applications.id', '=', 'application_service_m_application.m_application_id')
             ->whereIn('application_block_id', $applicationBlocks)
+            ->whereNull('deleted_at')
             ->pluck('application_service_id')
             ->unique();
 
         $applicationmodule_ids = DB::table('m_applications')
             ->join('application_service_m_application', 'm_applications.id', '=', 'application_service_m_application.m_application_id')
             ->join('application_module_application_service', 'application_service_m_application.application_service_id', '=', 'application_module_application_service.application_service_id')
+            ->whereNull('deleted_at')
             ->whereIn('application_block_id', $applicationBlocks)
             ->pluck('application_module_id')
             ->unique();
 
+        $database_ids = collect($databases);
+        /*
         $database_ids = DB::table('m_applications')
             ->join('database_m_application', 'm_applications.id', '=', 'database_m_application.m_application_id')
-            ->whereIn('application_block_id', $applicationBlocks)
             ->pluck('database_id')
             ->unique();
+        */
 
         // get all flows
         $flows = Flux::All()->sortBy('name');
@@ -699,6 +717,7 @@ class ReportController extends Controller
         // update lists
         $all_applicationBlocks = ApplicationBlock::All()->sortBy('name')->pluck('name', 'id');
         $all_applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
+        $all_databases = Database::All()->sortBy('name')->pluck('name', 'id');
         // $all_applicationServices = ApplicationService::All()->sortBy("name")->pluck("name","id");
         // $all_applicationModules = ApplicationModule::All()->sortBy("name")->pluck("name","id");
         // $all_databases = Database::All()->sortBy("name")->pluck("name","id");
@@ -707,6 +726,7 @@ class ReportController extends Controller
         return view('admin/reports/application_flows')
             ->with('all_applicationBlocks', $all_applicationBlocks)
             ->with('all_applications', $all_applications)
+            ->with('all_databases', $all_databases)
             // ->with("all_applicationModules",$all_applicationModules)
             // ->with("all_applicationServices",$all_applicationServices)
             // ->with("all_databases",$all_databases)

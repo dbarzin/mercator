@@ -58,6 +58,11 @@ class Certificate extends Model
         $this->attributes['end_validity'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
+    public function getLastNotificationAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
     public function logical_servers()
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
