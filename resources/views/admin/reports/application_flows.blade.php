@@ -20,7 +20,7 @@
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <td>
-                                    {{ trans('cruds.applicationBlock.title') }} :
+                                    {{ trans('cruds.applicationBlock.title') }}
                                     <div style="padding-bottom: 4px">
                                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -32,7 +32,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    {{ trans('cruds.application.title') }} :
+                                    {{ trans('cruds.application.title') }}
                                     <div style="padding-bottom: 4px">
                                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -44,7 +44,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    {{ trans('cruds.database.title') }} :
+                                    {{ trans('cruds.database.title') }}
                                     <div style="padding-bottom: 4px">
                                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -67,7 +67,7 @@
             @if($flows->count()>0)
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.flux.title') }} :
+                    {{ trans('cruds.flux.title') }}
                 </div>
 
                 <div class="card-body">
