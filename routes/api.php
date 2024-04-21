@@ -52,6 +52,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('dhcp-servers', API\DhcpServerController::class);
     Route::resource('dnsservers', API\DnsserverController::class);
     Route::resource('logical-servers', API\LogicalServerController::class);
+    Route::resource('logical-flows', API\LogicalFlowController::class);
     Route::resource('certificates', API\CertificateController::class);
 
     Route::resource('sites', API\SiteController::class);
