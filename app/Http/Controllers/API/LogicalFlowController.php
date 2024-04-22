@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroylogicalFlowRequest;
-use App\Http\Requests\StorelogicalFlowRequest;
-use App\Http\Requests\UpdatelogicalFlowRequest;
+use App\Http\Requests\MassDestroyLogicalFlowRequest;
+use App\Http\Requests\StoreLogicalFlowRequest;
+use App\Http\Requests\UpdateLogicalFlowRequest;
 use App\Http\Resources\Admin\logicalFlowResource;
 use App\LogicalFlow;
 use Gate;
@@ -23,7 +23,7 @@ class LogicalFlowController extends Controller
         return response()->json($logicalFlows);
     }
 
-    public function store(StorelogicalFlowRequest $request)
+    public function store(StoreLogicalFlowRequest $request)
     {
         Log::Debug('LogicalFlowController:store Start');
 
@@ -38,14 +38,14 @@ class LogicalFlowController extends Controller
         return response()->json($logicalFlow, 201);
     }
 
-    public function show(logicalFlow $logicalFlow)
+    public function show(LogicalFlow $logicalFlow)
     {
         abort_if(Gate::denies('logical_flow_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new logicalFlowResource($logicalFlow);
     }
 
-    public function update(UpdatelogicalFlowRequest $request, logicalFlow $logicalFlow)
+    public function update(UpdateLogicalFlowRequest $request, logicalFlow $logicalFlow)
     {
         abort_if(Gate::denies('logical_flow_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -54,7 +54,7 @@ class LogicalFlowController extends Controller
         return response()->json();
     }
 
-    public function destroy(logicalFlow $logicalFlow)
+    public function destroy(LogicalFlow $logicalFlow)
     {
         abort_if(Gate::denies('logical_flow_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -63,7 +63,7 @@ class LogicalFlowController extends Controller
         return response()->json();
     }
 
-    public function massDestroy(MassDestroylogicalFlowRequest $request)
+    public function massDestroy(MassDestroyLogicalFlowRequest $request)
     {
         abort_if(Gate::denies('logical_flow_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
