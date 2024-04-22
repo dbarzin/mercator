@@ -5,6 +5,10 @@
         {{ trans('global.back_to_list') }}
     </a>
 
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?flow={{$logicalFlow->id}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('lan_edit')
     <a class="btn btn-info" href="{{ route('admin.logical-flows.edit', $logicalFlow->id) }}">
         {{ trans('global.edit') }}
