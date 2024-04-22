@@ -18,7 +18,7 @@ php artisan passport:install
 ### Les APIs
 
 Pour chaque objet du modèle de données de la cartographie, il existe une API.
-La liste des API se trouve dans le fichier /route/api.php 
+La liste des API se trouve dans le fichier /route/api.php
 
 __Vue du RGPD__
 
@@ -68,7 +68,9 @@ __Vue de l'infrastructure logique__
 - /api/dhcp-servers
 - /api/dnsservers
 - /api/logical-servers
+- /api/logical-flows
 - /api/certificates
+- /api/vlans
 
 __Vue de l'infrastructure physique__
 
@@ -87,7 +89,6 @@ __Vue de l'infrastructure physique__
 - /api/wans
 - /api/mans
 - /api/lans
-- /api/vlans
 
 __Administration__
 
