@@ -69,6 +69,7 @@ _Logical infrastructure view_
 - /api/security-devices
 - /api/dhcp-servers
 - /api/dnsservers
+- /api/clusters
 - /api/logical-servers
 - /api/logical-flows
 - /api/certificates
