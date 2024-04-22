@@ -4,7 +4,7 @@
 
 ### RGPD view
 
-The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system. 
+The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.
 
 This view is used to fulfill the obligations set out in article 30 of the RGPD.
 
@@ -102,7 +102,7 @@ Table *relations* :
 
 ### Business view of the information system
 
-The business view of the information system describes all the organization's business processes and the players involved, independently of the technological choices made by the organization and the resources made available to it. 
+The business view of the information system describes all the organization's business processes and the players involved, independently of the technological choices made by the organization and the resources made available to it.
 
 [<img src="/mercator/images/information_system.png" width="600">](/mercator/images/information_system.png)
 
@@ -243,13 +243,13 @@ Table *information* :
 
 ### Application view
 
-The application view is used to describe part of what is classically referred to as the "computer system". 
+The application view is used to describe part of what is classically referred to as the "computer system".
 
 [<img src="/mercator/images/applications.png" width="600">](/mercator/images/applications.png)
 
 This view describes the technological solutions that support business processes, mainly applications.
 
-#### Application block 
+#### Application block
 
 An application block represents a set of applications.
 
@@ -305,7 +305,7 @@ Table *m_applications* :
 
 #### Service applicatif
 
-Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail. 
+Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.
 
 Un service applicatif peut, une API, ...
 
@@ -340,7 +340,7 @@ Table *application_modules* :
 
 #### Base de données
 
-Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement. 
+Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
 
 Table *databases* :
 
@@ -367,7 +367,7 @@ Un flux est un échange d’informations entre un émetteur ou un récepteur (ap
 
 Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.
 
-Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux. 
+Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux.
 
 Table *fluxes* :
 
@@ -396,7 +396,7 @@ La vue de l’administration répertorie l’administration des ressources, des 
 
 [<img src="/mercator/images/administration.png" width="400">](/mercator/images/administration.png)
 
-Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les opérateurs d’importance vitale (OIV). 
+Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les opérateurs d’importance vitale (OIV).
 
 #### Zone d’administration
 
@@ -452,7 +452,7 @@ Table *forest_ads* :
 
 ### L’infrastructure logiques
 
-La vue de l'infrastructure logique correspond à la répartition logique du réseau. 
+La vue de l'infrastructure logique correspond à la répartition logique du réseau.
 
 [<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
 
@@ -574,11 +574,11 @@ Table *routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Équipements de sécurité 
+#### Équipements de sécurité
 
 Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.
 
-Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements. 
+Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements.
 
 Table *security_devices* :
 
@@ -621,11 +621,25 @@ Table *dnsservers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
+#### Clusters
+
+Les clusters représentent un ensemble de serveurs logiques hébergés sur un ou plusieurs serveurs physiques
+
+Table *clusters* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du serveur |
+| type                 | varchar(255) | Type de cluster |
+| description          | longtext     | Description du cluster |
+| address_ip           | varchar(255) | Adresses IP du cluster |
+
+
 #### Serveurs logiques
 
 Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il est découpé en un seul serveur logique.
 
-Dans la cas de la virtualisation d’un groupe de serveurs physique aussi appelé « cluster », on peut associer tous les serveurs physiques du cluster au serveur logique.
 
 Table *logical_servers* :
 
@@ -676,7 +690,7 @@ Table *certificates* :
 
 ### L’infrastructure physique
 
-La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci. 
+La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci.
 
 [<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
 
@@ -719,7 +733,7 @@ Table *buildings* :
 
 Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
 
-Table *bays* : 
+Table *bays* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -827,7 +841,7 @@ Les téléphones fixe ou portable appartenant à l’organisation.
 
 Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein d’un réseau.
 
-Table *physical_switches* : 
+Table *physical_switches* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -883,7 +897,7 @@ Les équipements de sécurité physique sont des composants permettant la superv
 
 Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...
 
-Table *physical_security_devices* : 
+Table *physical_security_devices* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -956,4 +970,3 @@ Table *vlans* :
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
-
