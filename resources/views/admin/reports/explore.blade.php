@@ -270,25 +270,25 @@
                 }
 
                 if (exists(params.nodes[0], edge.attachedNodeId, edge.name).length==0)
-{
-    if(edge.edgeType === 'FLUX') {
-        if(edge.edgeDirection === 'TO') {
-            if (edge.bidirectional)
-                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true });
-            else
-                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {to: {enabled: true, type: 'arrow'}}, physics: true });
-        } else if(edge.edgeDirection === 'FROM') {
-            if (edge.bidirectional)
-                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true })
-            else
-                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
-        }
-    } else if(edge.edgeType === 'CABLE') {
-        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5, physics: true });
-    } else if(edge.edgeType === 'LINK') {
-        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, physics: true });
-    }
-}
+                {
+                    if(edge.edgeType === 'FLUX') {
+                        if(edge.edgeDirection === 'TO') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true });
+                            else
+                                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {to: {enabled: true, type: 'arrow'}}, physics: true });
+                        } else if(edge.edgeDirection === 'FROM') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: edge.attachedNodeId, to: params.nodes[0], length:200, arrows: {to: {enabled: true, type: 'arrow'}, from: {enabled: true, type: 'arrow'}}, physics: true })
+                            else
+                                edges.add({ label: edge.name, from: params.nodes[0], to: edge.attachedNodeId, length:200, arrows: {from: {enabled: true, type: 'arrow'}}, physics: true })
+                        }
+                    } else if(edge.edgeType === 'CABLE') {
+                        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5, physics: true });
+                    } else if(edge.edgeType === 'LINK') {
+                        edges.add({ from: params.nodes[0], to: edge.attachedNodeId, physics: true });
+                    }
+                }
             }
         }
     }
@@ -297,11 +297,11 @@
     if (!physicsCheckbox.checked) {
         setTimeout(() => {
             nodes.update(newlyAddedNodes.map(id => ({ id, physics: false })));
-        }, 1500);
-    }
+            }, 1500);
+        }
 
     network.redraw();
-});
+    });
         // Adds a contextmenu for quickaccess from nodes
 
         let contextMenu = document.getElementById("explore_context");
@@ -401,21 +401,21 @@
       if (this.checked) {
         network.setOptions({
         nodes: {
-         physics: true
-      },
-          edges: {
-          smooth: {
-          type: "dynamic"
-      }
-          }
+            physics: true
+            },
+            edges: {
+                smooth: {
+                type: "dynamic"
+                }
+            }
         });
         // update all nodes
         nodes.update(nodes.getIds().map(id => ({ id, physics: true })));
-      } else {
+        } else {
         network.setOptions({
            nodes: {
              physics: false
-      },
+            },
         edges: {
             smooth: {
               type: "continuous"
@@ -424,7 +424,7 @@
         });
         // update all nodes
         nodes.update(nodes.getIds().map(id => ({ id, physics: false  })));
-      }
+        }
     });
 
     // Toggle physics by keypress "p"
@@ -485,39 +485,39 @@
     }
 
 
-function addEdge(sourceNodeId, targetNodeId) {
-    var edgeList = _nodes.get(sourceNodeId).edges;
-    for (const edge of edgeList) {
-        if (edge.attachedNodeId === targetNodeId) {
-            if (edge.edgeType === 'FLUX') {
-                if (edge.edgeDirection === 'TO') {
-                    if (edge.bidirectional)
-                        edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
-                    else
-                        edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' } } });
-                } else if (edge.edgeDirection === 'FROM') {
-                    if (edge.bidirectional)
-                        edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
-                    else
-                        edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { from: { enabled: true, type: 'arrow' } } });
+    function addEdge(sourceNodeId, targetNodeId) {
+        var edgeList = _nodes.get(sourceNodeId).edges;
+        for (const edge of edgeList) {
+            if (edge.attachedNodeId === targetNodeId) {
+                if (edge.edgeType === 'FLUX') {
+                    if (edge.edgeDirection === 'TO') {
+                        if (edge.bidirectional)
+                            edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
+                        else
+                            edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' } } });
+                    } else if (edge.edgeDirection === 'FROM') {
+                        if (edge.bidirectional)
+                            edges.add({ label: edge.name, from: targetNodeId, to: sourceNodeId, length: 200, arrows: { to: { enabled: true, type: 'arrow' }, from: { enabled: true, type: 'arrow' } } });
+                        else
+                            edges.add({ label: edge.name, from: sourceNodeId, to: targetNodeId, length: 200, arrows: { from: { enabled: true, type: 'arrow' } } });
+                    }
+                } else if (edge.edgeType === 'CABLE') {
+                    edges.add({ from: sourceNodeId, to: targetNodeId, color: 'blue', width: 5 });
+                } else if (edge.edgeType === 'LINK') {
+                    edges.add({ from: sourceNodeId, to: targetNodeId });
                 }
-            } else if (edge.edgeType === 'CABLE') {
-                edges.add({ from: sourceNodeId, to: targetNodeId, color: 'blue', width: 5 });
-            } else if (edge.edgeType === 'LINK') {
-                edges.add({ from: sourceNodeId, to: targetNodeId });
             }
         }
     }
-}
 
-// Gets filtered entities from #filter field
-function getFilter(){
+    // Gets filtered entities from #filter field
+    function getFilter(){
             let filter = [];
             for (let option of document.getElementById('filters').options)
                 if (option.selected)
                   filter.push(option.value);
             return filter
-}
+    }
 
 
     function apply_filter() {
