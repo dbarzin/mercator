@@ -65,18 +65,21 @@ Entities are departments, suppliers, partners with whom information is exchanged
 
 Table *entities* :
 
-| Field | Type | Description |
-|:---------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Name of entity |
-| is_external | boolean | External entity |
-| security_level | longtext | Security level |
-| contact_point | longtext | Contact point |
-| description | longtext | Entity description |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date of update |
-| deleted_at | timestamp | Date of deletion |
-
+| Field             | Type         | Description |
+|:------------------|:-------------|:-----------------|
+| id                | int unsigned | Unique identifier of the entity |
+| name              | varchar(255) | Name of entity |
+| entity_type       | varchar(255) | Type of entity |
+| attributes        | varchar(255) | Attributes (#tag...) |
+| reference         | varchar(255) | Reference number of the entity (billing) |
+| parent_entity_id  | int unsigned | Pointer to the parent entity |
+| is_external       | boolean       | External entity |
+| security_level    | longtext      | Security level |
+| contact_point     | longtext      | Contact point |
+| description       | longtext      | Entity description |
+| created_at        | timestamp     | Date of creation |
+| updated_at        | timestamp     | Date of update |
+| deleted_at        | timestamp     | Date of deletion |
 
 #### Relationships
 
@@ -86,19 +89,30 @@ Relationships are contracts, service agreements, legal obligations... that have 
 
 Table *relations* :
 
-| Field | Type | Description |
-|:---------------|:-------------|:-----------------|
-| id | int unsigned | auto_increment |
-| name | varchar(255) | Relationship name |
-| description | longtext | Description of relationship |
-| type | varchar(255) | Type of relationship |
-| importance | int | Importance of relationship |
-| source_id | int unsigned | Reference to source entity |
+| Field         | Type | Description |
+|:--------------|:-------------|:-----------------|
+| id            | int unsigned | auto_increment |
+| name          | varchar(255) | Relationship name |
+| type          | varchar(255) | Type of relationship |
+| attributes      | varchar(255) | Attributes (#tag...) |
+| description   | longtext | Description of relationship |
+| source_id     | int unsigned | Reference to source entity |
 | destination_id | int unsigned | Reference to destination entity |
-| created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date updated |
-| deleted_at | timestamp | Date of deletion |
-
+| reference       | varchar(255) | Reference number of the relation (billing) |
+| responsible     | varchar(255) | Responsible of the relation |
+| order_number    | varchar(255) | Ordre number (billing) |
+| active          | tinyint(1)   | Is the reation still active |
+| start_date      | date         | Start date of the relation |
+| end_date        | date         | End date of the relation |
+| comments        | text         | Comment on the status of the relation |
+| importance      | int          | Importance of relationship |
+| security_need_c | int          | Confidentiality level need |
+| security_need_i | int          | Integrity level need  |
+| security_need_a | int          | Available level need |
+| security_need_t | int          | Tracability level need  |
+| created_at    | timestamp | Date of creation |
+| updated_at    | timestamp | Date updated |
+| deleted_at    | timestamp | Date of deletion |
 
 ### Business view of the information system
 
