@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,10 @@ class StoreClusterRequest extends FormRequest
                 'max:32',
                 'required',
                 'unique:clusters,name,NULL,id,deleted_at,NULL',
+            ],
+            'address_ip' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

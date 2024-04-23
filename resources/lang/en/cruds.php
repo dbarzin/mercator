@@ -270,6 +270,8 @@ return [
             'type_helper' => 'Cluster type',
             'description' => 'Description',
             'description_helper' => 'Cluster description',
+            'address_ip' => 'IP Adress',
+            'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'physical_servers' => 'Physical servers',
             'physical_servers_helper' => 'Group of physical servers',
             'logical_servers' => 'Logical servers',

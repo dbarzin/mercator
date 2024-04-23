@@ -52,6 +52,17 @@
                 <span class="help-block">{{ trans('cruds.cluster.fields.description_helper') }}</span>
             </div>
 
+            <div class="form-group">
+                <label class="recommended" for="description">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $cluster->address_ip) }}">
+                @if($errors->has('address_ip'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('address_ip') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cluster.fields.address_ip_helper') }}</span>
+            </div>
+
 
             <div class="row">
                 <div class="col-sm">

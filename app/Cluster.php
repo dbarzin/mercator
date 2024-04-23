@@ -32,6 +32,7 @@ class Cluster extends Model
         'name',
         'description',
         'type',
+        'address_ip',
         'created_at',
         'updated_at',
         'deleted_at',

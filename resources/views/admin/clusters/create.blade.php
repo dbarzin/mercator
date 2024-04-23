@@ -52,6 +52,17 @@
             </div>
 
             <div class="form-group">
+                <label class="required" for="name">{{ trans('cruds.cluster.fields.address_ip') }}</label>
+                <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', '') }}">
+                @if($errors->has('address_ip'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('address_ip') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.cluster.fields.address_ip_helper') }}</span>
+            </div>
+
+            <div class="form-group">
                 <label for="logical_servers">{{ trans('cruds.cluster.fields.logical_servers') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
