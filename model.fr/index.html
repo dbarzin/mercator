@@ -381,6 +381,31 @@
 <td align="left">Nom de l'entité</td>
 </tr>
 <tr>
+<td align="left">entity_type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type d'entité</td>
+</tr>
+<tr>
+<td align="left">attributes</td>
+<td align="left">varchar(255)</td>
+<td align="left">Attributs (#tag...)</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de l'entité</td>
+</tr>
+<tr>
+<td align="left">reference</td>
+<td align="left">varchar(255)</td>
+<td align="left">Numéro de référence de l'entité (facturation)</td>
+</tr>
+<tr>
+<td align="left">parent_entity_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Entité parente</td>
+</tr>
+<tr>
 <td align="left">is_external</td>
 <td align="left">boolean</td>
 <td align="left">Entité externe</td>
@@ -394,11 +419,6 @@
 <td align="left">contact_point</td>
 <td align="left">longtext</td>
 <td align="left">Point de contact</td>
-</tr>
-<tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'entité</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
@@ -441,19 +461,14 @@
 <td align="left">Nom de la relation</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la relation</td>
-</tr>
-<tr>
 <td align="left">type</td>
 <td align="left">varchar(255)</td>
 <td align="left">Type de la relation</td>
 </tr>
 <tr>
-<td align="left">importance</td>
-<td align="left">int</td>
-<td align="left">Importance de la relation</td>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description de la relation</td>
 </tr>
 <tr>
 <td align="left">source_id</td>
@@ -464,6 +479,66 @@
 <td align="left">destination_id</td>
 <td align="left">int unsigned</td>
 <td align="left">Référence vers l'entité destinataire</td>
+</tr>
+<tr>
+<td align="left">reference</td>
+<td align="left">varchar(255)</td>
+<td align="left">Numéro de référence de la relation (facturation)</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsable de la relation</td>
+</tr>
+<tr>
+<td align="left">order_number</td>
+<td align="left">varchar(255)</td>
+<td align="left">Numéro de commande (facturation)</td>
+</tr>
+<tr>
+<td align="left">active</td>
+<td align="left">tinyint(1)</td>
+<td align="left">La relation est encore active</td>
+</tr>
+<tr>
+<td align="left">start_date</td>
+<td align="left">date</td>
+<td align="left">Début de la relation</td>
+</tr>
+<tr>
+<td align="left">end_date</td>
+<td align="left">date</td>
+<td align="left">Fin de la relation</td>
+</tr>
+<tr>
+<td align="left">comments</td>
+<td align="left">text</td>
+<td align="left">Commentaires sur l'état de la relation</td>
+</tr>
+<tr>
+<td align="left">importance</td>
+<td align="left">int</td>
+<td align="left">Importance de la relation</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentialité</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Intégrité</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Disponibilité</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Traçabilité</td>
 </tr>
 <tr>
 <td align="left">created_at</td>

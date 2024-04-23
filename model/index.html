@@ -373,12 +373,32 @@
 <tr>
 <td align="left">id</td>
 <td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td align="left">Unique identifier of the entity</td>
 </tr>
 <tr>
 <td align="left">name</td>
 <td align="left">varchar(255)</td>
 <td align="left">Name of entity</td>
+</tr>
+<tr>
+<td align="left">entity_type</td>
+<td align="left">varchar(255)</td>
+<td align="left">Type of entity</td>
+</tr>
+<tr>
+<td align="left">attributes</td>
+<td align="left">varchar(255)</td>
+<td align="left">Attributes (#tag...)</td>
+</tr>
+<tr>
+<td align="left">reference</td>
+<td align="left">varchar(255)</td>
+<td align="left">Reference number of the entity (billing)</td>
+</tr>
+<tr>
+<td align="left">parent_entity_id</td>
+<td align="left">int unsigned</td>
+<td align="left">Pointer to the parent entity</td>
 </tr>
 <tr>
 <td align="left">is_external</td>
@@ -441,19 +461,19 @@
 <td align="left">Relationship name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of relationship</td>
-</tr>
-<tr>
 <td align="left">type</td>
 <td align="left">varchar(255)</td>
 <td align="left">Type of relationship</td>
 </tr>
 <tr>
-<td align="left">importance</td>
-<td align="left">int</td>
-<td align="left">Importance of relationship</td>
+<td align="left">attributes</td>
+<td align="left">varchar(255)</td>
+<td align="left">Attributes (#tag...)</td>
+</tr>
+<tr>
+<td align="left">description</td>
+<td align="left">longtext</td>
+<td align="left">Description of relationship</td>
 </tr>
 <tr>
 <td align="left">source_id</td>
@@ -464,6 +484,66 @@
 <td align="left">destination_id</td>
 <td align="left">int unsigned</td>
 <td align="left">Reference to destination entity</td>
+</tr>
+<tr>
+<td align="left">reference</td>
+<td align="left">varchar(255)</td>
+<td align="left">Reference number of the relation (billing)</td>
+</tr>
+<tr>
+<td align="left">responsible</td>
+<td align="left">varchar(255)</td>
+<td align="left">Responsible of the relation</td>
+</tr>
+<tr>
+<td align="left">order_number</td>
+<td align="left">varchar(255)</td>
+<td align="left">Ordre number (billing)</td>
+</tr>
+<tr>
+<td align="left">active</td>
+<td align="left">tinyint(1)</td>
+<td align="left">Is the reation still active</td>
+</tr>
+<tr>
+<td align="left">start_date</td>
+<td align="left">date</td>
+<td align="left">Start date of the relation</td>
+</tr>
+<tr>
+<td align="left">end_date</td>
+<td align="left">date</td>
+<td align="left">End date of the relation</td>
+</tr>
+<tr>
+<td align="left">comments</td>
+<td align="left">text</td>
+<td align="left">Comment on the status of the relation</td>
+</tr>
+<tr>
+<td align="left">importance</td>
+<td align="left">int</td>
+<td align="left">Importance of relationship</td>
+</tr>
+<tr>
+<td align="left">security_need_c</td>
+<td align="left">int</td>
+<td align="left">Confidentiality level need</td>
+</tr>
+<tr>
+<td align="left">security_need_i</td>
+<td align="left">int</td>
+<td align="left">Integrity level need</td>
+</tr>
+<tr>
+<td align="left">security_need_a</td>
+<td align="left">int</td>
+<td align="left">Available level need</td>
+</tr>
+<tr>
+<td align="left">security_need_t</td>
+<td align="left">int</td>
+<td align="left">Tracability level need</td>
 </tr>
 <tr>
 <td align="left">created_at</td>
