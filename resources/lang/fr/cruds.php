@@ -269,6 +269,8 @@ return [
             'type_helper' => 'Type de cluster',
             'description' => 'Description',
             'description_helper' => 'Description du cluster',
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'physical_servers' => 'Serveurs physiques',
             'physical_servers_helper' => 'Groupe de serveurs physiques',
             'logical_servers' => 'Serveurs logiques',
