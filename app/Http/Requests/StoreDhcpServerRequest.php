@@ -26,7 +26,7 @@ class StoreDhcpServerRequest extends FormRequest
             ],
             'address_ip' => [
                 'nullable',
-                new IPList(),
+                'ip',
             ],
         ];
     }

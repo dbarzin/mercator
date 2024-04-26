@@ -27,6 +27,10 @@ class DatabaseController extends Controller
         abort_if(Gate::denies('database_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $database = Database::create($request->all());
+        $database->entities()->sync($request->input('entities', []));
+        $database->informations()->sync($request->input('informations', []));
+        $database->applications()->sync($request->input('applications', []));
+        $database->logicalServers()->sync($request->input('logical_servers', []));
         // syncs
         // $database->roles()->sync($request->input('roles', []));
 
@@ -45,6 +49,10 @@ class DatabaseController extends Controller
         abort_if(Gate::denies('database_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $database->update($request->all());
+        $database->entities()->sync($request->input('entities', []));
+        $database->informations()->sync($request->input('informations', []));
+        $database->applications()->sync($request->input('applications', []));
+        $database->logicalServers()->sync($request->input('logical_servers', []));
         // syncs
         // $database->roles()->sync($request->input('roles', []));
 

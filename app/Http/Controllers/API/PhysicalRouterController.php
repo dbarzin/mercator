@@ -27,6 +27,7 @@ class PhysicalRouterController extends Controller
         abort_if(Gate::denies('physical_router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalrouter = PhysicalRouter::create($request->all());
+        $physicalrouter->vlans()->sync($request->input('vlans', []));
         // syncs
         // $physicalrouter->roles()->sync($request->input('roles', []));
 
@@ -40,11 +41,12 @@ class PhysicalRouterController extends Controller
         return new PhysicalRouterResource($physicalRouter);
     }
 
-    public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalrouter)
+    public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalRouter)
     {
         abort_if(Gate::denies('physical_router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalrouter->update($request->all());
+        $physicalRouter->update($request->all());
+        $physicalRouter->vlans()->sync($request->input('vlans', []));
         // syncs
         // $physicalrouter->roles()->sync($request->input('roles', []));
 
