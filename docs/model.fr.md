@@ -68,10 +68,14 @@ Table *entities* :
 |:---------------|:-------------|:-----------------|
 | id             | int unsigned | auto_increment |
 | name           | varchar(255) | Nom de l'entité |
+| entity_type       | varchar(255) | Type d'entité |
+| attributes        | varchar(255) | Attributs (#tag...) |
+| description    | longtext     | Description de l'entité |
+| reference         | varchar(255) | Numéro de référence de l'entité (facturation) |
+| parent_entity_id  | int unsigned | Entité parente |
 | is_external    | boolean      | Entité externe |
 | security_level | longtext     | Niveau de sécurité |
 | contact_point  | longtext     | Point de contact |
-| description    | longtext     | Description de l'entité |
 | created_at     | timestamp    | Date de création |
 | updated_at     | timestamp    | Date de mise à jour |
 | deleted_at     | timestamp    | Date de suppression |
@@ -89,14 +93,26 @@ Table *relations* :
 |:---------------|:-------------|:-----------------|
 | id             | int unsigned | auto_increment |
 | name           | varchar(255) | Nom de la relation |
-| description    | longtext     | Description de la relation |
 | type           | varchar(255) | Type de la relation |
-| importance     | int          | Importance de la relation |
+| description    | longtext     | Description de la relation |
 | source_id      | int unsigned | Référence vers l'entité source |
 | destination_id | int unsigned | Référence vers l'entité destinataire |
+| reference       | varchar(255) | Numéro de référence de la relation (facturation) |
+| responsible     | varchar(255) | Responsable de la relation |
+| order_number    | varchar(255) | Numéro de commande (facturation) |
+| active          | tinyint(1)   | La relation est encore active |
+| start_date      | date         | Début de la relation |
+| end_date        | date         | Fin de la relation |
+| comments        | text         | Commentaires sur l'état de la relation |
+| importance      | int          | Importance de la relation |
+| security_need_c | int          | Confidentialité |
+| security_need_i | int          | Intégrité |
+| security_need_a | int          | Disponibilité |
+| security_need_t | int          | Traçabilité |
 | created_at     | timestamp    | Date de création |
 | updated_at     | timestamp    | Date de mise à jour |
 | deleted_at     | timestamp    | Date de suppression |
+
 
 ### Vue métier du système d’information
 

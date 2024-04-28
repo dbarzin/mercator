@@ -49,7 +49,9 @@
 
                             </td>
                             <td>
-                                {{ $storageDevice->name ?? '' }}
+                                <a href="{{ route('admin.storage-devices.show', $storageDevice->id) }}">
+                                    {{ $storageDevice->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $storageDevice->description ?? '' !!}
