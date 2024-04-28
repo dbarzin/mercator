@@ -27,6 +27,7 @@ class PeripheralController extends Controller
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $peripheral = Peripheral::create($request->all());
+        $peripheral->applications()->sync($request->input('applications', []));
         // syncs
         // $peripheral->roles()->sync($request->input('roles', []));
 
@@ -45,6 +46,7 @@ class PeripheralController extends Controller
         abort_if(Gate::denies('peripheral_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $peripheral->update($request->all());
+        $peripheral->applications()->sync($request->input('applications', []));
         // syncs
         // $peripheral->roles()->sync($request->input('roles', []));
 
