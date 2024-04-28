@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.macroProcessus.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.macro-processuses.update", [$macroProcessus->id]) }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.edit') }} {{ trans('cruds.macroProcessus.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.macro-processuses.update", [$macroProcessus->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.macroProcessus.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $macroProcessus->name) }}" required>
@@ -47,8 +47,8 @@
                     <tr>
                         <td width='20%'>
                             <label
-                            @if (auth()->user()->granularity>=2) 
-                                class="recommended" 
+                            @if (auth()->user()->granularity>=2)
+                                class="recommended"
                             @endif
                                 for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                         </td>
@@ -154,17 +154,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.processes_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-
-
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
@@ -184,9 +181,9 @@ $(document).ready(function () {
         placeholder: "Select or enter a new item",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-    function template(data, container) {      
+    function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {
