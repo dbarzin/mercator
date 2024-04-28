@@ -25,14 +25,14 @@ class ProcessTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('processes')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
                 $browser->visit("/admin/processes/" . $data->id);
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/processes/" . $data->id);
-                $browser->assertSee($data->identifiant);
+                $browser->assertSee($data->name);
             });
         });
     }
@@ -41,7 +41,7 @@ class ProcessTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('processes')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -61,9 +61,8 @@ class ProcessTest extends DuskTestCase
                 $browser->visit("/admin/processes/create");
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/processes/create");
-            });        
+            });
         });
     }
 
 }
-
