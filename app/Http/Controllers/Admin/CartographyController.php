@@ -218,7 +218,7 @@ class CartographyController extends Controller
                 // Processus soutenus
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
                 foreach ($entity->entitiesProcesses as $process) {
-                    $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FANCYLINKSTYLE, null, true);
+                    $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
                     if ($entity->entitiesProcesses->last() !== $process) {
                         $textRun->addText(', ');
                     }
@@ -265,7 +265,7 @@ class CartographyController extends Controller
 
             // Get data
             $macroProcessuses = MacroProcessus::orderBy('name')->get();
-            $processes = Process::orderBy('identifiant')->get();
+            $processes = Process::orderBy('name')->get();
             $activities = Activity::orderBy('name')->get();
             $operations = Operation::orderBy('name')->get();
             $tasks = Task::orderBy('name')->get();
@@ -284,7 +284,7 @@ class CartographyController extends Controller
             }
 
             foreach ($processes as $process) {
-                $graph .= ' P'.$process->id . ' [label="' . $process->identifiant . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
+                $graph .= ' P'.$process->id . ' [label="' . $process->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
                 if ($granularity === 3) {
                     foreach ($process->activities as $activity) {
                         $graph .= ' P'.$process->id . '->A'. $activity->id;
@@ -375,7 +375,7 @@ class CartographyController extends Controller
                     }
                     $textRun = $this->addTextRunRow($table, trans('cruds.macroProcessus.fields.processes'));
                     foreach ($macroProcess->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($macroProcess->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }
@@ -392,7 +392,7 @@ class CartographyController extends Controller
 
                 foreach ($processes as $process) {
                     $section->addBookmark('PROCESS'.$process->id);
-                    $table = $this->addTable($section, $process->identifiant);
+                    $table = $this->addTable($section, $process->name);
                     $this->addHTMLRow($table, trans('cruds.process.fields.description'), $process->description);
                     $this->addHTMLRow($table, trans('cruds.process.fields.in_out'), $process->in_out);
                     $textRun = $this->addTextRunRow($table, trans('cruds.process.fields.activities'));
@@ -563,7 +563,7 @@ class CartographyController extends Controller
                     // processus liés
                     $textRun = $this->addTextRunRow($table, trans('cruds.information.fields.processes'));
                     foreach ($information->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($information->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }
@@ -795,7 +795,7 @@ class CartographyController extends Controller
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.processes'));
                     foreach ($application->processes as $process) {
-                        $textRun->addLink('PROCESS'.$process->id, $process->identifiant, CartographyController::FANCYLINKSTYLE, null, true);
+                        $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
                         if ($application->processes->last() !== $process) {
                             $textRun->addText(', ');
                         }

@@ -30,7 +30,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('name')->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->pluck('name', 'id');
         $databases = Database::orderBy('name')->pluck('name', 'id');
         $entityTypes = Entity::select('entity_type')
@@ -71,7 +71,7 @@ class EntityController extends Controller
     public function edit(Entity $entity)
     {
         abort_if(Gate::denies('entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('name')->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->pluck('name', 'id');
         $databases = Database::orderBy('name')->pluck('name', 'id');
         $entityTypes = Entity::select('entity_type')

@@ -35,7 +35,7 @@
                                             <option value="">-- All --</option>
                                             @if ($all_process!=null)
                                                 @foreach ($all_process as $process)
-                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>
+                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -103,7 +103,7 @@
                                     <td><b>{{ trans('cruds.macroProcessus.fields.processes') }}</b></td>
                                     <td>
                                     @foreach($macroProcess->processes as $process)
-                                        <a href="#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                        <a href="#PROCESS{{ $process->id }}">{{ $process->name }}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
@@ -134,7 +134,7 @@
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="PROCESS{{ $process->id }}">
                                     <th colspan="2">
-                                        <a href="/admin/processes/{{ $process->id }}">{{ $process->identifiant }}</a>
+                                        <a href="/admin/processes/{{ $process->id }}">{{ $process->name }}</a>
                                     </th>
                                 </thead>
                                 <tbody>
@@ -243,7 +243,7 @@
                                     </td>
                                     <td>
                                         @foreach($activity->activitiesProcesses as $process)
-                                            <a href="#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                            <a href="#PROCESS{{ $process->id }}">{{ $process->name }}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif
@@ -299,7 +299,7 @@
                                     <td><b>{{ trans('cruds.operation.fields.process') }}</b></td>
                                     <td>
                                         @if($operation->process!=null)
-                                            <a href="#PROCESS{{$operation->process->id}}">{{$operation->process->identifiant}}</a>
+                                            <a href="#PROCESS{{$operation->process->id}}">{{ $operation->process->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -464,7 +464,7 @@
                                         <td><b>{{ trans('cruds.information.fields.processes') }}</b></td>
                                         <td>
                                             @foreach($information->processes as $process)
-                                                <a href="#PROCESS{{ $process->id}}">{{ $process->identifiant}}</a>
+                                                <a href="#PROCESS{{ $process->id}}">{{ $process->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
@@ -530,7 +530,7 @@ digraph  {
     @endforeach
     @endif
     @foreach($processes as $process)
-        P{{ $process->id }} [label="{{ $process->identifiant }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
+        P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
         @if(auth()->user()->granularity==3)
             @foreach($process->activities as $activity)
                 P{{$process->id}} -> A{{$activity->id}}

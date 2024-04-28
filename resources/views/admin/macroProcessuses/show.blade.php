@@ -106,7 +106,7 @@
                         <td>
                             @foreach($macroProcessus->processes as $macroProcessus)
                                 <a href="{{ route('admin.processes.show', $macroProcessus->id) }}">
-                                    {{ $macroProcessus->identifiant}}
+                                    {{ $macroProcessus->name }}
                                     @if(!$loop->last)
                                     ,
                                     @endif

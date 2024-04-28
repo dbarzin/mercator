@@ -107,7 +107,7 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="processes" multiple>
                     @foreach($processes as $process)
-                        <option value="{{ $process->id }}" {{ (in_array($process->id, old('processes', [])) || $dataProcessing->processes->contains($process->id)) ? 'selected' : '' }}>{{ $process->identifiant }}</option>
+                        <option value="{{ $process->id }}" {{ (in_array($process->id, old('processes', [])) || $dataProcessing->processes->contains($process->id)) ? 'selected' : '' }}>{{ $process->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('processes'))

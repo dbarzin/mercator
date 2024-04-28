@@ -53,7 +53,7 @@ class Information extends Model
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+        return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

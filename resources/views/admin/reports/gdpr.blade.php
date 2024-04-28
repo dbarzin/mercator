@@ -35,7 +35,7 @@
                                             <option value="">-- All --</option>
                                             @if ($all_process!=null)
                                                 @foreach ($all_process as $process)
-                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->identifiant }}</option>
+                                                    <option value="{{$process->id}}" {{ Session::get('process')==$process->id ? "selected" : "" }}>{{ $process->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -132,7 +132,7 @@
                                     </th>
                                     <td>
                                         @foreach($dataProcessing->processes as $process)
-                                            <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>
+                                            <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
                                             @if (!$loop->last)
                                                 ,
                                             @endif
@@ -211,7 +211,7 @@ digraph  {
         MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#MACROPROCESS{{ $macroProcess->id }}"]
     @endforeach
     @foreach($processes as $process)
-        P{{ $process->id }} [label="{{ $process->identifiant }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
+        P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
         MP{{ $process->macroprocess_id }} -> P{{ $process->id }}
         @foreach($process->dataProcesses as $dp)
             P{{ $process->id }} -> DP{{ $dp->id}}

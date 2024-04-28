@@ -28,7 +28,7 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_register_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::orderBy('identifiant')->get()->pluck('identifiant', 'id');
+        $processes = Process::orderBy('name')->get()->pluck('name', 'id');
         $informations = Information::orderBy('name')->get()->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
 
@@ -58,7 +58,7 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_register_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::select(['id', 'identifiant'])->orderBy('identifiant')->get();
+        $processes = Process::select(['id', 'name'])->orderBy('name')->get();
         $informations = Information::select(['id', 'name'])->orderBy('name')->get();
         $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
 

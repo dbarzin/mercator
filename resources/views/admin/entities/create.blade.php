@@ -154,8 +154,8 @@
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
                 <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="activities" multiple>
-                    @foreach($processes as $id => $identifiant)
-                        <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $identifiant }}</option>
+                    @foreach($processes as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('processes', [])) ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('processes'))

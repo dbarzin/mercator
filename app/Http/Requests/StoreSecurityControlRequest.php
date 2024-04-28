@@ -20,7 +20,7 @@ class StoreSecurityControlRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:255',
                 'required',
                 'unique:security_controls,name,NULL,id,deleted_at,NULL',
             ],

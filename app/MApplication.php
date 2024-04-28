@@ -132,7 +132,7 @@ class MApplication extends Model
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+        return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
     public function services()

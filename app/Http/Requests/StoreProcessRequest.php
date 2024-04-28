@@ -18,12 +18,11 @@ class StoreProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant' => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:processes',
-                'unique:processes,identifiant,NULL,id,deleted_at,NULL',
+                'unique:processes,name,NULL,id,deleted_at,NULL',
             ],
             'activities.*' => [
                 'integer',

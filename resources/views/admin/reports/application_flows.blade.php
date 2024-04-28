@@ -275,7 +275,7 @@
                                         <th>{{ trans('cruds.application.fields.processes') }}</th>
                                         <td>
                                             @foreach($application->processes as $process)
-                                                <a href="/admin/report/information_system#PROCESS{{$process->id}}">{{ $process->identifiant }}</a>
+                                                <a href="/admin/report/information_system#PROCESS{{$process->id}}">{{ $process->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif

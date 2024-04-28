@@ -28,6 +28,22 @@ class Flux extends Model
     ];
 
     protected $fillable = [
+        'name',
+        'description',
+        'application_source_id',
+        'service_source_id',
+        'module_source_id',
+        'database_source_id',
+        'application_dest_id',
+        'service_dest_id',
+        'module_dest_id',
+        'database_dest_id',
+        'crypted',
+        'bidirectional',
+        'nature',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function source_id(): ?string

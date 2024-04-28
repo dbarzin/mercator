@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExplorerController extends Controller
 {
-
     public function explore(Request $request)
     {
         $nodes = [];
@@ -378,22 +377,24 @@ class ExplorerController extends Controller
             // Add source <-> destination flows
             foreach ($sources as $source) {
                 // if flow must be explored
-                if (($request->get("flow")!==null)&&($flow->id===(int)$request->get("flow"))) {
+                if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                     // Add source node to request
-                    if ($request->get("node")===null)
-                        $request["node"]=$this->formatId('LSERVER_', $source);
-                    else
-                        $request["node"]=$request->get("node").','.$this->formatId('LSERVER_', $source);
+                    if ($request->get('node') === null) {
+                        $request['node'] = $this->formatId('LSERVER_', $source);
+                    } else {
+                        $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $source);
+                    }
                 }
                 foreach ($destinations as $destination) {
                     $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_', $destination));
                     // if flow must be explored
-                    if (($request->get("flow")!==null)&&($flow->id==(int)$request->get("flow"))) {
+                    if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                         // Add destination node to request
-                        if ($request->get("node")===null)
-                            $request["node"]=$this->formatId('LSERVER_', $destination);
-                        else
-                            $request["node"]=$request->get("node").','.$this->formatId('LSERVER_', $destination);
+                        if ($request->get('node') === null) {
+                            $request['node'] = $this->formatId('LSERVER_', $destination);
+                        } else {
+                            $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $destination);
+                        }
                     }
                 }
             }
@@ -562,9 +563,9 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('INFO_', $join->information_id), $this->formatId('DATABASE_', $join->database_id));
         }
         // process
-        $processes = DB::table('processes')->select('id', 'identifiant', 'macroprocess_id')->whereNull('deleted_at')->get();
+        $processes = DB::table('processes')->select('id', 'name', 'macroprocess_id')->whereNull('deleted_at')->get();
         foreach ($processes as $process) {
-            $this->addNode($nodes, 2, $this->formatId('PROCESS_', $process->id), $process->identifiant, '/images/process.png', 'processes');
+            $this->addNode($nodes, 2, $this->formatId('PROCESS_', $process->id), $process->name, '/images/process.png', 'processes');
             $this->addLinkEdge($edges, $this->formatId('PROCESS_', $process->id), $this->formatId('MACROPROCESS_', $process->macroprocess_id));
         }
         // information_process

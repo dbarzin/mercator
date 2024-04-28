@@ -617,11 +617,11 @@ class PhysicalLinkController extends Controller
         return view('admin.links.show', compact('link'));
     }
 
-    public function destroy(PhysicalLink $physicalLink)
+    public function destroy(PhysicalLink $link)
     {
         abort_if(Gate::denies('physical_link_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalLink->delete();
+        $link->delete();
 
         return redirect()->route('admin.links.index');
     }

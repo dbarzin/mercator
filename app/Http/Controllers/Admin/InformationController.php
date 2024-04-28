@@ -26,7 +26,7 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
 
         // lists
         $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
@@ -58,7 +58,7 @@ class InformationController extends Controller
         $information->load('processes');
 
         // links
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
 
         // lists
         $owner_list = Information::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');

@@ -65,7 +65,7 @@ class SecurityControlController extends Controller
         abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
-        $processes = Process::All()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::All()->sortBy('name')->pluck('name', 'id');
 
         // Create items
         $apps = Collection::make();

@@ -31,6 +31,8 @@ class Building extends Model
         'name',
         'description',
         'site_id',
+        'camera',
+        'badge',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -206,7 +206,7 @@ class HomeController extends Controller
                         ->count(),
 
             'processes_lvl2' => Process
-                ::where('identifiant', '<>', null)
+                ::where('name', '<>', null)
                     ->where('description', '<>', null)
                     ->where('in_out', '<>', null)
                     ->where('owner', '<>', null)

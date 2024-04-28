@@ -17,7 +17,7 @@ class Process extends Model
     public $table = 'processes';
 
     public static $searchable = [
-        'identifiant',
+        'name',
         'description',
         'in_out',
         'owner',
@@ -30,7 +30,7 @@ class Process extends Model
     ];
 
     protected $fillable = [
-        'identifiant',
+        'name',
         'description',
         'in_out',
         'security_need_c',

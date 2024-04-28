@@ -116,7 +116,7 @@ class ReportController extends Controller
                 where('id', $macroprocess)
                     ->get();
 
-            $all_process = Process::orderBy('identifiant')
+            $all_process = Process::orderBy('name')
                 ->where('macroprocess_id', $macroprocess)
                 ->whereExists(function ($query) {
                     $query->select('data_processing_process.process_id')
@@ -166,7 +166,7 @@ class ReportController extends Controller
                 ->get();
 
             // only process with data processisng
-            $processes = Process::orderBy('identifiant')
+            $processes = Process::orderBy('name')
                 ->whereExists(function ($query) {
                     $query->select('data_processing_id')
                         ->from('data_processing_process')
@@ -178,7 +178,7 @@ class ReportController extends Controller
 
             $dataProcessings = DataProcessing::orderBy('name')->get();
 
-            $all_process = Process::orderBy('identifiant')
+            $all_process = Process::orderBy('name')
                 ->where('macroprocess_id', $macroprocess)
                 ->whereExists(function ($query) {
                     $query->select('data_processing_process.process_id')
@@ -293,7 +293,7 @@ class ReportController extends Controller
             $macroProcessuses = MacroProcessus::where('macro_processuses.id', $macroprocess)->get();
 
             // TODO : improve me
-            $processes = Process::All()->sortBy('identifiant')
+            $processes = Process::All()->sortBy('name')
                 ->filter(function ($item) use ($macroProcessuses, $process) {
                     if ($process !== null) {
                         return $item->id === $process;
@@ -309,7 +309,7 @@ class ReportController extends Controller
                 });
 
             // TODO : improve me
-            $all_process = Process::All()->sortBy('identifiant')
+            $all_process = Process::All()->sortBy('name')
                 ->filter(function ($item) use ($macroProcessuses, $process) {
                     foreach ($macroProcessuses as $macroprocess) {
                         foreach ($macroprocess->processes as $process) {
@@ -387,7 +387,7 @@ class ReportController extends Controller
                 });
         } else {
             $macroProcessuses = MacroProcessus::All()->sortBy('name');
-            $processes = Process::All()->sortBy('identifiant');
+            $processes = Process::All()->sortBy('name');
             $activities = Activity::All()->sortBy('name');
             $operations = Operation::All()->sortBy('name');
             $tasks = Task::All()->sortBy('name');
@@ -684,7 +684,7 @@ class ReportController extends Controller
 
             // databases
             if (($flux->database_source_id !== null) &&
-               (!$database_ids->contains($flux->database_source_id))) {
+               (! $database_ids->contains($flux->database_source_id))) {
                 $database_ids->push($flux->database_source_id);
             }
             if (($flux->database_dest_id !== null) &&
@@ -1797,7 +1797,7 @@ class ReportController extends Controller
             $section->addTitle(trans('cruds.dataProcessing.fields.processes'), 2);
             $txt = '<ul>';
             foreach ($dataProcessing->processes as $p) {
-                $txt .= '<li>' . $p->identifiant . '</li>';
+                $txt .= '<li>' . $p->name . '</li>';
             }
             $txt .= '</ul>';
             $this->addText($section, $txt);
@@ -1919,7 +1919,7 @@ class ReportController extends Controller
             // processes
             $txt = '';
             foreach ($dataProcessing->processes as $p) {
-                $txt .= $p->identifiant;
+                $txt .= $p->name;
                 if ($dataProcessing->processes->last() !== $p) {
                     $txt .= ', ';
                 }
@@ -2059,7 +2059,7 @@ class ReportController extends Controller
                 $sheet->setCellValue("E{$row}", $application->entity_resp ? $application->entity_resp->name : '');
                 $sheet->setCellValue("F{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("G{$row}", $application->responsible);
-                $sheet->setCellValue("H{$row}", $application->processes->implode('identifiant', ', '));
+                $sheet->setCellValue("H{$row}", $application->processes->implode('name', ', '));
                 $sheet->setCellValue("I{$row}", $application->technology);
                 $sheet->setCellValue("J{$row}", $application->type);
                 $sheet->setCellValue("K{$row}", $application->users);
@@ -3191,7 +3191,7 @@ class ReportController extends Controller
 
         if ($process !== null) {
             // Processus
-            $sheet->setCellValue("F{$row}", $process->identifiant);
+            $sheet->setCellValue("F{$row}", $process->name);
             $sheet->setCellValue("G{$row}", $process->security_need_c >= 0 ? $process->security_need_c : '');
             $this->addSecurityNeedColor($sheet, "G{$row}", $process->security_need_c);
 

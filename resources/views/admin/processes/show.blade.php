@@ -37,10 +37,10 @@
                 <tbody>
                     <tr>
                         <th width="10%">
-                            {{ trans('cruds.process.fields.identifiant') }}
+                            {{ trans('cruds.process.fields.name') }}
                         </th>
                         <td>
-                            {{ $process->identifiant }}
+                            {{ $process->name }}
                         </td>
                     </tr>
                     <tr>

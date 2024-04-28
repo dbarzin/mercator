@@ -27,6 +27,7 @@ class PhysicalServerController extends Controller
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalserver = PhysicalServer::create($request->all());
+        $physicalServer->applications()->sync($request->input('applications', []));
         // syncs
         // $physicalserver->roles()->sync($request->input('roles', []));
 
@@ -45,6 +46,7 @@ class PhysicalServerController extends Controller
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalServer->update($request->all());
+        $physicalServer->applications()->sync($request->input('applications', []));
         // syncs
         // $physicalServer->roles()->sync($request->input('roles', []));
 

@@ -10,7 +10,6 @@ use App\Http\Resources\Admin\LogicalServerResource;
 use App\LogicalServer;
 use Gate;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 class LogicalServerController extends Controller
 {
@@ -25,15 +24,12 @@ class LogicalServerController extends Controller
 
     public function store(StoreLogicalServerRequest $request)
     {
-        Log::Debug('LogicalServerController:store Start');
-
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer = LogicalServer::create($request->all());
-        #$logicalServer->servers()->sync($request->input('servers', []));
-        #$logicalServer->applications()->sync($request->input('applications', []));
-
-        Log::Debug('LogicalServerController:store Done');
+        $logicalServer->servers()->sync($request->input('servers', []));
+        $logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->databases()->sync($request->input('databases', []));
 
         return response()->json($logicalServer, 201);
     }
@@ -50,8 +46,9 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer->update($request->all());
-        #$logicalServer->servers()->sync($request->input('servers', []));
-        #$logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->servers()->sync($request->input('servers', []));
+        $logicalServer->applications()->sync($request->input('applications', []));
+        $logicalServer->databases()->sync($request->input('databases', []));
 
         return response()->json();
     }

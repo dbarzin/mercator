@@ -14,16 +14,4 @@ class StorePhysicalLinkRequest extends FormRequest
 
         return true;
     }
-
-    public function rules()
-    {
-        return [
-            'src_id' => [
-                'required',
-            ],
-            'dest_id' => [
-                'required',
-            ],
-        ];
-    }
 }

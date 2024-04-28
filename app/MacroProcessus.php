@@ -45,7 +45,7 @@ class MacroProcessus extends Model
 
     public function processes()
     {
-        return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy('identifiant');
+        return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy('name');
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -22,7 +22,7 @@ class DemoProcessesTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'identifiant' => 'Processus 1',
+                'name' => 'Processus 1',
                 'description' => '<p>Description du processus 1</p>',
                 'owner' => 'Ched',
                 'security_need_c' => 3,
@@ -38,7 +38,7 @@ class DemoProcessesTableSeeder extends Seeder
             1 =>
             array (
                 'id' => 2,
-                'identifiant' => 'Processus 2',
+                'name' => 'Processus 2',
                 'description' => '<p>Description du processus 2</p>',
                 'owner' => 'Ched',
                 'security_need_c' => 3,
@@ -54,7 +54,7 @@ class DemoProcessesTableSeeder extends Seeder
             2 =>
             array (
                 'id' => 3,
-                'identifiant' => 'Processus 3',
+                'name' => 'Processus 3',
                 'description' => '<p>Description du processus 3</p>',
                 'owner' => 'Johan',
                 'security_need_c' => 3,
@@ -70,7 +70,7 @@ class DemoProcessesTableSeeder extends Seeder
             3 =>
             array (
                 'id' => 4,
-                'identifiant' => 'Processus 4',
+                'name' => 'Processus 4',
                 'description' => '<p>Description du processus 4</p>',
                 'owner' => 'Paul',
                 'security_need_c' => 4,
@@ -86,7 +86,7 @@ class DemoProcessesTableSeeder extends Seeder
             4 =>
             array (
                 'id' => 5,
-                'identifiant' => 'Processus 5',
+                'name' => 'Processus 5',
                 'description' => '<p>tto</p>',
                 'owner' => NULL,
                 'security_need_c' => 1,
@@ -102,7 +102,7 @@ class DemoProcessesTableSeeder extends Seeder
             5 =>
             array (
                 'id' => 6,
-                'identifiant' => 'Processus 5',
+                'name' => 'Processus 5',
                 'description' => '<p>description de ptest</p>',
                 'owner' => NULL,
                 'security_need_c' => 0,
@@ -118,7 +118,7 @@ class DemoProcessesTableSeeder extends Seeder
             6 =>
             array (
                 'id' => 7,
-                'identifiant' => 'Processus 6',
+                'name' => 'Processus 6',
                 'description' => '<p>Description goes here</p>',
                 'owner' => NULL,
                 'security_need_c' => 1,
@@ -134,7 +134,7 @@ class DemoProcessesTableSeeder extends Seeder
             7 =>
             array (
                 'id' => 8,
-                'identifiant' => 'ptest3',
+                'name' => 'ptest3',
                 'description' => '<p>processus de test 3</p>',
                 'owner' => 'CHEM - Facturation',
                 'security_need_c' => 3,
@@ -150,7 +150,7 @@ class DemoProcessesTableSeeder extends Seeder
             8 =>
             array (
                 'id' => 9,
-                'identifiant' => 'Processus 5',
+                'name' => 'Processus 5',
                 'description' => '<p>Description du cinquième processus</p>',
                 'owner' => 'Paul',
                 'security_need_c' => 4,
@@ -166,7 +166,7 @@ class DemoProcessesTableSeeder extends Seeder
             9 =>
             array (
                 'id' => 10,
-                'identifiant' => 'Proc 6',
+                'name' => 'Proc 6',
                 'description' => NULL,
                 'owner' => NULL,
                 'security_need_c' => 0,

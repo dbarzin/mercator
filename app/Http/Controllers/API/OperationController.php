@@ -27,6 +27,9 @@ class OperationController extends Controller
         abort_if(Gate::denies('operation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation = Operation::create($request->all());
+        $operation->actors()->sync($request->input('actors', []));
+        $operation->tasks()->sync($request->input('tasks', []));
+        $operation->activities()->sync($request->input('activities', []));
         // syncs
         // $operation->roles()->sync($request->input('roles', []));
 
@@ -45,6 +48,9 @@ class OperationController extends Controller
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation->update($request->all());
+        $operation->actors()->sync($request->input('actors', []));
+        $operation->tasks()->sync($request->input('tasks', []));
+        $operation->activities()->sync($request->input('activities', []));
         // syncs
         // $operation->roles()->sync($request->input('roles', []));
 

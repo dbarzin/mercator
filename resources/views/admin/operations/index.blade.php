@@ -62,7 +62,7 @@
                             <td>
                                 @if ($operation->process!=null)
                                     <a href="{{ route('admin.processes.show',$operation->process->id) }}">
-                                        {{ $operation->process->identifiant ?? '' }}
+                                        {{ $operation->process->name ?? '' }}
                                     </a>
                                 @endif
                             </td>

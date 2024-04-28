@@ -37,7 +37,7 @@ class MApplicationLogController extends Controller
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
@@ -98,7 +98,7 @@ class MApplicationLogController extends Controller
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $processes = Process::all()->sortBy('identificant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
