@@ -30,9 +30,6 @@ class Flux extends Model
     protected $fillable = [
         'name',
         'description',
-        'created_at',
-        'updated_at',
-        'deleted_at',
         'application_source_id',
         'service_source_id',
         'module_source_id',
@@ -44,6 +41,9 @@ class Flux extends Model
         'crypted',
         'bidirectional',
         'nature',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function source_id(): ?string
