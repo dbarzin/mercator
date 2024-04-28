@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Cluster;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyClusterRequest;
 use App\Http\Requests\StoreClusterRequest;
 use App\Http\Requests\UpdateClusterRequest;
 use App\Http\Resources\Admin\ClusterResource;
-use App\Cluster;
 use Gate;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;

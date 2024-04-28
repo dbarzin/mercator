@@ -684,7 +684,7 @@ class ReportController extends Controller
 
             // databases
             if (($flux->database_source_id !== null) &&
-               (!$database_ids->contains($flux->database_source_id))) {
+               (! $database_ids->contains($flux->database_source_id))) {
                 $database_ids->push($flux->database_source_id);
             }
             if (($flux->database_dest_id !== null) &&

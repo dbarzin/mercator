@@ -10,7 +10,6 @@ use App\Http\Resources\Admin\LogicalServerResource;
 use App\LogicalServer;
 use Gate;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 class LogicalServerController extends Controller
 {
@@ -25,7 +24,6 @@ class LogicalServerController extends Controller
 
     public function store(StoreLogicalServerRequest $request)
     {
-        
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer = LogicalServer::create($request->all());

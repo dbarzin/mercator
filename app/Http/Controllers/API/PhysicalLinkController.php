@@ -1,12 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\API;
 
-use App\PhysicalLink;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalLinkRequest;
 use App\Http\Requests\StorePhysicalLinkRequest;
-use App\Http\Requests\UpdatePhysicalLinkRequest;
 use App\Http\Resources\Admin\PhysicalLinkResource;
+use App\PhysicalLink;
 use Gate;
 use Illuminate\Http\Response;
 
