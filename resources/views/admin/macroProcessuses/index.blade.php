@@ -52,7 +52,7 @@
                                     )
                                 )||
                                     (
-                                    (auth()->user()->granularity>=2) && 
+                                    (auth()->user()->granularity>=2) &&
                                     ($macroProcessus->owner==null)
                                     )
                                 )
@@ -78,11 +78,11 @@
                             <td>
                                 @foreach($macroProcessus->processes as $process)
                                     <a href="{{ route('admin.processes.show', $process->id) }}">
-                                        {{ $process->identifiant}}
-                                        @if(!$loop->last)
-                                        ,
-                                        @endif
+                                        {{ $process->name }}
                                     </a>
+                                    @if(!$loop->last)
+                                    ,
+                                    @endif
                                 @endforeach
                             </td>
 
@@ -165,7 +165,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

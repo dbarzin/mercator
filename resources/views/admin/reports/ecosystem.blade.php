@@ -153,7 +153,7 @@
                                     <td><b>{{ trans('cruds.entity.fields.processes') }}</b></td>
                                     <td>
                                         @foreach ($entity->entitiesProcesses as $process)
-                                            <a href="/admin/report/information_system#PROCESS{{ $process->id }}">{{ $process->identifiant }}</a>
+                                            <a href="/admin/report/information_system#PROCESS{{ $process->id }}">{{ $process->name }}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif

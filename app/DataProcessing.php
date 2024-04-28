@@ -41,7 +41,7 @@ class DataProcessing extends Model
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+        return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
     public function applications()

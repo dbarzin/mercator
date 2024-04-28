@@ -63,7 +63,7 @@
 
                       @foreach($applicationBlocks as $ab)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATIONBLOCK{{ $ab->id }}">
                                     <th colspan="2">
@@ -82,7 +82,7 @@
                                     <tr>
                                         <th>{{ trans("cruds.applicationBlock.fields.applications_helper") }}</th>
                                         <td>
-                                            @foreach($ab->applications as $application) 
+                                            @foreach($ab->applications as $application)
                                                 <a href="#APPLICATION{{$application->id}}"> {{ $application->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -101,7 +101,7 @@
             @endcan
 
             @can('application_access')
-            @if ($applications->count()>0)            
+            @if ($applications->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.application.title") }}
@@ -111,7 +111,7 @@
                     <p>{{ trans("cruds.application.description") }}</p>
                      @foreach($applications as $application)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATION{{$application->id}}">
                                     <th colspan="2">
@@ -142,7 +142,7 @@
                                     <tr>
                                         <th>{{ trans("cruds.application.fields.entity_resp_helper") }}</th>
                                         <td>
-                                            @if (isset($application->entity_resp)) 
+                                            @if (isset($application->entity_resp))
                                                 <a href="/admin/report/ecosystem#ENTITY{{$application->entity_resp->id}}">{{  $application->entity_resp->name }}</a>
                                             @endif
                                         </td>
@@ -181,14 +181,14 @@
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                 
+                                            @endforeach
                                             <br>{{ trans("cruds.flux.fields.destination") }} :
                                             @foreach($application->applicationDestFluxes as $flux)
                                                 <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                                            
+                                            @endforeach
                                         </td>
                                     </tr>
                                     <tr>
@@ -208,7 +208,7 @@
                                             <br>
                                             {{ trans('global.tracability') }} :
                                                 {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$application->security_need_t] ?? "" }} 
+                                                [$application->security_need_t] ?? "" }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -258,7 +258,7 @@
                                                 @else
                                                     {{ trans('global.hour') }}
                                                 @endif
-                                            @endif    
+                                            @endif
                                             @if (($application->rpo % (24*60)) > 0)
                                                 {{ $application->rpo % (24*60) }}
                                                 @if (($application->rpo % (24*60)) > 1)
@@ -277,12 +277,12 @@
                                         <th>{{ trans("cruds.application.fields.processes_helper") }}</th>
                                         <td>
                                             @foreach($application->processes as $process)
-                                                <a href="/admin/report/information_system#PROCESS{{$process->id}}">{{ $process->identifiant }}</a>
+                                                <a href="/admin/report/information_system#PROCESS{{$process->id}}">{{ $process->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
                                                 @endif
                                             @endforeach
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                     @if (auth()->user()->granularity>=2)
                                     <tr>
@@ -314,7 +314,7 @@
                                             @if ($application->application_block!=null)
                                             <a href="#APPLICATIONBLOCK{{$application->application_block_id}}">{{$application->application_block->name }}</a>
                                             @endif
-                                    </tr>                                    
+                                    </tr>
                                     <tr>
                                         <th>{{ trans("cruds.application.fields.logical_servers_helper") }}</th>
                                         <td>
@@ -347,7 +347,7 @@
                     <p>{{ trans("cruds.applicationService.description") }}</p>
                       @foreach($applicationServices as $applicationService)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="APPLICATIONSERVICE{{$applicationService->id}}">
                                     <th colspan="2">
@@ -366,7 +366,7 @@
                                                 <a href="#APPLICATIONMODULE{{ $module->id }}">{{ $module->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -379,14 +379,14 @@
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                 
+                                            @endforeach
                                             <br>{{ trans("cruds.flux.fields.destination") }} :
                                             @foreach($applicationService->serviceDestFluxes as $flux)
                                                 <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                                            
+                                            @endforeach
                                         </td>
                                     </tr>
                                     <tr>
@@ -400,7 +400,7 @@
                                                 <a href="#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -425,7 +425,7 @@
                     <p>{{ trans("cruds.applicationModule.description") }}</p>
                         @foreach($applicationModules as $applicationModule)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="APPLICATIONMODULE{{$applicationModule->id}}">
                                         <th colspan="2">
@@ -444,7 +444,7 @@
                                                     <a href="#APPLICATIONSERVICE{{ $service->id }}">{{ $service->name }}</a>
                                                     @if(!$loop->last)
                                                     ,
-                                                    @endif                                                
+                                                    @endif
                                                 @endforeach
                                             </td>
                                         </tr>
@@ -457,7 +457,7 @@
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
-                                                @endforeach                 
+                                                @endforeach
                                                 <br>{{ trans("cruds.flux.fields.destination") }} :
                                                 @foreach($applicationModule->moduleDestFluxes as $flux)
                                                     <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
@@ -466,7 +466,7 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                        </tr>                                        
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -478,7 +478,7 @@
             @endcan
 
             @can('database_access')
-            @if ($databases->count()>0)                        
+            @if ($databases->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.database.title") }}
@@ -488,7 +488,7 @@
                     <p>{{ trans("cruds.database.description") }}</p>
                     @foreach($databases as $database)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="DATABASE{{$database->id}}">
                                     <th colspan="2">
@@ -508,7 +508,7 @@
                                                 <a href="/admin/report/ecosystem#ENTITY{{ $entity->id }}">{{ $entity->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -538,14 +538,14 @@
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                 
+                                            @endforeach
                                             <br>{{ trans("cruds.flux.fields.destination") }} :
                                             @foreach($database->databaseDestFluxes as $flux)
                                                 <a href="#FLUX{{$flux->id}}">{{ $flux->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
                                                 @endif
-                                            @endforeach                                            
+                                            @endforeach
                                         </td>
                                     </tr>
                                     <tr>
@@ -555,7 +555,7 @@
                                                 <a href="/admin/report/information_system#INFORMATION{{ $information->id }}">{{ $information->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -566,7 +566,7 @@
                                                 <a href="/admin/report/applications#APPLICATION{{ $application->id }}">{{ $application->name }}</a>
                                                 @if(!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -602,7 +602,7 @@
                                             <br>
                                             {{ trans('global.tracability') }} :
                                                 {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$database->security_need_t] ?? "" }} 
+                                                [$database->security_need_t] ?? "" }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -620,7 +620,7 @@
             @endcan
 
             @can('flux_access')
-            @if ($fluxes->count()>0)                                    
+            @if ($fluxes->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.flux.title") }}
@@ -630,7 +630,7 @@
                     <p>{{ trans("cruds.flux.description") }}</p>
                     @foreach($fluxes as $flux)
                       <div class="row">
-                        <div class="col-sm-6">                        
+                        <div class="col-sm-6">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead id="FLUX{{$flux->id}}">
                                     <th colspan="2">
@@ -642,7 +642,7 @@
                                         <th width="30%">{{ trans("cruds.flux.fields.description") }}</th>
                                         <td>{!! $flux->description !!}</td>
                                     </tr>
-                                    @if ($flux->application_source!=null) 
+                                    @if ($flux->application_source!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.application_source") }}</th>
                                         <td><a href="#APPLICATION{{$flux->application_source->id}}">{{$flux->application_source->name}}</a></td>
@@ -656,42 +656,42 @@
                                     </tr>
                                     @endif
 
-                                    @if ($flux->module_source!=null) 
+                                    @if ($flux->module_source!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.module_source") }}</th>
                                         <td><a href="#MODULE{{$flux->module_source->id}}">{{$flux->module_source->name}}</a></td>
                                     </tr>
                                     @endif
 
-                                    @if ($flux->database_source!=null) 
+                                    @if ($flux->database_source!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.database_source") }}</th>
                                         <td><a href="#DATABASE{{$flux->database_source->id}}">{{$flux->database_source->name}}</a></td>
                                     </tr>
                                     @endif
 
-                                    @if ($flux->application_dest!=null) 
+                                    @if ($flux->application_dest!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.application_dest") }}</th>
                                         <td><a href="#APPLICATION{{$flux->application_dest->id}}">{{$flux->application_dest->name}}</a></td>
                                     </tr>
                                     @endif
 
-                                    @if ($flux->service_dest!=null) 
+                                    @if ($flux->service_dest!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.service_dest") }}</th>
                                         <td><a href="#SERVICE{{$flux->service_dest->id}}">{{$flux->service_dest->name}}</a></td>
                                     </tr>
                                     @endif
 
-                                    @if ($flux->module_dest!=null) 
+                                    @if ($flux->module_dest!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.module_dest") }}</th>
                                         <td><a href="#MODULE{{$flux->module_dest->id}}">{{$flux->module_dest->name}}</a></td>
                                     </tr>
                                     @endif
 
-                                    @if ($flux->database_dest!=null) 
+                                    @if ($flux->database_dest!=null)
                                     <tr>
                                         <th>{{ trans("cruds.flux.fields.database_dest") }}</th>
                                         <td><a href="#DATABASE{{$flux->database_dest->id}}">{{$flux->database_dest->name}}</a></td>
@@ -716,27 +716,27 @@
 <!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
 <script src="/js/d3-graphviz.js"></script>
 
-<script> 
+<script>
 let dotSrc=`
 digraph  {
     @can('application_block_access')
     @if (auth()->user()->granularity>=2)
-        @foreach($applicationBlocks as $ab) 
+        @foreach($applicationBlocks as $ab)
             AB{{ $ab->id }} [label="{{ $ab->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationblock.png" href="#APPLICATIONBLOCK{{$ab->id}}"]
         @endforEach
     @endif
     @endcan
     @can('application_access')
-    @foreach($applications as $application) 
+    @foreach($applications as $application)
         A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/application.png" href="#APPLICATION{{$application->id}}"]
         @if (auth()->user()->granularity>=2)
-            @foreach($application->services as $service) 
-                A{{ $application->id }} -> AS{{ $service->id}} 
-            @endforeach 
+            @foreach($application->services as $service)
+                A{{ $application->id }} -> AS{{ $service->id}}
+            @endforeach
         @endif
-        @foreach($application->databases as $database) 
-            A{{ $application->id }} -> DB{{ $database->id}} 
-        @endforeach 
+        @foreach($application->databases as $database)
+            A{{ $application->id }} -> DB{{ $database->id}}
+        @endforeach
         @if (auth()->user()->granularity>=2)
             @if ($application->application_block_id!=null)
                 AB{{ $application->application_block_id }} -> A{{ $application->id}}
@@ -746,19 +746,19 @@ digraph  {
     @endcan
     @can('application_service_access')
     @if (auth()->user()->granularity>=2)
-        @foreach($applicationServices as $service) 
+        @foreach($applicationServices as $service)
             AS{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#APPLICATIONSERVICE{{$service->id}}"]
-            @foreach($service->modules as $module) 
+            @foreach($service->modules as $module)
                 AS{{ $service->id }} -> M{{$module->id}}
             @endforeach
         @endforeach
-        @foreach($applicationModules as $module) 
+        @foreach($applicationModules as $module)
             M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#APPLICATIONMODULE{{$module->id}}"]
         @endforeach
     @endif
     @endcan
     @can('database_access')
-    @foreach($databases as $database) 
+    @foreach($databases as $database)
         DB{{ $database->id }} [label="{{ $database->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/database.png" href="#DATABASE{{$database->id}}"]
     @endforeach
     @endcan

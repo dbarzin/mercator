@@ -30,7 +30,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
@@ -55,7 +55,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::orderBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::orderBy('name')->pluck('name', 'id');
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');

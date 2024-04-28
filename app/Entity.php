@@ -67,7 +67,7 @@ class Entity extends Model
 
     public function entitiesProcesses()
     {
-        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+        return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
     public function parentEntity()

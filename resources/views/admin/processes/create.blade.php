@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.process.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.processes.store") }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.process.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.processes.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
-                <label class="required" for="identifiant">{{ trans('cruds.process.fields.identifiant') }}</label>
-                <input class="form-control {{ $errors->has('identifiant') ? 'is-invalid' : '' }}" type="text" name="identifiant" id="identifiant" value="{{ old('identifiant', '') }}" required>
-                @if($errors->has('identifiant'))
+                <label class="required" for="name">{{ trans('cruds.process.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                @if($errors->has('name'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('identifiant') }}
+                        {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.process.fields.identifiant_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.process.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.process.fields.description') }}</label>
@@ -86,9 +86,9 @@
                     <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                         <tr>
                             <td width='20%'>
-                                <label 
-                                @if (auth()->user()->granularity>=2) 
-                                    class="recommended" 
+                                <label
+                                @if (auth()->user()->granularity>=2)
+                                    class="recommended"
                                 @endif
                                 for="security_need">{{ trans('cruds.process.fields.security_need') }}</label>
                             </td>
@@ -153,7 +153,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.process.fields.security_need_helper') }}</span>
                 </div>
-                
+
             </div>
 
             <div class="col-sm">
@@ -235,16 +235,15 @@
             <span class="help-block">{{ trans('cruds.process.fields.macroprocessus_helper') }}</span>
         </div>
 
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
     </div>
 </div>
 
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 
 
 @endsection
@@ -266,9 +265,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-    function template(data, container) {      
+    function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {

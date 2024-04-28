@@ -43,14 +43,7 @@
                     @foreach($activities as $key => $activity)
                         <tr data-entry-id="{{ $activity->id }}"
                             @if (
-                                ($activity->description===null)||
-                                ($activity->responsible===null)||
-                                ($activity->purpose===null)||
-                                ($activity->categories===null)||
-                                ($activity->recipients===null)||
-                                ($activity->transfert===null)||
-                                ($activity->retention===null)||
-                                ($activity->controls===null)
+                                ($activity->description===null)
                                 )
                                 class="table-warning"
                             @endif
@@ -71,15 +64,15 @@
                                     <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                    
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($activity->activitiesProcesses as $process)
-                                    <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>                                    
+                                    <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                    
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
@@ -161,7 +154,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

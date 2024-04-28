@@ -46,7 +46,7 @@ class Activity extends Model
 
     public function activitiesProcesses()
     {
-        return $this->belongsToMany(Process::class)->orderBy('identifiant');
+        return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
     public function operations()

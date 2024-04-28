@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.activity.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.activities.update", [$activity->id]) }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.edit') }} {{ trans('cruds.activity.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.activities.update", [$activity->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.activity.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $activity->name) }}" required>
@@ -43,8 +43,8 @@
                             <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                         </div>
                         <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="processes" multiple>
-                            @foreach($processes as $id => $identifiant)
-                                <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $activity->activitiesProcesses->contains($id)) ? 'selected' : '' }}>{{ $identifiant }}</option>
+                            @foreach($processes as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $activity->activitiesProcesses->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('processes'))
@@ -78,15 +78,14 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 
 @endsection
 

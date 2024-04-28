@@ -28,7 +28,7 @@ class ActivityController extends Controller
         abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
-        $processes = Process::all()->sortBy('name')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
 
         return view('admin.activities.create', compact('operations', 'processes'));
     }
@@ -47,7 +47,7 @@ class ActivityController extends Controller
         abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
-        $processes = Process::all()->sortBy('identifiant')->pluck('identifiant', 'id');
+        $processes = Process::all()->sortBy('name')->pluck('name', 'id');
 
         $activity->load('operations', 'activitiesProcesses');
 

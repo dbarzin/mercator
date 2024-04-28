@@ -18,12 +18,11 @@ class UpdateProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            'identifiant' => [
+            'name' => [
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:processes,identifiant,' . request()->route('process')->id,
-                'unique:processes,identifiant,'.request()->route('process')->id.',id,deleted_at,NULL',
+                'unique:processes,name,'.request()->route('process')->id.',id,deleted_at,NULL',
             ],
             'activities.*' => [
                 'integer',

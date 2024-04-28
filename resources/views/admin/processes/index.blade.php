@@ -23,7 +23,7 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.process.fields.identifiant') }}
+                            {{ trans('cruds.process.fields.name') }}
                         </th>
                         <th>
                             {{ trans('cruds.process.fields.description') }}
@@ -33,7 +33,7 @@
                         </th>
                         @if (auth()->user()->granularity>=3)
                         <th>
-                            {{ trans('cruds.process.fields.activities') }}                              
+                            {{ trans('cruds.process.fields.activities') }}
                         </th>
                         @endif
                         <th>
@@ -53,7 +53,7 @@
                 <tbody>
                     @foreach($processes as $key => $process)
                         <tr data-entry-id="{{ $process->id }}"
-                            @if(($process->identifiant==null)||
+                            @if(($process->name==null)||
                                 ($process->description==null)||
                                 ($process->in_out==null)||
                                 ((auth()->user()->granularity>=2)&&
@@ -73,7 +73,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.processes.show', $process->id) }}">
-                                {{ $process->identifiant ?? '' }}
+                                {{ $process->name ?? '' }}
                                 </a>
                             </td>
                             <td>
@@ -86,7 +86,7 @@
                                     </a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                
+                                    @endif
                                 @endforeach
                             </td>
                             @if (auth()->user()->granularity>=3)
@@ -97,7 +97,7 @@
                                     </a>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                
+                                    @endif
                                 @endforeach
                             </td>
                             @endif
@@ -108,7 +108,7 @@
                                     </span>
                                     @if (!$loop->last)
                                     ,
-                                    @endif                                
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
@@ -200,7 +200,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

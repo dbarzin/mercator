@@ -112,7 +112,7 @@
                         </th>
                         <td>
                             @foreach($dataProcessing->processes as $process)
-                                <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->identifiant }}</a>
+                                <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
                                 @if (!$loop->last)
                                     ,
                                 @endif
