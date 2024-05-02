@@ -1990,6 +1990,7 @@ class ReportController extends Controller
             trans('cruds.application.fields.entities'),
             trans('cruds.application.fields.responsible'),
             trans('cruds.application.fields.processes'),
+            trans('cruds.application.fields.editor'),
             trans('cruds.application.fields.technology'),
             trans('cruds.application.fields.type'),
             trans('cruds.application.fields.users'),
@@ -2015,32 +2016,33 @@ class ReportController extends Controller
         $sheet->getColumnDimension('B')->setAutoSize(true);  // name
         $sheet->getColumnDimension('C')->setWidth(60, 'pt'); // description
         $sheet->getColumnDimension('D')->setAutoSize(true);  // CPE
-        $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
-        $sheet->getColumnDimension('H')->setWidth(60, 'pt');
-        $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);  // entity_resp
+        $sheet->getColumnDimension('F')->setAutoSize(true);  // entities
+        $sheet->getColumnDimension('G')->setAutoSize(true);  // resp
+        $sheet->getColumnDimension('H')->setWidth(60, 'pt'); // process
+        $sheet->getColumnDimension('I')->setAutoSize(true);  // editor
+        $sheet->getColumnDimension('J')->setAutoSize(true);  // tech
+        $sheet->getColumnDimension('K')->setAutoSize(true);  // type
+        $sheet->getColumnDimension('L')->setAutoSize(true);  // users
+        $sheet->getColumnDimension('M')->setAutoSize(true);  // external
         // CIAT
-        $sheet->getColumnDimension('M')->setWidth(10, 'pt');
-        $sheet->getStyle('M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getColumnDimension('N')->setWidth(10, 'pt');
         $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getColumnDimension('O')->setWidth(10, 'pt');
         $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getColumnDimension('P')->setWidth(10, 'pt');
         $sheet->getStyle('P')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension('Q')->setWidth(10, 'pt');
+        $sheet->getStyle('Q')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         // RTO - RPO
-        $sheet->getColumnDimension('Q')->setAutoSize(true);
         $sheet->getColumnDimension('R')->setAutoSize(true);
-
         $sheet->getColumnDimension('S')->setAutoSize(true);
-        $sheet->getColumnDimension('T')->setWidth(200, 'pt');  // logical servers
-        $sheet->getColumnDimension('U')->setWidth(200, 'pt');  // physical serveurs
-        $sheet->getColumnDimension('V')->setWidth(200, 'pt');  // workstations
-        $sheet->getColumnDimension('W')->setWidth(200, 'pt');  // databases
+
+        $sheet->getColumnDimension('T')->setAutoSize(true);
+        $sheet->getColumnDimension('U')->setWidth(200, 'pt');  // logical servers
+        $sheet->getColumnDimension('V')->setWidth(200, 'pt');  // physical serveurs
+        $sheet->getColumnDimension('W')->setWidth(200, 'pt');  // workstations
+        $sheet->getColumnDimension('X')->setWidth(200, 'pt');  // databases
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -2060,28 +2062,29 @@ class ReportController extends Controller
                 $sheet->setCellValue("F{$row}", $application->entities->implode('name', ', '));
                 $sheet->setCellValue("G{$row}", $application->responsible);
                 $sheet->setCellValue("H{$row}", $application->processes->implode('name', ', '));
-                $sheet->setCellValue("I{$row}", $application->technology);
-                $sheet->setCellValue("J{$row}", $application->type);
-                $sheet->setCellValue("K{$row}", $application->users);
-                $sheet->setCellValue("L{$row}", $application->external);
+                $sheet->setCellValue("I{$row}", $application->editor);
+                $sheet->setCellValue("J{$row}", $application->technology);
+                $sheet->setCellValue("K{$row}", $application->type);
+                $sheet->setCellValue("L{$row}", $application->users);
+                $sheet->setCellValue("M{$row}", $application->external);
 
-                $sheet->setCellValue("M{$row}", $application->security_need_c);
-                $this->addSecurityNeedColor($sheet, "M{$row}", $application->security_need_c);
+                $sheet->setCellValue("N{$row}", $application->security_need_c);
+                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_c);
 
-                $sheet->setCellValue("N{$row}", $application->security_need_i);
-                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_i);
+                $sheet->setCellValue("O{$row}", $application->security_need_i);
+                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_i);
 
-                $sheet->setCellValue("O{$row}", $application->security_need_a);
-                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_a);
+                $sheet->setCellValue("P{$row}", $application->security_need_a);
+                $this->addSecurityNeedColor($sheet, "P{$row}", $application->security_need_a);
 
-                $sheet->setCellValue("P{$row}", $application->security_need_t);
-                $this->addSecurityNeedColor($sheet, "P{$row}", $application->security_need_t);
+                $sheet->setCellValue("Q{$row}", $application->security_need_t);
+                $this->addSecurityNeedColor($sheet, "Q{$row}", $application->security_need_t);
 
-                $sheet->setCellValue("Q{$row}", $application->rto);
-                $sheet->setCellValue("R{$row}", $application->rpo);
+                $sheet->setCellValue("R{$row}", $application->rto);
+                $sheet->setCellValue("S{$row}", $application->rpo);
 
-                $sheet->setCellValue("S{$row}", $application->documentation);
-                $sheet->setCellValue("T{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue("T{$row}", $application->documentation);
+                $sheet->setCellValue("U{$row}", $application->logical_servers->implode('name', ', '));
                 $res = null;
 
                 // Done: request improved
@@ -2121,9 +2124,9 @@ class ReportController extends Controller
                     ->get()
                     ->implode('name', ', ');
 
-                $sheet->setCellValue("U{$row}", $res);
-                $sheet->setCellValue("V{$row}", $application->workstations->implode('name', ', '));
-                $sheet->setCellValue("W{$row}", $application->databases->implode('name', ', '));
+                $sheet->setCellValue("V{$row}", $res);
+                $sheet->setCellValue("W{$row}", $application->workstations->implode('name', ', '));
+                $sheet->setCellValue("X{$row}", $application->databases->implode('name', ', '));
 
                 $row++;
             }
