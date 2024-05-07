@@ -1,18 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.external-connected-entities.update", [$externalConnectedEntity->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-
-
-          <div class="row">
+<form method="POST" action="{{ route("admin.external-connected-entities.update", [$externalConnectedEntity->id]) }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.edit') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
+        </div>
+        <div class="card-body">
+            <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.externalConnectedEntity.fields.name') }}</label>
@@ -142,15 +139,15 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
+@endsection
 
 @section('scripts')
 <script>
@@ -173,8 +170,4 @@ $(document).ready(function () {
     });
 });
 </script>
-@endsection
-
-
-
 @endsection
