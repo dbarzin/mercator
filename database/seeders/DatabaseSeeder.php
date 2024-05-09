@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoOauthRefreshTokensTableSeeder::class);
             $this->call(DemoOauthClientsTableSeeder::class);
             $this->call(DemoOauthPersonalAccessClientsTableSeeder::class);
-            $this->call(DemoActivityProcessTableSeeder::class);
             $this->call(DemoActorOperationTableSeeder::class);
             $this->call(DemoApplicationBlocksTableSeeder::class);
             $this->call(DemoActorsTableSeeder::class);
@@ -95,6 +94,7 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoCpeVendorsTableSeeder::class);
             $this->call(DemoCpeProductsTableSeeder::class);
             $this->call(DemoActivitiesTableSeeder::class);
+            $this->call(DemoActivityProcessTableSeeder::class);
             $this->call(DemoActivityDocumentTableSeeder::class);
             $this->call(DemoDocumentsTableSeeder::class);
             $this->call(DemoEntityDocumentTableSeeder::class);
