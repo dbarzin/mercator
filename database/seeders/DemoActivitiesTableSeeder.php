@@ -14,8 +14,6 @@ class DemoActivitiesTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('activities')->delete();
 
         \DB::table('activities')->insert(array(

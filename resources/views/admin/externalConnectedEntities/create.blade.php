@@ -1,16 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
-    </div>
+<form method="POST" action="{{ route('admin.external-connected-entities.store') }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.externalConnectedEntity.title_singular') }}
+        </div>
+        <div class="card-body">
 
-    <div class="card-body">
-        <form method="POST" action="{{ route('admin.external-connected-entities.store') }}" enctype="multipart/form-data">
-            @csrf
-
-          <div class="row">
+            <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.externalConnectedEntity.fields.name') }}</label>
@@ -25,9 +24,7 @@
                 </div>
 
                 <div class="col-sm">
-
                     <div class="form-group">
-
                         <label class="recommended" for="type">{{ trans('cruds.externalConnectedEntity.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
@@ -43,15 +40,12 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.externalConnectedEntity.fields.type_helper') }}</span>
-
                     </div>
                 </div>
-
             </div>
 
             <div class="row">
                 <div class="col-sm">
-
                     <div class="form-group">
                         <label class="recommended" for="entity_resp_id">{{ trans('cruds.externalConnectedEntity.fields.entity') }}</label>
                         <select class="form-control select2 {{ $errors->has('entity') ? 'is-invalid' : '' }}" name="entity_id" id="entity_id">
@@ -66,12 +60,10 @@
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.externalConnectedEntity.fields.entity_helper') }}</span>
-
                     </div>
-
                 </div>
-                <div class="col-sm">
 
+                <div class="col-sm">
                     <div class="form-group">
                         <label for="contacts">{{ trans('cruds.externalConnectedEntity.fields.contacts') }}</label>
                         <input class="form-control {{ $errors->has('contacts') ? 'is-invalid' : '' }}" type="text" name="contacts" id="contacts" value="{{ old('contacts', '') }}">
@@ -96,7 +88,6 @@
                 <span class="help-block">{{ trans('cruds.externalConnectedEntity.fields.description_helper') }}</span>
             </div>
 
-
             <label class="recommended" for="network_id">{{ trans('cruds.externalConnectedEntity.fields.network') }}</label>
             <select class="form-control select2 {{ $errors->has('network') ? 'is-invalid' : '' }}" name="network_id" id="network_id">
                 <option></option>
@@ -110,7 +101,6 @@
                 </div>
             @endif
             <span class="help-block">{{ trans('cruds.externalConnectedEntity.fields.network_helper') }}</span>
-
 
             <div class="row">
                 <div class="col-sm">
@@ -139,15 +129,15 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
+@endsection
 
 @section('scripts')
 <script>
@@ -159,8 +149,4 @@ $(document).ready(function () {
     });
 });
 </script>
-@endsection
-
-
-
 @endsection
