@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
         "maatwebsite/excel": "^3.1",
+        "socialiteproviders/keycloak": "^5.3",
         "phpoffice/phpword": "^1.1.0"
     },
     "require-dev": {

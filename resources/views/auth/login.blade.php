@@ -71,6 +71,12 @@
                         </div>
                     </div>
                 </form>
+                
+                <!-- Ajout du bouton pour se connecter via Keycloak -->
+                <div class="text-right mt-3">
+                    <a href="{{ route('login.keycloak') }}" class="btn btn-secondary">Se connecter avec Keycloak</a>
+                </div>
+                
             </div>
         </div>
     </div>

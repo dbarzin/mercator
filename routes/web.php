@@ -28,6 +28,8 @@ Route::get('/cytoscape2', function () {
 
 Auth::routes();
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
+Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class,'redirectToKeycloak'])->name('login.keycloak');
+Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class,'handleKeycloakCallback']);
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
