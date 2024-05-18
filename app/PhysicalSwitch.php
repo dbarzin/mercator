@@ -55,6 +55,11 @@ class PhysicalSwitch extends Model
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
+    public function networkSwitches()
+    {
+        return $this->belongsToMany(NetworkSwitch::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

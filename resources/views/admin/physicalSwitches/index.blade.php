@@ -57,7 +57,7 @@
                             )
                                 class="table-warning"
                         @endif
-                          >                            
+                          >
                             <td>
 
                             </td>
@@ -73,13 +73,25 @@
                                 {!! $physicalSwitch->type ?? '' !!}
                             </td>
                             <td>
-                                {!! $physicalSwitch->site->name ?? '' !!}
+                                @if($physicalSwitch->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalSwitch->site->id) }}">
+                                    {{ $physicalSwitch->site->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {!! $physicalSwitch->building->name ?? '' !!}
+                                @if($physicalSwitch->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalSwitch->building->id) }}">
+                                    {{ $physicalSwitch->building->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {!! $physicalSwitch->bay->name ?? '' !!}
+                                @if($physicalSwitch->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalSwitch->bay->id) }}">
+                                    {{ $physicalSwitch->bay->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
                                 @can('physical_switch_show')
@@ -154,14 +166,14 @@
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
     pageLength: 100, stateSave: true,
-    "lengthMenu": [ 10, 50, 100, 500 ]    
+    "lengthMenu": [ 10, 50, 100, 500 ]
   });
   let table = $('.datatable-PhysicalSwitch:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

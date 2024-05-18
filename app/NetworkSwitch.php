@@ -37,6 +37,11 @@ class NetworkSwitch extends Model
         'deleted_at',
     ];
 
+    public function physicalSwitches()
+    {
+        return $this->belongsToMany(PhysicalSwitch::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

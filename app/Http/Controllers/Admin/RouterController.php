@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
 use App\NetworkSwitch;
 use App\Router;
+use App\PhysicalRouter;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,13 +28,18 @@ class RouterController extends Controller
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
+        $physical_routers = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.create', compact('network_switches'));
+        $type_list = Router::all()->sortBy('type')->pluck('type');
+
+        return view('admin.routers.create',
+            compact('network_switches', 'physical_routers','type_list'));
     }
 
     public function store(StoreRouterRequest $request)
     {
-        Router::create($request->all());
+        $router = Router::create($request->all());
+        $router->physicalRouters()->sync($request->input('physicalRouters', []));
 
         return redirect()->route('admin.routers.index');
     }
@@ -43,13 +49,19 @@ class RouterController extends Controller
         abort_if(Gate::denies('router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $network_switches = NetworkSwitch::orderBy('name')->pluck('name', 'id');
+        $physical_routers = PhysicalRouter::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.routers.edit', compact('router', 'network_switches'));
+        $type_list = Router::all()->sortBy('type')->pluck('type');
+
+        return view('admin.routers.edit',
+            compact('router', 'network_switches','physical_routers','type_list'));
     }
 
     public function update(UpdateRouterRequest $request, Router $router)
     {
         $router->update($request->all());
+
+        $router->physicalRouters()->sync($request->input('physicalRouters', []));
 
         return redirect()->route('admin.routers.index');
     }

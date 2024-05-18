@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyNetworkSwitchRequest;
 use App\Http\Requests\StoreNetworkSwitchRequest;
 use App\Http\Requests\UpdateNetworkSwitchRequest;
 use App\NetworkSwitch;
+use App\PhysicalSwitch;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,12 +26,15 @@ class NetworkSwitchController extends Controller
     {
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.networkSwitches.create');
+        $physicalSwitches = PhysicalSwitch::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.networkSwitches.create', compact('physicalSwitches'));
     }
 
     public function store(StoreNetworkSwitchRequest $request)
     {
-        NetworkSwitch::create($request->all());
+        $networkSwitch = NetworkSwitch::create($request->all());
+        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
 
         return redirect()->route('admin.network-switches.index');
     }
@@ -39,12 +43,16 @@ class NetworkSwitchController extends Controller
     {
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.networkSwitches.edit', compact('networkSwitch'));
+        $physicalSwitches = PhysicalSwitch::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.networkSwitches.edit',
+            compact('networkSwitch','physicalSwitches'));
     }
 
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
     {
         $networkSwitch->update($request->all());
+        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
 
         return redirect()->route('admin.network-switches.index');
     }

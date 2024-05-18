@@ -26,19 +26,22 @@
                             {{ trans('cruds.physicalRouter.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.physicalRouter.fields.description') }}
+                            {{ trans('cruds.physicalRouter.fields.type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.physicalRouter.fields.type') }}
+                            {{ trans('cruds.physicalRouter.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.physicalRouter.fields.site') }}
                         </th>
                         <th>
                             {{ trans('cruds.physicalRouter.fields.building') }}
-                        </th>                        
+                        </th>
                         <th>
                             {{ trans('cruds.physicalRouter.fields.bay') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.physicalRouter.fields.routers') }}
                         </th>
                       <th>
                             &nbsp;
@@ -57,20 +60,42 @@
                                 </a>
                             </td>
                             <td>
-                                {!! $physicalRouter->description ?? '' !!}
-                            </td>
-                            <td>
                                 {{ $physicalRouter->type ?? '' }}
                             </td>
                             <td>
-                                {{ $physicalRouter->site->name ?? '' }}
+                                {!! $physicalRouter->description ?? '' !!}
                             </td>
                             <td>
-                                {{ $physicalRouter->building->name ?? '' }}
+                                @if($physicalRouter->site!=null)
+                                <a href="{{ route('admin.sites.show', $physicalRouter->site->id) }}">
+                                    {{ $physicalRouter->site->name ?? '' }}
+                                </a>
+                                @endif
                             </td>
                             <td>
-                                {{ $physicalRouter->bay->name ?? '' }}
-                            </td>                            
+                                @if($physicalRouter->building!=null)
+                                <a href="{{ route('admin.buildings.show', $physicalRouter->building->id) }}">
+                                    {{ $physicalRouter->building->name ?? '' }}
+                                </a>
+                                @endif
+                            </td>
+                            <td>
+                                @if($physicalRouter->bay!=null)
+                                <a href="{{ route('admin.bays.show', $physicalRouter->bay->id) }}">
+                                    {{ $physicalRouter->bay->name ?? '' }}
+                                </a>
+                                @endif
+                            </td>
+                            <td>
+                                @foreach($physicalRouter->routers as $router)
+                                    <a href="{{ route('admin.routers.show', $router->id) }}">
+                                    {{ $router->name }}
+                                    @if(!$loop->last)
+                                    ,
+                                    @endif
+                                    </a>
+                                @endforeach                                
+                            </td>
                             <td>
                                 @can('physical_router_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.physical-routers.show', $physicalRouter->id) }}">
@@ -150,7 +175,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

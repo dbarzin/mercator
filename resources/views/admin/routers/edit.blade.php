@@ -1,24 +1,46 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.router.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.routers.update", [$router->id]) }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.edit') }} {{ trans('cruds.router.title_singular') }}
+        </div>
+        <div class="card-body">
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.routers.update", [$router->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.router.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $router->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.router.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $router->name) }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.router.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.router.fields.name_helper') }}</span>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label class="recommended" for="responsible">{{ trans('cruds.router.fields.type') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                            @foreach($type_list as $type)
+                            <option {{ $router->type==$type ? 'selected' : '' }}>{{$type}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('type'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('type') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.router.fields.type_helper') }}</span>
+                    </div>
+
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">{{ trans('cruds.router.fields.description') }}</label>
@@ -50,17 +72,30 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.router.fields.rules_helper') }}</span>
             </div>
+
             <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
+                <label for="databases">{{ trans('cruds.router.fields.physical_routers') }}</label>
+                <select class="form-control select2 {{ $errors->has('physical_routers') ? 'is-invalid' : '' }}" name="physicalRouters[]" id="physicalRouters" multiple>
+                    @foreach($physical_routers as $id => $name)
+                    <option value="{{ $id }}" {{ (in_array($id, old('physicalRouters', [])) || $router->physicalRouters->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('physicalRouters'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('physicalRouters') }}
+                </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.router.fields.physical_routers_helper') }}</span>
             </div>
-        </form>
+
+        </div>
     </div>
-</div>
-
-
-
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
