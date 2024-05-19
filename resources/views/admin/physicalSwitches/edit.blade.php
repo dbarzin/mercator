@@ -8,16 +8,42 @@
         {{ trans('global.edit') }} {{ trans('cruds.physicalSwitch.title_singular') }}
     </div>
     <div class="card-body">
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $physicalSwitch->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.physicalSwitch.fields.name_helper') }}</span>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="required" for="name">{{ trans('cruds.physicalSwitch.fields.name') }}</label>
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $physicalSwitch->name) }}" required>
+                    @if($errors->has('name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalSwitch.fields.name_helper') }}</span>
+                </div>
+
             </div>
+            <div class="col-sm-4">
+
+                <div class="form-group">
+                    <label for="type" class="recommended">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
+                    <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                        @if (!$type_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                        @endif
+                        @foreach($type_list as $t)
+                        <option {{ (old('type') ? old('type') : $physicalSwitch->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('type'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('type') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalSwitch.fields.type_helper') }}</span>
+                </div>
+            </div>
+        </div>
+
             <div class="form-group">
                 <label for="description" class="recommended">{{ trans('cruds.physicalSwitch.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $physicalSwitch->description) !!}</textarea>
@@ -28,22 +54,26 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalSwitch.fields.description_helper') }}</span>
             </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
             <div class="form-group">
-                <label for="type" class="recommended">{{ trans('cruds.physicalSwitch.fields.type') }}</label>
-                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
-                    @if (!$type_list->contains(old('type')))
-                    <option> {{ old('type') }}</option>'
-                    @endif
-                    @foreach($type_list as $t)
-                    <option {{ (old('type') ? old('type') : $physicalSwitch->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                <label for="databases">{{ trans('cruds.physicalSwitch.fields.network_switches') }}</label>
+                <select class="form-control select2 {{ $errors->has('physical_routers') ? 'is-invalid' : '' }}" name="networkSwitches[]" id="networkSwitches" multiple>
+                    @foreach($networkSwitches as $id => $name)
+                    <option value="{{ $id }}" {{ (in_array($id, old('networkSwitches', [])) || $physicalSwitch->networkSwitches->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('type') }}
-                    </div>
+                @if($errors->has('networkSwitches'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('networkSwitches') }}
+                </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.physicalSwitch.fields.type_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.physicalSwitch.fields.network_switches_helper') }}</span>
             </div>
         </div>
         <!---------------------------------------------------------------------------------------------------->
@@ -102,7 +132,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
     <div class="form-group">
         <button class="btn btn-danger" type="submit">

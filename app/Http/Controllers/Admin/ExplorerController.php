@@ -75,6 +75,12 @@ class ExplorerController extends Controller
             }
         }
 
+        // network_switch_physical_switch
+        $joins = DB::table('network_switch_physical_switch')->select('network_switch_id', 'physical_switch_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('LSWITCH_', $join->network_switch_id), $this->formatId('SWITCH_', $join->physical_switch_id));
+        }
+
         // Physical routers
         $routers = DB::table('physical_routers')->select('id', 'name', 'bay_id', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($routers as $router) {
@@ -87,6 +93,13 @@ class ExplorerController extends Controller
                 $this->addLinkEdge($edges, $this->formatId('PROUTER_', $router->id), $this->formatId('SITE_', $router->site_id));
             }
         }
+
+        // physical_router_router
+        $joins = DB::table('physical_router_router')->select('router_id', 'physical_router_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('ROUTER_', $join->router_id), $this->formatId('PROUTER_', $join->physical_router_id));
+        }
+
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
@@ -287,6 +300,12 @@ class ExplorerController extends Controller
                     }
                 }
             }
+        }
+
+        // Logical Switches
+        $networkSwitches = DB::table('network_switches')->select('id', 'name')->whereNull('deleted_at')->get();
+        foreach ($networkSwitches as $networkSwitch) {
+            $this->addNode($nodes, 5, $this->formatId('LSWITCH_', $networkSwitch->id), $networkSwitch->name, '/images/switch.png', 'switches');
         }
 
         // DHCP Servers

@@ -91,6 +91,21 @@
                         @endif
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.physicalSwitch.fields.network_switches') }}
+                    </th>
+                    <td>
+                        @foreach($physicalSwitch->networkSwitches as $networkSwitch)
+                            <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">
+                            {{ $networkSwitch->name }}
+                            </a>
+                            @if (!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -41,6 +41,9 @@
                             {{ trans('cruds.physicalSwitch.fields.bay') }}
                         </th>
                         <th>
+                            {{ trans('cruds.physicalSwitch.fields.network_switches') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -92,6 +95,16 @@
                                     {{ $physicalSwitch->bay->name ?? '' }}
                                 </a>
                                 @endif
+                            </td>
+                            <td>
+                                @foreach($physicalSwitch->networkSwitches as $networkSwitch)
+                                    <a href="{{ route('admin.network-switches.show', $networkSwitch->id) }}">
+                                    {{ $networkSwitch->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('physical_switch_show')
