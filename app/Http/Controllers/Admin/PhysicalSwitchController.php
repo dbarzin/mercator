@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSwitchRequest;
 use App\Http\Requests\StorePhysicalSwitchRequest;
 use App\Http\Requests\UpdatePhysicalSwitchRequest;
+use App\NetworkSwitch;
 use App\PhysicalSwitch;
 use App\Site;
 use Gate;
@@ -31,18 +32,20 @@ class PhysicalSwitchController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalSwitches.create',
-            compact('sites', 'buildings', 'bays', 'type_list')
+            compact('sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
         );
     }
 
     public function store(StorePhysicalSwitchRequest $request)
     {
-        PhysicalSwitch::create($request->all());
+        $physicalSwitch = PhysicalSwitch::create($request->all());
+        $physicalSwitch->networkSwitches()->sync($request->input('networkSwitches', []));
 
         return redirect()->route('admin.physical-switches.index');
     }
@@ -54,6 +57,7 @@ class PhysicalSwitchController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
@@ -61,13 +65,14 @@ class PhysicalSwitchController extends Controller
 
         return view(
             'admin.physicalSwitches.edit',
-            compact('sites', 'buildings', 'bays', 'physicalSwitch', 'type_list')
+            compact('sites', 'buildings', 'bays', 'physicalSwitch', 'networkSwitches', 'type_list')
         );
     }
 
     public function update(UpdatePhysicalSwitchRequest $request, PhysicalSwitch $physicalSwitch)
     {
         $physicalSwitch->update($request->all());
+        $physicalSwitch->networkSwitches()->sync($request->input('networkSwitches', []));
 
         return redirect()->route('admin.physical-switches.index');
     }

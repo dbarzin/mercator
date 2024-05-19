@@ -18,6 +18,7 @@ class Router extends Model
 
     public static $searchable = [
         'name',
+        'type',
         'description',
     ];
 
@@ -29,6 +30,7 @@ class Router extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'description',
         'rules',
         'ip_addresses',
@@ -36,6 +38,11 @@ class Router extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function physicalRouters()
+    {
+        return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

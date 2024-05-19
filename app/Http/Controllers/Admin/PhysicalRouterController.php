@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
 use App\PhysicalRouter;
+use App\Router;
 use App\Site;
 use App\Vlan;
 use Gate;
@@ -29,21 +30,26 @@ class PhysicalRouterController extends Controller
     {
         abort_if(Gate::denies('physical_router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.physicalRouters.create', compact('sites', 'buildings', 'bays', 'vlans'));
+        $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view(
+            'admin.physicalRouters.create',
+            compact('sites', 'buildings', 'bays', 'routers', 'vlans', 'type_list')
+        );
     }
 
     public function store(StorePhysicalRouterRequest $request)
     {
         $physicalRouter = PhysicalRouter::create($request->all());
         $physicalRouter->vlans()->sync($request->input('vlans', []));
+        $physicalRouter->routers()->sync($request->input('routers', []));
 
         return redirect()->route('admin.physical-routers.index');
     }
@@ -52,23 +58,27 @@ class PhysicalRouterController extends Controller
     {
         abort_if(Gate::denies('physical_router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
+
+        $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $physicalRouter->load('site', 'building', 'bay', 'vlans');
 
-        return view('admin.physicalRouters.edit', compact('sites', 'buildings', 'bays', 'vlans', 'physicalRouter'));
+        return view(
+            'admin.physicalRouters.edit',
+            compact('sites', 'buildings', 'bays', 'vlans', 'physicalRouter', 'routers', 'type_list')
+        );
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalRouter)
     {
         $physicalRouter->update($request->all());
         $physicalRouter->vlans()->sync($request->input('vlans', []));
+        $physicalRouter->routers()->sync($request->input('routers', []));
 
         return redirect()->route('admin.physical-routers.index');
     }

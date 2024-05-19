@@ -27,8 +27,7 @@ class RouterController extends Controller
         abort_if(Gate::denies('router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $router = Router::create($request->all());
-        // syncs
-        // $router->roles()->sync($request->input('roles', []));
+        $router->physicalRouters()->sync($request->input('physicalRouters', []));
 
         return response()->json($router, 201);
     }
@@ -45,8 +44,7 @@ class RouterController extends Controller
         abort_if(Gate::denies('router_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $router->update($request->all());
-        // syncs
-        // $router->roles()->sync($request->input('roles', []));
+        $router->physicalRouters()->sync($request->input('physicalRouters', []));
 
         return response()->json();
     }

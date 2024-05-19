@@ -21,6 +21,9 @@ class Relation extends Model
         'name',
         'type',
         'description',
+        'order_number',
+        'reference',
+        'comments',
     ];
 
     protected $dates = [

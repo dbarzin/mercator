@@ -55,6 +55,11 @@ class PhysicalRouter extends Model
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
+    public function routers()
+    {
+        return $this->belongsToMany(Router::class)->orderBy('name');
+    }
+
     public function vlans()
     {
         return $this->belongsToMany(Vlan::class)->orderBy('name');

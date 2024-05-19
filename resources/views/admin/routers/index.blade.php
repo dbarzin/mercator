@@ -26,7 +26,13 @@
                             {{ trans('cruds.router.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.router.fields.type') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.router.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.router.fields.physical_routers') }}
                         </th>
                         <th>
                             &nbsp;
@@ -45,7 +51,20 @@
                                 </a>
                             </td>
                             <td>
+                                {{ $router->type ?? '' }}
+                            </td>
+                            <td>
                                 {!! $router->description ?? '' !!}
+                            </td>
+                            <td>
+                                @foreach($router->physicalRouters as $physicalRouter)
+                                    <a href="{{ route('admin.physical-routers.show', $physicalRouter->id) }}">
+                                    {{ $physicalRouter->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('router_show')

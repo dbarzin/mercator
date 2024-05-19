@@ -32,6 +32,9 @@
                             {{ trans('cruds.networkSwitch.fields.ip') }}
                         </th>
                         <th>
+                            {{ trans('cruds.networkSwitch.fields.physical_switches') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -52,6 +55,16 @@
                             </td>
                             <td>
                                 {{ $networkSwitch->ip ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($networkSwitch->physicalSwitches as $physicalSwitch)
+                                    <a href="{{ route('admin.physical-switches.show', $physicalSwitch->id) }}">
+                                    {{ $physicalSwitch->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('network_switch_show')
@@ -133,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

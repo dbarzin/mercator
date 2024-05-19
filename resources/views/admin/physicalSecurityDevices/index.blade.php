@@ -53,10 +53,8 @@
                                 )
                                     class="table-warning"
                             @endif
-
                             >
                             <td>
-
                             </td>
                             <td>
                                 <a href="{{ route('admin.physical-security-devices.show', $physicalSecurityDevice->id) }}">
@@ -117,9 +115,6 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
