@@ -94,12 +94,6 @@ class ExplorerController extends Controller
             }
         }
 
-        // physical_router_router
-        $joins = DB::table('physical_router_router')->select('router_id', 'physical_router_id')->get();
-        foreach ($joins as $join) {
-            $this->addLinkEdge($edges, $this->formatId('ROUTER_', $join->router_id), $this->formatId('PROUTER_', $join->physical_router_id));
-        }
-
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
@@ -300,6 +294,12 @@ class ExplorerController extends Controller
                     }
                 }
             }
+        }
+
+        // physical_router_router
+        $joins = DB::table('physical_router_router')->select('router_id', 'physical_router_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('ROUTER_', $join->router_id), $this->formatId('PROUTER_', $join->physical_router_id));
         }
 
         // Logical Switches
