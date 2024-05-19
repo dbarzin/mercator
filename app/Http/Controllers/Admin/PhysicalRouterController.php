@@ -9,8 +9,8 @@ use App\Http\Requests\MassDestroyPhysicalRouterRequest;
 use App\Http\Requests\StorePhysicalRouterRequest;
 use App\Http\Requests\UpdatePhysicalRouterRequest;
 use App\PhysicalRouter;
-use App\Site;
 use App\Router;
+use App\Site;
 use App\Vlan;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,8 +39,10 @@ class PhysicalRouterController extends Controller
 
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.physicalRouters.create',
-            compact('sites', 'buildings', 'bays', 'routers', 'vlans', 'type_list'));
+        return view(
+            'admin.physicalRouters.create',
+            compact('sites', 'buildings', 'bays', 'routers', 'vlans', 'type_list')
+        );
     }
 
     public function store(StorePhysicalRouterRequest $request)
@@ -66,8 +68,10 @@ class PhysicalRouterController extends Controller
 
         $physicalRouter->load('site', 'building', 'bay', 'vlans');
 
-        return view('admin.physicalRouters.edit',
-            compact('sites', 'buildings', 'bays', 'vlans', 'physicalRouter', 'routers', 'type_list'));
+        return view(
+            'admin.physicalRouters.edit',
+            compact('sites', 'buildings', 'bays', 'vlans', 'physicalRouter', 'routers', 'type_list')
+        );
     }
 
     public function update(UpdatePhysicalRouterRequest $request, PhysicalRouter $physicalRouter)

@@ -7,8 +7,8 @@ use App\Http\Requests\MassDestroyRouterRequest;
 use App\Http\Requests\StoreRouterRequest;
 use App\Http\Requests\UpdateRouterRequest;
 use App\NetworkSwitch;
-use App\Router;
 use App\PhysicalRouter;
+use App\Router;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,8 +32,10 @@ class RouterController extends Controller
 
         $type_list = Router::all()->sortBy('type')->pluck('type');
 
-        return view('admin.routers.create',
-            compact('network_switches', 'physical_routers','type_list'));
+        return view(
+            'admin.routers.create',
+            compact('network_switches', 'physical_routers', 'type_list')
+        );
     }
 
     public function store(StoreRouterRequest $request)
@@ -53,8 +55,10 @@ class RouterController extends Controller
 
         $type_list = Router::all()->sortBy('type')->pluck('type');
 
-        return view('admin.routers.edit',
-            compact('router', 'network_switches','physical_routers','type_list'));
+        return view(
+            'admin.routers.edit',
+            compact('router', 'network_switches', 'physical_routers', 'type_list')
+        );
     }
 
     public function update(UpdateRouterRequest $request, Router $router)

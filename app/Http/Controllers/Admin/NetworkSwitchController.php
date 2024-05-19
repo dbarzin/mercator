@@ -45,8 +45,10 @@ class NetworkSwitchController extends Controller
 
         $physicalSwitches = PhysicalSwitch::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.networkSwitches.edit',
-            compact('networkSwitch','physicalSwitches'));
+        return view(
+            'admin.networkSwitches.edit',
+            compact('networkSwitch', 'physicalSwitches')
+        );
     }
 
     public function update(UpdateNetworkSwitchRequest $request, NetworkSwitch $networkSwitch)
