@@ -17,7 +17,6 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $buildings = Building::all()->sortBy('name');
         $buildings = Building::with('site')->orderBy('name')->get();
 
         return view('admin.buildings.index', compact('buildings'));
@@ -34,9 +33,9 @@ class BuildingController extends Controller
 
     public function store(StoreBuildingRequest $request)
     {
+        $request['camera'] = $request->has('camera');
+        $request['badge'] = $request->has('badge');
         $building = Building::create($request->all());
-        $building->camera = $request->has('camera');
-        $building->badge = $request->has('badge');
         $building->save();
 
         return redirect()->route('admin.buildings.index');
@@ -55,8 +54,8 @@ class BuildingController extends Controller
 
     public function update(UpdateBuildingRequest $request, Building $building)
     {
-        $building->camera = $request->has('camera');
-        $building->badge = $request->has('badge');
+        $request['camera'] = $request->has('camera');
+        $request['badge'] = $request->has('badge');
         $building->update($request->all());
 
         return redirect()->route('admin.buildings.index');
