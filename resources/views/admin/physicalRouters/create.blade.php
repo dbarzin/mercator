@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label for="site_id">{{ trans('cruds.physicalRouter.fields.site') }}</label>
                         <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
-                            <option>{{ trans('global.pleaseSelect') }} </option>
+                            <option value="">{{ trans('global.pleaseSelect') }} </option>
                             @foreach($sites as $id => $site)
                                 <option value="{{ $id }}" {{ old('site_id') == $id ? 'selected' : '' }}>{{ $site }}</option>
                             @endforeach
@@ -83,7 +83,7 @@
                     <div class="form-group">
                         <label for="building_id">{{ trans('cruds.physicalRouter.fields.building') }}</label>
                         <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
-                            <option>{{ trans('global.pleaseSelect') }} </option>
+                            <option value="">{{ trans('global.pleaseSelect') }} </option>
                             @foreach($buildings as $id => $building)
                                 <option value="{{ $id }}" {{ old('building_id') == $id ? 'selected' : '' }}>{{ $building }}</option>
                             @endforeach
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label for="bay_id">{{ trans('cruds.physicalRouter.fields.bay') }}</label>
                         <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
-                            <option>{{ trans('global.pleaseSelect') }} </option>
+                            <option value="">{{ trans('global.pleaseSelect') }} </option>
                             @foreach($bays as $id => $bay)
                                 <option value="{{ $id }}" {{ old('bay_id') == $id ? 'selected' : '' }}>{{ $bay }}</option>
                             @endforeach
