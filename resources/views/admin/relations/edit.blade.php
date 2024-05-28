@@ -109,7 +109,7 @@
                     <div class="form-group">
                         <label class="required" for="source_id">{{ trans('cruds.relation.fields.source') }}</label>
                         <select class="form-control select2 {{ $errors->has('source') ? 'is-invalid' : '' }}" name="source_id" id="source_id" required>
-                            <option>{{ trans('global.pleaseSelect') }}</option>
+                            <option value="">{{ trans('global.pleaseSelect') }}</option>
                             @foreach($sources as $source)
                                 <option value="{{ $source->id }}" {{ ($relation->source ? $relation->source->id : old('source_id')) == $source->id ? 'selected' : '' }}>{{ $source->name }}</option>
                             @endforeach
@@ -127,7 +127,7 @@
                     <div class="form-group">
                         <label class="required" for="destination_id">{{ trans('cruds.relation.fields.destination') }}</label>
                         <select class="form-control select2 {{ $errors->has('destination') ? 'is-invalid' : '' }}" name="destination_id" id="destination_id" required>
-                            <option>{{ trans('global.pleaseSelect') }}</option>
+                            <option value="">{{ trans('global.pleaseSelect') }}</option>
                             @foreach($destinations as $destination)
                                 <option value="{{ $destination->id }}" {{ ($relation->destination ? $relation->destination->id : old('destination_id')) == $destination->id ? 'selected' : '' }}>{{ $destination->name }}</option>
                             @endforeach
