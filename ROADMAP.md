@@ -22,6 +22,7 @@ Changements prévus en 2024 :
 
 ## Evolutions mineurs
 
+- [ ] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
 - [ ] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
 - [ ] Packaging des librairies JavaScript avec [Laravel Mix](https://laravel-mix.com/).
 - [ ] Dessiner un nouveau jeu d'icônes en SVG
@@ -32,6 +33,7 @@ Changements prévus en 2024 :
 - [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [x] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 - [x] Ajout des clusters
+- [x] Ajout des flux logiques
 - [ ] Afficher l'historique des changements d'un objet
 
 ## Petites évolutions

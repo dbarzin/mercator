@@ -27,10 +27,10 @@
                         </th>
                         <th>
                             {{ trans('cruds.dhcpServer.fields.description') }}
-                        </th>                        
+                        </th>
                         <th>
                             {{ trans('cruds.dhcpServer.fields.address_ip') }}
-                        </th>                        
+                        </th>
                         <th>
                             &nbsp;
                         </th>
@@ -43,11 +43,12 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.dhcp-servers.show', $dhcpServer->id) }}">                                
                                 {{ $dhcpServer->name ?? '' }}
                             </td>
                             <td>
                                 {!! $dhcpServer->description !!}
-                            </td>                            
+                            </td>
                             <td>
                                 {{ $dhcpServer->address_ip ?? '' }}
                             </td>
@@ -130,7 +131,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
