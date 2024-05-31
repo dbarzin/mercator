@@ -241,6 +241,7 @@
                                         <a href="/admin/gateways/{{ $gateway->id }}">{{ $gateway->name }}</a>
                                         </th>
                                     </thead>
+                                    <tbody>
                                     <tr>
                                         <th width="20%">{{ trans("cruds.gateway.fields.description") }}</th>
                                         <td>{!! $gateway->description !!}</td>
@@ -291,6 +292,7 @@
                                         <a href="/admin/external-connected-entities/{{ $entity->id }}">{{ $entity->name }}</a>
                                         </th>
                                     </thead>
+                                    <tbody>
                                     <tr>
                                         <th>{{ trans("cruds.externalConnectedEntity.fields.entity") }}</th>
                                         <td>
@@ -362,6 +364,42 @@
                                         <tr>
                                             <th>{{ trans("cruds.router.fields.rules") }}</th>
                                             <td>{!! $router->rules !!}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+            @endif
+            @endcan
+
+            @can("network_switch_access")
+            @if ($networkSwitches->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.networkSwitch.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.networkSwitch.description") }}</p>
+                        @foreach($networkSwitches as $networkSwitch)
+                          <div class="row">
+                            <div class="col-sm-6">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="SW{{ $networkSwitch->id }}">
+                                        <th colspan="2">
+                                        <a href="/admin/network-switches/{{ $networkSwitch->id }}">{{ $networkSwitch->name }}</a>
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th width="20%">{{ trans("cruds.networkSwitch.fields.description") }}</th>
+                                            <td>{!! $networkSwitch->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans("cruds.networkSwitch.fields.ip") }}</th>
+                                            <td>{!! $networkSwitch->ip !!}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -867,16 +905,28 @@ digraph  {
             CERT{{ $certificate->id }} [label="{{ $certificate->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="#CERT{{$certificate->id}}"]
         @endif
     @endforeach
+    @endcan
+    @can('router_access')
     @foreach($routers as $router)
         R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
-        @foreach($subnetworks as $subnetwork)
-            @if (($router->ip_addresses!=null)&&($subnetwork->address!=null))
-                @foreach(explode(',',$router->ip_addresses) as $address)
-                    @if ($subnetwork->contains($address))
-                        SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}
-                    @endif
-                @endforeach
-            @endif
+        @foreach(explode(',',$router->ip_addresses) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> R{{ $router->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+    @can('network_switch_access')
+    @foreach($networkSwitches as $networkSwitch)
+        SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!=null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
+        @foreach(explode(',',$networkSwitch->ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> SW{{ $networkSwitch->id }}
+                @endif
+            @endforeach
         @endforeach
     @endforeach
     @endcan
@@ -894,6 +944,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/entity.png", "64px", "64px")
     .addImage("/images/server.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")
+    .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/cluster.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")

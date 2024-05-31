@@ -186,7 +186,7 @@ class Subnetwork extends Model
             $size = strpos($ip, ':') === false ? 4 : 16;
 
             // Convert to binary
-            $ip = inet_pton($ip);
+            $ip = inet_pton(trim($ip));
             $net = inet_pton($net);
             if (! $ip || ! $net) {
                 return false;
@@ -205,6 +205,7 @@ class Subnetwork extends Model
             // Compare the mask
             return ($ip & $mask) === ($net & $mask);
         }
+
         return false;
     }
 
