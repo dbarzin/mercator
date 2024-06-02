@@ -40,8 +40,60 @@
                 </div>
             </div>
             <!------------------------------------------------------------------------------------------------------>
-
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="recommended" for="router">{{ trans('cruds.logicalFlow.fields.router') }}</label>
+                        <select class="form-control select2 {{ $errors->has('router') ? 'is-invalid' : '' }}" name="router_id" id="router">
+                            <option></option>
+                            @foreach($routers as $id => $name)
+                            <option value="{{$id}}" {{ $logicalFlow->router_id === $id ? 'selected' : '' }}>{{$name}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('router'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('router') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalFlow.fields.router_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------------------------------------>
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.priority') }}</label>
+                        <input class="form-control {{ $errors->has('priority') ? 'is-invalid' : '' }}" type="text" name="priority" id="priority" value="{{ old('priority', $logicalFlow->priority) }}" required>
+                        @if($errors->has('priority'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('priority') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalFlow.fields.priority_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.action') }}</label>
+
+                        <select class="form-control select2 {{ $errors->has('action') ? 'is-invalid' : '' }}" name="action" id="action">
+                            <option></option>
+                            <option {{ $logicalFlow->action=="Permit" ? 'selected' : '' }}>Permit</option>
+                            <option {{ $logicalFlow->action=="Deny" ? 'selected' : '' }}>Deny</option>
+                            <option {{ $logicalFlow->action=="Block" ? 'selected' : '' }}>Block</option>
+                            <option {{ $logicalFlow->action=="Reditect" ? 'selected' : '' }}>Reditect</option>
+                            <option {{ $logicalFlow->action=="Log" ? 'selected' : '' }}>Log</option>
+                        </select>
+
+                        @if($errors->has('action'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('action') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalFlow.fields.action_helper') }}</span>
+                    </div>
+                </div>
                 <div class="col-sm-1">
                     <div class="form-group">
                         <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.protocol') }}</label>
@@ -109,6 +161,33 @@
 
             </div>
 
+            <!------------------------------------------------------------------------------------------------------>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="name">{{ trans('cruds.logicalFlow.fields.users') }}</label>
+                        <input class="form-control {{ $errors->has('users') ? 'is-invalid' : '' }}" type="text" name="users" id="users" value="{{ old('users', $logicalFlow->users) }}">
+                        @if($errors->has('users'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('users') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalFlow.fields.users_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="name">{{ trans('cruds.logicalFlow.fields.schedule') }}</label>
+                        <input class="form-control {{ $errors->has('schedule') ? 'is-invalid' : '' }}" type="text" name="schedule" id="schedule" value="{{ old('schedule', $logicalFlow->schedule) }}">
+                        @if($errors->has('schedule'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('schedule') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.logicalFlow.fields.schedule_helper') }}</span>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

@@ -36,6 +36,12 @@ class LogicalFlow extends Model
         'dest_port',
         'protocol',
         'description',
+        'router_id',
+        'priority',
+        'action',
+        'users',
+        'interface',
+        'schedule',
     ];
 
     public function isSource(string $ip): bool
@@ -46,6 +52,11 @@ class LogicalFlow extends Model
     public function isDestination(string $ip): bool
     {
         return $this->contains($this->dest_ip_range, $ip);
+    }
+
+    public function router()
+    {
+        return $this->belongsTo(Router::class, 'router_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
@@ -67,8 +78,8 @@ class LogicalFlow extends Model
             $size = strpos($ip, ':') === false ? 4 : 16;
 
             // Convert to binary
-            $ip = inet_pton($ip);
-            $net = inet_pton($net);
+            $ip = inet_pton(trim($ip));
+            $net = inet_pton(trim($net));
             if (! $ip || ! $net) {
                 return false;
             }

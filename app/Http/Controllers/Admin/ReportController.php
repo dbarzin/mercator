@@ -4,62 +4,63 @@ namespace App\Http\Controllers\Admin;
 
 // GDPR
 use App\Activity;
+use App\DataProcessing;
 // ecosystem
-use App\Actor;
-use App\Annuaire;
-use App\ApplicationBlock;
+use App\Entity;
+use App\Relation;
 // information system
+use App\MacroProcessus;
+use App\Process;
+use App\Operation;
+use App\Task;
+use App\Actor;
+// Application
+use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Bay;
-use App\Building;
-use App\Certificate;
-// Applications
-use App\Cluster;
 use App\Database;
-use App\DataProcessing;
-use App\DhcpServer;
-use App\Dnsserver;
-use App\DomaineAd;
-// Administration
-use App\Entity;
-use App\ExternalConnectedEntity;
 use App\Flux;
+// Administration
+use App\Annuaire;
 use App\ForestAd;
-use App\Gateway;
+use App\ZoneAdmin;
+use App\DomaineAd;
 // Logique
-use App\Http\Controllers\Controller;
+use App\ExternalConnectedEntity;
+use App\Gateway;
+use App\Subnetwork;
 use App\Information;
 use App\LogicalServer;
-use App\MacroProcessus;
-use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
-use App\Peripheral;
-use App\Phone;
-use App\PhysicalLink;
+use App\Vlan;
+use App\Certificate;
+use App\Cluster;
+use App\Router;
 // Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
-use App\Router;
+use App\DhcpServer;
+use App\Dnsserver;
 use App\SecurityDevice;
 use App\Site;
+use App\Building;
+use App\Bay;
 use App\StorageDevice;
-use App\Subnetwork;
-use App\Task;
-use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
+use App\Peripheral;
+use App\Phone;
+use App\PhysicalLink;
+//
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -788,13 +789,27 @@ class ReportController extends Controller
             // TODO: improve me
             $networkSwitches = NetworkSwitch::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
-                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                    foreach (explode(',', $item->ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 });
 
             // TODO: improve me
             $routers = Router::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
-                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                    foreach (explode(',', $item->ip_addresses) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 });
 
             // TODO: improve me
@@ -807,11 +822,11 @@ class ReportController extends Controller
             $dhcpServers = DhcpServer::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
-                        // foreach (explode(',', $item->address_ip) as $address) {
-                        if ($subnetwork->contains($item->address_ip)) {
-                            return true;
+                        foreach (explode(',', $item->address_ip) as $address) {
+                            if ($subnetwork->contains($item->address_ip)) {
+                                return true;
+                            }
                         }
-                        //}
                     }
                     return false;
                 });
