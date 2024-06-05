@@ -93,6 +93,6 @@ return new class extends Migration
         DB::delete('delete from permissions where id=292;');
         DB::delete('delete from permissions where id=293;');
         DB::delete('delete from permissions where id=294;');
-        DB::delete('delete from permissions where id=285;');
+        DB::delete('delete from permissions where id=295;');
     }
 };
