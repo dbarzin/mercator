@@ -864,9 +864,11 @@ digraph  {
                     @endif
                 @endforeach
             @endforeach
+            @can('cluster_access')
             @if ($logicalServer->cluster_id!=null)
                 LOGICAL_SERVER{{ $logicalServer->id }} -> CLUSTER{{ $logicalServer->cluster_id }}
             @endif
+            @endcan
         @endif
         @foreach($logicalServer->certificates as $certificate)
             LOGICAL_SERVER{{ $logicalServer->id }} -> CERT{{ $certificate->id }}

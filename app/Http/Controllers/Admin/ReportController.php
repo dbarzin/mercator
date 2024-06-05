@@ -895,7 +895,7 @@ class ReportController extends Controller
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
         }
-
+        
         return view(
             'admin/reports/logical_infrastructure',
             compact(

@@ -22,6 +22,7 @@
 <script>
     d3.select("#graph").graphviz()
 
+    .addImage("/images/register.png", "64px", "64px")
     .addImage("/images/dataprocessing.png", "64px", "64px")
     .addImage("/images/security-control.png", "64px", "64px")
 
@@ -77,7 +78,7 @@
           href="/admin/report/ecosystem"
           shape = "Mrecord"
           CONTROL [label="{{ trans('cruds.securityControl.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/security-control.png" href="/admin/security-controls"]
-          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/dataprocessing.png" href="/admin/data-processing"]
+          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/register.png" href="/admin/data-processing"]
           }
         subgraph clusterA {
           label="{{ trans('cruds.report.cartography.ecosystem') }}"
@@ -147,10 +148,7 @@
           ROUTER [label="{{ trans('cruds.physicalRouter.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/physical-routers"]
           SECURITY [label="{{ trans('cruds.physicalSecurityDevice.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="/admin/physical-security-devices"]
           }
-          /*
-          REGISTER -> APPLICATION  [label="  n-m"]
-          REGISTER -> PROCESS  [label="  n-m"]
-          */
+
           MPROCESS -> PROCESS  [label="  0-n"]
           PROCESS -> ACTIVITY  [label="  0-n"]
           PROCESS -> OPERATION  [label="  0-n"]
