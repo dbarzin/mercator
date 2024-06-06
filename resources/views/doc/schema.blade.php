@@ -78,7 +78,7 @@
           href="/admin/report/ecosystem"
           shape = "Mrecord"
           CONTROL [label="{{ trans('cruds.securityControl.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/security-control.png" href="/admin/security-controls"]
-          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/register.png" href="/admin/data-processing"]
+          REGISTER [label="{{ trans('cruds.dataProcessing.title') }}" shape=none labelloc="b"  width=1 height=1.3 image="/images/register.png" href="/admin/data-processings"]
           }
         subgraph clusterA {
           label="{{ trans('cruds.report.cartography.ecosystem') }}"
