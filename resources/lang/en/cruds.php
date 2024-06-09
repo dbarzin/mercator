@@ -40,6 +40,28 @@ return [
         'title_short' => 'Administration',
         'title_singular' => 'Administration view',
     ],
+    'adminUser' => [
+        'fields' => [
+            'user_id' => 'User ID',
+            'user_id_helper' => '',
+            'firstname' => 'Prénom',
+            'firstname_helper' => '',
+            'lastname' => 'Nom',
+            'lastname_helper' => '',
+            'type' => 'Type',
+            'type_helper' => 'Type d\'administrateur',
+            'description' => 'Description',
+            'description_helper' => '',
+            'domain' => 'Domaine',
+            'domain_helper' => 'Domaine dans lequel l\'administrateur est défini',
+            'local' => 'Local',
+            'local_helper' => '',
+            'privileged' => 'Privilégié',
+            'privileged_helper' => '',
+        ],
+        'title' => 'Administrateurs',
+        'title_singular' => 'Administrateurs',
+    ],
     'annuaire' => [
         'description' => 'Application gathering data on users or computer equipment of the company and allowing their administration.',
         'fields' => [
