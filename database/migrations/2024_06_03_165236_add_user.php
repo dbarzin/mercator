@@ -14,6 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         //
+        
         Schema::create('admin_users', function (Blueprint $table) {
             // Unique cluster link identifier
             $table->increments('id');
@@ -50,23 +51,23 @@ return new class extends Migration
             $permissions = [
                 [
                     'id'    => '291',
-                    'title' => 'admin_users_create',
+                    'title' => 'admin_user_create',
                 ],
                 [
                     'id'    => '292',
-                    'title' => 'admin_users_edit',
+                    'title' => 'admin_user_edit',
                 ],
                 [
                     'id'    => '293',
-                    'title' => 'admin_users_show',
+                    'title' => 'admin_user_show',
                 ],
                 [
                     'id'    => '294',
-                    'title' => 'admin_users_delete',
+                    'title' => 'admin_user_delete',
                 ],
                 [
                     'id'    => '295',
-                    'title' => 'admin_users_access',
+                    'title' => 'admin_user_access',
                 ],
             ];
             Permission::insert($permissions);

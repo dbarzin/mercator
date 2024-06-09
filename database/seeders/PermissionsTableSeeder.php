@@ -1185,6 +1185,26 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '290',
                 'title' => 'logical_flow_access',
             ],
+            [
+                'id'    => '291',
+                'title' => 'admin_user_create',
+            ],
+            [
+                'id'    => '292',
+                'title' => 'admin_user_edit',
+            ],
+            [
+                'id'    => '293',
+                'title' => 'admin_user_show',
+            ],
+            [
+                'id'    => '294',
+                'title' => 'admin_user_delete',
+            ],
+            [
+                'id'    => '295',
+                'title' => 'admin_user_access',
+            ],
         ];
 
         Permission::insert($permissions);
