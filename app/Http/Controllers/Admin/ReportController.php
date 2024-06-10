@@ -26,6 +26,7 @@ use App\Annuaire;
 use App\ForestAd;
 use App\ZoneAdmin;
 use App\DomaineAd;
+use App\AdminUser;
 // Logique
 use App\ExternalConnectedEntity;
 use App\Gateway;
@@ -895,7 +896,7 @@ class ReportController extends Controller
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
         }
-        
+
         return view(
             'admin/reports/logical_infrastructure',
             compact(
@@ -1657,12 +1658,14 @@ class ReportController extends Controller
         $annuaires = Annuaire::All();
         $forests = ForestAd::All();
         $domains = DomaineAd::All();
+        $adminUsers = AdminUser::All();
 
         return view('admin/reports/administration')
             ->with('zones', $zones)
             ->with('annuaires', $annuaires)
             ->with('forests', $forests)
-            ->with('domains', $domains);
+            ->with('domains', $domains)
+            ->with('adminUsers', $adminUsers);
     }
 
     public function entities()

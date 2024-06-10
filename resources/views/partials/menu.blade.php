@@ -309,6 +309,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('admin_user_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.admin-users.index") }}" class="nav-link {{ request()->is('admin/admin-users*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.adminUser.title') }}
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

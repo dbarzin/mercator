@@ -124,6 +124,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('domaine-ads', Admin\DomaineAdController::class);
     Route::delete('domaine-ads-destroy', [Admin\DomaineAdController::class,'massDestroy'])->name('domaine-ads.massDestroy');
 
+    // Admin User
+    Route::resource('admin-users', Admin\AdminUserController::class);
+    Route::delete('admin-users-destroy', [Admin\AdminUserController::class,'massDestroy'])->name('admin-users.massDestroy');
+
     // Networks
     Route::resource('networks', Admin\NetworkController::class);
     Route::delete('networks-destroy', [Admin\NetworkController::class,'massDestroy'])->name('networks.massDestroy');

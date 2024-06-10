@@ -14,12 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         //
-        
+
         Schema::create('admin_users', function (Blueprint $table) {
             // Unique cluster link identifier
             $table->increments('id');
-
-            $table->unsignedInteger('domain_id')->index('domain_id_fk_69385935')->nullable();
 
             $table->string('user_id');
 
@@ -32,6 +30,8 @@ return new class extends Migration
             $table->boolean("local")->nullable();
             $table->boolean("privileged")->nullable();
 
+            $table->unsignedInteger('domain_id')->index('domain_id_fk_69385935')->nullable();
+
             // Soft delete and timestamp
             $table->timestamps();
             $table->softDeletes();
@@ -40,7 +40,7 @@ return new class extends Migration
         });
 
         Schema::table('admin_users', function (Blueprint $table) {
-            // link to cluster
+            // link to domain
             $table->foreign('domain_id','domain_id_fk_69385935')->references('id')->on('domaine_ads')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
 

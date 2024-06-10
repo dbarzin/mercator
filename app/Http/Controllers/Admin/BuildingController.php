@@ -36,7 +36,7 @@ class BuildingController extends Controller
         $request['camera'] = $request->has('camera');
         $request['badge'] = $request->has('badge');
         $building = Building::create($request->all());
-        $building->save();
+        // $building->save();
 
         return redirect()->route('admin.buildings.index');
     }

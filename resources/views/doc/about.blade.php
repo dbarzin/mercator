@@ -10,8 +10,8 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-3" style="min-width: 460px;">
-                        <img src="/images/mercator.jpg">
+                    <div class="col-3" >
+                        <img src="/images/mercator.png" class="img-fluid">
                     </div>
                     <div class="col-5">
                         <p> {!! trans("doc.about.p1") !!} </p>
