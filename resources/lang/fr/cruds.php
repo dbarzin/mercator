@@ -38,6 +38,7 @@ return [
         'title_singular' => "Vue de l'administration",
     ],
     'adminUser' => [
+        'description' => 'Utilisateurs disposant de droits d\'administration.',
         'fields' => [
             'user_id' => 'User ID',
             'user_id_helper' => '',

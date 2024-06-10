@@ -41,6 +41,7 @@ return [
         'title_singular' => 'Administration view',
     ],
     'adminUser' => [
+        'description' => 'Users with administrative rights',
         'fields' => [
             'user_id' => 'User ID',
             'user_id_helper' => '',

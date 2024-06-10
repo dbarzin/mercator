@@ -30,13 +30,13 @@
                     <ul>
                         @foreach($zones as $zone)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ZONE{{ $zone->id }}">
                                         <th colspan="2">
                                             <a href="/admin/zone-admins/{{ $zone->id }}">{{ $zone->name }}</a>
                                         </th>
-                                    </thead>                                    
+                                    </thead>
                                 <tbody>
                                     <tr>
                                         <th width="20%">{{ trans('cruds.zoneAdmin.fields.description') }}</th>
@@ -45,7 +45,7 @@
                                     <tr>
                                         <th>{{ trans('cruds.zoneAdmin.fields.annuaires') }}</th>
                                         <td>
-                                            @foreach($zone->zoneAdminAnnuaires as $annuaire) 
+                                            @foreach($zone->zoneAdminAnnuaires as $annuaire)
                                                 <a href="#ANNUAIRE{{$annuaire->id}}">{{ $annuaire->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -56,11 +56,11 @@
                                     <tr>
                                         <th>{{ trans('cruds.zoneAdmin.fields.forests') }}</th>
                                         <td>
-                                            @foreach($zone->zoneAdminForestAds as $forest) 
+                                            @foreach($zone->zoneAdminForestAds as $forest)
                                                 <a href="#FOREST{{$forest->id}}">{{ $forest->name }}</a>
                                                 @if (!$loop->last)
                                                 ,
-                                                @endif                                                
+                                                @endif
                                             @endforeach
                                         </td>
                                     </tr>
@@ -76,7 +76,7 @@
             @endif
             @endcan
 
-            @can('annuaire_access')            
+            @can('annuaire_access')
             @if ($annuaires->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -88,13 +88,13 @@
                     <ul>
                         @foreach($annuaires as $annuaire)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="ANNUAIRE{{ $annuaire->id }}">
                                         <th colspan="2">
                                             <a href="/admin/annuaires/{{ $annuaire->id }}">{{ $annuaire->name }}</a>
                                         </th>
-                                    </thead>                                    
+                                    </thead>
                                 <tbody>
                                     <tr>
                                         <th width="20%">{{ trans('cruds.annuaire.fields.description') }}</th>
@@ -104,7 +104,7 @@
                                         <th>{{ trans('cruds.annuaire.fields.solution') }}</th>
                                         <td>{{ $annuaire->solution }}</td>
                                     </tr>
-                                    <tr>                                        
+                                    <tr>
                                         <th>{{ trans('cruds.annuaire.fields.zone_admin') }}</th>
                                         <td>
                                            @if ($annuaire->zone_admin!=null)
@@ -124,7 +124,7 @@
             @endif
             @endcan
 
-            @can('forest_ad_access')            
+            @can('forest_ad_access')
             @if ($forests->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -136,13 +136,13 @@
                     <ul>
                         @foreach($forests as $forest)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="FOREST{{ $forest->id }}">
                                         <th colspan="2">
                                             <a href="/admin/forest-ads/{{ $forest->id }}">{{ $forest->name }}</a>
                                         </th>
-                                    </thead>                                    
+                                    </thead>
                                 <tbody>
                                     <tr>
                                         <th width="20%">{{ trans('cruds.forestAd.fields.description') }}</th>
@@ -159,7 +159,7 @@
                                     <tr>
                                         <th>{{ trans('cruds.forestAd.fields.domaines') }}</th>
                                         <td>
-                                            @foreach($forest->domaines as $domain) 
+                                            @foreach($forest->domaines as $domain)
                                                 <a href="#DOMAIN{{$domain->id}}">{{$domain->name}}</a>
                                                 @if (!$loop->last)
                                                 ,
@@ -178,7 +178,7 @@
             @endif
             @endcan
 
-            @can('domaine_ad_access')            
+            @can('domaine_ad_access')
             @if ($domains->count()>0)
             <div class="card">
                 <div class="card-header">
@@ -189,13 +189,13 @@
                     <ul>
                         @foreach($domains as $domain)
                           <div class="row">
-                            <div class="col-sm-6">                        
+                            <div class="col-sm-6">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead id="DOMAIN{{ $domain->id }}">
                                         <th colspan="2">
                                             <a href="/admin/domaine-ads/{{ $domain->id }}">{{ $domain->name }}</a>
                                         </th>
-                                    </thead>                                    
+                                    </thead>
                                 <tbody>
                                     <tr>
                                         <th width="20%">{{ trans('cruds.domaineAd.fields.description') }}</th>
@@ -238,6 +238,98 @@
             </div>
             @endif
             @endcan
+
+
+
+
+            @can('admin_user_access')
+            @if ($adminUsers->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('cruds.adminUser.title') }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans('cruds.adminUser.description') }}</p>
+                    <ul>
+                        @foreach($adminUsers as $adminUser)
+                          <div class="row">
+                            <div class="col-sm-6">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="USER{{$adminUser->id}}">
+                                        <th colspan="4">
+                                            <a href="/admin/admin-users/{{ $adminUser->id }}">{{ $adminUser->user_id }}</a>
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th width="10%">
+                                            {{ trans('cruds.adminUser.fields.firstname') }}
+                                        </th>
+                                        <td width="30%">
+                                            {{ $adminUser->firstname }}
+                                        </td>
+                                        <th width="10%">
+                                            {{ trans('cruds.adminUser.fields.lastname') }}
+                                        </th>
+                                        <td>
+                                            {{ $adminUser->lastname }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <dt>{{ trans('cruds.adminUser.fields.description') }}</dt>
+                                        </th>
+                                        <td colspan="3">
+                                            {!! $adminUser->description !!}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{ trans('cruds.adminUser.fields.domain') }}
+                                        </th>
+                                        <td>
+                                            @if ($adminUser->domain_id !== null)
+                                                <a href="{{ route('admin.domaine-ads.show', $adminUser->domain_id) }}">
+                                                    {{ $adminUser->domain->name }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <th>
+                                            {{ trans('cruds.adminUser.fields.type') }}
+                                        </th>
+                                        <td>
+                                            {{ $adminUser->type }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{ trans('cruds.adminUser.fields.local') }}
+                                        </th>
+                                        <td>
+                                            {{ $adminUser->local }}
+                                        </td>
+                                        <th>
+                                            {{ trans('cruds.adminUser.fields.privileged') }}
+                                        </th>
+                                        <td>
+                                            {{ $adminUser->privileged }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -254,27 +346,35 @@
 <script>
 let dotSrc=`
 digraph  {
-    @foreach($zones as $zone) 
+    @foreach($zones as $zone)
         Z{{ $zone->id }} [label="{{ $zone->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/zoneadmin.png" href="#ZONE{{$zone->id}}"]
-        @foreach($zone->zoneAdminAnnuaires as $annuaire) 
+        @foreach($zone->zoneAdminAnnuaires as $annuaire)
             Z{{ $zone->id }} -> A{{$annuaire->id}}
         @endforeach
-        @foreach($zone->zoneAdminForestAds as $forest) 
+        @foreach($zone->zoneAdminForestAds as $forest)
             Z{{ $zone->id }} -> F{{$forest->id}}
         @endforeach
     @endforEach
-    @foreach($annuaires as $annuaire) 
+    @foreach($annuaires as $annuaire)
         A{{ $annuaire->id }} [label="{{ $annuaire->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/annuaire.png" href="#ANNUAIRE{{$annuaire->id}}"]
     @endforEach
     @foreach($forests as $forest)
         F{{ $forest->id }} [label="{{ $forest->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/ldap.png" href="#FOREST{{$forest->id}}"]
-        @foreach($forest->domaines as $domain) 
-        F{{ $forest->id }} -> D{{ $domain->id }} 
+        @foreach($forest->domaines as $domain)
+        F{{ $forest->id }} -> D{{ $domain->id }}
         @endforeach
     @endforeach
     @foreach($domains as $domain)
         D{{ $domain->id }} [label="{{ $domain->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/domain.png" href="#DOMAIN{{$domain->id}}"]
     @endforeach
+    @can('admin_user_access')
+    @foreach($adminUsers as $user)
+        @if ($user->domain_id!==null)
+        U{{$user->id}} [label="{{ $user->user_id }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/user.png" href="#USER{{$user->id}}"]
+        D{{$user->domain_id}} -> U{{$user->id}}
+        @endif
+    @endforeach
+    @endcan
 }`;
 
 d3.select("#graph").graphviz()
@@ -282,6 +382,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/annuaire.png", "64px", "64px")
     .addImage("/images/ldap.png", "64px", "64px")
     .addImage("/images/domain.png", "64px", "64px")
+    .addImage("/images/user.png", "64px", "64px")
     .renderDot(dotSrc);
 
 </script>
