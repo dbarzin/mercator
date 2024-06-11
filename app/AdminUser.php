@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\ExternalConnectedEntity
+ * App\AdminUser
  */
-class ExternalConnectedEntity extends Model
+class AdminUser extends Model
 {
     use SoftDeletes, Auditable;
 
-    public $table = 'external_connected_entities';
+    public $table = 'admin_users';
 
     public static $searchable = [
-        'name',
+        'user_id',
+        'firstname',
+        'lastname',
+        'type',
         'description',
-        'contacts',
-        'src_desc',
-        'dest_desc',
     ];
 
     protected $dates = [
@@ -31,26 +31,22 @@ class ExternalConnectedEntity extends Model
     ];
 
     protected $fillable = [
-        'name',
+        'user_id',
+        'firstname',
+        'lastname',
         'type',
-        'entity_id',
-        'contacts',
         'description',
-        'network_id',
-        'src',
-        'dest',
-        'src_desc',
-        'dest_desc',
+        'domain_id',
+        'local',
+        'privileged',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
-    public function entity()
+    public function domain()
     {
-        return $this->belongsTo(Entity::class, 'entity_id');
-    }
-
-    public function network()
-    {
-        return $this->belongsTo(Network::class, 'network_id');
+        return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

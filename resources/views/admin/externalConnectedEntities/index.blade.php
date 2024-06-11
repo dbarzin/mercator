@@ -36,7 +36,13 @@
                         </th>
                         <th>
                             {{ trans('cruds.externalConnectedEntity.fields.network') }}
-                        </th>                        
+                        </th>
+                        <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.src') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.externalConnectedEntity.fields.dest') }}
+                        </th>
                         <th>
                             &nbsp;
                         </th>
@@ -62,16 +68,26 @@
                                         {{ $externalConnectedEntity->entity->name }}
                                     </a>
                                 @endif
-                            </td>                            
+                            </td>
                             <td>
                                 {{ $externalConnectedEntity->contacts }}
-                            </td>                            
+                            </td>
                             <td>
                                 @if($externalConnectedEntity->network!=null)
                                     <a href="{{ route('admin.networks.show', $externalConnectedEntity->network->id) }}">
                                         {{ $externalConnectedEntity->network->name }}
                                     </a>
                                 @endif
+                            </td>
+                            <td>
+                                    {{ $externalConnectedEntity->src_desc }}
+                                    <br>
+                                    {{ $externalConnectedEntity->src }}
+                            </td>
+                            <td>
+                                    {{ $externalConnectedEntity->dest_desc }}
+                                    <br>
+                                    {{ $externalConnectedEntity->dest }}
                             </td>
                             <td>
                                 @can('external_connected_entity_show')
@@ -152,7 +168,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

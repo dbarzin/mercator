@@ -4,64 +4,64 @@ namespace App\Http\Controllers\Admin;
 
 // GDPR
 use App\Activity;
-use App\DataProcessing;
-// ecosystem
-use App\Entity;
-use App\Relation;
-// information system
-use App\MacroProcessus;
-use App\Process;
-use App\Operation;
-use App\Task;
 use App\Actor;
-// Application
+// ecosystem
+use App\AdminUser;
+use App\Annuaire;
+// information system
 use App\ApplicationBlock;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Database;
-use App\Flux;
-// Administration
-use App\Annuaire;
-use App\ForestAd;
-use App\ZoneAdmin;
-use App\DomaineAd;
-use App\AdminUser;
-// Logique
-use App\ExternalConnectedEntity;
-use App\Gateway;
-use App\Subnetwork;
-use App\Information;
-use App\LogicalServer;
-use App\Network;
-use App\NetworkSwitch;
-use App\Vlan;
+use App\Bay;
+use App\Building;
+// Application
 use App\Certificate;
 use App\Cluster;
-use App\Router;
+use App\Database;
+use App\DataProcessing;
+use App\DhcpServer;
+use App\Dnsserver;
+// Administration
+use App\DomaineAd;
+use App\Entity;
+use App\ExternalConnectedEntity;
+use App\Flux;
+use App\ForestAd;
+// Logique
+use App\Gateway;
+use App\Http\Controllers\Controller;
+use App\Information;
+use App\LogicalServer;
+use App\MacroProcessus;
+use App\MApplication;
+use App\Network;
+use App\NetworkSwitch;
+use App\Operation;
+use App\Peripheral;
+use App\Phone;
 // Physique
+use App\PhysicalLink;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\DhcpServer;
-use App\Dnsserver;
+use App\Process;
+use App\Relation;
+use App\Router;
 use App\SecurityDevice;
 use App\Site;
-use App\Building;
-use App\Bay;
 use App\StorageDevice;
+use App\Subnetwork;
+use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\Peripheral;
-use App\Phone;
-use App\PhysicalLink;
-//
+
+use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -2247,6 +2247,8 @@ class ReportController extends Controller
             trans('cruds.externalConnectedEntity.fields.contacts'),
             trans('cruds.externalConnectedEntity.fields.network'),
             trans('cruds.externalConnectedEntity.fields.src'),
+            trans('cruds.externalConnectedEntity.fields.src'),
+            trans('cruds.externalConnectedEntity.fields.dest'),
             trans('cruds.externalConnectedEntity.fields.dest'),
         ];
 
@@ -2268,6 +2270,8 @@ class ReportController extends Controller
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+        $sheet->getColumnDimension('L')->setAutoSize(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2283,8 +2287,10 @@ class ReportController extends Controller
             $sheet->setCellValue("F{$row}", $html->toRichTextObject($access->description));
             $sheet->setCellValue("G{$row}", $access->contacts);
             $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : '');
-            $sheet->setCellValue("I{$row}", $access->src);
-            $sheet->setCellValue("J{$row}", $access->dest);
+            $sheet->setCellValue("I{$row}", $access->src_desc);
+            $sheet->setCellValue("J{$row}", $access->src);
+            $sheet->setCellValue("K{$row}", $access->dest_desc);
+            $sheet->setCellValue("L{$row}", $access->dest);
 
             $row++;
         }

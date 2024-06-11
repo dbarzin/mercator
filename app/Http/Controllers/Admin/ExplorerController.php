@@ -460,13 +460,13 @@ class ExplorerController extends Controller
         foreach ($joins as $join) {
             $this->addLinkEdge($edges, $this->formatId('FOREST_', $join->forest_ad_id), $this->formatId('DOMAIN_', $join->domaine_ad_id));
         }
-
         // AdminUsers
-        $adminUsers = DB::table('admin_users')->select('id', 'user_id','domain_id')->whereNull('deleted_at')->get();
+        $adminUsers = DB::table('admin_users')->select('id', 'user_id', 'domain_id')->whereNull('deleted_at')->get();
         foreach ($adminUsers as $adminUser) {
             $this->addNode($nodes, 4, $this->formatId('USER_', $adminUser->id), $adminUser->user_id, '/images/user.png', 'admin_users');
-            if ($adminUser->domain_id!==null)
+            if ($adminUser->domain_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('USER_', $adminUser->id), $this->formatId('DOMAIN_', $adminUser->domain_id));
+            }
         }
 
         // ---------------------------------------------------

@@ -517,6 +517,8 @@ return [
             'src_helper' => 'IP source de la connexion (filtre : IPv4|IPv6 )',
             'dest' => 'Destination',
             'dest_helper' => 'IP/Range de destination de la connextion (filtre : xxx.xxx.xxx.xxx[/xx], xxx.xxx.xxx.xxx[/xx] ... )',
+            'src_desc_helper' => 'Description de la source',
+            'dest_desc_helper' => 'Description de la destination',
         ],
         'title' => 'Entités extérieures connectées',
         'title_short' => 'Entités',
