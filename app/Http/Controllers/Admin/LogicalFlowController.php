@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\LogicalFlow;
-use App\Router;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
+use App\LogicalFlow;
+use App\Router;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,8 +28,10 @@ class LogicalFlowController extends Controller
 
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.logicalFlows.create',
-            compact('routers'));
+        return view(
+            'admin.logicalFlows.create',
+            compact('routers')
+        );
     }
 
     public function store(StoreLogicalFlowRequest $request)
@@ -46,8 +47,10 @@ class LogicalFlowController extends Controller
 
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.logicalFlows.edit',
-            compact('logicalFlow','routers'));
+        return view(
+            'admin.logicalFlows.edit',
+            compact('logicalFlow', 'routers')
+        );
     }
 
     public function update(UpdateLogicalFlowRequest $request, LogicalFlow $logicalFlow)
