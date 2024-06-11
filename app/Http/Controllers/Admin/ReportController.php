@@ -2247,6 +2247,8 @@ class ReportController extends Controller
             trans('cruds.externalConnectedEntity.fields.contacts'),
             trans('cruds.externalConnectedEntity.fields.network'),
             trans('cruds.externalConnectedEntity.fields.src'),
+            trans('cruds.externalConnectedEntity.fields.src'),
+            trans('cruds.externalConnectedEntity.fields.dest'),
             trans('cruds.externalConnectedEntity.fields.dest'),
         ];
 
@@ -2268,6 +2270,8 @@ class ReportController extends Controller
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+        $sheet->getColumnDimension('L')->setAutoSize(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2283,8 +2287,10 @@ class ReportController extends Controller
             $sheet->setCellValue("F{$row}", $html->toRichTextObject($access->description));
             $sheet->setCellValue("G{$row}", $access->contacts);
             $sheet->setCellValue("H{$row}", $access->network ? $access->network->name : '');
-            $sheet->setCellValue("I{$row}", $access->src);
-            $sheet->setCellValue("J{$row}", $access->dest);
+            $sheet->setCellValue("I{$row}", $access->src_desc);
+            $sheet->setCellValue("J{$row}", $access->src);
+            $sheet->setCellValue("K{$row}", $access->dest_desc);
+            $sheet->setCellValue("L{$row}", $access->dest);
 
             $row++;
         }

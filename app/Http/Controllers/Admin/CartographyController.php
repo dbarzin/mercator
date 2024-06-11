@@ -1539,8 +1539,8 @@ class CartographyController extends Controller
                     if ($entity->network !== null) {
                         $textRun->addLink('NETWORK'.$entity->network->id, $entity->network->name, CartographyController::FANCYLINKSTYLE, null, true);
                     }
-                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src);
-                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest);
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.src'), $entity->src_desc . ' '  . $entity->src);
+                    $this->addTextRow($table, trans('cruds.externalConnectedEntity.fields.dest'), $entity->dest_desc . ' '  . $entity->dest);
 
                     $section->addTextBreak(1);
                 }

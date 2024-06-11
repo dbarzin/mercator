@@ -20,6 +20,8 @@ class ExternalConnectedEntity extends Model
         'name',
         'description',
         'contacts',
+        'src_desc',
+        'dest_desc',
     ];
 
     protected $dates = [
@@ -37,6 +39,8 @@ class ExternalConnectedEntity extends Model
         'network_id',
         'src',
         'dest',
+        'src_desc',
+        'dest_desc',
     ];
 
     public function entity()
