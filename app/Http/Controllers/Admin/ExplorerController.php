@@ -506,7 +506,7 @@ class ExplorerController extends Controller
         // Application Services
         $services = DB::table('application_services')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($services as $service) {
-            $this->addNode($nodes, 3, $this->formatId('SERV_', $service->id), $service->name, '/images/service.png', 'application-services');
+            $this->addNode($nodes, 3, $this->formatId('SERV_', $service->id), $service->name, '/images/applicationservice.png', 'application-services');
         }
         // application_service_m_application
         $joins = DB::table('application_service_m_application')->select('m_application_id', 'application_service_id')->get();
