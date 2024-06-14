@@ -4,7 +4,7 @@ Thank you for your interest in Mercator and your willingness to contribute! This
 
 ## Code of Conduct
 
-Our project adheres to a [Code of Conduct](https://github.com/dbarzin/mercator/CONDUCT.fr.md) which defines expected and unacceptable behaviour. We expect all contributors to read and abide by this code.
+Our project adheres to a [Code of Conduct](https://github.com/dbarzin/mercator/CODE_OF_CONDUCT.md) which defines expected and unacceptable behaviour. We expect all contributors to read and abide by this code.
 
 ## How to contribute
 

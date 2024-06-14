@@ -4,7 +4,7 @@ Nous vous remercions de l'intérêt que vous portez à Mercator et de votre volo
 
 ## Code de Conduite
 
-Notre projet adhère à un [Code de Conduite](https://github.com/dbarzin/mercator/CONDUCT.fr.md) qui définit les comportements attendus et les comportements inacceptables. Nous attendons de tous les contributeurs qu'ils lisent et respectent ce code.
+Notre projet adhère à un [Code de Conduite](https://github.com/dbarzin/mercator/CODE_OF_CONDUCT.fr.md) qui définit les comportements attendus et les comportements inacceptables. Nous attendons de tous les contributeurs qu'ils lisent et respectent ce code.
 
 ## Comment Contribuer
 
