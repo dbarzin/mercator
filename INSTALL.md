@@ -35,13 +35,9 @@ Clone the project from Github
 
 ## Composer
 
-Update composer
-
-    cd /var/www/mercator
-    composer update
-
 Install packages with composer :
     
+    cd /var/www/mercator
     composer update
 
 Publish all publishable assets from vendor packages
