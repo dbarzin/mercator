@@ -242,6 +242,10 @@ Enfin, redémarrez le service Apache pour activer les modifications :
 
 ### HTTPS
 
+Activer le module SSL d'Apache
+
+    sudo a2enmod ssl 
+
 Voici le fichier de configuration pour HTTPS
 
 ```xml
