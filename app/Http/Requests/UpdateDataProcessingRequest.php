@@ -20,7 +20,7 @@ class UpdateDataProcessingRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 'unique:data_processing,name,'.request()->route('data_processing')->id.',id,deleted_at,NULL',
             ],
