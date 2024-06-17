@@ -206,7 +206,27 @@ Modify .env file, and uncomment LDAP configuration :
     # Permet de restreindre l'accès à des groupes
     LDAP_GROUPS="Delivering,Help Desk"
 
-Find more complete documentation on LDAP configuration here.
+Find more complete documentation on LDAP configuration [here](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+
+## KeyCloak Configuration
+
+To configure Keycloak, follow these steps:
+
+- Open your .env file.
+- Uncomment and modify the Keycloak configuration settings as follows:
+
+```
+KEYCLOAK = enable 
+KEYCLOAK_CLIENT_ID= # Client Name (on Keycloak)
+KEYCLOAK_CLIENT_SECRET=  # Client Secret
+KEYCLOAK_REDIRECT_URI=<Mercator IP Address>/login/keycloak/callback
+KEYCLOAK_BASE_URL=<KeyCloak IP Address>
+KEYCLOAK_REALM=   # RealM Name
+```
+
+Once you make the KEYCLOAK parametre in 'enable' you would see a bouton in Login page that redirect to keycloak server
+
+Find more complete documentation on Keycloak configuration [here](https://www.keycloak.org/documentation).
 
 ## Apache
 

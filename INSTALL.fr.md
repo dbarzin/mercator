@@ -208,6 +208,26 @@ dans le fichier .env, mettez les paramètres de connexion en décommentant les l
 
 Retrouvez une documentation plus complète sur la configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
 
+## Configuration de Keycloak
+
+Pour configurer Keycloak, suivez ces étapes :
+
+- Ouvrez votre fichier .env.
+- Décommentez et modifiez les paramètres de configuration de Keycloak comme suit :
+
+```
+KEYCLOAK = enable 
+KEYCLOAK_CLIENT_ID= # Client Name (on Keycloak)
+KEYCLOAK_CLIENT_SECRET=  # Client Secret
+KEYCLOAK_REDIRECT_URI=<Mercator IP Address>/login/keycloak/callback
+KEYCLOAK_BASE_URL=<KeyCloak IP Address>
+KEYCLOAK_REALM=   # RealM Name
+```
+
+Après avoir défini KEYCLOAK sur enable, un bouton apparaîtra sur la page de connexion, permettant aux utilisateurs de se connecter via Keycloak.
+
+Pour une documentation plus complète sur la configuration de Keycloak, consultez la documentation officielle de Keycloak.
+
 ## Apache
 
 Pour configurer Apache, modifiez les propriétés du répertoire mercator et accordez les autorisations appropriées au répertoire de stockage avec la commande suivante
