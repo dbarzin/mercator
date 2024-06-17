@@ -10,13 +10,13 @@
         {{ trans('global.explore') }}
     </a>
 
-    @can('entity_edit')
+    @can('relation_edit')
         <a class="btn btn-info" href="{{ route('admin.relations.edit', $relation->id) }}">
             {{ trans('global.edit') }}
         </a>
     @endcan
 
-    @can('entity_delete')
+    @can('relation_delete')
         <form action="{{ route('admin.relations.destroy', $relation->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
