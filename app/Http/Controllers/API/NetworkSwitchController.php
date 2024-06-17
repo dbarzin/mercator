@@ -27,6 +27,7 @@ class NetworkSwitchController extends Controller
         abort_if(Gate::denies('network_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkswitch = NetworkSwitch::create($request->all());
+        $networkswitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
         // syncs
         // $networkswitch->roles()->sync($request->input('roles', []));
 
@@ -45,6 +46,7 @@ class NetworkSwitchController extends Controller
         abort_if(Gate::denies('network_switch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $networkSwitch->update($request->all());
+        $networkSwitch->physicalSwitches()->sync($request->input('physicalSwitches', []));
         // syncs
         // $networkSwitch->roles()->sync($request->input('roles', []));
 
