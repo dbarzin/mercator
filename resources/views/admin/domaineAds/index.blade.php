@@ -26,6 +26,9 @@
                             {{ trans('cruds.domaineAd.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.forestAd.title') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.domaineAd.fields.domain_ctrl_cnt') }}
                         </th>
                         <th>
@@ -43,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($domaineAds as $key => $domaineAd)
+                    @foreach($domaineAds as $domaineAd)
                         <tr data-entry-id="{{ $domaineAd->id }}">
                             <td>
 
@@ -52,6 +55,16 @@
                                 <a href="{{ route('admin.domaine-ads.show', $domaineAd->id) }}">
                                     {{ $domaineAd->name ?? '' }}
                                 </a>
+                            </td>
+                            <td>
+                                @foreach($domaineAd->domainesForestAds as $forestAd)
+                                    <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
+                                    {{ $forestAd->name }}
+                                    </a>
+                                @if ($loop->last!=$forestAd)
+                                ,
+                                @endif
+                                @endforeach
                             </td>
                             <td>
                                 {{ $domaineAd->domain_ctrl_cnt ?? '' }}

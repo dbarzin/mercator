@@ -1670,7 +1670,7 @@ class ReportController extends Controller
 
     public function entities()
     {
-        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.ods');
 
         $entities = Entity::All()->sortBy('name');
 
@@ -1724,7 +1724,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -1874,7 +1874,7 @@ class ReportController extends Controller
 
     public function activityList()
     {
-        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
 
         $register = DataProcessing::All()->sortBy('name');
 
@@ -1986,7 +1986,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -1994,7 +1994,7 @@ class ReportController extends Controller
 
     public function applicationsByBlocks()
     {
-        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.ods');
 
         $applicationBlocks = ApplicationBlock::All()->sortBy('name');
         $applicationBlocks->load('applications');
@@ -2150,7 +2150,7 @@ class ReportController extends Controller
             }
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2158,7 +2158,7 @@ class ReportController extends Controller
 
     public function logicalServers()
     {
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.application_block');
@@ -2223,7 +2223,7 @@ class ReportController extends Controller
             }
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2232,7 +2232,7 @@ class ReportController extends Controller
     // TODO : i18n
     public function externalAccess()
     {
-        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.ods');
 
         $accesses = ExternalConnectedEntity::All()->sortBy('name');
         $accesses->load('entity', 'network');
@@ -2295,7 +2295,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2305,7 +2305,7 @@ class ReportController extends Controller
 
     public function logicalServerConfigs()
     {
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
 
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'servers');
@@ -2383,7 +2383,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2391,7 +2391,7 @@ class ReportController extends Controller
 
     public function securityNeeds()
     {
-        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
 
         // macroprocess - process - application - base de données - information
         $header = [
@@ -2519,7 +2519,7 @@ class ReportController extends Controller
                 }
             }
         }
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2527,7 +2527,7 @@ class ReportController extends Controller
 
     public function physicalInventory()
     {
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
 
         $inventory = [];
 
@@ -2594,7 +2594,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2602,7 +2602,7 @@ class ReportController extends Controller
 
     public function workstations()
     {
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
 
         $workstations = Workstation::All()->sortBy('name');
         $workstations->load('applications', 'site', 'building');
@@ -2673,7 +2673,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2681,7 +2681,7 @@ class ReportController extends Controller
 
     public function vlans()
     {
-        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
 
         $vlans = Vlan::orderBy('Name')->get();
         $vlans->load('subnetworks');
@@ -2807,7 +2807,7 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         return response()->download($path);
@@ -2824,7 +2824,7 @@ class ReportController extends Controller
     {
         Log::debug('CVEReport - Start');
 
-        $path = storage_path('app/cve-'. Carbon::today()->format('Ymd') .'.xlsx');
+        $path = storage_path('app/cve-'. Carbon::today()->format('Ymd') .'.ods');
 
         // loop on applications
         $applications = DB::table('m_applications')
@@ -2934,7 +2934,7 @@ class ReportController extends Controller
             usleep(200);
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
         $writer->save($path);
 
         Log::debug('CVEReport - Done.');

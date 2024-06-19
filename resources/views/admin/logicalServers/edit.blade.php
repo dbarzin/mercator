@@ -275,6 +275,32 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.administration.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="recommended" for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
+                    <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="domain_id" id="domain_id">
+                        <option></option>
+                        @foreach($domains as $id => $name)
+                            <option value="{{ $id }}" {{ $id==old('domain_id', $logicalServer->domain_id) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('domain_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('domain_id') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.domain_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
@@ -288,8 +314,8 @@
                             <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                         </div>
                         <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="servers[]" id="servers" multiple>
-                            @foreach($servers as $id => $servers)
-                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $servers }}</option>
+                            @foreach($servers as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('servers'))
@@ -302,19 +328,13 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
     <div class="form-group">
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
-
 </form>
-
-
 @endsection
 
 @section('scripts')

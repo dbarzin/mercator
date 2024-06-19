@@ -203,6 +203,29 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.administration.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        <dt>{{ trans('cruds.logicalServer.fields.domain') }}</dt>
+                    </th>
+                    <td>
+                        @if ($logicalServer->domain_id!==null)
+                        <a href="{{ route('admin.domaine-ads.show', $logicalServer->domain_id) }}">
+                            {{ $logicalServer->domain->name }}
+                        </a>
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->

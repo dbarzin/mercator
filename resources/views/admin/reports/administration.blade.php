@@ -218,11 +218,26 @@
                                         <td>{{ $domain->relation_inter_domaine }}</td>
                                     </tr>
                                     <tr>
-                                        <th>{{ trans('cruds.domaineAd.fields.forestAds') }}</th>
+                                        <th>{{ trans('cruds.forestAd.title') }}</th>
                                         <td>
-                                            @foreach($domain->domainesForestAds as $forest)
-                                                <a href="#FOREST{{$forest->id}}">{{ $forest->name}}</a>
-                                                @if (!$loop->last)
+                                            @foreach($domain->domainesForestAds as $forestAd)
+                                                <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
+                                                {{ $forestAd->name }}
+                                                </a>
+                                            @if ($loop->last!=$forestAd)
+                                            ,
+                                            @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ trans('cruds.logicalServer.title') }}</th>
+                                        <td>
+                                            @foreach($domain->logicalServers as $logicalServer)
+                                                <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
+                                                {{ $logicalServer->name }}
+                                                </a>
+                                                @if ($loop->last!=$logicalServer)
                                                 ,
                                                 @endif
                                             @endforeach

@@ -45,6 +45,7 @@ class LogicalServer extends Model
         'disk',
         'disk_used',
         'cluster_id',
+        'domain_id',
         'environment',
         'net_services',
         'configuration',
@@ -117,6 +118,11 @@ class LogicalServer extends Model
     public function cluster()
     {
         return $this->belongsTo(Cluster::class, 'cluster_id');
+    }
+
+    public function domain()
+    {
+        return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
 
     public function certificates()

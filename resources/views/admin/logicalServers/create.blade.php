@@ -273,6 +273,32 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.administration.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="recommended" for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
+                    <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="domain_id" id="domain_id">
+                        <option></option>
+                        @foreach($domains as $id => $name)
+                            <option value="{{ $id }}" {{ $id==old('domain_id', '') ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('domain_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('domain_id') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.logicalServer.fields.domain_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!---------------------------------------------------------------------------------------------------->

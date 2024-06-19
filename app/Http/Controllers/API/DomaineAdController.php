@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\DomaineAd;
+use App\LogicalServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
@@ -28,6 +29,7 @@ class DomaineAdController extends Controller
 
         $domaineAd = DomaineAd::create($request->all());
         $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
+        $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
 
         return response()->json($domaineAd, 201);
     }
@@ -45,6 +47,7 @@ class DomaineAdController extends Controller
 
         $domaineAd->update($request->all());
         $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
+        $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
 
         return response()->json();
     }
