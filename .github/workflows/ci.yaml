@@ -72,7 +72,7 @@ jobs:
           php artisan insights
 
       - name: Upgrade Chrome Driver
-        run: php artisan dusk:chrome-driver 124.0.6367.60
+        run: php artisan dusk:chrome-driver 126
 
       - name: Start Chrome Driver Version
         run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
