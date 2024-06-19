@@ -44,6 +44,11 @@ class DomaineAd extends Model
         return $this->belongsToMany(ForestAd::class)->orderBy('name');
     }
 
+    public function logicalServers()
+    {
+        return $this->hasMany(LogicalServer::class, 'domain_id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

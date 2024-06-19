@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.domaineAd.title_singular') }}
-    </div>
+<form method="POST" action="{{ route("admin.domaine-ads.store") }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.domaineAd.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.domaine-ads.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.domaineAd.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -69,14 +69,66 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.domaineAd.fields.relation_inter_domaine_helper') }}</span>
             </div>
+
             <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
+                <label for="link_to_as">{{ trans('cruds.forestAd.title') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('domainesForestAds') ? 'is-invalid' : '' }}" name="domainesForestAds[]" id="domainesForestAds" multiple>
+                    @foreach($domainesForestAds as $id => $domainesForestAd)
+                        <option value="{{ $id }}" {{ (in_array($id, old('domainesForestAds', []))) ? 'selected' : '' }}>{{ $domainesForestAd }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('domainesForestAds'))
+                    <span class="text-danger">{{ $errors->first('domainesForestAds') }}</span>
+                @endif
             </div>
-        </form>
+
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+        </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label  for="logicalServers">{{ trans('cruds.domaineAd.fields.logical_servers') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2 {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
+                            @foreach($logicalServers as $id => $name)
+                            <option value="{{$id}}" {{ (in_array($id, old('logicalServers', []))) ? 'selected' : '' }}>{{$name}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('logicalServers'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('logicalServers') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
@@ -96,7 +148,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>

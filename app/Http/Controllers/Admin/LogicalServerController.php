@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Cluster;
 use App\Database;
+use App\DomaineAd;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
@@ -46,6 +47,7 @@ class LogicalServerController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::with('cartographers')->get();
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
 
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
@@ -56,6 +58,7 @@ class LogicalServerController extends Controller
         return view(
             'admin.logicalServers.create',
             compact(
+                'domains',
                 'clusters',
                 'servers',
                 'applications',
@@ -83,6 +86,7 @@ class LogicalServerController extends Controller
         $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+        $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
 
         $applications = MApplication::with('cartographers')->get();
         // Filtre sur les cartographes si nécessaire
@@ -96,6 +100,7 @@ class LogicalServerController extends Controller
         return view(
             'admin.logicalServers.edit',
             compact(
+                'domains',
                 'clusters',
                 'servers',
                 'applications',
