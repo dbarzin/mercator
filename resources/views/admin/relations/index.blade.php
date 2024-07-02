@@ -131,6 +131,11 @@
                                 @foreach(explode(" ",$relation->attributes) as $attribute)
                                 <span class="badge badge-info">{{ $attribute }}</span>
                                 @endforeach
+                                @if ($relation->active==false)
+                                    <span class="badge badge-info">Old</span>
+                                @else
+                                    <span class="badge badge-info">Active</span>
+                                @endif
                             </td>
                             <td>
                                 @can('relation_show')
