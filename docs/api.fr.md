@@ -34,18 +34,18 @@ __Vue métier du système d'information__
 
 - /api/macro-processuses
 - /api/processes
-- /api/operations
-- /api/actors
 - /api/activities
+- /api/operations
 - /api/tasks
+- /api/actors
 - /api/information
 
 __Vue des applications__
 
 - /api/application-blocks
 - /api/applications
-- /api/application-modules
 - /api/application-services
+- /api/application-modules
 - /api/databases
 - /api/fluxes
 
@@ -55,6 +55,7 @@ __Vue de l'administration__
 - /api/annuaires
 - /api/forest-ads
 - /api/domaine-ads
+- /api/admin-users
 
 __Vue de l'infrastructure logique__
 
@@ -90,12 +91,8 @@ __Vue de l'infrastructure physique__
 - /api/wans
 - /api/mans
 - /api/lans
-
-__Administration__
-
-- /api/users
-- /api/permissions
-- /api/roles
+- /api/links
+- /api/fluxes
 
 ### Actions gérées par le contrôleur de ressources
 
@@ -119,6 +116,39 @@ accédés par l'API.
 
 Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
+
+### Liaison entre les vues
+Les différentes vues de l'API sont interconnectées pour fournir une vue complète et intégrée de la cartographie. Certaines vues (celles qui acceptent d'autres attributs) ont des champs supplémentaires pour se connecter à d'autres vues. Par exemple, nous pouvons lier la vue Processus à la vue Application.
+
+
+#### Exemple:
+Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :
+
+##### Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.
+
+```
+{
+  "id": 201,
+  "name": "app1",
+  "description": "desc1"
+}
+{
+  "id": 202,
+  "name": "app2",
+  "description": "desc2"
+}
+```
+
+##### Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :
+```
+{
+  "id": 101,
+  "name": "processus",
+  "application_id[]": [201, 202]
+}
+```
+
+Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaine_ads', 'application_services', 'certificates', 'peripherals', 'physical_servers', 'physical_routers', 'network_switches', 'routers', 'physicalSwitches', 'physicalRouters'].
 
 ### Exemples
 

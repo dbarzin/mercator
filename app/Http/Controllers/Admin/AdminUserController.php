@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AdminUser;
 use App\DomaineAd;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyAdminUSerRequest;
+use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
 use Gate;
@@ -43,7 +43,7 @@ class AdminUserController extends Controller
 
     public function edit(AdminUser $adminUser)
     {
-        abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('admin_user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $type_list = AdminUser::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
@@ -65,18 +65,18 @@ class AdminUserController extends Controller
 
     public function show(AdminUser $adminUser)
     {
-        abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('admin_user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.adminUser.show', compact('adminUser'));
     }
 
-    public function destroy(AdminUser $user)
+    public function destroy(AdminUser $adminUser)
     {
         abort_if(Gate::denies('admin_user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->delete();
+        $adminUser->delete();
 
-        return redirect()->route('admin.adminUser.index');
+        return redirect()->route('admin.admin-users.index');
     }
 
     public function massDestroy(MassDestroyAdminUserRequest $request)
