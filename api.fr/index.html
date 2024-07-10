@@ -79,6 +79,18 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-vues">Liaison entre les vues</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple:</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-1-assurez-vous-davoir-lapplication_id-pour-les-applications-que-vous-souhaitez-lier">Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#etape-2-liez-le-processus-aux-applications-soit-avec-une-mise-a-jour-soit-avec-un-enregistrement-nous-pouvons-ajouter">Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#authentification">Authentification</a>
@@ -158,18 +170,18 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <ul>
 <li>/api/macro-processuses</li>
 <li>/api/processes</li>
-<li>/api/operations</li>
-<li>/api/actors</li>
 <li>/api/activities</li>
+<li>/api/operations</li>
 <li>/api/tasks</li>
+<li>/api/actors</li>
 <li>/api/information</li>
 </ul>
 <p><strong>Vue des applications</strong></p>
 <ul>
 <li>/api/application-blocks</li>
 <li>/api/applications</li>
-<li>/api/application-modules</li>
 <li>/api/application-services</li>
+<li>/api/application-modules</li>
 <li>/api/databases</li>
 <li>/api/fluxes</li>
 </ul>
@@ -179,6 +191,7 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li>/api/annuaires</li>
 <li>/api/forest-ads</li>
 <li>/api/domaine-ads</li>
+<li>/api/admin-users</li>
 </ul>
 <p><strong>Vue de l'infrastructure logique</strong></p>
 <ul>
@@ -214,12 +227,8 @@ La liste des API se trouve dans le fichier /route/api.php</p>
 <li>/api/wans</li>
 <li>/api/mans</li>
 <li>/api/lans</li>
-</ul>
-<p><strong>Administration</strong></p>
-<ul>
-<li>/api/users</li>
-<li>/api/permissions</li>
-<li>/api/roles</li>
+<li>/api/links</li>
+<li>/api/fluxes</li>
 </ul>
 <h3 id="actions-gerees-par-le-controleur-de-ressources">Actions gérées par le contrôleur de ressources</h3>
 <p>Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.</p>
@@ -266,6 +275,30 @@ Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder
 accédés par l'API.</p>
 <p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.</p>
+<h3 id="liaison-entre-les-vues">Liaison entre les vues</h3>
+<p>Les différentes vues de l'API sont interconnectées pour fournir une vue complète et intégrée de la cartographie. Certaines vues (celles qui acceptent d'autres attributs) ont des champs supplémentaires pour se connecter à d'autres vues. Par exemple, nous pouvons lier la vue Processus à la vue Application.</p>
+<h4 id="exemple">Exemple:</h4>
+<p>Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :</p>
+<h5 id="etape-1-assurez-vous-davoir-lapplication_id-pour-les-applications-que-vous-souhaitez-lier">Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</h5>
+<pre><code>{
+  &quot;id&quot;: 201,
+  &quot;name&quot;: &quot;app1&quot;,
+  &quot;description&quot;: &quot;desc1&quot;
+}
+{
+  &quot;id&quot;: 202,
+  &quot;name&quot;: &quot;app2&quot;,
+  &quot;description&quot;: &quot;desc2&quot;
+}
+</code></pre>
+<h5 id="etape-2-liez-le-processus-aux-applications-soit-avec-une-mise-a-jour-soit-avec-un-enregistrement-nous-pouvons-ajouter">Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</h5>
+<pre><code>{
+  &quot;id&quot;: 101,
+  &quot;name&quot;: &quot;processus&quot;,
+  &quot;application_id[]&quot;: [201, 202]
+}
+</code></pre>
+<p>Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaine_ads', 'application_services', 'certificates', 'peripherals', 'physical_servers', 'physical_routers', 'network_switches', 'routers', 'physicalSwitches', 'physicalRouters'].</p>
 <h3 id="exemples">Exemples</h3>
 <p>Voici quelques exemples d'utilisation de l'API avec PHP :</p>
 <h4 id="authentification">Authentification</h4>
