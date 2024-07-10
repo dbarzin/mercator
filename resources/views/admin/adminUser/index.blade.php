@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Actor">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-AdminUser">
                 <thead>
                     <tr>
                         <th width="10">
@@ -107,11 +107,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('actor_delete')
+@can('admin_user_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.actors.massDestroy') }}",
+    url: "{{ route('admin.admin-users.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -141,7 +141,7 @@
     order: [[ 1, 'asc' ]],
     pageLength: 100, stateSave: true,
   });
-  let table = $('.datatable-Actor:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-AdminUser:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

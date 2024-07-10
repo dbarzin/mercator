@@ -19,7 +19,7 @@ class MassDestroyAdminUserRequest extends FormRequest
     {
         return [
             'ids' => 'required|array',
-            'ids.*' => 'exists:activities,id',
+            'ids.*' => 'exists:admin_users,id',
         ];
     }
 }
