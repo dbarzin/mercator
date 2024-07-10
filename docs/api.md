@@ -93,6 +93,7 @@ _Physical infrastructure view_
 - /api/mans
 - /api/lans
 - /api/links
+- /api/fluxes
 
 ### Actions managed by the resource controller
 
