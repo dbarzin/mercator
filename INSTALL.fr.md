@@ -35,13 +35,9 @@ Cloner le projet depuis Github
 
 ## Composer
 
-Mettre à jour composer
-
-    cd /var/www/mercator
-    composer self-update
-
 Installer les packages avec composer :
 
+    cd /var/www/mercator
     composer update
 
 Publier tous les actifs publiables à partir des packages des fournisseurs
@@ -265,6 +261,10 @@ Enfin, redémarrez le service Apache pour activer les modifications :
     sudo systemctl restart apache2
 
 ### HTTPS
+
+Activer le module SSL d'Apache
+
+    sudo a2enmod ssl 
 
 Voici le fichier de configuration pour HTTPS
 

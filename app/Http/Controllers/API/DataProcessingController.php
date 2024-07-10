@@ -26,36 +26,38 @@ class DataProcessingController extends Controller
     {
         abort_if(Gate::denies('data_processing_register_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $DataProcessing = DataProcessing::create($request->all());
-        // syncs
-        // $DataProcessing->roles()->sync($request->input('roles', []));
+        $dataProcessing = DataProcessing::create($request->all());
+        $dataProcessing->processes()->sync($request->input('processes', []));
+        $dataProcessing->informations()->sync($request->input('informations', []));
+        $dataProcessing->applications()->sync($request->input('applications', []));
 
-        return response()->json($DataProcessing, 201);
+        return response()->json($dataProcessing, 201);
     }
 
-    public function show(DataProcessing $DataProcessing)
+    public function show(DataProcessing $dataProcessing)
     {
         abort_if(Gate::denies('data_processing_register_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DataProcessingResource($DataProcessing);
+        return new DataProcessingResource($dataProcessing);
     }
 
-    public function update(UpdateDataProcessingRequest $request, DataProcessing $DataProcessing)
+    public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
     {
         abort_if(Gate::denies('data_processing_register_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $DataProcessing->update($request->all());
-        // syncs
-        // $DataProcessing->roles()->sync($request->input('roles', []));
+        $dataProcessing->update($request->all());
+        $dataProcessing->processes()->sync($request->input('processes', []));
+        $dataProcessing->informations()->sync($request->input('informations', []));
+        $dataProcessing->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
 
-    public function destroy(DataProcessing $DataProcessing)
+    public function destroy(DataProcessing $dataProcessing)
     {
         abort_if(Gate::denies('data_processing_register_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $DataProcessing->delete();
+        $dataProcessing->delete();
 
         return response()->json();
     }
