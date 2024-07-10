@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('annuaires', API\AnnuaireController::class);
     Route::resource('forest-ads', API\ForestAdController::class);
     Route::resource('domaine-ads', API\DomaineAdController::class);
+    Route::resource('admin-users', API\AdminUserController::class);
 
     Route::resource('networks', API\NetworkController::class);
     Route::resource('subnetworks', API\SubnetworkController::class);
