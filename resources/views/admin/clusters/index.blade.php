@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Entity">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Cluster">
                 <thead>
                     <tr>
                         <th width="10">
@@ -132,7 +132,7 @@
     order: [[ 1, 'asc' ]],
     pageLength: 100, stateSave: true,
   });
-  let table = $('.datatable-Entity:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Cluster:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

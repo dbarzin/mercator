@@ -19,7 +19,7 @@ class MassDestroyClusterRequest extends FormRequest
     {
         return [
             'ids' => 'required|array',
-            'ids.*' => 'exists:certificates,id',
+            'ids.*' => 'exists:clusters,id',
         ];
     }
 }
