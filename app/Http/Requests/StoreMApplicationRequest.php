@@ -11,7 +11,6 @@ class StoreMApplicationRequest extends FormRequest
     public function authorize()
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         return true;
     }
 
@@ -22,7 +21,6 @@ class StoreMApplicationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:m_applications',
                 'unique:m_applications,name,NULL,id,deleted_at,NULL',
             ],
             'entities.*' => [
@@ -65,11 +63,11 @@ class StoreMApplicationRequest extends FormRequest
                 'array',
             ],
             'install_date' => [
-                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
             'update_date' => [
-                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
                 'after:install_date',
             ],
