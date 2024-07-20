@@ -7,10 +7,8 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
-/**
- * App\MApplication
- */
 class MApplication extends Model
 {
     use SoftDeletes, Auditable;
@@ -30,6 +28,9 @@ class MApplication extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'install_date',
+        'update_date',
+        'next_update',
     ];
 
     protected $fillable = [
@@ -59,13 +60,6 @@ class MApplication extends Model
         'next_update',
     ];
 
-    /**
-     * Vérifie que l'utilisateur passé en paramètre est cartographe de cette application.
-     *
-     * @param User $user
-     *
-     * @return bool
-     */
     public function hasCartographer(User $user)
     {
         return $this->cartographers()
@@ -73,40 +67,58 @@ class MApplication extends Model
             ->exists();
     }
 
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
     public function getUpdateDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $this->formatDateForDisplay($value);
     }
 
     public function setUpdateDateAttribute($value)
     {
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['update_date'] = $this->parseDate($value);
     }
 
     public function getInstallDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $this->formatDateForDisplay($value);
     }
 
     public function setInstallDateAttribute($value)
     {
-        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['install_date'] = $this->parseDate($value);
     }
 
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
     public function getNextUpdateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $this->formatDateForDisplay($value, config('panel.date_format'));
     }
 
     public function setNextUpdateAttribute($value)
     {
-        $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['next_update'] = $this->parseDate($value, config('panel.date_format'));
+    }
+
+    private function parseDate($value, $format = null)
+    {
+        $format = $format ?: config('panel.date_format') . ' ' . config('panel.time_format');
+
+        try {
+            return $value ? Carbon::createFromFormat($format, $value)->format('Y-m-d H:i:s') : null;
+        } catch (\Exception $e) {
+            Log::error('Invalid date format: ' . $value . ' with format ' . $format);
+            return null;
+        }
+    }
+
+    private function formatDateForDisplay($value, $format = null)
+    {
+        $format = $format ?: config('panel.date_format') . ' ' . config('panel.time_format');
+
+        try {
+            return $value ? Carbon::parse($value)->format($format) : null;
+        } catch (\Exception $e) {
+            Log::error('Error parsing date: ' . $value . ' with format ' . $format);
+            return null;
+        }
     }
 
     public function applicationSourceFluxes()
