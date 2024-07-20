@@ -195,7 +195,11 @@
                         <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
                     </th>
                     <td colspan="5">
-                        {{ $application->documentation }}
+                        @if (filter_var($application->documentation, FILTER_VALIDATE_URL))
+                            <a href="{{ $application->documentation }}">{{ $application->documentation }}</a>
+                        @else
+                            {{ $application->documentation }}
+                        @endif
                     </td>
                 </tr>
                 @endif
