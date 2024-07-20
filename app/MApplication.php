@@ -106,7 +106,6 @@ class MApplication extends Model
 
     public function setNextUpdateAttribute($value)
     {
-        // dd($value);
         $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 

@@ -181,6 +181,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_src_id', $link->logical_server_src_id)
                 ->where('network_switch_src_id', $link->network_switch_src_id)
                 ->where('router_src_id', $link->router_src_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('src_port', 'Source port already used !');
             }
@@ -199,6 +200,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_src_id', $link->logical_server_dest_id)
                 ->where('network_switch_src_id', $link->network_switch_dest_id)
                 ->where('router_src_id', $link->router_dest_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('dest_port', 'Destination port already used 1!');
             }
@@ -217,6 +219,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_dest_id', $link->logical_server_dest_id)
                 ->where('network_switch_dest_id', $link->network_switch_dest_id)
                 ->where('router_dest_id', $link->router_dest_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('dest_port', 'Destination port already used 2!');
             }
@@ -235,6 +238,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_dest_id', $link->logical_server_src_id)
                 ->where('network_switch_dest_id', $link->network_switch_src_id)
                 ->where('router_dest_id', $link->router_src_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('src_port', 'Source port already used !');
             }
@@ -538,6 +542,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_src_id', $link->logical_server_src_id)
                 ->where('network_switch_src_id', $link->network_switch_src_id)
                 ->where('router_src_id', $link->router_src_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('src_port', 'Source port already used !');
             }
@@ -556,6 +561,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_src_id', $link->logical_server_dest_id)
                 ->where('network_switch_src_id', $link->network_switch_dest_id)
                 ->where('router_src_id', $link->router_dest_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('dest_port', 'Destination port already used 1!');
             }
@@ -574,6 +580,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_dest_id', $link->logical_server_dest_id)
                 ->where('network_switch_dest_id', $link->network_switch_dest_id)
                 ->where('router_dest_id', $link->router_dest_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('dest_port', 'Destination port already used 2!');
             }
@@ -592,6 +599,7 @@ class PhysicalLinkController extends Controller
                 ->where('logical_server_dest_id', $link->logical_server_src_id)
                 ->where('network_switch_dest_id', $link->network_switch_src_id)
                 ->where('router_dest_id', $link->router_src_id)
+                ->whereNull('deleted_at')
                 ->exists())) {
                 $validator->errors()->add('src_port', 'Source port already used !');
             }
