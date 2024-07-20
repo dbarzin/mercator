@@ -25,6 +25,9 @@ Route::get('/cytoscape1', function () {
 Route::get('/cytoscape2', function () {
     return view('cytoscape2');
 });
+Route::get('/cytoscape3', function () {
+    return view('cytoscape3');
+});
 
 Auth::routes();
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);

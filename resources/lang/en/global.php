@@ -284,4 +284,6 @@ return [
     'availability_short' => 'A',
     'tracability' => 'Traçability',
     'tracability_short' => 'T',
+    'old' => 'Old',
+    'active' => 'Active',
 ];

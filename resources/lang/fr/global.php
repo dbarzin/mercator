@@ -72,4 +72,6 @@ return [
     'availability_short' => 'D',
     'tracability' => 'Traçabilité',
     'tracability_short' => 'T',
+    'old' => 'Old',
+    'active' => 'Actif',
 ];

@@ -100,7 +100,7 @@ class MApplication extends Model
     private function parseDate($value, $format = null)
     {
         $format = $format ?: config('panel.date_format') . ' ' . config('panel.time_format');
-        
+
         try {
             return $value ? Carbon::createFromFormat($format, $value)->format('Y-m-d H:i:s') : null;
         } catch (\Exception $e) {
@@ -112,7 +112,7 @@ class MApplication extends Model
     private function formatDateForDisplay($value, $format = null)
     {
         $format = $format ?: config('panel.date_format') . ' ' . config('panel.time_format');
-        
+
         try {
             return $value ? Carbon::parse($value)->format($format) : null;
         } catch (\Exception $e) {
