@@ -38,6 +38,9 @@
                             {{ trans('cruds.application.fields.application_block') }}
                         </th>
                         <th>
+                            {{ trans('cruds.application.fields.attributes') }}
+                        </th>
+                        <th>
                         </th>
                     </tr>
                 </thead>
@@ -104,6 +107,11 @@
                                 {{ $application->application_block->name ?? '' }}
                                 </a>
                                 @endif
+                            </td>
+                            <td>
+                                @foreach(explode(" ",$application->attributes) as $a)
+                                    <div class="badge badge-info">{{ $a }}</div>
+                                @endforeach
                             </td>
                             <td>
                                 @can('m_application_show')
