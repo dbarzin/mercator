@@ -169,7 +169,13 @@
                                     @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>{{ trans("cruds.application.fields.documentation_helper") }}</th>
-                                        <td><a href="{{ $application->documentation}}">{{ $application->documentation}}</a></td>
+                                        <td>
+                                            @if (filter_var($application->documentation, FILTER_VALIDATE_URL))
+                                                <a href="{{ $application->documentation }}">{{ $application->documentation }}</a>
+                                            @else
+                                                {{ $application->documentation }}
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endif
                                     <tr>

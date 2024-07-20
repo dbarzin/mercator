@@ -266,7 +266,7 @@ class PatchingController extends Controller
     {
         // Get Attributes
         $attributes_list = LogicalServer::select('attributes')
-            ->where('attributes', '<>', null)
+            ->whereNotNull('attributes')
             ->distinct()
             ->pluck('attributes');
         $res = [];
@@ -278,7 +278,7 @@ class PatchingController extends Controller
             }
         }
         $attributes_list = MApplication::select('attributes')
-            ->where('attributes', '<>', null)
+            ->whereNotNull('attributes')
             ->distinct()
             ->pluck('attributes');
         foreach ($attributes_list as $i) {

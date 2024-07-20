@@ -2,6 +2,7 @@ FROM php:8.3-fpm-alpine3.19
 
 # system deps
 RUN apk update && apk add git curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev nginx gettext supervisor
+RUN apk add postgresql-dev postgresql-client
 
 # run font cache
 RUN fc-cache -f
@@ -28,7 +29,7 @@ RUN apk add php-zip \
   libpng-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install gd zip ldap pdo pdo_mysql
+RUN docker-php-ext-install gd zip ldap pdo pdo_mysql pdo_pgsql
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php \

@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 @if (auth()->user()->granularity>=2)
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                         <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
@@ -37,6 +37,22 @@
                     </div>
                 </div>
                 @endif
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes" multiple>
+                            @foreach($attributes_list as $a)
+                                <option {{ str_contains(old('attributes') ? old('attributes') : $application->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('attributes'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('attributes') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.attributes_helper') }}</span>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>

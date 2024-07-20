@@ -22,6 +22,7 @@ class MApplication extends Model
         'responsible',
         'editor',
         'functional_referent',
+        'attributes'
     ];
 
     protected $dates = [
@@ -35,6 +36,7 @@ class MApplication extends Model
 
     protected $fillable = [
         'name',
+        'application_block_id',
         'description',
         'vendor',
         'product',
@@ -52,7 +54,6 @@ class MApplication extends Model
         'security_need_a',
         'security_need_t',
         'external',
-        'application_block_id',
         'attributes',
         'patching_frequency',
         'install_date',
