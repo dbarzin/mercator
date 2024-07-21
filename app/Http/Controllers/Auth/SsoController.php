@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
+use App\Role;
 use App\User;
-use App\Role; // Importez le modèle Role
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite; // Importez le modèle Role
 
 class SsoController extends Controller
 {
@@ -31,7 +30,7 @@ class SsoController extends Controller
         // Trouver ou créer l'utilisateur dans la base de données locale
         $existingUser = User::where('email', $keycloakUser->email)->first();
 
-        if (!$existingUser) {
+        if (! $existingUser) {
             $existingUser = new User();
             $existingUser->name = $keycloakUser->name; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser->email;

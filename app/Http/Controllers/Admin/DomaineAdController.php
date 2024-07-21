@@ -1,13 +1,14 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\DomaineAd;
 use App\ForestAd;
-use App\LogicalServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;
 use App\Http\Requests\UpdateDomaineAdRequest;
+use App\LogicalServer;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,8 +20,10 @@ class DomaineAdController extends Controller
 
         $domaineAds = DomaineAd::all()->sortBy('name');
 
-        return view('admin.domaineAds.index',
-            compact('domaineAds'));
+        return view(
+            'admin.domaineAds.index',
+            compact('domaineAds')
+        );
     }
 
     public function create()
@@ -30,8 +33,10 @@ class DomaineAdController extends Controller
         $domainesForestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.domaineAds.create',
-            compact('domainesForestAds', 'logicalServers'));
+        return view(
+            'admin.domaineAds.create',
+            compact('domainesForestAds', 'logicalServers')
+        );
     }
 
     public function store(StoreDomaineAdRequest $request)
@@ -53,8 +58,10 @@ class DomaineAdController extends Controller
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $domaineAd->load('domainesForestAds');
 
-        return view('admin.domaineAds.edit',
-            compact('domaineAd', 'domainesForestAds', 'logicalServers'));
+        return view(
+            'admin.domaineAds.edit',
+            compact('domaineAd', 'domainesForestAds', 'logicalServers')
+        );
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)

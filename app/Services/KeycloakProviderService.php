@@ -2,14 +2,31 @@
 
 namespace App\Services\V3;
 
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
-use Illuminate\Support\Facades\Log;
-use App\Modules\Api\Modules\V3\Models\User;
-use Illuminate\Support\Arr;
 
 class KeycloakService extends AbstractProvider implements ProviderInterface
 {
+
+    public function user()
+    {
+        if ($this->hasInvalidState()) {
+            throw new InvalidStateException();
+        }
+
+        $response = $this->getAccessTokenResponse($this->getCode());
+
+        $user = $this->mapUserToObject($this->getUserByToken(
+            $token = Arr::get($response, 'access_token')
+        ));
+
+        return array_merge($user, [
+            'access_token' => $token,
+            'refresh_token' => Arr::get($response, 'refresh_token'),
+            'expires_in' => Arr::get($response, 'expires_in'),
+        ]);
+    }
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
@@ -64,26 +81,5 @@ class KeycloakService extends AbstractProvider implements ProviderInterface
             parent::getCodeFields($state),
             ['response_mode' => 'query']
         );
-    }
-
-    public function user()
-    {
-        if ($this->hasInvalidState()) {
-            throw new InvalidStateException;
-        }
-
-        $response = $this->getAccessTokenResponse($this->getCode());
-
-        $user = $this->mapUserToObject($this->getUserByToken(
-            $token = Arr::get($response, 'access_token')
-        ));
-
-        return array_merge($user, [
-            'access_token' => $token,
-            'refresh_token' => Arr::get($response, 'refresh_token'),
-            'expires_in' => Arr::get($response, 'expires_in'),
-        ]);
-
-        
     }
 }

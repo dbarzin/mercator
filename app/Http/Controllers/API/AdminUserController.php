@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\AdminUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAdminUserRequest;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
 use App\Http\Resources\Admin\AdminUserResource;
-use App\AdminUser;
 use Gate;
 use Illuminate\Http\Response;
 
