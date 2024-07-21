@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\V3\KeycloakService as KeycloakSocialiteProvider;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Facades\Socialite;
-use App\Services\V3\KeycloakService as KeycloakSocialiteProvider;
-use Illuminate\Support\Facades\Log;
 
 class KeycloakProvider extends ServiceProvider
 {
@@ -16,10 +15,9 @@ class KeycloakProvider extends ServiceProvider
      */
     public function boot()
     {
-            Socialite::extend('keycloak', function ($app) {
-                $config = $app['config']['services.keycloak'];
-                return Socialite::buildProvider(KeycloakSocialiteProvider::class, $config);
-            });
-        
+        Socialite::extend('keycloak', function ($app) {
+            $config = $app['config']['services.keycloak'];
+            return Socialite::buildProvider(KeycloakSocialiteProvider::class, $config);
+        });
     }
 }

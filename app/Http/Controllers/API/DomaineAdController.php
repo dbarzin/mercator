@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\DomaineAd;
-use App\LogicalServer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyDomaineAdRequest;
 use App\Http\Requests\StoreDomaineAdRequest;

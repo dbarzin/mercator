@@ -82,7 +82,7 @@ class MApplicationController extends Controller
             }
         }
         sort($res);
-        $attributes_list=array_unique($res);
+        $attributes_list = array_unique($res);
 
         // Get Reponsibles
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
@@ -192,7 +192,7 @@ class MApplicationController extends Controller
             }
         }
         sort($res);
-        $attributes_list=array_unique($res);
+        $attributes_list = array_unique($res);
 
         $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
         $res = [];

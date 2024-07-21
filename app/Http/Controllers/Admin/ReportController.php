@@ -13,24 +13,24 @@ use App\ApplicationBlock;
 use App\ApplicationModule;
 use App\ApplicationService;
 use App\Bay;
-use App\Building;
 // Application
+use App\Building;
 use App\Certificate;
 use App\Cluster;
 use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
-// Administration
 use App\DomaineAd;
 use App\Entity;
+// Administration
 use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
-// Logique
 use App\Gateway;
 use App\Http\Controllers\Controller;
 use App\Information;
+// Logique
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\MApplication;
@@ -39,9 +39,9 @@ use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
 use App\Phone;
-// Physique
 use App\PhysicalLink;
 use App\PhysicalRouter;
+// Physique
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
@@ -56,7 +56,6 @@ use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

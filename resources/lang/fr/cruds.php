@@ -1126,6 +1126,7 @@ return [
             'title' => "Rapport de Cartographie du Système d'Information",
             'views' => 'Vues',
             'views_helper' => 'Vues présentes dans le rapport',
+            'graph_helper' => 'avec schémas',
         ],
         'lists' => [
             'applications' => 'Applications par groupe applicatif',
