@@ -1120,6 +1120,7 @@ return [
             'title' => 'Information System Mapping Report',
             'views' => 'Views',
             'views_helper' => 'Views in the report',
+            'graph_helper' => 'with schemas',
         ],
         'lists' => [
             'applications' => 'Applications by application group',

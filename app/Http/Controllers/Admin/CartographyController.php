@@ -2,67 +2,69 @@
 
 namespace App\Http\Controllers\Admin;
 
+// RGPD
 use App\Activity;
 // ecosystem
-use App\Actor;
-use App\Annuaire;
+use App\Entity;
+use App\Relation;
 // information system
+use App\MacroProcessus;
+use App\Process;
+use App\Task;
+use App\Operation;
+use App\Actor;
+// Applications
 use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Bay;
-use App\Building;
-use App\Certificate;
-use App\Database;
-// Applications
 use App\DhcpServer;
 use App\Dnsserver;
-use App\DomaineAd;
-use App\Entity;
-use App\ExternalConnectedEntity;
 use App\Flux;
 // Administration
 use App\ForestAd;
 use App\Gateway;
-use App\Http\Controllers\Controller;
-use App\Information;
+use App\DomaineAd;
+use App\Annuaire;
+use App\ZoneAdmin;
 // Logique
+use App\ExternalConnectedEntity;
+use App\Network;
 use App\Lan;
 use App\LogicalServer;
-use App\MacroProcessus;
 use App\Man;
-use App\MApplication;
-use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
+use App\PhysicalRouter;
+use App\Certificate;
+use App\Database;
+use App\Information;
+// Physique
 use App\Peripheral;
 use App\Phone;
-use App\PhysicalRouter;
-// Physique
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
 use App\Router;
 use App\SecurityDevice;
 use App\Site;
+use App\Bay;
+use App\Building;
 use App\StorageDevice;
 use App\Subnetwork;
-use App\Task;
 use App\Vlan;
 use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 // Log
 use Illuminate\Support\Facades\Log;
 // PhpOffice
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
+// Laravel
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class CartographyController extends Controller
 {
@@ -155,25 +157,27 @@ class CartographyController extends Controller
             $relations = Relation::orderBy('name')->get();
 
             // Generate Graph
-            $graph = 'digraph  {';
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
 
-            // use font from the library fonts-freefont-ttf
-            $graph .= 'graph [fontname = "FreeSans"];';
-            $graph .= 'node [fontname = "FreeSans"];';
-            $graph .= 'edge [fontname = "FreeSans"];';
+                // use font from the library fonts-freefont-ttf
+                $graph .= 'graph [fontname = "FreeSans"];';
+                $graph .= 'node [fontname = "FreeSans"];';
+                $graph .= 'edge [fontname = "FreeSans"];';
 
-            foreach ($entities as $entity) {
-                $graph .= 'E'. $entity->id . '[label="'. $entity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/entity.png').'"]';
+                foreach ($entities as $entity) {
+                    $graph .= 'E'. $entity->id . '[label="'. $entity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/entity.png').'"]';
+                }
+                foreach ($relations as $relation) {
+                    $graph .= 'E'.$relation->source_id .' -> E'. $relation->destination_id .'[label="'. $relation->name .'"]';
+                }
+                $graph .= '}';
+
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
             }
-            foreach ($relations as $relation) {
-                $graph .= 'E'.$relation->source_id .' -> E'. $relation->destination_id .'[label="'. $relation->name .'"]';
-            }
-            $graph .= '}';
-
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
 
             // ===============================
             $section->addTitle(trans('cruds.entity.title'), 2);
@@ -273,67 +277,69 @@ class CartographyController extends Controller
             $informations = Information::orderBy('name')->get();
 
             // Generate Graph
-            $graph = 'digraph  {';
-            if ($granularity >= 2) {
-                foreach ($macroProcessuses as $macroProcess) {
-                    $graph .= ' MP' . $macroProcess->id . ' [label="'. $macroProcess->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/macroprocess.png').'"]';
-                    foreach ($macroProcess->processes as $process) {
-                        $graph .= ' MP' . $macroProcess->id .'->P' . $process->id;
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
+                if ($granularity >= 2) {
+                    foreach ($macroProcessuses as $macroProcess) {
+                        $graph .= ' MP' . $macroProcess->id . ' [label="'. $macroProcess->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/macroprocess.png').'"]';
+                        foreach ($macroProcess->processes as $process) {
+                            $graph .= ' MP' . $macroProcess->id .'->P' . $process->id;
+                        }
                     }
                 }
-            }
 
-            foreach ($processes as $process) {
-                $graph .= ' P'.$process->id . ' [label="' . $process->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
-                if ($granularity === 3) {
-                    foreach ($process->activities as $activity) {
-                        $graph .= ' P'.$process->id . '->A'. $activity->id;
+                foreach ($processes as $process) {
+                    $graph .= ' P'.$process->id . ' [label="' . $process->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
+                    if ($granularity === 3) {
+                        foreach ($process->activities as $activity) {
+                            $graph .= ' P'.$process->id . '->A'. $activity->id;
+                        }
+                    }
+                    foreach ($process->processInformation as $information) {
+                        $graph .= ' P'. $process->id .'->I'. $information->id;
                     }
                 }
-                foreach ($process->processInformation as $information) {
-                    $graph .= ' P'. $process->id .'->I'. $information->id;
-                }
-            }
-            if ($granularity === 3) {
-                foreach ($activities as $activity) {
-                    $graph .= ' A' . $activity->id .' [label="'. $activity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/activity.png').'"]';
-                    foreach ($activity->operations as $operation) {
-                        $graph .= ' A'. $activity->id .'->O'.$operation->id;
+                if ($granularity === 3) {
+                    foreach ($activities as $activity) {
+                        $graph .= ' A' . $activity->id .' [label="'. $activity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/activity.png').'"]';
+                        foreach ($activity->operations as $operation) {
+                            $graph .= ' A'. $activity->id .'->O'.$operation->id;
+                        }
                     }
                 }
-            }
-            foreach ($operations as $operation) {
-                $graph .= ' O'. $operation->id .' [label="'. $operation->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/operation.png').'"]';
+                foreach ($operations as $operation) {
+                    $graph .= ' O'. $operation->id .' [label="'. $operation->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/operation.png').'"]';
+                    if ($granularity === 3) {
+                        foreach ($operation->tasks as $task) {
+                            $graph .= ' O' . $operation->id . '->T'. $task->id;
+                        }
+                    }
+                    if ($granularity >= 2) {
+                        foreach ($operation->actors as $actor) {
+                            $graph .= ' O'. $operation->id . '->ACT'. $actor->id;
+                        }
+                    }
+                }
                 if ($granularity === 3) {
-                    foreach ($operation->tasks as $task) {
-                        $graph .= ' O' . $operation->id . '->T'. $task->id;
+                    foreach ($tasks as $task) {
+                        $graph .= ' T'. $task->id . ' [label="'. $task->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
                     }
                 }
                 if ($granularity >= 2) {
-                    foreach ($operation->actors as $actor) {
-                        $graph .= ' O'. $operation->id . '->ACT'. $actor->id;
+                    foreach ($actors as $actor) {
+                        $graph .= ' ACT'. $actor->id . ' [label="'. $actor->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/actor.png').'"]';
                     }
                 }
-            }
-            if ($granularity === 3) {
-                foreach ($tasks as $task) {
-                    $graph .= ' T'. $task->id . ' [label="'. $task->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
+                foreach ($informations as $information) {
+                    $graph .= ' I'. $information->id . ' [label="' . $information->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/information.png').'"]';
                 }
-            }
-            if ($granularity >= 2) {
-                foreach ($actors as $actor) {
-                    $graph .= ' ACT'. $actor->id . ' [label="'. $actor->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/actor.png').'"]';
-                }
-            }
-            foreach ($informations as $information) {
-                $graph .= ' I'. $information->id . ' [label="' . $information->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/information.png').'"]';
-            }
-            $graph .= '}';
+                $graph .= '}';
 
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
+            }
 
             // =====================================
             if (($granularity >= 2) && ($macroProcessuses->count() > 0)) {
@@ -620,45 +626,47 @@ class CartographyController extends Controller
             $fluxes = Flux::orderBy('name')->get();
 
             // Generate Graph
-            $graph = 'digraph  {';
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
 
-            foreach ($applicationBlocks as $ab) {
-                $graph .= ' AB' . $ab->id . ' [label="'.$ab->name.'" shape=none labelloc=b  width=1 height=1.8 image="' . public_path('/images/applicationblock.png').'" ]';
-            }
-
-            foreach ($applications as $application) {
-                $graph .= ' A' . $application->id . '[label="' . $application->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/application.png') . '"]';
-                foreach ($application->services as $service) {
-                    $graph .= ' A' . $application->id .'->AS' . $service->id;
+                foreach ($applicationBlocks as $ab) {
+                    $graph .= ' AB' . $ab->id . ' [label="'.$ab->name.'" shape=none labelloc=b  width=1 height=1.8 image="' . public_path('/images/applicationblock.png').'" ]';
                 }
-                foreach ($application->databases as $database) {
-                    $graph .= ' A' . $application->id .'->DB' . $database->id;
+
+                foreach ($applications as $application) {
+                    $graph .= ' A' . $application->id . '[label="' . $application->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/application.png') . '"]';
+                    foreach ($application->services as $service) {
+                        $graph .= ' A' . $application->id .'->AS' . $service->id;
+                    }
+                    foreach ($application->databases as $database) {
+                        $graph .= ' A' . $application->id .'->DB' . $database->id;
+                    }
+                    if ($application->application_block_id !== null) {
+                        $graph .= ' AB' . $application->application_block_id . '->A' .  $application->id;
+                    }
                 }
-                if ($application->application_block_id !== null) {
-                    $graph .= ' AB' . $application->application_block_id . '->A' .  $application->id;
+                foreach ($applicationServices as $service) {
+                    $graph .= ' AS' . $service->id . '[label="' . $service->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationservice.png') . '"]';
+                    foreach ($service->modules as $module) {
+                        $graph .= ' AS' . $service->id . '->M' . $module->id;
+                    }
                 }
-            }
-            foreach ($applicationServices as $service) {
-                $graph .= ' AS' . $service->id . '[label="' . $service->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationservice.png') . '"]';
-                foreach ($service->modules as $module) {
-                    $graph .= ' AS' . $service->id . '->M' . $module->id;
+
+                foreach ($applicationModules as $module) {
+                    $graph .= ' M' . $module->id . '[label="' . $module->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationmodule.png') .'"]';
                 }
+
+                foreach ($databases as $database) {
+                    $graph .= ' DB' . $database->id . '[label="'. $database->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/database.png') . '"]';
+                }
+
+                $graph .= '}';
+
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
             }
-
-            foreach ($applicationModules as $module) {
-                $graph .= ' M' . $module->id . '[label="' . $module->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationmodule.png') .'"]';
-            }
-
-            foreach ($databases as $database) {
-                $graph .= ' DB' . $database->id . '[label="'. $database->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/database.png') . '"]';
-            }
-
-            $graph .= '}';
-
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
 
             // =====================================
             if ($applicationBlocks->count() > 0) {
@@ -1086,34 +1094,36 @@ class CartographyController extends Controller
             $domains = DomaineAd::All();
 
             // Generate Graph
-            $graph = 'digraph  {';
-            foreach ($zones as $zone) {
-                $graph .= ' Z'. $zone->id . '[label="'. $zone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/zoneadmin.png'). '"]';
-                foreach ($zone->zoneAdminAnnuaires as $annuaire) {
-                    $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
+                foreach ($zones as $zone) {
+                    $graph .= ' Z'. $zone->id . '[label="'. $zone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/zoneadmin.png'). '"]';
+                    foreach ($zone->zoneAdminAnnuaires as $annuaire) {
+                        $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
+                    }
+                    foreach ($zone->zoneAdminForestAds as $forest) {
+                        $graph .= ' Z' . $zone->id . '->F' . $forest->id;
+                    }
                 }
-                foreach ($zone->zoneAdminForestAds as $forest) {
-                    $graph .= ' Z' . $zone->id . '->F' . $forest->id;
+                foreach ($annuaires as $annuaire) {
+                    $graph .= ' A'. $annuaire->id . '[label="' .$annuaire->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/annuaire.png') .'"]';
                 }
-            }
-            foreach ($annuaires as $annuaire) {
-                $graph .= ' A'. $annuaire->id . '[label="' .$annuaire->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/annuaire.png') .'"]';
-            }
-            foreach ($forests as $forest) {
-                $graph .= ' F' . $forest->id . '[label="' . $forest->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/ldap.png') .'"]';
-                foreach ($forest->domaines as $domain) {
-                    $graph .= ' F' . $forest->id . '->D' . $domain->id;
+                foreach ($forests as $forest) {
+                    $graph .= ' F' . $forest->id . '[label="' . $forest->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/ldap.png') .'"]';
+                    foreach ($forest->domaines as $domain) {
+                        $graph .= ' F' . $forest->id . '->D' . $domain->id;
+                    }
                 }
-            }
-            foreach ($domains as $domain) {
-                $graph .= ' D' . $domain->id . '[label="' . $domain->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/domain.png') . '"]';
-            }
-            $graph .= '}';
+                foreach ($domains as $domain) {
+                    $graph .= ' D' . $domain->id . '[label="' . $domain->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/domain.png') . '"]';
+                }
+                $graph .= '}';
 
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
+            }
 
             // =====================================
             if ($zones->count() > 0) {
@@ -1252,100 +1262,102 @@ class CartographyController extends Controller
             $vlans = Vlan::orderBy('name')->get();
 
             // Generate Graph
-            $graph = 'digraph  {';
-            foreach ($networks as $network) {
-                $graph .= ' NET' . $network->id . '[label="' . $network->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/cloud.png') . '"]';
-            }
-            foreach ($gateways as $gateway) {
-                $graph .= ' GATEWAY' . $gateway->id . '[label="' . $gateway->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/gateway.png') . '"]';
-            }
-            foreach ($subnetworks as $subnetwork) {
-                $graph .= ' SUBNET' . $subnetwork->id . '[label="' . $subnetwork->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/network.png') . '"]';
-                if ($subnetwork->vlan_id !== null) {
-                    $graph .= ' SUBNET' . $subnetwork->id . '->VLAN' . $subnetwork->vlan_id;
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
+                foreach ($networks as $network) {
+                    $graph .= ' NET' . $network->id . '[label="' . $network->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/cloud.png') . '"]';
                 }
-                if ($subnetwork->network_id !== null) {
-                    $graph .= ' NET' . $subnetwork->network->id . '->SUBNET' . $subnetwork->id;
+                foreach ($gateways as $gateway) {
+                    $graph .= ' GATEWAY' . $gateway->id . '[label="' . $gateway->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/gateway.png') . '"]';
                 }
-                if ($subnetwork->gateway_id !== null) {
-                    $graph .= ' SUBNET' . $subnetwork->id . '->GATEWAY' . $subnetwork->gateway_id;
-                }
-            }
-
-            foreach ($externalConnectedEntities as $entity) {
-                $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
-                if ($entity->network !== null) {
-                    $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
-                }
-            }
-
-            foreach ($logicalServers as $logicalServer) {
-                $graph .= ' LOGICAL_SERVER' . $logicalServer->id .'[label="' . $logicalServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
-                if ($logicalServer->address_ip !== null) {
-                    foreach ($subnetworks as $subnetwork) {
-                        foreach (explode(',', $logicalServer->address_ip) as $address) {
-                            if ($subnetwork->contains($address)) {
-                                $graph .= ' SUBNET' . $subnetwork->id . '->LOGICAL_SERVER' . $logicalServer->id;
-                            }
-                        }
-                    }
-                }
-            }
-
-            foreach ($dhcpServers as $dhcpServer) {
-                $graph .= ' DHCP_SERVER' . $dhcpServer->id .'[label="' . $dhcpServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
-                if ($dhcpServer->address_ip !== null) {
-                    foreach ($subnetworks as $subnetwork) {
-                        if ($subnetwork->contains($dhcpServer->address_ip)) {
-                            $graph .= ' SUBNET' . $subnetwork->id . '->DHCP_SERVER' . $dhcpServer->id;
-                        }
-                    }
-                }
-            }
-
-            foreach ($dnsservers as $dnsserver) {
-                $graph .= ' DNS_SERVER' . $dnsserver->id .'[label="' . $dnsserver->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
-                if ($dnsserver->address_ip !== null) {
-                    foreach ($subnetworks as $subnetwork) {
-                        if ($subnetwork->contains($dnsserver->address_ip)) {
-                            $graph .= ' SUBNET' . $subnetwork->id . '->DNS_SERVER' . $dnsserver->id;
-                        }
-                    }
-                }
-            }
-
-            foreach ($certificates as $certificate) {
-                if ($certificate->logical_servers->count() > 0) {
-                    $graph .= ' CERT' . $certificate->id . '[label="' . $certificate->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/certificate.png') .'"]';
-                }
-                foreach ($certificate->logical_servers as $logical_server) {
-                    $graph .= ' LOGICAL_SERVER' . $logical_server->id . '->CERT'. $certificate->id;
-                }
-            }
-
-            foreach ($routers as $router) {
-                $graph .= ' R'. $router->id . ' [label="'. $router->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/router.png') . '"]';
                 foreach ($subnetworks as $subnetwork) {
-                    if (($router->ip_addresses !== null) && ($subnetwork->address !== null)) {
-                        foreach (explode(',', $router->ip_addresses) as $address) {
-                            if ($subnetwork->contains($address)) {
-                                $graph .= ' SUBNET' . $subnetwork->id . '->R' . $router->id;
+                    $graph .= ' SUBNET' . $subnetwork->id . '[label="' . $subnetwork->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/network.png') . '"]';
+                    if ($subnetwork->vlan_id !== null) {
+                        $graph .= ' SUBNET' . $subnetwork->id . '->VLAN' . $subnetwork->vlan_id;
+                    }
+                    if ($subnetwork->network_id !== null) {
+                        $graph .= ' NET' . $subnetwork->network->id . '->SUBNET' . $subnetwork->id;
+                    }
+                    if ($subnetwork->gateway_id !== null) {
+                        $graph .= ' SUBNET' . $subnetwork->id . '->GATEWAY' . $subnetwork->gateway_id;
+                    }
+                }
+
+                foreach ($externalConnectedEntities as $entity) {
+                    $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
+                    if ($entity->network !== null) {
+                        $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
+                    }
+                }
+
+                foreach ($logicalServers as $logicalServer) {
+                    $graph .= ' LOGICAL_SERVER' . $logicalServer->id .'[label="' . $logicalServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    if ($logicalServer->address_ip !== null) {
+                        foreach ($subnetworks as $subnetwork) {
+                            foreach (explode(',', $logicalServer->address_ip) as $address) {
+                                if ($subnetwork->contains($address)) {
+                                    $graph .= ' SUBNET' . $subnetwork->id . '->LOGICAL_SERVER' . $logicalServer->id;
+                                }
                             }
                         }
                     }
                 }
+
+                foreach ($dhcpServers as $dhcpServer) {
+                    $graph .= ' DHCP_SERVER' . $dhcpServer->id .'[label="' . $dhcpServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    if ($dhcpServer->address_ip !== null) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($dhcpServer->address_ip)) {
+                                $graph .= ' SUBNET' . $subnetwork->id . '->DHCP_SERVER' . $dhcpServer->id;
+                            }
+                        }
+                    }
+                }
+
+                foreach ($dnsservers as $dnsserver) {
+                    $graph .= ' DNS_SERVER' . $dnsserver->id .'[label="' . $dnsserver->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    if ($dnsserver->address_ip !== null) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($dnsserver->address_ip)) {
+                                $graph .= ' SUBNET' . $subnetwork->id . '->DNS_SERVER' . $dnsserver->id;
+                            }
+                        }
+                    }
+                }
+
+                foreach ($certificates as $certificate) {
+                    if ($certificate->logical_servers->count() > 0) {
+                        $graph .= ' CERT' . $certificate->id . '[label="' . $certificate->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/certificate.png') .'"]';
+                    }
+                    foreach ($certificate->logical_servers as $logical_server) {
+                        $graph .= ' LOGICAL_SERVER' . $logical_server->id . '->CERT'. $certificate->id;
+                    }
+                }
+
+                foreach ($routers as $router) {
+                    $graph .= ' R'. $router->id . ' [label="'. $router->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/router.png') . '"]';
+                    foreach ($subnetworks as $subnetwork) {
+                        if (($router->ip_addresses !== null) && ($subnetwork->address !== null)) {
+                            foreach (explode(',', $router->ip_addresses) as $address) {
+                                if ($subnetwork->contains($address)) {
+                                    $graph .= ' SUBNET' . $subnetwork->id . '->R' . $router->id;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach ($vlans as $vlan) {
+                    $graph .= ' VLAN' . $vlan->id . '[label="' . $vlan->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/vlan.png') . '"]';
+                }
+
+                $graph .= '}';
+
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
             }
-
-            foreach ($vlans as $vlan) {
-                $graph .= ' VLAN' . $vlan->id . '[label="' . $vlan->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/vlan.png') . '"]';
-            }
-
-            $graph .= '}';
-
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
 
             // =====================================
             if ($networks->count() > 0) {
@@ -1726,100 +1738,102 @@ class CartographyController extends Controller
             $lans = Lan::orderBy('name')->get();
 
             // Generate Graph
-            $graph = 'digraph  {';
-            foreach ($sites as $site) {
-                $graph .= ' S' . $site->id . '[label="'. $site->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/site.png') .'"]';
-            }
-            foreach ($buildings as $building) {
-                $graph .= ' B'. $building->id . '[label="' . $building->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/building.png') . '"]';
-                $graph .= ' S'. $building->site_id . '->B' . $building->id;
-                foreach ($building->roomBays as $bay) {
-                    $graph .= ' B'. $building->id . '->BAY' . $bay->id;
+            if ($request->has('graph')) {
+                $graph = 'digraph  {';
+                foreach ($sites as $site) {
+                    $graph .= ' S' . $site->id . '[label="'. $site->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/site.png') .'"]';
                 }
-            }
-            foreach ($bays as $bay) {
-                $graph .= ' BAY' . $bay->id . '[label="' . $bay->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/bay.png') . '"]';
-            }
-            foreach ($physicalServers as $pServer) {
-                $graph .= ' PSERVER' . $pServer->id . '[label="' . $pServer->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
-                if ($pServer->bay !== null) {
-                    $graph .= ' BAY' . $pServer->bay->id . '->PSERVER' . $pServer->id;
-                } elseif ($pServer->building !== null) {
-                    $graph .= ' B' . $pServer->building->id . '->PSERVER' . $pServer->id;
-                } elseif ($pServer->site !== null) {
-                    $graph .= ' S' . $pServer->site->id .'->PSERVER' . $pServer->id;
+                foreach ($buildings as $building) {
+                    $graph .= ' B'. $building->id . '[label="' . $building->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/building.png') . '"]';
+                    $graph .= ' S'. $building->site_id . '->B' . $building->id;
+                    foreach ($building->roomBays as $bay) {
+                        $graph .= ' B'. $building->id . '->BAY' . $bay->id;
+                    }
                 }
-            }
-            foreach ($workstations as $workstation) {
-                $graph .= ' W' . $workstation->id . '[label="' .$workstation->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/workstation.png') .'"]';
-                if ($workstation->building !== null) {
-                    $graph .= ' B' . $workstation->building->id . '->W' . $workstation->id;
-                } elseif ($workstation->site !== null) {
-                    $graph .= ' S' . $workstation->site->id . '->W' . $workstation->id;
+                foreach ($bays as $bay) {
+                    $graph .= ' BAY' . $bay->id . '[label="' . $bay->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/bay.png') . '"]';
                 }
-            }
-            foreach ($storageDevices as $storageDevice) {
-                $graph .= ' SD' . $storageDevice->id .'[label="' . $storageDevice->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/storage.png') . '"]';
-                if ($storageDevice->bay !== null) {
-                    $graph .= ' BAY' . $storageDevice->bay->id . '->SD' . $storageDevice->id;
-                } elseif ($storageDevice->building !== null) {
-                    $graph .= ' B' . $storageDevice->building->id . '->SD' . $storageDevice->id;
-                } elseif ($storageDevice->site !== null) {
-                    $graph .= ' S' . $storageDevice->site->id . '->SD' . $storageDevice->id;
+                foreach ($physicalServers as $pServer) {
+                    $graph .= ' PSERVER' . $pServer->id . '[label="' . $pServer->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    if ($pServer->bay !== null) {
+                        $graph .= ' BAY' . $pServer->bay->id . '->PSERVER' . $pServer->id;
+                    } elseif ($pServer->building !== null) {
+                        $graph .= ' B' . $pServer->building->id . '->PSERVER' . $pServer->id;
+                    } elseif ($pServer->site !== null) {
+                        $graph .= ' S' . $pServer->site->id .'->PSERVER' . $pServer->id;
+                    }
                 }
-            }
-            foreach ($peripherals as $peripheral) {
-                $graph .= ' PER' . $peripheral->id . '[label="' . $peripheral->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/peripheral.png') .'"]';
-                if ($peripheral->bay !== null) {
-                    $graph .= ' BAY' . $peripheral->bay->id .'->PER' . $peripheral->id;
-                } elseif ($peripheral->building !== null) {
-                    $graph .= ' B'. $peripheral->building->id . '->PER' . $peripheral->id;
-                } elseif ($peripheral->site !== null) {
-                    $graph .= ' S' . $peripheral->site->id . '->PER' . $peripheral->id;
+                foreach ($workstations as $workstation) {
+                    $graph .= ' W' . $workstation->id . '[label="' .$workstation->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/workstation.png') .'"]';
+                    if ($workstation->building !== null) {
+                        $graph .= ' B' . $workstation->building->id . '->W' . $workstation->id;
+                    } elseif ($workstation->site !== null) {
+                        $graph .= ' S' . $workstation->site->id . '->W' . $workstation->id;
+                    }
                 }
-            }
-            foreach ($phones as $phone) {
-                $graph .= ' PHONE' . $phone->id . '[label="' . $phone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/phone.png') .'"]';
-                if ($phone->building !== null) {
-                    $graph .= ' B' . $phone->building->id .'->PHONE' . $phone->id;
-                } elseif ($phone->site !== null) {
-                    $graph .= ' S' . $phone->site->id . '->PHONE' . $phone->id;
+                foreach ($storageDevices as $storageDevice) {
+                    $graph .= ' SD' . $storageDevice->id .'[label="' . $storageDevice->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/storage.png') . '"]';
+                    if ($storageDevice->bay !== null) {
+                        $graph .= ' BAY' . $storageDevice->bay->id . '->SD' . $storageDevice->id;
+                    } elseif ($storageDevice->building !== null) {
+                        $graph .= ' B' . $storageDevice->building->id . '->SD' . $storageDevice->id;
+                    } elseif ($storageDevice->site !== null) {
+                        $graph .= ' S' . $storageDevice->site->id . '->SD' . $storageDevice->id;
+                    }
                 }
-            }
-            foreach ($physicalSwitches as $switch) {
-                $graph .= ' SWITCH' . $switch->id . '[label="' . $switch->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/switch.png') .'"]';
-                if ($switch->bay !== null) {
-                    $graph .= ' BAY' . $switch->bay->id . '->SWITCH' . $switch->id;
-                } elseif ($switch->building !== null) {
-                    $graph .= ' B' . $switch->building->id . '->SWITCH'. $switch->id;
-                } elseif ($switch->site !== null) {
-                    $graph .= ' S' . $switch->site->id . '->SWITCH' . $switch->id;
+                foreach ($peripherals as $peripheral) {
+                    $graph .= ' PER' . $peripheral->id . '[label="' . $peripheral->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/peripheral.png') .'"]';
+                    if ($peripheral->bay !== null) {
+                        $graph .= ' BAY' . $peripheral->bay->id .'->PER' . $peripheral->id;
+                    } elseif ($peripheral->building !== null) {
+                        $graph .= ' B'. $peripheral->building->id . '->PER' . $peripheral->id;
+                    } elseif ($peripheral->site !== null) {
+                        $graph .= ' S' . $peripheral->site->id . '->PER' . $peripheral->id;
+                    }
                 }
-            }
-            foreach ($physicalRouters as $router) {
-                $graph .= ' ROUTER' . $router->id . '[label="' . $router->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/router.png') . '"]';
-                if ($router->bay !== null) {
-                    $graph .= ' BAY' . $router->bay->id . '->ROUTER' . $router->id;
-                } elseif ($router->building !== null) {
-                    $graph .= ' B' . $router->building->id . '->ROUTER' . $router->id;
-                } elseif ($router->site !== null) {
-                    $graph .= ' S' . $router->site->id . '->ROUTER' . $router->id;
+                foreach ($phones as $phone) {
+                    $graph .= ' PHONE' . $phone->id . '[label="' . $phone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/phone.png') .'"]';
+                    if ($phone->building !== null) {
+                        $graph .= ' B' . $phone->building->id .'->PHONE' . $phone->id;
+                    } elseif ($phone->site !== null) {
+                        $graph .= ' S' . $phone->site->id . '->PHONE' . $phone->id;
+                    }
                 }
-            }
-            foreach ($wifiTerminals as $wifiTerminal) {
-                $graph .= ' WIFI' . $wifiTerminal->id . '[label="' . $wifiTerminal->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/wifi.png') . '"]';
-                if ($wifiTerminal->building !== null) {
-                    $graph .= ' B' . $wifiTerminal->building->id . '->WIFI' . $wifiTerminal->id;
-                } elseif ($wifiTerminal->site !== null) {
-                    $graph .= ' S' . $wifiTerminal->site->id . '->WIFI' . $wifiTerminal->id;
+                foreach ($physicalSwitches as $switch) {
+                    $graph .= ' SWITCH' . $switch->id . '[label="' . $switch->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/switch.png') .'"]';
+                    if ($switch->bay !== null) {
+                        $graph .= ' BAY' . $switch->bay->id . '->SWITCH' . $switch->id;
+                    } elseif ($switch->building !== null) {
+                        $graph .= ' B' . $switch->building->id . '->SWITCH'. $switch->id;
+                    } elseif ($switch->site !== null) {
+                        $graph .= ' S' . $switch->site->id . '->SWITCH' . $switch->id;
+                    }
                 }
-            }
-            $graph .= '}';
+                foreach ($physicalRouters as $router) {
+                    $graph .= ' ROUTER' . $router->id . '[label="' . $router->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/router.png') . '"]';
+                    if ($router->bay !== null) {
+                        $graph .= ' BAY' . $router->bay->id . '->ROUTER' . $router->id;
+                    } elseif ($router->building !== null) {
+                        $graph .= ' B' . $router->building->id . '->ROUTER' . $router->id;
+                    } elseif ($router->site !== null) {
+                        $graph .= ' S' . $router->site->id . '->ROUTER' . $router->id;
+                    }
+                }
+                foreach ($wifiTerminals as $wifiTerminal) {
+                    $graph .= ' WIFI' . $wifiTerminal->id . '[label="' . $wifiTerminal->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/wifi.png') . '"]';
+                    if ($wifiTerminal->building !== null) {
+                        $graph .= ' B' . $wifiTerminal->building->id . '->WIFI' . $wifiTerminal->id;
+                    } elseif ($wifiTerminal->site !== null) {
+                        $graph .= ' S' . $wifiTerminal->site->id . '->WIFI' . $wifiTerminal->id;
+                    }
+                }
+                $graph .= '}';
 
-            // IMAGE
-            $image_paths[] = $image_path = $this->generateGraphImage($graph);
-            Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
-            $section->addTextBreak(1);
+                // IMAGE
+                $image_paths[] = $image_path = $this->generateGraphImage($graph);
+                Html::addHtml($section, '<table style="width:100%"><tr><td><img src="'.$image_path.'" width="'. min(600, getimagesize($image_path)[0] / 2) . '"/></td></tr></table>');
+                $section->addTextBreak(1);
+            }
 
             // =====================================
             if ($sites->count() > 0) {

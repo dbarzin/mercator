@@ -13,35 +13,55 @@
                   <form method="POST" action="{{ route('admin.report.cartography') }}" enctype="multipart/form-data" target="_new">
                     @method('PUT')
                     @csrf
-                    <div class="form-group">
-                      <label for="title">{{ trans("cruds.report.cartography.granularity") }}</label>
-                      <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}" name="granularity" id="granularity">
-                          <option value="1" {{ auth()->user()->granularity == 1 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_1") }}</option>
-                          <option value="2" {{ auth()->user()->granularity == 2 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_2") }}</option>
-                          <option value="3" {{ auth()->user()->granularity == 3 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_3") }}</option>
-                      </select>
-                      <span class="help-block">{{ trans("cruds.report.cartography.granularity_helper") }}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="vues">{{ trans("cruds.report.cartography.views") }}</label>
-                        <div style="padding-bottom: 4px">
-                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>
-                        <select class="form-control select2 {{ $errors->has('vues') ? 'is-invalid' : '' }}" name="vues[]" id="vues" multiple>
-                                <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
-                                <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
-                                <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
-                                <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
-                                <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
-                                <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
-                        </select>
-                        @if($errors->has('processes'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('processes') }}
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="form-group">
+                                <label for="title">{{ trans("cruds.report.cartography.granularity") }}</label>
+                                <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}" name="granularity" id="granularity">
+                                    <option value="1" {{ auth()->user()->granularity == 1 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_1") }}</option>
+                                    <option value="2" {{ auth()->user()->granularity == 2 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_2") }}</option>
+                                    <option value="3" {{ auth()->user()->granularity == 3 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_3") }}</option>
+                                </select>
+                                <span class="help-block">{{ trans("cruds.report.cartography.granularity_helper") }}</span>
                             </div>
-                        @endif
-                        <span class="help-block">{{ trans("cruds.report.cartography.views_helper") }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="vues">{{ trans("cruds.report.cartography.views") }}</label>
+                                <div style="padding-bottom: 4px">
+                                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                </div>
+                                <select class="form-control select2 {{ $errors->has('vues') ? 'is-invalid' : '' }}" name="vues[]" id="vues" multiple>
+                                        <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
+                                        <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
+                                        <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
+                                        <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
+                                        <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
+                                        <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                </select>
+                                @if($errors->has('processes'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('processes') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans("cruds.report.cartography.views_helper") }}</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="vues">&nbsp;</label>
+                                <div style="padding-bottom: 12px">
+                                    <span class="btn btn-xs select-all" style="border-radius: 0"></span>
+                                </div>
+                                <div class="form-check form-switch">
+                                  <input class="form-check-input" type="checkbox" id="graph" name="graph">
+                                  <label class="form-check-label" for="graph">{{ trans("cruds.report.cartography.graph_helper") }}</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -69,7 +89,7 @@
                         <a href="{{ route('admin.report.entities') }}" target="_new">{{ trans("cruds.report.lists.entities") }}</a>
                         <br>
                         {{ trans("cruds.report.lists.entities_helper") }}
-                        <br>                    
+                        <br>
                         <br>
                     </li>
                     <li>
@@ -92,14 +112,14 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.report.vlans') }}" target="_new">{{ trans("cruds.report.lists.vlans") }}</a>                      
+                        <a href="{{ route('admin.report.vlans') }}" target="_new">{{ trans("cruds.report.lists.vlans") }}</a>
                         <br>
                         {{ trans("cruds.report.lists.vlans_helper") }}
                         <br><br>
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.report.logicalServerConfigs') }}" target="_new">{{ trans("cruds.report.lists.logical_server_configurations") }}</a>                      
+                        <a href="{{ route('admin.report.logicalServerConfigs') }}" target="_new">{{ trans("cruds.report.lists.logical_server_configurations") }}</a>
                         <br>
                         {{ trans("cruds.report.lists.logical_server_configurations_helper") }}
                         <br><br>
@@ -158,14 +178,14 @@
                             <a href="/admin/report/activityReport" target="_new">{{ trans("cruds.report.lists.register_report") }}</a>
                             <br>
                             {{ trans("cruds.report.lists.register_report") }}
-                            <br>                    
+                            <br>
                             <br>
                         </li>
                         <li>
                             <a href="/admin/report/activityList" target="_new">{{ trans("cruds.report.lists.register_list") }}</a>
                             <br>
                             {{ trans("cruds.report.lists.register_list_helper") }}
-                            <br>                    
+                            <br>
                             <br>
                         </li>
                     </ul>
@@ -183,7 +203,7 @@
                             <a href="/admin/audit/maturity" target="_new">{{ trans("cruds.report.lists.maturity") }}</a>
                             <br>
                             {{ trans("cruds.report.lists.maturity_helper") }}
-                            <br>                    
+                            <br>
                             <br>
                         </li>
                     <li>
