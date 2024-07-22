@@ -79,17 +79,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#droits-dacces">Droits d'accès</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-vues">Liaison entre les vues</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple:</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#etape-1-assurez-vous-davoir-lapplication_id-pour-les-applications-que-vous-souhaitez-lier">Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#etape-2-liez-le-processus-aux-applications-soit-avec-une-mise-a-jour-soit-avec-un-enregistrement-nous-pouvons-ajouter">Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</a>
-    </li>
-        </ul>
-    </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#liaison-entre-les-objets">Liaison entre les objets</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#exemples">Exemples</a>
         <ul>
@@ -275,11 +265,11 @@ Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder
 accédés par l'API.</p>
 <p>Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.</p>
-<h3 id="liaison-entre-les-vues">Liaison entre les vues</h3>
-<p>Les différentes vues de l'API sont interconnectées pour fournir une vue complète et intégrée de la cartographie. Certaines vues (celles qui acceptent d'autres attributs) ont des champs supplémentaires pour se connecter à d'autres vues. Par exemple, nous pouvons lier la vue Processus à la vue Application.</p>
-<h4 id="exemple">Exemple:</h4>
-<p>Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :</p>
-<h5 id="etape-1-assurez-vous-davoir-lapplication_id-pour-les-applications-que-vous-souhaitez-lier">Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</h5>
+<h3 id="liaison-entre-les-objets">Liaison entre les objets</h3>
+<p>Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :</p>
+<ul>
+<li>Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.</li>
+</ul>
 <pre><code>{
   &quot;id&quot;: 201,
   &quot;name&quot;: &quot;app1&quot;,
@@ -291,7 +281,9 @@ l'entête "Authorization" de la requête de l'API.</p>
   &quot;description&quot;: &quot;desc2&quot;
 }
 </code></pre>
-<h5 id="etape-2-liez-le-processus-aux-applications-soit-avec-une-mise-a-jour-soit-avec-un-enregistrement-nous-pouvons-ajouter">Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</h5>
+<ul>
+<li>Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :</li>
+</ul>
 <pre><code>{
   &quot;id&quot;: 101,
   &quot;name&quot;: &quot;processus&quot;,
