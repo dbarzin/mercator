@@ -79,17 +79,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#access-rights">Access rights</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#linking-between-views">Linking Between Views</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#example">Example:</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#step-1-ensure-you-have-the-application_id-for-the-applications-you-want-to-link">Step 1: Ensure you have the application_id for the applications you want to link.</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#step-2-link-the-process-to-the-applications-either-with-an-update-or-a-store-we-can-add">Step 2: Link the process to the applications. Either with an update or a store, we can add:</a>
-    </li>
-        </ul>
-    </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#linking-objects">Linking objects</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#php">PHP</a>
         <ul>
@@ -275,11 +265,11 @@ This user must have a role in Mercator that allows him/her to access/modify the 
 objects accessed via the API.</p>
 <p>When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
 header of the API request.</p>
-<h3 id="linking-between-views">Linking Between Views</h3>
-<p>The different views of the API are interconnected to provide a comprehensive and integrated view of the cartography. Some views (the ones that accept other attributes) have extra fields to connect to other views. For example, we can link the Process View to the Application View.</p>
-<h4 id="example">Example:</h4>
-<p>Suppose we have a "process" that uses two applications "app1" and "app2". To do so, we follow these steps:</p>
-<h5 id="step-1-ensure-you-have-the-application_id-for-the-applications-you-want-to-link">Step 1: Ensure you have the application_id for the applications you want to link.</h5>
+<h3 id="linking-objects">Linking objects</h3>
+<p>Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a ‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:</p>
+<ul>
+<li>Step 1: Ensure you have the application_id for the applications you want to link.</li>
+</ul>
 <pre><code>{
   &quot;id&quot;: 201,
   &quot;name&quot;: &quot;app1&quot;,
@@ -291,7 +281,9 @@ header of the API request.</p>
   &quot;description&quot;: &quot;desc2&quot;
 }
 </code></pre>
-<h5 id="step-2-link-the-process-to-the-applications-either-with-an-update-or-a-store-we-can-add">Step 2: Link the process to the applications. Either with an update or a store, we can add:</h5>
+<ul>
+<li>Step 2: Link the process to the applications. Either with an update or a store, we can add:</li>
+</ul>
 <pre><code>{
   &quot;id&quot;: 101,
   &quot;name&quot;: &quot;process&quot;,

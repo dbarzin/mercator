@@ -118,13 +118,11 @@ objects accessed via the API.
 When authentication is successful, the API sends an "access_token", which must be passed in the "Authorization" header.
 header of the API request.
 
-### Linking Between Views
-The different views of the API are interconnected to provide a comprehensive and integrated view of the cartography. Some views (the ones that accept other attributes) have extra fields to connect to other views. For example, we can link the Process View to the Application View.
+### Linking objects
 
-#### Example:
-Suppose we have a "process" that uses two applications "app1" and "app2". To do so, we follow these steps:
+Mapping objects can refer to other objects. For example, we can link a process to an application. Suppose we have a ‘process’ that uses two applications, ‘app1’ and ‘app2’. To do this, we follow these steps:
 
-##### Step 1: Ensure you have the application_id for the applications you want to link.
+- Step 1: Ensure you have the application_id for the applications you want to link.
 
 ```
 {
@@ -139,7 +137,7 @@ Suppose we have a "process" that uses two applications "app1" and "app2". To do 
 }
 ```
 
-##### Step 2: Link the process to the applications. Either with an update or a store, we can add:
+- Step 2: Link the process to the applications. Either with an update or a store, we can add:
 ```
 {
   "id": 101,

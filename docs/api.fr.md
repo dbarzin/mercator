@@ -117,14 +117,11 @@ accédés par l'API.
 Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
 
-### Liaison entre les vues
-Les différentes vues de l'API sont interconnectées pour fournir une vue complète et intégrée de la cartographie. Certaines vues (celles qui acceptent d'autres attributs) ont des champs supplémentaires pour se connecter à d'autres vues. Par exemple, nous pouvons lier la vue Processus à la vue Application.
+### Liaison entre les objets
 
+Les objets de la cartographie peuvent faire référence à d'autres objets. Par exemple, nous pouvons lier une processus à une application. Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :
 
-#### Exemple:
-Supposons que nous ayons un "processus" qui utilise deux applications "app1" et "app2". Pour ce faire, nous suivons ces étapes :
-
-##### Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.
+- Étape 1 : Assurez-vous d'avoir l'application_id pour les applications que vous souhaitez lier.
 
 ```
 {
@@ -139,7 +136,7 @@ Supposons que nous ayons un "processus" qui utilise deux applications "app1" et 
 }
 ```
 
-##### Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :
+- Étape 2 : Liez le processus aux applications. Soit avec une mise à jour, soit avec un enregistrement, nous pouvons ajouter :
 ```
 {
   "id": 101,
