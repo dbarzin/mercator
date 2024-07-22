@@ -132,9 +132,9 @@
                                 <span class="badge badge-info">{{ $attribute }}</span>
                                 @endforeach
                                 @if ($relation->active==false)
-                                    <span class="badge badge-info">{{ _('global.old') }}</span>
+                                    <span class="badge badge-info">{{ trans('global.old') }}</span>
                                 @else
-                                    <span class="badge badge-info">{{ _('global.active') }}</span>
+                                    <span class="badge badge-info">{{ trans('global.active') }}</span>
                                 @endif
                             </td>
                             <td>
