@@ -7,7 +7,7 @@
 - Disk : 10G
 - VCPU 2
 
-## Installation 
+## Installation
 
 Update the linux distribution
 
@@ -36,7 +36,7 @@ Clone the project from Github
 ## Composer
 
 Install packages with composer :
-    
+
     cd /var/www/mercator
     composer update
 
@@ -113,7 +113,7 @@ To import the test database (optional)
 or (Postgres)
 
    psql mercator < pg_mercator_data.sql
-   
+
 ## Import the CPE Database
 
 Decompress CPE databse
@@ -204,7 +204,7 @@ Modify .env file, and uncomment LDAP configuration :
 
 Find more complete documentation on LDAP configuration [here](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
 
-## KeyCloak Configuration
+## KeyCloak Configuration (optional)
 
 To configure Keycloak, follow these steps:
 
@@ -212,7 +212,7 @@ To configure Keycloak, follow these steps:
 - Uncomment and modify the Keycloak configuration settings as follows:
 
 ```
-KEYCLOAK = enable 
+KEYCLOAK = enable
 KEYCLOAK_CLIENT_ID= # Client Name (on Keycloak)
 KEYCLOAK_CLIENT_SECRET=  # Client Secret
 KEYCLOAK_REDIRECT_URI=<Mercator IP Address>/login/keycloak/callback
@@ -264,7 +264,7 @@ Finally, restart the Apache service to activate the changes:
 
 Activate Apache SSL module
 
-    sudo a2enmod ssl 
+    sudo a2enmod ssl
 
 Here is the configuration file for HTTPS
 
@@ -287,7 +287,7 @@ Here is the configuration file for HTTPS
 </VirtualHost>
 ```
 
-To force HTTPS redirection you have to set this parameter in .env 
+To force HTTPS redirection you have to set this parameter in .env
 
     APP_ENV=production
 
@@ -433,5 +433,3 @@ or (Postgres)
     psql mercator < backup_mercator_users.sql
 
 All migration issues should be resolved.
-
-
