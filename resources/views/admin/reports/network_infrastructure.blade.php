@@ -934,15 +934,23 @@
 
 <script>
 <?php
+    /*
     $tableau20 = array (
              "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78",
              "#2CA02C", "#98DF8A", "#D62728", "#FF9896",
              "#9467BD", "#C5B0D5", "#8C5694", "#C49C94",
              "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7",
              "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5");
+    */
+    // Lighter colors
+    $tableau20 = array (
+             "#99cbed", "#dfe9f6", "#ffcc9f", "#ffe4c9",
+             "#9fe59f", "#d6f2d0", "#efa8a8", "#ffd6d5",
+             "#d4c2e5", "#e8dfee", "#d3b9d6", "#e7d7d4",
+             "#f4c9e7", "#fce2ed", "#cccccc", "#e9e9e9",
+             "#eded9e", "#f1f1d1", "#9aecf4", "#d8f0f5");
     $idColor = 0;
 ?>
-
 
 let dotSrc=`
 digraph  {
