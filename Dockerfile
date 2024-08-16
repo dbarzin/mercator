@@ -64,6 +64,9 @@ RUN php artisan vendor:publish --all
 # Create database folder
 RUN mkdir sql
 
+# Create the SQLite database file
+RUN touch sql/db.sqlite
+
 # copy environement varaibles file
 RUN cp .env.sqlite .env
 

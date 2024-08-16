@@ -83,7 +83,7 @@ docker pull ghcr.io/dbarzin/mercator:latest
 Then you can run an ephemeral local instance in development mode (i.e. http):
 
 ```shell
-docker run -it --rm --name mercator -e APP_ENV=development -p "127.0.0.1:8000":80 ghcr.io/dbarzin/mercator:latest
+docker run -it --rm --name mercator -e USE_DEMO_DATA=1 -p "127.0.0.1:8000":80 ghcr.io/dbarzin/mercator:latest
 ```
 
 By default it uses an SQLite backend. If you want to make data persistent:
