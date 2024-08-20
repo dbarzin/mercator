@@ -982,6 +982,12 @@ digraph  {
                 WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
             @endforeach
 
+            @foreach($building->buildingPeripherals as $peripheral)
+                @if ($peripheral->bay_id===null)
+                    PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+                @endif
+            @endforeach
+
             @foreach($building->roomBays as $bay)
             subgraph BAY_{{ $bay->id }} {
                 cluster=true;
