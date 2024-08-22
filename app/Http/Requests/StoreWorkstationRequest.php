@@ -25,7 +25,7 @@ class StoreWorkstationRequest extends FormRequest
                 'required',
                 'unique:workstations,name,NULL,id,deleted_at,NULL',
             ],
-            'ip_addresses' => [
+            'address_ip' => [
                 'nullable',
                 new IPList(),
             ],

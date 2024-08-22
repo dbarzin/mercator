@@ -852,6 +852,8 @@ return [
     'peripheral' => [
         'description' => 'Physical component connected to a workstation in order to add new functionalities (eg: keyboard, mouse, printer, scanner, etc.).',
         'fields' => [
+            'address_ip' => 'IP Adress',
+            'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'bay' => 'Bay',
             'bay_helper' => '',
             'building' => 'Building / Room',

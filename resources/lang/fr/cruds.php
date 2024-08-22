@@ -859,6 +859,8 @@ return [
     'peripheral' => [
         'description' => 'Composant physique connecté à un poste de travail aﬁn d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.).',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
             'bay_helper' => '',
             'building' => 'Bâtiment / Salle',

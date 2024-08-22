@@ -146,6 +146,25 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.peripheral.fields.address_ip') }}
+                    </th>
+                    <td>
+                        {{ $peripheral->address_ip }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->

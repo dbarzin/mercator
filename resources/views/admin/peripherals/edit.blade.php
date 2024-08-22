@@ -83,7 +83,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans("cruds.menu.ecosystem.title_short") }}        
+        {{ trans("cruds.menu.ecosystem.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -129,7 +129,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans("cruds.menu.application.title_short") }}        
+        {{ trans("cruds.menu.application.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -209,63 +209,84 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="address_ip">{{ trans('cruds.peripheral.fields.address_ip') }}</label>
+                    <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip', $peripheral->address_ip) }}">
+                    @if($errors->has('address_ip'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('address_ip') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.peripheral.fields.address_ip_helper') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="card-header">
         {{ trans("cruds.menu.physical_infrastructure.title_short") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="site_id">{{ trans('cruds.peripheral.fields.site') }}</label>
-                        <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
-                            <option value="">{{ trans('global.pleaseSelect') }}</option>
-                            @foreach($sites as $id => $site)
-                                <option value="{{ $id }}" {{ ($peripheral->site ? $peripheral->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('site'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('site') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.peripheral.fields.site_helper') }}</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="building_id">{{ trans('cruds.peripheral.fields.building') }}</label>
-                        <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
-                            <option value="">{{ trans('global.pleaseSelect') }}</option>
-                            @foreach($buildings as $id => $building)
-                                <option value="{{ $id }}" {{ ($peripheral->building ? $peripheral->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('building'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('building') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.peripheral.fields.building_helper') }}</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="bay_id">{{ trans('cruds.peripheral.fields.bay') }}</label>
-                        <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
-                            <option value="">{{ trans('global.pleaseSelect') }}</option>
-                            @foreach($bays as $id => $bay)
-                                <option value="{{ $id }}" {{ ($peripheral->bay ? $peripheral->bay->id : old('bay_id')) == $id ? 'selected' : '' }}>{{ $bay }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('bay'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('bay') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.peripheral.fields.bay_helper') }}</span>
-                    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="site_id">{{ trans('cruds.peripheral.fields.site') }}</label>
+                    <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
+                        <option value="">{{ trans('global.pleaseSelect') }}</option>
+                        @foreach($sites as $id => $site)
+                            <option value="{{ $id }}" {{ ($peripheral->site ? $peripheral->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('site'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('site') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.peripheral.fields.site_helper') }}</span>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="building_id">{{ trans('cruds.peripheral.fields.building') }}</label>
+                    <select class="form-control select2 {{ $errors->has('building') ? 'is-invalid' : '' }}" name="building_id" id="building_id">
+                        <option value="">{{ trans('global.pleaseSelect') }}</option>
+                        @foreach($buildings as $id => $building)
+                            <option value="{{ $id }}" {{ ($peripheral->building ? $peripheral->building->id : old('building_id')) == $id ? 'selected' : '' }}>{{ $building }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('building'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('building') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.peripheral.fields.building_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="bay_id">{{ trans('cruds.peripheral.fields.bay') }}</label>
+                    <select class="form-control select2 {{ $errors->has('bay') ? 'is-invalid' : '' }}" name="bay_id" id="bay_id">
+                        <option value="">{{ trans('global.pleaseSelect') }}</option>
+                        @foreach($bays as $id => $bay)
+                            <option value="{{ $id }}" {{ ($peripheral->bay ? $peripheral->bay->id : old('bay_id')) == $id ? 'selected' : '' }}>{{ $bay }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('bay'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('bay') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.peripheral.fields.bay_helper') }}</span>
+                </div>
+            </div>
+        </div>
 
         </div>
     </div>
@@ -275,7 +296,7 @@
             {{ trans('global.save') }}
         </button>
     </div>
-    
+
 </form>
 @endsection
 
@@ -296,7 +317,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 
     // CPE
@@ -426,12 +447,12 @@ $(document).ready(function () {
                         e.preventDefault();
                         let vendor = $(this).data('vendor');
                         $("#vendor-selector").append('<option>'+vendor+'</option>');
-                        $("#vendor-selector").val(vendor);                        
+                        $("#vendor-selector").val(vendor);
                         let product = $(this).data('product');
                         $("#product-selector").append('<option>'+product+'</option>');
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
-                        $("#version-selector").val(null);                        
+                        $("#version-selector").val(null);
                         swal.close();
                     })
                 },
@@ -439,7 +460,7 @@ $(document).ready(function () {
                 showCancelButton: true,
                 customClass: {
                     container:   {
-                        'max-height': "6em", 
+                        'max-height': "6em",
                         'overflow-y': 'scroll',
                         'width': '100%',
                     }
