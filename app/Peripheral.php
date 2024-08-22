@@ -42,6 +42,7 @@ class Peripheral extends Model
         'vendor',
         'product',
         'version',
+        'address_ip',
         'created_at',
         'updated_at',
         'deleted_at',

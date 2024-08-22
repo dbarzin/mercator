@@ -24,7 +24,7 @@
                                     {{ trans("cruds.site.title_singular") }} :
                                     <select name="site" onchange="this.form.building.value='';this.form.submit()">
                                         <option value="">-- All sites --</option>
-                                        @foreach($all_sites as $id => $name)                                            
+                                        @foreach($all_sites as $id => $name)
                                             <option value="{{$id}}" {{ Session::get('site')==$id ? "selected" : "" }}>{{ $name }}</option>
                                         @endforeach
                                     </select>
@@ -34,7 +34,7 @@
                                     <select name="building" onchange="this.form.submit()">
                                         <option value="">-- All buildings --</option>
                                         @if ($all_buildings!=null)
-                                            @foreach($all_buildings as $id => $name)                                            
+                                            @foreach($all_buildings as $id => $name)
                                                 <option value="{{$id}}" {{ Session::get('building')==$id ? "selected" : "" }}>{{ $name }}</option>
                                             @endforeach
                                         @endif
@@ -69,7 +69,7 @@
                                     <tr>
                                         <td width="20%">
                                             {{ trans("cruds.site.fields.description") }}
-                                        </td>                          
+                                        </td>
                                     <td>
                                         {!! $site->description !!}
                                     </td>
@@ -79,19 +79,19 @@
                                         {{ trans("cruds.site.fields.buildings") }}
                                     </th>
                                     <td>
-                                        @foreach($site->siteBuildings as $building) 
+                                        @foreach($site->siteBuildings as $building)
                                             <a href="#BUILDING{{$building->id}}">{{$building->name}}</a>
                                             @if (!$loop->last)
                                                 ,
                                             @endif
                                         @endforeach
                                     </td>
-                                </tr>                                
+                                </tr>
                             </tbody>
                     </table>
                 </div>
             </div>
-            @endforeach            
+            @endforeach
 
             </div>
             </div>
@@ -109,7 +109,7 @@
                         @foreach($buildings as $building)
                       <div class="row">
                         <div class="col-sm-6">
-                            <table id="BUILDING{{ $building->id }}" class="table table-bordered table-striped table-hover">                                
+                            <table id="BUILDING{{ $building->id }}" class="table table-bordered table-striped table-hover">
                                 <thead >
                                 <th colspan="2">
                                     <a href="/admin/buildings/{{ $building->id }}">{{ $building->name }}</a>
@@ -122,20 +122,20 @@
                                     </tr>
                                     <tr>
                                         <th>{{ trans("cruds.building.fields.bays") }}</th>
-                                    <td>         
-                                        @foreach($building->roomBays as $bay) 
+                                    <td>
+                                        @foreach($building->roomBays as $bay)
                                             <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif
                                         @endforeach
                                     </td>
-                                </tr>                        
+                                </tr>
                                 </tbody>
-                        </table>                        
+                        </table>
                     </div>
                 </div>
-                @endforeach                    
+                @endforeach
                 </div>
             </div>
             @endif
@@ -167,12 +167,12 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.physical_servers") }}</th>
                                     <td>
-                                    @foreach($bay->bayPhysicalServers as $physicalServer) 
+                                    @foreach($bay->bayPhysicalServers as $physicalServer)
                                         <a href="#PSERVER{{$physicalServer->id}}">{{ $physicalServer->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
@@ -180,12 +180,12 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.physical_routers") }}</th>
                                     <td>
-                                    @foreach($bay->bayPhysicalRouters as $physicalRouter) 
+                                    @foreach($bay->bayPhysicalRouters as $physicalRouter)
                                         <a href="#ROUTER{{$physicalRouter->id}}">{{ $physicalRouter->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
@@ -194,12 +194,12 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.physical_switches") }}</th>
                                     <td>
-                                    @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch) 
+                                    @foreach($bay->bayPhysicalSwitches as $bayPhysicalSwitch)
                                         <a href="#SWITCH{{$bayPhysicalSwitch->id}}">{{ $bayPhysicalSwitch->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
@@ -208,12 +208,12 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.storage_devices") }}</th>
                                     <td>
-                                    @foreach($bay->bayStorageDevices as $bayStorageDevice) 
+                                    @foreach($bay->bayStorageDevices as $bayStorageDevice)
                                         <a href="#STORAGEDEVICE{{$bayStorageDevice->id}}">{{ $bayStorageDevice->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
@@ -222,12 +222,12 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.physical_security_devices") }}</th>
                                     <td>
-                                    @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice) 
+                                    @foreach($bay->bayPhysicalSecurityDevices as $physicalSecurityDevice)
                                         <a href="#PSD{{$physicalSecurityDevice->id}}">{{ $physicalSecurityDevice->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
@@ -236,18 +236,18 @@
                                 <tr>
                                     <th>{{ trans("cruds.bay.fields.peripherals") }}</th>
                                     <td>
-                                    @foreach($bay->bayPeripherals as $peripheral) 
+                                    @foreach($bay->bayPeripherals as $peripheral)
                                         <a href="#PERIPHERAL{{$peripheral->id}}">{{ $peripheral->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
-                                    @endforeach                                        
+                                    @endforeach
                                     </td>
                                 </tr>
                                 @endif
 
                             </tbody>
-                        </table>                                
+                        </table>
                     </div>
                 </div>
                  @endforeach
@@ -290,13 +290,13 @@
                                     <th>{{ trans("cruds.physicalServer.fields.site") }}</th>
                                     <td>
                                         @if ($pserver->site!=null)
-                                            <a href="#SITE{{$pserver->site->id}}">{{ $pserver->site->name }}</a> 
+                                            <a href="#SITE{{$pserver->site->id}}">{{ $pserver->site->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>{{ trans("cruds.physicalServer.fields.building") }}</th>
-                                    <td>                                        
+                                    <td>
                                         @if ($pserver->building!=null)
                                             <a href="#BUILDING{{ $pserver->building->id }}">{{ $pserver->building->name }}</a>
                                         @endif
@@ -336,7 +336,7 @@
             @endcan
 
             @can('workstation_access')
-            @if ((auth()->user()->granularity>=2)&&($workstations->count()>0))
+            @if ($workstations->count()>0)
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.workstation.title") }}
@@ -365,11 +365,11 @@
                                     <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                     <td>
                                         @if ($workstation->site!=null)
-                                            <a href="#SITE{{$workstation->site->id}}">{{ $workstation->site->name }}</a> 
+                                            <a href="#SITE{{$workstation->site->id}}">{{ $workstation->site->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>   
+                                <tr>
                                     <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                     <td>
                                         @if ($workstation->building!=null)
@@ -413,7 +413,7 @@
                                     <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
                                     <td>
                                         @if ($storageDevice->site!=null)
-                                            <a href="#SITE{{$storageDevice->site->id}}">{{ $storageDevice->site->name }}</a> 
+                                            <a href="#SITE{{$storageDevice->site->id}}">{{ $storageDevice->site->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -471,14 +471,14 @@
                                 </tr>
                                 <tr>
                                     <th>{{ trans("cruds.peripheral.fields.responsible") }}</th>
-                                    <td>{{ $peripheral->responsible }}</td>                                    
+                                    <td>{{ $peripheral->responsible }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                     <td>
                                         @if ($peripheral->site!=null)
                                             <a href="#SITE{{ $peripheral->site->id }}">{{ $peripheral->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -486,7 +486,7 @@
                                     <td>
                                         @if ($peripheral->building!=null)
                                             <a href="#BUILDING{{ $peripheral->building->id }}">{{ $peripheral->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -494,7 +494,7 @@
                                     <td>
                                         @if ($peripheral->bay!=null)
                                             <a href="#BAY{{ $peripheral->bay->id }}">{{ $peripheral->bay->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -538,7 +538,7 @@
                                     <td>
                                         @if ($phone->site!=null)
                                             <a href="#SITE{{ $phone->site->id }}">{{ $phone->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -546,7 +546,7 @@
                                     <td>
                                         @if ($phone->building!=null)
                                             <a href="#BUILDING{{ $phone->building->id }}">{{ $phone->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -590,7 +590,7 @@
                                     <td>
                                         @if ($switch->site!=null)
                                             <a href="#SITE{{ $switch->site->id }}">{{ $switch->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -598,7 +598,7 @@
                                     <td>
                                         @if ($switch->building!=null)
                                             <a href="#BUILDING{{ $switch->building->id }}">{{ $switch->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -606,7 +606,7 @@
                                     <td>
                                         @if ($switch->bay!=null)
                                             <a href="#BAY{{ $switch->bay->id }}">{{ $switch->bay->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -650,7 +650,7 @@
                                     <td>
                                         @if ($router->site!=null)
                                             <a href="#SITE{{ $router->site->id }}">{{ $router->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -658,7 +658,7 @@
                                     <td>
                                         @if ($router->building!=null)
                                             <a href="#BUILDING{{ $router->building->id }}">{{ $router->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -666,7 +666,7 @@
                                     <td>
                                         @if ($router->bay!=null)
                                             <a href="#BAY{{ $router->bay->id }}">{{ $router->bay->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -710,7 +710,7 @@
                                     <td>
                                         @if ($wifiTerminal->site!=null)
                                             <a href="#SITE{{ $wifiTerminal->site->id }}">{{ $wifiTerminal->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -718,7 +718,7 @@
                                     <td>
                                         @if ($wifiTerminal->building!=null)
                                             <a href="#BUILDING{{ $wifiTerminal->building->id }}">{{ $wifiTerminal->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -735,7 +735,7 @@
             @if ($physicalSecurityDevices->count()>0)
             <div class="card">
                 <div class="card-header">
-                    {{ trans("cruds.physicalSecurityDevice.title") }}                    
+                    {{ trans("cruds.physicalSecurityDevice.title") }}
                 </div>
                 <div class="card-body">
                     <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
@@ -762,7 +762,7 @@
                                     <td>
                                         @if ($physicalSecurityDevice->site!=null)
                                             <a href="#SITE{{ $physicalSecurityDevice->site->id }}">{{ $physicalSecurityDevice->site->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -770,7 +770,7 @@
                                     <td>
                                         @if ($physicalSecurityDevice->building!=null)
                                             <a href="#BUILDING{{ $physicalSecurityDevice->building->id }}">{{ $physicalSecurityDevice->building->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -778,7 +778,7 @@
                                     <td>
                                         @if ($physicalSecurityDevice->bay!=null)
                                             <a href="#BAY{{ $physicalSecurityDevice->bay->id }}">{{ $physicalSecurityDevice->bay->name }}</a><br>
-                                        @endif                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -807,15 +807,15 @@
 let dotSrc=`
 digraph  {
     @can('site_access')
-    @foreach($sites as $site) 
+    @foreach($sites as $site)
         S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/site.png" href="#SITE{{$site->id}}"]
     @endforEach
     @endcan
     @can('building_access')
-    @foreach($buildings as $building) 
+    @foreach($buildings as $building)
         B{{ $building->id }} [label="{{ $building->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/building.png" href="#BUILDING{{$building->id}}"]
-        S{{ $building->site_id }} -> B{{ $building->id }} 
-        @foreach($building->roomBays as $bay) 
+        S{{ $building->site_id }} -> B{{ $building->id }}
+        @foreach($building->roomBays as $bay)
             B{{ $building->id }} -> BAY{{ $bay->id }}
         @endforeach
         @can('workstation_access')
@@ -823,7 +823,7 @@ digraph  {
                 WG{{ $building->buildingWorkstations()->first()->id }} [label="{{ $building->buildingWorkstations()->count() }} {{ trans("cruds.workstation.title")}}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
                 B{{ $building->id }} -> WG{{ $building->buildingWorkstations()->first()->id }}
             @else
-                @foreach($building->buildingWorkstations as $workstation) 
+                @foreach($building->buildingWorkstations as $workstation)
                    W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
                    B{{ $building->id }} -> W{{ $workstation->id }}
                 @endforEach
@@ -832,12 +832,12 @@ digraph  {
     @endforEach
     @endcan
     @can('bay_access')
-    @foreach($bays as $bay) 
+    @foreach($bays as $bay)
         BAY{{ $bay->id }} [label="{{ $bay->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/bay.png" href="#BAY{{$bay->id}}"]
     @endforeach
     @endcan
     @can('physical_server_access')
-    @foreach($physicalServers as $pServer) 
+    @foreach($physicalServers as $pServer)
         PSERVER{{ $pServer->id }} [label="{{ $pServer->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/server.png" href="#PSERVER{{$pServer->id}}"]
         @if ($pServer->bay!=null)
              BAY{{ $pServer->bay->id }} -> PSERVER{{ $pServer->id }}
@@ -849,7 +849,7 @@ digraph  {
     @endforeach
     @endcan
     @can('storage_device_access')
-    @foreach($storageDevices as $storageDevice) 
+    @foreach($storageDevices as $storageDevice)
         SD{{ $storageDevice->id }} [label="{{ $storageDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/storage.png" href="#STORAGEDEVICE{{$storageDevice->id}}"]
         @if ($storageDevice->bay!=null)
              BAY{{ $storageDevice->bay->id }} -> SD{{ $storageDevice->id }}
@@ -861,7 +861,7 @@ digraph  {
     @endforeach
     @endcan
     @can('peripheral_access')
-    @foreach($peripherals as $peripheral) 
+    @foreach($peripherals as $peripheral)
         PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
         @if ($peripheral->bay!=null)
              BAY{{ $peripheral->bay->id }} -> PER{{ $peripheral->id }}
@@ -873,7 +873,7 @@ digraph  {
     @endforeach
     @endcan
     @can('phone_access')
-    @foreach($phones as $phone) 
+    @foreach($phones as $phone)
         PHONE{{ $phone->id }} [label="{{ $phone->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/phone.png" href="#PHONE{{$phone->id}}"]
         @if ($phone->building!=null)
              B{{ $phone->building->id }} -> PHONE{{ $phone->id }}
@@ -883,7 +883,7 @@ digraph  {
     @endforeach
     @endcan
     @can('physical_switch_access')
-    @foreach($physicalSwitches as $switch) 
+    @foreach($physicalSwitches as $switch)
         SWITCH{{ $switch->id }} [label="{{ $switch->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="#SWITCH{{$switch->id}}"]
         @if ($switch->bay!=null)
              BAY{{ $switch->bay->id }} -> SWITCH{{ $switch->id }}
@@ -895,7 +895,7 @@ digraph  {
     @endforeach
     @endcan
     @can('physical_router_access')
-    @foreach($physicalRouters as $router) 
+    @foreach($physicalRouters as $router)
         ROUTER{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
         @if ($router->bay!=null)
              BAY{{ $router->bay->id }} -> ROUTER{{ $router->id }}
@@ -907,7 +907,7 @@ digraph  {
     @endforeach
     @endcan
     @can('wifi_terminal_access')
-    @foreach($wifiTerminals as $wifiTerminal) 
+    @foreach($wifiTerminals as $wifiTerminal)
         WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
         @if ($wifiTerminal->building!=null)
              B{{ $wifiTerminal->building->id }} -> WIFI{{ $wifiTerminal->id }}
@@ -917,7 +917,7 @@ digraph  {
     @endforeach
     @endcan
     @can('physical_security_device_access')
-    @foreach($physicalSecurityDevices as $physicalSecurityDevice) 
+    @foreach($physicalSecurityDevices as $physicalSecurityDevice)
         PSD{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="#PSD{{$physicalSecurityDevice->id}}"]
         @if ($physicalSecurityDevice->bay!=null)
              BAY{{ $physicalSecurityDevice->bay->id }} -> PSD{{ $physicalSecurityDevice->id }}

@@ -16,6 +16,9 @@ class ExplorerController extends Controller
         $nodes = [];
         $edges = [];
 
+        // Get all subnetworks
+        $subnetworks = Subnetwork::all();
+
         // ---------------------------------------------------
         // Physical view - 6
         // ---------------------------------------------------
@@ -53,13 +56,21 @@ class ExplorerController extends Controller
             }
         }
         // Workstation
-        $workstations = DB::table('workstations')->select('id', 'name', 'building_id', 'site_id')->whereNull('deleted_at')->get();
+        $workstations = DB::table('workstations')->select('id', 'name', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($workstations as $workstation) {
-            $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations');
+            $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations', $workstation->address_ip);
             if ($workstation->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
             } elseif ($workstation->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('SITE_', $workstation->site_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $workstation->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('WORK_', $workstation->id));
+                        break;
+                    }
+                }
             }
         }
         // physical_switches
@@ -108,9 +119,9 @@ class ExplorerController extends Controller
         }
 
         // peripherals
-        $peripherals = DB::table('peripherals')->select('id', 'name', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
+        $peripherals = DB::table('peripherals')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
         foreach ($peripherals as $peripheral) {
-            $this->addNode($nodes, 6, $this->formatId('PERIF_', $peripheral->id), $peripheral->name, '/images/peripheral.png', 'peripherals');
+            $this->addNode($nodes, 6, $this->formatId('PERIF_', $peripheral->id), $peripheral->name, '/images/peripheral.png', 'peripherals', $peripheral->address_ip);
             if ($peripheral->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BAY_', $peripheral->bay_id));
             } elseif ($peripheral->building_id !== null) {
@@ -120,6 +131,14 @@ class ExplorerController extends Controller
             }
             if ($peripheral->provider_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('ENTITY_', $peripheral->provider_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $peripheral->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PERIF_', $peripheral->id));
+                        break;
+                    }
+                }
             }
         }
 
@@ -263,7 +282,6 @@ class ExplorerController extends Controller
         }
 
         // Subnetworks
-        $subnetworks = Subnetwork::all();
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
             $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
@@ -283,7 +301,7 @@ class ExplorerController extends Controller
         // Logical Routers
         $logicalRouters = Router::All();
         foreach ($logicalRouters as $logicalRouter) {
-            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
+            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers', $logicalRouter->ip_addresses);
             if ($logicalRouter->getAttribute('ip_addresses') !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalRouter->getAttribute('ip_addresses')) as $address) {
@@ -311,7 +329,7 @@ class ExplorerController extends Controller
         // DHCP Servers
         $dhcp_servers = DB::table('dhcp_servers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
         foreach ($dhcp_servers as $dhcp_server) {
-            $this->addNode($nodes, 5, $this->formatId('DHCPS_', $dhcp_server->id), $dhcp_server->name, '/images/lserver.png', 'dhcp-servers');
+            $this->addNode($nodes, 5, $this->formatId('DHCPS_', $dhcp_server->id), $dhcp_server->name, '/images/lserver.png', 'dhcp-servers', $dhcp_server->address_ip);
             if ($dhcp_server->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $dhcp_server->address_ip) as $address) {
@@ -327,7 +345,7 @@ class ExplorerController extends Controller
         // DNS Servers
         $dns_servers = DB::table('dnsservers')->select('id', 'name', 'address_ip')->whereNull('deleted_at')->get();
         foreach ($dns_servers as $dns_server) {
-            $this->addNode($nodes, 5, $this->formatId('DNSS_', $dns_server->id), $dns_server->name, '/images/lserver.png', 'dnsservers');
+            $this->addNode($nodes, 5, $this->formatId('DNSS_', $dns_server->id), $dns_server->name, '/images/lserver.png', 'dnsservers', $dns_server->address_ip);
             if ($dns_server->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $dns_server->address_ip) as $address) {

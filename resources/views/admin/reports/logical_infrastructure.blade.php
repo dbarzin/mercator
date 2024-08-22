@@ -600,6 +600,130 @@
                 @endif
             @endcan
 
+            @can('workstation_access')
+            @if ($workstations->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.workstation.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.workstation.description") }}</p>
+                      @foreach($workstations as $workstation)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="WORKSTATION{{ $workstation->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/workstations/{{ $workstation->id }}">{{ $workstation->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.workstation.fields.type") }}</th>
+                                    <td>{{ $workstation->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.workstation.fields.description") }}</th>
+                                    <td>{!! $workstation->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.address_ip") }}</th>
+                                    <td>{{ $workstation->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.workstation.fields.site") }}</th>
+                                    <td>
+                                        @if ($workstation->site!=null)
+                                            <a href="#SITE{{$workstation->site->id}}">{{ $workstation->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.workstation.fields.building") }}</th>
+                                    <td>
+                                        @if ($workstation->building!=null)
+                                            <a href="#BUILDING{{ $workstation->building->id }}">{{ $workstation->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+            @can('peripheral_access')
+            @if ($peripherals->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.peripheral.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.peripheral.description") }}</p>
+                      @foreach($peripherals as $peripheral)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="PERIPHERAL{{ $peripheral->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/peripherals/{{ $peripheral->id }}">{{ $peripheral->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.peripheral.fields.description") }}</th>
+                                    <td>{!! $peripheral->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.type") }}</th>
+                                    <td>{{ $peripheral->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.responsible") }}</th>
+                                    <td>{{ $peripheral->responsible }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.address_ip") }}</th>
+                                    <td>{{ $peripheral->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.site") }}</th>
+                                    <td>
+                                        @if ($peripheral->site!=null)
+                                            <a href="#SITE{{ $peripheral->site->id }}">{{ $peripheral->site->name }}</a><br>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.building") }}</th>
+                                    <td>
+                                        @if ($peripheral->building!=null)
+                                            <a href="#BUILDING{{ $peripheral->building->id }}">{{ $peripheral->building->name }}</a><br>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
+                                    <td>
+                                        @if ($peripheral->bay!=null)
+                                            <a href="#BAY{{ $peripheral->bay->id }}">{{ $peripheral->bay->name }}</a><br>
+                                        @endif
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
             @can('dhcp_server_access')
             @if ($dhcpServers->count()>0)
             <div class="card">
@@ -908,6 +1032,30 @@ digraph  {
         @endif
     @endforeach
     @endcan
+    @can('workstation_access')
+    @foreach($workstations as $workstation)
+        WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+        @foreach(explode(',',$workstation->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> WS{{ $workstation->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+    @can('peripheral_access')
+    @foreach($peripherals as $peripheral)
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        @foreach(explode(',',$peripheral->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
     @can('router_access')
     @foreach($routers as $router)
         R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
@@ -949,6 +1097,8 @@ d3.select("#graph").graphviz()
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/cluster.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
+    .addImage("/images/workstation.png", "64px", "64px")
+    .addImage("/images/peripheral.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")
     .renderDot(dotSrc);
 

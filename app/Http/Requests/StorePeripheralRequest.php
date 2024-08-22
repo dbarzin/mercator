@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +22,11 @@ class StorePeripheralRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:peripherals',
                 'unique:peripherals,name,NULL,id,deleted_at,NULL',
+            ],
+            'address_ip' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

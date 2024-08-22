@@ -25,7 +25,7 @@ class UpdateWorkstationRequest extends FormRequest
                 'required',
                 'unique:workstations,name,'.request()->route('workstation')->id.',id,deleted_at,NULL',
             ],
-            'ip_addresses' => [
+            'address_ip' => [
                 'nullable',
                 new IPList(),
             ],
