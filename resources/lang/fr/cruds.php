@@ -1380,6 +1380,8 @@ return [
             'site_helper' => 'Site sur lequel se trouve la borne wifi',
             'type' => 'Type',
             'type_helper' => '',
+            'address_ip' => 'Adresse(s) IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
         ],
         'title' => 'Bornes Wifi',
         'title_short' => 'Wifi',

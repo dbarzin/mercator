@@ -29,6 +29,9 @@
                             {{ trans('cruds.wifiTerminal.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.wifiTerminal.fields.address_ip') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.wifiTerminal.fields.site') }}
                         </th>
                         <th>
@@ -46,10 +49,15 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.wifi-terminals.show', $wifiTerminal->id) }}">
                                 {{ $wifiTerminal->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $wifiTerminal->type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wifiTerminal->address_ip }}
                             </td>
                             <td>
                                 {{ $wifiTerminal->site->name ?? '' }}

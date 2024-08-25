@@ -158,13 +158,21 @@ class ExplorerController extends Controller
         }
 
         // Wifi terminals
-        $wifiTerminals = DB::table('wifi_terminals')->select('id', 'name', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+        $wifiTerminals = DB::table('wifi_terminals')->select('id', 'name', 'address_ip', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($wifiTerminals as $wifiTerminal) {
-            $this->addNode($nodes, 6, $this->formatId('WIFI_', $wifiTerminal->id), $wifiTerminal->name, '/images/wifi.png', 'wifi-terminals');
+            $this->addNode($nodes, 6, $this->formatId('WIFI_', $wifiTerminal->id), $wifiTerminal->name, '/images/wifi.png', 'wifi-terminals',$wifiTerminal->address_ip);
             if ($wifiTerminal->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('BUILDING_', $wifiTerminal->building_id));
             } elseif ($wifiTerminal->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WIFI_', $wifiTerminal->id), $this->formatId('SITE_', $wifiTerminal->site_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $wifiTerminal->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('WIFI_', $wifiTerminal->id));
+                        break;
+                    }
+                }
             }
         }
 
@@ -301,7 +309,7 @@ class ExplorerController extends Controller
         // Logical Routers
         $logicalRouters = Router::All();
         foreach ($logicalRouters as $logicalRouter) {
-            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers', $logicalRouter->ip_addresses);
+            $this->addNode($nodes, 5, $this->formatId('ROUTER_', $logicalRouter->id), $logicalRouter->name, '/images/router.png', 'routers');
             if ($logicalRouter->getAttribute('ip_addresses') !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalRouter->getAttribute('ip_addresses')) as $address) {

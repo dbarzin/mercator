@@ -28,10 +28,12 @@ class WifiTerminalController extends Controller
         abort_if(Gate::denies('wifi_terminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wifiTerminals.create', compact('sites', 'buildings'));
+        $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.wifiTerminals.create',
+            compact('type_list', 'sites', 'buildings'));
     }
 
     public function store(StoreWifiTerminalRequest $request)
@@ -46,12 +48,14 @@ class WifiTerminalController extends Controller
         abort_if(Gate::denies('wifi_terminal_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $wifiTerminal->load('site', 'building');
 
-        return view('admin.wifiTerminals.edit', compact('sites', 'buildings', 'wifiTerminal'));
+        return view('admin.wifiTerminals.edit',
+            compact('sites', 'buildings', 'wifiTerminal','type_list'));
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)

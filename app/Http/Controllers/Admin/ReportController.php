@@ -776,7 +776,7 @@ class ReportController extends Controller
                     ->where('network_id', '=', $network);
             }
 
-            // TODO: improve me
+            // Get Gateways
             $gateways = Gateway::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
@@ -787,7 +787,7 @@ class ReportController extends Controller
                     return false;
                 });
 
-            // TODO: improve me
+            // Get NetworkSwitches
             $networkSwitches = NetworkSwitch::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->ip) as $ip) {
@@ -802,6 +802,19 @@ class ReportController extends Controller
 
             // Get Workstations
             $workstations = Workstation::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->address_ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            // Get WifiTerminals
+            $wifiTerminals = WifiTerminal::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -914,6 +927,7 @@ class ReportController extends Controller
             $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy('name');
             $networkSwitches = NetworkSwitch::All()->sortBy('name');
             $workstations = Workstation::All()->sortBy('name');
+            $wifiTerminals = WifiTerminal::All()->sortBy('name');
             $peripherals = Peripheral::All()->sortBy('name');
             $routers = Router::All()->sortBy('name');
             $securityDevices = SecurityDevice::All()->sortBy('name');
@@ -937,6 +951,7 @@ class ReportController extends Controller
                 'networkSwitches',
                 'workstations',
                 'peripherals',
+                'wifiTerminals',
                 'routers',
                 'securityDevices',
                 'dhcpServers',
