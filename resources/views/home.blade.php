@@ -366,7 +366,7 @@
         url: "/admin/clusters"
         }, {
           label: "{!! trans('cruds.logicalServer.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $logicalServers !!}, 0],
+          data: [@can('logical_server_access') 0, @endcan 0, 0, 0, 0, {!! $logicalServers !!}, 0],
           value: {!! $logicalServers !!},
           url: "/admin/logical-servers"
         }, {
