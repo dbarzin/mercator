@@ -32,8 +32,10 @@ class WifiTerminalController extends Controller
 
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.wifiTerminals.create',
-            compact('type_list', 'sites', 'buildings'));
+        return view(
+            'admin.wifiTerminals.create',
+            compact('type_list', 'sites', 'buildings')
+        );
     }
 
     public function store(StoreWifiTerminalRequest $request)
@@ -54,8 +56,10 @@ class WifiTerminalController extends Controller
 
         $wifiTerminal->load('site', 'building');
 
-        return view('admin.wifiTerminals.edit',
-            compact('sites', 'buildings', 'wifiTerminal','type_list'));
+        return view(
+            'admin.wifiTerminals.edit',
+            compact('sites', 'buildings', 'wifiTerminal', 'type_list')
+        );
     }
 
     public function update(UpdateWifiTerminalRequest $request, WifiTerminal $wifiTerminal)

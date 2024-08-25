@@ -8,7 +8,6 @@ use Laravel\Socialite\Two\ProviderInterface;
 
 class KeycloakService extends AbstractProvider implements ProviderInterface
 {
-
     public function user()
     {
         if ($this->hasInvalidState()) {
