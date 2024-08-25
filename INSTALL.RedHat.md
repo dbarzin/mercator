@@ -11,134 +11,133 @@
 
 Update linux distribution
 
-sudo dnf update && sudo dnf upgrade
+    sudo dnf update && sudo dnf upgrade
 
 Install Httpd, GIT, Graphviz, Vim and Php
 
-sudo dnf install vim httpd git graphviz php
+    sudo dnf install vim httpd git graphviz php
 
 Check that the php 8.1 module is available
 
-sudo dnf module list php
+    sudo dnf module list php
 
 Install php 8.1
 
-sudo dnf module reset php
-sudo dnf module enable php:8.1
-sudo dnf install php
+    sudo dnf module reset php
+    sudo dnf module enable php:8.1
+    sudo dnf install php
 
 Check php version
 
-php --version
+    php --version
 
 Install PHP and libraries
 
-sudo dnf install php-json php-dbg php-mysqlnd php-gd php-zip php-curl php-mbstring php-xml php-ldap php-soap
+    sudo dnf install php-json php-dbg php-mysqlnd php-gd php-zip php-curl php-mbstring php-xml php-ldap php-soap
 
 Install Composer
 
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 Verify that Composer is installed
 
-compose --version
+    compose --version
 
 ##Project
 
 Create the project directory
 
-cd /var/www
-sudo mkdir mercator
-sudo chown $USER:$GROUP mercator
+    cd /var/www
+    sudo mkdir mercator
+    sudo chown $USER:$GROUP mercator
 
 Clone the project from Github
 
-git clone https://www.github.com/dbarzin/mercator
-
+    git clone https://www.github.com/dbarzin/mercator
 
 ## Compose
 
 Update composer
 
-cd /var/www/mercator
-compose self-update
+    cd /var/www/mercator
+    compose self-update
 
 Install packages with composer
 
-composer update
+    composer update
 
 Publish all publishable assets from vendor packages
 
-php artisan vendor:publish --all
+    php artisan vendor:publish --all
 
 ## MySQL
 
 Install MySQL
 
-sudo dnf install mysql-server
+    sudo dnf install mysql-server
 
 Verify that you are using MySQL
 
-sudo mysql --version
+    sudo mysql --version
 
 Start the MySQL service
 
-systemctl start mysqld.service
-systemctl enable mysqld.service
+    systemctl start mysqld.service
+    systemctl enable mysqld.service
 
 Launch MySQL with root rights
 
-sudo mysql
+    sudo mysql
 
 Create the _mercator_ database and the _mercator_user_ user
 
-CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER 'mercator_user'@'localhost' IDENTIFIED BY 's3cr3t';
-GRANT ALL PRIVILEGES ON mercator.* TO 'mercator_user'@'localhost';
-GRANT PROCESS ON *.* TO 'mercator_user'@'localhost';
+    CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;
+    CREATE USER 'mercator_user'@'localhost' IDENTIFIED BY 's3cr3t';
+    GRANT ALL PRIVILEGES ON mercator.* TO 'mercator_user'@'localhost';
+    GRANT PROCESS ON *.* TO 'mercator_user'@'localhost';
 
-FLUSH PRIVILEGES;
-EXIT;
+    FLUSH PRIVILEGES;
+    EXIT;
 
 ## Configuration
 
 Create an .env file in the project root directory:
 
-cd /var/www/mercator
-cp .env.example .env
+    cd /var/www/mercator
+    cp .env.example .env
 
 Edit database connection settings in the .env file:
 
-## .env file
-DB_CONNECTION=mysql
-#DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-# Comment DB_PORT for pgsql
-DB_DATABASE=mercator
-DB_USERNAME=mercator_user
-DB_PASSWORD=s3cr3t
+    ## .env file
+    DB_CONNECTION=mysql
+    #DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    # Comment DB_PORT for pgsql
+    DB_DATABASE=mercator
+    DB_USERNAME=mercator_user
+    DB_PASSWORD=s3cr3t
 
 ## Create the database
 
 Run migrations
 
-php artisan migrate --seed
+    php artisan migrate --seed
 
 Note: The seed is important (--seed), because it will create the first admin user for you.
 
 Generate app key
 
-php artisan key:generate
+    php artisan key:generate
 
 Clear cache
 
-php artisan config:clear
+    php artisan config:clear
 
 To import the test database (optional)
 
-sudo mysql mercator < mercator_data.sql
+    sudo mysql mercator < mercator_data.sql
 
 or (Postgres):
 
