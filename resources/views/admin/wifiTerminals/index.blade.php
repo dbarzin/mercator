@@ -60,10 +60,14 @@
                                 {{ $wifiTerminal->address_ip }}
                             </td>
                             <td>
-                                {{ $wifiTerminal->site->name ?? '' }}
+                                @if ($wifiTerminal->site!==null)
+                                    <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{{ $wifiTerminal->site->name }}</a>
+                                @endif
                             </td>
                             <td>
-                                {{ $wifiTerminal->building->name ?? '' }}
+                                @if ($wifiTerminal->building!==null)
+                                    <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{{ $wifiTerminal->building->name }}</a>
+                                @endif
                             </td>
                             <td>
                                 @can('wifi_terminal_show')
