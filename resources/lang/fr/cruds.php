@@ -899,6 +899,8 @@ return [
     'phone' => [
         'description' => 'Téléphone ﬁxe ou portable appartenant à l’organisation.',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le téléphone',
             'description' => 'Description',

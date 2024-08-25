@@ -27,8 +27,6 @@ class PhoneController extends Controller
         abort_if(Gate::denies('phone_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $phone = Phone::create($request->all());
-        // syncs
-        // $phone->roles()->sync($request->input('roles', []));
 
         return response()->json($phone, 201);
     }
@@ -45,8 +43,6 @@ class PhoneController extends Controller
         abort_if(Gate::denies('phone_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $phone->update($request->all());
-        // syncs
-        // $phone->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

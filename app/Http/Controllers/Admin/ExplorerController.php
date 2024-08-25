@@ -148,6 +148,23 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PERIF_', $join->peripheral_id));
         }
 
+        // Phones
+        $phones = DB::table('phones')->select('id', 'name', 'address_ip', 'building_id')->whereNull('deleted_at')->get();
+        foreach ($phones as $phone) {
+            $this->addNode($nodes, 6, $this->formatId('PHONE_', $phone->id), $phone->name, '/images/phone.png', 'phones', $phone->address_ip);
+            if ($phone->building_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('PHONE_', $phone->id), $this->formatId('BUILDING_', $phone->building_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $phone->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PHONE_', $phone->id));
+                        break;
+                    }
+                }
+            }
+        }
+
         // Storage devices
         $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'physical_switch_id')->whereNull('deleted_at')->get();
         foreach ($storageDevices as $storageDevice) {

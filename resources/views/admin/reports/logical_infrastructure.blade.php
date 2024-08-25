@@ -656,6 +656,64 @@
             @endif
             @endcan
 
+            @can('phone_access')
+            @if ($phones->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.phone.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.phones.description") }}</p>
+                      @foreach($phones as $phone)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="PHONE{{ $phone->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.phone.fields.type") }}</th>
+                                    <td>{{ $phone->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.description") }}</th>
+                                    <td>{!! $phone->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.address_ip") }}</th>
+                                    <td>{{ $phone->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.site") }}</th>
+                                    <td>
+                                        @if ($phone->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.building") }}</th>
+                                    <td>
+                                        @if ($phone->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+
+
             @can('wifi_terminal_access')
             @if ($wifiTerminals->count()>0)
             <div class="card">
@@ -1112,6 +1170,18 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+    @can('phone_access')
+    @foreach($phones as $phone)
+        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!=null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+        @foreach(explode(',',$phone->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> PHONE{{ $phone->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
     @can('peripheral_access')
     @foreach($peripherals as $peripheral)
         PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
@@ -1166,6 +1236,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/cluster.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
+    .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")

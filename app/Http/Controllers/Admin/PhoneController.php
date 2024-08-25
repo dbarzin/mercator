@@ -28,10 +28,12 @@ class PhoneController extends Controller
         abort_if(Gate::denies('phone_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.phones.create', compact('sites', 'buildings'));
+        $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.phones.create',
+            compact('sites', 'buildings','type_list'));
     }
 
     public function store(StorePhoneRequest $request)
@@ -46,12 +48,14 @@ class PhoneController extends Controller
         abort_if(Gate::denies('phone_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $phone->load('site', 'building');
 
-        return view('admin.phones.edit', compact('sites', 'buildings', 'phone'));
+        return view('admin.phones.edit',
+            compact('sites', 'buildings', 'type_list', 'phone',));
     }
 
     public function update(UpdatePhoneRequest $request, Phone $phone)

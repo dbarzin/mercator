@@ -892,6 +892,8 @@ return [
     'phone' => [
         'description' => 'Fixed or mobile phone belonging to the organization.',
         'fields' => [
+            'address_ip' => 'IP Adresses',
+            'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'building' => 'Building / Room',
             'building_helper' => 'Building / Room in which the telephone is located',
             'description' => 'Description',

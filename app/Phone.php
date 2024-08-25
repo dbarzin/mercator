@@ -31,6 +31,7 @@ class Phone extends Model
         'name',
         'description',
         'type',
+        'address_ip',
         'site_id',
         'building_id',
         'created_at',

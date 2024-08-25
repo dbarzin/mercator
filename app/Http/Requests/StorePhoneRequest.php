@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,10 @@ class StorePhoneRequest extends FormRequest
                 'required',
                 //'unique:phones',
                 'unique:phones,name,NULL,id,deleted_at,NULL',
+            ],
+            'address_ip' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

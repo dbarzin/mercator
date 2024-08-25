@@ -29,6 +29,9 @@
                             {{ trans('cruds.phone.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.phone.fields.address_ip') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.phone.fields.site') }}
                         </th>
                         <th>
@@ -46,16 +49,25 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.phones.show', $phone->id) }}">
                                 {{ $phone->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {{ $phone->type ?? '' }}
                             </td>
                             <td>
-                                {{ $phone->site->name ?? '' }}
+                                {{ $phone->address_ip ?? '' }}
                             </td>
                             <td>
-                                {{ $phone->building->name ?? '' }}
+                                @if ($phone->site!==null)
+                                    <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($phone->building!==null)
+                                    <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
+                                @endif
                             </td>
                             <td>
                                 @can('phone_show')
