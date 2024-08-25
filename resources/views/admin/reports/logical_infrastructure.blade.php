@@ -634,7 +634,7 @@
                                     <th>{{ trans("cruds.workstation.fields.site") }}</th>
                                     <td>
                                         @if ($workstation->site!=null)
-                                            <a href="#SITE{{$workstation->site->id}}">{{ $workstation->site->name }}</a>
+                                            <a href="{{ route('admin.sites.show', $workstation->site_id) }}">{{ $workstation->site->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -642,7 +642,63 @@
                                     <th>{{ trans("cruds.workstation.fields.building") }}</th>
                                     <td>
                                         @if ($workstation->building!=null)
-                                            <a href="#BUILDING{{ $workstation->building->id }}">{{ $workstation->building->name }}</a>
+                                            <a href="{{ route('admin.buildings.show', $workstation->building_id) }}">{{ $workstation->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+            @can('wifi_terminal_access')
+            @if ($wifiTerminals->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.wifiTerminal.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.workstation.description") }}</p>
+                      @foreach($wifiTerminals as $wifiTerminal)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="WIFI{{ $wifiTerminal->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/wifiTerminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.wifiTerminal.fields.type") }}</th>
+                                    <td>{{ $wifiTerminal->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.description") }}</th>
+                                    <td>{!! $wifiTerminal->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.address_ip") }}</th>
+                                    <td>{{ $wifiTerminal->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
+                                    <td>
+                                        @if ($wifiTerminal->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{{ $wifiTerminal->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
+                                    <td>
+                                        @if ($wifiTerminal->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{{ $wifiTerminal->building->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -694,7 +750,7 @@
                                     <th>{{ trans("cruds.peripheral.fields.site") }}</th>
                                     <td>
                                         @if ($peripheral->site!=null)
-                                            <a href="#SITE{{ $peripheral->site->id }}">{{ $peripheral->site->name }}</a><br>
+                                            <a href="{{ route('admin.sites.show', $peripheral->site_id) }}">{{ $peripheral->site->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -702,7 +758,7 @@
                                     <th>{{ trans("cruds.peripheral.fields.building") }}</th>
                                     <td>
                                         @if ($peripheral->building!=null)
-                                            <a href="#BUILDING{{ $peripheral->building->id }}">{{ $peripheral->building->name }}</a><br>
+                                            <a href="{{ route('admin.buildings.show', $peripheral->building_id) }}">{{ $peripheral->building->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -710,7 +766,7 @@
                                     <th>{{ trans("cruds.peripheral.fields.bay") }}</th>
                                     <td>
                                         @if ($peripheral->bay!=null)
-                                            <a href="#BAY{{ $peripheral->bay->id }}">{{ $peripheral->bay->name }}</a><br>
+                                            <a href="{{ route('admin.bays.show', $peripheral->bay_id) }}">{{ $peripheral->bay->name }}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -1044,6 +1100,18 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+    @can('wifi_terminal_access')
+    @foreach($wifiTerminals as $wifiTerminal)
+        WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!=null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
+        @foreach(explode(',',$wifiTerminal->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> WIFI{{ $wifiTerminal->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
     @can('peripheral_access')
     @foreach($peripherals as $peripheral)
         PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
@@ -1099,6 +1167,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
+    .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")
     .renderDot(dotSrc);
 

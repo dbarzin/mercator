@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +23,11 @@ class UpdateWifiTerminalRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:wifi_terminals,name,' . request()->route('wifi_terminal')->id,
                 'unique:wifi_terminals,name,'.request()->route('wifi_terminal')->id.',id,deleted_at,NULL',
             ],
-            'bays.*' => [
-                'integer',
-            ],
-            'bays' => [
-                'array',
+            'address_ip' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

@@ -1,102 +1,89 @@
 # Mercator
 
-Mercator is an Open Source web application to manage the mapping of an information system as described in the [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) of the [ANSSI](https://www.ssi.gouv.fr/en/).
-The [documentation](https://dbarzin.github.io/mercator/) and [application sources](https://dbarzin.github.io/mercator/) are published on GitHub.
-
 [![Latest Release](https://img.shields.io/github/release/dbarzin/mercator.svg?style=flat-square)](https://github.com/dbarzin/mercator/releases/latest)
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
 ![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
 ![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
 
-Read this in other languages: [French](README.fr.md)
+**Mercator** is a powerful and versatile open-source web application designed to facilitate the mapping of information systems, as outlined in the [Mapping The Information System Guide](https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/) by [ANSSI](https://www.ssi.gouv.fr/en/). Whether you're an operator of vital importance or part of a broader IT governance framework, Mercator is an essential tool for gaining visibility, control, and ensuring the resilience of your information systems.
 
-## Introduction
+📚 [Explore the Documentation](https://dbarzin.github.io/mercator/) | 🔍 [View the Application Sources](https://dbarzin.github.io/mercator/)
 
-Computer attacks occur in a constantly changing environment. To meet these challenges, it is necessary to implement a global approach to risk management within the organization.
+📖 _Read this in other languages:_ [French](README.fr.md)
 
-The mapping of the Information System allows to have a global view of all the elements which compose the information system to obtain a better readability, and thus a better control.
+## 🌟 **Key Features**
 
-The elaboration of a cartography participates in the protection, the defense and the resilience of the information system. It is an essential tool for the control of its information system and is an obligation for operators of vital importance and is part of a global risk management approach.
+- 🖥️ **Comprehensive Visualizations:** Generate graphical representations of your ecosystem, including logical, administrative, and physical infrastructure views.
+- 📝 **Architecture Reports:** Automatically create detailed architecture reports of your information system.
+- 🗺️ **Mapping Diagrams:** Draw and export mapping diagrams to visually communicate system architecture.
+- ✅ **Compliance Monitoring:** Assess and compute compliance levels across your systems.
+- 🔒 **Security Integrations:** Search for vulnerabilities using [CVE-Search](https://github.com/cve-search/cve-search) integration.
+- 📊 **Data Export:** Export data in various formats, including Excel, CSV, and PDF.
+- 🌐 **REST API:** Seamlessly integrate with other systems using the REST API with JSON support.
+- 👥 **Multi-User Management:** Role-based access control for collaborative environments.
+- 🌍 **Multilingual Support:** Available in multiple languages for global teams.
+- 🔗 **LDAP/Active Directory Integration:** Connect with existing user directories for streamlined authentication.
+- 🛠️ **CPE Support:** Leverage [Common Platform Enumeration (CPE)](https://nvd.nist.gov/products/cpe) for enhanced system identification.
 
-## Major functions
+## 🖼️ **Screenshots**
 
-- Graphical views of the ecosystem, information system, administration, logical, applications, and physical infrastructure
-- Generate information system architecture report
-- Draw mapping diagrams
-- Compute compliance levels
-- Search for CVE with [CVE-Search](https://github.com/cve-search/cve-search)
-- Extraction in Excel, CSV, PDF ... of all lists
-- REST API with JSON
-- Multi-user with role management
-- Multilingual
-- Connection to LDAP or Active Directory
-- [CPE](https://nvd.nist.gov/products/cpe) - Common Platform Enumeration
-
-## Screens
-
-Main page
-
+### 🏠 **Main Dashboard**
 [<img src="public/screenshots/mercator1.png" width="400" height="300">](public/screenshots/mercator1.png) [<img src="public/screenshots/mercator2.png" width="400" height="300">](public/screenshots/mercator2.png)
 
-Compliance Levels
-
+### 📊 **Compliance Levels**
 [<img src="public/screenshots/mercator3.png" width="400">](public/screenshots/mercator3.png)
 
-Input screen
-
+### 🔧 **Input Screens**
 [<img src="public/screenshots/mercator4.png" width="400" height="200">](public/screenshots/mercator4.png) [<img src="public/screenshots/mercator5.png" width="400" height="200">](public/screenshots/mercator5.png)
 
-Drawing of the cartography
-
+### 🗺️ **Cartography Drawing**
 [<img src="public/screenshots/mercator6.png" width="400" height="300">](public/screenshots/mercator6.png) [<img src="public/screenshots/mercator7.png" width="400" height="300">](public/screenshots/mercator7.png)
 
-Explore
-
+### 🔍 **Data Exploration**
 [<img src="public/screenshots/mercator9.png" width="400">](public/screenshots/mercator9.png)
 
-Data model
-
+### 🗂️ **Data Model**
 [<img src="public/screenshots/mercator8.png" width="400">](public/screenshots/mercator8.png)
 
-## Technologies
+## 🛠️ **Technologies Used**
 
-- PHP, Javascript, Laravel
-- Supported databases: MySQL, Postgres, SQLite, SQL Server (see: [Laravel/Databases/introduction](https://laravel.com/docs/master/database#introduction) )
-- WebAssembly + Graphviz
-- ChartJS
+- **Backend:** PHP, Laravel
+- **Frontend:** JavaScript
+- **Databases:** MySQL, PostgreSQL, SQLite, SQL Server ([See Laravel Database Documentation](https://laravel.com/docs/master/database#introduction))
+- **Additional Libraries:** WebAssembly, Graphviz, ChartJS
 
-## Installation
+## 📦 **Installation**
 
-### Manual
+### 🔧 Manual Installation
 
-- See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.md) on Ubuntu
-- See [Installation](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md) on RedHat
+For detailed instructions, please refer to the installation guides:
+- [Installation on Ubuntu](https://github.com/dbarzin/mercator/blob/master/INSTALL.md)
+- [Installation on RedHat](https://github.com/dbarzin/mercator/blob/master/INSTALL.RedHat.md)
 
-### Docker
+### 🐳 Docker Installation
 
-First download the docker image.
+Get up and running quickly using Docker. Start by pulling the latest Docker image:
 
-```shell
+```bash
 docker pull ghcr.io/dbarzin/mercator:latest
 ```
 
-Then you can run an ephemeral local instance in development mode (i.e. http):
+Run a local instance in development mode:
 
-```shell
+```bash
 docker run -it --rm -e USE_DEMO_DATA=1 -p 8000:80 ghcr.io/dbarzin/mercator:latest
 ```
 
-By default it uses an SQLite backend. If you want to make data persistent:
+To persist your data using SQLite:
 
-```shell
+```bash
 touch ./db.sqlite && chmod a+w ./db.sqlite
 docker run -it --rm -e APP_ENV=development -p 8000:80 -v $PWD/db.sqlite:/var/www/mercator/sql/db.sqlite ghcr.io/dbarzin/mercator:latest
 ```
 
-Finally you can populate the database with demo data through the `USE_DEMO_DATA` environment variable:
+Populate the database with demo data:
 
-```shell
-touch ./db.sqlite && chmod a+w ./db.sqlite
+```bash
 docker run -it --rm \
            -e APP_ENV=development \
            -p 8000:80 \
@@ -105,14 +92,14 @@ docker run -it --rm \
            ghcr.io/dbarzin/mercator:latest
 ```
 
-Visit http://127.0.0.1:8000 !
+Access your instance at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-If you are looking for a more robust (https) and automated environment, please have a look on [docker-compose](docker-compose/) folder.
+For a production-ready environment with HTTPS and automated setup, check out the [docker-compose](docker-compose/) folder.
 
-## Changelog
+## 📜 **Changelog**
 
-All notable changes to this project are [documented](https://github.com/dbarzin/mercator/blob/master/CHANGELOG.md).
+Stay up to date with the latest improvements and updates in the [Changelog](https://github.com/dbarzin/mercator/blob/master/CHANGELOG.md).
 
-## License
+## 📄 **License**
 
-Mercator is an open source software distributed under [GPL](https://www.gnu.org/licenses/licenses.html).
+Mercator is open-source software distributed under the [GPL License](https://www.gnu.org/licenses/licenses.html).

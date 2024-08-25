@@ -3,65 +3,65 @@
 namespace App\Http\Controllers\Admin;
 
 // GDPR
-use App\DataProcessing;
-// ecosystem
-use App\Entity;
-use App\Relation;
-// information system
 use App\Activity;
-use App\Operation;
-use App\Information;
-use App\Task;
+// ecosystem
 use App\Actor;
-// Application
+use App\AdminUser;
+// information system
+use App\Annuaire;
 use App\ApplicationBlock;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Database;
+use App\Bay;
+// Application
+use App\Building;
+use App\Certificate;
 use App\Cluster;
+use App\Database;
+use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
+use App\Entity;
 // Administration
 use App\ExternalConnectedEntity;
-use App\AdminUser;
-use App\Annuaire;
+use App\Flux;
 use App\ForestAd;
 use App\Gateway;
+use App\Http\Controllers\Controller;
 // Logique
+use App\Information;
 use App\LogicalServer;
-use App\Certificate;
 use App\MacroProcessus;
+use App\MApplication;
 use App\Network;
-use App\Subnetwork;
 use App\NetworkSwitch;
+use App\Operation;
+use App\Peripheral;
+use App\Phone;
 use App\PhysicalLink;
-use App\PhysicalRouter;
-use App\Vlan;
-use App\Flux;
 // Physique
+use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
 use App\Process;
+use App\Relation;
 use App\Router;
-use App\Peripheral;
-use App\Phone;
 use App\SecurityDevice;
 use App\Site;
-use App\Building;
-use App\Bay;
 use App\StorageDevice;
+use App\Subnetwork;
+use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
+
 use App\ZoneAdmin;
-//
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -776,7 +776,7 @@ class ReportController extends Controller
                     ->where('network_id', '=', $network);
             }
 
-            // TODO: improve me
+            // Get Gateways
             $gateways = Gateway::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach ($subnetworks as $subnetwork) {
@@ -787,7 +787,7 @@ class ReportController extends Controller
                     return false;
                 });
 
-            // TODO: improve me
+            // Get NetworkSwitches
             $networkSwitches = NetworkSwitch::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->ip) as $ip) {
@@ -802,6 +802,19 @@ class ReportController extends Controller
 
             // Get Workstations
             $workstations = Workstation::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->address_ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            // Get WifiTerminals
+            $wifiTerminals = WifiTerminal::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -914,6 +927,7 @@ class ReportController extends Controller
             $externalConnectedEntities = ExternalConnectedEntity::All()->sortBy('name');
             $networkSwitches = NetworkSwitch::All()->sortBy('name');
             $workstations = Workstation::All()->sortBy('name');
+            $wifiTerminals = WifiTerminal::All()->sortBy('name');
             $peripherals = Peripheral::All()->sortBy('name');
             $routers = Router::All()->sortBy('name');
             $securityDevices = SecurityDevice::All()->sortBy('name');
@@ -937,6 +951,7 @@ class ReportController extends Controller
                 'networkSwitches',
                 'workstations',
                 'peripherals',
+                'wifiTerminals',
                 'routers',
                 'securityDevices',
                 'dhcpServers',

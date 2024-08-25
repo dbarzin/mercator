@@ -27,12 +27,15 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer = LogicalServer::create($request->all());
-        if ($request->has('servers[]'))
+        if ($request->has('servers[]')) {
             $logicalServer->servers()->sync($request->input('servers', []));
-        if ($request->has('applications[]'))
+        }
+        if ($request->has('applications[]')) {
             $logicalServer->applications()->sync($request->input('applications', []));
-        if ($request->has('databases[]'))
+        }
+        if ($request->has('databases[]')) {
             $logicalServer->databases()->sync($request->input('databases', []));
+        }
 
         return response()->json($logicalServer, 201);
     }
@@ -49,12 +52,15 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer->update($request->all());
-        if ($request->has('servers[]'))
+        if ($request->has('servers[]')) {
             $logicalServer->servers()->sync($request->input('servers', []));
-        if ($request->has('applications[]'))
+        }
+        if ($request->has('applications[]')) {
             $logicalServer->applications()->sync($request->input('applications', []));
-        if ($request->has('databases[]'))
+        }
+        if ($request->has('databases[]')) {
             $logicalServer->databases()->sync($request->input('databases', []));
+        }
 
         return response()->json();
     }

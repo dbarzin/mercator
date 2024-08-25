@@ -31,17 +31,10 @@ class UpdateLogicalServerRequest extends FormRequest
                 'min:0',
                 'max:2147483647',
             ],
-            'servers.*' => [
-                'integer',
-            ],
-            'servers' => [
-                'array',
-            ],
             'address_ip' => [
                 'nullable',
                 new IPList(),
             ],
-
         ];
     }
 }
