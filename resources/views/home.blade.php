@@ -231,132 +231,132 @@
         @endcan
         {
           label: "{!! trans('cruds.entity.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan {!! $entities !!}, 0, 0, 0, 0, 0],
+          data: [@can('entity_access') 0, @endcan {!! $entities !!}, 0, 0, 0, 0, 0],
           value: {!! $entities !!},
           url: "/admin/entities"
         }, {
           label: "{!! trans('cruds.relation.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan {!! $relations !!}, 0, 0, 0, 0, 0],
+          data: [@can('relation_access') 0, @endcan {!! $relations !!}, 0, 0, 0, 0, 0],
           value: {!! $relations !!},
           url: "/admin/relations"
         }, {
           label: "{!! trans('cruds.macroProcessus.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $macroProcessuses !!}, 0, 0, 0, 0],
+          data: [@can('macro_processus_access') 0, @endcan 0, {!! $macroProcessuses !!}, 0, 0, 0, 0],
           value: {!! $macroProcessuses !!},
           url: "/admin/macro-processuses"
         }, {
           label: "{!! trans('cruds.process.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $processes !!}, 0, 0, 0, 0],
+          data: [@can('process_access') 0, @endcan 0, {!! $processes !!}, 0, 0, 0, 0],
           value: {!! $processes !!},
           url: "/admin/processes"
         }, {
           label: "{!! trans('cruds.activity.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $activities !!}, 0, 0, 0, 0],
+          data: [@can('activity_access') 0, @endcan 0, {!! $activities !!}, 0, 0, 0, 0],
           value: {!! $activities !!},
           url: "/admin/activities"
         }, {
           label: "{!! trans('cruds.operation.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $operations !!}, 0, 0, 0, 0],
+          data: [@can('operation_access') 0, @endcan 0, {!! $operations !!}, 0, 0, 0, 0],
           value: {!! $operations !!},
           url: "/admin/operations"
         }, {
           label: "{!! trans('cruds.task.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $tasks !!}, 0, 0, 0, 0],
+          data: [@can('task_access') 0, @endcan 0, {!! $tasks !!}, 0, 0, 0, 0],
           value: {!! $tasks !!},
           url: "admin/tasks"
         }, {
           label: "{!! trans('cruds.actor.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $actors !!}, 0, 0, 0, 0],
+          data: [@can('actor_access') 0, @endcan 0, {!! $actors !!}, 0, 0, 0, 0],
           value: {!! $actors !!},
           url: "/admin/actors"
         }, {
           label: "{!! trans('cruds.information.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, {!! $informations !!}, 0, 0, 0, 0],
+          data: [@can('information_access') 0, @endcan 0, {!! $informations !!}, 0, 0, 0, 0],
           value: {!! $informations !!},
           url: "/admin/information"
         }, {
           label: "{!! trans('cruds.applicationBlock.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $applicationBlocks !!}, 0, 0, 0],
+          data: [@can('application_block_access') 0, @endcan 0, 0, {!! $applicationBlocks !!}, 0, 0, 0],
           value: {!! $applicationBlocks !!},
           url: "/admin/application-blocks"
         }, {
           label: "{!! trans('cruds.application.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $applications !!}, 0, 0, 0],
+          data: [@can('application_access') 0, @endcan 0, 0, {!! $applications !!}, 0, 0, 0],
           value: {!! $applications !!},
           url: "/admin/applications"
         }, {
           label: "{!! trans('cruds.applicationService.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $applicationServices !!}, 0, 0, 0],
+          data: [@can('application_service_access') 0, @endcan 0, 0, {!! $applicationServices !!}, 0, 0, 0],
           value: {!! $applicationServices !!},
           url: "/admin/application-services"
         }, {
           label: "{!! trans('cruds.applicationModule.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $applicationModules !!}, 0, 0, 0],
+          data: [@can('application_module_access') 0, @endcan 0, 0, {!! $applicationModules !!}, 0, 0, 0],
           value: {!! $applicationModules !!},
           url: "/admin/application-modules"
         }, {
           label: "{!! trans('cruds.database.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $databases !!}, 0, 0, 0],
+          data: [@can('database_access') 0, @endcan 0, 0, {!! $databases !!}, 0, 0, 0],
           value: {!! $databases !!},
           url: "/admin/databases"
         }, {
           label: "{!! trans('cruds.flux.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, {!! $fluxes !!}, 0, 0, 0],
+          data: [@can('flux_access') 0, @endcan 0, 0, {!! $fluxes !!}, 0, 0, 0],
           value: {!! $fluxes !!},
           url: "/admin/fluxes",
         }, {
           label: "{!! trans('cruds.zoneAdmin.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, {!!$zones!!}, 0, 0],
+          data: [@can('zone_admin_access') 0, @endcan 0, 0, 0, {!!$zones!!}, 0, 0],
           value: {!!$zones!!},
           url: "/admin/zone-admins"
         }, {
           label: "{!! trans('cruds.annuaire.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, {!!$annuaires!!}, 0, 0],
+          data: [@can('annuaire_access') 0, @endcan 0, 0, 0, {!!$annuaires!!}, 0, 0],
           value: {!!$annuaires!!},
           url: "/admin/annuaires"
         }, {
           label: "{!! trans('cruds.forestAd.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, {!!$forests!!}, 0, 0],
+          data: [@can('forest_ad_access') 0, @endcan 0, 0, 0, {!!$forests!!}, 0, 0],
           value: {!!$forests!!},
           url: "/admin/forest-ads"
         }, {
           label: "{!! trans('cruds.domaineAd.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, {!!$domaines!!}, 0, 0],
+          data: [@can('domaine_ad_access') 0, @endcan 0, 0, 0, {!!$domaines!!}, 0, 0],
           value:  {!!$domaines!!},
           url: "/admin/domaine-ads"
         }, {
           label: "{!! trans('cruds.network.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $networks !!}, 0],
+          data: [@can('network_access') 0, @endcan 0, 0, 0, 0, {!! $networks !!}, 0],
           value: {!! $networks !!},
           url: "/admin/networks"
         }, {
           label: "{!! trans('cruds.subnetwork.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $subnetworks !!}, 0],
+          data: [@can('subnetwork_access') 0, @endcan 0, 0, 0, 0, {!! $subnetworks !!}, 0],
           value: {!! $subnetworks !!},
           url: "/admin/subnetworks"
         }, {
           label: "{!! trans('cruds.gateway.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $gateways !!}, 0],
+          data: [@can('gateway_access') 0, @endcan 0, 0, 0, 0, {!! $gateways !!}, 0],
           value: {!! $gateways !!},
           url: "/admin/gateways"
         }, {
           label: "{!! trans('cruds.externalConnectedEntity.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $externalConnectedEntities !!}, 0],
+          data: [@can('external_connected_entity_access') 0, @endcan 0, 0, 0, 0, {!! $externalConnectedEntities !!}, 0],
           value: {!! $externalConnectedEntities !!},
           url: "/admin/external-connected-entities"
         }, {
           label: "{!! trans('cruds.networkSwitch.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $switches !!}, 0],
+          data: [@can('network_switch_access') 0, @endcan 0, 0, 0, 0, {!! $switches !!}, 0],
           value: {!! $switches !!},
           url: "/admin/network-switches"
         }, {
           label: "{!! trans('cruds.router.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $routers !!}, 0],
+          data: [@can('router_access') 0, @endcan 0, 0, 0, 0, {!! $routers !!}, 0],
           value: {!! $routers !!},
           url: "/admin/routers"
         }, {
           label: "{!! trans('cruds.securityDevice.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $securityDevices !!}, 0],
+          data: [@can('security_device_access') 0, @endcan 0, 0, 0, 0, {!! $securityDevices !!}, 0],
           value: {!! $securityDevices !!},
           url: "/admin/security-devices"
         }, {
@@ -371,82 +371,87 @@
           url: "/admin/logical-servers"
         }, {
           label: "{!! trans('cruds.certificate.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $certificates !!}, 0],
+          data: [@can('certificate_access') 0, @endcan 0, 0, 0, 0, {!! $certificates !!}, 0],
           value: {!! $certificates !!},
           url: "/admin/certificates"
         }, {
           label: "{!! trans('cruds.site.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $sites !!}],
+          data: [@can('site_access') 0, @endcan 0, 0, 0, 0, 0, {!! $sites !!}],
           value: {!! $sites !!},
           url: "/admin/sites"
         }, {
           label: "{!! trans('cruds.building.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $buildings !!}],
+          data: [@can('building_access') 0, @endcan 0, 0, 0, 0, 0, {!! $buildings !!}],
           value: {!! $buildings !!},
           url: "/admin/buildings"
         }, {
           label: "{!! trans('cruds.bay.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $bays !!}],
+          data: [@can('bay_access') 0, @endcan 0, 0, 0, 0, 0, {!! $bays !!}],
           value: {!! $bays !!},
           url: "/admin/bays"
         }, {
           label: "{!! trans('cruds.physicalServer.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalServers !!}],
+          data: [@can('physical_server_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalServers !!}],
           value: {!! $physicalServers !!},
           url: "/admin/physical-servers"
         }, {
           label: "{!! trans('cruds.workstation.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $workstations !!}],
+          data: [@can('workstation_access') 0, @endcan 0, 0, 0, 0, 0, {!! $workstations !!}],
           value: {!! $workstations !!},
           url: "/admin/workstations"
         }, {
           label: "{!! trans('cruds.peripheral.title') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $peripherals !!}],
+          data: [@can('peripheral_access') 0, @endcan 0, 0, 0, 0, 0, {!! $peripherals !!}],
           value: {!! $peripherals !!},
           url: "/admin/peripherals"
         }, {
           label: "{!! trans('cruds.storageDevice.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $storageDevices !!}],
+          data: [@can('storage_device_access') 0, @endcan 0, 0, 0, 0, 0, {!! $storageDevices !!}],
           value: {!! $storageDevices !!},
           url: "/admin/storage-devices"
         }, {
           label: "{!! trans('cruds.physicalSwitch.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalSwitchs !!}],
+          data: [@can('physical_switch_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalSwitchs !!}],
           value: {!! $physicalSwitchs !!},
           url: "/admin/physical-switches"
         }, {
           label: "{!! trans('cruds.physicalRouter.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalRouters !!}],
+          data: [@can('physical_router_access') 0, @endcan 0, 0, 0, 0, 0, {!! $physicalRouters !!}],
           value: {!! $physicalRouters !!},
           url: "/admin/physical-routers"
         }, {
+          label: "{!! trans('cruds.phone.title') !!}",
+          data: [@can('phone_access') 0, @endcan 0, 0, 0, 0, 0, {!! $phones !!}],
+          value: {!! $phones !!},
+          url: "/admin/phones"
+        }, {
           label: "{!! trans('cruds.wifiTerminal.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $wifiTerminals !!}],
+          data: [@can('wifi_terminal_access') 0, @endcan 0, 0, 0, 0, 0, {!! $wifiTerminals !!}],
           value: {!! $wifiTerminals !!},
           url: "/admin/wifi-terminals"
         }, {
           label: "{!! trans('cruds.physicalSecurityDevice.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $securityDevices !!}],
+          data: [@can('physical_security_device_access') 0, @endcan 0, 0, 0, 0, 0, {!! $securityDevices !!}],
           value: {!! $securityDevices !!},
           url: "/admin/physical-security-devices"
         }, {
           label: "{!! trans('cruds.wan.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $wans !!}],
+          data: [@can('wan_access') 0, @endcan 0, 0, 0, 0, 0, {!! $wans !!}],
           value: {!! $wans !!},
           url: "/admin/wans"
         }, {
           label: "{!! trans('cruds.man.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $mans !!}],
+          data: [@can('man_access') 0, @endcan 0, 0, 0, 0, 0, {!! $mans !!}],
           value: {!! $mans !!},
           url: "/admin/mans"
         }, {
           label: "{!! trans('cruds.lan.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, 0, {!! $lans !!}],
+          data: [@can('lan_access') 0, @endcan 0, 0, 0, 0, 0, {!! $lans !!}],
           value: {!! $lans !!},
           url: "/admin/lans"
         }, {
           label: "{!! trans('cruds.vlan.title_short') !!}",
-          data: [@can('gdpr_access') 0, @endcan 0, 0, 0, 0, {!! $vlans !!}, 0],
+          data: [@can('vlan_access') 0, @endcan 0, 0, 0, 0, {!! $vlans !!}, 0],
           value: {!! $vlans !!},
           url: "/admin/vlans"
         }
@@ -569,6 +574,7 @@
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.bay.title') !!}" , num:{!! $bays !!}, url: "/admin/bays" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalServer.title_short') !!}", num:{!! $physicalServers !!}, url: "/admin/physical-servers" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.workstation.title') !!}" , num:{!! $workstations !!}, url: "/admin/workstations" },
+     {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.phone.title') !!}" , num:{!! $phones !!}, url: "/admin/phones" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.peripheral.title') !!}" , num:{!! $peripherals !!}, url: "/admin/peripherals" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.storageDevice.title_short') !!}" , num:{!! $storageDevices !!}, url: "/admin/storage-devices" },
      {group:"{!! trans('cruds.menu.physical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.physicalSwitch.title_short') !!}" , num:{!! $physicalSwitchs !!}, url: "/admin/physical-switches" },
