@@ -62,13 +62,7 @@ For detailed instructions, please refer to the installation guides:
 
 ### 🐳 Docker Installation
 
-Get up and running quickly using Docker. Start by pulling the latest Docker image:
-
-```bash
-docker pull ghcr.io/dbarzin/mercator:latest
-```
-
-Run a local instance in development mode:
+Get up and running quickly using Docker. Run a local instance in development mode:
 
 ```bash
 docker run -it --rm -e USE_DEMO_DATA=1 -p 8000:80 ghcr.io/dbarzin/mercator:latest
@@ -93,6 +87,9 @@ docker run -it --rm \
 ```
 
 Access your instance at [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+    user : admin@admin.com
+    password : password
 
 For a production-ready environment with HTTPS and automated setup, check out the [docker-compose](docker-compose/) folder.
 

@@ -62,18 +62,11 @@ Pour des instructions détaillées, veuillez vous référer aux guides d'install
 
 ### 🐳 Installation via Docker
 
-Démarrez rapidement avec Docker. Commencez par télécharger la dernière image Docker :
-
-```bash
-docker pull ghcr.io/dbarzin/mercator:latest
-```
-
-Exécutez une instance locale en mode développement :
+Démarrez rapidement avec Docker. Exécutez une instance locale en mode développement :
 
 ```bash
 docker run -it --rm -e USE_DEMO_DATA=1 -p 8000:80 ghcr.io/dbarzin/mercator:latest
 ```
-
 Pour rendre vos données persistantes avec SQLite :
 
 ```bash
@@ -93,6 +86,9 @@ docker run -it --rm \
 ```
 
 Accédez à votre instance via [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+    user : admin@admin.com
+    password : password
 
 Pour un environnement de production prêt à l'emploi avec HTTPS et une configuration automatisée, consultez le dossier [docker-compose](docker-compose/).
 
