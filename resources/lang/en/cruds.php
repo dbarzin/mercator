@@ -951,6 +951,8 @@ return [
     'physicalSecurityDevice' => [
         'description' => 'Component allowing network supervision, incident detection, equipment protection or having a function of securing the information system.',
         'fields' => [
+            'address_ip' => 'IP Adresses',
+            'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'bay' => 'Bay',
             'bay_helper' => '',
             'building' => 'Building / Room',

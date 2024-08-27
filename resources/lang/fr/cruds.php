@@ -958,6 +958,8 @@ return [
     'physicalSecurityDevice' => [
         'description' => 'Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
             'bay_helper' => 'Baie dans laquelle se trouve le dispositif',
             'building' => 'Bâtiment  / Salle',

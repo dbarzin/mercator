@@ -852,6 +852,19 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // Get Physical Security Devices
+            $physicalSecurityDevices = PhysicalSecurityDevices::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->address_ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
             // Get routers
             $routers = Router::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
@@ -942,6 +955,7 @@ class ReportController extends Controller
             $workstations = Workstation::All()->sortBy('name');
             $wifiTerminals = WifiTerminal::All()->sortBy('name');
             $phones = Phone::All()->sortBy('name');
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
             $peripherals = Peripheral::All()->sortBy('name');
             $routers = Router::All()->sortBy('name');
             $securityDevices = SecurityDevice::All()->sortBy('name');
@@ -965,6 +979,7 @@ class ReportController extends Controller
                 'networkSwitches',
                 'workstations',
                 'phones',
+                'physicalSecurityDevices',
                 'peripherals',
                 'wifiTerminals',
                 'routers',
