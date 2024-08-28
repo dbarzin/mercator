@@ -29,11 +29,12 @@ class StorageDevice extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'description',
+        'address_ip',
         'site_id',
         'building_id',
         'bay_id',
-        'physical_switch_id',
         'created_at',
         'updated_at',
         'deleted_at',

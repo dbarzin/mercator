@@ -8,15 +8,38 @@
             {{ trans('global.create') }} {{ trans('cruds.storageDevice.title_singular') }}
         </div>
         <div class="card-body">
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.storageDevice.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.storageDevice.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.storageDevice.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.storageDevice.fields.name_helper') }}</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="type">{{ trans('cruds.storageDevice.fields.type') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                            @if (!$type_list->contains(old('type')))
+                                <option> {{ old('type') }}</option>'
+                            @endif
+                            @foreach($type_list as $t)
+                                <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('type'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('type') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.storageDevice.fields.type_helper') }}</span>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">{{ trans('cruds.storageDevice.fields.description') }}</label>
@@ -27,6 +50,25 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.storageDevice.fields.description_helper') }}</span>
+            </div>
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+        </div>
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="address_ip">{{ trans('cruds.storageDevice.fields.address_ip') }}</label>
+                    <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip') }}">
+                    @if($errors->has('address_ip'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('address_ip') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.storageDevice.fields.address_ip_helper') }}</span>
+                </div>
             </div>
         </div>
         <!---------------------------------------------------------------------------------------------------->

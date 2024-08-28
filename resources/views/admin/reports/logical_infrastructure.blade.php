@@ -768,6 +768,72 @@
             @endif
             @endcan
 
+            @can('storage_device_access')
+            @if ($storageDevices->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.storageDevice.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.storageDevice.description") }}</p>
+                      @foreach($storageDevices as $storageDevice)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="STOR{{ $storageDevice->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/storageDevices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.storageDevice.fields.type") }}</th>
+                                    <td>{{ $storageDevice->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.description") }}</th>
+                                    <td>{!! $storageDevice->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.address_ip") }}</th>
+                                    <td>{{ $storageDevice->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
+                                    <td>
+                                        @if ($storageDevice->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $storageDevice->site_id) }}">{{ $storageDevice->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
+                                    <td>
+                                        @if ($storageDevice->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $storageDevice->building_id) }}">{{ $storageDevice->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
+                                    <td>
+                                        @if ($storageDevice->bay!=null)
+                                            <a href="{{ route('admin.bays.show', $storageDevice->bay_id) }}">{{ $storageDevice->bay->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+
+
             @can('wifi_terminal_access')
             @if ($wifiTerminals->count()>0)
             <div class="card">
@@ -1264,6 +1330,32 @@ digraph  {
     @endforeach
     @endcan
 
+    @can('storage_device_access')
+    @foreach($storageDevices as $storageDevice)
+        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
+        @foreach(explode(',',$storageDevice->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> STOR{{ $storageDevice->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
+    @can('peripheral_access')
+    @foreach($peripherals as $peripheral)
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        @foreach(explode(',',$peripheral->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
     @can('router_access')
     @foreach($routers as $router)
         R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
@@ -1309,6 +1401,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/workstation.png", "64px", "64px")
     .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/securitydevice.png", "64px", "64px")
+    .addImage("/images/storagedev.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")

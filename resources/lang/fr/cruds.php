@@ -1248,6 +1248,8 @@ return [
     'storageDevice' => [
         'description' => 'Support physique ou réseau de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
             'bay_helper' => '',
             'building' => 'Bâtiment / Salle',
@@ -1258,6 +1260,8 @@ return [
             'name_helper' => '',
             'site' => 'Site',
             'site_helper' => 'Site sur lequel se trouve le dispositif',
+            'type' => 'Type',
+            'type_helper' => '',
         ],
         'title' => 'Infrastructures de stockage',
         'title_short' => 'Stockage',

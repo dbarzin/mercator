@@ -853,7 +853,7 @@ class ReportController extends Controller
                 });
 
             // Get Physical Security Devices
-            $physicalSecurityDevices = PhysicalSecurityDevices::All()->sortBy('name')
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -881,7 +881,27 @@ class ReportController extends Controller
             // Get Security Devices
             $securityDevices = SecurityDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
-                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                    foreach (explode(',', $item->ip_addresses) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            // Get StorageDevices
+            $storageDevices = StorageDevice::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->ip_addresses) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 });
 
             // Get DHCP Servers
@@ -959,6 +979,7 @@ class ReportController extends Controller
             $peripherals = Peripheral::All()->sortBy('name');
             $routers = Router::All()->sortBy('name');
             $securityDevices = SecurityDevice::All()->sortBy('name');
+            $storageDevices = StorageDevice::All()->sortBy('name');
             $dhcpServers = DhcpServer::All()->sortBy('name');
             $dnsservers = Dnsserver::All()->sortBy('name');
             $clusters = Cluster::All()->sortBy('name');
@@ -984,6 +1005,7 @@ class ReportController extends Controller
                 'wifiTerminals',
                 'routers',
                 'securityDevices',
+                'storageDevices',
                 'dhcpServers',
                 'dnsservers',
                 'clusters',

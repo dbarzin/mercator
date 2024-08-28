@@ -174,11 +174,19 @@ class ExplorerController extends Controller
         }
 
         // Storage devices
-        $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'physical_switch_id')->whereNull('deleted_at')->get();
+        $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'address_ip')->whereNull('deleted_at')->get();
         foreach ($storageDevices as $storageDevice) {
-            $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices');
+            $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices', $storageDevice->address_ip);
             if ($storageDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('STORAGE_', $storageDevice->id), $this->formatId('BAY_', $storageDevice->bay_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $storageDevice->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('STORAGE_', $storageDevice->id));
+                        break;
+                    }
+                }
             }
         }
 

@@ -1242,6 +1242,8 @@ return [
     'storageDevice' => [
         'description' => 'Physical medium or data storage network: network storage server (NAS), storage network (SAN), hard drive, etc.',
         'fields' => [
+            'address_ip' => 'IP Adresses',
+            'address_ip_helper' => 'Filter : (IPv4|IPv6),...',
             'bay' => 'Bay',
             'bay_helper' => '',
             'building' => 'Building / Room',
@@ -1252,6 +1254,8 @@ return [
             'name_helper' => '',
             'site' => 'Site',
             'site_helper' => 'Site where the device is located',
+            'type' => 'Type',
+            'type_helper' => '',
         ],
         'title' => 'Storage infrastructure',
         'title_short' => 'Storage',
