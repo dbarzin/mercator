@@ -56,7 +56,6 @@ use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

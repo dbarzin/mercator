@@ -32,8 +32,10 @@ class PhoneController extends Controller
 
         $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.phones.create',
-            compact('sites', 'buildings','type_list'));
+        return view(
+            'admin.phones.create',
+            compact('sites', 'buildings', 'type_list')
+        );
     }
 
     public function store(StorePhoneRequest $request)
@@ -54,8 +56,10 @@ class PhoneController extends Controller
 
         $phone->load('site', 'building');
 
-        return view('admin.phones.edit',
-            compact('sites', 'buildings', 'type_list', 'phone',));
+        return view(
+            'admin.phones.edit',
+            compact('sites', 'buildings', 'type_list', 'phone', )
+        );
     }
 
     public function update(UpdatePhoneRequest $request, Phone $phone)

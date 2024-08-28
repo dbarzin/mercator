@@ -34,8 +34,10 @@ class StorageDeviceController extends Controller
 
         $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.storageDevices.create',
-            compact('sites', 'buildings', 'bays', 'type_list'));
+        return view(
+            'admin.storageDevices.create',
+            compact('sites', 'buildings', 'bays', 'type_list')
+        );
     }
 
     public function store(StoreStorageDeviceRequest $request)
@@ -57,8 +59,10 @@ class StorageDeviceController extends Controller
 
         $storageDevice->load('site', 'building', 'bay');
 
-        return view('admin.storageDevices.edit',
-            compact('sites', 'buildings', 'bays', 'type_list', 'storageDevice'));
+        return view(
+            'admin.storageDevices.edit',
+            compact('sites', 'buildings', 'bays', 'type_list', 'storageDevice')
+        );
     }
 
     public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)
