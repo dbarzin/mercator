@@ -41,7 +41,6 @@
             </div>
             <div class="row">
                 <div class="col">
-
                     <div class="form-group">
                         <label for="description">{{ trans('cruds.wifiTerminal.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $wifiTerminal->description) !!}</textarea>
@@ -70,7 +69,7 @@
                         {{ $errors->first('address_ip') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.workstation.fields.address_ip_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.wifiTerminal.fields.address_ip_helper') }}</span>
             </div>
         </div>
     </div>

@@ -106,15 +106,23 @@ class ExplorerController extends Controller
         }
 
         // Physical security devices
-        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
+        $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'physical-security-devices');
+            $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'physical-security-devices', $securityDevice->address_ip);
             if ($securityDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
             } elseif ($securityDevice->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BUILDING_', $securityDevice->building_id));
             } elseif ($securityDevice->site_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('SITE_', $securityDevice->site_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $securityDevice->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SECURITY_', $securityDevice->id));
+                        break;
+                    }
+                }
             }
         }
 
@@ -148,12 +156,37 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('APP_', $join->m_application_id), $this->formatId('PERIF_', $join->peripheral_id));
         }
 
+        // Phones
+        $phones = DB::table('phones')->select('id', 'name', 'address_ip', 'building_id')->whereNull('deleted_at')->get();
+        foreach ($phones as $phone) {
+            $this->addNode($nodes, 6, $this->formatId('PHONE_', $phone->id), $phone->name, '/images/phone.png', 'phones', $phone->address_ip);
+            if ($phone->building_id !== null) {
+                $this->addLinkEdge($edges, $this->formatId('PHONE_', $phone->id), $this->formatId('BUILDING_', $phone->building_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $phone->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PHONE_', $phone->id));
+                        break;
+                    }
+                }
+            }
+        }
+
         // Storage devices
-        $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'physical_switch_id')->whereNull('deleted_at')->get();
+        $storageDevices = DB::table('storage_devices')->select('id', 'name', 'bay_id', 'address_ip')->whereNull('deleted_at')->get();
         foreach ($storageDevices as $storageDevice) {
-            $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices');
+            $this->addNode($nodes, 6, $this->formatId('STORAGE_', $storageDevice->id), $storageDevice->name, '/images/storagedev.png', 'storage-devices', $storageDevice->address_ip);
             if ($storageDevice->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('STORAGE_', $storageDevice->id), $this->formatId('BAY_', $storageDevice->bay_id));
+            }
+            foreach ($subnetworks as $subnetwork) {
+                foreach (explode(',', $storageDevice->address_ip) as $address) {
+                    if ($subnetwork->contains($address)) {
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('STORAGE_', $storageDevice->id));
+                        break;
+                    }
+                }
             }
         }
 

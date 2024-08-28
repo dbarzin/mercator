@@ -20,8 +20,7 @@
                         <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.name_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-md-6">
-
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="type">{{ trans('cruds.physicalSecurityDevice.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -54,8 +53,32 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.description_helper') }}</span>
             </div>
-
-
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="address_ip">{{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}</label>
+                <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip') }}">
+                @if($errors->has('address_ip'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('address_ip') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.address_ip_helper') }}</span>
+            </div>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.physical_infrastructure.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -109,12 +132,12 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
         </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
     </div>
 </form>
 @endsection

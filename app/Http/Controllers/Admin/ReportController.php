@@ -56,7 +56,6 @@ use App\Task;
 use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-
 use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -826,8 +825,34 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // Get Phones
+            $phones = Phone::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->address_ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
             // Get peripherals
             $peripherals = Peripheral::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->address_ip) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            // Get Physical Security Devices
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
                     foreach (explode(',', $item->address_ip) as $ip) {
                         foreach ($subnetworks as $subnetwork) {
@@ -855,7 +880,27 @@ class ReportController extends Controller
             // Get Security Devices
             $securityDevices = SecurityDevice::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
-                    return $subnetworks->pluck('id')->contains($item->subnetwork_id);
+                    foreach (explode(',', $item->ip_addresses) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
+            // Get StorageDevices
+            $storageDevices = StorageDevice::All()->sortBy('name')
+                ->filter(function ($item) use ($subnetworks) {
+                    foreach (explode(',', $item->ip_addresses) as $ip) {
+                        foreach ($subnetworks as $subnetwork) {
+                            if ($subnetwork->contains($ip)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 });
 
             // Get DHCP Servers
@@ -928,9 +973,12 @@ class ReportController extends Controller
             $networkSwitches = NetworkSwitch::All()->sortBy('name');
             $workstations = Workstation::All()->sortBy('name');
             $wifiTerminals = WifiTerminal::All()->sortBy('name');
+            $phones = Phone::All()->sortBy('name');
+            $physicalSecurityDevices = PhysicalSecurityDevice::All()->sortBy('name');
             $peripherals = Peripheral::All()->sortBy('name');
             $routers = Router::All()->sortBy('name');
             $securityDevices = SecurityDevice::All()->sortBy('name');
+            $storageDevices = StorageDevice::All()->sortBy('name');
             $dhcpServers = DhcpServer::All()->sortBy('name');
             $dnsservers = Dnsserver::All()->sortBy('name');
             $clusters = Cluster::All()->sortBy('name');
@@ -950,10 +998,13 @@ class ReportController extends Controller
                 'externalConnectedEntities',
                 'networkSwitches',
                 'workstations',
+                'phones',
+                'physicalSecurityDevices',
                 'peripherals',
                 'wifiTerminals',
                 'routers',
                 'securityDevices',
+                'storageDevices',
                 'dhcpServers',
                 'dnsservers',
                 'clusters',

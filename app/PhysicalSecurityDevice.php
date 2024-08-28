@@ -32,6 +32,7 @@ class PhysicalSecurityDevice extends Model
         'name',
         'type',
         'description',
+        'address_ip',
         'site_id',
         'building_id',
         'bay_id',

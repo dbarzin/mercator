@@ -29,6 +29,9 @@
                             {{ trans('cruds.physicalSecurityDevice.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.physicalSecurityDevice.fields.site') }}
                         </th>
                         <th>
@@ -63,6 +66,9 @@
                             </td>
                             <td>
                                 {{ $physicalSecurityDevice->type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $physicalSecurityDevice->address_ip ?? '' }}
                             </td>
                             <td>
                                 @if($physicalSecurityDevice->site!=null)

@@ -29,12 +29,15 @@ class StorageDeviceController extends Controller
         abort_if(Gate::denies('storage_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.storageDevices.create', compact('sites', 'buildings', 'bays'));
+        $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view(
+            'admin.storageDevices.create',
+            compact('sites', 'buildings', 'bays', 'type_list')
+        );
     }
 
     public function store(StoreStorageDeviceRequest $request)
@@ -49,14 +52,17 @@ class StorageDeviceController extends Controller
         abort_if(Gate::denies('storage_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = StorageDevice::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
 
         $storageDevice->load('site', 'building', 'bay');
 
-        return view('admin.storageDevices.edit', compact('sites', 'buildings', 'bays', 'storageDevice'));
+        return view(
+            'admin.storageDevices.edit',
+            compact('sites', 'buildings', 'bays', 'type_list', 'storageDevice')
+        );
     }
 
     public function update(UpdateStorageDeviceRequest $request, StorageDevice $storageDevice)

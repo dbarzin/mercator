@@ -24,7 +24,6 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="type">{{ trans('cruds.wifiTerminal.fields.type') }}</label>
-
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                             @if (!$type_list->contains(old('type')))
                                 <option> {{ old('type') }}</option>'
@@ -33,8 +32,6 @@
                                 <option {{ old('type') == $t ? 'selected' : '' }}>{{$t}}</option>
                             @endforeach
                         </select>
-
-
                         @if($errors->has('type'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('type') }}
@@ -44,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="description">{{ trans('cruds.wifiTerminal.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>

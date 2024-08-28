@@ -26,7 +26,10 @@
                             {{ trans('cruds.storageDevice.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.storageDevice.fields.description') }}
+                            {{ trans('cruds.storageDevice.fields.type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.storageDevice.fields.address_ip') }}
                         </th>
                         <th>
                             {{ trans('cruds.storageDevice.fields.site') }}
@@ -54,16 +57,25 @@
                                 </a>
                             </td>
                             <td>
-                                {!! $storageDevice->description ?? '' !!}
+                                {!! $storageDevice->type ?? '' !!}
                             </td>
                             <td>
-                                {{ $storageDevice->site->name ?? '' }}
+                                {!! $storageDevice->address_ip ?? '' !!}
                             </td>
                             <td>
-                                {{ $storageDevice->building->name ?? '' }}
+                                @if ($storageDevice->site!==null)
+                                    <a href="{{ route('admin.sites.show', $storageDevice->site_id) }}">{{ $storageDevice->site->name }}</a>
+                                @endif
                             </td>
                             <td>
-                                {{ $storageDevice->bay->name ?? '' }}
+                                @if ($storageDevice->building!==null)
+                                    <a href="{{ route('admin.buildings.show', $storageDevice->building_id) }}">{{ $storageDevice->building->name }}</a>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($storageDevice->bay!==null)
+                                    <a href="{{ route('admin.bays.show', $storageDevice->bay_id) }}">{{ $storageDevice->bay->name }}</a>
+                                @endif
                             </td>
                             <td>
                                 @can('storage_device_show')

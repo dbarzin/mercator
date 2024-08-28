@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +23,11 @@ class UpdatePhysicalSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:physical_security_devices,name,' . request()->route('physical_security_device')->id,
                 'unique:physical_security_devices,name,'.request()->route('physical_security_device')->id.',id,deleted_at,NULL',
+            ],
+            'address_ip' => [
+                'nullable',
+                new IPList(),
             ],
         ];
     }

@@ -899,6 +899,8 @@ return [
     'phone' => [
         'description' => 'Téléphone ﬁxe ou portable appartenant à l’organisation.',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le téléphone',
             'description' => 'Description',
@@ -956,6 +958,8 @@ return [
     'physicalSecurityDevice' => [
         'description' => 'Composant permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
             'bay_helper' => 'Baie dans laquelle se trouve le dispositif',
             'building' => 'Bâtiment  / Salle',
@@ -1244,6 +1248,8 @@ return [
     'storageDevice' => [
         'description' => 'Support physique ou réseau de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…',
         'fields' => [
+            'address_ip' => 'Adresse IP',
+            'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
             'bay' => 'Baie',
             'bay_helper' => '',
             'building' => 'Bâtiment / Salle',
@@ -1254,6 +1260,8 @@ return [
             'name_helper' => '',
             'site' => 'Site',
             'site_helper' => 'Site sur lequel se trouve le dispositif',
+            'type' => 'Type',
+            'type_helper' => '',
         ],
         'title' => 'Infrastructures de stockage',
         'title_short' => 'Stockage',

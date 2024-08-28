@@ -656,6 +656,184 @@
             @endif
             @endcan
 
+            @can('phone_access')
+            @if ($phones->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.phone.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.phones.description") }}</p>
+                      @foreach($phones as $phone)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="PHONE{{ $phone->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/phones/{{ $phone->id }}">{{ $phone->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.phone.fields.type") }}</th>
+                                    <td>{{ $phone->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.description") }}</th>
+                                    <td>{!! $phone->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.address_ip") }}</th>
+                                    <td>{{ $phone->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.site") }}</th>
+                                    <td>
+                                        @if ($phone->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $phone->site_id) }}">{{ $phone->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.phone.fields.building") }}</th>
+                                    <td>
+                                        @if ($phone->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $phone->building_id) }}">{{ $phone->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+            @can('physical_security_device_access')
+            @if ($physicalSecurityDevices->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.physicalSecurityDevice.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.physicalSecurityDevice.description") }}</p>
+                      @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="SECURITY{{ $physicalSecurityDevice->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/physical-security-devices/{{ $physicalSecurityDevice->id }}">{{ $physicalSecurityDevice->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.physicalSecurityDevice.fields.type") }}</th>
+                                    <td>{{ $physicalSecurityDevice->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.description") }}</th>
+                                    <td>{!! $physicalSecurityDevice->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.address_ip") }}</th>
+                                    <td>{{ $physicalSecurityDevice->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.site") }}</th>
+                                    <td>
+                                        @if ($physicalSecurityDevice->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $physicalSecurityDevice->site_id) }}">{{ $physicalSecurityDevice->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.physicalSecurityDevice.fields.building") }}</th>
+                                    <td>
+                                        @if ($physicalSecurityDevice->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $physicalSecurityDevice->building_id) }}">{{ $physicalSecurityDevice->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+            @can('storage_device_access')
+            @if ($storageDevices->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.storageDevice.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.storageDevice.description") }}</p>
+                      @foreach($storageDevices as $storageDevice)
+                      <div class="row">
+                        <div class="col-sm-6">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead id="STOR{{ $storageDevice->id }}">
+                                    <th colspan="2">
+                                        <a href="/admin/storageDevices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th width="20%">{{ trans("cruds.storageDevice.fields.type") }}</th>
+                                    <td>{{ $storageDevice->type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.description") }}</th>
+                                    <td>{!! $storageDevice->description !!}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.address_ip") }}</th>
+                                    <td>{{ $storageDevice->address_ip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.site") }}</th>
+                                    <td>
+                                        @if ($storageDevice->site_id!==null)
+                                            <a href="{{ route('admin.sites.show', $storageDevice->site_id) }}">{{ $storageDevice->site->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.building") }}</th>
+                                    <td>
+                                        @if ($storageDevice->building!=null)
+                                            <a href="{{ route('admin.buildings.show', $storageDevice->building_id) }}">{{ $storageDevice->building->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ trans("cruds.storageDevice.fields.bay") }}</th>
+                                    <td>
+                                        @if ($storageDevice->bay!=null)
+                                            <a href="{{ route('admin.bays.show', $storageDevice->bay_id) }}">{{ $storageDevice->bay->name }}</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
+
+
             @can('wifi_terminal_access')
             @if ($wifiTerminals->count()>0)
             <div class="card">
@@ -1112,6 +1290,33 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
+    @can('phone_access')
+    @foreach($phones as $phone)
+        PHONE{{ $phone->id }} [label="{{ $phone->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($phone->address_ip!=null) ? '1.5' :'1.1' }} image="/images/phone.png" href="#PHONE{{$phone->id}}"]
+        @foreach(explode(',',$phone->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> PHONE{{ $phone->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
+    @can('physical_security_device_access')
+    @foreach($physicalSecurityDevices as $physicalSecurityDevice)
+        SECURITY{{ $physicalSecurityDevice->id }} [label="{{ $physicalSecurityDevice->name }} {{ Session::get('show_ip') ? chr(13) . $phone->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($physicalSecurityDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/securitydevice.png" href="#SECURITY{{$physicalSecurityDevice->id}}"]
+        @foreach(explode(',',$physicalSecurityDevice->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> SECURITY{{ $physicalSecurityDevice->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
     @can('peripheral_access')
     @foreach($peripherals as $peripheral)
         PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
@@ -1124,6 +1329,33 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
+    @can('storage_device_access')
+    @foreach($storageDevices as $storageDevice)
+        STOR{{ $storageDevice->id }} [label="{{ $storageDevice->name }} {{ Session::get('show_ip') ? chr(13) . $storageDevice->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($storageDevice->address_ip!=null) ? '1.5' :'1.1' }} image="/images/storagedev.png" href="#STOR{{$storageDevice->id}}"]
+        @foreach(explode(',',$storageDevice->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> STOR{{ $storageDevice->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
+    @can('peripheral_access')
+    @foreach($peripherals as $peripheral)
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }} {{ Session::get('show_ip') ? chr(13) . $peripheral->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        @foreach(explode(',',$peripheral->address_ip) as $address)
+            @foreach($subnetworks as $subnetwork)
+                @if ($subnetwork->contains($address))
+                    SUBNET{{ $subnetwork->id }} -> PER{{ $peripheral->id }}
+                @endif
+            @endforeach
+        @endforeach
+    @endforeach
+    @endcan
+
     @can('router_access')
     @foreach($routers as $router)
         R{{ $router->id }} [label="{{ $router->name }} {{ Session::get('show_ip') ? chr(13) . $router->ip_addresses : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($router->ip_addresses!=null) ? '1.5' :'1.1' }} image="/images/router.png" href="#ROUTER{{$router->id}}"]
@@ -1136,6 +1368,7 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
     @can('network_switch_access')
     @foreach($networkSwitches as $networkSwitch)
         SW{{ $networkSwitch->id }} [label="{{ $networkSwitch->name }} {{ Session::get('show_ip') ? chr(13) . $networkSwitch->ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($networkSwitch->ip!=null) ? '1.5' :'1.1' }} image="/images/switch.png" href="#SW{{$networkSwitch->id}}"]
@@ -1166,6 +1399,9 @@ d3.select("#graph").graphviz()
     .addImage("/images/cluster.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
+    .addImage("/images/phone.png", "64px", "64px")
+    .addImage("/images/securitydevice.png", "64px", "64px")
+    .addImage("/images/storagedev.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")

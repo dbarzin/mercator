@@ -27,8 +27,6 @@ class StorageDeviceController extends Controller
         abort_if(Gate::denies('storage_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $storagedevice = StorageDevice::create($request->all());
-        // syncs
-        // $storagedevice->roles()->sync($request->input('roles', []));
 
         return response()->json($storagedevice, 201);
     }
@@ -47,8 +45,6 @@ class StorageDeviceController extends Controller
         abort_if(Gate::denies('storage_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $storageDevice->update($request->all());
-        // syncs
-        // $storageDevice->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
