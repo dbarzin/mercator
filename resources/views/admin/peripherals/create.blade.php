@@ -9,28 +9,19 @@
         {{ trans('global.create') }} {{ trans('cruds.peripheral.title_singular') }}
     </div>
     <div class="card-body">
-        <div class="form-group">
-            <label class="required" for="name">{{ trans('cruds.peripheral.fields.name') }}</label>
-            <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-            @if($errors->has('name'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.peripheral.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.peripheral.fields.name_helper') }}</span>
+                    </div>
                 </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.peripheral.fields.name_helper') }}</span>
-        </div>
-
-        <div class="form-group">
-            <label for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
-            <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
-            @if($errors->has('description'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('description') }}
-                </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.peripheral.fields.description_helper') }}</span>
-        </div>
-        <div class="row">
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="domain">{{ trans('cruds.peripheral.fields.domain') }}</label>
@@ -51,9 +42,7 @@
                     <span class="help-block">{{ trans('cruds.peripheral.fields.domain_helper') }}</span>
                 </div>
             </div>
-
-            <div class="col-md-10">
-
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="type">{{ trans('cruds.peripheral.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('domain') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -72,6 +61,17 @@
                     <span class="help-block">{{ trans('cruds.peripheral.fields.type_helper') }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
+            <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
+            @if($errors->has('description'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('description') }}
+                </div>
+            @endif
+            <span class="help-block">{{ trans('cruds.peripheral.fields.description_helper') }}</span>
         </div>
 
     </div>
