@@ -23,7 +23,7 @@
                     <span class="help-block">{{ trans('cruds.physicalServer.fields.name_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="type">{{ trans('cruds.physicalServer.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">

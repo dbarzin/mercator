@@ -23,22 +23,7 @@
                     <span class="help-block">{{ trans('cruds.peripheral.fields.name_helper') }}</span>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $peripheral->description) !!}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.peripheral.fields.description_helper') }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
+
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="type">{{ trans('cruds.peripheral.fields.domain') }}</label>
@@ -60,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="col-md-10">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="type">{{ trans('cruds.peripheral.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -77,6 +62,22 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.peripheral.fields.type_helper') }}</span>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="description">{{ trans('cruds.peripheral.fields.description') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $peripheral->description) !!}</textarea>
+                    @if($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.peripheral.fields.description_helper') }}</span>
                 </div>
             </div>
         </div>

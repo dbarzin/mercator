@@ -31,30 +31,28 @@
                     <th width="10%">
                         {{ trans('cruds.peripheral.fields.name') }}
                     </th>
-                    <td colspan='3'>
+                    <td width="40%">
                         {{ $peripheral->name }}
+                    </td>
+                    <th width="10%">
+                        {{ trans('cruds.peripheral.fields.domain') }}
+                    </th>
+                    <td width="10%">
+                        {{ $peripheral->domain }}
+                    </td>
+                    <th width="10%">
+                        {{ trans('cruds.peripheral.fields.type') }}
+                    </th>
+                    <td width="10%">
+                        {{ $peripheral->type }}
                     </td>
                 </tr>
                 <tr>
                     <th>
                         {{ trans('cruds.peripheral.fields.description') }}
                     </th>
-                    <td colspan='3'>
+                    <td colspan='5'>
                         {!! $peripheral->description !!}
-                    </td>
-                </tr>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.peripheral.fields.domain') }}
-                    </th>
-                    <td  width="20%">
-                        {{ $peripheral->domain }}
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.peripheral.fields.type') }}
-                    </th>
-                    <td  width="60%">
-                        {{ $peripheral->type }}
                     </td>
                 </tr>
             </tbody>
