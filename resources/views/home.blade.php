@@ -205,9 +205,7 @@
       data: {
         mode: 'single',
         labels: [
-          @can('gdpr_access')
             "{!! trans('cruds.menu.gdpr.title_short') !!}",
-          @endcan
             "{!! trans('cruds.menu.ecosystem.title_short') !!}",
             "{!! trans('cruds.menu.metier.title_short') !!}",
             "{!! trans('cruds.menu.application.title_short') !!}",
@@ -216,13 +214,16 @@
             "{!! trans('cruds.menu.physical_infrastructure.title_short') !!}",
             ],
         datasets: [
-        @can('gdpr_access')
+        @can('data_processing_register_access')
         {
           label: "{!! trans('cruds.dataProcessing.title') !!}",
           data: [ {!! $data_processing !!}, 0, 0, 0, 0, 0, 0],
           value: {!! $data_processing !!},
           url: "/admin/data-processing"
-        }, {
+        },
+        @endcan
+        @can('security_controls_access')
+        {
           label: "{!! trans('cruds.securityControl.title_short') !!}",
           data: [{!! $security_controls !!}, 0, 0, 0, 0, 0, 0],
           value: {!! $security_controls !!},
@@ -588,7 +589,7 @@
           value: {!! $vlans !!},
           url: "/admin/vlans"
         }
-        @endcan 
+        @endcan
       ]},
       options: {
         hover: {
