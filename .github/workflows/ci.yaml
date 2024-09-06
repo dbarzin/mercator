@@ -69,16 +69,18 @@ jobs:
 
       - name: Check code quality
         run: |
-          php artisan insights
+          php artisan insights -s
 
-      - name: Upgrade Chrome Driver
+      - name: Install Chrome Driver
         run: php artisan dusk:chrome-driver 128
 
-      - name: Start Chrome Driver Version
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
+      - name: Check Chrome Driver Version
+        run: |
+            chmod +x ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver &&
+            ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver -v
 
       - name: Start Chrome Driver
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver &
 
       - name: Run Laravel Server
         run: php artisan serve --no-reload &
