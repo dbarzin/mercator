@@ -29,8 +29,18 @@ Route::get('/cytoscape3', function () {
     return view('cytoscape3');
 });
 
-Auth::routes();
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
+// Authentification routes
+Auth::routes([
+    'login' => true,
+    'logout' => true,
+    'register' => false, // Désactiver l'inscription
+    'reset' => true,
+    'confirm' => false, // Désactiver la confirmation de mot de passe
+    'verify' => false, // Désactiver la vérification par e-mail
+]);
+// Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
+
+// keycloak
 Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class,'redirectToKeycloak'])->name('login.keycloak');
 Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::class,'handleKeycloakCallback']);
 
