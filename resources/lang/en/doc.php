@@ -12,7 +12,7 @@ return [
         'p1' => 'Computer attacks occur in constantly changing environments. To meet these challenges, it is necessary to put in place a comprehensive risk management approach within the organization.',
         'p2' => 'The mapping of the Information System provides a global view of all the elements that make up the information system to obtain better readability, and therefore better control.',
         'p3' => 'The development of a map contributes to the protection, defense and resilience of the information system. It is an essential tool for mastering its information system (IS) and is an obligation for Operators of Vital Importance (OIV) and which is part of a comprehensive risk management approach.',
-        'p4' => "The guide \" <a href='https://www.ssi.gouv.fr/en/guide/mapping-the-information-system/' target='new'>Mapping the information system - Five-step development guide</a> \" published by ANSSI describes the implementation of this process.",
+        'p4' => "The guide \" <a href='https://cyber.gouv.fr/en/publications/mapping-information-system' target='new'>Mapping the information system - Five-step development guide</a> \" published by ANSSI describes the implementation of this process.",
         'title' => 'Guide',
     ],
 ];
