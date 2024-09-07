@@ -8,7 +8,7 @@
     <title>Data model - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,12 +17,11 @@
         var mkdocs_page_url = "/mercator/model/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -34,7 +33,7 @@
           <a href=".." class="icon icon-home"> Mercator
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -57,7 +56,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Data model</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Data model</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#rgpd-view">RGPD view</a>
         <ul>
@@ -215,8 +214,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Data model</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Data model</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/model.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -240,71 +239,71 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Treatment name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Treatment name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of treatment</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of treatment</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">longtext</td>
-<td align="left">Responsable du traitement</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Responsable du traitement</td>
 </tr>
 <tr>
-<td align="left">purpose</td>
-<td align="left">longtext</td>
-<td align="left">Purposes of processing</td>
+<td style="text-align: left;">purpose</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Purposes of processing</td>
 </tr>
 <tr>
-<td align="left">categories</td>
-<td align="left">longtext</td>
-<td align="left">Categories of recipients</td>
+<td style="text-align: left;">categories</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Categories of recipients</td>
 </tr>
 <tr>
-<td align="left">recipients</td>
-<td align="left">longtext</td>
-<td align="left">Data recipients</td>
+<td style="text-align: left;">recipients</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Data recipients</td>
 </tr>
 <tr>
-<td align="left">transfer</td>
-<td align="left">longtext</td>
-<td align="left">Data transfers</td>
+<td style="text-align: left;">transfer</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Data transfers</td>
 </tr>
 <tr>
-<td align="left">retention</td>
-<td align="left">longtext</td>
-<td align="left">Retention periods</td>
+<td style="text-align: left;">retention</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Retention periods</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -315,41 +314,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">measure name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">measure name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">measure description</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">measure description</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -364,76 +363,76 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">Unique identifier of the entity</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Unique identifier of the entity</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of entity</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Name of entity</td>
 </tr>
 <tr>
-<td align="left">entity_type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type of entity</td>
+<td style="text-align: left;">entity_type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type of entity</td>
 </tr>
 <tr>
-<td align="left">attributes</td>
-<td align="left">varchar(255)</td>
-<td align="left">Attributes (#tag...)</td>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributes (#tag...)</td>
 </tr>
 <tr>
-<td align="left">reference</td>
-<td align="left">varchar(255)</td>
-<td align="left">Reference number of the entity (billing)</td>
+<td style="text-align: left;">reference</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Reference number of the entity (billing)</td>
 </tr>
 <tr>
-<td align="left">parent_entity_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Pointer to the parent entity</td>
+<td style="text-align: left;">parent_entity_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Pointer to the parent entity</td>
 </tr>
 <tr>
-<td align="left">is_external</td>
-<td align="left">boolean</td>
-<td align="left">External entity</td>
+<td style="text-align: left;">is_external</td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">External entity</td>
 </tr>
 <tr>
-<td align="left">security_level</td>
-<td align="left">longtext</td>
-<td align="left">Security level</td>
+<td style="text-align: left;">security_level</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Security level</td>
 </tr>
 <tr>
-<td align="left">contact_point</td>
-<td align="left">longtext</td>
-<td align="left">Contact point</td>
+<td style="text-align: left;">contact_point</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Contact point</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Entity description</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Entity description</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -444,121 +443,121 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Relationship name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Relationship name</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type of relationship</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type of relationship</td>
 </tr>
 <tr>
-<td align="left">attributes</td>
-<td align="left">varchar(255)</td>
-<td align="left">Attributes (#tag...)</td>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributes (#tag...)</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of relationship</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of relationship</td>
 </tr>
 <tr>
-<td align="left">source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to source entity</td>
+<td style="text-align: left;">source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Reference to source entity</td>
 </tr>
 <tr>
-<td align="left">destination_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to destination entity</td>
+<td style="text-align: left;">destination_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Reference to destination entity</td>
 </tr>
 <tr>
-<td align="left">reference</td>
-<td align="left">varchar(255)</td>
-<td align="left">Reference number of the relation (billing)</td>
+<td style="text-align: left;">reference</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Reference number of the relation (billing)</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsible of the relation</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsible of the relation</td>
 </tr>
 <tr>
-<td align="left">order_number</td>
-<td align="left">varchar(255)</td>
-<td align="left">Ordre number (billing)</td>
+<td style="text-align: left;">order_number</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Ordre number (billing)</td>
 </tr>
 <tr>
-<td align="left">active</td>
-<td align="left">tinyint(1)</td>
-<td align="left">Is the reation still active</td>
+<td style="text-align: left;">active</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Is the reation still active</td>
 </tr>
 <tr>
-<td align="left">start_date</td>
-<td align="left">date</td>
-<td align="left">Start date of the relation</td>
+<td style="text-align: left;">start_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Start date of the relation</td>
 </tr>
 <tr>
-<td align="left">end_date</td>
-<td align="left">date</td>
-<td align="left">End date of the relation</td>
+<td style="text-align: left;">end_date</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">End date of the relation</td>
 </tr>
 <tr>
-<td align="left">comments</td>
-<td align="left">text</td>
-<td align="left">Comment on the status of the relation</td>
+<td style="text-align: left;">comments</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Comment on the status of the relation</td>
 </tr>
 <tr>
-<td align="left">importance</td>
-<td align="left">int</td>
-<td align="left">Importance of relationship</td>
+<td style="text-align: left;">importance</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Importance of relationship</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentiality level need</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentiality level need</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity level need</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Integrity level need</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Available level need</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Available level need</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Tracability level need</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Tracability level need</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date updated</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -572,71 +571,71 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of macro process</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Name of macro process</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of macro-process</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of macro-process</td>
 </tr>
 <tr>
-<td align="left">io_elements</td>
-<td align="left">longtext</td>
-<td align="left">Incoming and outgoing elements</td>
+<td style="text-align: left;">io_elements</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Incoming and outgoing elements</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Privacy</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Privacy</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Owner</td>
+<td style="text-align: left;">owner</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Owner</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -647,76 +646,76 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">identifier</td>
-<td align="left">varchar(255)</td>
-<td align="left">Process name</td>
+<td style="text-align: left;">identifier</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Process name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Process description</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Process description</td>
 </tr>
 <tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Process owner</td>
+<td style="text-align: left;">owner</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Process owner</td>
 </tr>
 <tr>
-<td align="left">in_out</td>
-<td align="left">longtext</td>
-<td align="left">incoming and outgoing elements</td>
+<td style="text-align: left;">in_out</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">incoming and outgoing elements</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentiality</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
-<td align="left">macroprocess_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Reference to macro-process</td>
+<td style="text-align: left;">macroprocess_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Reference to macro-process</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -726,41 +725,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">activity name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">activity name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Activity description</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Activity description</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -770,41 +769,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of operation</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Name of operation</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of operation</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of operation</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of update</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -814,41 +813,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Task name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Task name</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Task description</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Task description</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">creation date</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">creation date</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date updated</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -858,51 +857,51 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">actor's name</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">actor's name</td>
 </tr>
 <tr>
-<td align="left">nature</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nature of actor</td>
+<td style="text-align: left;">nature</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nature of actor</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type of actor</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type of actor</td>
 </tr>
 <tr>
-<td align="left">contact</td>
-<td align="left">varchar(255)</td>
-<td align="left">Actor contact</td>
+<td style="text-align: left;">contact</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Actor contact</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date created</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date created</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date updated</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date updated</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -912,86 +911,86 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of information</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Name of information</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of information</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of information</td>
 </tr>
 <tr>
-<td align="left">owner</td>
-<td align="left">varchar(255)</td>
-<td align="left">Owner of information</td>
+<td style="text-align: left;">owner</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Owner of information</td>
 </tr>
 <tr>
-<td align="left">administrator</td>
-<td align="left">varchar(255)</td>
-<td align="left">Information administrator</td>
+<td style="text-align: left;">administrator</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Information administrator</td>
 </tr>
 <tr>
-<td align="left">storage</td>
-<td align="left">varchar(255)</td>
-<td align="left">Information storage</td>
+<td style="text-align: left;">storage</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Information storage</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentiality</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Integrity</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Availability</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traceability</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
-<td align="left">sensitivity</td>
-<td align="left">varchar(255)</td>
-<td align="left">Sensitivity of information</td>
+<td style="text-align: left;">sensitivity</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Sensitivity of information</td>
 </tr>
 <tr>
-<td align="left">constraints</td>
-<td align="left">longtext</td>
-<td align="left">Legal and regulatory constraints</td>
+<td style="text-align: left;">constraints</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Legal and regulatory constraints</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1006,46 +1005,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Name of information</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Name of information</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description of application block</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description of application block</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsible for application block</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsible for application block</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of creation</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date of deletion</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1057,116 +1056,116 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'application</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'application</td>
 </tr>
 <tr>
-<td align="left">version</td>
-<td align="left">varchar(255)</td>
-<td align="left">Version de l'application</td>
+<td style="text-align: left;">version</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Version de l'application</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'application</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'application</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentialité</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentialité</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Intégrité</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Intégrité</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Disponibilité</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Disponibilité</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traçabilité</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type d'application</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type d'application</td>
 </tr>
 <tr>
-<td align="left">technology</td>
-<td align="left">varchar(255)</td>
-<td align="left">Technologie</td>
+<td style="text-align: left;">technology</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Technologie</td>
 </tr>
 <tr>
-<td align="left">external</td>
-<td align="left">varchar(255)</td>
-<td align="left">Externe</td>
+<td style="text-align: left;">external</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Externe</td>
 </tr>
 <tr>
-<td align="left">users</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nombre d'utilisateurs et type</td>
+<td style="text-align: left;">users</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nombre d'utilisateurs et type</td>
 </tr>
 <tr>
-<td align="left">documentation</td>
-<td align="left">varchar(255)</td>
-<td align="left">Lien vers la documentation</td>
+<td style="text-align: left;">documentation</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Lien vers la documentation</td>
 </tr>
 <tr>
-<td align="left">entity_resp_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Entité responsable de l'exploitation</td>
+<td style="text-align: left;">entity_resp_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Entité responsable de l'exploitation</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de l'application</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'application</td>
 </tr>
 <tr>
-<td align="left">application_block_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers la bloc applicatif</td>
+<td style="text-align: left;">application_block_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers la bloc applicatif</td>
 </tr>
 <tr>
-<td align="left">install_date</td>
-<td align="left">datetime</td>
-<td align="left">Date d'installation de l'application</td>
+<td style="text-align: left;">install_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date d'installation de l'application</td>
 </tr>
 <tr>
-<td align="left">update_date</td>
-<td align="left">datetime</td>
-<td align="left">Date de mise à jour de l'application</td>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date de mise à jour de l'application</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1177,46 +1176,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du service applicatif</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du service applicatif</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du service applicatif</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du service applicatif</td>
 </tr>
 <tr>
-<td align="left">exposition</td>
-<td align="left">varchar(255)</td>
-<td align="left">Exposition du service applicatif</td>
+<td style="text-align: left;">exposition</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Exposition du service applicatif</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1226,41 +1225,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du service applicatif</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du service applicatif</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du module applicatif</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du module applicatif</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1270,81 +1269,81 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du service applicatif</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du service applicatif</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du module applicatif</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du module applicatif</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de l'application</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'application</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de l'application</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'application</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentialité</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentialité</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Intégrité</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Intégrité</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Disponibilité</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Disponibilité</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traçabilité</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
-<td align="left">external</td>
-<td align="left">varchar(255)</td>
-<td align="left">Externe</td>
+<td style="text-align: left;">external</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Externe</td>
 </tr>
 <tr>
-<td align="left">entity_resp_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Entité responsable</td>
+<td style="text-align: left;">entity_resp_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Entité responsable</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1356,91 +1355,91 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du flux</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du flux</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du flux</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du flux</td>
 </tr>
 <tr>
-<td align="left">application_source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers l'application source</td>
+<td style="text-align: left;">application_source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers l'application source</td>
 </tr>
 <tr>
-<td align="left">service_source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le service source</td>
+<td style="text-align: left;">service_source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le service source</td>
 </tr>
 <tr>
-<td align="left">module_source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le module source</td>
+<td style="text-align: left;">module_source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le module source</td>
 </tr>
 <tr>
-<td align="left">database_source_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vars la base de données source</td>
+<td style="text-align: left;">database_source_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vars la base de données source</td>
 </tr>
 <tr>
-<td align="left">application_dest_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers l'application destinataire</td>
+<td style="text-align: left;">application_dest_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers l'application destinataire</td>
 </tr>
 <tr>
-<td align="left">service_dest_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le service destinataire</td>
+<td style="text-align: left;">service_dest_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le service destinataire</td>
 </tr>
 <tr>
-<td align="left">module_dest_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le module destinataire</td>
+<td style="text-align: left;">module_dest_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le module destinataire</td>
 </tr>
 <tr>
-<td align="left">database_dest_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers la basede données destinataire</td>
+<td style="text-align: left;">database_dest_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers la basede données destinataire</td>
 </tr>
 <tr>
-<td align="left">crypted</td>
-<td align="left">tinyint(1)</td>
-<td align="left">Le flux est chiffré (1=oui, O=non)</td>
+<td style="text-align: left;">crypted</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Le flux est chiffré (1=oui, O=non)</td>
 </tr>
 <tr>
-<td align="left">bidirectional</td>
-<td align="left">tinyint(1)</td>
-<td align="left">Le flux est bidirectionnel (1=oui, O=non)</td>
+<td style="text-align: left;">bidirectional</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Le flux est bidirectionnel (1=oui, O=non)</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1455,41 +1454,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la zone</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la zone</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la zone</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de la zone</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1500,51 +1499,51 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'annuaire</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'annuaire</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'annuaire</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'annuaire</td>
 </tr>
 <tr>
-<td align="left">solution</td>
-<td align="left">varchar(255)</td>
-<td align="left">Solution technique</td>
+<td style="text-align: left;">solution</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Solution technique</td>
 </tr>
 <tr>
-<td align="left">zone_admin_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers la zone d'administration</td>
+<td style="text-align: left;">zone_admin_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers la zone d'administration</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1554,46 +1553,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la forêt Active Directory ou de l'arborescence LDAP</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la forêt Active Directory ou de l'arborescence LDAP</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la forêt Active Directory ou de l'arborescence LDAP</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de la forêt Active Directory ou de l'arborescence LDAP</td>
 </tr>
 <tr>
-<td align="left">zone_admin_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers la zone d'administration</td>
+<td style="text-align: left;">zone_admin_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers la zone d'administration</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1607,76 +1606,76 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du réseau</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du réseau</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du réseau</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du réseau</td>
 </tr>
 <tr>
-<td align="left">protocol_type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Protocoles utilisés</td>
+<td style="text-align: left;">protocol_type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Protocoles utilisés</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de l'exploitation</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'exploitation</td>
 </tr>
 <tr>
-<td align="left">responsible_sec</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de la sécurité</td>
+<td style="text-align: left;">responsible_sec</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de la sécurité</td>
 </tr>
 <tr>
-<td align="left">security_need_c</td>
-<td align="left">int</td>
-<td align="left">Confidentialité</td>
+<td style="text-align: left;">security_need_c</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Confidentialité</td>
 </tr>
 <tr>
-<td align="left">security_need_i</td>
-<td align="left">int</td>
-<td align="left">Intégrité</td>
+<td style="text-align: left;">security_need_i</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Intégrité</td>
 </tr>
 <tr>
-<td align="left">security_need_a</td>
-<td align="left">int</td>
-<td align="left">Disponibilité</td>
+<td style="text-align: left;">security_need_a</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Disponibilité</td>
 </tr>
 <tr>
-<td align="left">security_need_t</td>
-<td align="left">int</td>
-<td align="left">Traçabilité</td>
+<td style="text-align: left;">security_need_t</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Traçabilité</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1686,96 +1685,96 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du réseau</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du réseau</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du réseau</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du réseau</td>
 </tr>
 <tr>
-<td align="left">address</td>
-<td align="left">varchar(255)</td>
-<td align="left">Range d'adresse du sous-réseau</td>
+<td style="text-align: left;">address</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Range d'adresse du sous-réseau</td>
 </tr>
 <tr>
-<td align="left">default_gateway</td>
-<td align="left">varchar(255)</td>
-<td align="left">Adresse de la passerelle par défaut</td>
+<td style="text-align: left;">default_gateway</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse de la passerelle par défaut</td>
 </tr>
 <tr>
-<td align="left">ip_allocation_type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type d'allocation des adresses</td>
+<td style="text-align: left;">ip_allocation_type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type d'allocation des adresses</td>
 </tr>
 <tr>
-<td align="left">responsible_exp</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de l'exploitation</td>
+<td style="text-align: left;">responsible_exp</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de l'exploitation</td>
 </tr>
 <tr>
-<td align="left">zone</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la zone firewall associée</td>
+<td style="text-align: left;">zone</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la zone firewall associée</td>
 </tr>
 <tr>
-<td align="left">dmz</td>
-<td align="left">varchar(255)</td>
-<td align="left"></td>
+<td style="text-align: left;">dmz</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
-<td align="left">wifi</td>
-<td align="left">varchar(255)</td>
-<td align="left"></td>
+<td style="text-align: left;">wifi</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
-<td align="left">connected_subnets_id</td>
-<td align="left">int unsigned</td>
-<td align="left"></td>
+<td style="text-align: left;">connected_subnets_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr>
-<td align="left">gateway_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vars la passerelle</td>
+<td style="text-align: left;">gateway_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vars la passerelle</td>
 </tr>
 <tr>
-<td align="left">vlan_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le VLAN associé</td>
+<td style="text-align: left;">vlan_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le VLAN associé</td>
 </tr>
 <tr>
-<td align="left">network_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Lien vers le réseau associé</td>
+<td style="text-align: left;">network_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Lien vers le réseau associé</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1785,51 +1784,51 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la passerelle</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la passerelle</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la passerelle</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de la passerelle</td>
 </tr>
 <tr>
-<td align="left">ip</td>
-<td align="left">varchar(255)</td>
-<td align="left">Adress IP de la passerelle</td>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adress IP de la passerelle</td>
 </tr>
 <tr>
-<td align="left">authentification</td>
-<td align="left">varchar(255)</td>
-<td align="left">Mode d'authentification</td>
+<td style="text-align: left;">authentification</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Mode d'authentification</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1839,51 +1838,51 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'entité</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'entité</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'entié</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'entié</td>
 </tr>
 <tr>
-<td align="left">responsible_sec</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable de la sécurité de l'entité</td>
+<td style="text-align: left;">responsible_sec</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable de la sécurité de l'entité</td>
 </tr>
 <tr>
-<td align="left">contacts</td>
-<td align="left">varchar(255)</td>
-<td align="left">Contactes de l'entité</td>
+<td style="text-align: left;">contacts</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Contactes de l'entité</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1893,46 +1892,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du commutateur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du commutateur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du commutateur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du commutateur</td>
 </tr>
 <tr>
-<td align="left">ip</td>
-<td align="left">varchar(255)</td>
-<td align="left">Adresse IP du commutateur</td>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresse IP du commutateur</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1942,46 +1941,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du routeur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du routeur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du routeur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du routeur</td>
 </tr>
 <tr>
-<td align="left">rules</td>
-<td align="left">longtext</td>
-<td align="left">Règles de filtrage</td>
+<td style="text-align: left;">rules</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Règles de filtrage</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -1992,41 +1991,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'équipement</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'équipement</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'équipement</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'équipement</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2036,41 +2035,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du serveur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du serveur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du serveur</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2080,41 +2079,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du serveur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du serveur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du serveur</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2124,36 +2123,36 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du serveur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type de cluster</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type de cluster</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du cluster</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du cluster</td>
 </tr>
 <tr>
-<td align="left">address_ip</td>
-<td align="left">varchar(255)</td>
-<td align="left">Adresses IP du cluster</td>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresses IP du cluster</td>
 </tr>
 </tbody>
 </table>
@@ -2163,91 +2162,91 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du serveur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du serveur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du serveur</td>
 </tr>
 <tr>
-<td align="left">net_services</td>
-<td align="left">varchar(255)</td>
-<td align="left">Services réseau actifs</td>
+<td style="text-align: left;">net_services</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Services réseau actifs</td>
 </tr>
 <tr>
-<td align="left">configuration</td>
-<td align="left">longtext</td>
-<td align="left">Configuration du serveur</td>
+<td style="text-align: left;">configuration</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Configuration du serveur</td>
 </tr>
 <tr>
-<td align="left">operating_system</td>
-<td align="left">varchar(255)</td>
-<td align="left">Système d'exploitation</td>
+<td style="text-align: left;">operating_system</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Système d'exploitation</td>
 </tr>
 <tr>
-<td align="left">address_ip</td>
-<td align="left">varchar(255)</td>
-<td align="left">Adresses IP du serveur</td>
+<td style="text-align: left;">address_ip</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Adresses IP du serveur</td>
 </tr>
 <tr>
-<td align="left">cpu</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nombre de CPU</td>
+<td style="text-align: left;">cpu</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nombre de CPU</td>
 </tr>
 <tr>
-<td align="left">memory</td>
-<td align="left">varchar(255)</td>
-<td align="left">Quantité de mémémoire</td>
+<td style="text-align: left;">memory</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Quantité de mémémoire</td>
 </tr>
 <tr>
-<td align="left">environment</td>
-<td align="left">varchar(255)</td>
-<td align="left">Environnement (prod, dev, test, ...)</td>
+<td style="text-align: left;">environment</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Environnement (prod, dev, test, ...)</td>
 </tr>
 <tr>
-<td align="left">disk</td>
-<td align="left">int</td>
-<td align="left">Espace disque alloué</td>
+<td style="text-align: left;">disk</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Espace disque alloué</td>
 </tr>
 <tr>
-<td align="left">install_date</td>
-<td align="left">datetime</td>
-<td align="left">Date d'installation du serveur</td>
+<td style="text-align: left;">install_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date d'installation du serveur</td>
 </tr>
 <tr>
-<td align="left">update_date</td>
-<td align="left">datetime</td>
-<td align="left">Date de mise à jour du serveur</td>
+<td style="text-align: left;">update_date</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date de mise à jour du serveur</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2258,61 +2257,61 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du certificat</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du certificat</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du certificat</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du certificat</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type de certificat (SSL, HTTPS ...)</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type de certificat (SSL, HTTPS ...)</td>
 </tr>
 <tr>
-<td align="left">start_validity</td>
-<td align="left">date</td>
-<td align="left">Date de début de validité</td>
+<td style="text-align: left;">start_validity</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de début de validité</td>
 </tr>
 <tr>
-<td align="left">end_validity</td>
-<td align="left">date</td>
-<td align="left">Date de fin de validité</td>
+<td style="text-align: left;">end_validity</td>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">Date de fin de validité</td>
 </tr>
 <tr>
-<td align="left">status</td>
-<td align="left">int</td>
-<td align="left">Etat du certificat (RFC 6960)</td>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Etat du certificat (RFC 6960)</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2334,41 +2333,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du site</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du site</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du site</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du site</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2378,56 +2377,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du site</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du site</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du site</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du site</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">camera</td>
-<td align="left">tinyint(1)</td>
-<td align="left">Le building / salle est protégé par une caméra</td>
+<td style="text-align: left;">camera</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Le building / salle est protégé par une caméra</td>
 </tr>
 <tr>
-<td align="left">badge</td>
-<td align="left">tinyint(1)</td>
-<td align="left">Le building / salle nécessite un accès par badge</td>
+<td style="text-align: left;">badge</td>
+<td style="text-align: left;">tinyint(1)</td>
+<td style="text-align: left;">Le building / salle nécessite un accès par badge</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2437,46 +2436,46 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la baie</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la baie</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la baie</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de la baie</td>
 </tr>
 <tr>
-<td align="left">room_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">room_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2486,71 +2485,71 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du serveur</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du serveur</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du serveur</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du serveur</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du serveur</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du serveur</td>
 </tr>
 <tr>
-<td align="left">responsible</td>
-<td align="left">varchar(255)</td>
-<td align="left">Responsable du serveur</td>
+<td style="text-align: left;">responsible</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Responsable du serveur</td>
 </tr>
 <tr>
-<td align="left">configuration</td>
-<td align="left">longtext</td>
-<td align="left">Configuration du serveur</td>
+<td style="text-align: left;">configuration</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Configuration du serveur</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">bay_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers la baie</td>
+<td style="text-align: left;">bay_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers la baie</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2560,56 +2559,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du poste de travail</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du poste de travail</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du poste de travail</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du poste de travail</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du poste de travail</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du poste de travail</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2619,51 +2618,51 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'infrastructure de stockage</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'infrastructure de stockage</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'infrastructure de stockage</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'infrastructure de stockage</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2673,61 +2672,61 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du périphérique</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du périphérique</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du périphérique</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du périphérique</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du périphériques</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du périphériques</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">bay_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers la baie</td>
+<td style="text-align: left;">bay_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers la baie</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2736,56 +2735,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du téléphone</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du téléphone</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du téléphone</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du téléphone</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du téléphone</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du téléphone</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2795,56 +2794,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du commutateur physique</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du commutateur physique</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du commutateur physique</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du commutateur physique</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du commutateur physique</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du commutateur physique</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2854,56 +2853,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du routeur physique</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du routeur physique</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du routeur physique</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du routeur physique</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle du routeur physique</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle du routeur physique</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2913,56 +2912,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de la borne wifi</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de la borne wifi</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de la bornes wifi</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de la bornes wifi</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle de la bornes wifi</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle de la bornes wifi</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -2973,56 +2972,56 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom de l'équipement de sécurité</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom de l'équipement de sécurité</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description de l'équipement de sécurité</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description de l'équipement de sécurité</td>
 </tr>
 <tr>
-<td align="left">type</td>
-<td align="left">varchar(255)</td>
-<td align="left">Type / modèle de l'équipement de sécurité</td>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Type / modèle de l'équipement de sécurité</td>
 </tr>
 <tr>
-<td align="left">site_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le site</td>
+<td style="text-align: left;">site_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le site</td>
 </tr>
 <tr>
-<td align="left">building_id</td>
-<td align="left">int unsigned</td>
-<td align="left">Référence vers le building / salle</td>
+<td style="text-align: left;">building_id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">Référence vers le building / salle</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -3032,36 +3031,36 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du WAN</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du WAN</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -3071,36 +3070,36 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du MAN</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du MAN</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -3110,41 +3109,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du LAN</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du LAN</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du LAN</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du LAN</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -3154,41 +3153,41 @@
 <table>
 <thead>
 <tr>
-<th align="left">Champ</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">id</td>
-<td align="left">int unsigned</td>
-<td align="left">auto_increment</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
 </tr>
 <tr>
-<td align="left">name</td>
-<td align="left">varchar(255)</td>
-<td align="left">Nom du VLAN</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du VLAN</td>
 </tr>
 <tr>
-<td align="left">description</td>
-<td align="left">longtext</td>
-<td align="left">Description du VLAN</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du VLAN</td>
 </tr>
 <tr>
-<td align="left">created_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de création</td>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
 </tr>
 <tr>
-<td align="left">updated_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de mise à jour</td>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
 </tr>
 <tr>
-<td align="left">deleted_at</td>
-<td align="left">timestamp</td>
-<td align="left">Date de suppression</td>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
 </tr>
 </tbody>
 </table>
@@ -3232,14 +3231,15 @@
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
