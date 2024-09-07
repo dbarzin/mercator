@@ -8,7 +8,7 @@
     <title>Introduction - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,12 +17,11 @@
         var mkdocs_page_url = "/mercator/index.fr/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -34,14 +33,14 @@
           <a href=".." class="icon icon-home"> Mercator
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Introduction</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Introduction</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a>
     </li>
@@ -95,8 +94,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Introduction</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/index.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -110,9 +109,9 @@
 <li class="i18n-link i18n-link-found i18n-link-en"><a href="../">English</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
-<p>Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme 
-décrit dans le <a href="https://www.ssi.gouv.fr/guide/cartographie-du-systeme-dinformation/">Guide pour la cartographie du Système d’information</a> 
-de l’<a href="https://www.ssi.gouv.fr">ANSSI</a>.</p>
+<p>Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme
+décrit dans le <a href="https://cyber.gouv.fr/guide/cartographie-du-systeme-dinformation">Guide pour la cartographie du Système d’information</a>
+de l’<a href="https://cyber.gouv.fr">ANSSI</a>.</p>
 <h3 id="objectif">Objectif</h3>
 <p>L’objectif de Mercator est de pouvoir gérer en équipe la cartographie d'un système d’information de manière complète et cohérente et de générer automatiquement les différents rapports qui permettent de faciliter le maintien et la communication de cette cartographie.</p>
 <p>Le maintien d’une cartographie à jour et complète est un travail long et complexe. Mercator permet de diviser ce travail entre plusieurs équipes (infrastructure, réseau, système, application...) et de générer automatiquement les schémas d’infrastructure, d’extraire les inventaires et de générer les rapports de cartographie.</p>
@@ -157,14 +156,15 @@ de l’<a href="https://www.ssi.gouv.fr">ANSSI</a>.</p>
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

@@ -8,7 +8,7 @@
     <title>Maturity.fr - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,12 +17,11 @@
         var mkdocs_page_url = "/mercator/maturity.fr/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -34,7 +33,7 @@
           <a href=".." class="icon icon-home"> Mercator
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -89,8 +88,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Maturity.fr</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Maturity.fr</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/maturity.fr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -137,194 +136,194 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 <thead>
 <tr>
 <th>Objet</th>
-<th align="center">Niveau</th>
+<th style="text-align: center;">Niveau</th>
 <th>Exigences</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Écosystème</strong></td>
-<td align="center"></td>
+<td style="text-align: center;"></td>
 <td></td>
 </tr>
 <tr>
 <td>Entité</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, un niveau de sécurité, un point de contact et supporter au moins un processus</td>
 </tr>
 <tr>
 <td>Relation</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir un type et une description</td>
 </tr>
 <tr>
 <td>Relation</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une importance</td>
 </tr>
 <tr>
 <td><strong>Système d'Information</strong></td>
-<td align="center"></td>
+<td style="text-align: center;"></td>
 <td></td>
 </tr>
 <tr>
 <td>Macro-Processus</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une description, des éléments d'entrée/sortie et un besoins de sécurité (CIDT)</td>
 </tr>
 <tr>
 <td>Macro-Processus</td>
-<td align="center">3</td>
+<td style="text-align: center;">3</td>
 <td>doit avoir un propriétaire</td>
 </tr>
 <tr>
 <td>Processus</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, des éléments d'entrée/sortie, un propriétaire</td>
 </tr>
 <tr>
 <td>Processus</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir un niveau de sécurité et faire partie d'un macro-processus</td>
 </tr>
 <tr>
 <td>Activité</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une desription</td>
 </tr>
 <tr>
 <td>Opération</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description</td>
 </tr>
 <tr>
 <td>Opération</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir un acteur</td>
 </tr>
 <tr>
 <td>Opération</td>
-<td align="center">3</td>
+<td style="text-align: center;">3</td>
 <td>doit avoir une tâche</td>
 </tr>
 <tr>
 <td>Tâche</td>
-<td align="center">3</td>
+<td style="text-align: center;">3</td>
 <td>doit avoir une description et faire partie d'une opération</td>
 </tr>
 <tr>
 <td>Acteur</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir un contact, une nature et un type</td>
 </tr>
 <tr>
 <td>Information</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, un propriétaire et un mode de stockage</td>
 </tr>
 <tr>
 <td>Information</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir un niveau de sécurité et de sensibilité</td>
 </tr>
 <tr>
 <td><strong>Vue applicative</strong></td>
-<td align="center"></td>
+<td style="text-align: center;"></td>
 <td></td>
 </tr>
 <tr>
 <td>Block applicatif</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une description</td>
 </tr>
 <tr>
 <td>Application</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, un responsable, une technologie, un type des utilisateurs et servir un processus</td>
 </tr>
 <tr>
 <td>Application</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une entité responsable et un besoin de sécurité</td>
 </tr>
 <tr>
 <td>Application</td>
-<td align="center">3</td>
+<td style="text-align: center;">3</td>
 <td>doit être identifiées par une CPE</td>
 </tr>
 <tr>
 <td>Service applicatif</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une description et une application</td>
 </tr>
 <tr>
 <td>Module applicatif</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir une description</td>
 </tr>
 <tr>
 <td>Base de données</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, une entité responsable, un responsable et un type</td>
 </tr>
 <tr>
 <td>Base de données</td>
-<td align="center">2</td>
+<td style="text-align: center;">2</td>
 <td>doit avoir un niveau de sécurité</td>
 </tr>
 <tr>
 <td>Flux applicatif</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, une source et une destination</td>
 </tr>
 <tr>
 <td><strong>Vue de l'administration</strong></td>
-<td align="center"></td>
+<td style="text-align: center;"></td>
 <td></td>
 </tr>
 <tr>
 <td>Zone d'administration</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description</td>
 </tr>
 <tr>
 <td>Service d'annuaire</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, une solution et faire partie d'une zone</td>
 </tr>
 <tr>
 <td>Forêt active directory / LDAP</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description et faire partie d'une zone</td>
 </tr>
 <tr>
 <td>Domains active directory / LDAP</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, une nombre de domain contrôleur, un nombre d'utilisateurn un nombre de machines et des relations inter-domaine</td>
 </tr>
 <tr>
 <td><strong>Vue logique</strong></td>
-<td align="center"></td>
+<td style="text-align: center;"></td>
 <td></td>
 </tr>
 <tr>
 <td>Réseaux</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir un type de protocol, un responsable, un responsable sécurité et des besoins de sécurité</td>
 </tr>
 <tr>
 <td>Sous-réseau</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, une adresse IP, une passerelle par défaut, un type d'allocation d'adresse IP, un responsable d'exploitation et un VLAN</td>
 </tr>
 <tr>
 <td>Passerelle</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir une description, un tupe d'authentification et une adresse IP</td>
 </tr>
 <tr>
 <td>Entité externe connectée</td>
-<td align="center">1</td>
+<td style="text-align: center;">1</td>
 <td>doit avoir un type et un contact</td>
 </tr>
 </tbody>
@@ -361,14 +360,15 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
