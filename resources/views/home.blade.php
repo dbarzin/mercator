@@ -219,7 +219,7 @@
           label: "{!! trans('cruds.dataProcessing.title') !!}",
           data: [ {!! $data_processing !!}, 0, 0, 0, 0, 0, 0],
           value: {!! $data_processing !!},
-          url: "/admin/data-processing"
+          url: "/admin/data-processings"
         },
         @endcan
         @can('security_controls_access')
