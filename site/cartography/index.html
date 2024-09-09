@@ -8,7 +8,7 @@
     <title>Mapping - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,12 +17,11 @@
         var mkdocs_page_url = "/mercator/cartography/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -34,7 +33,7 @@
           <a href=".." class="icon icon-home"> Mercator
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -45,7 +44,7 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Mapping</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Mapping</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
     </li>
@@ -103,8 +102,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Mapping</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Mapping</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/dbarzin/mercator/edit/master/docs/cartography.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -147,36 +146,36 @@
 <table>
 <thead>
 <tr>
-<th align="center">Level</th>
-<th align="center">Description</th>
-<th align="center">Color</th>
+<th style="text-align: center;">Level</th>
+<th style="text-align: center;">Description</th>
+<th style="text-align: center;">Color</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">0</td>
-<td align="center">Insignificant</td>
-<td align="center">White</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Insignificant</td>
+<td style="text-align: center;">White</td>
 </tr>
 <tr>
-<td align="center">1</td>
-<td align="center">Low</td>
-<td align="center"><span style="color:green">Green</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;"><span style="color:green">Green</span></td>
 </tr>
 <tr>
-<td align="center">2</td>
-<td align="center">Medium</td>
-<td align="center"><span style="color:yellow;">Yellow</span></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;"><span style="color:yellow;">Yellow</span></td>
 </tr>
 <tr>
-<td align="center">3</td>
-<td align="center">Strong</td>
-<td align="center"><span style="color:orange">Orange</span></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">Strong</td>
+<td style="text-align: center;"><span style="color:orange">Orange</span></td>
 </tr>
 <tr>
-<td align="center">4</td>
-<td align="center">Very strong</td>
-<td align="center"><span style="color:red">Red</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">Very strong</td>
+<td style="text-align: center;"><span style="color:red">Red</span></td>
 </tr>
 </tbody>
 </table>
@@ -220,14 +219,15 @@
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

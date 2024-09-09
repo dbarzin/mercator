@@ -219,7 +219,7 @@
           label: "{!! trans('cruds.dataProcessing.title') !!}",
           data: [ {!! $data_processing !!}, 0, 0, 0, 0, 0, 0],
           value: {!! $data_processing !!},
-          url: "/admin/data-processing"
+          url: "/admin/data-processings"
         },
         @endcan
         @can('security_controls_access')
@@ -715,6 +715,10 @@
       }
 
   var topTags = [
+    @can("gdpr_access")
+    {group:"{!! trans('cruds.menu.gdpr.title_short') !!}", tag:"{!! trans('cruds.dataProcessing.title') !!}", num:{!! $data_processing !!}, url: "/admin/data-processings" },
+    {group:"{!! trans('cruds.menu.gdpr.title_short') !!}", tag:"{!! trans('cruds.securityControl.title_short') !!}", num:{!! $security_controls !!}, url: "/admin/security-controls" },
+    @endcan
     @can("ecosystem_access")
     {group:"{!! trans('cruds.menu.ecosystem.title_short') !!}", tag:"{!! trans('cruds.entity.title') !!}", num:{!! $entities !!}, url: "/admin/entities" },
     {group:"{!! trans('cruds.menu.ecosystem.title_short') !!}", tag:"{!! trans('cruds.relation.title') !!}", num:{!! $relations !!}, url: "/admin/relations" },

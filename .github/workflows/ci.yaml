@@ -34,8 +34,7 @@ jobs:
             extensions: zip, curl, mbstring, dom, soap, xdebug, mysql, gd
 
       - name: Install dependencies
-        run: |
-            composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
+        run: composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Create Database
         run: mysql --host 127.0.0.1 --port 3306 -uroot -e "CREATE DATABASE mercator CHARACTER SET utf8 COLLATE utf8_general_ci;"

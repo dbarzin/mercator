@@ -1,8 +1,8 @@
 ## Introduction
 
-Mercator is a Web application for managing the mapping of an information system as described in the 
-described in the [Mapping the Information System Guide](https://www.ssi.gouv.fr/guide/mapping-the-information-system/) 
-from [ANSSI](https://www.ssi.gouv.fr/en/).
+Mercator is a Web application for managing the mapping of an information system as described in the
+described in the [Mapping the Information System Guide](https://cyber.gouv.fr/guide/mapping-the-information-system)
+from [ANSSI](https://cyber.gouv.fr/en).
 
 ### Objective
 

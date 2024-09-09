@@ -1213,7 +1213,7 @@ return [
             'description_helper' => 'Description of the security measure',
         ],
         'title' => 'Security controls',
-        'title_short' => 'security',
+        'title_short' => 'Security',
         'title_singular' => 'Security control',
     ],
     'securityDevice' => [
