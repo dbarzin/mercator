@@ -563,8 +563,9 @@ return [
             'service_source_helper' => '',
             'source' => 'Source',
         ],
-        'title' => 'Flux',
-        'title_singular' => 'Flux',
+        'title' => 'Flux logiques',
+        'title_short' => 'Flux',
+        'title_singular' => 'Flux logique',
     ],
     'forestAd' => [
         'description' => 'Regroupement organisé de domaines Active Directory/LDAP.',

@@ -478,40 +478,51 @@
     }
 
     function deployFromNode(nodeId, depth, visitedNodes, filter) {
+      // Limit recursion
       if (depth <= 0 || visitedNodes.has(nodeId)) {
         return;
       }
-      //
-      // console.log("deplyFromNode");
-
       visitedNodes.add(nodeId);
 
+      // Deploy
       let node = _nodes.get(nodeId);
       if (!node) {
         return;
       }
 
+      // Loop on edges
       let edgeList = node.edges;
       for (const edge of edgeList) {
         let targetNodeId = edge.attachedNodeId;
 
         if (nodes.get(targetNodeId) === null) {
             let targetNode = _nodes.get(targetNodeId);
-            // Check node already present
-            if (!nodes.get(targetNodeId)) {
-                nodes.add(targetNode);
+            if (targetNode == null)
+                continue;
+
+            // Filter target node type
+            if (
+                ((filter.length == 0) || filter.includes(targetNode.vue))
+                ||
+                (filter.includes("8") && (edge.edgeType === 'CABLE'))
+                ||
+                (filter.includes("9") && (edge.edgeType === 'FLUX'))
+            ) {
+                // Check node already present
+                if (!nodes.get(targetNodeId)) {
+                    nodes.add(targetNode);
+
+                if (exists(nodeId, targetNodeId, edge.name).length === 0) {
+                  addEdge(nodeId, targetNodeId);
+                }
+                setTimeout(function() {
+                    deployFromNode(targetNodeId, depth - 1, visitedNodes, filter);
+                    }, 500);
+                }
             }
         }
-
-        if (exists(nodeId, targetNodeId, edge.name).length === 0) {
-          addEdge(nodeId, targetNodeId);
-        }
-       setTimeout(function() {
-            deployFromNode(targetNodeId, depth - 1, visitedNodes);
-       }, 500);
-      }
     }
-
+}
 
     function addEdge(sourceNodeId, targetNodeId) {
         var edgeList = _nodes.get(sourceNodeId).edges;
@@ -547,15 +558,11 @@
             return filter
     }
 
-
     function apply_filter() {
-        // console.log("apply_filter");
-
         // Get current filter
         cur_filter = $('#filters').val();
 
         // Get filter size
-        // console.log("filter_size= ", cur_filter.length);
         if (cur_filter.length==0) {
             for (let [node, value] of _nodes)
                 $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
@@ -573,7 +580,6 @@
                 else
                     disabled++;
             }
-            // console.log("disable= ",disabled," activated= ",activated);
         }
         $('#node').val(null).trigger("change");
     }
