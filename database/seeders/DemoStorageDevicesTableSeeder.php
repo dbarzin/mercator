@@ -14,12 +14,12 @@ class DemoStorageDevicesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('storage_devices')->delete();
-        
+
         \DB::table('storage_devices')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'DiskServer 1',
@@ -30,12 +30,11 @@ class DemoStorageDevicesTableSeeder extends Seeder
                 'site_id' => 1,
                 'building_id' => 2,
                 'bay_id' => 3,
-                'physical_switch_id' => NULL,
                 'vendor' => NULL,
                 'product' => NULL,
                 'version' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Oracle Server',
@@ -46,13 +45,12 @@ class DemoStorageDevicesTableSeeder extends Seeder
                 'site_id' => 1,
                 'building_id' => 2,
                 'bay_id' => 2,
-                'physical_switch_id' => NULL,
                 'vendor' => NULL,
                 'product' => NULL,
                 'version' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }
