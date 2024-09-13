@@ -19,27 +19,30 @@ Changements prévus en 2024 :
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
 - [ ] Utiliser un modèle de document pour les rapports
+- [ ] Pouvoir changer les images des objets
 
 ## Evolutions mineurs
 
+- [x] Amélorer l'exploration des objets (le filtre s'applique sur le double click)
 - [ ] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
-- [ ] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
+- [x] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
 - [ ] Packaging des librairies JavaScript avec [Laravel Mix](https://laravel-mix.com/).
-- [ ] Dessiner un nouveau jeu d'icônes en SVG
+- [x] Dessiner un nouveau jeu d'icônes compatible GLPv3
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
-- [ ] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
+- [x] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
 - [x] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 - [x] Ajout des clusters
 - [x] Ajout des flux logiques
 - [ ] Afficher l'historique des changements d'un objet
+- [ ] Cloner un objet
 
 ## Petites évolutions
 
 - [ ] Améliorer les tests Dusk
-- [ ] Documenter une procédure de déploiement sous Debian
+- [x] Documenter une procédure de déploiement sous Debian
 - [ ] Dark Theme
 
 Changements réalisés en 2023 :
