@@ -23,9 +23,15 @@ cd /tmp/mercator
 composer update
 
 # Drop old test database
+
 tput setaf 2; echo "Drop test database"; tput setaf 7
 mysql -e "DROP DATABASE IF EXISTS mercator_test;"
 mysql -e "DROP USER IF EXISTS 'mercator_test'@'localhost';"
+
+# if it fails :
+# sudo mysql
+# CREATE USER 'yourname'@'localhost';
+# GRANT ALL PRIVILEGES ON *.* TO 'yourname'@'localhost' WITH GRANT OPTION;
 
 # Create database
 tput setaf 2; echo "Create database"; tput setaf 7
@@ -70,15 +76,19 @@ tput setaf 2; echo "Start server"; tput setaf 7
 php artisan serve --no-reload > /dev/null &
 sleep 3
 
+# Install chrome driver
+tput setaf 2; echo "Install Chrome Driver"; tput setaf 7
+php artisan dusk:chrome-driver
+
+# Start Chrome driver
+tput setaf 2; echo "Start chrome"; tput setaf 7
+./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
+
 # start dusk
 tput setaf 2; echo "Dusk test"; tput setaf 7
-
-php artisan dusk:chrome-driver
 php artisan dusk --stop-on-error --stop-on-failure
 
 # kill server
 kill $(lsof -t -i:8000)
 
 tput setaf 2; echo "Done."; tput setaf 7
-
-
