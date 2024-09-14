@@ -67,19 +67,16 @@ jobs:
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
       - name: Check code quality
-        run: |
-          php artisan insights -s
+        run: php artisan insights -s
 
       - name: Install Chrome Driver
-        run: php artisan dusk:chrome-driver 128
+        run: php artisan dusk:chrome-driver --detect
 
-      - name: Check Chrome Driver Version
-        run: |
-            chmod +x ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver &&
-            ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver -v
+      - name: Check Chrome Driver version
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
 
       - name: Start Chrome Driver
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux64/chromedriver &
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
 
       - name: Run Laravel Server
         run: php artisan serve --no-reload &
