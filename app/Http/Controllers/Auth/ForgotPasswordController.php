@@ -16,17 +16,18 @@ use Illuminate\View\View;
 class ForgotPasswordController extends Controller
 {
     /**
-     * Write code on Method
+     * Show the reset password form
      *
      * @return response()
      */
     public function showForgetPasswordForm(): View
     {
+
         return view('auth.passwords.email');
     }
 
     /**
-     * Write code on Method
+     * Generated a reset token
      *
      * @return response()
      */
@@ -40,12 +41,33 @@ class ForgotPasswordController extends Controller
         if (! DB::table('users')->whereNull('deleted_at')->where('email', $request->email)->exists()) {
             // Log incident
             Log::warning('Unknown reset email used : ' . $request->email);
-            // return with stupid message
+            // return with same message
             return back()->with('message', 'We have e-mailed your password reset link!');
+        }
+
+        // Limit number of mail sent per minute (nospam)
+        $previousTokenCreationDate = DB::table('password_resets')
+            ->select("created_at")
+            ->where("email",$request->email)
+            ->first();
+
+        if ($previousTokenCreationDate!=null) {
+            // Max one mail per 15 minutes
+            if (Carbon::now()->diffInMinutes($previousTokenCreationDate->created_at)<15) {
+                // Log incident
+                Log::warning('Request reset email already sent to : ' . $request->email);
+                // return with same message
+                return back()->with('message', 'We have e-mailed your password reset link!');
+            }
         }
 
         // Generate random token
         $token = Str::random(64);
+
+        // Delete previous reset token
+        DB::table('password_resets')
+            ->where('email',$request->email)
+            ->delete();
 
         // Save token in reset_passord table
         DB::table('password_resets')->insert([
@@ -76,17 +98,20 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * Write code on Method
+     * Show reset password form
      *
      * @return response()
      */
     public function showResetPasswordForm($token): View
     {
+        // TODO: Get token expiration
+
+        // Show reset token form
         return view('auth.passwords.reset', ['token' => $token]);
     }
 
     /**
-     * Write code on Method
+     * Reset the password
      *
      * @return response()
      */
@@ -98,6 +123,7 @@ class ForgotPasswordController extends Controller
             'password_confirmation' => 'required',
         ]);
 
+        // Check token from table
         $updatePassword = DB::table('password_resets')
             ->where([
                 'email' => $request->email,
@@ -109,11 +135,14 @@ class ForgotPasswordController extends Controller
             return back()->withInput()->with('error', 'Invalid token!');
         }
 
+        // Update password
         $user = User::where('email', $request->email)
             ->update(['password' => Hash::make($request->password)]);
 
+        // Remove token from table
         DB::table('password_resets')->where(['email' => $request->email])->delete();
 
+        // Redirect
         return redirect('/login')->with('message', 'Your password has been changed!');
     }
 
