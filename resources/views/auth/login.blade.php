@@ -63,22 +63,22 @@
                             </button>
                         </div>
                         <div class="col-6 text-right">
-                            @if(Route::has('password.request'))
-                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
+                            @if(Route::has('forget.password.get'))
+                                <a class="btn btn-link px-0" href="{{ route('forget.password.get') }}">
                                     {{ trans('global.forgot_password') }}
                                 </a><br>
                             @endif
                         </div>
                     </div>
                 </form>
-                
+
                 <!-- Ajout du bouton pour se connecter via Keycloak -->
                 @if(env('KEYCLOAK') === 'enable')
                     <div class="text-right mt-3">
                         <a href="{{ route('login.keycloak') }}" class="btn btn-secondary">Keycloak</a>
                     </div>
                 @endif
-                
+
             </div>
         </div>
     </div>
