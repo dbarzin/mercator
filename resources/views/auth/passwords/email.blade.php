@@ -8,13 +8,13 @@
 
                 <p class="text-muted">{{ trans('global.reset_password') }}</p>
 
-                @if(session('status'))
+                @if(session('message'))
                     <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
+                        {{ session('message') }}
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('password.email') }}">
+                <form method="POST" action="{{ route('forget.password.post') }}">
                     @csrf
 
                     <div class="form-group">

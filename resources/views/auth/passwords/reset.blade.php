@@ -8,7 +8,7 @@
 
                 <p class="text-muted">{{ trans('global.reset_password') }}</p>
 
-                <form method="POST" action="{{ route('password.request') }}">
+                <form method="POST" action="{{ route('reset.password.post') }}">
                     @csrf
 
                     <input name="token" value="{{ $token }}" type="hidden">

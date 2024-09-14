@@ -34,11 +34,16 @@ Auth::routes([
     'login' => true,
     'logout' => true,
     'register' => false, // Désactiver l'inscription
-    'reset' => true,
+    'reset' => false, // Custom version
     'confirm' => false, // Désactiver la confirmation de mot de passe
     'verify' => false, // Désactiver la vérification par e-mail
 ]);
-// Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
+
+// Forget password
+Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 // keycloak
 Route::get('login/keycloak', [App\Http\Controllers\Auth\SsoController::class,'redirectToKeycloak'])->name('login.keycloak');
