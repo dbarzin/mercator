@@ -15,6 +15,7 @@ use App\MApplication;
 use App\PhysicalServer;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalServerController extends Controller
@@ -59,6 +60,50 @@ class PhysicalServerController extends Controller
             )
         );
     }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+
+        // List
+        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+        $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $responsible_list = PhysicalServer::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $type_list = PhysicalServer::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $logical_server_list = LogicalServer::orderBy('name')->pluck('name', 'id');
+
+        // Get PhysicalServer
+        $physicalServer = PhysicalServer::find($request->id);
+
+        // PhysicalServer not found
+        abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($physicalServer->only($physicalServer->getFillable()));
+        $request->merge(["applications" => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
+        $request->merge(["logicalServers" => $physicalServer->serversLogicalServers()->pluck('id')->unique()->toArray()]);
+        $request->flash();
+
+        return view(
+            'admin.physicalServers.create',
+            compact(
+                'sites',
+                'buildings',
+                'bays',
+                'clusters',
+                'application_list',
+                'operating_system_list',
+                'responsible_list',
+                'type_list',
+                'logical_server_list'
+            )
+        );
+    }
+
+
 
     public function store(StorePhysicalServerRequest $request)
     {

@@ -13,6 +13,7 @@ use App\Router;
 use App\Site;
 use App\Vlan;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalRouterController extends Controller
@@ -38,6 +39,35 @@ class PhysicalRouterController extends Controller
         $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view(
+            'admin.physicalRouters.create',
+            compact('sites', 'buildings', 'bays', 'routers', 'vlans', 'type_list')
+        );
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('physical_router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $routers = Router::all()->sortBy('name')->pluck('name', 'id');
+
+        $vlans = Vlan::all()->sortBy('name')->pluck('name', 'id');
+
+        $type_list = PhysicalRouter::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        // Get PhysicalRouter
+        $physicalRouter = PhysicalRouter::find($request->id);
+
+        // PhysicalRouter not found
+        abort_if($physicalRouter === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($physicalRouter->only($physicalRouter->getFillable()));
+        $request->merge(["vlans" => $physicalRouter->vlans()->pluck('id')->unique()->toArray()]);
+        $request->merge(["routers" => $physicalRouter->routers()->pluck('id')->unique()->toArray()]);
+        $request->flash();
 
         return view(
             'admin.physicalRouters.create',

@@ -12,6 +12,7 @@ use App\Site;
 use App\Workstation;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class WorkstationController extends Controller
 {
@@ -48,6 +49,45 @@ class WorkstationController extends Controller
             ->distinct()
             ->orderBy('cpu')
             ->pluck('cpu');
+
+        return view(
+            'admin.workstations.create',
+            compact('sites', 'buildings', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+        );
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
+
+        $type_list = Workstation::select('type')
+            ->where('type', '<>', null)
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
+        $operating_system_list = Workstation::select('operating_system')
+            ->where('operating_system', '<>', null)
+            ->distinct()
+            ->orderBy('operating_system')
+            ->pluck('operating_system');
+        $cpu_list = Workstation::select('cpu')
+            ->where('cpu', '<>', null)
+            ->distinct()
+            ->orderBy('cpu')
+            ->pluck('cpu');
+
+        // Get Workstation
+        $workstation = Workstation::find($request->id);
+
+        // Workstation not found
+        abort_if($workstation === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($workstation->only($workstation->getFillable()));
+        $request->flash();
 
         return view(
             'admin.workstations.create',

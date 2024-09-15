@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePhoneRequest;
 use App\Phone;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhoneController extends Controller
@@ -37,6 +38,30 @@ class PhoneController extends Controller
             compact('sites', 'buildings', 'type_list')
         );
     }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('phone_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = Phone::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        // Get Phone
+        $phone = Phone::find($request->id);
+
+        // Vlan not found
+        abort_if($phone === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($phone->only($phone->getFillable()));
+        $request->flash();
+
+        return view(
+            'admin.phones.create',
+            compact('sites', 'buildings', 'type_list')
+        );
+    }
+
 
     public function store(StorePhoneRequest $request)
     {

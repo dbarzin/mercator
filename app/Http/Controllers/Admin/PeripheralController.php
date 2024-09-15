@@ -13,6 +13,7 @@ use App\MApplication;
 use App\Peripheral;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PeripheralController extends Controller
@@ -40,6 +41,37 @@ class PeripheralController extends Controller
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
         $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+
+        return view(
+            'admin.peripherals.create',
+            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list', 'domain_list', 'responsible_list')
+        );
+    }
+
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
+        $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+
+        // lists
+        $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+        $domain_list = Peripheral::select('domain')->where('domain', '<>', null)->distinct()->orderBy('domain')->pluck('domain');
+        $responsible_list = Peripheral::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+
+        // Get Peripheral
+        $peripheral = Peripheral::find($request->id);
+
+        // Vlan not found
+        abort_if($peripheral === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($peripheral->only($peripheral->getFillable()));
+        $request->merge(["applications" => $peripheral->applications()->pluck('id')->unique()->toArray()]);
+        $request->flash();
 
         return view(
             'admin.peripherals.create',

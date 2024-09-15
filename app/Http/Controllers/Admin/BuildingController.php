@@ -9,6 +9,7 @@ use App\Http\Requests\StoreBuildingRequest;
 use App\Http\Requests\UpdateBuildingRequest;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BuildingController extends Controller
@@ -27,6 +28,24 @@ class BuildingController extends Controller
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.buildings.create', compact('sites'));
+    }
+
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // Get Vlan
+        $building = Building::find($request->id);
+
+        // Vlan not found
+        abort_if($building === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($building->only($building->getFillable()));
+        $request->flash();
 
         return view('admin.buildings.create', compact('sites'));
     }

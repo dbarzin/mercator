@@ -18,6 +18,12 @@ class StorePhysicalRouterRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => [
+                'min:3',
+                'max:32',
+                'required',
+                'unique:physical_routers,name,NULL,id,deleted_at,NULL',
+            ],
             'vlans.*' => [
                 'integer',
             ],

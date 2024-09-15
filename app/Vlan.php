@@ -45,6 +45,10 @@ class Vlan extends Model
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');
     }
 
+    public function getFillable() {
+        return $this->fillable;
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

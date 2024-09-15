@@ -16,6 +16,12 @@
         </a>
     @endcan
 
+    @can('physical_router_create')
+        <a class="btn btn-warning" href="{{ route('admin.physical-routers.clone', $physicalRouter->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('physical_router_delete')
         <form action="{{ route('admin.physical-routers.destroy', $physicalRouter->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

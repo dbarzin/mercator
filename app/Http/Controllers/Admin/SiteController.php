@@ -8,6 +8,7 @@ use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
@@ -24,6 +25,21 @@ class SiteController extends Controller
     public function create()
     {
         abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.sites.create');
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get Vlan
+        $site = Site::find($request->id);
+
+        // Vlan not found
+        abort_if($site === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($site->only($site->getFillable()));
+        $request->flash();
 
         return view('admin.sites.create');
     }

@@ -23,15 +23,14 @@ cd /tmp/mercator
 composer update
 
 # Drop old test database
-
+# If it fails execute this :
+#    sudo mysql
+#    CREATE USER 'yourname'@'localhost';
+#    GRANT ALL PRIVILEGES ON *.* TO 'yourname'@'localhost' WITH GRANT OPTION;
 tput setaf 2; echo "Drop test database"; tput setaf 7
 mysql -e "DROP DATABASE IF EXISTS mercator_test;"
 mysql -e "DROP USER IF EXISTS 'mercator_test'@'localhost';"
 
-# if it fails :
-# sudo mysql
-# CREATE USER 'yourname'@'localhost';
-# GRANT ALL PRIVILEGES ON *.* TO 'yourname'@'localhost' WITH GRANT OPTION;
 
 # Create database
 tput setaf 2; echo "Create database"; tput setaf 7

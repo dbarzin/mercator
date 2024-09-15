@@ -7,6 +7,7 @@ return [
     'change_password' => 'Changer le mot de passe',
     'change_password_success' => 'Mot de passe changé avec succès',
     'check' => 'Vérifier',
+    'clone' => 'Copier',
     'confidentiality' => 'Confidentialité',
     'create' => 'Créer',
     'created_at' => 'Créé le',

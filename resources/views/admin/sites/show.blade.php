@@ -16,6 +16,12 @@
         </a>
     @endcan
 
+    @can('site_create')
+        <a class="btn btn-warning" href="{{ route('admin.sites.clone', $site->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('site_delete')
         <form action="{{ route('admin.sites.destroy', $site->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

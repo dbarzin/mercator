@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateWifiTerminalRequest;
 use App\Site;
 use App\WifiTerminal;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WifiTerminalController extends Controller
@@ -31,6 +32,29 @@ class WifiTerminalController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view(
+            'admin.wifiTerminals.create',
+            compact('type_list', 'sites', 'buildings')
+        );
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('wifi_terminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $type_list = WifiTerminal::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        // Get WifiTerminal
+        $wifiTerminal = WifiTerminal::find($request->id);
+
+        // WifiTerminal not found
+        abort_if($wifiTerminal === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($wifiTerminal->only($wifiTerminal->getFillable()));
+        $request->flash();
 
         return view(
             'admin.wifiTerminals.create',

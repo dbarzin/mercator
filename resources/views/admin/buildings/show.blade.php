@@ -16,6 +16,12 @@
         </a>
     @endcan
 
+    @can('building_create')
+        <a class="btn btn-warning" href="{{ route('admin.buildings.clone', $building->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('building_delete')
         <form action="{{ route('admin.buildings.destroy', $building->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

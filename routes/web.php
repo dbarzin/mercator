@@ -202,22 +202,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Sites
     Route::resource('sites', Admin\SiteController::class);
+    Route::get('sites-clone/{id}', [Admin\SiteController::class,'clone'])->name('sites.clone');
     Route::delete('sites-destroy', [Admin\SiteController::class,'massDestroy'])->name('sites.massDestroy');
 
     // Buildings
     Route::resource('buildings', Admin\BuildingController::class);
+    Route::get('buildings-clone/{id}', [Admin\BuildingController::class,'clone'])->name('buildings.clone');
     Route::delete('buildings-destroy', [Admin\BuildingController::class,'massDestroy'])->name('buildings.massDestroy');
 
     // Bays
     Route::resource('bays', Admin\BayController::class);
+    Route::get('bays-clone/{id}', [Admin\BayController::class,'clone'])->name('bays.clone');
     Route::delete('bays-destroy', [Admin\BayController::class,'massDestroy'])->name('bays.massDestroy');
 
     // Physical Servers
     Route::resource('physical-servers', Admin\PhysicalServerController::class);
+    Route::get('physical-servers-clone/{id}', [Admin\PhysicalServerController::class,'clone'])->name('physical-servers.clone');
     Route::delete('physical-servers-destroy', [Admin\PhysicalServerController::class,'massDestroy'])->name('physical-servers.massDestroy');
 
     // Workstations
     Route::resource('workstations', Admin\WorkstationController::class);
+    Route::get('workstations-clone/{id}', [Admin\WorkstationController::class,'clone'])->name('workstations.clone');
     Route::delete('workstations-destroy', [Admin\WorkstationController::class,'massDestroy'])->name('workstations.massDestroy');
 
     // Storage Devices
@@ -226,22 +231,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Peripherals
     Route::resource('peripherals', Admin\PeripheralController::class);
+    Route::get('peripherals-clone/{id}', [Admin\PeripheralController::class,'clone'])->name('peripherals.clone');
     Route::delete('peripherals-destroy', [Admin\PeripheralController::class,'massDestroy'])->name('peripherals.massDestroy');
 
     // Phones
     Route::resource('phones', Admin\PhoneController::class);
+    Route::get('phones-clone/{id}', [Admin\PhoneController::class,'clone'])->name('phones.clone');
     Route::delete('phones-destroy', [Admin\PhoneController::class,'massDestroy'])->name('phones.massDestroy');
 
     // Physical Switches
     Route::resource('physical-switches', Admin\PhysicalSwitchController::class);
+    Route::get('physical-switches-clone/{id}', [Admin\PhysicalSwitchController::class,'clone'])->name('physical-switches.clone');
     Route::delete('physical-switches-destroy', [Admin\PhysicalSwitchController::class,'massDestroy'])->name('physical-switches.massDestroy');
 
     // Physical Routers
     Route::resource('physical-routers', Admin\PhysicalRouterController::class);
+    Route::get('physical-routers-clone/{id}', [Admin\PhysicalRouterController::class,'clone'])->name('physical-routers.clone');
     Route::delete('physical-routers-destroy', [Admin\PhysicalRouterController::class,'massDestroy'])->name('physical-routers.massDestroy');
 
     // Wifi Terminals
     Route::resource('wifi-terminals', Admin\WifiTerminalController::class);
+    Route::get('wifi-terminals-clone/{id}', [Admin\WifiTerminalController::class,'clone'])->name('wifi-terminals.clone');
     Route::delete('wifi-terminals-destroy', [Admin\WifiTerminalController::class,'massDestroy'])->name('wifi-terminals.massDestroy');
 
     // Physical Security Devices
@@ -267,6 +277,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // VLANs
     Route::resource('vlans', Admin\VlanController::class);
+    Route::get('vlans-clone/{id}', [Admin\VlanController::class,'clone'])->name('vlans.clone');
     Route::delete('vlans-destroy', [Admin\VlanController::class,'massDestroy'])->name('vlans.massDestroy');
 
     // Application Modules
