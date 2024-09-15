@@ -15,6 +15,12 @@
         </a>
     @endcan
 
+    @can('physical_switch_create')
+        <a class="btn btn-warning" href="{{ route('admin.physical-switches.clone', $physicalSwitch->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('physical_switch_delete')
         <form action="{{ route('admin.physical-switches.destroy', $physicalSwitch->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

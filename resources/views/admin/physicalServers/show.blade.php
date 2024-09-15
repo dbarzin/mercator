@@ -16,6 +16,12 @@
         </a>
     @endcan
 
+    @can('physical_server_create')
+        <a class="btn btn-warning" href="{{ route('admin.physical-servers.clone', $physicalServer->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('physical_server_delete')
         <form action="{{ route('admin.physical-servers.destroy', $physicalServer->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

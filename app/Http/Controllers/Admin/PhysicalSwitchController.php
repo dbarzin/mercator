@@ -12,6 +12,7 @@ use App\NetworkSwitch;
 use App\PhysicalSwitch;
 use App\Site;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhysicalSwitchController extends Controller
@@ -35,6 +36,32 @@ class PhysicalSwitchController extends Controller
         $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
 
         $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        return view(
+            'admin.physicalSwitches.create',
+            compact('sites', 'buildings', 'bays', 'networkSwitches', 'type_list')
+        );
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networkSwitches = NetworkSwitch::all()->sortBy('name')->pluck('name', 'id');
+
+        $type_list = PhysicalSwitch::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
+
+        // Get PhysicalSwitch
+        $physicalSwitch = PhysicalSwitch::find($request->id);
+
+        // Vlan not found
+        abort_if($physicalSwitch === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($physicalSwitch->only($physicalSwitch->getFillable()));
+        $request->merge(["networkSwitches" => $physicalSwitch->networkSwitches()->pluck('id')->unique()->toArray()]);
+        $request->flash();
 
         return view(
             'admin.physicalSwitches.create',

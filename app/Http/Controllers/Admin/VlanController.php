@@ -10,7 +10,9 @@ use App\Subnetwork;
 use App\Vlan;
 use Gate;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Session;
 
 class VlanController extends Controller
 {
@@ -23,11 +25,30 @@ class VlanController extends Controller
         return view('admin.vlans.index', compact('vlans'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+
+
+        return view('admin.vlans.create', compact('subnetworks'));
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('vlan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $subnetworks = Subnetwork::all()->sortBy('name')->pluck('name', 'id');
+
+        // Get Vlan
+        $vlan = Vlan::find($request->id);
+
+        // Vlan not found
+        abort_if($vlan === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($vlan->only($vlan->getFillable()));
+        $request->merge(["subnetworks" => $vlan->subnetworks()->pluck('id')->unique()->toArray()]);
+        $request->flash();
 
         return view('admin.vlans.create', compact('subnetworks'));
     }

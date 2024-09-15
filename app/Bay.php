@@ -71,6 +71,10 @@ class Bay extends Model
         return $this->belongsTo(Building::class, 'room_id');
     }
 
+    public function getFillable() {
+        return $this->fillable;
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

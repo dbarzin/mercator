@@ -54,6 +54,7 @@ return [
     'chart_type' => 'Type of chart',
     'check' => 'Check',
     'clickHereToVerify' => 'Click to verify',
+    'clone' => 'Clone',
     'code' => 'Code',
     'companies' => 'Companies',
     'company' => 'Society',

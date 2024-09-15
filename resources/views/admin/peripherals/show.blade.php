@@ -11,6 +11,12 @@
         </a>
     @endcan
 
+    @can('peripheral_create')
+        <a class="btn btn-warning" href="{{ route('admin.peripherals.clone', $peripheral->id) }}">
+            {{ trans('global.clone') }}
+        </a>
+    @endcan
+
     @can('peripheral_delete')
         <form action="{{ route('admin.peripherals.destroy', $peripheral->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">

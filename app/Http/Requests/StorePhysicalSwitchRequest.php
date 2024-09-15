@@ -22,7 +22,6 @@ class StorePhysicalSwitchRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                //'unique:physical_switches',
                 'unique:physical_switches,name,NULL,id,deleted_at,NULL',
             ],
         ];

@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyBayRequest;
 use App\Http\Requests\StoreBayRequest;
 use App\Http\Requests\UpdateBayRequest;
 use Gate;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BayController extends Controller
@@ -28,6 +29,23 @@ class BayController extends Controller
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.bays.create', compact('rooms'));
+    }
+
+    public function clone(Request $request) {
+        abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $rooms = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // Get Bay
+        $bay = Bay::find($request->id);
+
+        // Bay not found
+        abort_if($bay === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        $request->merge($bay->only($bay->getFillable()));
+        $request->flash();
 
         return view('admin.bays.create', compact('rooms'));
     }

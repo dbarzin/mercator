@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    
+
 <div class="form-group">
     <div class="form-group">
         <a class="btn btn-default" href="{{ route('admin.workstations.index') }}">
@@ -9,6 +9,12 @@
         @can('workstation_edit')
             <a class="btn btn-info" href="{{ route('admin.workstations.edit', $workstation->id) }}">
                 {{ trans('global.edit') }}
+            </a>
+        @endcan
+
+        @can('workstation_create')
+            <a class="btn btn-warning" href="{{ route('admin.workstations.clone', $workstation->id) }}">
+                {{ trans('global.clone') }}
             </a>
         @endcan
 
@@ -60,7 +66,7 @@
                     </a>
                     @if(!$loop->last)
                     ,
-                    @endif                                
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -86,11 +92,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">      
+            <div class="col-sm-4">
                 <dt>{{ trans('cruds.workstation.fields.operating_system') }}</dt>
                 {!! $workstation->operating_system !!}
             </div>
-            <div class="col-sm-4">      
+            <div class="col-sm-4">
                 <dt>{{ trans('cruds.workstation.fields.address_ip') }}</dt>
                 {!! $workstation->address_ip !!}
             </div>
@@ -117,7 +123,7 @@
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $workstation->created_at ? $workstation->created_at->format(trans('global.timestamp')) : '' }} |
-        {{ trans('global.updated_at') }} {{ $workstation->updated_at ? $workstation->updated_at->format(trans('global.timestamp')) : '' }} 
+        {{ trans('global.updated_at') }} {{ $workstation->updated_at ? $workstation->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
 <div class="form-group">

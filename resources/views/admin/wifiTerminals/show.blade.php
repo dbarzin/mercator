@@ -5,9 +5,16 @@
     <a class="btn btn-default" href="{{ route('admin.wifi-terminals.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
     @can('wifi_terminal_edit')
         <a class="btn btn-info" href="{{ route('admin.wifi-terminals.edit', $wifiTerminal->id) }}">
             {{ trans('global.edit') }}
+        </a>
+    @endcan
+
+    @can('vlan_create')
+        <a class="btn btn-warning" href="{{ route('admin.wifi-terminals.clone', $wifiTerminal->id) }}">
+            {{ trans('global.clone') }}
         </a>
     @endcan
 

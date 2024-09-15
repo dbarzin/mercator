@@ -22,7 +22,6 @@ class UpdateApplicationBlockRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:application_blocks,name,' . request()->route('application_block')->id,
                 'unique:application_blocks,name,'.request()->route('application_block')->id.',id,deleted_at,NULL',
             ],
         ];

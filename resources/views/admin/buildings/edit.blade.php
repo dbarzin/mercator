@@ -33,7 +33,7 @@
 
             <div class="form-group">
               <div>
-                <input type="checkbox" {{ $building->camera ? 'checked' : ''}} id="camera" name="camera">
+                <input type="checkbox" {{ old('camera', $building->camera) ? 'checked' : ''}} id="camera" name="camera">
                 <label for="name">{{ trans('cruds.building.fields.camera') }}</label>
               </div>
               <span class="help-block">{{ trans('cruds.building.fields.camera_helper') }}</span>
@@ -41,7 +41,7 @@
 
             <div class="form-group">
               <div>
-                <input type="checkbox" {{ $building->badge ? 'checked' : ''}} id="badge" name="badge">
+                <input type="checkbox" {{ old('badge', $building->badge) ? 'checked' : ''}} id="badge" name="badge">
                 <label for="name">{{ trans('cruds.building.fields.badge') }}</label>
               </div>
               <span class="help-block">{{ trans('cruds.building.fields.badge_helper') }}</span>
