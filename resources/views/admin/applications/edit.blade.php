@@ -54,15 +54,38 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $application->description) !!}</textarea>
-                @if($errors->has('description'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('description') }}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
+                        <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $application->description) !!}</textarea>
+                        @if($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
+                    </div>
                 </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="imageSelect">Sélectionner une icône</label>
+                        <select id="imageSelect"
+                                class="form-control select2"
+                                name="image"
+                                        >
+                            <option
+                                img_src="<div><img src='/images/application.png' style='width:128%;height:128px;'/></div>">
+                            </option>
+                            <!-- Dynamically populated with existing images -->
+                        </select>
+
+                        <label for="imageUpload">Télécharger une nouvelle image</label>
+                        <input type="file" id="imageUpload" accept="image/png" />
+                    </div>
+                </div>
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
             </div>
         </div>
         <!------------------------------------------------------------------------------------------------------------->
@@ -372,7 +395,6 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
-
           <div class="row">
             <div class="col-md-6">
                 <label
@@ -620,8 +642,8 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
         /**
          * Contruction de la liste des évènements
@@ -894,6 +916,48 @@
             return true;
         }
     });
+
+    // ---------------------------------------------------------------------
+
+    // Initialize imageSelect Select2
+
+    var frameworks = [
+        {
+            "id":"1",
+            "image": "https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg",
+            "text":"Product1"
+        },
+        {   "id":"2",
+            "image": "https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
+            "text":"Product2"
+        }
+    ]
+
+    $("#imageSelect").select2({
+      data: frameworks,
+      templateResult: format,
+      templateSelection: format,
+      escapeMarkup: function(m) { return m; },
+      placeholder: " Click here to select",
+      dropdownCssClass : 'bigdrop'
+    })
+    .val('1')
+    .trigger("change");
+
+    function format(state) {
+      if (!state.id) return state.text; // optgroup
+      // return '<img src="' + state.image + '" style="width: 50px; width: 20px; height: 20px" /> ' + state.text;
+      return '<img src="' + state.image + '"  /> ' + state.text;
+    }
+
+    // $('.select2-container--default .select2-selection--single').css({'height': '220px'});
+
+
 });
 </script>
+@endsection
+
+@section('styles')
+.bigdrop {
+}
 @endsection
