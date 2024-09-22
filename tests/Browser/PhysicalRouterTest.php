@@ -24,8 +24,8 @@ class PhysicalRouterTest extends DuskTestCase
     public function testView()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('physical_routers')->first();
-		if ($data!=null) 
+		$data = \DB::table('physical_routers')->whereNull("deleted_at")->first();
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -41,7 +41,7 @@ class PhysicalRouterTest extends DuskTestCase
     {
         $admin = \App\User::find(1);
 		$data = \DB::table('physical_routers')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -61,8 +61,7 @@ class PhysicalRouterTest extends DuskTestCase
                 $browser->visit("/admin/physical-routers/create");
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/physical-routers/create");
-            });        
+            });
         });
     }
 }
-
