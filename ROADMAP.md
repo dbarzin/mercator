@@ -19,7 +19,7 @@ Changements prévus en 2024 :
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
 - [ ] Utiliser un modèle de document pour les rapports
-- [ ] Pouvoir changer les images des objets
+- [x] Pouvoir changer les images des objets
 
 ## Evolutions mineurs
 
