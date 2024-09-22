@@ -32,8 +32,8 @@ class BuildingController extends Controller
         return view('admin.buildings.create', compact('sites'));
     }
 
-
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');

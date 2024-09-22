@@ -70,7 +70,8 @@ class Site extends Model
         return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

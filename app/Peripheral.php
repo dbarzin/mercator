@@ -63,7 +63,8 @@ class Peripheral extends Model
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

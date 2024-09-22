@@ -39,7 +39,8 @@ class WifiTerminalController extends Controller
         );
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('wifi_terminal_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');

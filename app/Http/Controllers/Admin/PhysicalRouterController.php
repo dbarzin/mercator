@@ -46,7 +46,8 @@ class PhysicalRouterController extends Controller
         );
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('physical_router_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
@@ -65,8 +66,8 @@ class PhysicalRouterController extends Controller
         abort_if($physicalRouter === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($physicalRouter->only($physicalRouter->getFillable()));
-        $request->merge(["vlans" => $physicalRouter->vlans()->pluck('id')->unique()->toArray()]);
-        $request->merge(["routers" => $physicalRouter->routers()->pluck('id')->unique()->toArray()]);
+        $request->merge(['vlans' => $physicalRouter->vlans()->pluck('id')->unique()->toArray()]);
+        $request->merge(['routers' => $physicalRouter->routers()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(

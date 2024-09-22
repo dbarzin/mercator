@@ -62,7 +62,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $icons = Mapplication::select("icon")->whereNotNull("icon")->orderBy('icon')->distinct()->pluck('icon');
+        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -139,13 +139,12 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Set the Icon
-        if (($request->files!==null) && $request->file('iconFile')!==null) {
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
             $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
-        }
-        else if (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $id = intval($request->iconSelect);
             // TODO : It work if nobody has added an icon in the mean time
-            $application->icon = Mapplication::select("icon")->whereNotNull("icon")->orderBy('icon')->distinct()->get()[$id]->icon;
+            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
         }
         // Save application
         $application->save();
@@ -178,7 +177,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $icons = Mapplication::select("icon")->whereNotNull("icon")->orderBy('icon')->distinct()->pluck('icon');
+        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
 
         // rto-rpo
         $application->rto_days = intdiv($application->rto, 60 * 24);
@@ -265,13 +264,12 @@ class MApplicationController extends Controller
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
         // Icon
-        if (($request->files!==null) && $request->file('iconFile')!==null) {
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
             $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
-        }
-        else if (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $id = intval($request->iconSelect);
             // It work if nobody has added an icon
-            $application->icon = Mapplication::select("icon")->whereNotNull("icon")->orderBy('icon')->distinct()->get()[$id]->icon;
+            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
         }
         // Other fields
         $application->update($request->all());
@@ -286,7 +284,6 @@ class MApplicationController extends Controller
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
-
 
         return redirect()->route('admin.applications.index');
     }
@@ -315,11 +312,13 @@ class MApplicationController extends Controller
 
     // Return the icon of the application as a PNG file
 
-    public function icon(int $id) {
+    public function icon(int $id)
+    {
         // Get applications
         $application = MApplication::find($id, ['icon']);
-        if ($application===null)
+        if ($application === null) {
             return null;
+        }
 
         // Get base 64 image
         $base64Image = $application->icon;
@@ -329,7 +328,7 @@ class MApplicationController extends Controller
 
         // Retourner une réponse avec le contenu de l'image et le type MIME 'image/png'
         return response($imageData)
-                ->header('Content-Type', 'image/png');
+            ->header('Content-Type', 'image/png');
     }
 
     public function massDestroy(MassDestroyMApplicationRequest $request)

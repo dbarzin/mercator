@@ -48,8 +48,8 @@ class PeripheralController extends Controller
         );
     }
 
-
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('peripheral_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
@@ -70,7 +70,7 @@ class PeripheralController extends Controller
         abort_if($peripheral === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($peripheral->only($peripheral->getFillable()));
-        $request->merge(["applications" => $peripheral->applications()->pluck('id')->unique()->toArray()]);
+        $request->merge(['applications' => $peripheral->applications()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(

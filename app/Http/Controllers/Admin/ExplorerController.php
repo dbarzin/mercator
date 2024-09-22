@@ -542,11 +542,14 @@ class ExplorerController extends Controller
         // Applications
         $applications = DB::table('m_applications')->select('id', 'name', 'icon', 'application_block_id')->whereNull('deleted_at')->get();
         foreach ($applications as $application) {
-            $this->addNode($nodes, 3,
+            $this->addNode(
+                $nodes,
+                3,
                 $this->formatId('APP_', $application->id),
                 $application->name,
-                $application->icon===null ? '/images/application.png' : ('data:image/png;base64,' . $application->icon ),
-                'applications');
+                $application->icon === null ? '/images/application.png' : 'data:image/png;base64,' . $application->icon,
+                'applications'
+            );
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
         }
         // m_application_physical_server

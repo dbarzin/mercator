@@ -29,7 +29,8 @@ class SiteController extends Controller
         return view('admin.sites.create');
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get Vlan

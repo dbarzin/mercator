@@ -22,7 +22,6 @@ class ForgotPasswordController extends Controller
      */
     public function showForgetPasswordForm(): View
     {
-
         return view('auth.passwords.email');
     }
 
@@ -47,13 +46,13 @@ class ForgotPasswordController extends Controller
 
         // Limit number of mail sent per minute (nospam)
         $previousTokenCreationDate = DB::table('password_resets')
-            ->select("created_at")
-            ->where("email",$request->email)
+            ->select('created_at')
+            ->where('email', $request->email)
             ->first();
 
-        if ($previousTokenCreationDate!=null) {
+        if ($previousTokenCreationDate !== null) {
             // Max one mail per 15 minutes
-            if (Carbon::now()->diffInMinutes($previousTokenCreationDate->created_at)<15) {
+            if (Carbon::now()->diffInMinutes($previousTokenCreationDate->created_at) < 15) {
                 // Log incident
                 Log::warning('Request reset email already sent to : ' . $request->email);
                 // return with same message
@@ -66,7 +65,7 @@ class ForgotPasswordController extends Controller
 
         // Delete previous reset token
         DB::table('password_resets')
-            ->where('email',$request->email)
+            ->where('email', $request->email)
             ->delete();
 
         // Save token in reset_passord table

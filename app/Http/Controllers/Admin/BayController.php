@@ -33,7 +33,8 @@ class BayController extends Controller
         return view('admin.bays.create', compact('rooms'));
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('bay_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
