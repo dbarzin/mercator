@@ -37,7 +37,7 @@ Changements prévus en 2024 :
 - [x] Ajout des clusters
 - [x] Ajout des flux logiques
 - [ ] Afficher l'historique des changements d'un objet
-- [ ] Cloner un objet
+- [x] Cloner un objet
 
 ## Petites évolutions
 

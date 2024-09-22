@@ -47,10 +47,16 @@
                     <th width="10%">
                         <dt>{{ trans('cruds.application.fields.application_block') }}</dt>
                     </th>
-                    <td>
+                    <td width="10%">
                         @if ($application->application_block!=null)
                         <a href='{{ route("admin.application-blocks.show", $application->application_block->id) }}'>{{ $application->application_block->name }}</a>
                         @endif
+                    </td>
+                    <th width="10%">
+                        <dt>{{ trans('cruds.application.fields.attributes') }}</dt>
+                    </td>
+                    <td width="10%">
+                        {{ $application->attributes }}
                     </td>
                     @endif
                 </tr>
@@ -58,8 +64,15 @@
                     <th>
                         <dt>{{ trans('cruds.application.fields.description') }}</dt>
                     </th>
-                    <td colspan="3">
+                    <td colspan="4">
                         {!! $application->description !!}
+                    </td>
+                    <td width="10%">
+                        @if ($application->icon === null)
+                        <img src='/images/application.png' width='100' height='100'>
+                        @else
+                        <img src='data:image/png;base64,{{ $application->icon }}' width='100' height='100'>
+                        @endif
                     </td>
                 </tr>
             </tbody>

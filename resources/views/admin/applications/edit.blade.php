@@ -67,25 +67,16 @@
                         <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
                     </div>
                 </div>
-<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="imageSelect">Sélectionner une icône</label>
-                        <select id="imageSelect"
-                                class="form-control select2"
-                                name="image"
-                                        >
-                            <option
-                                img_src="<div><img src='/images/application.png' style='width:128%;height:128px;'/></div>">
-                            </option>
-                            <!-- Dynamically populated with existing images -->
-                        </select>
-
-                        <label for="imageUpload">Télécharger une nouvelle image</label>
-                        <input type="file" id="imageUpload" accept="image/png" />
+                        <label for="iconSelect">Sélectionner une icône</label>
+                        <select id="iconSelect" name="iconSelect" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="iconFile">Sélectionnez une image</label>
+                        <input type="file" id="iconFile" name="iconFile" accept="image/png" />
                     </div>
                 </div>
-<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
             </div>
         </div>
         <!------------------------------------------------------------------------------------------------------------->
@@ -638,10 +629,10 @@
         </button>
     </div>
 </form>
-
 @endsection
 
 @section('scripts')
+<script src="/js/DynamicSelect.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -918,46 +909,79 @@
     });
 
     // ---------------------------------------------------------------------
+    // Initialize imageSelect
+	imagesData =
+		[
+            {
+                value: 'application.png',
+                img: '/images/application.png',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: {{ $application->icon === null ? "true" : "false"}},
+            },
+            @foreach($icons as  $index => $icon)
+            {
+                value: '{{ $index }}',
+                img: 'data:image/png;base64,{{ $icon }}',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: {{ $application->icon === $icon ? "true" : "false" }},
+            },
+            @endforeach
+        ];
 
-    // Initialize imageSelect Select2
+    // Initialize the Dynamic Selects
+    dynamicSelect = new DynamicSelect('#iconSelect', {
+        columns: 2,
+        height: '100px',
+        width: '160px',
+        dropdownWidth: '300px',
+        placeholder: 'Select an icon',
+        data: imagesData,
+    });
 
-    var frameworks = [
-        {
-            "id":"1",
-            "image": "https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg",
-            "text":"Product1"
-        },
-        {   "id":"2",
-            "image": "https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
-            "text":"Product2"
+    // Handle file upload and verification
+    $('#iconFile').on('change', function(e) {
+        const file = e.target.files[0];
+
+        if (file && file.type === 'image/png') {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = function() {
+                // Check size
+                if (img.size > 65535) {
+                    alert('Image size must be < 65kb');
+                    return;
+                    }
+                if ((img.width > 255) || (img.height > 255)) {
+                    alert('Could not be more than 256x256 pixels.');
+                    return;
+                }
+
+                // Encode the image in base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+					console.log("new image");
+					console.log(file.name);
+                    // Add the base64 encoded image to the select2 options
+                    const base64Image = event.target.result;
+					// add new image
+					imagesData.push(
+		                {
+		                    value: file.name,
+		                    img: base64Image,
+		                    imgHeight: '100px',
+		                });
+					// refresh
+					dynamicSelect.refresh(imagesData, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        } else {
+            alert('Select a PNG image.');
         }
-    ]
-
-    $("#imageSelect").select2({
-      data: frameworks,
-      templateResult: format,
-      templateSelection: format,
-      escapeMarkup: function(m) { return m; },
-      placeholder: " Click here to select",
-      dropdownCssClass : 'bigdrop'
-    })
-    .val('1')
-    .trigger("change");
-
-    function format(state) {
-      if (!state.id) return state.text; // optgroup
-      // return '<img src="' + state.image + '" style="width: 50px; width: 20px; height: 20px" /> ' + state.text;
-      return '<img src="' + state.image + '"  /> ' + state.text;
-    }
-
-    // $('.select2-container--default .select2-selection--single').css({'height': '220px'});
-
-
+    });
 });
 </script>
-@endsection
-
-@section('styles')
-.bigdrop {
-}
 @endsection

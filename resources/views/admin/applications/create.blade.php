@@ -52,15 +52,29 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
-                @if($errors->has('description'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('description') }}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
+                        <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
+                        @if($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
+                    </div>
                 </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="iconSelect">Sélectionner une icône</label>
+                        <select id="iconSelect" name="iconSelect" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="iconFile">Sélectionnez une image</label>
+                        <input type="file" id="iconFile" name="iconFile" accept="image/png" />
+                    </div>
+                </div>
             </div>
         </div>
         <!------------------------------------------------------------------------------------------------------------->
@@ -602,6 +616,7 @@
 @endsection
 
 @section('scripts')
+<script src="/js/DynamicSelect.js"></script>
 <script>
 $(document).ready(function () {
 
@@ -796,6 +811,82 @@ $(document).ready(function () {
             return true;
         }
     });
+
+    // ---------------------------------------------------------------------
+    // Initialize imageSelect
+	imagesData =
+		[
+            {
+                value: 'application.png',
+                img: '/images/application.png',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: true,
+            },
+            @foreach($icons as  $index => $icon)
+            {
+                value: '{{ $index }}',
+                img: 'data:image/png;base64,{{ $icon }}',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: false,
+            },
+            @endforeach
+        ];
+
+    // Initialize the Dynamic Selects
+    dynamicSelect = new DynamicSelect('#iconSelect', {
+        columns: 2,
+        height: '100px',
+        width: '160px',
+        dropdownWidth: '300px',
+        placeholder: 'Select an icon',
+        data: imagesData,
+    });
+
+    // Handle file upload and verification
+    $('#iconFile').on('change', function(e) {
+        const file = e.target.files[0];
+
+        if (file && file.type === 'image/png') {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = function() {
+                // Check size
+                if (img.size > 65535) {
+                    alert('Image size must be < 65kb');
+                    return;
+                    }
+                if ((img.width > 255) || (img.height > 255)) {
+                    alert('Could not be more than 256x256 pixels.');
+                    return;
+                }
+
+                // Encode the image in base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+					console.log("new image");
+					console.log(file.name);
+                    // Add the base64 encoded image to the select2 options
+                    const base64Image = event.target.result;
+					// add new image
+					imagesData.push(
+		                {
+		                    value: file.name,
+		                    img: base64Image,
+		                    imgHeight: '100px',
+		                });
+					// refresh
+					dynamicSelect.refresh(imagesData, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        } else {
+            alert('Select a PNG image.');
+        }
+    });
+
 });
 </script>
 @endsection
