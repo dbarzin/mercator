@@ -49,7 +49,8 @@ class WifiTerminal extends Model
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

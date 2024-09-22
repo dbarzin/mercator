@@ -43,7 +43,8 @@ class PhysicalSwitchController extends Controller
         );
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('physical_switch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -60,7 +61,7 @@ class PhysicalSwitchController extends Controller
         abort_if($physicalSwitch === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($physicalSwitch->only($physicalSwitch->getFillable()));
-        $request->merge(["networkSwitches" => $physicalSwitch->networkSwitches()->pluck('id')->unique()->toArray()]);
+        $request->merge(['networkSwitches' => $physicalSwitch->networkSwitches()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(

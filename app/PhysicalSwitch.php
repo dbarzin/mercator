@@ -60,7 +60,8 @@ class PhysicalSwitch extends Model
         return $this->belongsToMany(NetworkSwitch::class)->orderBy('name');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

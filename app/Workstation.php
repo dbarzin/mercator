@@ -61,7 +61,8 @@ class Workstation extends Model
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

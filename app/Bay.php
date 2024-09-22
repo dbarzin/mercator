@@ -71,7 +71,8 @@ class Bay extends Model
         return $this->belongsTo(Building::class, 'room_id');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

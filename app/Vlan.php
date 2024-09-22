@@ -45,7 +45,8 @@ class Vlan extends Model
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

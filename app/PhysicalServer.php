@@ -111,7 +111,8 @@ class PhysicalServer extends Model
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
-    public function getFillable() {
+    public function getFillable()
+    {
         return $this->fillable;
     }
 

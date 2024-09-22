@@ -39,7 +39,8 @@ class PhoneController extends Controller
         );
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('phone_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -61,7 +62,6 @@ class PhoneController extends Controller
             compact('sites', 'buildings', 'type_list')
         );
     }
-
 
     public function store(StorePhoneRequest $request)
     {

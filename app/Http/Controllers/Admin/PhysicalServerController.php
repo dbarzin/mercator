@@ -61,7 +61,8 @@ class PhysicalServerController extends Controller
         );
     }
 
-    public function clone(Request $request) {
+    public function clone(Request $request)
+    {
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id');
@@ -83,8 +84,8 @@ class PhysicalServerController extends Controller
         abort_if($physicalServer === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($physicalServer->only($physicalServer->getFillable()));
-        $request->merge(["applications" => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
-        $request->merge(["logicalServers" => $physicalServer->serversLogicalServers()->pluck('id')->unique()->toArray()]);
+        $request->merge(['applications' => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
+        $request->merge(['logicalServers' => $physicalServer->serversLogicalServers()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(
@@ -102,8 +103,6 @@ class PhysicalServerController extends Controller
             )
         );
     }
-
-
 
     public function store(StorePhysicalServerRequest $request)
     {

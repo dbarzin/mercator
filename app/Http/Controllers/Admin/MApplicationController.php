@@ -62,6 +62,8 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
+
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $technology_list = MApplication::select('technology')->where('technology', '<>', null)->distinct()->orderBy('technology')->pluck('technology');
@@ -110,6 +112,7 @@ class MApplicationController extends Controller
                 'databases',
                 'logical_servers',
                 'application_blocks',
+                'icons',
                 'type_list',
                 'technology_list',
                 'users_list',
@@ -128,13 +131,25 @@ class MApplicationController extends Controller
         $request->merge(['responsible' => implode(', ', $request->responsibles !== null ? $request->responsibles : [])]);
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
+        // Create application
         $application = MApplication::create($request->all());
 
-        // rto-rpo
+        // Compute RTO - RPO
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
+
+        // Set the Icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $id = intval($request->iconSelect);
+            // TODO : It work if nobody has added an icon in the mean time
+            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
+        }
+        // Save application
         $application->save();
 
+        // Save relations
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
@@ -162,6 +177,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
 
         // rto-rpo
         $application->rto_days = intdiv($application->rto, 60 * 24);
@@ -223,6 +239,7 @@ class MApplicationController extends Controller
                 'databases',
                 'logical_servers',
                 'application_blocks',
+                'icons',
                 'application',
                 'type_list',
                 'technology_list',
@@ -242,13 +259,22 @@ class MApplicationController extends Controller
         $application->responsible = implode(', ', $request->responsibles !== null ? $request->responsibles : []);
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
-        // rto-rpo
+        // RTO-RPO
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
-        // other fields
+        // Icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $id = intval($request->iconSelect);
+            // It work if nobody has added an icon
+            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
+        }
+        // Other fields
         $application->update($request->all());
 
+        // Relations
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
@@ -282,6 +308,27 @@ class MApplicationController extends Controller
         $application->delete();
 
         return redirect()->route('admin.applications.index');
+    }
+
+    // Return the icon of the application as a PNG file
+
+    public function icon(int $id)
+    {
+        // Get applications
+        $application = MApplication::find($id, ['icon']);
+        if ($application === null) {
+            return null;
+        }
+
+        // Get base 64 image
+        $base64Image = $application->icon;
+
+        // Décoder l'image encodée en base64
+        $imageData = base64_decode($base64Image);
+
+        // Retourner une réponse avec le contenu de l'image et le type MIME 'image/png'
+        return response($imageData)
+            ->header('Content-Type', 'image/png');
     }
 
     public function massDestroy(MassDestroyMApplicationRequest $request)
