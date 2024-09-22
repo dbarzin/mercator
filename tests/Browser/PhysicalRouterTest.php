@@ -40,7 +40,7 @@ class PhysicalRouterTest extends DuskTestCase
     public function testEdit()
     {
         $admin = \App\User::find(1);
-		$data = \DB::table('physical_routers')->first();
+		$data = \DB::table('physical_routers')->whereNull("deleted_at")->first();
 		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
