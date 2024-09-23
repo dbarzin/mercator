@@ -138,7 +138,11 @@ class MApplicationController extends Controller
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
-        // Set the Icon
+        // Save application
+        $application->save();
+
+        // Save the Icon without auditlog
+        $application->disableAuditing();
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
         } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
@@ -146,8 +150,7 @@ class MApplicationController extends Controller
             // TODO : It work if nobody has added an icon in the mean time
             $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
         }
-        // Save application
-        $application->save();
+        $application->enableAuditing();
 
         // Save relations
         $application->entities()->sync($request->input('entities', []));
@@ -263,16 +266,21 @@ class MApplicationController extends Controller
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
-        // Icon
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $id = intval($request->iconSelect);
-            // It work if nobody has added an icon
-            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
-        }
         // Other fields
         $application->update($request->all());
+
+        // Save the Icon without auditlog
+        $application->disableAuditing();
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
+            $application->save()
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $id = intval($request->iconSelect);
+            // TODO : It work if nobody has added an icon in the mean time
+            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
+            $application->save()
+        }
+        $application->enableAuditing();
 
         // Relations
         $application->entities()->sync($request->input('entities', []));

@@ -369,12 +369,12 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
+           <div class="form-group">
                  <label
                     @if (auth()->user()->granularity>=2)
                     class="recommended"
                     @endif
                     for="security_need">{{ trans('cruds.application.fields.security_need') }}</label>
-                   <div class="form-group">
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td align="right" valign="bottom">
