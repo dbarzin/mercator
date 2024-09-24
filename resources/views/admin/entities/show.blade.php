@@ -80,8 +80,15 @@
                         <th>
                             {{ trans('cruds.entity.fields.description') }}
                         </th>
-                        <td colspan="7">
+                        <td colspan="6">
                             {!! $entity->description !!}
+                        </td>
+                        <td width="10%">
+                            @if ($entity->icon_id === null)
+                            <img src='/images/application.png' width='100' height='100'>
+                            @else
+                            <img src='{{ route('admin.documents.show', $entity->icon_id) }}' width='100' height='100'>
+                            @endif
                         </td>
                     </tr>
                     <tr>

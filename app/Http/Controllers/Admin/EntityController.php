@@ -10,6 +10,7 @@ use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
 use App\MApplication;
 use App\Process;
+use App\Document;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,14 +38,43 @@ class EntityController extends Controller
             ->where('entity_type', '<>', null)->distinct()
             ->orderBy('entity_type')->pluck('entity_type');
         $entities = Entity::orderBy('name')->pluck('name', 'id');
+        $icons = Entity::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        return view('admin.entities.create', compact('processes', 'entityTypes', 'applications', 'databases', 'entities'));
+        return view('admin.entities.create',
+            compact('processes', 'entityTypes', 'applications', 'databases', 'entities', 'icons'));
     }
 
     public function store(StoreEntityRequest $request)
     {
         $entity = Entity::create($request->all());
 
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $entity->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $entity->icon_id = intval($request->iconSelect);
+        }
+        else
+            $entity->icon_id=null;
+
+        $entity->save();
+
+        // Save relations
         $entity->entitiesProcesses()->sync($request->input('processes', []));
 
         // update applications table
@@ -79,14 +109,44 @@ class EntityController extends Controller
             ->orderBy('entity_type')->pluck('entity_type');
         $entity->load('entitiesProcesses', 'applications', 'databases');
         $entities = Entity::orderBy('name')->pluck('name', 'id');
+        $icons = Entity::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        return view('admin.entities.edit', compact('entity', 'entityTypes', 'processes', 'applications', 'databases', 'entities'));
+        return view('admin.entities.edit',
+            compact('entity', 'entityTypes', 'processes', 'applications', 'databases', 'entities', 'icons'));
     }
 
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
         $entity->is_external = $request->has('is_external');
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $entity->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $entity->icon_id = intval($request->iconSelect);
+        }
+        else
+            $entity->icon_id=null;
+
+        // Get fields
         $entity->update($request->all());
+
+        // Save relations
         $entity->entitiesProcesses()->sync($request->input('processes', []));
 
         // update applications table
