@@ -73,16 +73,31 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="recommended" for="description">{{ trans('cruds.entity.fields.description') }}</label>
-            <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $entity->description) !!}</textarea>
-            @if($errors->has('description'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('description') }}
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label class="recommended" for="description">{{ trans('cruds.entity.fields.description') }}</label>
+                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $entity->description) !!}</textarea>
+                    @if($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.entity.fields.description_helper') }}</span>
                 </div>
-            @endif
-            <span class="help-block">{{ trans('cruds.entity.fields.description_helper') }}</span>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="iconSelect">Sélectionner une icône</label>
+                    <select id="iconSelect" name="iconSelect" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label for="iconFile">Sélectionnez une image</label>
+                    <input type="file" id="iconFile" name="iconFile" accept="image/png" />
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
             <label class="recommended" for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
             <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}" name="contact_point" id="contact_point">{!! old('contact_point', $entity->contact_point) !!}</textarea>
@@ -176,24 +191,97 @@
 @endsection
 
 @section('scripts')
+<script src="/js/DynamicSelect.js"></script>
 <script>
 $(document).ready(function () {
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
+
+    var allEditors = document.querySelectorAll('.ckeditor');
+    for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
         extraPlugins: []
       }
     );
-  }
-});
+    }
 
-$(document).ready(function() {
-  $(".select2-free").select2({
+    $(".select2-free").select2({
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    })
-  });
+    });
+
+
+    // ---------------------------------------------------------------------
+    // Initialize imageSelect
+	imagesData =
+		[
+            {
+                value: '-1',
+                img: '/images/application.png',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: {{ $entity->icon_id === null ? "true" : "false"}},
+            },
+            @foreach($icons as  $icon)
+            {
+                value: '{{ $icon }}',
+                img: '{{ route('admin.documents.show', $icon) }}',
+                imgWidth: '100px',
+                imgHeight: '100px',
+                selected: {{ $entity->icon_id === $icon ? "true" : "false" }},
+            },
+            @endforeach
+        ];
+
+    // Initialize the Dynamic Selects
+    dynamicSelect = new DynamicSelect('#iconSelect', {
+        columns: 2,
+        height: '100px',
+        width: '160px',
+        dropdownWidth: '300px',
+        placeholder: 'Select an icon',
+        data: imagesData,
+    });
+
+    // Handle file upload and verification
+    $('#iconFile').on('change', function(e) {
+        const file = e.target.files[0];
+
+        if (file && file.type === 'image/png') {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = function() {
+                // Check size
+                if (img.size > 65535) {
+                    alert('Image size must be < 65kb');
+                    return;
+                    }
+                if ((img.width > 255) || (img.height > 255)) {
+                    alert('Could not be more than 256x256 pixels.');
+                    return;
+                }
+
+                // Encode the image in base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // Add the image to the select2 options
+					imagesData.push(
+		                {
+		                    value: file.name,
+		                    img: event.target.result,
+		                    imgHeight: '100px',
+		                });
+					// refresh
+					dynamicSelect.refresh(imagesData, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        } else {
+            alert('Select a PNG image.');
+        }
+    });
+
+});
 </script>
 @endsection

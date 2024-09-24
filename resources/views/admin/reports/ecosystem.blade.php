@@ -277,7 +277,7 @@
   digraph  {
   @can('entity_show')
   @foreach($entities as $entity)
-    E{{ $entity->id }} [label=\"{{ $entity->name }}\" shape=none labelloc=\"b\"  width=1 height=1.1 image=\"/images/entity.png\" href=\"#ENTITY{{$entity->id}}\"]
+    E{{ $entity->id }} [label="{{ $entity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $entity->icon_id === null ? '/images/entity.png' : route('admin.documents.show', $entity->icon_id) }}" href="#ENTITY{{$entity->id}}"]
     @if (($entity->parentEntity!=null)&&($entities->contains("id",$entity->parentEntity->id)))
         E{{ $entity->parentEntity->id }} -> E{{ $entity->id }}
     @endif
@@ -294,6 +294,11 @@
 
 d3.select("#graph").graphviz()
     .addImage("/images/entity.png", "64px", "64px")
+    @foreach($entities as $entity)
+       @if ($entity->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $entity->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .renderDot(dotSrc);
 </script>
 @parent

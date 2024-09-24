@@ -17,10 +17,9 @@
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
-                @if (auth()->user()->granularity>=2)
                 <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
+                    <div class="form-group" >
+                        <label {{ auth()->user()->granularity>=2 ? 'class="recommended"' : ""}} for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                         <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
                             @foreach($application_blocks as $id => $application_block)
                             <option value="{{ $id }}" {{ old('application_block_id') == $id ? 'selected' : '' }}>{{ $application_block }}</option>
@@ -34,7 +33,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.application_block_helper') }}</span>
                     </div>
                 </div>
-                @endif
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
