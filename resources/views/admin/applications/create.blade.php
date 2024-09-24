@@ -866,13 +866,11 @@ $(document).ready(function () {
                 // Encode the image in base64
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    // Add the base64 encoded image to the select2 options
-                    const base64Image = event.target.result;
-					// add new image
+                    // Add image to the select2 options
 					imagesData.push(
 		                {
 		                    value: file.name,
-		                    img: base64Image,
+		                    img: event.target.result,
 		                    imgHeight: '100px',
 		                });
 					// refresh

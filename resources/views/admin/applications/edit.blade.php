@@ -962,15 +962,11 @@
                 // Encode the image in base64
                 const reader = new FileReader();
                 reader.onload = function(event) {
-					console.log("new image");
-					console.log(file.name);
-                    // Add the base64 encoded image to the select2 options
-                    const base64Image = event.target.result;
-					// add new image
+                    // Add the image to the select2 options
 					imagesData.push(
 		                {
-		                    value: -1,
-		                    img: base64Image,
+		                    value: file.name,
+		                    img: event.target.result,
 		                    imgHeight: '100px',
 		                });
 					// refresh
