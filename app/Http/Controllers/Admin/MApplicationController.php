@@ -164,6 +164,9 @@ class MApplicationController extends Controller
         else
             $application->icon_id=null;
 
+        // Save application
+        $application->save();
+
         // Save relations
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
