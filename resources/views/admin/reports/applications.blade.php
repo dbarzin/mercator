@@ -734,7 +734,7 @@ digraph  {
     @endcan
     @can('application_access')
     @foreach($applications as $application)
-        A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon ==null ? '/images/application.png' : ('/admin/application-icon/' . $application->id ) }}" href="#APPLICATION{{$application->id}}"]
+        A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) }}" href="#APPLICATION{{$application->id}}"]
         @if (auth()->user()->granularity>=2)
             @foreach($application->services as $service)
                 A{{ $application->id }} -> AS{{ $service->id}}
@@ -778,8 +778,8 @@ d3.select("#graph").graphviz()
     .addImage("/images/database.png", "64px", "64px")
     .addImage("/images/applicationblock.png", "64px", "64px")
     @foreach($applications as $application)
-       @if ($application->icon!==null)
-       .addImage("/admin/application-icon/{{ $application->id }}", "64px", "64px")
+       @if ($application->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
        @endif
     @endforeach
     .renderDot(dotSrc);

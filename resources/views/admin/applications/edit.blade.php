@@ -913,19 +913,19 @@
 	imagesData =
 		[
             {
-                value: 'application.png',
+                value: '-1',
                 img: '/images/application.png',
                 imgWidth: '100px',
                 imgHeight: '100px',
-                selected: {{ $application->icon === null ? "true" : "false"}},
+                selected: {{ $application->icon_id === null ? "true" : "false"}},
             },
-            @foreach($icons as  $index => $icon)
+            @foreach($icons as  $icon)
             {
-                value: '{{ $index }}',
-                img: 'data:image/png;base64,{{ $icon }}',
+                value: '{{ $icon }}',
+                img: '{{ route('admin.documents.show', $icon) }}',
                 imgWidth: '100px',
                 imgHeight: '100px',
-                selected: {{ $application->icon === $icon ? "true" : "false" }},
+                selected: {{ $application->icon_id === $icon ? "true" : "false" }},
             },
             @endforeach
         ];
@@ -969,7 +969,7 @@
 					// add new image
 					imagesData.push(
 		                {
-		                    value: file.name,
+		                    value: -1,
 		                    img: base64Image,
 		                    imgHeight: '100px',
 		                });

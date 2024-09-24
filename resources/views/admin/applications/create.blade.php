@@ -817,16 +817,16 @@ $(document).ready(function () {
 	imagesData =
 		[
             {
-                value: 'application.png',
+                value: '-1',
                 img: '/images/application.png',
                 imgWidth: '100px',
                 imgHeight: '100px',
                 selected: true,
             },
-            @foreach($icons as  $index => $icon)
+            @foreach($icons as $icon)
             {
-                value: '{{ $index }}',
-                img: 'data:image/png;base64,{{ $icon }}',
+                value: '{{ $icon }}',
+                img: '{{ route('admin.documents.show', $icon) }}',
                 imgWidth: '100px',
                 imgHeight: '100px',
                 selected: false,
@@ -866,8 +866,6 @@ $(document).ready(function () {
                 // Encode the image in base64
                 const reader = new FileReader();
                 reader.onload = function(event) {
-					console.log("new image");
-					console.log(file.name);
                     // Add the base64 encoded image to the select2 options
                     const base64Image = event.target.result;
 					// add new image

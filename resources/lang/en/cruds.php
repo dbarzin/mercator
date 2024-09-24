@@ -337,6 +337,7 @@ return [
             'count' => 'Number de documents',
             'total_size' => 'total size',
             'hash' => 'Hash',
+            'mimetype' => 'MIME type',
             'name' => 'Name',
             'size' => 'Size',
             'status' => 'Status'

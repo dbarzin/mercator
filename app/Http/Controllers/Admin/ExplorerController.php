@@ -540,14 +540,14 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 3, $this->formatId('BLOCK_', $applicationBlock->id), $applicationBlock->name, '/images/applicationblock.png', 'application-blocks');
         }
         // Applications
-        $applications = DB::table('m_applications')->select('id', 'name', 'icon', 'application_block_id')->whereNull('deleted_at')->get();
+        $applications = DB::table('m_applications')->select('id', 'name', 'icon_id', 'application_block_id')->whereNull('deleted_at')->get();
         foreach ($applications as $application) {
             $this->addNode(
                 $nodes,
                 3,
                 $this->formatId('APP_', $application->id),
                 $application->name,
-                $application->icon === null ? '/images/application.png' : 'data:image/png;base64,' . $application->icon,
+                $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) ,
                 'applications'
             );
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
