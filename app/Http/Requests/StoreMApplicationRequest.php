@@ -23,6 +23,7 @@ class StoreMApplicationRequest extends FormRequest
                 'required',
                 'unique:m_applications,name,NULL,id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'entities.*' => [
                 'integer',
             ],

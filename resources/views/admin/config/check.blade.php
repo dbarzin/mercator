@@ -24,6 +24,7 @@ function bytesToHuman($bytes) {
             <tr>
                 <th>#</th>
                 <th>{{ trans('cruds.configuration.documents.name') }}</th>
+                <th>{{ trans('cruds.configuration.documents.mimetype') }}</th>
                 <th>{{ trans('cruds.configuration.documents.size') }}</th>
                 <th>{{ trans('cruds.configuration.documents.hash') }}</th>
                 <th>{{ trans('cruds.configuration.documents.status') }}</th>
@@ -39,15 +40,18 @@ function bytesToHuman($bytes) {
                     <a href="{{ route('admin.documents.show',$doc->id) }}">{{ substr($doc->filename,0,64) }}</a>
                 </td>
                 <td>
+                    {{ $doc->mimetype }}
+                </td>
+                <td>
                     {{ bytesToHuman($doc->size) }}
                 </td>
                 <td>
                     {{ $doc->hash }}
                     <br>
                 </td>
-                <td>    
-                    <b>        
-                    @if (file_exists(storage_path('docs/').$doc->id))            
+                <td>
+                    <b>
+                    @if (file_exists(storage_path('docs/').$doc->id))
                         @if ($doc->hash == hash_file("sha256", storage_path('docs/').$doc->id))
                             <font color="green">OK</font>
                         @else

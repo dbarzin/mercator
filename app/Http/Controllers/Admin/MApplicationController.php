@@ -16,6 +16,8 @@ use App\Process;
 use App\Services\CartographerService;
 use App\Services\EventService;
 use App\User;
+use App\Document;
+
 // CoreUI Gates
 use Gate;
 // Laravel Gate
@@ -62,7 +64,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
+        $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -138,19 +140,29 @@ class MApplicationController extends Controller
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
-        // Save application
-        $application->save();
-
-        // Save the Icon without auditlog
-        $application->disableAuditing();
+        // Save icon
         if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $id = intval($request->iconSelect);
-            // TODO : It work if nobody has added an icon in the mean time
-            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $application->icon_id = $document->id;
         }
-        $application->enableAuditing();
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $application->icon_id = intval($request->iconSelect);
+        }
+        else
+            $application->icon_id=null;
 
         // Save relations
         $application->entities()->sync($request->input('entities', []));
@@ -180,7 +192,7 @@ class MApplicationController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $icons = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->pluck('icon');
+        $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // rto-rpo
         $application->rto_days = intdiv($application->rto, 60 * 24);
@@ -266,21 +278,32 @@ class MApplicationController extends Controller
         $application->rto = $request->rto_days * 60 * 24 + $request->rto_hours * 60 + $request->rto_minutes;
         $application->rpo = $request->rpo_days * 60 * 24 + $request->rpo_hours * 60 + $request->rpo_minutes;
 
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $application->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $application->icon_id = intval($request->iconSelect);
+        }
+        else
+            $application->icon_id=null;
+
         // Other fields
         $application->update($request->all());
-
-        // Save the Icon without auditlog
-        $application->disableAuditing();
-        if (($request->files !== null) && $request->file('iconFile') !== null) {
-            $application->icon = base64_encode(file_get_contents($request->file('iconFile')));
-            $application->save()
-        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
-            $id = intval($request->iconSelect);
-            // TODO : It work if nobody has added an icon in the mean time
-            $application->icon = Mapplication::select('icon')->whereNotNull('icon')->orderBy('icon')->distinct()->get()[$id]->icon;
-            $application->save()
-        }
-        $application->enableAuditing();
 
         // Relations
         $application->entities()->sync($request->input('entities', []));
