@@ -120,6 +120,7 @@ return [
     'filterDate' => 'Filter by Dates',
     'forgot_password' => 'Forgot your password ?',
     'hide' => 'Hide',
+    'icon_select' => 'Select an icon',
     'if_you_are_having_trouble' => 'If you have any problems, click',
     'import_data' => 'Import Data',
     'imported_rows_to_table' => ': rows rows imported into the table: table',

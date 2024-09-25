@@ -25,6 +25,7 @@ class StorePeripheralRequest extends FormRequest
                 'required',
                 'unique:peripherals,name,NULL,id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'address_ip' => [
                 'nullable',
                 new IPList(),

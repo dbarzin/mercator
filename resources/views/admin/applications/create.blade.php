@@ -65,11 +65,10 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="iconSelect">Sélectionner une icône</label>
+                        <label for="iconSelect">{{ trans('global.icon_select') }}</label>
                         <select id="iconSelect" name="iconSelect" class="form-control"></select>
                     </div>
                     <div class="form-group">
-                        <label for="iconFile">Sélectionnez une image</label>
                         <input type="file" id="iconFile" name="iconFile" accept="image/png" />
                     </div>
                 </div>
@@ -817,16 +816,16 @@ $(document).ready(function () {
             {
                 value: '-1',
                 img: '/images/application.png',
-                imgWidth: '100px',
-                imgHeight: '100px',
+                imgWidth: '120px',
+                imgHeight: '120px',
                 selected: true,
             },
             @foreach($icons as $icon)
             {
                 value: '{{ $icon }}',
                 img: '{{ route('admin.documents.show', $icon) }}',
-                imgWidth: '100px',
-                imgHeight: '100px',
+                imgWidth: '120px',
+                imgHeight: '120px',
                 selected: false,
             },
             @endforeach
@@ -835,7 +834,7 @@ $(document).ready(function () {
     // Initialize the Dynamic Selects
     dynamicSelect = new DynamicSelect('#iconSelect', {
         columns: 2,
-        height: '100px',
+        height: '140px',
         width: '160px',
         dropdownWidth: '300px',
         placeholder: 'Select an icon',

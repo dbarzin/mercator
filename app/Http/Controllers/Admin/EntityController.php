@@ -71,7 +71,6 @@ class EntityController extends Controller
         }
         else
             $entity->icon_id=null;
-
         $entity->save();
 
         // Save relations

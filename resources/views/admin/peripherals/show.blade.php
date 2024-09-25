@@ -5,6 +5,11 @@
     <a class="btn btn-default" href="{{ route('admin.peripherals.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PERIF_{{$peripheral->id}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('peripheral_edit')
         <a class="btn btn-info" href="{{ route('admin.peripherals.edit', $peripheral->id) }}">
             {{ trans('global.edit') }}
@@ -57,9 +62,17 @@
                     <th>
                         {{ trans('cruds.peripheral.fields.description') }}
                     </th>
-                    <td colspan='5'>
+                    <td colspan='4'>
                         {!! $peripheral->description !!}
                     </td>
+                    <td width="10%">
+                        @if ($peripheral->icon_id === null)
+                        <img src='/images/peripheral.png' width='120' height='120'>
+                        @else
+                        <img src='{{ route('admin.documents.show', $peripheral->icon_id) }}' width='100' height='100'>
+                        @endif
+                    </td>
+
                 </tr>
             </tbody>
         </table>

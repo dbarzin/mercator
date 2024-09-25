@@ -69,7 +69,7 @@
                     </td>
                     <td width="10%">
                         @if ($application->icon_id === null)
-                        <img src='/images/application.png' width='100' height='100'>
+                        <img src='/images/application.png' width='120' height='120'>
                         @else
                         <img src='{{ route('admin.documents.show', $application->icon_id) }}' width='100' height='100'>
                         @endif

@@ -127,9 +127,16 @@ class ExplorerController extends Controller
         }
 
         // peripherals
-        $peripherals = DB::table('peripherals')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
+        $peripherals = DB::table('peripherals')->select('id', 'name', 'icon_id', 'address_ip', 'bay_id', 'site_id', 'building_id', 'provider_id')->whereNull('deleted_at')->get();
         foreach ($peripherals as $peripheral) {
-            $this->addNode($nodes, 6, $this->formatId('PERIF_', $peripheral->id), $peripheral->name, '/images/peripheral.png', 'peripherals', $peripheral->address_ip);
+            $this->addNode(
+                $nodes,
+                6,
+                $this->formatId('PERIF_', $peripheral->id),
+                $peripheral->name,
+                $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id),
+                'peripherals',
+                $peripheral->address_ip);
             if ($peripheral->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BAY_', $peripheral->bay_id));
             } elseif ($peripheral->building_id !== null) {

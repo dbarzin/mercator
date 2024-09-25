@@ -22,9 +22,9 @@ class UpdateEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:entities,name,' . request()->route('entity')->id,
                 'unique:entities,name,'.request()->route('entity')->id.',id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'seurity_level' => [
                 'nullable',
                 'integer',

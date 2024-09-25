@@ -25,6 +25,7 @@ return [
     'forgot_password' => 'Mot de passe oublié ?',
     'hide' => 'Masquer',
     'integrity' => 'Intégrité',
+    'icon_select' => 'Sélectionnez une icône',
     'list' => 'Liste',
     'login' => 'Connexion',
     'login_id' => 'Adresse mail',
