@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Site;
-use App\Document;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,12 +72,11 @@ class SiteController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $site->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $site->icon_id = intval($request->iconSelect);
+        } else {
+            $site->icon_id = null;
         }
-        else
-            $site->icon_id=null;
         $site->save();
 
         return redirect()->route('admin.sites.index');
@@ -111,12 +110,11 @@ class SiteController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $site->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $site->icon_id = intval($request->iconSelect);
+        } else {
+            $site->icon_id = null;
         }
-        else
-            $site->icon_id=null;
 
         $site->update($request->all());
 

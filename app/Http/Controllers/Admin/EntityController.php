@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Database;
+use App\Document;
 use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyEntityRequest;
@@ -10,7 +11,6 @@ use App\Http\Requests\StoreEntityRequest;
 use App\Http\Requests\UpdateEntityRequest;
 use App\MApplication;
 use App\Process;
-use App\Document;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,8 +40,10 @@ class EntityController extends Controller
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $icons = Entity::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        return view('admin.entities.create',
-            compact('processes', 'entityTypes', 'applications', 'databases', 'entities', 'icons'));
+        return view(
+            'admin.entities.create',
+            compact('processes', 'entityTypes', 'applications', 'databases', 'entities', 'icons')
+        );
     }
 
     public function store(StoreEntityRequest $request)
@@ -65,12 +67,11 @@ class EntityController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $entity->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $entity->icon_id = intval($request->iconSelect);
+        } else {
+            $entity->icon_id = null;
         }
-        else
-            $entity->icon_id=null;
         $entity->save();
 
         // Save relations
@@ -110,8 +111,10 @@ class EntityController extends Controller
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $icons = Entity::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
-        return view('admin.entities.edit',
-            compact('entity', 'entityTypes', 'processes', 'applications', 'databases', 'entities', 'icons'));
+        return view(
+            'admin.entities.edit',
+            compact('entity', 'entityTypes', 'processes', 'applications', 'databases', 'entities', 'icons')
+        );
     }
 
     public function update(UpdateEntityRequest $request, Entity $entity)
@@ -135,12 +138,11 @@ class EntityController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $entity->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $entity->icon_id = intval($request->iconSelect);
+        } else {
+            $entity->icon_id = null;
         }
-        else
-            $entity->icon_id=null;
 
         // Get fields
         $entity->update($request->all());

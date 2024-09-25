@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Bay;
 use App\Building;
+use App\Document;
 use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPeripheralRequest;
@@ -12,7 +13,6 @@ use App\Http\Requests\UpdatePeripheralRequest;
 use App\MApplication;
 use App\Peripheral;
 use App\Site;
-use App\Document;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,9 +47,16 @@ class PeripheralController extends Controller
         return view(
             'admin.peripherals.create',
             compact(
-                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
-                'type_list', 'domain_list', 'responsible_list'
-                )
+                'sites',
+                'buildings',
+                'bays',
+                'entities',
+                'applications',
+                'icons',
+                'type_list',
+                'domain_list',
+                'responsible_list'
+            )
         );
     }
 
@@ -82,8 +89,16 @@ class PeripheralController extends Controller
         return view(
             'admin.peripherals.create',
             compact(
-                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
-                'type_list', 'domain_list', 'responsible_list')
+                'sites',
+                'buildings',
+                'bays',
+                'entities',
+                'applications',
+                'icons',
+                'type_list',
+                'domain_list',
+                'responsible_list'
+            )
         );
     }
 
@@ -109,12 +124,11 @@ class PeripheralController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $peripheral->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $peripheral->icon_id = intval($request->iconSelect);
+        } else {
+            $peripheral->icon_id = null;
         }
-        else
-            $peripheral->icon_id=null;
         $peripheral->save();
 
         // Save links
@@ -145,8 +159,17 @@ class PeripheralController extends Controller
         return view(
             'admin.peripherals.edit',
             compact(
-                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
-                'peripheral', 'type_list', 'domain_list', 'responsible_list')
+                'sites',
+                'buildings',
+                'bays',
+                'entities',
+                'applications',
+                'icons',
+                'peripheral',
+                'type_list',
+                'domain_list',
+                'responsible_list'
+            )
         );
     }
 
@@ -169,12 +192,11 @@ class PeripheralController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $peripheral->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $peripheral->icon_id = intval($request->iconSelect);
+        } else {
+            $peripheral->icon_id = null;
         }
-        else
-            $peripheral->icon_id=null;
 
         // Get fields
         $peripheral->update($request->all());

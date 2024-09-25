@@ -31,7 +31,8 @@ class ExplorerController extends Controller
                 $this->formatId('SITE_', $site->id),
                 $site->name,
                 $site->icon_id === null ? '/images/site.png' : route('admin.documents.show', $site->icon_id),
-                'sites');
+                'sites'
+            );
             // link to build
         }
         // BUILDINGS
@@ -142,7 +143,8 @@ class ExplorerController extends Controller
                 $peripheral->name,
                 $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id),
                 'peripherals',
-                $peripheral->address_ip);
+                $peripheral->address_ip
+            );
             if ($peripheral->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PERIF_', $peripheral->id), $this->formatId('BAY_', $peripheral->bay_id));
             } elseif ($peripheral->building_id !== null) {
@@ -560,7 +562,7 @@ class ExplorerController extends Controller
                 3,
                 $this->formatId('APP_', $application->id),
                 $application->name,
-                $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) ,
+                $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id),
                 'applications'
             );
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
@@ -746,7 +748,8 @@ class ExplorerController extends Controller
                 $this->formatId('ENTITY_', $entity->id),
                 $entity->name,
                 $entity->icon_id === null ? '/images/entity.png' : route('admin.documents.show', $entity->icon_id),
-                'entities');
+                'entities'
+            );
             if ($entity->parent_entity_id !== null) {
                 $this->addFluxEdge($edges, null, false, $this->formatId('ENTITY_', $entity->id), $this->formatId('ENTITY_', $entity->parent_entity_id));
             }
