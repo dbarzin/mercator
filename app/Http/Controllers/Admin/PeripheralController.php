@@ -23,7 +23,7 @@ class PeripheralController extends Controller
     {
         abort_if(Gate::denies('peripheral_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $peripherals = Peripheral::all()->sortBy('name');
+        $peripherals = Peripheral::with(["site", "building", "bay", "provider"])->orderBy('name')->get();
 
         return view('admin.peripherals.index', compact('peripherals'));
     }

@@ -28,8 +28,6 @@ class PeripheralController extends Controller
 
         $peripheral = Peripheral::create($request->all());
         $peripheral->applications()->sync($request->input('applications', []));
-        // syncs
-        // $peripheral->roles()->sync($request->input('roles', []));
 
         return response()->json($peripheral, 201);
     }

@@ -38,8 +38,12 @@
                             {{ trans('cruds.peripheral.fields.responsible') }}
                         </th>
                         <th>
-                            {{ trans('cruds.peripheral.fields.site') }} -
-                            {{ trans('cruds.peripheral.fields.building') }} -
+                            {{ trans('cruds.peripheral.fields.site') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.peripheral.fields.building') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.peripheral.fields.bay') }}
                         </th>
                         <th>
@@ -71,8 +75,12 @@
                                 {{ $peripheral->responsible ?? '' }}
                             </td>
                             <td>
-                                {{ $peripheral->site->name ?? '' }} -
-                                {{ $peripheral->building->name ?? '' }} -
+                                {{ $peripheral->site->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $peripheral->building->name ?? '' }}
+                            </td>
+                            <td>
                                 {{ $peripheral->bay->name ?? '' }}
                             </td>
                             <td>

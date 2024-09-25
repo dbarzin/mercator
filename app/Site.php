@@ -36,37 +36,37 @@ class Site extends Model
         'deleted_at',
     ];
 
-    public function siteBuildings()
+    public function buildings()
     {
         return $this->hasMany(Building::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function sitePhysicalServers()
+    public function physicalServers()
     {
         return $this->hasMany(PhysicalServer::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function siteWorkstations()
+    public function workstations()
     {
         return $this->hasMany(Workstation::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function siteStorageDevices()
+    public function storageDevices()
     {
         return $this->hasMany(StorageDevice::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function sitePeripherals()
+    public function peripherals()
     {
         return $this->hasMany(Peripheral::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function sitePhones()
+    public function phones()
     {
         return $this->hasMany(Phone::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function sitePhysicalSwitches()
+    public function physicalSwitches()
     {
         return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');
     }

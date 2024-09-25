@@ -51,11 +51,11 @@
                                 {!! $site->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($site->siteBuildings as $building)
+                                @foreach($site->buildings as $building)
                                     <a href="{{ route('admin.buildings.show', $building->id) }}">
                                     {{ $building->name ?? '' }}
                                     </a>
-                                    @if ($site->siteBuildings->last()!=$building)
+                                    @if ($site->buildings->last()!=$building)
                                     ,
                                     @endif
                                 @endforeach

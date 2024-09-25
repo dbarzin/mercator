@@ -18,7 +18,7 @@ class SiteController extends Controller
     {
         abort_if(Gate::denies('site_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name');
+        $sites = Site::with("buildings")->orderBy('name')->get();
 
         return view('admin.sites.index', compact('sites'));
     }
@@ -125,7 +125,9 @@ class SiteController extends Controller
     {
         abort_if(Gate::denies('site_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $site->load('siteBuildings', 'sitePhysicalServers', 'siteWorkstations', 'siteStorageDevices', 'sitePeripherals', 'sitePhones', 'sitePhysicalSwitches');
+        $site->load(
+            'buildings', 'physicalServers', 'workstations', 'storageDevices',
+            'peripherals', 'phones', 'physicalSwitches');
 
         return view('admin.sites.show', compact('site'));
     }

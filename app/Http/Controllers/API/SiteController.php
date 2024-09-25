@@ -43,8 +43,6 @@ class SiteController extends Controller
         abort_if(Gate::denies('site_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $site->update($request->all());
-        // syncs
-        // $site->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }

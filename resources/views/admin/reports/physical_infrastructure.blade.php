@@ -79,7 +79,7 @@
                                         {{ trans("cruds.site.fields.buildings") }}
                                     </th>
                                     <td>
-                                        @foreach($site->siteBuildings as $building)
+                                        @foreach($site->buildings as $building)
                                             <a href="#BUILDING{{$building->id}}">{{$building->name}}</a>
                                             @if (!$loop->last)
                                                 ,

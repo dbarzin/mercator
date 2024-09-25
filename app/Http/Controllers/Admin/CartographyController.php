@@ -1848,9 +1848,9 @@ class CartographyController extends Controller
 
                     // Buildings
                     $textRun = $this->addTextRunRow($table, trans('cruds.site.fields.buildings'));
-                    foreach ($site->siteBuildings as $building) {
+                    foreach ($site->buildings as $building) {
                         $textRun->addLink('BUILDING'.$building->id, $building->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($site->siteBuildings->last() !== $building) {
+                        if ($site->buildings->last() !== $building) {
                             $textRun->addText(', ');
                         }
                     }
