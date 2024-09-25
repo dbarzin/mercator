@@ -31,9 +31,10 @@ class Peripheral extends Model
 
     protected $fillable = [
         'name',
-        'description',
         'domain',
         'type',
+        'description',
+        'icon_id',
         'provider_id',
         'responsible',
         'site_id',

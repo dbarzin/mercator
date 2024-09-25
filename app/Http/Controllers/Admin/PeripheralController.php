@@ -12,6 +12,7 @@ use App\Http\Requests\UpdatePeripheralRequest;
 use App\MApplication;
 use App\Peripheral;
 use App\Site;
+use App\Document;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,7 @@ class PeripheralController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -44,7 +46,10 @@ class PeripheralController extends Controller
 
         return view(
             'admin.peripherals.create',
-            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list', 'domain_list', 'responsible_list')
+            compact(
+                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
+                'type_list', 'domain_list', 'responsible_list'
+                )
         );
     }
 
@@ -57,6 +62,7 @@ class PeripheralController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -75,15 +81,46 @@ class PeripheralController extends Controller
 
         return view(
             'admin.peripherals.create',
-            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'type_list', 'domain_list', 'responsible_list')
+            compact(
+                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
+                'type_list', 'domain_list', 'responsible_list')
         );
     }
 
     public function store(StorePeripheralRequest $request)
     {
+        // Get fields
         $peripheral = Peripheral::create($request->all());
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $peripheral->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $peripheral->icon_id = intval($request->iconSelect);
+        }
+        else
+            $peripheral->icon_id=null;
+        $peripheral->save();
+
+        // Save links
         $peripheral->applications()->sync($request->input('applications', []));
 
+        // Redirect
         return redirect()->route('admin.peripherals.index');
     }
 
@@ -96,6 +133,7 @@ class PeripheralController extends Controller
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $icons = Peripheral::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
         $type_list = Peripheral::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -106,13 +144,42 @@ class PeripheralController extends Controller
 
         return view(
             'admin.peripherals.edit',
-            compact('sites', 'buildings', 'bays', 'entities', 'applications', 'peripheral', 'type_list', 'domain_list', 'responsible_list')
+            compact(
+                'sites', 'buildings', 'bays', 'entities', 'applications', 'icons',
+                'peripheral', 'type_list', 'domain_list', 'responsible_list')
         );
     }
 
     public function update(UpdatePeripheralRequest $request, Peripheral $peripheral)
     {
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $peripheral->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $peripheral->icon_id = intval($request->iconSelect);
+        }
+        else
+            $peripheral->icon_id=null;
+
+        // Get fields
         $peripheral->update($request->all());
+
+        // Update links
         $peripheral->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.peripherals.index');

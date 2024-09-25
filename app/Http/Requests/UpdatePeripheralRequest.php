@@ -25,6 +25,7 @@ class UpdatePeripheralRequest extends FormRequest
                 'required',
                 'unique:peripherals,name,'.request()->route('peripheral')->id.',id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'address_ip' => [
                 'nullable',
                 new IPList(),

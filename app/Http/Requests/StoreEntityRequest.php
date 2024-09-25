@@ -25,6 +25,7 @@ class StoreEntityRequest extends FormRequest
                 //'unique:entities',
                 'unique:entities,name,NULL,id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'seurity_level' => [
                 'nullable',
                 'integer',

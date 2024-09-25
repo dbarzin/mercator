@@ -862,7 +862,7 @@ digraph  {
     @endcan
     @can('peripheral_access')
     @foreach($peripherals as $peripheral)
-        PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]
+        PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $peripheral->icon_id === null ? '/images/$peripheral.png' : route('admin.documents.show', $peripheral->icon_id) }}" href="#PERIPHERAL{{$peripheral->id}}"]
         @if ($peripheral->bay!=null)
              BAY{{ $peripheral->bay->id }} -> PER{{ $peripheral->id }}
         @elseif ($peripheral->building!=null)
@@ -943,6 +943,11 @@ d3.select("#graph").graphviz()
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
+    @foreach($peripherals as $peripheral)
+       @if ($peripheral->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .renderDot(dotSrc);
 </script>
 @parent
