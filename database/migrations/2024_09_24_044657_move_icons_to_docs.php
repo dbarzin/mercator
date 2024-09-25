@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('icon_id')->after("type")->nullable()->index('document_id_fk_4394343');
             $table->foreign('icon_id','document_id_fk_4394343')->references('id')->on('documents')->onUpdate('NO ACTION');
         });
-
+/*
         // Move icons to documents
         $applications = MApplication::whereNotNull("icon")->get();
         foreach($applications as $app) {
@@ -49,7 +49,7 @@ return new class extends Migration
             $app->icon=null;
             $app->save();
         }
-
+*/
         // Drop icons
         Schema::table('m_applications', function (Blueprint $table) {
             $table->dropColumn("icon");
