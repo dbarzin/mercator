@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Document;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DocumentController extends Controller
 {
@@ -15,6 +16,9 @@ class DocumentController extends Controller
 
         // Get the path to the file
         $path = storage_path('docs/' . $id);
+
+        // Check file exists
+        abort_if(!file_exists($path), Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Get the content of the file
         $file_contents = file_get_contents($path);
