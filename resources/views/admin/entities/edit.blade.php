@@ -209,7 +209,6 @@ $(document).ready(function () {
         tags: true
     });
 
-
     // ---------------------------------------------------------------------
     // Initialize imageSelect
 	imagesData =

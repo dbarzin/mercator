@@ -818,7 +818,7 @@ $(document).ready(function () {
                 img: '/images/application.png',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: true,
+                selected: {{ old('icon_id') === -1 ? "true" : "false" }},
             },
             @foreach($icons as $icon)
             {
@@ -826,7 +826,7 @@ $(document).ready(function () {
                 img: '{{ route('admin.documents.show', $icon) }}',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: false,
+                selected: {{ old('icon_id') === $icon ? "true" : "false" }},
             },
             @endforeach
         ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\ApplicationBlock;
 use App\ApplicationService;
 use App\Database;
+use App\Document;
 use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyMApplicationRequest;
@@ -16,8 +17,6 @@ use App\Process;
 use App\Services\CartographerService;
 use App\Services\EventService;
 use App\User;
-use App\Document;
-
 // CoreUI Gates
 use Gate;
 // Laravel Gate
@@ -157,12 +156,11 @@ class MApplicationController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $application->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $application->icon_id = intval($request->iconSelect);
+        } else {
+            $application->icon_id = null;
         }
-        else
-            $application->icon_id=null;
 
         // Save application
         $application->save();
@@ -298,12 +296,11 @@ class MApplicationController extends Controller
             $file->move(storage_path('docs'), $document->id);
 
             $application->icon_id = $document->id;
-        }
-        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
             $application->icon_id = intval($request->iconSelect);
+        } else {
+            $application->icon_id = null;
         }
-        else
-            $application->icon_id=null;
 
         // Other fields
         $application->update($request->all());

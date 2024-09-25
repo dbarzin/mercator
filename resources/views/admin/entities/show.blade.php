@@ -87,7 +87,7 @@
                             @if ($entity->icon_id === null)
                             <img src='/images/application.png' width='120' height='120'>
                             @else
-                            <img src='{{ route('admin.documents.show', $entity->icon_id) }}' width='100' height='100'>
+                            <img src='{{ route('admin.documents.show', $entity->icon_id) }}' width='120' height='120'>
                             @endif
                         </td>
                     </tr>

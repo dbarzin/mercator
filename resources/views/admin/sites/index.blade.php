@@ -29,6 +29,9 @@
                             {{ trans('cruds.site.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.site.fields.buildings') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -46,6 +49,16 @@
                             </td>
                             <td>
                                 {!! $site->description ?? '' !!}
+                            </td>
+                            <td>
+                                @foreach($site->buildings as $building)
+                                    <a href="{{ route('admin.buildings.show', $building->id) }}">
+                                    {{ $building->name ?? '' }}
+                                    </a>
+                                    @if ($site->buildings->last()!=$building)
+                                    ,
+                                    @endif
+                                @endforeach
                             </td>
                             <td>
                                 @can('site_show')
@@ -126,7 +139,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
