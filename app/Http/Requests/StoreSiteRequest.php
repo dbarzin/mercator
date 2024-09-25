@@ -25,6 +25,7 @@ class StoreSiteRequest extends FormRequest
                 //'unique:sites',
                 'unique:sites,name,NULL,id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
         ];
     }
 }

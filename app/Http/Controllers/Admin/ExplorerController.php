@@ -23,9 +23,15 @@ class ExplorerController extends Controller
         // Physical view - 6
         // ---------------------------------------------------
         // SITES
-        $sites = DB::table('sites')->select('id', 'name')->whereNull('deleted_at')->get();
+        $sites = DB::table('sites')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($sites as $site) {
-            $this->addNode($nodes, 6, $this->formatId('SITE_', $site->id), $site->name, '/images/site.png', 'sites');
+            $this->addNode(
+                $nodes,
+                6,
+                $this->formatId('SITE_', $site->id),
+                $site->name,
+                $site->icon_id === null ? '/images/site.png' : route('admin.documents.show', $site->icon_id),
+                'sites');
             // link to build
         }
         // BUILDINGS

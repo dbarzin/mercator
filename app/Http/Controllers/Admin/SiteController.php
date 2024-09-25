@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroySiteRequest;
 use App\Http\Requests\StoreSiteRequest;
 use App\Http\Requests\UpdateSiteRequest;
 use App\Site;
+use App\Document;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,28 +27,58 @@ class SiteController extends Controller
     {
         abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.sites.create');
+        // Select icons
+        $icons = Site::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        return view('admin.sites.create', compact('icons'));
     }
 
     public function clone(Request $request)
     {
         abort_if(Gate::denies('site_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Get Vlan
-        $site = Site::find($request->id);
+        // Get icons
+        $icons = Site::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
+        // Get site
+        $site = Site::find($request->id);
         // Vlan not found
         abort_if($site === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($site->only($site->getFillable()));
         $request->flash();
 
-        return view('admin.sites.create');
+        return view('admin.sites.create', compact('icons'));
     }
 
     public function store(StoreSiteRequest $request)
     {
-        Site::create($request->all());
+        $site = Site::create($request->all());
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $site->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $site->icon_id = intval($request->iconSelect);
+        }
+        else
+            $site->icon_id=null;
+        $site->save();
 
         return redirect()->route('admin.sites.index');
     }
@@ -56,11 +87,37 @@ class SiteController extends Controller
     {
         abort_if(Gate::denies('site_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.sites.edit', compact('site'));
+        $icons = Site::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        return view('admin.sites.edit', compact('site', 'icons'));
     }
 
     public function update(UpdateSiteRequest $request, Site $site)
     {
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $site->icon_id = $document->id;
+        }
+        elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $site->icon_id = intval($request->iconSelect);
+        }
+        else
+            $site->icon_id=null;
+
         $site->update($request->all());
 
         return redirect()->route('admin.sites.index');

@@ -30,6 +30,7 @@ class Site extends Model
     protected $fillable = [
         'name',
         'description',
+        'icon_id',
         'created_at',
         'updated_at',
         'deleted_at',

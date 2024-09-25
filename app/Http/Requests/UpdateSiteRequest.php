@@ -22,9 +22,9 @@ class UpdateSiteRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:sites,name,' . request()->route('site')->id,
                 'unique:sites,name,'.request()->route('site')->id.',id,deleted_at,NULL',
             ],
+            'iconFile' => ['nullable','file','mimes:png','max:65535'],
         ];
     }
 }

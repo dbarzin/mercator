@@ -44,7 +44,7 @@
                         <th width="10%">
                             {{ trans('cruds.site.fields.name') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             {{ $site->name }}
                         </td>
                     </tr>
@@ -55,12 +55,19 @@
                         <td>
                             {!! $site->description !!}
                         </td>
+                        <td width="10%">
+                            @if ($site->icon_id === null)
+                            <img src='/images/site.png' width='120' height='120'>
+                            @else
+                            <img src='{{ route('admin.documents.show', $site->icon_id) }}' width='120' height='120'>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.site.fields.buildings') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             @foreach($site->siteBuildings as $building)
                                 <a href="{{ route('admin.buildings.show', $building->id) }}">
                                 {{ $building->name ?? '' }}

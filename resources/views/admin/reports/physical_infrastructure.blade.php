@@ -808,7 +808,7 @@ let dotSrc=`
 digraph  {
     @can('site_access')
     @foreach($sites as $site)
-        S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/site.png" href="#SITE{{$site->id}}"]
+        S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $site->icon_id === null ? '/images/$site.png' : route('admin.documents.show', $site->icon_id) }}" href="#SITE{{$site->id}}"]
     @endforEach
     @endcan
     @can('building_access')
@@ -932,6 +932,11 @@ digraph  {
 
 d3.select("#graph").graphviz()
     .addImage("/images/site.png", "64px", "64px")
+    @foreach($sites as $site)
+       @if ($site->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $site->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .addImage("/images/building.png", "64px", "64px")
     .addImage("/images/bay.png", "64px", "64px")
     .addImage("/images/server.png", "64px", "64px")
