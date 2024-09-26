@@ -6,11 +6,15 @@
         background-size:  800px 800px;
         background-position: center;
         background-repeat: no-repeat;
-        background-color: #3b2924;
+        background-color: #FFFFFF;
         }
 
     .card {
         background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .text-muted {
+        color: rgba(0,0,0);        
     }
 
     .input-group-text {
