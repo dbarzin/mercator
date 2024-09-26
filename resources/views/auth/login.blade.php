@@ -1,12 +1,34 @@
 @extends('layouts.app')
+@section('styles')
+<style>
+    body {
+        background-image: url('/images/mercator.png');
+        background-size:  800px 800px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #3b2924;
+        }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .input-group-text {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+@endsection
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card mx-4">
             <div class="card-body p-4">
-                <h1>{{ (env('APP_NAME') === null) || (env('APP_NAME') === "Laravel") ? "Mercator" : env('APP_NAME') }}</h1>
 
-                <p class="text-muted">{{ trans('global.login') }}</p>
+                <p class="text-muted"><b>{{ trans('global.login') }}</b></p>
 
                 @if(session('message'))
                     <div class="alert alert-info" role="alert">
@@ -71,9 +93,8 @@
                         </div>
                     </div>
                 </form>
-
-                <!-- Ajout du bouton pour se connecter via Keycloak -->
                 @if(env('KEYCLOAK') === 'enable')
+                    <!-- Ajout du bouton pour se connecter via Keycloak -->
                     <div class="text-right mt-3">
                         <a href="{{ route('login.keycloak') }}" class="btn btn-secondary">Keycloak</a>
                     </div>

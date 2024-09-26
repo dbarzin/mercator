@@ -29,10 +29,7 @@
                             {{ trans('cruds.building.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.building.fields.camera') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.building.fields.badge') }}
+                            {{ trans('cruds.building.fields.attributes') }}
                         </th>
                         <th>
                             {{ trans('cruds.building.fields.site') }}
@@ -55,15 +52,14 @@
                                 {!! $building->description ?? '' !!}
                             </td>
                             <td>
-                                {{ $building->camera ? trans('global.yes') : trans('global.no') }} 
-                            </td>
-                            <td>
-                                {{ $building->badge ? trans('global.yes') : trans('global.no') }} 
+                                @foreach(explode(" ",$building->attributes) as $attribute)
+                                <span class="badge badge-info">{{ $attribute }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @if ($building->site!=null)
                                 <a href="{{ route('admin.sites.show', $building->site_id) }}">
-                                {{ $building->site->name ?? '' }}                                
+                                {{ $building->site->name ?? '' }}
                                 </a>
                                 @endif
                             </td>

@@ -57,18 +57,12 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.building.fields.camera') }}
+                        {{ trans('cruds.building.fields.attributes') }}
                     </th>
                     <td>
-                        {{ $building->camera ? trans('global.yes') : trans('global.no') }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.building.fields.badge') }}
-                    </th>
-                    <td>
-                        {{ $building->badge ? trans('global.yes') : trans('global.no') }}
+                        @foreach(explode(" ",$building->attributes) as $attribute)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                        @endforeach
                     </td>
                 </tr>
                 <tr>

@@ -1869,6 +1869,7 @@ class CartographyController extends Controller
                     $section->addBookmark('BUILDING'.$building->id);
                     $table = $this->addTable($section, $building->name);
                     $this->addHTMLRow($table, trans('cruds.building.fields.description'), $building->description);
+                    $this->addHTMLRow($table, trans('cruds.building.fields.attributes'), $building->attributes);
 
                     // Baies
                     if ($building->roomBays->count() > 0) {
@@ -1880,7 +1881,6 @@ class CartographyController extends Controller
                             }
                         }
                     }
-
                     $section->addTextBreak(1);
                 }
             }

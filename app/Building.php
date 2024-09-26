@@ -30,6 +30,7 @@ class Building extends Model
     protected $fillable = [
         'name',
         'description',
+        'attributes',
         'site_id',
         'camera',
         'badge',

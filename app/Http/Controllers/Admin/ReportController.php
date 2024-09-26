@@ -1054,7 +1054,7 @@ class ReportController extends Controller
                 $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
             }
 
-            // TODO: improve me
+            // Get all bays
             $bays = Bay::All()->sortBy('name')
                 ->filter(function ($item) use ($buildings) {
                     foreach ($buildings as $building) {

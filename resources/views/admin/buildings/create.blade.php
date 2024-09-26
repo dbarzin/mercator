@@ -32,19 +32,18 @@
             </div>
 
             <div class="form-group">
-              <div>
-                <input type="checkbox" {{ old('camera') ? "checked" : "" }} id="camera" name="camera">
-                <label for="name">{{ trans('cruds.building.fields.camera') }}</label>
-              </div>
-              <span class="help-block">{{ trans('cruds.building.fields.camera_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-              <div>
-                <input type="checkbox" {{ old('badge') ? "checked" : "" }} id="badge" name="badge">
-                <label for="name">{{ trans('cruds.building.fields.badge') }}</label>
-              </div>
-              <span class="help-block">{{ trans('cruds.building.fields.badge_helper') }}</span>
+                <label for="attributes">{{ trans('cruds.building.fields.attributes') }}</label>
+                <select class="form-control select2-free {{ $errors->has('attributes') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
+                    @foreach($attributes_list as $a)
+                        <option {{ str_contains(old('attributes'), $a) ? 'selected' : '' }}>{{$a}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('attributes'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('attributes') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.relation.fields.attributes_helper') }}</span>
             </div>
 
             <div class="form-group">
