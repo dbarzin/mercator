@@ -28,8 +28,9 @@ class BuildingController extends Controller
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $attributes_list = $this->getAttributes();
 
-        return view('admin.buildings.create', compact('sites'));
+        return view('admin.buildings.create', compact('sites', 'attributes_list'));
     }
 
     public function clone(Request $request)
@@ -37,25 +38,25 @@ class BuildingController extends Controller
         abort_if(Gate::denies('building_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $attributes_list = $this->getAttributes();
 
-        // Get Vlan
+        // Get building
         $building = Building::find($request->id);
 
-        // Vlan not found
+        // Building not found
         abort_if($building === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         $request->merge($building->only($building->getFillable()));
         $request->flash();
 
-        return view('admin.buildings.create', compact('sites'));
+        return view('admin.buildings.create', compact('sites', 'attributes_list'));
     }
 
     public function store(StoreBuildingRequest $request)
     {
-        $request['camera'] = $request->has('camera');
-        $request['badge'] = $request->has('badge');
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $building = Building::create($request->all());
-        // $building->save();
 
         return redirect()->route('admin.buildings.index');
     }
@@ -64,17 +65,18 @@ class BuildingController extends Controller
     {
         abort_if(Gate::denies('building_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = Site::all()->sortBy('name')->pluck('name', 'id');
+        $attributes_list = $this->getAttributes();
 
         $building->load('site');
 
-        return view('admin.buildings.edit', compact('sites', 'building'));
+        return view('admin.buildings.edit', compact('sites', 'attributes_list', 'building'));
     }
 
     public function update(UpdateBuildingRequest $request, Building $building)
     {
-        $request['camera'] = $request->has('camera');
-        $request['badge'] = $request->has('badge');
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+
         $building->update($request->all());
 
         return redirect()->route('admin.buildings.index');
@@ -103,5 +105,23 @@ class BuildingController extends Controller
         Building::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = Building::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
     }
 }

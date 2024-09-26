@@ -32,24 +32,24 @@
             </div>
 
             <div class="form-group">
-              <div>
-                <input type="checkbox" {{ old('camera', $building->camera) ? 'checked' : ''}} id="camera" name="camera">
-                <label for="name">{{ trans('cruds.building.fields.camera') }}</label>
-              </div>
-              <span class="help-block">{{ trans('cruds.building.fields.camera_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-              <div>
-                <input type="checkbox" {{ old('badge', $building->badge) ? 'checked' : ''}} id="badge" name="badge">
-                <label for="name">{{ trans('cruds.building.fields.badge') }}</label>
-              </div>
-              <span class="help-block">{{ trans('cruds.building.fields.badge_helper') }}</span>
+                <label for="attributes">{{ trans('cruds.building.fields.attributes') }}</label>
+                <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
+                    @foreach($attributes_list as $a)
+                        <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($building->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('attributes'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('attributes') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.building.fields.attributes_helper') }}</span>
             </div>
 
             <div class="form-group">
                 <label for="site_id">{{ trans('cruds.building.fields.site') }}</label>
                 <select class="form-control select2 {{ $errors->has('site') ? 'is-invalid' : '' }}" name="site_id" id="site_id">
+                    <option>{{ trans('global.pleaseSelect') }}</option>
                     @foreach($sites as $id => $site)
                         <option value="{{ $id }}" {{ ($building->site ? $building->site->id : old('site_id')) == $id ? 'selected' : '' }}>{{ $site }}</option>
                     @endforeach

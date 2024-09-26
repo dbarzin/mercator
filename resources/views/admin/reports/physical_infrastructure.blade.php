@@ -117,20 +117,28 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="20%">{{ trans("cruds.building.fields.description") }}</td>
+                                        <th width="20%">{{ trans("cruds.building.fields.description") }}</th>
                                         <td>{!! $building->description !!}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ trans("cruds.building.fields.bays") }}</th>
-                                    <td>
+                                        <td>
                                         @foreach($building->roomBays as $bay)
                                             <a href="#BAY{{$bay->id}}">{{$bay->name}}</a>
                                             @if (!$loop->last)
                                             ,
                                             @endif
                                         @endforeach
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.building.fields.attributes") }}</th>
+                                        <td>
+                                        @foreach(explode(" ",$building->attributes) as $attribute)
+                                        <span class="badge badge-info">{{ $attribute }}</span>
+                                        @endforeach
+                                        </td>
+                                    </tr>
                                 </tbody>
                         </table>
                     </div>
