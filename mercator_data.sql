@@ -275,19 +275,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `buildings` WRITE;
 /*!40000 ALTER TABLE `buildings` DISABLE KEYS */;
-INSERT INTO `buildings` (`id`, `name`, `description`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `camera`, `badge`) VALUES (1,'ROOM 100','<p>Description de la salle 100</p>','2020-06-21 04:37:21','2023-01-12 17:07:38',NULL,1,0,0),
-(2,'ROOM 200','<p>Description de la salle 200</p>','2020-06-21 04:37:36','2023-01-12 17:08:17',NULL,1,0,0),
-(3,'ROOM 300','<p>Description du building 3</p>','2020-06-21 04:37:48','2023-01-12 16:36:36',NULL,2,0,0),
-(4,'ROOM 400','<p>Description de la salle 400</p>','2020-06-21 04:38:03','2024-09-15 14:07:29',NULL,2,1,0),
-(5,'ROOM 500','<p>Description de la salle 500</p>','2020-06-21 04:38:16','2023-01-12 16:37:27',NULL,3,0,0),
-(6,'Test building','<p>Description</p>','2020-07-24 19:12:48','2020-07-24 19:14:08','2020-07-24 19:14:08',4,NULL,NULL),
-(7,'ROOM 000','<p>Description de la salle triple zéro</p>','2020-08-21 13:10:15','2024-05-23 15:23:14',NULL,1,0,0),
-(8,'test','<p>test</p>','2020-11-06 13:44:22','2020-11-06 14:26:18','2020-11-06 14:26:18',NULL,1,0),
-(9,'test2','<p>test2</p>','2020-11-06 13:59:45','2020-11-06 14:06:50','2020-11-06 14:06:50',NULL,NULL,NULL),
-(10,'test3','<p>fdfsdfsd</p>','2020-11-06 14:07:07','2020-11-06 14:26:18','2020-11-06 14:26:18',NULL,NULL,NULL),
-(11,'test4',NULL,'2020-11-06 14:25:52','2020-11-06 14:26:18','2020-11-06 14:26:18',NULL,0,0),
-(12,'ROOM 600','<p>Description de la room 600</p>','2024-05-23 14:55:13','2024-05-23 14:55:45',NULL,8,0,0),
-(13,'ROOM 700','<p>Description de la room 700</p>','2024-05-23 14:56:06','2024-05-23 15:22:36',NULL,8,0,0);
+INSERT INTO `buildings` (`id`, `name`, `description`, `attributes`, `created_at`, `updated_at`, `deleted_at`, `site_id`) VALUES (1,'ROOM 100','<p>Description de la salle 100</p>','UHA','2020-06-21 04:37:21','2024-09-26 14:58:40',NULL,1),
+(2,'ROOM 200','<p>Description de la salle 200</p>','Badge','2020-06-21 04:37:36','2024-09-26 14:43:49',NULL,1),
+(3,'ROOM 300','<p>Description du building 3</p>','Badge UHB','2020-06-21 04:37:48','2024-09-26 14:58:50',NULL,2),
+(4,'ROOM 400','<p>Description de la salle 400</p>','Camera ','2020-06-21 04:38:03','2024-09-26 14:43:49',NULL,2),
+(5,'ROOM 500','<p>Description de la salle 500</p>','Camera ','2020-06-21 04:38:16','2024-09-26 14:43:49',NULL,3),
+(7,'ROOM 000','<p>Description de la salle triple zéro</p>','Badge Camera UHA','2020-08-21 13:10:15','2024-09-26 14:58:32',NULL,1),
+(12,'ROOM 600','<p>Description de la room 600</p>','','2024-05-23 14:55:13','2024-09-26 14:43:49',NULL,8),
+(13,'ROOM 700','<p>Description de la room 700</p>','','2024-05-23 14:56:06','2024-09-26 14:43:49',NULL,8);
 /*!40000 ALTER TABLE `buildings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,7 +582,14 @@ INSERT INTO `documents` (`id`, `filename`, `mimetype`, `size`, `hash`, `deleted_
 (48,'Capture d’écran du 2024-09-24 07-41-20.png','image/png',16491,'4452bc985f56ced39e05b7101f3a05263a19844b63aea045d4031c1aa6efadbf',NULL,'2024-09-24 03:42:43','2024-09-24 03:42:43'),
 (49,'annuaire.png','image/png',24100,'ea1abfe6f4cbe0bb60cb28ed01fa944053bd426772acb32a8eb29472578eb0fa',NULL,'2024-09-24 06:31:11','2024-09-24 06:31:11'),
 (50,'annuaire.png','image/png',24100,'ea1abfe6f4cbe0bb60cb28ed01fa944053bd426772acb32a8eb29472578eb0fa',NULL,'2024-09-24 06:34:05','2024-09-24 06:34:05'),
-(51,'applicationmodule.png','image/png',20936,'ac3bed75765e753bd7621296eddaa241d92ebbd4f7f8083ecfbaa8babc1b19b9',NULL,'2024-09-24 06:37:35','2024-09-24 06:37:35');
+(51,'applicationmodule.png','image/png',20936,'ac3bed75765e753bd7621296eddaa241d92ebbd4f7f8083ecfbaa8babc1b19b9',NULL,'2024-09-24 06:37:35','2024-09-24 06:37:35'),
+(52,'Screenshot 2024-09-24 at 11-34-43 acme – Qwant Search.png','image/png',18110,'0025f04878ec0bb84b5c07ea03f8d7571c875144df975b8c2583204b506e3153',NULL,'2024-09-24 07:35:16','2024-09-24 07:35:16'),
+(53,'Screenshot 2024-09-24 at 11-45-46 garden icon – Qwant Search.png','image/png',28717,'def4eeb673fb27584002f10fc5f8b677d7981a7e93aee35046e887b552a76449',NULL,'2024-09-24 07:46:10','2024-09-24 07:46:10'),
+(54,'Screenshot 2024-09-25 at 07-53-15 enterprise icon – Qwant Search.png','image/png',22065,'45edeed75fc6a8db10b2404827a71eb90aabecb6f19244f04b2143648e437c27',NULL,'2024-09-25 03:53:41','2024-09-25 03:53:41'),
+(55,'Screenshot 2024-09-25 at 08-10-43 icon peripherique – Qwant Search.png','image/png',13886,'a361f02ff993a5d55ba3b0ae6502561950e18842f8932ad17aa0be74db832890',NULL,'2024-09-25 04:11:06','2024-09-25 04:11:06'),
+(56,'Screenshot 2024-09-25 at 08-17-28 icon peripherique – Qwant Search.png','image/png',36920,'721126baa5286acd9a4e92a104d42f3ab6d1d373b46854f2a073f8595a10036c',NULL,'2024-09-25 04:18:25','2024-09-25 04:18:25'),
+(57,'Screenshot 2024-09-25 at 09-54-30 icon camera – Qwant Search.png','image/png',33797,'1622b64e4fafecd5427feb8b40f634fae929cdb9f3dae2ed1d18b26f2798e1ad',NULL,'2024-09-25 05:54:45','2024-09-25 05:54:45'),
+(58,'Screenshot 2024-09-25 at 19-25-49 image building icon - Recherche Google.png','image/png',17156,'4a02fac52f4d68a9e6a335bc2825b80d1db8d9664be00e7a3ea8baed2c0a4e11',NULL,'2024-09-25 15:26:30','2024-09-25 15:26:30');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -628,18 +630,19 @@ LOCK TABLES `entities` WRITE;
 INSERT INTO `entities` (`id`, `name`, `icon_id`, `security_level`, `contact_point`, `description`, `is_external`, `created_at`, `updated_at`, `deleted_at`, `entity_type`, `attributes`, `reference`, `parent_entity_id`) VALUES (1,'MegaNet System',NULL,'<p>ISO 27001</p>','<p>Helpdek<br>27, Rue des poire&nbsp;<br>12043 Mire-en-Mare le Bains</p><p>helpdesk@meganet.org</p>','<p>Fournisseur équipement réseau</p>',1,'2020-05-21 02:30:59','2023-06-01 15:16:50',NULL,'Producer',NULL,NULL,NULL),
 (2,'Entité1',NULL,'<p>Néant</p>','<ul><li>Commercial</li><li>Service Delivery</li><li>Helpdesk</li></ul>','<p>Entité de tests1</p>',1,'2020-05-21 02:31:17','2022-05-23 15:10:25',NULL,'Revendeur',NULL,NULL,NULL),
 (4,'Entité3',NULL,'<p>ISO 9001</p>','<p>Point de contact de la troisième entité</p>','<p>Description de la troisième entité.</p>',1,'2020-05-21 02:44:03','2022-05-23 15:10:46',NULL,'Producteur',NULL,NULL,NULL),
-(5,'Entity6',NULL,'<p>Néant</p>','<p>support_informatque@entite6.fr</p>','<p>Description de l\'entité six</p>',0,'2020-05-21 02:44:18','2024-04-04 03:43:04',NULL,'Distributor',NULL,NULL,NULL),
+(5,'Entity6',NULL,'<p>Néant</p>','<p>support_informatque@entite6.fr</p>','<p>Description de l\'entité six</p>',0,'2020-05-21 02:44:18','2024-09-25 03:53:41',NULL,'Distributor',NULL,NULL,NULL),
 (6,'Entité4',NULL,'<p>ISO 27001</p>','<p>Pierre Pinon<br>Tel: 00 34 392 484 22</p>','<p>Description de l\'entté quatre</p>',0,'2020-05-21 02:45:14','2021-05-23 13:01:17',NULL,NULL,NULL,NULL,NULL),
 (7,'Entité5',NULL,'<p>Néant</p>','<p>Servicdesk@entite5.fr</p>','<p>Description de l\'entité 5</p>',0,'2020-05-21 03:38:41','2021-05-23 13:02:16',NULL,NULL,NULL,NULL,NULL),
 (8,'Entité2',NULL,'<p>ISO 27001</p>','<p>Point de contact de l\'entité 2</p>','<p>Description de l\'entité 2</p>',1,'2020-05-21 03:54:22','2022-05-23 14:44:34',NULL,'Legal entity',NULL,NULL,NULL),
 (9,'NetworkSys',NULL,'<p>ISO 27001</p>','<p>support@networksys.fr</p>','<p>Description de l’entité NetworkSys</p>',0,'2020-05-21 06:25:15','2022-05-23 14:44:48',NULL,'Internal department',NULL,NULL,NULL),
 (12,'Pierre et fils',NULL,'<p>Certifications :&nbsp;<br>- ISO 9001<br>- ISO 27001<br>- ISO 31000</p>','<p>Paul Pierre<br>Gérant<br>00 33 4943 432 423</p>','<p>Description de l\'entité de test</p>',1,'2020-07-06 13:37:54','2022-05-23 14:45:07',NULL,'Fournisseur',NULL,NULL,NULL),
 (13,'Nestor',NULL,'<p>Haut niveau</p>','<p>Paul, Pierre et Jean</p>','<p>Description de Nestor</p>',1,'2020-08-12 16:11:31','2022-05-23 14:41:44',NULL,'Fournisseur',NULL,NULL,NULL),
-(18,'Acme corp.',NULL,'<p>None sorry...</p>','<p>Do not call me, I will call you back.</p>','<p>Looney tunes academy</p>',0,'2021-09-07 18:07:16','2024-04-14 06:29:50',NULL,'Producer',NULL,NULL,23),
+(18,'Acme corp.',NULL,'<p>None sorry...</p>','<p>Do not call me, I will call you back.</p>','<p>Looney tunes academy</p>',1,'2021-09-07 18:07:16','2024-09-24 07:50:43',NULL,'Producer',NULL,NULL,23),
 (19,'HAL',NULL,'<p>Top security certification</p>','<p>hal@corp.com</p>','<b>test',0,'2021-09-07 18:08:56','2021-09-07 18:09:17',NULL,NULL,NULL,NULL,NULL),
 (22,'Hacker Studio',NULL,'<p>All SANS certificates</p>','<p>Do not call us, we will call you back.</p><p>&nbsp;</p>','<b>test',1,'2022-06-02 11:56:32','2022-06-02 11:56:32',NULL,'Fournisseur',NULL,NULL,NULL),
 (23,'World company',NULL,'<p>Full protection</p>','<p>ping us at 256.256.256.256</p>','<p>Thebiggest compagny in the world</p>',1,'2022-06-22 17:20:11','2023-06-01 15:19:54',NULL,'Producer',NULL,NULL,NULL),
-(24,'test',NULL,NULL,NULL,NULL,0,'2024-09-13 10:02:43','2024-09-13 10:02:53','2024-09-13 10:02:53',NULL,NULL,NULL,NULL);
+(24,'test',NULL,NULL,NULL,NULL,0,'2024-09-13 10:02:43','2024-09-13 10:02:53','2024-09-13 10:02:53',NULL,NULL,NULL,NULL),
+(25,'Garden maker',NULL,'<p>We have a dog&nbsp;</p>','<p>We are in the garden</p>','<p>The Garden maker</p>',1,'2024-09-24 07:46:10','2024-09-24 07:46:43',NULL,'Producer',NULL,NULL,18);
 /*!40000 ALTER TABLE `entities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -705,7 +708,8 @@ INSERT INTO `entity_process` (`process_id`, `entity_id`) VALUES (1,1),
 (4,18),
 (3,19),
 (1,22),
-(4,23);
+(4,23),
+(4,25);
 /*!40000 ALTER TABLE `entity_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -929,7 +933,8 @@ INSERT INTO `m_application_peripheral` (`m_application_id`, `peripheral_id`) VAL
 (35,5),
 (1,5),
 (35,6),
-(1,6);
+(1,6),
+(18,7);
 /*!40000 ALTER TABLE `m_application_peripheral` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1010,7 +1015,7 @@ INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, 
 (35,'Vulnerability','<p>Vulnerable test application</p>',NULL,NULL,0,'RSSI',NULL,NULL,41,'Microsoft','Interne','>100',NULL,'2022-06-28 05:59:28','2024-09-24 03:10:37',NULL,4,2,NULL,0,0,0,'1.5',3120,1800,NULL,NULL,'',NULL,NULL),
 (37,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'',NULL,'Web',40,'Microsoft','Internl','>100',NULL,'2022-12-17 14:12:12','2024-09-24 03:38:57',NULL,18,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL,'',NULL,NULL),
 (38,'excel',NULL,NULL,NULL,0,'',NULL,NULL,39,NULL,NULL,NULL,NULL,'2023-03-26 07:38:20','2023-03-26 07:38:20',NULL,NULL,NULL,NULL,0,0,0,'2019',0,0,NULL,NULL,NULL,NULL,NULL),
-(42,'Business Master','<p>The business mater application</p>',NULL,NULL,0,'Pierre','Pierre','Web',NULL,'PHP','Internal','>10','VaultServices','2024-09-24 06:34:05','2024-09-24 06:34:05',NULL,8,1,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,'Critical',NULL,NULL),
+(42,'Business Master','<p>The business mater application</p>',NULL,NULL,0,'Pierre','Pierre','Web',NULL,'PHP','Internal','>10','VaultServices','2024-09-24 06:34:05','2024-09-24 06:34:05',NULL,25,1,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,'Critical',NULL,NULL),
 (43,'Customer Relation','<p>The description goes here</p>',NULL,NULL,0,'Johan','Paul','progiciel',51,'C++','Interne','>10','VaultServices','2024-09-24 06:37:35','2024-09-24 06:37:35',NULL,8,3,NULL,0,0,0,NULL,0,0,NULL,NULL,'GRP-0',NULL,NULL);
 /*!40000 ALTER TABLE `m_applications` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1151,8 +1156,9 @@ INSERT INTO `peripherals` (`id`, `name`, `type`, `icon_id`, `description`, `vend
 (2,'PER_02','IBM 5600',NULL,'<p>Description</p>',NULL,NULL,NULL,'Nestor','2020-07-25 06:19:18','2020-07-25 06:19:18',NULL,3,5,NULL,NULL,NULL,NULL),
 (3,'PER_03','HAL 8100',NULL,'<p>Space device</p>',NULL,NULL,NULL,'Niel','2020-07-25 06:19:58','2020-07-25 06:20:18',NULL,3,4,NULL,NULL,NULL,NULL),
 (4,'PER_42','IBM 4703',NULL,'<p>The peripheral</p>',NULL,NULL,NULL,'Niel','2023-10-01 08:37:26','2024-08-20 17:45:33',NULL,1,7,NULL,NULL,NULL,NULL),
-(5,'CAM01','PHI 324',NULL,'<p>Description of secure cam 01</p>',NULL,'CAM01',NULL,'Marcel','2024-09-13 11:02:38','2024-09-15 13:53:52',NULL,1,7,1,'10.10.34.3','IOT',1),
-(6,'CAM02','PHI 324',NULL,'<p>Description of secure cam 02</p>',NULL,'CAM',NULL,'Marcel','2024-09-15 13:55:06','2024-09-15 13:55:06',NULL,1,7,1,'10.10.34.4','IOT',1);
+(5,'CAM01','PHI 324',NULL,'<p>Description of secure cam 01</p>',NULL,'CAM01',NULL,'Marcel','2024-09-13 11:02:38','2024-09-25 05:54:45',NULL,1,7,1,'10.10.34.3','IOT',1),
+(6,'CAM02','PHI 324',NULL,'<p>Description of secure cam 02</p>',NULL,'CAM',NULL,'Marcel','2024-09-15 13:55:06','2024-09-15 13:55:06',NULL,1,7,1,'10.10.34.4','IOT',1),
+(7,'PHONE I34','iPhone',NULL,'<p>DEscription goes here</p>',NULL,NULL,NULL,'Nestor','2024-09-25 04:18:25','2024-09-25 04:18:26',NULL,NULL,NULL,NULL,NULL,'IOT',8);
 /*!40000 ALTER TABLE `peripherals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1589,14 +1595,15 @@ UNLOCK TABLES;
 
 LOCK TABLES `sites` WRITE;
 /*!40000 ALTER TABLE `sites` DISABLE KEYS */;
-INSERT INTO `sites` (`id`, `name`, `icon_id`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Site A',NULL,'<p>Description du site A</p>','2020-06-21 04:36:41','2020-06-21 04:36:41',NULL),
+INSERT INTO `sites` (`id`, `name`, `icon_id`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'Site A',NULL,'<p>Description du site A</p>','2020-06-21 04:36:41','2024-09-25 15:26:30',NULL),
 (2,'Site B',NULL,'<p>Description du site B</p>','2020-06-21 04:36:53','2020-06-21 04:36:53',NULL),
 (3,'Site C',NULL,'<p>Description du Site C</p>','2020-06-21 04:37:05','2020-06-21 04:37:05',NULL),
 (4,'Test1',NULL,'<p>site de test</p>','2020-07-24 19:12:29','2020-07-24 19:12:56','2020-07-24 19:12:56'),
 (5,'testsite',NULL,'<p>description here</p>','2021-04-12 15:31:40','2021-04-12 15:32:04','2021-04-12 15:32:04'),
 (6,'Site Z',NULL,NULL,'2021-06-18 05:36:03','2021-10-19 16:51:22','2021-10-19 16:51:22'),
 (7,'Site 0',NULL,NULL,'2021-06-18 05:36:12','2021-08-17 17:52:52','2021-08-17 17:52:52'),
-(8,'Site D',NULL,'<p>Description du site D</p>','2024-05-23 14:54:22','2024-05-23 14:54:22',NULL);
+(8,'Site D',NULL,'<p>Description du site D</p>','2024-05-23 14:54:22','2024-05-23 14:54:22',NULL),
+(9,'Site E',NULL,'<p>Description of site E</p>','2024-09-25 15:38:17','2024-09-25 15:38:17',NULL);
 /*!40000 ALTER TABLE `sites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1729,4 +1736,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-24 11:10:49
+-- Dump completed on 2024-09-26 19:18:19
