@@ -10,19 +10,19 @@
         }
 
     .card {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.6);
     }
 
     .text-muted {
-        color: rgba(0,0,0);        
+        color: black;
     }
 
     .input-group-text {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.2);
     }
 
     .form-control {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 250, 0.7);
     }
 </style>
 @endsection

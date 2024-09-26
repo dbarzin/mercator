@@ -1,30 +1,29 @@
 @extends('layouts.app')
 @section('styles')
 <style>
-     body {
-                background-image: url('/images/mercator.png');
-                background-size:  800px 800px;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-color: #3b2924;
-            }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.5); /* Couleur blanche avec 80% d'opacité */
+    body {
+        background-image: url('/images/mercator.png');
+        background-size:  800px 800px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #FFFFFF;
         }
 
-        .input-group-text {
-            background-color: rgba(255, 255, 255, 0.5); /* Fond partiellement transparent pour les icônes */
-        }
+    .card {
+        background-color: rgba(255, 255, 255, 0.6);
+    }
 
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.7); /* Fond partiellement transparent pour les champs de texte */
-        }
+    .text-muted {
+        color: black;
+    }
 
-        h1 {
-            text-align: center;
-            color: #333; /* Couleur du titre */
-        }
+    .input-group-text {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 250, 0.7);
+    }
 </style>
 @endsection
 
