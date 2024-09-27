@@ -362,7 +362,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // Documents
     Route::post('/documents/store', [Admin\DocumentController::class,'store'])->name('documents.store');
     Route::get('/documents/delete/{id}', [Admin\DocumentController::class,'delete'])->name('documents.delete');
-    Route::get('/documents/show/{id}', [Admin\DocumentController::class,'get'])->name('documents.show');
+    Route::get('/documents/{id}', [Admin\DocumentController::class,'get'])->name('documents.show');
     Route::get('/config/documents', [Admin\DocumentController::class,'stats'])->name('config.documents');
     Route::get('/config/documents/check', [Admin\DocumentController::class,'check'])->name('config.documents.check');
 

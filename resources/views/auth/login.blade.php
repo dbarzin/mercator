@@ -10,19 +10,22 @@
         }
 
     .card {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 10px;
+        padding: 2px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .text-muted {
-        color: rgba(0,0,0);        
+        color: black !important;
     }
 
     .input-group-text {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255);
     }
 
     .form-control {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 250, 0.7);
     }
 </style>
 @endsection
@@ -32,7 +35,7 @@
         <div class="card mx-4">
             <div class="card-body p-4">
 
-                <p class="text-muted"><b>{{ trans('global.login') }}</b></p>
+                <p class="text-muted">Connection</p>
 
                 @if(session('message'))
                     <div class="alert alert-info" role="alert">
