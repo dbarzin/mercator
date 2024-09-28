@@ -38,6 +38,7 @@ Changements prévus en 2024 :
 - [x] Ajout des flux logiques
 - [ ] Afficher l'historique des changements d'un objet
 - [x] Cloner un objet
+- [ ] Ajout d'une chart Helm pour simplifier le déploiement dans Kubernetes (https://helm.sh/docs/topics/charts/)
 
 ## Petites évolutions
 
