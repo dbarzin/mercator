@@ -277,7 +277,7 @@ LOCK TABLES `buildings` WRITE;
 /*!40000 ALTER TABLE `buildings` DISABLE KEYS */;
 INSERT INTO `buildings` (`id`, `name`, `description`, `attributes`, `created_at`, `updated_at`, `deleted_at`, `site_id`) VALUES (1,'ROOM 100','<p>Description de la salle 100</p>','UHA','2020-06-21 04:37:21','2024-09-26 14:58:40',NULL,1),
 (2,'ROOM 200','<p>Description de la salle 200</p>','Badge','2020-06-21 04:37:36','2024-09-26 14:43:49',NULL,1),
-(3,'ROOM 300','<p>Description du building 3</p>','Badge UHB','2020-06-21 04:37:48','2024-09-26 14:58:50',NULL,2),
+(3,'ROOM 300','<p>Description du building 3</p>','Badge Camera UHB','2020-06-21 04:37:48','2024-09-26 18:10:09',NULL,2),
 (4,'ROOM 400','<p>Description de la salle 400</p>','Camera ','2020-06-21 04:38:03','2024-09-26 14:43:49',NULL,2),
 (5,'ROOM 500','<p>Description de la salle 500</p>','Camera ','2020-06-21 04:38:16','2024-09-26 14:43:49',NULL,3),
 (7,'ROOM 000','<p>Description de la salle triple zéro</p>','Badge Camera UHA','2020-08-21 13:10:15','2024-09-26 14:58:32',NULL,1),
@@ -369,10 +369,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `data_processing_document` WRITE;
 /*!40000 ALTER TABLE `data_processing_document` DISABLE KEYS */;
-INSERT INTO `data_processing_document` (`data_processing_id`, `document_id`) VALUES (1,16),
-(2,17),
-(2,19),
-(1,30);
 /*!40000 ALTER TABLE `data_processing_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +518,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `document_logical_server` WRITE;
 /*!40000 ALTER TABLE `document_logical_server` DISABLE KEYS */;
-INSERT INTO `document_logical_server` (`logical_server_id`, `document_id`) VALUES (4,22);
 /*!40000 ALTER TABLE `document_logical_server` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -541,55 +536,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` (`id`, `filename`, `mimetype`, `size`, `hash`, `deleted_at`, `created_at`, `updated_at`) VALUES (10,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff',NULL,'2023-05-08 09:19:49','2023-05-08 09:19:49'),
-(11,'singes.jpeg','image/jpeg',16070,'5268fc6c3500513143daee5a06e930edcbefbd078c74f81ac252e13989a9e452',NULL,'2023-05-08 09:21:45','2023-05-08 09:21:45'),
-(12,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff',NULL,'2023-05-08 09:23:15','2023-05-08 09:23:15'),
-(13,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff',NULL,'2023-05-08 09:24:12','2023-05-08 09:24:12'),
-(14,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff',NULL,'2023-05-09 11:29:30','2023-05-09 11:29:30'),
-(15,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff','2023-05-09 11:39:25','2023-05-09 11:37:40','2023-05-09 11:39:25'),
-(16,'singes.jpeg','image/jpeg',16070,'5268fc6c3500513143daee5a06e930edcbefbd078c74f81ac252e13989a9e452',NULL,'2023-05-09 11:38:20','2023-05-09 11:38:20'),
-(17,'babay beatles.jpg','image/jpeg',31240,'1a06a0d18a332d9439976baacce1bd69fd64c866d0622c340f1f01d6ed8049ff',NULL,'2023-05-09 11:51:48','2023-05-09 11:51:48'),
-(18,'kepi_capitain2.jpeg','image/jpeg',5955,'86fe43201f8360ec0c7bbdfd55d5ff71a71ef5fa499e58899f0ea0cd3382ec5d','2023-05-09 11:52:16','2023-05-09 11:51:56','2023-05-09 11:52:16'),
-(19,'valentin.jpeg','image/jpeg',8247,'188f019c0dd657fddee41660841a02de11efcd0802e22d59833084d2ab272002',NULL,'2023-05-09 11:52:06','2023-05-09 11:52:06'),
-(20,'bonnet-commandant-cousteau.jpg','image/jpeg',206376,'2abde9d07f4abdd4626fe5bcde9e49d4fa63c6f1e0a9d9aa8f00081d130de737','2024-01-05 10:00:15','2024-01-05 09:59:29','2024-01-05 10:00:15'),
-(21,'casquette-marin-204926-460x646.jpg','image/jpeg',26934,'438a24c6436daa42670132d93fcbb194ea3b55cceb6793bbec808a922b483411','2024-01-05 10:00:16','2024-01-05 09:59:41','2024-01-05 10:00:16'),
-(22,'casquette-marin-204926-460x646.jpg','image/jpeg',26934,'438a24c6436daa42670132d93fcbb194ea3b55cceb6793bbec808a922b483411','2024-01-05 10:01:04','2024-01-05 10:00:24','2024-01-05 10:01:04'),
-(23,'casquette-marin-204926-460x646.jpg','image/jpeg',26934,'438a24c6436daa42670132d93fcbb194ea3b55cceb6793bbec808a922b483411',NULL,'2024-01-05 10:00:53','2024-01-05 10:00:53'),
-(24,'casquette-marin-204926-460x646.jpg','image/jpeg',26934,'438a24c6436daa42670132d93fcbb194ea3b55cceb6793bbec808a922b483411',NULL,'2024-01-05 10:01:13','2024-01-05 10:01:13'),
-(25,'pirate.jpg','image/jpeg',160650,'b88833f4774b2cdf2e9272f2e3a2fb9b9b20bb0bd0dbcc4ff7bbb23ff2cb2487',NULL,'2024-04-02 14:59:22','2024-04-02 14:59:22'),
-(26,'1705914670710.jpeg','image/jpeg',117251,'8626e933982488895f47cb4632468df196e383203ab787138c670fbdde21e223',NULL,'2024-04-03 02:57:52','2024-04-03 02:57:52'),
-(27,'1708930283974.jpeg','image/jpeg',35788,'6c42078ff105133183739afe8552103f8029ec725b3722b602a1c718ab8b4b2a',NULL,'2024-04-04 02:47:31','2024-04-04 02:47:31'),
-(28,'1708930283974.jpeg','image/jpeg',35788,'6c42078ff105133183739afe8552103f8029ec725b3722b602a1c718ab8b4b2a',NULL,'2024-04-04 02:50:12','2024-04-04 02:50:12'),
-(29,'brain-sudo.jpeg','image/jpeg',73028,'2a710e6ffffad1a23da5606adbc30472982a09c964bb554462613a8bed5de265',NULL,'2024-04-04 02:54:49','2024-04-04 02:54:49'),
-(30,'pirate.jpg','image/jpeg',160650,'b88833f4774b2cdf2e9272f2e3a2fb9b9b20bb0bd0dbcc4ff7bbb23ff2cb2487',NULL,'2024-04-04 02:55:55','2024-04-04 02:55:55'),
-(31,'dbarzin 2023.jpeg','image/jpeg',16275,'a761febd49b4a2c5d06ad6170ced19c8a725e8bbbddca7cbf47b292392263d0a','2024-04-04 03:00:03','2024-04-04 03:00:01','2024-04-04 03:00:03'),
-(32,'pirate.jpg','image/jpeg',160650,'b88833f4774b2cdf2e9272f2e3a2fb9b9b20bb0bd0dbcc4ff7bbb23ff2cb2487',NULL,'2024-04-04 03:00:10','2024-04-04 03:00:10'),
-(33,'pirate.jpg','image/jpeg',160650,'b88833f4774b2cdf2e9272f2e3a2fb9b9b20bb0bd0dbcc4ff7bbb23ff2cb2487',NULL,'2024-04-04 03:02:07','2024-04-04 03:02:07'),
-(34,'pirate.jpg','image/jpeg',160650,'b88833f4774b2cdf2e9272f2e3a2fb9b9b20bb0bd0dbcc4ff7bbb23ff2cb2487',NULL,'2024-04-04 03:04:41','2024-04-04 03:04:41'),
-(35,'icon.png','image/png',45408,'0b6add97172eb1c84558dcde90131f1225b67e34313b0fb8aae162c3f0175781',NULL,'2024-09-24 03:07:24','2024-09-24 03:07:24'),
-(36,'icon.png','image/png',45408,'0b6add97172eb1c84558dcde90131f1225b67e34313b0fb8aae162c3f0175781',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(37,'icon.png','image/png',45408,'0b6add97172eb1c84558dcde90131f1225b67e34313b0fb8aae162c3f0175781',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(38,'icon.png','image/png',43793,'0fbfe197df62b6a872ba4801e1c4dbf163a4b77bfb6fc5e65062a720ce26fbc9',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(39,'icon.png','image/png',33139,'6ddb4db024a71db25759612b903b47efe060ffc6bcb1538d2a1901bf414ce72b',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(40,'icon.png','image/png',35953,'4fd77f01cdee4cd3ca1100356f8a72fbe7d8ecee061393a21483b84f46ddec19',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(41,'icon.png','image/png',35494,'559be91f52700935900315c9d62d8c9a94edf42f5f611e800e0bc6b55f6f2c77',NULL,'2024-09-24 03:07:53','2024-09-24 03:07:53'),
-(42,'icon.png','image/png',45408,'0b6add97172eb1c84558dcde90131f1225b67e34313b0fb8aae162c3f0175781',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(43,'icon.png','image/png',45408,'0b6add97172eb1c84558dcde90131f1225b67e34313b0fb8aae162c3f0175781',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(44,'icon.png','image/png',43793,'0fbfe197df62b6a872ba4801e1c4dbf163a4b77bfb6fc5e65062a720ce26fbc9',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(45,'icon.png','image/png',33139,'6ddb4db024a71db25759612b903b47efe060ffc6bcb1538d2a1901bf414ce72b',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(46,'icon.png','image/png',35953,'4fd77f01cdee4cd3ca1100356f8a72fbe7d8ecee061393a21483b84f46ddec19',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(47,'icon.png','image/png',35494,'559be91f52700935900315c9d62d8c9a94edf42f5f611e800e0bc6b55f6f2c77',NULL,'2024-09-24 03:10:37','2024-09-24 03:10:37'),
-(48,'Capture d’écran du 2024-09-24 07-41-20.png','image/png',16491,'4452bc985f56ced39e05b7101f3a05263a19844b63aea045d4031c1aa6efadbf',NULL,'2024-09-24 03:42:43','2024-09-24 03:42:43'),
-(49,'annuaire.png','image/png',24100,'ea1abfe6f4cbe0bb60cb28ed01fa944053bd426772acb32a8eb29472578eb0fa',NULL,'2024-09-24 06:31:11','2024-09-24 06:31:11'),
-(50,'annuaire.png','image/png',24100,'ea1abfe6f4cbe0bb60cb28ed01fa944053bd426772acb32a8eb29472578eb0fa',NULL,'2024-09-24 06:34:05','2024-09-24 06:34:05'),
-(51,'applicationmodule.png','image/png',20936,'ac3bed75765e753bd7621296eddaa241d92ebbd4f7f8083ecfbaa8babc1b19b9',NULL,'2024-09-24 06:37:35','2024-09-24 06:37:35'),
-(52,'Screenshot 2024-09-24 at 11-34-43 acme – Qwant Search.png','image/png',18110,'0025f04878ec0bb84b5c07ea03f8d7571c875144df975b8c2583204b506e3153',NULL,'2024-09-24 07:35:16','2024-09-24 07:35:16'),
-(53,'Screenshot 2024-09-24 at 11-45-46 garden icon – Qwant Search.png','image/png',28717,'def4eeb673fb27584002f10fc5f8b677d7981a7e93aee35046e887b552a76449',NULL,'2024-09-24 07:46:10','2024-09-24 07:46:10'),
-(54,'Screenshot 2024-09-25 at 07-53-15 enterprise icon – Qwant Search.png','image/png',22065,'45edeed75fc6a8db10b2404827a71eb90aabecb6f19244f04b2143648e437c27',NULL,'2024-09-25 03:53:41','2024-09-25 03:53:41'),
-(55,'Screenshot 2024-09-25 at 08-10-43 icon peripherique – Qwant Search.png','image/png',13886,'a361f02ff993a5d55ba3b0ae6502561950e18842f8932ad17aa0be74db832890',NULL,'2024-09-25 04:11:06','2024-09-25 04:11:06'),
-(56,'Screenshot 2024-09-25 at 08-17-28 icon peripherique – Qwant Search.png','image/png',36920,'721126baa5286acd9a4e92a104d42f3ab6d1d373b46854f2a073f8595a10036c',NULL,'2024-09-25 04:18:25','2024-09-25 04:18:25'),
-(57,'Screenshot 2024-09-25 at 09-54-30 icon camera – Qwant Search.png','image/png',33797,'1622b64e4fafecd5427feb8b40f634fae929cdb9f3dae2ed1d18b26f2798e1ad',NULL,'2024-09-25 05:54:45','2024-09-25 05:54:45'),
-(58,'Screenshot 2024-09-25 at 19-25-49 image building icon - Recherche Google.png','image/png',17156,'4a02fac52f4d68a9e6a335bc2825b80d1db8d9664be00e7a3ea8baed2c0a4e11',NULL,'2024-09-25 15:26:30','2024-09-25 15:26:30');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1003,20 +949,20 @@ UNLOCK TABLES;
 LOCK TABLES `m_applications` WRITE;
 /*!40000 ALTER TABLE `m_applications` DISABLE KEYS */;
 INSERT INTO `m_applications` (`id`, `name`, `description`, `vendor`, `product`, `security_need_c`, `responsible`, `functional_referent`, `type`, `icon_id`, `technology`, `external`, `users`, `editor`, `created_at`, `updated_at`, `deleted_at`, `entity_resp_id`, `application_block_id`, `documentation`, `security_need_i`, `security_need_a`, `security_need_t`, `version`, `rto`, `rpo`, `install_date`, `update_date`, `attributes`, `patching_frequency`, `next_update`) VALUES (1,'central_wifimanager','<p>Description de l\'application 1</p>',NULL,NULL,0,'Jacques, RSSI',NULL,'logiciel',NULL,'Microsoft',NULL,'> 20',NULL,'2020-06-14 09:20:15','2024-09-24 03:10:37',NULL,23,3,'//Documentation/application1.docx',1,1,1,'1.03',3120,1800,NULL,NULL,'Critical',NULL,NULL),
-(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2.</p>','microsoft','excel',3,'Jacques',NULL,'Web',49,'Microsoft','SaaS','>10','Alienware','2020-06-14 09:31:16','2024-09-24 06:31:11',NULL,2,1,'None',4,2,2,'2002',3120,1800,NULL,'2024-02-17 00:00:00','Critical GRP-2',6,'2024-08-17'),
+(2,'Application 2','<p><i>Description</i> de l\'<strong>application</strong> 2.</p>','microsoft','excel',3,'Jacques',NULL,'Web',NULL,'Microsoft','SaaS','>10','Alienware','2020-06-14 09:31:16','2024-09-24 06:31:11',NULL,2,1,'None',4,2,2,'2002',3120,1800,NULL,'2024-02-17 00:00:00','Critical GRP-2',6,'2024-08-17'),
 (3,'Application 3','<p>Test application 3</p>','42',NULL,1,'RSSI',NULL,'progiciel',NULL,'Microsoft','Interne','>100',NULL,'2020-06-17 17:33:41','2024-09-24 03:10:37',NULL,1,2,'Aucune',2,3,3,NULL,3120,1800,NULL,'2024-02-16 00:00:00','GRP-0',NULL,NULL),
 (4,'EG350','<p>Description app4</p>',NULL,NULL,2,'Jacques, Pierre',NULL,'logiciel',NULL,'Microsoft','Internl','>100',NULL,'2020-08-11 14:13:02','2024-09-24 03:10:37',NULL,1,2,'None',2,3,2,'1.0',3120,1800,NULL,NULL,'',NULL,NULL),
 (12,'SuperApp','<p>Super super application !</p>',NULL,NULL,1,'RSSI',NULL,'Web',NULL,'Oracle','Interne',NULL,NULL,'2021-04-12 17:10:59','2021-06-23 19:33:15',NULL,1,2,NULL,1,1,1,NULL,3120,1800,NULL,NULL,NULL,NULL,NULL),
 (14,'Windows Calc','<p>Calculatrice windows</p>',NULL,NULL,2,'RSSI',NULL,'logiciel',NULL,'Microsoft','Internl',NULL,NULL,'2021-05-13 08:15:27','2022-03-20 17:53:29',NULL,1,3,NULL,0,0,0,NULL,3120,1800,NULL,NULL,NULL,NULL,NULL),
 (15,'Compta','<p>Application de comptabilité</p>',NULL,NULL,3,'RSSI',NULL,'progiciel',NULL,'Microsoft','Interne','>100',NULL,'2021-05-15 07:53:15','2024-03-02 07:41:57',NULL,1,2,NULL,4,2,3,NULL,3120,1800,NULL,NULL,NULL,NULL,NULL),
 (16,'Queue Manager','<p>Queue manager</p>',NULL,NULL,4,'Jacques',NULL,'logiciel',NULL,'Internal Dev','Interne','>100',NULL,'2021-08-02 15:17:11','2022-06-11 09:49:17',NULL,1,1,'//Portal/QueueManager.doc',4,4,4,NULL,3120,1800,NULL,NULL,NULL,NULL,NULL),
-(18,'Application 42','<p>The Ultimate Question of Life, the Universe and Everything</p>',NULL,NULL,1,'Johan, Marc',NULL,'logiciel',40,'COBOL','Interne','>50',NULL,'2021-11-15 16:03:20','2024-09-24 03:54:14',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2023-10-19 00:00:00','2023-10-28 00:00:00','Critical GRP-0',NULL,NULL),
+(18,'Application 42','<p>The Ultimate Question of Life, the Universe and Everything</p>',NULL,NULL,1,'Johan, Marc',NULL,'logiciel',NULL,'COBOL','Interne','>50',NULL,'2021-11-15 16:03:20','2024-09-24 03:54:14',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2023-10-19 00:00:00','2023-10-28 00:00:00','Critical GRP-0',NULL,NULL),
 (19,'Windows Word 98','<p>Traitement de texte Word</p>',NULL,NULL,1,'Johan, Marc',NULL,'progiciel',NULL,'Microsoft','Interne',NULL,NULL,'2022-06-14 11:52:36','2022-06-14 11:52:58',NULL,18,1,NULL,1,1,1,NULL,3120,1800,'2022-06-14 00:00:00',NULL,NULL,NULL,NULL),
-(35,'Vulnerability','<p>Vulnerable test application</p>',NULL,NULL,0,'RSSI',NULL,NULL,41,'Microsoft','Interne','>100',NULL,'2022-06-28 05:59:28','2024-09-24 03:10:37',NULL,4,2,NULL,0,0,0,'1.5',3120,1800,NULL,NULL,'',NULL,NULL),
-(37,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'',NULL,'Web',40,'Microsoft','Internl','>100',NULL,'2022-12-17 14:12:12','2024-09-24 03:38:57',NULL,18,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL,'',NULL,NULL),
-(38,'excel',NULL,NULL,NULL,0,'',NULL,NULL,39,NULL,NULL,NULL,NULL,'2023-03-26 07:38:20','2023-03-26 07:38:20',NULL,NULL,NULL,NULL,0,0,0,'2019',0,0,NULL,NULL,NULL,NULL,NULL),
+(35,'Vulnerability','<p>Vulnerable test application</p>',NULL,NULL,0,'RSSI',NULL,NULL,NULL,'Microsoft','Interne','>100',NULL,'2022-06-28 05:59:28','2024-09-24 03:10:37',NULL,4,2,NULL,0,0,0,'1.5',3120,1800,NULL,NULL,'',NULL,NULL),
+(37,'Messagerie','<p>Internal mail system</p>',NULL,NULL,3,'',NULL,'Web',NULL,'Microsoft','Internl','>100',NULL,'2022-12-17 14:12:12','2024-09-24 03:38:57',NULL,18,1,NULL,3,3,3,'v1.0',3120,1800,NULL,NULL,'',NULL,NULL),
+(38,'excel',NULL,NULL,NULL,0,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2023-03-26 07:38:20','2023-03-26 07:38:20',NULL,NULL,NULL,NULL,0,0,0,'2019',0,0,NULL,NULL,NULL,NULL,NULL),
 (42,'Business Master','<p>The business mater application</p>',NULL,NULL,0,'Pierre','Pierre','Web',NULL,'PHP','Internal','>10','VaultServices','2024-09-24 06:34:05','2024-09-24 06:34:05',NULL,25,1,NULL,0,0,0,NULL,NULL,NULL,NULL,NULL,'Critical',NULL,NULL),
-(43,'Customer Relation','<p>The description goes here</p>',NULL,NULL,0,'Johan','Paul','progiciel',51,'C++','Interne','>10','VaultServices','2024-09-24 06:37:35','2024-09-24 06:37:35',NULL,8,3,NULL,0,0,0,NULL,0,0,NULL,NULL,'GRP-0',NULL,NULL);
+(43,'Customer Relation','<p>The description goes here</p>',NULL,NULL,0,'Johan','Paul','progiciel',NULL,'C++','Interne','>10','VaultServices','2024-09-24 06:37:35','2024-09-24 06:37:35',NULL,8,3,NULL,0,0,0,NULL,0,0,NULL,NULL,'GRP-0',NULL,NULL);
 /*!40000 ALTER TABLE `m_applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1361,9 +1307,9 @@ INSERT INTO `relation_values` (`relation_id`, `date_price`, `price`, `created_at
 (3,'2024-01-01',20000.00,'2024-04-06 12:00:55','2024-04-06 12:00:55'),
 (13,'2024-04-06',100.00,'2024-04-06 12:18:56','2024-04-06 12:18:56'),
 (13,'2020-01-01',95.00,'2024-04-06 12:18:56','2024-04-06 12:18:56'),
-(7,'2001-01-01',800000.00,'2024-05-02 09:25:57','2024-05-02 09:25:57'),
-(7,'2021-04-01',700000.00,'2024-05-02 09:25:57','2024-05-02 09:25:57'),
-(7,'2024-04-01',950000.00,'2024-05-02 09:25:57','2024-05-02 09:25:57');
+(7,'2001-01-01',800000.00,'2024-09-26 17:16:07','2024-09-26 17:16:07'),
+(7,'2021-04-01',700000.00,'2024-09-26 17:16:07','2024-09-26 17:16:07'),
+(7,'2024-04-01',950000.00,'2024-09-26 17:16:07','2024-09-26 17:16:07');
 /*!40000 ALTER TABLE `relation_values` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1379,7 +1325,7 @@ INSERT INTO `relations` (`id`, `importance`, `name`, `type`, `description`, `cre
 (4,2,'Outsourcing Service P1','Contrat','<p>Description du service</p>','2020-05-21 02:23:03','2024-04-06 11:59:47',NULL,18,6,'Signé','REF 434343','Paul','ORDER 4343',1,'2024-04-01','2025-04-01',NULL,NULL,NULL,NULL,NULL),
 (5,1,'Outsourcing Service P2','Contrat','<p>Description goes here</p>','2020-05-21 02:23:35','2024-04-06 12:01:39',NULL,2,6,'Litige','REF 54454','Marcel','ORDER 423432',1,'2021-01-01','2025-01-01',NULL,NULL,NULL,NULL,NULL),
 (6,2,'Software 21','Contrat','<p>Description goes here</p>','2020-05-21 02:24:35','2024-04-06 12:21:09',NULL,7,2,'Validé','REF 543543','Marc','ORDER 4545435',1,'2020-01-01','2099-01-01','<p>No comments</p>',NULL,NULL,NULL,NULL),
-(7,2,'Assurance Cyber P3','Assurance','<p>Description here</p>','2020-05-21 02:26:43','2024-05-02 09:25:57',NULL,4,6,'Signé Validé','REF 324242324','Paul, Piere','ORDER 23434',1,'2024-04-01','2099-04-06','<p>Description des conditions du contrat</p><p>Support, garanties, niveau de service.</p>',NULL,NULL,NULL,NULL),
+(7,2,'Assurance Cyber P3','Assurance','<p>Description here</p>','2020-05-21 02:26:43','2024-09-26 17:16:07',NULL,4,6,'Signé Validé','REF 324242324','Paul, Piere','ORDER 23434',1,'2024-04-01','2099-04-06','<p>Description des conditions du contrat</p><p>Support, garanties, niveau de service.</p>',NULL,NULL,NULL,NULL),
 (8,3,'Product A2','Contrat','<p>Decription goes here</p>','2020-05-21 02:32:19','2024-04-06 12:03:17',NULL,1,5,'Signé','REF RE5943545','Henri','ORDER 543FD3',1,'2023-01-01','2024-01-01',NULL,NULL,NULL,NULL,NULL),
 (9,2,'System34','Contrat','<p>Description goes here</p>','2020-05-21 02:33:33','2024-04-06 12:22:30',NULL,9,1,'Signé','REF 65665','Paul','ORDER 43434',1,'2022-01-01','2099-02-01',NULL,NULL,NULL,NULL,NULL),
 (10,2,'Support APP2','Service','<p>Régelement général APD34</p>','2020-05-22 21:21:02','2024-04-06 12:21:43',NULL,1,8,'Signé','REF YI3434','Henri','ORDER 45543',1,'2023-01-01','2099-01-01',NULL,NULL,NULL,NULL,NULL),
@@ -1736,4 +1682,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-26 19:18:19
+-- Dump completed on 2024-09-28  9:53:32
