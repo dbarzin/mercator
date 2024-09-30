@@ -52,9 +52,13 @@
                                 {!! $building->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach(explode(" ",$building->attributes) as $attribute)
-                                <span class="badge badge-info">{{ $attribute }}</span>
-                                @endforeach
+                                <?php
+                                foreach(explode(" ",$building->attributes) as $attribute) {
+                                echo "<span class='badge badge-info'>";
+                                echo $attribute;
+                                echo "</span> ";
+                                }
+                                ?>
                             </td>
                             <td>
                                 @if ($building->site!=null)
