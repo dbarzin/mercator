@@ -50,17 +50,11 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /*
-        $roles = Role::all()->sortBy('title');
-        // Triage des permissions pour chaque rôles
-        foreach ($roles as $role) {
-            $role->sortedPerms = $this->getSortedPerms($role->permissions->sortBy('title')->pluck('title', 'id'));
-        }
-        */
         $roles = DB::table('roles')
             ->leftJoin('role_user', 'role_user.role_id', '=', 'roles.id')
             ->select('roles.id', 'roles.title', DB::raw('count(role_user.user_id) as count'))
             ->groupBy('roles.id', 'roles.title')
+            ->whereNull('deleted_at')
             ->get();
 
         return view('admin.roles.index', compact('roles'));
