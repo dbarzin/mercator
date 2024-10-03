@@ -6,6 +6,11 @@
         <a class="btn btn-default" href="{{ route('admin.workstations.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
+
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=WORK_{{$workstation->id}}">
+            {{ trans('global.explore') }}
+        </a>
+
         @can('workstation_edit')
             <a class="btn btn-info" href="{{ route('admin.workstations.edit', $workstation->id) }}">
                 {{ trans('global.edit') }}
