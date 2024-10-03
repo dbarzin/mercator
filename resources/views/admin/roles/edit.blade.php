@@ -1561,6 +1561,17 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
+                        <label>Password</label>
+                        <div class="form-check form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="profile_password_edit" id="profile_password_edit" value="256" {{ in_array('profile_password_edit', old('permissions', [])) || $role->permissions->contains(256) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_profile_password_edit }}">edit</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
                         <label>{{ trans('cruds.user.title') }}</label>
                         @php($permission = $permissions_sorted['user'])
                         <div class="form-check form-switch form-switch-lg">

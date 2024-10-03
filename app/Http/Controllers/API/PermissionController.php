@@ -26,8 +26,6 @@ class PermissionController extends Controller
         abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permission = Permission::create($request->all());
-        // syncs
-        // $permissions->roles()->sync($request->input('roles', []));
 
         return response()->json($permission, 201);
     }

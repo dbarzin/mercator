@@ -16,15 +16,13 @@ class ProfileController extends Controller
 
     public function saveProfile(Request $request)
     {
-        // dd($request->granularity);
         $user = Auth::guard()->user();
-        // dd($user);
+
         $user->granularity = $request->granularity;
         $user->language = $request->language;
 
         $user->save();
 
-        // dd($request);
         return redirect('/profile/preferences');
     }
 }
