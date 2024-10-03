@@ -104,7 +104,9 @@
                 </a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="/profile/preferences">{{ trans('panel.menu.options') }}</a>
+                  @can('profile_password_edit')
                   <a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a>
+                  @endcan
                 </div>
             </li>
             &nbsp;

@@ -734,5 +734,5 @@
             </li>
         </ul>
     </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024-10</button>
+    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024-10-R2</button>
 </div>
