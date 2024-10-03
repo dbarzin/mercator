@@ -38,6 +38,9 @@
                             {{ trans('cruds.peripheral.fields.responsible') }}
                         </th>
                         <th>
+                            {{ trans('cruds.peripheral.fields.address_ip') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.peripheral.fields.site') }}
                         </th>
                         <th>
@@ -73,6 +76,9 @@
                             </td>
                             <td>
                                 {{ $peripheral->responsible ?? '' }}
+                            </td>
+                            <td>
+                                {{ $peripheral->address_ip ?? '' }}
                             </td>
                             <td>
                                 {{ $peripheral->site->name ?? '' }}
