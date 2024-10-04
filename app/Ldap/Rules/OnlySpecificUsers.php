@@ -4,7 +4,10 @@ namespace App\Ldap\Rules;
 
 use LdapRecord\Laravel\Auth\Rule;
 
-class OnlySpecificUsers extends Rule
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use LdapRecord\Models\Model as LdapRecord;
+
+class OnlySpecificUsers implements Rule
 {
     public function passes(LdapRecord $user, Eloquent $model = null): bool
     {
