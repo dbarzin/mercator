@@ -6,18 +6,13 @@ use LdapRecord\Laravel\Auth\Rule;
 
 class OnlySpecificUsers extends Rule
 {
-    /**
-     * Check if the rule passes validation.
-     *
-     * @return bool
-     */
-    public function isValid(): bool
+    public function passes(LdapRecord $user, Eloquent $model = null): bool
     {
         if (! config('app.ldap_groups')) {
             return true;
         }
 
-        return $this->user->groups()->recursive()->exists(
+        return $user->groups()->recursive()->exists(
             explode(',', config('app.ldap_groups'))
         );
     }
