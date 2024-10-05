@@ -249,7 +249,7 @@ return [
     'time' => 'time',
     'timeFrom' => 'of',
     'timeTo' => 'at',
-    'timestamp' => 'd/m/y - H:m',
+    'timestamp' => 'd/m/y - H:i',
     'title' => 'title',
     'toggleNavigation' => 'Toggle navigation',
     'tracability' => 'Traceability',

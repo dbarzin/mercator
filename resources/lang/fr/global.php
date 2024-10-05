@@ -56,7 +56,7 @@ return [
     'strong' => 'Fort',
     'test' => 'Test',
     'time' => 'Temps',
-    'timestamp' => 'd/m/y - H:m',
+    'timestamp' => 'd/m/y - H:i',
     'tracability' => 'Traçabilité',
     'update' => 'Mettre à jour',
     'updated_at' => 'Modifié le',
