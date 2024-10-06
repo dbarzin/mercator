@@ -504,7 +504,7 @@ class ExplorerController extends Controller
         // certificate_logical_server
         $joins = DB::table('certificate_logical_server')->select('certificate_id', 'logical_server_id')->get();
         foreach ($joins as $join) {
-            $this->addLinkEdge($edges, 5, $this->formatId('CERT_', $join->certificate_id), $this->formatId('LSERVER_', $join->logical_server_id));
+            $this->addLinkEdge($edges, $this->formatId('CERT_', $join->certificate_id), $this->formatId('LSERVER_', $join->logical_server_id));
         }
 
         // ---------------------------------------------------
