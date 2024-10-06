@@ -11,17 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // add type - remove link to physical_switch
+        // Remove link to physical_switch
+        if (Schema::hasColumn('storage_devices', 'physical_switch_id')) {
+
+            Schema::table('storage_devices', function (Blueprint $table) {
+                if (DB::getDriverName() !== 'sqlite') {
+                    $table->dropForeign('physical_switch_fk_4025543');
+                }
+            });
+
+            Schema::table('storage_devices', function (Blueprint $table) {
+                $table->dropColumn('physical_switch_id');
+            });
+        }
+
+        // Add type
         Schema::table('storage_devices', function (Blueprint $table) {
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('physical_switch_fk_4025543');
-            }
             $table->string('type')->after("name")->nullable();
         });
 
-        Schema::table('storage_devices', function (Blueprint $table) {
-            $table->dropColumn('physical_switch_id');
-        });
     }
 
     /**
