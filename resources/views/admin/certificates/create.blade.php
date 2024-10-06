@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.certificates.store") }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.certificate.title_singular') }}
+        </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.certificate.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.certificates.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.certificate.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -55,21 +54,21 @@
             <div class="row">
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>              
+                        <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date" type="text" name="start_validity" id="start_validity" value="{{ old('start_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>                    
+                        <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>
                         <input class="date form-control" type="text" id="end_validity" name="end_validity" value="{{ old('end_validity') }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
-                        <label for="logical_servers">{{ trans('cruds.certificate.fields.status') }}</label> 
+                        <label for="logical_servers">{{ trans('cruds.certificate.fields.status') }}</label>
 
                         <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                             <option></option>
@@ -120,16 +119,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.certificate.fields.applications_helper') }}</span>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
@@ -149,7 +146,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 
 });
