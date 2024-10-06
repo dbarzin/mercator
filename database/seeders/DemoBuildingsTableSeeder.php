@@ -14,12 +14,10 @@ class DemoBuildingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('buildings')->delete();
-        
+
         \DB::table('buildings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Building 1',
@@ -28,10 +26,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-06-21 06:47:41',
                 'deleted_at' => NULL,
                 'site_id' => 1,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Building 2',
@@ -40,10 +36,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-07-25 08:26:13',
                 'deleted_at' => NULL,
                 'site_id' => 1,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'Building 3',
@@ -52,10 +46,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-07-25 08:26:03',
                 'deleted_at' => NULL,
                 'site_id' => 2,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Building 4',
@@ -64,10 +56,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-07-25 08:25:54',
                 'deleted_at' => NULL,
                 'site_id' => 2,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'Building 5',
@@ -76,10 +66,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-07-25 08:26:26',
                 'deleted_at' => NULL,
                 'site_id' => 3,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'Test building',
@@ -88,10 +76,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-07-24 21:14:08',
                 'deleted_at' => '2020-07-24 21:14:08',
                 'site_id' => 4,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'Building 0',
@@ -100,10 +86,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-10-02 09:38:55',
                 'deleted_at' => NULL,
                 'site_id' => 1,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'test',
@@ -112,10 +96,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-11-06 15:26:18',
                 'deleted_at' => '2020-11-06 15:26:18',
                 'site_id' => NULL,
-                'camera' => true,
-                'badge' => false,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'test2',
@@ -124,10 +106,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-11-06 15:06:50',
                 'deleted_at' => '2020-11-06 15:06:50',
                 'site_id' => NULL,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'test3',
@@ -136,10 +116,8 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-11-06 15:26:18',
                 'deleted_at' => '2020-11-06 15:26:18',
                 'site_id' => NULL,
-                'camera' => NULL,
-                'badge' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'test4',
@@ -148,11 +126,7 @@ class DemoBuildingsTableSeeder extends Seeder
                 'updated_at' => '2020-11-06 15:26:18',
                 'deleted_at' => '2020-11-06 15:26:18',
                 'site_id' => NULL,
-                'camera' => false,
-                'badge' => false,
             ),
         ));
-        
-        
     }
 }
