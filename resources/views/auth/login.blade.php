@@ -35,7 +35,7 @@
         <div class="card mx-4">
             <div class="card-body p-4">
 
-                <p class="text-muted">Connection</p>
+                <p class="text-muted">{{ (env('APP_NAME') === null) || (env('APP_NAME') === "Laravel") ? "Mercator" : env('APP_NAME') }} :: Login</p>
 
                 @if(session('message'))
                     <div class="alert alert-info" role="alert">
