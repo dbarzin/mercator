@@ -35,7 +35,7 @@
                 <label for="attributes">{{ trans('cruds.building.fields.attributes') }}</label>
                 <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
                     @foreach($attributes_list as $a)
-                        <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($building->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
+                        <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$building->attributes)) ? 'selected' : '' }}>{{$a}}</option>
                     @endforeach
                 </select>
                 @if($errors->has('attributes'))
