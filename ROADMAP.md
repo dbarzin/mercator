@@ -6,6 +6,7 @@ Changements prévus en 2024 :
 
 ## Evolutions majeures
 
+- [ ] Outil de dessin de la cartographie
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
@@ -14,8 +15,8 @@ Changements prévus en 2024 :
 - [ ] Identifier les chemins critiques
 - [ ] Exploiter les logs - recherche et afficher tout les changements d'un objet
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
-- [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
-- [ ] Générer les cartographes dans la gestion des utilisateurs
+- [o] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
+- [o] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Intégration des données de la cartographie dans syslog
 - [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
 - [ ] Utiliser un modèle de document pour les rapports
@@ -24,7 +25,7 @@ Changements prévus en 2024 :
 ## Evolutions mineurs
 
 - [x] Amélorer l'exploration des objets (le filtre s'applique sur le double click)
-- [ ] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
+- [x] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
 - [x] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
 - [ ] Packaging des librairies JavaScript avec [Laravel Mix](https://laravel-mix.com/).
 - [x] Dessiner un nouveau jeu d'icônes compatible GLPv3
@@ -38,15 +39,15 @@ Changements prévus en 2024 :
 - [x] Ajout des flux logiques
 - [ ] Afficher l'historique des changements d'un objet
 - [x] Cloner un objet
-- [ ] Ajout d'une chart Helm pour simplifier le déploiement dans Kubernetes (https://helm.sh/docs/topics/charts/)
 
 ## Petites évolutions
 
 - [ ] Améliorer les tests Dusk
 - [x] Documenter une procédure de déploiement sous Debian
 - [ ] Dark Theme
+- [ ] Ajout d'une chart Helm pour simplifier le déploiement dans Kubernetes (https://helm.sh/docs/topics/charts/)
 
-Changements réalisés en 2023 :
+# Changements réalisés en 2023 :
 
 ## Evolutions majeures
 
@@ -66,7 +67,7 @@ Changements réalisés en 2023 :
 - [x] Ajouter l'objet cluster de serveurs logiques
 - [x] Dans l'explorer, afficher les objets du menu déroulant en se basant sur le filtre de la vue  
 
-Changements réalisés en 2022 :
+# Changements réalisés en 2022 :
 
 ## Evolutions majeures
 
