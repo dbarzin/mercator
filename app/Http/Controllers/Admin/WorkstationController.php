@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Document;
 use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
@@ -32,6 +33,9 @@ class WorkstationController extends Controller
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        // Select icons
+        $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
         $type_list = Workstation::select('type')
@@ -52,7 +56,9 @@ class WorkstationController extends Controller
 
         return view(
             'admin.workstations.create',
-            compact('sites', 'buildings', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+            compact('sites', 'buildings', 'icons',
+                    'type_list', 'operating_system_list',
+                    'cpu_list', 'application_list')
         );
     }
 
@@ -62,6 +68,9 @@ class WorkstationController extends Controller
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // Get icons
+        $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
@@ -92,13 +101,40 @@ class WorkstationController extends Controller
 
         return view(
             'admin.workstations.create',
-            compact('sites', 'buildings', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+            compact('sites', 'buildings', 'icons', 'type_list',
+                    'operating_system_list', 'cpu_list', 'application_list')
         );
     }
 
     public function store(StoreWorkstationRequest $request)
     {
         $workstation = Workstation::create($request->all());
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $workstation->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $workstation->icon_id = intval($request->iconSelect);
+        } else {
+            $workstation->icon_id = null;
+        }
+        $site->save();
+
+        // Sync applications
         $workstation->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.workstations.index');
@@ -110,6 +146,7 @@ class WorkstationController extends Controller
 
         $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
@@ -133,12 +170,38 @@ class WorkstationController extends Controller
 
         return view(
             'admin.workstations.edit',
-            compact('sites', 'buildings', 'workstation', 'type_list', 'operating_system_list', 'cpu_list', 'application_list')
+            compact(
+                'sites', 'buildings', 'icons',
+                'workstation', 'type_list', 'operating_system_list',
+                'cpu_list', 'application_list')
         );
     }
 
     public function update(UpdateWorkstationRequest $request, Workstation $workstation)
     {
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $workstation->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $workstation->icon_id = intval($request->iconSelect);
+        } else {
+            $workstation->icon_id = null;
+        }
+
         $workstation->update($request->all());
         $workstation->applications()->sync($request->input('applications', []));
 

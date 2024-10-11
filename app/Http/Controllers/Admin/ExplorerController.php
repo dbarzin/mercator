@@ -63,9 +63,17 @@ class ExplorerController extends Controller
             }
         }
         // Workstation
-        $workstations = DB::table('workstations')->select('id', 'name', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
+        $workstations = DB::table('workstations')->select('id', 'name', 'icon_id', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($workstations as $workstation) {
-            $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations', $workstation->address_ip);
+            $this->addNode(
+                $nodes,
+                6,
+                $this->formatId('WORK_', $workstation->id),
+                $workstation->name,
+                $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id),
+                'workstations',
+                $workstation->address_ip
+            );
             if ($workstation->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
             } elseif ($workstation->site_id !== null) {
