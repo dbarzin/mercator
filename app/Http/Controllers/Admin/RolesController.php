@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Permission;
 use App\Role;
+use App\User;
 use Gate;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -115,6 +116,9 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Role is used
+        abort_if($role->users()->count()>0, Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $role->delete();
 
