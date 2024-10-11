@@ -598,7 +598,7 @@ let dotSrc=`
 digraph  {
     @can('application_access')
     @foreach($applications as $application)
-            A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/application.png" href="#APPLICATION{{$application->id}}"]
+            A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) }}" href="#APPLICATION{{$application->id}}"]
     @endforEach
     @endcan
     @can('application_service_access')
@@ -650,6 +650,11 @@ digraph  {
 
 d3.select("#graph").graphviz()
     .addImage("/images/application.png", "64px", "64px")
+    @foreach($applications as $application)
+       @if ($application->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $application->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .addImage("/images/applicationservice.png", "64px", "64px")
     .addImage("/images/applicationmodule.png", "64px", "64px")
     .addImage("/images/database.png", "64px", "64px")

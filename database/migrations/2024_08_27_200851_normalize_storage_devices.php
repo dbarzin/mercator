@@ -32,12 +32,18 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('storage_devices', function (Blueprint $table) {
-            $table->unsignedInteger('physical_switch_id')->nullable()->index('physical_switch_fk_4025543');
             $table->dropColumn('type');
         });
 
-        Schema::table('storage_devices', function (Blueprint $table) {
-            $table->foreign('physical_switch_id', 'physical_switch_fk_4025543')->references('id')->on('physical_switches')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-        });
+        if (DB::getDriverName() !== 'sqlite') {
+            Schema::table('storage_devices', function (Blueprint $table) {
+                $table->unsignedInteger('physical_switch_id')->nullable()->index('physical_switch_fk_4025543');
+            });
+
+            Schema::table('storage_devices', function (Blueprint $table) {
+                $table->foreign('physical_switch_id', 'physical_switch_fk_4025543')->references('id')->on('physical_switches')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            });
+
+        }
     }
 };

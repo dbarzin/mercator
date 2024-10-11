@@ -1096,8 +1096,18 @@ d3.select("#graph").graphviz()
     .addImage("/images/bay.png", "64px", "64px")
     .addImage("/images/server.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
+    @foreach($workstations as $workstation)
+       @if ($workstation->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .addImage("/images/storage.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
+    @foreach($peripherals as $peripheral)
+       @if ($peripheral->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .addImage("/images/phone.png", "64px", "64px")
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/router.png", "64px", "64px")

@@ -816,7 +816,7 @@ let dotSrc=`
 digraph  {
     @can('site_access')
     @foreach($sites as $site)
-        S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $site->icon_id === null ? '/images/$site.png' : route('admin.documents.show', $site->icon_id) }}" href="#SITE{{$site->id}}"]
+        S{{ $site->id }} [label="{{ $site->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $site->icon_id === null ? '/images/site.png' : route('admin.documents.show', $site->icon_id) }}" href="#SITE{{$site->id}}"]
     @endforEach
     @endcan
     @can('building_access')
@@ -832,7 +832,7 @@ digraph  {
                 B{{ $building->id }} -> WG{{ $building->buildingWorkstations()->first()->id }}
             @else
                 @foreach($building->buildingWorkstations as $workstation)
-                   W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
+                   W{{ $workstation->id }} [label="{{ $workstation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id) }}" href="#WORKSTATION{{$workstation->id}}"]
                    B{{ $building->id }} -> W{{ $workstation->id }}
                 @endforEach
             @endif
@@ -949,18 +949,23 @@ d3.select("#graph").graphviz()
     .addImage("/images/bay.png", "64px", "64px")
     .addImage("/images/server.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
+    @foreach($workstations as $workstation)
+       @if ($workstation->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .addImage("/images/storage.png", "64px", "64px")
     .addImage("/images/peripheral.png", "64px", "64px")
-    .addImage("/images/phone.png", "64px", "64px")
-    .addImage("/images/switch.png", "64px", "64px")
-    .addImage("/images/router.png", "64px", "64px")
-    .addImage("/images/wifi.png", "64px", "64px")
-    .addImage("/images/security.png", "64px", "64px")
     @foreach($peripherals as $peripheral)
        @if ($peripheral->icon_id!==null)
        .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
        @endif
     @endforeach
+    .addImage("/images/phone.png", "64px", "64px")
+    .addImage("/images/switch.png", "64px", "64px")
+    .addImage("/images/router.png", "64px", "64px")
+    .addImage("/images/wifi.png", "64px", "64px")
+    .addImage("/images/security.png", "64px", "64px")
     .renderDot(dotSrc);
 </script>
 @parent

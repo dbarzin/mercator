@@ -63,9 +63,17 @@ class ExplorerController extends Controller
             }
         }
         // Workstation
-        $workstations = DB::table('workstations')->select('id', 'name', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
+        $workstations = DB::table('workstations')->select('id', 'name', 'icon_id', 'address_ip', 'building_id', 'site_id')->whereNull('deleted_at')->get();
         foreach ($workstations as $workstation) {
-            $this->addNode($nodes, 6, $this->formatId('WORK_', $workstation->id), $workstation->name, '/images/workstation.png', 'workstations', $workstation->address_ip);
+            $this->addNode(
+                $nodes,
+                6,
+                $this->formatId('WORK_', $workstation->id),
+                $workstation->name,
+                $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id),
+                'workstations',
+                $workstation->address_ip
+            );
             if ($workstation->building_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('WORK_', $workstation->id), $this->formatId('BUILDING_', $workstation->building_id));
             } elseif ($workstation->site_id !== null) {
@@ -524,13 +532,13 @@ class ExplorerController extends Controller
         // Forest
         $forests = DB::table('forest_ads')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
         foreach ($forests as $forest) {
-            $this->addNode($nodes, 4, $this->formatId('FOREST_', $forest->id), $forest->name, '/images/ldap.png', 'forests_ads');
+            $this->addNode($nodes, 4, $this->formatId('FOREST_', $forest->id), $forest->name, '/images/ldap.png', 'forests-ads');
             $this->addLinkEdge($edges, $this->formatId('FOREST_', $forest->id), $this->formatId('ZONE_', $forest->zone_admin_id));
         }
         // Domain
         $domains = DB::table('domaine_ads')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($domains as $domain) {
-            $this->addNode($nodes, 4, $this->formatId('DOMAIN_', $domain->id), $domain->name, '/images/domain.png', 'domaine_ads');
+            $this->addNode($nodes, 4, $this->formatId('DOMAIN_', $domain->id), $domain->name, '/images/domain.png', 'domaine-ads');
         }
         // domaine_ad_forest_ad
         $joins = DB::table('domaine_ad_forest_ad')->select('forest_ad_id', 'domaine_ad_id')->get();
@@ -540,7 +548,7 @@ class ExplorerController extends Controller
         // AdminUsers
         $adminUsers = DB::table('admin_users')->select('id', 'user_id', 'domain_id')->whereNull('deleted_at')->get();
         foreach ($adminUsers as $adminUser) {
-            $this->addNode($nodes, 4, $this->formatId('USER_', $adminUser->id), $adminUser->user_id, '/images/user.png', 'admin_users');
+            $this->addNode($nodes, 4, $this->formatId('USER_', $adminUser->id), $adminUser->user_id, '/images/user.png', 'admin-users');
             if ($adminUser->domain_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('USER_', $adminUser->id), $this->formatId('DOMAIN_', $adminUser->domain_id));
             }

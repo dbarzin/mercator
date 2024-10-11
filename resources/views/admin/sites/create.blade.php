@@ -84,7 +84,7 @@ $(document).ready(function () {
                 img: '/images/site.png',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: {{ old('icon_id') === -1 ? "true" : "false" }},
+                selected: {{ old('icon_id') === null ? "true" : "false" }},
             },
             @foreach($icons as $icon)
             {

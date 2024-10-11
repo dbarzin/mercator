@@ -34,6 +34,7 @@ class Workstation extends Model
         'name',
         'type',
         'description',
+        'icon_id',
         'site_id',
         'building_id',
         'cpu',

@@ -1109,15 +1109,6 @@ INSERT INTO `peripherals` (`id`, `name`, `type`, `icon_id`, `description`, `vend
 UNLOCK TABLES;
 
 --
--- Dumping data for table `personal_access_tokens`
---
-
-LOCK TABLES `personal_access_tokens` WRITE;
-/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `phones`
 --
 
