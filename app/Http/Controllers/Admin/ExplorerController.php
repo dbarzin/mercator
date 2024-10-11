@@ -538,7 +538,7 @@ class ExplorerController extends Controller
         // Domain
         $domains = DB::table('domaine_ads')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($domains as $domain) {
-            $this->addNode($nodes, 4, $this->formatId('DOMAIN_', $domain->id), $domain->name, '/images/domain.png', 'domaine_ads');
+            $this->addNode($nodes, 4, $this->formatId('DOMAIN_', $domain->id), $domain->name, '/images/domain.png', 'domaine-ads');
         }
         // domaine_ad_forest_ad
         $joins = DB::table('domaine_ad_forest_ad')->select('forest_ad_id', 'domaine_ad_id')->get();
