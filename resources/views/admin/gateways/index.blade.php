@@ -46,7 +46,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.gateways.show', $gateway->id) }}">
                                 {{ $gateway->name ?? '' }}
+                            </a>
                             </td>
                             <td>
                                 {!! $gateway->description ?? '' !!}
