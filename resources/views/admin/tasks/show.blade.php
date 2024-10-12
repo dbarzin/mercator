@@ -6,6 +6,10 @@
             {{ trans('global.back_to_list') }}
         </a>
 
+        <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=TASK_{{$task->id}}">
+            {{ trans('global.explore') }}
+        </a>
+
         @can('task_edit')
             <a class="btn btn-info" href="{{ route('admin.tasks.edit', $task->id) }}">
                 {{ trans('global.edit') }}
