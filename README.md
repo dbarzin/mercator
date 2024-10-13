@@ -49,7 +49,7 @@
 
 - **Backend:** PHP, Laravel
 - **Frontend:** JavaScript
-- **Databases:** MySQL, PostgreSQL, SQLite, SQL Server ([See Laravel Database Documentation](https://laravel.com/docs/master/database#introduction))
+- **Databases:** MariaDB, MySQL, PostgreSQL, and SQLite ([See Laravel Database Documentation](https://laravel.com/docs/master/database#introduction))
 - **Additional Libraries:** WebAssembly, Graphviz, ChartJS
 
 ## 📦 **Installation**
