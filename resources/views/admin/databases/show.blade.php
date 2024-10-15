@@ -35,12 +35,10 @@
                     <th width="10%">
                         {{ trans('cruds.database.fields.name') }}
                     </th>
-                    <td>
+                    <td colspan=3>
                         {{ $database->name }}
                     </td>
-                </tr>
-                <tr>
-                    <th>
+                    <th width="10%">
                         {{ trans('cruds.database.fields.type') }}
                     </th>
                     <td>
@@ -51,7 +49,7 @@
                     <th>
                         {{ trans('cruds.database.fields.description') }}
                     </th>
-                    <td>
+                    <td colspan=5>
                         {!! $database->description !!}
                     </td>
                 </tr>
@@ -67,16 +65,12 @@
                             @endif
                         @endforeach
                     </td>
-                </tr>
-                <tr>
                     <th>
                         {{ trans('cruds.database.fields.entity_resp') }}
                     </th>
                     <td>
                         {{ $database->entity_resp->name ?? '' }}
                     </td>
-                </tr>
-                <tr>
                     <th>
                         {{ trans('cruds.database.fields.responsible') }}
                     </th>
@@ -88,7 +82,7 @@
                     <th>
                         {{ trans('cruds.database.fields.informations') }}
                     </th>
-                    <td>
+                    <td colspan=5>
                         @foreach($database->informations as $information)
                             <a href="{{ route('admin.information.show', $information->id) }}">
                                 {{ $information->name }}
@@ -103,7 +97,7 @@
                     <th>
                         {{ trans('cruds.database.fields.applications') }}
                     </th>
-                    <td>
+                    <td colspan=5>
                         @foreach($database->applications as $application)
                             <a href="{{ route('admin.applications.show', $application->id) }}">
                                 {{ $application->name }}
@@ -118,7 +112,7 @@
                     <th>
                         {{ trans('cruds.database.fields.logical_servers') }}
                     </th>
-                    <td>
+                    <td colspan=3>
                         @foreach($database->logicalServers as $logicalServer)
                             <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                                 {{ $logicalServer->name }}
@@ -128,8 +122,6 @@
                             @endif
                         @endforeach
                     </td>
-                </tr>
-                <tr>
                     <th>
                         {{ trans('cruds.database.fields.external') }}
                     </th>
@@ -141,7 +133,7 @@
                     <th>
                         {{ trans('cruds.database.fields.security_need') }}
                     </th>
-                    <td>
+                    <td colspan=5>
                     {{ trans('global.confidentiality') }} :
                         @if ($database->security_need_c==0){{ trans('global.none') }}@endif
                         @if ($database->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
