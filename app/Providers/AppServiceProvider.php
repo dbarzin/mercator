@@ -33,8 +33,6 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Log SQL queries
-        // if (false) {
         if (env('APP_DEBUG')) {
             \DB::listen(function ($query) {
                 \Log::info($query->time . ':' . $query->sql);
