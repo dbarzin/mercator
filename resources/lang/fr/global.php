@@ -20,6 +20,7 @@ return [
     'minutes' => 'minutes',
     'delete' => 'Supprimer',
     'deleted_at' => 'Supprimé le',
+    'deprecated' => 'Déprécié',
     'edit' => 'Modifier',
     'explore' => 'Explorer',
     'forgot_password' => 'Mot de passe oublié ?',

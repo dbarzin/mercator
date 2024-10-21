@@ -85,6 +85,7 @@ return [
     'custom_controller_index' => 'Custom index of the controller.',
     'customer' => 'Customer',
     'customers' => 'Customers',
+    'deprecated' => 'Deprecated',
     'dashboard' => 'Dashboard',
     'datatables' => [
         'colvis' => 'Column visibility',
