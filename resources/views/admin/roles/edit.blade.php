@@ -909,6 +909,7 @@
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][2][0] }}" {{ in_array($permission['actions'][2][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][2][0]) ? 'checked' : '' }}>
                             <label class="form-check-label" for="for_{{ $permission['actions'][2][0] }}">{{ $permission['actions'][2][1] }}</label>
                         </div>
+                        <span class="help-block">{{ trans('global.deprecated') }}</span>
                     </div>
                 </div>
 
@@ -936,6 +937,7 @@
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][2][0] }}" {{ in_array($permission['actions'][2][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][2][0]) ? 'checked' : '' }}>
                             <label class="form-check-label" for="for_{{ $permission['actions'][2][0] }}">{{ $permission['actions'][2][1] }}</label>
                         </div>
+                        <span class="help-block">{{ trans('global.deprecated') }}</span>
                     </div>
                 </div>
 
