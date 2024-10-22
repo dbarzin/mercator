@@ -240,7 +240,7 @@ return [
     'tasks' => 'Tasks',
     'team-management' => 'teams',
     'team-management-singular' => 'Team',
-    'test' => 'test',
+    'test' => 'Test',
     'test_answers' => 'Test Answers',
     'test_results' => 'Test Results',
     'tests' => 'Tests',
