@@ -3,7 +3,11 @@ docker/data
 *Dockerfile
 *.md
 .dockerignore
-.env*
-*.sqlite*
 nginx.conf
 supervisord.conf
+*.md
+.github
+.idea
+docker-compose
+docs
+chart

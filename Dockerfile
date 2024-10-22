@@ -41,13 +41,15 @@ RUN addgroup --g 1000 -S www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # Clone sources from Github
-WORKDIR /var/www/
-RUN git clone https://github.com/dbarzin/mercator.git/
+#WORKDIR /var/www/
+#RUN git clone https://github.com/dbarzin/mercator.git/
+RUN mkdir /var/www/mercator
 WORKDIR /var/www/mercator
+COPY . .
 
 # Copy config files
-RUN cp docker/nginx.conf /etc/nginx/http.d/default.conf
-RUN cp docker/supervisord.conf /etc/supervisord.conf
+COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/supervisord.conf /etc/supervisord.conf
 
 # change owner
 RUN chown -R mercator:www /var/www/mercator
