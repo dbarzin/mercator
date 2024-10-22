@@ -1,20 +1,18 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route('admin.config.cert.save') }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans("cruds.configuration.certificate.title") }}
+        </div>
+        <div class="card-body">
 
-<div class="card">
-
-    <div class="card-header">
-        {{ trans("cruds.configuration.certificate.title") }}
-    </div>
-
-    <div class="card-body">
-
-        <form method="POST" action="{{ route('admin.config.cert.save') }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
             <div class="form-group">
             <label for="name">{{ trans("cruds.configuration.certificate.help") }}</label>
             </div>
+
             <div class="form-group">
             <label class="required" for="name">{{ trans("cruds.configuration.certificate.message_subject") }}</label>
             <input class="form-control" type="text" name="mail_subject" id="mail_subject" value="{{ $mail_subject }}" required/>
@@ -81,17 +79,16 @@
                   </label>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit" name="action" value="save">
-                    {{ trans('global.save') }}
-                </button>
-                <button class="btn btn-success" type="submit" name="action" value="test">
-                    {{ trans('global.test') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit" name="action" value="save">
+            {{ trans('global.save') }}
+        </button>
+        <button class="btn btn-success" type="submit" name="action" value="test">
+            {{ trans('global.test') }}
+        </button>
+    </div>
+</form>
 
 @endsection
