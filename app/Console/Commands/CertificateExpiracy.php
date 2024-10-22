@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class CertificateExpiracy extends Command
 {
     /**
@@ -88,38 +91,67 @@ class CertificateExpiracy extends Command
                 $subject = config('mercator-config.cert.mail-subject');
                 $group = config('mercator-config.cert.group');
 
-                // set mail header
-                $headers = [
-                    'MIME-Version: 1.0',
-                    'Content-type: text/html;charset=iso-8859-1',
-                    'From: '. $mail_from,
-                ];
+                $mail = new PHPMailer(true);
 
-                if ($group === null || $group === '1') {
-                    $message = '<html><body>These certificates are about to exipre :<br><br>';
-                    foreach ($certificates as $cert) {
-                        $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
-                    }
-                    $message .= '</body></html>';
+                try {
+                    // Server settings
+                    $mail->isSMTP();                               // Use SMTP
+                    // Server settings
+                    $mail->isSMTP();                                     // Use SMTP
+                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
+                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
 
-                    // Send mail
-                    if (mail($to_email, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-                        Log::debug('Mail sent to '.$to_email);
-                    } else {
-                        Log::debug('Email sending fail.');
-                    }
-                } else {
-                    foreach ($certificates as $cert) {
-                        $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
-                        //$message = '<html><body>' . $cert->description . '</body></html>';
-                        $message = $cert->description;
+                    // Recipients
+                    $mail->setFrom(config('mercator-config.cert.mail-from'));
+                    $mail->addAddress(config('mercator-config.cert.mail-to'));         // Add a recipient
+
+                    // Content
+                    $mail->isHTML(true);                            // Set email format to HTML
+                    $mail->Subject = $subject;
+
+                    // Optional: Add DKIM signing
+                    $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+                    $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+                    $mail->DKIM_identity = $mail->From;
+
+                    if ($group === null || $group === '1') {
+                        $message = '<html><body>These certificates are about to exipre :<br><br>';
+                        foreach ($certificates as $cert) {
+                            $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
+                        }
+                        $message .= '</body></html>';
+
+                        $mail->Body = $message;
+
                         // Send mail
-                        if (mail($to_email, '=?UTF-8?B?' . base64_encode($mailSubject) . '?=', $message, implode("\r\n", $headers))) {
-                            Log::debug('Mail sent to '.$to_email);
-                        } else {
-                            Log::debug('Email sending fail.');
+                        $mail->send();
+
+                        // Log
+                        Log::debug("Mail sent to {$to_email}");
+                    } else {
+                        foreach ($certificates as $cert) {
+                            $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
+                            $message = $cert->description;
+
+                            // Send mail
+                            $mail->Body = $message;
+
+                            // Send mail
+                            $mail->send();
+
+                            // Log
+                            Log::debug("Mail sent to {$to_email}");
                         }
                     }
+                } catch (Exception $e) {
+                    Log::error("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
                 }
             }
         } else {
@@ -136,6 +168,7 @@ class CertificateExpiracy extends Command
      */
     private function needCheck()
     {
+        return true;
         $check_frequency = config('mercator-config.cert.check-frequency');
 
         return // Daily

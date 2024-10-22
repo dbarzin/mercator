@@ -157,7 +157,7 @@
     "dotenv-expand": "^5.1.0",
     "ee-first": "^1.1.1",
     "electron-to-chromium": "^1.4.365",
-    "elliptic": "^6.5.4",
+    "elliptic": "^6.5.8",
     "emoji-regex": "^8.0.0",
     "emojis-list": "^3.0.0",
     "encodeurl": "^1.0.2",

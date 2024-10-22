@@ -1,11 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Gate;
+
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class ConfigurationController extends Controller
 {
@@ -24,8 +27,6 @@ class ConfigurationController extends Controller
         $expire_delay = config('mercator-config.cert.expire-delay');
         $group = config('mercator-config.cert.group');
         $repeat_notification = config('mercator-config.cert.repeat-notification');
-
-        // dd($mail_from);
 
         // Return
         return view(
@@ -77,21 +78,44 @@ class ConfigurationController extends Controller
                 $msg = 'Configuration saved !';
                 break;
             case 'test':
-                // send test email alert
-                $message = '<html><body><br>This is a test message !<br><br></body></html>';
+                // Create a new PHPMailer instance
+                $mail = new PHPMailer(true);
 
-                // define the header
-                $headers = [
-                    'MIME-Version: 1.0',
-                    'Content-type: text/html;charset=iso-8859-1',
-                    'From: '. $mail_from,
-                ];
+                try {
+                    // Server settings
+                    $mail->isSMTP();                               // Use SMTP
+                    // Server settings
+                    $mail->isSMTP();                                     // Use SMTP
+                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
+                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
 
-                // En-têtes additionnels
-                if (mail($mail_to, '=?UTF-8?B?' . base64_encode($mail_subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-                    $msg = 'Mail sent to '.$mail_to;
-                } else {
-                    $msg = 'Email sending fail.';
+                    // Recipients
+                    $mail->setFrom($mail_from);
+                    $mail->addAddress($mail_to);         // Add a recipient
+
+                    // Content
+                    $mail->isHTML(true);                            // Set email format to HTML
+                    $mail->Subject = $mail_subject;
+                    $mail->Body    = '<html><body><br>This is a test message !<br><br></body></html>';
+
+                    // Optional: Add DKIM signing
+                    $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+                    $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+                    $mail->DKIM_identity = $mail->From;
+
+                    // Send email
+                    $mail->send();
+
+                    $msg = 'Message has been sent';
+                } catch (Exception $e) {
+                    $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
                 break;
             default:
@@ -164,22 +188,45 @@ class ConfigurationController extends Controller
                 $msg = 'Configuration saved !';
                 break;
             case 'test':
-                // send test email alert
-                $message = '<html><body><br>This is a test message !<br><br></body></html>';
+                // Create a new PHPMailer instance
+                $mail = new PHPMailer(true);
+                try {
+                    // Server settings
+                    $mail->isSMTP();                               // Use SMTP
+                    // Server settings
+                    $mail->isSMTP();                                     // Use SMTP
+                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
+                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
 
-                // define the header
-                $headers = [
-                    'MIME-Version: 1.0',
-                    'Content-type: text/html;charset=iso-8859-1',
-                    'From: '. $mail_from,
-                ];
+                    // Recipients
+                    $mail->setFrom($mail_from);
+                    $mail->addAddress($mail_to);         // Add a recipient
 
-                // En-têtes additionnels
-                if (mail($mail_to, '=?UTF-8?B?' . base64_encode($mail_subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-                    $msg = 'Mail sent to '.$mail_to;
-                } else {
-                    $msg = 'Email sending fail.';
+                    // Content
+                    $mail->isHTML(true);                            // Set email format to HTML
+                    $mail->Subject = $mail_subject;
+                    $mail->Body    = '<html><body><br>This is a test message !<br><br></body></html>';
+
+                    // Optional: Add DKIM signing
+                    $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+                    $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+                    $mail->DKIM_identity = $mail->From;
+
+                    // Send email
+                    $mail->send();
+
+                    $msg = 'Message has been sent';
+                } catch (Exception $e) {
+                    $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
+
                 break;
             case 'test_provider':
                 $client = curl_init($provider . '/api/dbinfo');

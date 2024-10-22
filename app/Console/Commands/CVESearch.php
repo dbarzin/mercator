@@ -8,6 +8,9 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class CVESearch extends Command
 {
     /**
@@ -167,20 +170,10 @@ class CVESearch extends Command
 
             Log::debug('CVESearch - ' . count($cve_match) . ' match found');
 
-            // compose message
+            // CPE found ?
+            // if (true) {
             if ((count($cpe_match) > 0) || (count($cve_match) > 0)) {
-                // send email alert
-                $mail_from = config('mercator-config.cve.mail-from');
-                $to_email = config('mercator-config.cve.mail-to');
-                $subject = config('mercator-config.cve.mail-subject');
-
-                // set mail header
-                $headers = [
-                    'MIME-Version: 1.0',
-                    'Content-type: text/html;charset=iso-8859-1',
-                    'From: '. $mail_from,
-                ];
-
+                // Construct message
                 $message = '<html><body>';
                 if (count($cpe_match) > 0) {
                     $message = '<h1>CPE Matching</h1>';
@@ -199,10 +192,45 @@ class CVESearch extends Command
                 // Log::debug('CVESearch - '. $message);
 
                 // Send mail
-                if (mail($to_email, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-                    Log::debug('Mail sent to '.$to_email);
-                } else {
-                    Log::debug('Email sending fail.');
+                $mail = new PHPMailer(true);
+
+                try {
+                    // Server settings
+                    $mail->isSMTP();                               // Use SMTP
+                    // Server settings
+                    $mail->isSMTP();                                     // Use SMTP
+                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
+                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
+
+                    // Recipients
+                    $mail->setFrom(config('mercator-config.cve.mail-from'));
+                    $mail->addAddress(config('mercator-config.cve.mail-to'));         // Add a recipient
+
+                    // Content
+                    $mail->isHTML(true);                            // Set email format to HTML
+                    $mail->Subject = config('mercator-config.cve.mail-subject');
+
+                    // Optional: Add DKIM signing
+                    $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+                    $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+                    $mail->DKIM_identity = $mail->From;
+
+                    $mail->Body = $message;
+
+                    // Send mail
+                    $mail->send();
+
+                    // Log
+                    Log::debug("CVESearch - Mail sent");
+                } catch (Exception $e) {
+                    Log::error("CVESearch - Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
                 }
             }
         }
