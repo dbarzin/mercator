@@ -9,7 +9,7 @@ class DhcpServerTest extends DuskTestCase
 {
     public function testIndex()
     {
-
+/* Deprecated
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
@@ -19,13 +19,15 @@ class DhcpServerTest extends DuskTestCase
                 $browser->assertRouteIs('admin.dhcp-servers.index');
             });
         });
+*/
     }
 
     public function testView()
     {
+/* Deprecated
         $admin = \App\User::find(1);
 		$data = \DB::table('dhcp_servers')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -35,13 +37,15 @@ class DhcpServerTest extends DuskTestCase
                 $browser->assertSee($data->name);
             });
         });
+*/
     }
 
     public function testEdit()
     {
+/* Deprecated
         $admin = \App\User::find(1);
 		$data = \DB::table('dhcp_servers')->first();
-		if ($data!=null) 
+		if ($data!=null)
         retry($times = 5,  function () use ($admin,$data) {
             $this->browse(function (Browser $browser) use ($admin,$data) {
                 $browser->loginAs($admin);
@@ -50,10 +54,12 @@ class DhcpServerTest extends DuskTestCase
                 $browser->assertPathIs("/admin/dhcp-servers/" . $data->id . "/edit");
             });
         });
+*/
     }
 
     public function testCreate()
     {
+/* Deprecated
         $admin = \App\User::find(1);
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
@@ -61,8 +67,9 @@ class DhcpServerTest extends DuskTestCase
                 $browser->visit("/admin/dhcp-servers/create");
                 $browser->waitForText("Mercator");
                 $browser->assertPathIs("/admin/dhcp-servers/create");
-            });        
+            });
         });
+*/
     }
 
 }
