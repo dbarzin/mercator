@@ -326,8 +326,8 @@ return [
             'sent_from' => 'Sent from',
             'to' => 'to',
             'recurence' => 'every',
-            'provider' => 'Provider',
-            'provider_helper' => 'CVE-Search provder (ex: https://cvepremium.circl.lu)',
+            'provider' => 'Vulnerability Provider',
+            'provider_helper' => 'Vulnerability-Search provider (ex: https://vulnerability.circl.lu)',
         ],
         'documents' => [
             'title' => 'Documents',

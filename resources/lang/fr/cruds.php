@@ -326,8 +326,8 @@ return [
             'sent_from' => 'Envoyé depuis',
             'to' => 'à',
             'recurence' => 'tous les',
-            'provider' => 'Founisseur de CVE',
-            'provider_helper' => 'Founisseur du projet CVE-Search (ex: https://cvepremium.circl.lu)',
+            'provider' => 'Founisseur de vulnérabilités',
+            'provider_helper' => 'Founisseur du projet Vulnerability-Search (ex: https://vulnerability.circl.lu)',
         ],
         'documents' => [
             'title' => 'Documents',
