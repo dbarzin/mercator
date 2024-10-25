@@ -44,7 +44,7 @@ class ConfigurationController extends Controller
     }
 
     /*
-    * Save the Certificate configuration
+    * Save the Mail Certificate configuration
     */
     public function saveCertConfig(Request $request)
     {
@@ -229,7 +229,7 @@ class ConfigurationController extends Controller
 
                 break;
             case 'test_provider':
-                $client = curl_init($provider . '/api/dbinfo');
+                $client = curl_init($provider . '/api/dbInfo');
                 curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($client);
                 if ($response === false) {
@@ -239,7 +239,8 @@ class ConfigurationController extends Controller
                     if ($json === null) {
                         $msg = 'Could not connect to provider';
                     } else {
-                        $msg = 'Provider last update : ' . $json->cves->last_update . ' size = ' . $json->cves->size;
+                        //dd($json);
+                        $msg = "Last NVD update :" . $json->last_updates->nvd . " Total db size = " . $json->db_sizes->total;
                     }
                 }
                 break;

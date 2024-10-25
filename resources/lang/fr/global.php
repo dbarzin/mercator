@@ -25,6 +25,7 @@ return [
     'explore' => 'Explorer',
     'forgot_password' => 'Mot de passe oublié ?',
     'hide' => 'Masquer',
+    'history' => 'Historique',
     'integrity' => 'Intégrité',
     'icon_select' => 'Sélectionnez une icône',
     'list' => 'Liste',

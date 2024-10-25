@@ -121,6 +121,7 @@ return [
     'filterDate' => 'Filter by Dates',
     'forgot_password' => 'Forgot your password ?',
     'hide' => 'Hide',
+    'history' => 'History',
     'icon_select' => 'Select an icon',
     'if_you_are_having_trouble' => 'If you have any problems, click',
     'import_data' => 'Import Data',
