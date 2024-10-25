@@ -6,8 +6,8 @@ use App\AuditLog;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuditLogsController extends Controller
 {
@@ -37,5 +37,49 @@ class AuditLogsController extends Controller
         abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.auditLogs.show', compact('auditLog'));
+    }
+
+    public function history(Request $request)
+    {
+        abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get all the input as an InputBag object
+        $input = $request->input();
+
+        // Check if input is not empty
+        if (!empty($input)) {
+            // Get the first key
+            $firstKey = array_keys($input)[0];
+        } else {
+            return "404";
+        }
+
+        // Get the audit log
+        $auditLog = AuditLog::find($firstKey);
+
+        // Get the list
+        $auditLogs =
+            DB::table('audit_logs')
+                ->select(
+                    'audit_logs.id',
+                    'description',
+                    'subject_type',
+                    'subject_id',
+                    'users.name',
+                    'user_id',
+                    'host',
+                    'properties',
+                    'audit_logs.created_at'
+                )
+                ->join('users', 'users.id', '=', 'user_id')
+                ->where('subject_id',$auditLog->subject_id)
+                ->orderBy('id')->get();
+
+        // JSON decode all properties
+        foreach($auditLogs as $auditLog) {
+            $auditLog->properties = json_decode(trim(stripslashes($auditLog->properties),'"'));
+        }
+
+        return view('admin.auditLogs.history', compact('auditLogs'));
     }
 }

@@ -60,9 +60,10 @@
                         {{ trans('cruds.auditLog.fields.properties') }}
                     </th>
                     <td>
+                        {{ $auditLog->properties }}
                         <table>
-                        @foreach(json_decode($auditLog->properties[0],true) as $key => $value)
-                        <tr><td>{{ $key }}</td><td>{{ $value }}</td><tr>
+                        @foreach($auditLog->properties as $key => $value)
+                        <tr><td>{{ $key }}</td><td>{{ $value }}</td>
                         @endforeach
                         </table>
                     </td>
