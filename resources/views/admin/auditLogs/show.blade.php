@@ -23,10 +23,10 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.auditLog.fields.description') }}
+                        {{ trans('cruds.auditLog.fields.subject_type') }}
                     </th>
                     <td>
-                        {{ $auditLog->description }}
+                        {{ $auditLog->subject_type }}
                     </td>
                 </tr>
                 <tr>
@@ -34,15 +34,17 @@
                         {{ trans('cruds.auditLog.fields.subject_id') }}
                     </th>
                     <td>
-                        {{ $auditLog->subject_id }}
+                        <a href="{{ \App\AuditLog::subject_url($auditLog->subject_type) }}/{{ $auditLog->subject_id }}">
+                            {{ $auditLog->subject_id }}
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.auditLog.fields.subject_type') }}
+                        {{ trans('cruds.auditLog.fields.description') }}
                     </th>
                     <td>
-                        {{ $auditLog->subject_type }}
+                        {{ $auditLog->description }}
                     </td>
                 </tr>
                 <tr>
@@ -61,11 +63,6 @@
                     </th>
                     <td>
                         {{ $auditLog->properties }}
-                        <table>
-                        @foreach($auditLog->properties as $key => $value)
-                        <tr><td>{{ $key }}</td><td>{{ $value }}</td>
-                        @endforeach
-                        </table>
                     </td>
                 </tr>
                 <tr>

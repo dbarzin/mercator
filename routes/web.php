@@ -287,7 +287,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Audit Logs
     Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
-    Route::get('history', [Admin\AuditLogsController::class,'history'])->name('history');
+    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class,'history'])->name('history');
 
     // Macro Processuses
     Route::resource('macro-processuses', Admin\MacroProcessusController::class);
