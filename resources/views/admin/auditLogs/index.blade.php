@@ -72,7 +72,8 @@
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                             {{ trans('global.view') }}
                         </a>
-                        <a class="btn btn-xs btn-secondary" href="{{ route('admin.history', $log->id) }}">
+                        <a class="btn btn-xs btn-secondary" href="{{ route('admin.history',
+                                ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
                             {{ trans('global.history') }}
                         </a>
                     </td>

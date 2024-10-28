@@ -43,19 +43,7 @@ class AuditLogsController extends Controller
     {
         abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Get all the input as an InputBag object
-        $input = $request->input();
-
-        // Check if input is not empty
-        if (!empty($input)) {
-            // Get the first key
-            $firstKey = array_keys($input)[0];
-        } else {
-            return "404";
-        }
-
-        // Get the audit log
-        $auditLog = AuditLog::find($firstKey);
+        abort_if(($request->id==null)||($request->type==null), 500, '500 missing parameters');
 
         // Get the list
         $auditLogs =
@@ -72,8 +60,13 @@ class AuditLogsController extends Controller
                     'audit_logs.created_at'
                 )
                 ->join('users', 'users.id', '=', 'user_id')
-                ->where('subject_id',$auditLog->subject_id)
-                ->orderBy('id')->get();
+                ->where('subject_id', $request->id)
+                ->where('subject_type', ($request->type))
+                ->orderBy('audit_logs.id')
+                ->get();
+
+
+        abort_if($auditLogs->isEmpty(), 404, 'Not found');
 
         // JSON decode all properties
         foreach($auditLogs as $auditLog) {
