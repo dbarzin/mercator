@@ -21,6 +21,7 @@ Changements prévus en 2024 :
 - [ ] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
 - [ ] Utiliser un modèle de document pour les rapports
 - [x] Pouvoir changer les images des objets
+- [ ] Upgrade to [Bootstrap 5.3](https://getbootstrap.com/)
 
 ## Evolutions mineurs
 
@@ -37,7 +38,7 @@ Changements prévus en 2024 :
 - [x] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 - [x] Ajout des clusters
 - [x] Ajout des flux logiques
-- [ ] Afficher l'historique des changements d'un objet
+- [x] Afficher l'historique des changements d'un objet
 - [x] Cloner un objet
 
 ## Petites évolutions
