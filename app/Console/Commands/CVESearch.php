@@ -187,8 +187,10 @@ class CVESearch extends Command
                         }
                     }
                 }
-                else
-                    dd($cve);
+                else {
+                    Log::error("Unknown CVE format !");
+                    Log::error($cve);
+                }
                 /*
                 elseif (strtotime($cve->document->tracking->current_release_date) >= $min_timestamp) {
                     // put summary in lowercase
