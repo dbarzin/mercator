@@ -46,7 +46,7 @@ Changements prévus en 2024 :
 - [ ] Améliorer les tests Dusk
 - [x] Documenter une procédure de déploiement sous Debian
 - [ ] Dark Theme
-- [ ] Ajout d'une chart Helm pour simplifier le déploiement dans Kubernetes (https://helm.sh/docs/topics/charts/)
+- [x] Ajout d'une chart Helm pour simplifier le déploiement dans Kubernetes (https://helm.sh/docs/topics/charts/)
 
 # Changements réalisés en 2023 :
 
