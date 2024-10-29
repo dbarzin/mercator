@@ -96,7 +96,8 @@ class ConfigurationController extends Controller
 
                     // Recipients
                     $mail->setFrom($mail_from);
-                    $mail->addAddress($mail_to);         // Add a recipient
+                    foreach(explode(",",$mail_to) as $email)
+                        $mail->addAddress($email);
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
@@ -205,7 +206,8 @@ class ConfigurationController extends Controller
 
                     // Recipients
                     $mail->setFrom($mail_from);
-                    $mail->addAddress($mail_to);         // Add a recipient
+                    foreach(explode(",",$mail_to) as $email)
+                        $mail->addAddress($email);
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML

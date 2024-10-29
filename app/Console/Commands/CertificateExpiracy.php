@@ -108,7 +108,8 @@ class CertificateExpiracy extends Command
 
                     // Recipients
                     $mail->setFrom(config('mercator-config.cert.mail-from'));
-                    $mail->addAddress(config('mercator-config.cert.mail-to'));         // Add a recipient
+                    foreach(explode(",",config('mercator-config.cert.mail-to')) as $email)
+                        $mail->addAddress($email);
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML

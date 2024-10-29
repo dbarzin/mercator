@@ -15,6 +15,13 @@
         </a>
     @endcan
 
+    @can('audit_log_show')
+    <a class="btn btn-secondary" href="{{ route('admin.history',
+            ['type' => 'App\Certificate', 'id' => $certificate->id]) }}">
+        {{ trans('global.history') }}
+    </a>
+    @endcan
+
     @can('certificate_delete')
         <form action="{{ route('admin.certificates.destroy', $certificate->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">
