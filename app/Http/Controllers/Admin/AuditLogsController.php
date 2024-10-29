@@ -61,7 +61,7 @@ class AuditLogsController extends Controller
                 )
                 ->join('users', 'users.id', '=', 'user_id')
                 ->where('subject_id', $request->id)
-                ->where('subject_type', ($request->type))
+                ->where('subject_type', $request->type)
                 ->orderBy('audit_logs.id')
                 ->get();
 

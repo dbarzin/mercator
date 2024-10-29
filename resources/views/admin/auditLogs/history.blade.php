@@ -63,7 +63,10 @@
                         @php $previous = null; @endphp
                         @foreach($auditLogs as $auditLog2)
                             @php
-                                $value = $auditLog2->properties->{$key};
+                                if (property_exists($auditLog2->properties,$key))
+                                    $value = $auditLog2->properties->{$key};
+                                else
+                                    $value = null;
                             @endphp
                         <td {!! (($loop->first)||($value==$previous)) ? "" : "class='bg-success'" !!}>
                             @if ((gettype($value)=="string")&&(strlen($value)>100))
