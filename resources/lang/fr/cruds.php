@@ -1352,6 +1352,8 @@ return [
             'name_helper' => '',
             'subnetworks' => 'Sous-réseaux',
             'subnetworks_helper' => 'Sous-réseaux rattachés',
+            'vlan_id' => "VLAN-ID",
+            'vlan_id_helper' => 'Identificateur uniquer du VLAN (1-4096)',
         ],
         'title' => 'VLAN - Virtual Local Area Network',
         'title_short' => 'VLAN',

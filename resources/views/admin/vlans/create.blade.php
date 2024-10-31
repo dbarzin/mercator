@@ -9,25 +9,45 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.vlan.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.vlan.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" maxlength="64" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.vlan.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vlan.fields.name_helper') }}</span>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="name" class="recommended" >{{ trans('cruds.vlan.fields.vlan_id') }}</label>
+                        <input type="number" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="vlan_id" name="vlan_id" min="1" max="4096" value="{{ old('vlan_id') }}">
+                        @if($errors->has('vlan_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('vlan_id') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.vlan.fields.vlan_id_helper') }}</span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">{{ trans('cruds.vlan.fields.description') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
-                @if($errors->has('description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="description">{{ trans('cruds.vlan.fields.description') }}</label>
+                        <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
+                        @if($errors->has('description'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('description') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.vlan.fields.description_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.vlan.fields.description_helper') }}</span>
+                </div>
             </div>
 
             <div class="form-group">

@@ -26,6 +26,9 @@
                             {{ trans('cruds.vlan.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.vlan.fields.vlan_id') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.vlan.fields.description') }}
                         </th>
                         <th>
@@ -48,17 +51,20 @@
                                 </a>
                             </td>
                             <td>
+                                {{ $vlan->vlan_id }}
+                            </td>
+                            <td>
                                 {{ $vlan->description ?? '' }}
                             </td>
                             <td>
-                                @foreach($vlan->subnetworks as $subnetwork) 
+                                @foreach($vlan->subnetworks as $subnetwork)
                                     <a href="{{ route('admin.subnetworks.show', $subnetwork->id) }}">
                                     {{$subnetwork->name}}
                                     </a>
                                     @if (!$loop->last)
                                     ,
                                     @endif
-                                @endforeach                                
+                                @endforeach
                             </td>
                             <td>
                                 @can('vlan_show')
@@ -140,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

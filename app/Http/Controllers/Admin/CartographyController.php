@@ -1688,12 +1688,14 @@ class CartographyController extends Controller
             // =====================================
             if ($vlans->count() > 0) {
                 $section->addTitle(trans('cruds.vlan.title'), 2);
+                $section->addText(trans('cruds.vlan.vlan_id'));
                 $section->addText(trans('cruds.vlan.description'));
                 $section->addTextBreak(1);
 
                 foreach ($vlans as $vlan) {
                     $section->addBookmark('VLAN'.$vlan->id);
                     $table = $this->addTable($section, $vlan->name);
+                    $this->addTextRow($table, trans('cruds.vlan.fields.vlan_id'), $vlan->vlan_id);
                     $this->addHTMLRow($table, trans('cruds.vlan.fields.description'), $vlan->description);
 
                     // Sous-réseaux
