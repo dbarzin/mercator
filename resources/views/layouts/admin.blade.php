@@ -68,31 +68,76 @@
         </a>
             <ul class="dropdown-menu" style="">
                 @can('gdpr_access')
-                <li><a class="dropdown-item" href="/admin/report/gdpr">{{ trans('panel.menu.gdpr') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/gdpr">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.gdpr') }}
+                    </a>
+                </li>
                 @endcan
                 @can('ecosystem_access')
-                <li><a class="dropdown-item" href="/admin/report/ecosystem">{{ trans('panel.menu.ecosystem') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/ecosystem">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.ecosystem') }}
+                    </a>
+                </li>
                 @endcan
                 @can('metier_access')
-                <li><a class="dropdown-item" href="/admin/report/information_system">{{ trans('panel.menu.information_system') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/information_system">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.information_system') }}
+                    </a>
+                </li>
                 @endcan
                 @can('application_access')
-                <li><a class="dropdown-item" href="/admin/report/applications">{{ trans('panel.menu.applications') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/applications">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.applications') }}
+                    </a>
+                </li>
                 @can('flux_access')
-                <li><a class="dropdown-item" href="/admin/report/application_flows">{{ trans('panel.menu.application_flows') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/application_flows">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.application_flows') }}
+                    </a>
+                </li>
                 @endcan
                 @endcan
                 @can('administration_access')
-                <li><a class="dropdown-item" href="/admin/report/administration">{{ trans('panel.menu.administration') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/administration">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.administration') }}
+                    </a>
+                </li>
                 @endcan
                 @can('infrastructure_access')
-                <li><a class="dropdown-item" href="/admin/report/logical_infrastructure">{{ trans('panel.menu.logical_infrastructure') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/logical_infrastructure">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.logical_infrastructure') }}
+                    </a>
+                </li>
                 @endcan
                 @can('physicalinfrastructure_access')
-                <li><a class="dropdown-item" href="/admin/report/physical_infrastructure">{{ trans('panel.menu.physical_infrastructure') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/physical_infrastructure">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.physical_infrastructure') }}
+                    </a>
+                </li>
                 @endcan
                 @can('physical_link_access')
-                <li><a class="dropdown-item" href="/admin/report/network_infrastructure">{{ trans('panel.menu.network_infrastructure') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/admin/report/network_infrastructure">
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+                        {{ trans('panel.menu.network_infrastructure') }}
+                    </a>
+                </li>
                 @endcan
             </ul>
         </li>
@@ -101,9 +146,19 @@
                 {{ trans('panel.menu.preferences') }}
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/profile/preferences">{{ trans('panel.menu.options') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/profile/preferences">
+                        <i class="fa-fw fas fa-gear nav-icon"></i>
+                        {{ trans('panel.menu.options') }}
+                    </a>
+                </li>
                 @can('profile_password_edit')
-                <li><a class="dropdown-item" href="/profile/password">{{ trans('panel.menu.password') }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="/profile/password">
+                        <i class="fa-fw fas fa-lock nav-icon"></i>
+                        {{ trans('panel.menu.password') }}
+                    </a>
+                </li>
                 @endcan
             </ul>
         </li>
@@ -113,9 +168,24 @@
                 &nbsp {{ trans('panel.menu.help') }}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/admin/doc/schema">{{ trans('panel.menu.schema') }}</a></li>
-              <li><a class="dropdown-item" href="/admin/doc/guide">{{ trans('panel.menu.guide') }}</a></li>
-              <li><a class="dropdown-item" href="/admin/doc/about">{{ trans('panel.menu.about') }}</a></li>
+              <li>
+                  <a class="dropdown-item" href="/admin/doc/schema">
+                        <i class="fa-fw fas fa-map nav-icon"></i>
+                      {{ trans('panel.menu.schema') }}
+                  </a>
+              </li>
+              <li>
+                  <a class="dropdown-item" href="/admin/doc/guide">
+                        <i class="fa-fw fas fa-book nav-icon"></i>
+                      {{ trans('panel.menu.guide') }}
+                  </a>
+              </li>
+              <li>
+                  <a class="dropdown-item" href="/admin/doc/about">
+                        <i class="fa-fw fas fa-info nav-icon"></i>
+                      {{ trans('panel.menu.about') }}
+                  </a>
+              </li>
           </ul>
         </li>
     </ul>
