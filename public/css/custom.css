@@ -108,6 +108,11 @@ table.dataTable thead .sorting_desc {
     color: #7C123E;
 }
 
+.nav-link {
+    color: #000000;
+    background-color: #FFFFFF;    
+}
+
 .sidebar .nav-link.active {
     color: #000000;
     background-color: #FFFFFF;
@@ -326,4 +331,3 @@ html {
       color: #20a8d8;
       cursor: pointer
     }
-
