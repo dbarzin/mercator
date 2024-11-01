@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <form method="POST" action="{{ route("admin.logical-flows.update", [$logicalFlow->id]) }}" enctype="multipart/form-data">
     @method('PUT')
     @csrf
@@ -188,7 +187,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="form-group">
