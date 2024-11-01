@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.fluxes.store") }}" enctype="multipart/form-data">
+    @csrf
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.flux.title_singular') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.flux.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.fluxes.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.flux.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -84,30 +84,29 @@
             </div>
         </div>
 
-            <div class="form-group">
+            <div class="form-check">
                 <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
-                <div class="form-check form-switch">
+                <div class="form-switch">
                   <input class="form-check-input" type="checkbox" id="crypted" name="crypted" value="1" {{ old('crypted') ? 'checked' : '' }}>
                   <label class="form-check-label" for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-check">
                 <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
-                <div class="form-check form-switch">
+                <div class="form-switch">
                   <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional" value="1" {{ old('bidirectional') ? 'checked' : '' }}>
                   <label class="form-check-label" for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
@@ -133,5 +132,3 @@ $(document).ready(function () {
 
 </script>
 @endsection
-
-

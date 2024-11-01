@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.networks.store") }}" enctype="multipart/form-data">
+    @csrf
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.network.title_singular') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.network.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.networks.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.network.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -68,9 +68,9 @@
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
-                                        @if (auth()->user()->granularity>=2)                                    
-                                            class="recommended" 
+                                    <label
+                                        @if (auth()->user()->granularity>=2)
+                                            class="recommended"
                                         @endif
                                         for="security_need">{{ trans('cruds.network.fields.security_need') }}</label>
                                 </td>
@@ -133,18 +133,17 @@
                     </div>
 
                 </div>
-                <div class="col-sm">                    
-                </div>                
+                <div class="col-sm">
+                </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
@@ -164,7 +163,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>
