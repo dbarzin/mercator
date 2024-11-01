@@ -13,6 +13,7 @@
     <link href="{{ asset('/css/font-awesome.css') }}" rel="stylesheet" />
     <!-- link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" />
+
     <!--<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/jquery.dataTables.min.css') }}" rel="stylesheet" />
     <!-- link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" /-->
@@ -21,6 +22,14 @@
     <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet" />
     <!-- link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/select.dataTables.min.css') }}" rel="stylesheet" />
+
+
+<!--
+    https://code.jquery.com/jquery-3.7.1.js
+    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js
+    https://cdn.datatables.net/2.1.8/js/dataTables.js
+    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js
+-->
     <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet" />
 
@@ -151,8 +160,9 @@
     </div>
     <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="/js/sweetalert2.all.min.js"></script>
-    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script -->
-    <script src="{{ asset ('/js/jquery.min.js') }}"></script>
+
+    <!--script src="https://code.jquery.com/jquery-3.7.1.js"></script-->
+    <script src="{{ asset ('/js/jquery-3.7.1.js') }}"></script>
 
     <!-- Bootstrap -->
     <!-- script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script -->
