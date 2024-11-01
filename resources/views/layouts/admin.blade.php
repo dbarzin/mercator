@@ -6,8 +6,8 @@
 
     <title>{{ trans('panel.site_title') }}</title>
     <!-- link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" /-->
+    <!--link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"-->
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" -->
 
     <!--link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/font-awesome.css') }}" rel="stylesheet" />
@@ -23,13 +23,6 @@
     <!-- link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/select.dataTables.min.css') }}" rel="stylesheet" />
 
-
-<!--
-    https://code.jquery.com/jquery-3.7.1.js
-    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js
-    https://cdn.datatables.net/2.1.8/js/dataTables.js
-    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js
--->
     <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" /-->
     <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet" />
 
@@ -73,7 +66,7 @@
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
           {{ trans('panel.views') }}
         </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="">
                 @can('gdpr_access')
                 <li><a class="dropdown-item" href="/admin/report/gdpr">{{ trans('panel.menu.gdpr') }}</a></li>
                 @endcan
@@ -166,7 +159,7 @@
 
     <!-- Bootstrap -->
     <!-- script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script -->
-    <!--script src="/js/bootstrap.bundle.min.js"></script-->
+    <script src="/js/bootstrap.bundle.min.js"></script>
 
     <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script -->
     <script src="/js/popper.min.js"></script>
