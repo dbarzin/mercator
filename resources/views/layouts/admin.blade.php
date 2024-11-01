@@ -143,9 +143,15 @@
         </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                {{ trans('panel.menu.preferences') }}
+                {{ trans('panel.menu.tools') }}
             </a>
             <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.report.explore') }}">
+                        <i class="fa-fw fas fa-globe"></i>
+                        {{ trans('panel.menu.explore') }}
+                    </a>
+                </li>
                 <li>
                     <a class="dropdown-item" href="/profile/preferences">
                         <i class="fa-fw fas fa-gear nav-icon"></i>
