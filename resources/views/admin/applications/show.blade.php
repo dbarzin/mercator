@@ -1,22 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="form-group">
-
     <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
-
     <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=APP_{{$application->id}}">
         {{ trans('global.explore') }}
     </a>
-
     @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
         <a class="btn btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
             {{ trans('global.edit') }}
         </a>
     @endif
-
     @if(auth()->user()->can('m_application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
         <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">
@@ -24,7 +19,6 @@
             <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
         </form>
     @endif
-
 </div>
 
 <div class="card">
