@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.security-devices.show', $securityDevice->id) }}">
                                 {{ $securityDevice->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 {!! $securityDevice->description ?? '' !!}
@@ -124,7 +126,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
