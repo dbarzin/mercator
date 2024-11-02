@@ -89,17 +89,17 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-check">
                 <label for="crypted">{{ trans('cruds.flux.fields.crypted') }}</label>
-                <div class="form-check form-switch">
+                <div class="form-switch">
                   <input class="form-check-input" type="checkbox" id="crypted" name="crypted" value="1" {{ $flux->crypted ? "checked" : "" }}>
                   <label class="form-check-label" for="crypted">{{ trans('cruds.flux.fields.crypted_helper') }}</label>
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-check">
                 <label for="crypted">{{ trans('cruds.flux.fields.bidirectional') }}</label>
-                <div class="form-check form-switch">
+                <div class="form-switch">
                   <input class="form-check-input" type="checkbox" id="bidirectional" name="bidirectional" value="1" {{ $flux->bidirectional ? "checked" : "" }} >
                   <label class="form-check-label" for="bidirectional">{{ trans('cruds.flux.fields.bidirectional_helper') }}</label>
                 </div>
@@ -108,6 +108,9 @@
     </div>
 </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.fluxes.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
