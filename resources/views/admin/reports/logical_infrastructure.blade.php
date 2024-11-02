@@ -1122,6 +1122,10 @@
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <th width="20%">{{ trans("cruds.vlan.fields.vlan_id") }}</th>
+                                    <td>{{ $vlan->vlan_id }}</td>
+                                </tr>
+                                <tr>
                                     <th width="20%">{{ trans("cruds.vlan.fields.description") }}</th>
                                     <td>{!! $vlan->description !!}</td>
                                 </tr>

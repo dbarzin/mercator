@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
-<form method="POST" action="{{ route("admin.applications.store") }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('admin.applications.store') }}" enctype="multipart/form-data">
     @csrf
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.application.title_singular') }}
@@ -599,15 +597,16 @@
                     <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
                 </div>
             </div>
-
-        </div>
-
-        <div class="form-group">
-            <button class="btn btn-danger" type="submit">
-                {{ trans('global.save') }}
-            </button>
         </div>
     </div>
+</div>
+<div class="form-group">
+    <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+    <button class="btn btn-danger" type="submit">
+        {{ trans('global.save') }}
+    </button>
 </div>
 </form>
 @endsection

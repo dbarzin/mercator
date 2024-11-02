@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.relations.store") }}" enctype="multipart/form-data">
+    @csrf
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.relation.title_singular') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.relation.title_singular') }}
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.relations.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <!---------------------------------------------------------------------------------------------------->
             <div class="row">
                 <div class="col-sm">
@@ -176,9 +176,9 @@
                     </div>
                 </div>
                 <div class="col-sm-1">
-                    <div class="form-group">
-                        <label for="crypted">{{ trans('cruds.relation.fields.active') }}</label>
-                        <div class="form-check form-switch">
+                    <div class="form-check">
+                        <label for="active">{{ trans('cruds.relation.fields.active') }}</label>
+                        <div class="form-switch">
                           <input class="form-check-input" type="checkbox" id="active" name="active" {{ old('active') ? "checked" : "" }}/>
                           <label class="form-check-label" for="active">{{ trans('cruds.relation.fields.active_helper') }}</label>
                         </div>
@@ -265,15 +265,18 @@
                     </div>
                 </div>
             </div>
-            <!---------------------------------------------------------------------------------------------------->
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.relations.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 

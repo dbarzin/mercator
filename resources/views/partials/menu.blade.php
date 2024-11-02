@@ -27,8 +27,9 @@
             </li>
 
             @can('gdpr_access')
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link  nav-dropdown-toggle open" href="#">
+                <li class="nav-item nav-dropdown
+                    {{ (request()->is('admin/data*')||request()->is('admin/security*')) ? 'open' : '' }}">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
                         </i>
@@ -59,9 +60,12 @@
                 </li>
             @endcan
 
-
             @can('ecosystem_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/entities*')||
+                        request()->is('admin/relations*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -93,7 +97,16 @@
                 </li>
             @endcan
             @can('metier_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/macro-processuses*')||
+                        request()->is('admin/processes*')||
+                        request()->is('admin/activities*')||
+                        request()->is('admin/operations*')||
+                        request()->is('admin/tasks*')||
+                        request()->is('admin/actors*')||
+                        request()->is('admin/information*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -185,7 +198,15 @@
                 </li>
             @endcan
             @can('application_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/application-blocks*')||
+                        request()->is('admin/applications*')||
+                        request()->is('admin/application-services*')||
+                        request()->is('admin/application-modules*')||
+                        request()->is('admin/databases*')||
+                        request()->is('admin/fluxes*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -261,7 +282,14 @@
                 </li>
             @endcan
             @can('administration_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/zone-admins*')||
+                        request()->is('admin/annuaires*')||
+                        request()->is('admin/forest-ads*')||
+                        request()->is('admin/domaine-ads*')||
+                        request()->is('admin/admin-users*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -323,7 +351,22 @@
                 </li>
             @endcan
             @can('infrastructure_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/networks*')||
+                        request()->is('admin/subnetworks*')||
+                        request()->is('admin/gateways*')||
+                        request()->is('admin/external-connected*')||
+                        request()->is('admin/routers*')||
+                        request()->is('admin/network-switches*')||
+                        request()->is('admin/security-devices*')||
+                        request()->is('admin/dnsservers*')||
+                        request()->is('admin/clusters*')||
+                        request()->is('admin/logical-servers*')||
+                        request()->is('admin/logical-flows*')||
+                        request()->is('admin/vlans*')||
+                        request()->is('admin/certificates*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -364,7 +407,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('external_connected_entity_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.external-connected-entities.index") }}" class="nav-link {{ request()->is('admin/external-connected-entities*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.external-connected-entities.index") }}" class="nav-link {{ request()->is('admin/external-connected*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -468,7 +511,7 @@
                         @if (auth()->user()->granularity>=2)
                         @can('certificate_access')
                             <li class="nav-item">
-                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificatess*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.certificates.index") }}" class="nav-link {{ request()->is('admin/certificates*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-align-justify nav-icon">
 
                                     </i>
@@ -481,7 +524,22 @@
                 </li>
             @endcan
             @can('physicalinfrastructure_access')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/sites*')||
+                        request()->is('admin/buildings*')||
+                        request()->is('admin/bays*')||
+                        request()->is('admin/physical*')||
+                        request()->is('admin/workstations*')||
+                        request()->is('admin/storage-devices*')||
+                        request()->is('admin/peripherals*')||
+                        request()->is('admin/phones*')||
+                        request()->is('admin/wifi-terminals*')||
+                        request()->is('admin/links*')||
+                        request()->is('admin/wans*')||
+                        request()->is('admin/mans*')||
+                        request()->is('admin/lans*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-folder nav-icon">
 
@@ -657,7 +715,16 @@
                 </li>
             @endcan
             @can('configure')
-                <li class="nav-item nav-dropdown">
+                <li class="nav-item nav-dropdown
+                    {{ (
+                        request()->is('admin/users*')||
+                        request()->is('admin/roles*')||
+                        request()->is('admin/certificate*')||
+                        request()->is('admin/cve*')||
+                        request()->is('admin/documents*')||
+                        request()->is('admin/audit-logs*')||
+                        request()->is('admin/history*')
+                        ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-gear nav-icon">
 
@@ -734,5 +801,5 @@
             </li>
         </ul>
     </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024-10-R3</button>
+    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024-11-R1</button>
 </div>
