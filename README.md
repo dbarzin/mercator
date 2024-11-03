@@ -4,6 +4,7 @@
 ![License](https://img.shields.io/github/license/dbarzin/mercator.svg?style=flat-square)
 ![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
 ![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mercator)](https://artifacthub.io/packages/search?repo=mercator)
 
 **Mercator** is a powerful and versatile open-source web application designed to facilitate the mapping of information systems, as outlined in the [Mapping The Information System Guide](https://cyber.gouv.fr/en/publications/mapping-information-system) by [ANSSI](https://cyber.gouv.fr/en/). Whether you're an operator of vital importance or part of a broader IT governance framework, Mercator is an essential tool for gaining visibility, control, and ensuring the resilience of your information systems.
 
