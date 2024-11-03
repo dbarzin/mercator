@@ -278,7 +278,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // VLANs
     Route::resource('vlans', Admin\VlanController::class);
-    Route::get('vlans-clone/{id}', [Admin\VlanController::class,'clone'])->name('vlans.clone');
+    Route::get('vlans/clone/{id}', [Admin\VlanController::class,'clone'])->name('vlans.clone');
     Route::delete('vlans-destroy', [Admin\VlanController::class,'massDestroy'])->name('vlans.massDestroy');
 
     // Application Modules
@@ -287,6 +287,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Audit Logs
     Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
+    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class,'history'])->name('history');
 
     // Macro Processuses
     Route::resource('macro-processuses', Admin\MacroProcessusController::class);

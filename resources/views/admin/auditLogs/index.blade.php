@@ -37,7 +37,7 @@
                     </th>
                 </tr>
             </thead>
-                @foreach($logs as $log) 
+                @foreach($logs as $log)
                 <tr data-entry-id="{{ $log->id }}">
                     <td>
                     </td>
@@ -50,7 +50,7 @@
                         {{ $log->description }}
                     </td>
                     <td>
-                        {{ $log->subject_type }}                        
+                        {{ $log->subject_type }}
                     </td>
                     <td>
                         <a href="{{ \App\AuditLog::subject_url($log->subject_type) }}/{{ $log->subject_id }}">
@@ -72,6 +72,10 @@
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                             {{ trans('global.view') }}
                         </a>
+                        <a class="btn btn-xs btn-secondary" href="{{ route('admin.history',
+                                ['type' => $log->subject_type, 'id' => $log->subject_id]) }}">
+                            {{ trans('global.history') }}
+                        </a>
                     </td>
                 </tr>
                 @endforeach
@@ -79,7 +83,7 @@
         </table>
         <p>
         {{ $logs->links() }}
-        </p>        
+        </p>
     </div>
 </div>
 @endsection
@@ -93,7 +97,7 @@
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: false,
     bPaginate: false,
-    pageLength: 100, 
+    pageLength: 100,
     stateSave: true,
     bSort:false,
     bLengthChange:false,

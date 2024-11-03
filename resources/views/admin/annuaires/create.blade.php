@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.annuaire.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" maxlength="32" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
@@ -54,14 +54,14 @@
         </div>
     </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.annuaires.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
 </form>
-
-
-
 @endsection
 
 @section('scripts')

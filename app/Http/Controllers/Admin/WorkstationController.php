@@ -132,7 +132,7 @@ class WorkstationController extends Controller
         } else {
             $workstation->icon_id = null;
         }
-        $site->save();
+        $workstation->save();
 
         // Sync applications
         $workstation->applications()->sync($request->input('applications', []));

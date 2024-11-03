@@ -20,7 +20,7 @@ class UpdateVlanRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 'unique:vlans,name,'.request()->route('vlan')->id.',id,deleted_at,NULL',
             ],
