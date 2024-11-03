@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.macro-processuses.store") }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.macroProcessus.title_singular') }}
+        </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.macroProcessus.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.macro-processuses.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.macroProcessus.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -44,9 +43,9 @@
                     <table cellspacing="5" cellpadding="5" border="0" width='40%'>
                         <tr>
                             <td width='20%'>
-                                <label 
-                                @if (auth()->user()->granularity>=2)                                 
-                                    class="recommended" 
+                                <label
+                                @if (auth()->user()->granularity>=2)
+                                    class="recommended"
                                 @endif
                                 for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                             </td>
@@ -148,14 +147,17 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.macroProcessus.fields.processes_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.macro-processuses.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 
 @endsection
 
@@ -176,9 +178,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-    function template(data, container) {      
+    function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {

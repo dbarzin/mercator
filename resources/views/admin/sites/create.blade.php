@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <form method="POST" action="{{ route("admin.sites.store") }}" enctype="multipart/form-data">
     @csrf
     <div class="card">
@@ -48,6 +47,9 @@
         </div>
     </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.sites.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
@@ -145,8 +147,6 @@ $(document).ready(function () {
             alert('Select a PNG image.');
         }
     });
-
-
 });
 </script>
 @endsection

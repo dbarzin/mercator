@@ -155,19 +155,25 @@ Change the access permissions of the key
 
 ## Mail configuration
 
-If you want to send notification mails from Mercator.
+If you wish to send notification e-mails from Deming.
+You have to configure the SMTP server access in .env
 
-Install postfix and mailx
+    MAIL_HOST='smtp.localhost'
+    MAIL_PORT=2525
+    MAIL_AUTH=true
+    MAIL_SMTP_SECURE='ssl'
+    MAIL_SMTP_AUTO_TLS=false
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
 
-    sudo apt install postfix mailutils
+You may also configure DKIM :
 
-Configure postfix
+    MAIL_DKIM_DOMAIN = 'admin.local';
+    MAIL_DKIM_PRIVATE = '/path/to/private/key';
+    MAIL_DKIM_SELECTOR = 'default'; // Match your DKIM DNS selector
+    MAIL_DKIM_PASSPHRASE = '';      // Only if your key has a passphrase
 
-    sudo dpkg-reconfigure postfix
-
-Send a test mail with
-
-    echo "Test mail body" | mailx -r "mercator@yourdomain.local" -s "Subject Test" yourname@yourdomain.local
+Don't forget to [configure](https://dbarzin.github.io/deming/config/#notifications) the content and frequency of your emails.
 
 ## Scheduler
 

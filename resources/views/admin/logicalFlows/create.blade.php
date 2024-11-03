@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <form method="POST" action="{{ route("admin.logical-flows.store") }}" enctype="multipart/form-data">
     @csrf
     <div class="card">
@@ -193,6 +192,9 @@
         </div>
     </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.logical-flows.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>

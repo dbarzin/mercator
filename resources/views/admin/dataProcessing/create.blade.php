@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.data-processings.store") }}" enctype="multipart/form-data" >
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.dataProcessing.title_singular') }}
+        </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.dataProcessing.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.data-processings.store") }}" enctype="multipart/form-data" >
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" maxlength=32 value="{{ old('name', '') }}" required>
@@ -166,21 +165,20 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.dataProcessing.fields.documents_helper') }}</span>
             </div>
-
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.data-processings.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')
-
 <script src="/js/dropzone.js"></script>
 
 <script>

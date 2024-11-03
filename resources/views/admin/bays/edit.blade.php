@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="card">
     <div class="card-header">
         {{ trans('global.edit') }} {{ trans('cruds.bay.title_singular') }}
@@ -45,6 +44,9 @@
                 <span class="help-block">{{ trans('cruds.bay.fields.room_helper') }}</span>
             </div>
             <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.bays.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -71,7 +73,7 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
 });
 </script>

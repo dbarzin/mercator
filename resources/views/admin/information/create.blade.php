@@ -1,14 +1,13 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route("admin.information.store") }}" enctype="multipart/form-data">
+    @csrf
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.create') }} {{ trans('cruds.information.title_singular') }}
+        </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.information.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.information.store") }}" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.information.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -129,7 +128,7 @@
 
                 </div>
             </div>
-        
+
             <div class="row">
                 <div class="col-sm">
 
@@ -137,9 +136,9 @@
                         <table cellspacing="5" cellpadding="5" border="0" width='100%'>
                             <tr>
                                 <td width='20%'>
-                                    <label 
-                                        @if (auth()->user()->granularity>=2)                                    
-                                            class="recommended" 
+                                    <label
+                                        @if (auth()->user()->granularity>=2)
+                                            class="recommended"
                                         @endif
                                         for="security_need">{{ trans('cruds.information.fields.security_need') }}</label>
                                 </td>
@@ -221,14 +220,17 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.information.fields.constraints_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.information.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
+        <button class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 
 
 
@@ -252,9 +254,9 @@ $(document).ready(function () {
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,
         tags: true
-    }) 
+    })
 
-    function template(data, container) {      
+    function template(data, container) {
       if (data.id==4) {
          return '\<span class="highRisk"\>'+data.text+'</span>';
       } else if (data.id==3) {

@@ -177,9 +177,9 @@
                     </div>
                 </div>
                 <div class="col-sm-1">
-                    <div class="form-group">
+                    <div class="form-check">
                         <label for="crypted">{{ trans('cruds.relation.fields.active') }}</label>
-                        <div class="form-check form-switch">
+                        <div class="form-switch">
                           <input class="form-check-input" type="checkbox" id="active" name="active" {{ $relation->active ? "checked" : "" }}>
                           <label class="form-check-label" for="active">{{ trans('cruds.relation.fields.active_helper') }}</label>
                         </div>
@@ -283,13 +283,15 @@
     </div>
 </div>
 <div class="form-group">
+    <a class="btn btn-default" href="{{ route('admin.relations.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
     <button class="btn btn-danger" type="submit">
         {{ trans('global.save') }}
     </button>
 </div>
 </form>
 @endsection
-
 
 @section('scripts')
 <script src="/js/dropzone.js"></script>

@@ -43,7 +43,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.wans.show', $wan->id) }}">
                                 {{ $wan->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 @foreach($wan->mans as $key => $item)

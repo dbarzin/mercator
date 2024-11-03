@@ -40,7 +40,9 @@
 
                             </td>
                             <td>
+                                <a href="{{ route('admin.mans.show', $man->id) }}">
                                 {{ $man->name ?? '' }}
+                                </a>
                             </td>
                             <td>
                                 @foreach($man->lans as $key => $item)
@@ -126,7 +128,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

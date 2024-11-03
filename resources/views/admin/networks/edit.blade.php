@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <form method="POST" action="{{ route("admin.networks.update", [$network->id]) }}" enctype="multipart/form-data">
     @method('PUT')
     @csrf
@@ -137,6 +136,9 @@
         </div>
     </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.networks.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
