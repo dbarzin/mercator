@@ -1,7 +1,8 @@
 apiVersion: v2
 name: mercator
-description: A Helm chart for running Mercator via Kubernetes
+description: Mercator is a powerful and versatile open-source web application designed to facilitate the mapping of information systems, as outlined in the Mapping The Information System Guide by ANSSI.
 home: https://github.com/dbarzin/mercator
+icon: https://raw.githubusercontent.com/dbarzin/mercator/refs/heads/master/public/images/mercator.png
 maintainers:
   - name: Mercator
     url: https://github.com/dbarzin/mercator/chart
