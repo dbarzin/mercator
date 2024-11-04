@@ -141,32 +141,45 @@
                 @endcan
             </ul>
         </li>
+
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                {{ trans('panel.menu.preferences') }}
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/profile/preferences">
+                    <i class="fa-fw fas fa-gear nav-icon"></i>
+                    {{ trans('panel.menu.options') }}
+                </a>
+                @can('profile_password_edit')
+                <a class="dropdown-item" href="/profile/password">
+                    <i class="fa-fw fas fa-lock nav-icon"></i>
+                    {{ trans('panel.menu.password') }}
+                </a>
+                @endcan
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 {{ trans('panel.menu.tools') }}
             </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ route('admin.report.explore') }}">
-                        <i class="fa-fw fas fa-globe"></i>
-                        {{ trans('panel.menu.explore') }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="/profile/preferences">
-                        <i class="fa-fw fas fa-gear nav-icon"></i>
-                        {{ trans('panel.menu.options') }}
-                    </a>
-                </li>
-                @can('profile_password_edit')
-                <li>
-                    <a class="dropdown-item" href="/profile/password">
-                        <i class="fa-fw fas fa-lock nav-icon"></i>
-                        {{ trans('panel.menu.password') }}
-                    </a>
-                </li>
+            <div class="dropdown-menu">
+                @can('patching_access')
+                <a class="dropdown-item" href="/admin/patching/index">
+                    <i class="fa-fw fas fa-wrench"></i>
+                    {{ trans('panel.menu.patching') }}
+                </a>
                 @endcan
-            </ul>
+                <a class="dropdown-item" href="/admin/report/explore">
+                    <i class="fa-fw fas fa-globe"></i>
+                    {{ trans('panel.menu.explore') }}
+                </a>
+                <a class="dropdown-item" href="/admin/doc/report">
+                    <i class="fa-fw fas fa-file"></i>
+                    {{ trans('panel.menu.reports') }}
+                </a>
+            </div>
         </li>
 
         <li class="nav-item dropdown">
@@ -177,19 +190,19 @@
               <li>
                   <a class="dropdown-item" href="/admin/doc/schema">
                         <i class="fa-fw fas fa-map nav-icon"></i>
-                      {{ trans('panel.menu.schema') }}
+                        {{ trans('panel.menu.schema') }}
                   </a>
               </li>
               <li>
                   <a class="dropdown-item" href="/admin/doc/guide">
                         <i class="fa-fw fas fa-book nav-icon"></i>
-                      {{ trans('panel.menu.guide') }}
+                        {{ trans('panel.menu.guide') }}
                   </a>
               </li>
               <li>
-                  <a class="dropdown-item" href="/admin/doc/about">
+              <a class="dropdown-item" href="/admin/doc/about">
                         <i class="fa-fw fas fa-info nav-icon"></i>
-                      {{ trans('panel.menu.about') }}
+                        {{ trans('panel.menu.about') }}
                   </a>
               </li>
           </ul>
