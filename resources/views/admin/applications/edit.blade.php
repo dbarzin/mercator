@@ -134,8 +134,8 @@
                         <span class="help-block">{{ trans('cruds.application.fields.entities_helper') }}</span>
                     </div>
                 </div>
-                @endif
             </div>
+                @endif
         </div>
     </div>
         <div class="row">
