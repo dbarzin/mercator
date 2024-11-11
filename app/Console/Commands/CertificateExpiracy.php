@@ -68,7 +68,7 @@ class CertificateExpiracy extends Command
                         $cert->save();
                     } elseif (
                         Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $cert->last_notification)
-                        ->lessThan(
+                        ->greaterThan(
                         now()->addDays(-intval(config('mercator-config.cert.expire-delay'))))
                         ) {
                         Log::debug('CertificateExpiracy - ' . $cert->name . ' already notified on ' . $cert->last_notification);
