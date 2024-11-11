@@ -34,11 +34,11 @@ class PhysicalServerController extends Controller
         return response()->json($physicalserver, 201);
     }
 
-    public function show(PhysicalServer $physicalserver)
+    public function show(PhysicalServer $physicalServer)
     {
         abort_if(Gate::denies('physical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalServerResource($physicalserver);
+        return new PhysicalServerResource($physicalServer);
     }
 
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
