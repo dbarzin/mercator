@@ -117,7 +117,6 @@ class CertificateExpiracy extends Command
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
-                    $mail->Subject = $subject;
 
                     // Optional: Add DKIM signing
                     $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
@@ -127,6 +126,7 @@ class CertificateExpiracy extends Command
                     $mail->DKIM_identity = $mail->From;
 
                     if ($group === null || $group === '1') {
+                        $mail->Subject = subject;
                         $message = '<html><body>These certificates are about to exipre :<br><br>';
                         foreach ($certificates as $cert) {
                             $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';
@@ -142,7 +142,7 @@ class CertificateExpiracy extends Command
                         Log::debug("Mail sent to {$to_email}");
                     } else {
                         foreach ($certificates as $cert) {
-                            $mailSubject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
+                            $mail->Subject  = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
                             $message = $cert->description;
 
                             // Send mail
