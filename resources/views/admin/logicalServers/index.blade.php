@@ -26,6 +26,9 @@
                             {{ trans('cruds.logicalServer.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.logicalServer.fields.type') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.logicalServer.fields.description') }}
                         </th>
                         <th>
@@ -66,6 +69,9 @@
                                 <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                                 {{ $logicalServer->name }}
                                 </a>
+                            </td>
+                            <td>
+                                {{ $logicalServer->type }}
                             </td>
                             <td>
                                 {!! $logicalServer->description !!}

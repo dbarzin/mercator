@@ -707,6 +707,8 @@ return [
             'databases_helper' => 'Databases hosted on the logical server',
             'attributes' => 'Attributes',
             'attributes_helper' => 'List of logical server attributes',
+            'type' => 'Type',
+            'type_helper' => 'Type de serveur logique (ex: application, database, storage, DNS...)'
         ],
         'title' => 'Logical Servers',
         'title_short' => 'Servers',
