@@ -19,6 +19,7 @@ class LogicalServer extends Model
 
     public static $searchable = [
         'name',
+        'type',
         'description',
         'configuration',
         'net_services',
@@ -32,6 +33,7 @@ class LogicalServer extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'description',
         'operating_system',
         'install_date',

@@ -716,6 +716,8 @@ return [
             'attributes_helper' => 'Liste des attributes du serveur logique',
             'next_update' => 'Date de prochaine mise à jour',
             'next_update_helper' => 'Date prévue pour la prochaine mise à jour',
+            'type' => 'Type',
+            'type_helper' => 'Type de serveur logique (ex: applicatif, base de données, stockage, DNS...)'
         ],
         'title' => 'Serveurs logiques',
         'title_short' => 'Serveurs',

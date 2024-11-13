@@ -20,7 +20,6 @@ class UsersTableSeeder extends Seeder
                 'language'       => 'fr'
             ],
         ];
-
         User::insert($users);
     }
 }

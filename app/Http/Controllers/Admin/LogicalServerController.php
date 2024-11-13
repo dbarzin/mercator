@@ -52,8 +52,9 @@ class LogicalServerController extends Controller
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
 
-        $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
-        $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
+        $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+        $operating_system_list = LogicalServer::select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
+        $environment_list = LogicalServer::select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
 
         return view(
             'admin.logicalServers.create',
@@ -63,6 +64,7 @@ class LogicalServerController extends Controller
                 'servers',
                 'applications',
                 'databases',
+                'type_list',
                 'environment_list',
                 'operating_system_list'
             )
@@ -92,6 +94,7 @@ class LogicalServerController extends Controller
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
 
+        $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
 
@@ -105,6 +108,7 @@ class LogicalServerController extends Controller
                 'servers',
                 'applications',
                 'databases',
+                'type_list',
                 'operating_system_list',
                 'environment_list',
                 'logicalServer'

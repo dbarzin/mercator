@@ -14,13 +14,32 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required maxlength='32'>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.name_helper') }}</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="type">{{ trans('cruds.logicalServer.fields.type') }}</label>
+                <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type" maxlength='255'>
+                    @if (!$operating_system_list->contains(old('type')))
+                        <option> {{ old('type') }}</option>'
+                    @endif
+                    @foreach($type_list as $t)
+                        <option {{ (old('type') ? old('type') : $logicalServer->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('type') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.logicalServer.fields.type_helper') }}</span>
             </div>
         </div>
       </div>

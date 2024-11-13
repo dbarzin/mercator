@@ -2261,6 +2261,7 @@ class ReportController extends Controller
 
         $header = [
             trans('cruds.logicalServer.title_singular'),
+            trans('cruds.logicalServer.fields.type'),
             trans('cruds.application.title_singular'),
             trans('cruds.application.fields.entities'),
             trans('cruds.application.fields.entity_resp'),
@@ -2284,6 +2285,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension('E')->setAutoSize(true);
         $sheet->getColumnDimension('F')->setAutoSize(true);
         $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
 
         // converter
         // $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2293,7 +2295,8 @@ class ReportController extends Controller
         foreach ($logicalServers as $logicalServer) {
             foreach ($logicalServer->applications as $application) {
                 $sheet->setCellValue("A{$row}", $logicalServer->name);
-                $sheet->setCellValue("B{$row}", $application->name);
+                $sheet->setCellValue("B{$row}", $logicalServer->type);
+                $sheet->setCellValue("C{$row}", $application->name);
 
                 $entities = $application->entities()->get();
                 $l = null;
@@ -2304,16 +2307,16 @@ class ReportController extends Controller
                         $l .= ', '.$entity->name;
                     }
                 }
-                $sheet->setCellValue("C{$row}", $l);
+                $sheet->setCellValue("D{$row}", $l);
 
                 $l = $application->entity_resp()->get();
                 if ($l->count() > 0) {
-                    $sheet->setCellValue("D{$row}", $l[0]->name);
+                    $sheet->setCellValue("E{$row}", $l[0]->name);
                 }
 
-                $sheet->setCellValue("E{$row}", $application->responsible);
-                $sheet->setCellValue("F{$row}", $application->application_block->name ?? '');
-                $sheet->setCellValue("G{$row}", $application->application_block->responsible ?? '');
+                $sheet->setCellValue("F{$row}", $application->responsible);
+                $sheet->setCellValue("G{$row}", $application->application_block->name ?? '');
+                $sheet->setCellValue("H{$row}", $application->application_block->responsible ?? '');
 
                 $row++;
             }
