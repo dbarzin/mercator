@@ -497,7 +497,7 @@
                                     <tbody>
                                         <tr>
                                             <th width="20%">{{ trans("cruds.logicalServer.fields.type") }}</th>
-                                            <td>{{} $logicalServer->type }}</td>
+                                            <td>{{ $logicalServer->type }}</td>
                                         </tr>
                                         <tr>
                                             <th>{{ trans("cruds.logicalServer.fields.description") }}</th>
