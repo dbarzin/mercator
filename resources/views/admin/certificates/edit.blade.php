@@ -83,7 +83,7 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label class="recommended" for="logical_servers">{{ trans('cruds.certificate.fields.logical_servers') }}</label>
-                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="logical_servers" multiple>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                             @foreach($logical_servers as $id => $logical_server)
                                 <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $certificate->logical_servers->contains($id)) ? 'selected' : '' }}>{{ $logical_server }}</option>
                             @endforeach
