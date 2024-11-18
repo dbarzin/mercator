@@ -51,13 +51,11 @@ class Flux extends Model
         if ($this->application_source_id !== null) {
             return 'APP_' . $this->application_source_id;
         }
-        if (auth()->user()->granularity >= 2) {
-            if ($this->service_source_id !== null) {
-                return 'SERV_' . $this->service_source_id;
-            }
-            if ($this->module_source_id !== null) {
-                return 'MOD_' . $this->module_source_id;
-            }
+        if ($this->service_source_id !== null) {
+            return 'SRV_' . $this->service_source_id;
+        }
+        if ($this->module_source_id !== null) {
+            return 'MOD_' . $this->module_source_id;
         }
         if ($this->database_source_id !== null) {
             return 'DB_' . $this->database_source_id;
@@ -70,13 +68,11 @@ class Flux extends Model
         if ($this->application_dest_id !== null) {
             return 'APP_' . $this->application_dest_id;
         }
-        if (auth()->user()->granularity >= 2) {
-            if ($this->service_dest_id !== null) {
-                return 'SERV_' . $this->service_dest_id;
-            }
-            if ($this->module_dest_id !== null) {
-                return 'MOD_' . $this->module_dest_id;
-            }
+        if ($this->service_dest_id !== null) {
+            return 'SERV_' . $this->service_dest_id;
+        }
+        if ($this->module_dest_id !== null) {
+            return 'MOD_' . $this->module_dest_id;
         }
         if ($this->database_dest_id !== null) {
             return 'DB_' . $this->database_dest_id;
