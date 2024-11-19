@@ -69,7 +69,7 @@ class Flux extends Model
             return 'APP_' . $this->application_dest_id;
         }
         if ($this->service_dest_id !== null) {
-            return 'SERV_' . $this->service_dest_id;
+            return 'SRV_' . $this->service_dest_id;
         }
         if ($this->module_dest_id !== null) {
             return 'MOD_' . $this->module_dest_id;
