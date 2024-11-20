@@ -33,7 +33,7 @@
                             <td width="400">
                                 <div class="form-group">
                                     <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
-                                    <select class="form-control select2" id="node" >
+                                    <select class="form-control select2" id="node">
                                         <option></option>
                                         @foreach($nodes as $node)
                                         <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
