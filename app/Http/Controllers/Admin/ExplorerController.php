@@ -608,7 +608,7 @@ class ExplorerController extends Controller
         // Application Modules
         $modules = DB::table('application_modules')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($modules as $module) {
-            $this->addNode($nodes, 3, $this->formatId('MOD_', $module->id), $module->name, '/images/applicationmodule.png', 'modules');
+            $this->addNode($nodes, 3, $this->formatId('MOD_', $module->id), $module->name, '/images/applicationmodule.png', 'application-modules');
         }
         // application_module_application_service
         $joins = DB::table('application_module_application_service')->select('application_module_id', 'application_service_id')->get();
