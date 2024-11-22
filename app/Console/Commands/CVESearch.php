@@ -55,9 +55,9 @@ class CVESearch extends Command
             $check_frequency = config('mercator-config.cve.check-frequency');
 
             // update provider
-            if ($provider === 'https//cve.circl.lu') {
+            if (($provider == 'https://cvepremium.circl.lu')||($provider === 'https//cve.circl.lu')) {
                 // change variable
-                $provider = 'https://cvepremium.circl.lu';
+                $provider = 'https://vulnerability.circl.lu';;
                 config(['mercator-config.cve.provider' => $provider]);
 
                 // Save configuration
@@ -156,9 +156,9 @@ class CVESearch extends Command
 
             // loop on all CVE
             foreach ($json as $cve) {
-                // check CVE in frequency range
-#print_r("------------------------------\n");
+#print_r("-----------------------------------------------------\n");
 #print_r($cve);
+                // check CVE in frequency range
                 if (property_exists($cve,"dataType") && $cve->dataType=="CVE_RECORD") {
                     if (strtotime($cve->cveMetadata->datePublished)>= $min_timestamp) {
                         // put summary in lowercase
@@ -189,22 +189,8 @@ class CVESearch extends Command
                 }
                 else {
                     Log::error("Unknown CVE format !");
-                    Log::error($cve);
+                    Log::error(json_encode($cve));
                 }
-                /*
-                elseif (strtotime($cve->document->tracking->current_release_date) >= $min_timestamp) {
-                    // put summary in lowercase
-                    $text= strtolower($cve->document->title);
-                    // Log::debug('CVESearch - CVE summary ' . $cve->summary);
-                    foreach ($names as $name) {
-                        // Log::debug('CVESearch - check ' . $name);
-                        if (str_contains($tex, $name)) {
-                            $message .= '<b>' . $cve->application . ' </b> : <b>' . $cve->id . ' </b> - ' . $cve->document->title . '<br>';
-                            $found=true;
-                        }
-                    }
-                }
-                */
             }
             $message .= '</body></html>';
 
