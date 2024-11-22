@@ -111,8 +111,8 @@ class CertificateExpiracy extends Command
                     $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
 
                     // Recipients
-                    $mail->setFrom(config('mercator-config.cert.mail-from'));
-                    foreach(explode(",",config('mercator-config.cert.mail-to')) as $email)
+                    $mail->setFrom($mail_from);
+                    foreach(explode(",",$to_email) as $email)
                         $mail->addAddress($email);
 
                     // Content

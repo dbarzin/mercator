@@ -163,10 +163,11 @@ class CVESearch extends Command
                     if (strtotime($cve->cveMetadata->datePublished)>= $min_timestamp) {
                         // put summary in lowercase
                         $text= strtolower($cve->containers->cna->title);
-                        // Log::debug('CVESearch - CVE summary ' . $cve->summary);
+                        Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             // Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
+                                Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
                                 $found=true;
                             }
@@ -177,24 +178,45 @@ class CVESearch extends Command
                     if (strtotime($cve->published)>= $min_timestamp) {
                         // put summary in lowercase
                         $text= strtolower($cve->details);
-                        // Log::debug('CVESearch - CVE summary ' . $cve->summary);
+                        Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
-                            // Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
+                                Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->aliases[0] . ' </b> - ' . $cve->details . '<br>';
                                 $found=true;
                             }
                         }
                     }
                 }
+                elseif (property_exists($cve,"document") &&
+                        property_exists($cve->document,"category") &&
+                        ($cve->document->category == "csaf_security_advisory")) {
+                    if (strtotime($cve->document->tracking->current_release_date)>= $min_timestamp) {
+                        // put summary in lowercase
+                        $text= strtolower($cve->document->title);
+                        Log::debug('CVESearch - CVE text ' . $text);
+                        foreach ($names as $name) {
+                            if (str_contains($text, $name)) {
+                                Log::debug('CVESearch - found ' . $name);
+                                $message .= '<b>' . $name . ' </b> : <b>' . $cve->document->title . ' </b> - ' . $cve->document->notes[0]->text . '<br>';
+                                $found=true;
+                            }
+                        }
+                    }
+
+
+                }
                 else {
                     Log::error("Unknown CVE format !");
-                    Log::error(json_encode($cve));
+                    print_r("Unknwon CVE format:\n");
+                    print_r($cve);
                 }
             }
             $message .= '</body></html>';
 
             if ($found) {
+
+                Log::debug("CVESearch - Message {$message}");
 
                 // Send mail
                 $mail = new PHPMailer(true);
@@ -214,7 +236,7 @@ class CVESearch extends Command
 
                     // Recipients
                     $mail->setFrom(config('mercator-config.cve.mail-from'));
-                    foreach(explode(",",$mail_to) as $email)
+                    foreach(explode(",",config('mercator-config.cve.mail-to')) as $email)
                         $mail->addAddress($email);
 
                     // Content
