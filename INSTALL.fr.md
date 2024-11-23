@@ -2,7 +2,7 @@
 
 ## Configuration recommandée
 
-- OS : Ubuntu 22.04 LTS - Server - Small user footprint
+- OS : Ubuntu 24.04 LTS - Server - Small user footprint
 - RAM : 2G
 - Disque : 10G
 - VCPU 2
