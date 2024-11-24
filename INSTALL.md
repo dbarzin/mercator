@@ -2,7 +2,7 @@
 
 ## Recommended configuration
 
-- OS : Ubuntu 22.04 LTS - Server - Small user footprint
+- OS : Ubuntu 24.04 LTS - Server - Small user footprint
 - RAM : 2G
 - Disk : 10G
 - VCPU 2
@@ -38,21 +38,13 @@ Clone the project from Github
 Install packages with composer :
 
     cd /var/www/mercator
-    composer update
-
-Publish all publishable assets from vendor packages
-
-    php artisan vendor:publish --all
+    composer install
 
 ## MySQL
 
 Install MySQL
 
     sudo apt install mysql-server
-
-Make sure you are using MySQL
-
-    sudo mysql --version
 
 Launch MySQL with root rights
 
@@ -109,10 +101,6 @@ Clear the cache
 To import the test database (optional)
 
     sudo mysql mercator < mercator_data.sql
-
-or (Postgres)
-
-   psql mercator < pg_mercator_data.sql
 
 ## Import the CPE Database
 
@@ -314,10 +302,6 @@ If you generate large reports, you will need to increase the memory allocated to
 Before updating the application take a backup of the database and the project.
 
     mysqldump mercator > mercator_backup.sql
-
-or (Postgres)
-
-    pg_dump mercator > mercator_backup.sql
 
 Get the sources from GIT
 
