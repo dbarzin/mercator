@@ -38,21 +38,13 @@ Cloner le projet depuis Github
 Installer les packages avec composer :
 
     cd /var/www/mercator
-    composer update
-
-Publier tous les actifs publiables à partir des packages des fournisseurs
-
-    php artisan vendor:publish --all
+    composer install
 
 ## MySQL
 
 Installer MySQL
 
     sudo apt install mysql-server
-
-Vérifier que vous utilisez MySQL
-
-    sudo mysql --version
 
 Lancer MySQL avec les droits root
 
@@ -107,10 +99,6 @@ Vider la cache
 Pour importer la base de données de test (facultatif)
 
     sudo mysql mercator < mercator_data.sql
-
-ou (Postgres):
-
-    psql mercator < pg_mercator_data.sql
 
 ## Importer la base de données des CPE
 
