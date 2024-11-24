@@ -303,10 +303,6 @@ Before updating the application take a backup of the database and the project.
 
     mysqldump mercator > mercator_backup.sql
 
-or (Postgres)
-
-    pg_dump mercator > mercator_backup.sql
-
 Get the sources from GIT
 
     cd /var/www/mercator
