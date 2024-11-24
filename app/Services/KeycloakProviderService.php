@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\V3;
+namespace App\Services;
 
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 
-class KeycloakService extends AbstractProvider implements ProviderInterface
+class KeycloakProviderService extends AbstractProvider implements ProviderInterface
 {
     public function user()
     {
