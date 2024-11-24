@@ -58,10 +58,7 @@ RUN chown -R mercator:www /var/www/mercator
 USER mercator:www
 
 # Run composer
-RUN composer -n update
-
-# Publish Laravel Vendor resources
-RUN php artisan vendor:publish --all
+RUN composer install
 
 # Create database folder
 RUN mkdir sql

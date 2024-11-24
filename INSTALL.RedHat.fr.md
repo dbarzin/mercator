@@ -17,14 +17,14 @@ Installer Httpd, GIT, Graphviz, Vim et Php
 
 	sudo dnf install vim httpd git graphviz php
 
-Vérifier que le module php 8.1 est disponible
+Vérifier que le module php 8.2 est disponible
 
 	sudo dnf module list php
 
 Installer php 8.1
 
 	sudo dnf module reset php
-	sudo dnf module enable php:8.1
+	sudo dnf module enable php:8.2
 	sudo dnf install php
 
 Vérifier la version php
@@ -59,18 +59,9 @@ Cloner le projet depuis Github
 
 ## Composer
 
-Mettre à jour composer
-
-	cd /var/www/mercator
-	composer self-update
-
 Installer les packages avec composer
 
-	composer update
-
-Publier tous les actifs publiables à partir des packages des fournisseurs
-
-	php artisan vendor:publish --all
+	composer install
 
 ## MySQL
 
@@ -139,10 +130,6 @@ Vider la cache
 Pour importer la base de données de test (facultatif)
 
 	sudo mysql mercator < mercator_data.sql
-
-ou (Postgres):
-
-    psql mercator < pg_mercator_data.sql
 
 ## Importer la base de données des CPE
 
