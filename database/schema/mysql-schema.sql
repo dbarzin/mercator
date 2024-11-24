@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `audit_logs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `audit_logs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` text NOT NULL,
+  `description` varchar(255) NOT NULL,
   `subject_id` int(10) unsigned DEFAULT NULL,
   `subject_type` varchar(255) DEFAULT NULL,
   `user_id` int(10) unsigned DEFAULT NULL,
@@ -899,6 +899,7 @@ DROP TABLE IF EXISTS `logical_servers`;
 CREATE TABLE `logical_servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `net_services` varchar(255) DEFAULT NULL,
   `configuration` longtext DEFAULT NULL,
@@ -1880,6 +1881,7 @@ CREATE TABLE `vlans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `vlan_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -2170,3 +2172,5 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (187,'2024_09_22_11
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (188,'2024_09_24_044657_move_icons_to_docs',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (189,'2024_09_24_084005_move_icons_to_docs',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (190,'2024_09_26_160952_building_attributes',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (195,'2024_10_31_220940_add_vlan_id',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (197,'2024_11_13_183902_add_type_to_logical_servers',3);
