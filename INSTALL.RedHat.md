@@ -338,7 +338,7 @@ add this line to the crontab
 
  Update libraries
 
-      sudo -u apache composer update
+      sudo -u apache composer install
 
  Clear caches
 
@@ -370,7 +370,7 @@ add this line to the crontab
 
  Update libraries
 
-      sudo -u apache composer update
+      sudo -u apache composer install
 
  Back up the database
 

@@ -318,7 +318,7 @@ Migrer la base de données
 
 Mettre à jour les librairies
 
-    sudo -u www-data composer update
+    sudo -u www-data composer install
 
 Vider les caches
 
@@ -350,7 +350,7 @@ Dans un autre terminal, lancer les tests
 
 Mettre à jour les librairies
 
-    sudo -u www-data composer update
+    sudo -u www-data composer install
 
 Sauvegarder la base de données
 

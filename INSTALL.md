@@ -314,7 +314,7 @@ Migrate the database
 
 Update the libraries
 
-    composer update
+    composer install
 
 Empty caches
 
@@ -350,7 +350,7 @@ or to stop on first error
 
 Update the libraries
 
-    composer update
+    composer install
 
 Backup the database
 
