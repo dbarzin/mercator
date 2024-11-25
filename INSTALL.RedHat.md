@@ -365,19 +365,3 @@ add this line to the crontab
  In another terminal, run the tests
 
       sudo -u apache php artisan dusk
-
- ## Fix migration issues
-
- Update libraries
-
-      sudo -u apache composer install
-
- Back up the database
-
-      sudo mysqldump mercator \
-          --ignore-table=mercator.users \
-          --ignore-table=mercator.roles \
-          --ignore-table=mercator.permissions \
-          --ignore-table=mercator.permission_role \
-          --ignore-table=mercator.role_user \
-          --ignore-table=mercator.m
