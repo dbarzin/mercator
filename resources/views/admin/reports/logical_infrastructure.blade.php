@@ -871,8 +871,8 @@
                                 <tr>
                                     <th>{{ trans("cruds.wifiTerminal.fields.site") }}</th>
                                     <td>
-                                        @if ($wifiTerminal->site_id!==null)
-                                            <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{{ $wifiTerminal->site->name }}</a>
+                                        @if ($wifiTerminal->site!==null)
+                                            <a href="{{ route('admin.sites.show', $wifiTerminal->site_id) }}">{! $wifiTerminal->site->name !}</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -880,7 +880,7 @@
                                     <th>{{ trans("cruds.wifiTerminal.fields.building") }}</th>
                                     <td>
                                         @if ($wifiTerminal->building!=null)
-                                            <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{{ $wifiTerminal->building->name }}</a>
+                                            <a href="{{ route('admin.buildings.show', $wifiTerminal->building_id) }}">{! $wifiTerminal->building->name !}</a>
                                         @endif
                                     </td>
                                 </tr>
