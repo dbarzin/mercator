@@ -111,7 +111,7 @@
                                 @endif
                                 <tr>
                                     <td><b>{{ trans('cruds.entity.fields.is_external') }}</b></td>
-                                    <td>{{ $entity->is_external ? trans('global.yes') : trans('global.yes') }}</td>
+                                    <td>{{ $entity->is_external ? trans('global.yes') : trans('global.no') }}</td>
                                 </tr>
                                 <tr>
                                     <td width="20%"><b>{{ trans('cruds.entity.fields.description') }}</b></td>
