@@ -66,13 +66,13 @@ Pour des instructions détaillées, veuillez vous référer aux guides d'install
 Démarrez rapidement avec Docker. Exécutez une instance locale en mode développement :
 
 ```bash
-docker run -it --rm -e USE_DEMO_DATA=1 -p 8000:80 ghcr.io/dbarzin/mercator:latest
+docker run -it --rm -e USE_DEMO_DATA=1 -p 8000:8080 ghcr.io/dbarzin/mercator:latest
 ```
 Pour rendre vos données persistantes avec SQLite :
 
 ```bash
 touch ./db.sqlite && chmod a+w ./db.sqlite
-docker run -it --rm -e APP_ENV=development -p 8000:80 -v $PWD/db.sqlite:/var/www/mercator/sql/db.sqlite ghcr.io/dbarzin/mercator:latest
+docker run -it --rm -e APP_ENV=development -p 8000:8080 -v $PWD/db.sqlite:/var/www/mercator/sql/db.sqlite ghcr.io/dbarzin/mercator:latest
 ```
 
 Populez la base de données avec des données de démonstration :
@@ -80,7 +80,7 @@ Populez la base de données avec des données de démonstration :
 ```bash
 docker run -it --rm \
            -e APP_ENV=development \
-           -p 8000:80 \
+           -p 8000:8080 \
            -v $PWD/db.sqlite:/var/www/mercator/sql/db.sqlite \
            -e USE_DEMO_DATA=1 \
            ghcr.io/dbarzin/mercator:latest
