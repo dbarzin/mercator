@@ -140,8 +140,6 @@ class CVESearch extends Command
                 return;
             }
 
-            $json = json_decode($response);
-
             // get application names in lowercase
             $names = MApplication::all()
                 ->sortBy('name')
@@ -203,8 +201,9 @@ class CVESearch extends Command
                             }
                         }
                     }
-
-
+                }
+                elseif (property_exists($cve,"circl")) {
+                    // SKIP
                 }
                 else {
                     Log::error("Unknown CVE format !");
