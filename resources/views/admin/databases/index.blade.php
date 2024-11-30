@@ -35,6 +35,9 @@
                             {{ trans('cruds.database.fields.informations') }}
                         </th>
                         <th>
+                            {{ trans('cruds.database.fields.applications') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -82,7 +85,18 @@
                                     @endif
                                 @endforeach
                             </td>
-                            
+
+                            <td>
+                                @foreach($database->applications as $application)
+                                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                                    {{ $application->name }}
+                                    </a>
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
+                            </td>
+
                             <td>
                                 @can('database_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.databases.show', $database->id) }}">
@@ -162,7 +176,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

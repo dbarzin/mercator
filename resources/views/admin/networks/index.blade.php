@@ -56,7 +56,7 @@
                             <td>
                                 {!! $network->protocol_type ?? '' !!}
                             </td>
-                            <td>                                
+                            <td>
                                 @if ($network->security_need_c==1)
                                     <span class="veryLowRisk"> 1 </span>
                                 @elseif ($network->security_need_c==2)
@@ -67,7 +67,7 @@
                                     <span class="highRisk"> 4 </span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($network->security_need_i==1)
                                     <span class="veryLowRisk"> 1 </span>
@@ -79,7 +79,7 @@
                                     <span class="highRisk"> 4 </span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($network->security_need_a==1)
                                     <span class="veryLowRisk"> 1 </span>
@@ -91,7 +91,7 @@
                                     <span class="highRisk"> 4 </span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($network->security_need_t==1)
                                     <span class="veryLowRisk"> 1 </span>
@@ -103,9 +103,22 @@
                                     <span class="highRisk"> 4 </span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
-
-                            </td>                            
+                                @endif
+                                @if (config('mercator-config.parameters.security_need_auth'))
+                                -
+                                @if ($network->security_need_auth==1)
+                                    <span class="veryLowRisk"> 1 </span>
+                                @elseif ($network->security_need_auth==2)
+                                    <span class="lowRisk"> 2 </span>
+                                @elseif ($network->security_need_auth==3)
+                                    <span class="mediumRisk"> 3 </span>
+                                @elseif ($network->security_need_auth==4)
+                                    <span class="highRisk"> 4 </span>
+                                @else
+                                    <span> * </span>
+                                @endif
+                                @endif
+                            </td>
                             <td>
                                 @can('network_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.networks.show', $network->id) }}">
@@ -185,7 +198,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

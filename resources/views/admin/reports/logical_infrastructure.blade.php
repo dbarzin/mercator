@@ -83,21 +83,42 @@
                                     <tr>
                                         <th>{{ trans('cruds.network.fields.security_need') }}</th>
                                         <td>
-                                            {{ trans('global.confidentiality') }} :
-                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$network->security_need_c] ?? "" }}
-                                            <br>
-                                            {{ trans('global.integrity') }} :
-                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$network->security_need_i] ?? "" }}
-                                            <br>
-                                            {{ trans('global.availability') }} :
-                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$network->security_need_a] ?? "" }}
-                                            <br>
-                                            {{ trans('global.tracability') }} :
-                                                {{ array(1=>trans('global.low'),2=>trans('global.medium'),3=>trans('global.strong'),4=>trans('global.very_strong'))
-                                                [$network->security_need_t] ?? "" }}
+                                            {{ trans('global.confidentiality_short') }} :
+                                                @if ($network->security_need_c==0){{ trans('global.none') }}@endif
+                                                @if ($network->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                                @if ($network->security_need_c==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                                @if ($network->security_need_c==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                                @if ($network->security_need_c==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                            &nbsp;
+                                            {{ trans('global.integrity_short') }} :
+                                                @if ($network->security_need_i==0){{ trans('global.none') }}@endif
+                                                @if ($network->security_need_i==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                                @if ($network->security_need_i==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                                @if ($network->security_need_i==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                                @if ($network->security_need_i==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                            &nbsp;
+                                            {{ trans('global.availability_short') }} :
+                                                @if ($network->security_need_a==0){{ trans('global.none') }}@endif
+                                                @if ($network->security_need_a==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                                @if ($network->security_need_a==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                                @if ($network->security_need_a==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                                @if ($network->security_need_a==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                            &nbsp;
+                                            {{ trans('global.tracability_short') }} :
+                                                @if ($network->security_need_t==0){{ trans('global.none') }}@endif
+                                                @if ($network->security_need_t==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                                @if ($network->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                                @if ($network->security_need_t==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                                @if ($network->security_need_t==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                            @if (config('mercator-config.parameters.security_need_auth'))
+                                            &nbsp;
+                                            {{ trans('global.authenticity_short') }} :
+                                                @if ($network->security_need_auth==0){{ trans('global.none') }}@endif
+                                                @if ($network->security_need_auth==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                                @if ($network->security_need_auth==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                                @if ($network->security_need_auth==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                                @if ($network->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>

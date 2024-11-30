@@ -340,6 +340,13 @@ return [
             'size' => 'Size',
             'status' => 'Status'
         ],
+        'parameters' => [
+            'title' => 'Paraleters',
+            'title_short' => 'Parameters',
+            'help' => 'This screen is used to configure optional Mercator parameters',
+            'security_need_auth' => 'Authenticity',
+            'security_need_auth_helper' => 'Adds the Authenticity security criterion to the existing Confidentiality, Integrity, Availability and Traceability criteria',
+        ],
     ],
     'database' => [
         'description' => 'Structured and ordered set of information intended to be exploited by computer.',

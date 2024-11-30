@@ -42,9 +42,9 @@
 
 
             <div class="form-group">
-                <table cellspacing="5" cellpadding="5" border="0" width='40%'>
+                <table cellspacing="5" cellpadding="5" border="0">
                     <tr>
-                        <td width='20%'>
+                        <td width="140">
                             <label
                             @if (auth()->user()->granularity>=2)
                                 class="recommended"
@@ -52,7 +52,7 @@
                                 for="security_need">{{ trans('cruds.macroProcessus.fields.security_need') }}</label>
                         </td>
                         <td align="right" width="10">
-                            <label for="security_need">C</label>
+                            <label for="security_need">{{ trans("global.confidentiality_short") }}</label>
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_c') ? 'is-invalid' : '' }}" name="security_need_c" id="security_need_c">
@@ -64,8 +64,8 @@
                                 <option value="4" {{ ($macroProcessus->security_need_c ? $macroProcessus->security_need_c : old('security_need_c')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                             </select>
                         </td>
-                        <td align="right">
-                            <label for="security_need">I</label>
+                        <td align="right" width="10">
+                            <label for="security_need">{{ trans("global.integrity_short") }}</label>
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_i') ? 'is-invalid' : '' }}" name="security_need_i" id="security_need_i">
@@ -77,8 +77,8 @@
                                 <option value="4" {{ ($macroProcessus->security_need_i ? $macroProcessus->security_need_i : old('security_need_i')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                             </select>
                         </td>
-                        <td align="right">
-                            <label for="security_need">D</label>
+                        <td align="right" width="10">
+                            <label for="security_need">{{ trans("global.availability_short") }}</label>
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_a') ? 'is-invalid' : '' }}" name="security_need_a" id="security_need_a">
@@ -90,8 +90,8 @@
                                 <option value="4" {{ ($macroProcessus->security_need_a ? $macroProcessus->security_need_a : old('security_need_a')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                             </select>
                         </td>
-                        <td align="right">
-                            <label for="security_need">T</label>
+                        <td align="right" width="10">
+                            <label for="security_need">{{ trans("global.tracability_short") }}</label>
                         </td>
                         <td width="120">
                             <select class="form-control select2 risk {{ $errors->has('security_need_t') ? 'is-invalid' : '' }}" name="security_need_t" id="security_need_t">
@@ -103,6 +103,21 @@
                                 <option value="4" {{ ($macroProcessus->security_need_t ? $macroProcessus->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                             </select>
                         </td>
+                        @if (config('mercator-config.parameters.security_need_auth'))
+                        <td align="right" width="10">
+                            <label for="security_need">{{ trans('global.authenticity_short') }}</label>
+                        </td>
+                        <td  width="120">
+                            <select class="form-control select2 risk{{ $errors->has('security_need_auth') ? 'is-invalid' : '' }}" name="security_need_auth" id="security_need_auth">
+                                <option value="-1"></option>
+                                <option value="0" {{ ($macroProcessus->security_need_auth ? $macroProcessus->security_need_auth : old('security_need_auth')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                <option value="1" {{ ($macroProcessus->security_need_auth ? $macroProcessus->security_need_auth : old('security_need_auth')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                <option value="2" {{ ($macroProcessus->security_need_auth ? $macroProcessus->security_need_auth : old('security_need_auth')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                <option value="3" {{ ($macroProcessus->security_need_auth ? $macroProcessus->security_need_auth : old('security_need_auth')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                <option value="4" {{ ($macroProcessus->security_need_auth ? $macroProcessus->security_need_auth : old('security_need_auth')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                            </select>
+                        </td>
+                        @endif
                     </tr>
                 </table>
                 @if($errors->has('security_need'))

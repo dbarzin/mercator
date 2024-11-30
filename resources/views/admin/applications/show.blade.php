@@ -247,13 +247,13 @@
         <table class="table table-bordered table-striped">
             <tbody>
                 <tr>
-                    <th width="50%">
+                    <th width="60%">
                         <dt>{{ trans('cruds.application.fields.security_need') }}</dt>
                     </th>
-                    <th width="25%">
+                    <th width="20%">
                         <dt>{{ trans('cruds.application.fields.RTO') }}</dt>
                     </th>
-                    <th width="25%">
+                    <th width="20%">
                         <dt>{{ trans('cruds.application.fields.RPO') }}</dt>
                     </th>
                 </tr>
@@ -262,7 +262,7 @@
                         <table class="table table-striped table-borderless" cellspacing="5" cellpadding="5" border="0">
                             <tbody>
                             <td align="right" valign="middle">
-                                {{ trans("global.confidentiality") }}</dt>
+                                {{ trans("global.confidentiality") }}
                             </td>
                             <td align="left">
                             @if ($application->security_need_c==0){{ trans('global.none') }}@endif
@@ -300,7 +300,19 @@
                             @if ($application->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
                             @if ($application->security_need_t==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                             @if ($application->security_need_t==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
-                        </td>
+                            </td>
+                            @if (config('mercator-config.parameters.security_need_auth'))
+                                <td align="right" valign="middle">
+                                    {{ trans('global.authenticity') }}
+                                </td>
+                                <td align="left">
+                                @if ($application->security_need_auth==0){{ trans('global.none') }}@endif
+                                @if ($application->security_need_auth==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                                @if ($application->security_need_auth==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                                @if ($application->security_need_auth==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                                @if ($application->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                                </td>
+                            @endif
                     </tbody>
                     </table>
                 </td>

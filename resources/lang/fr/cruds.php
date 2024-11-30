@@ -340,6 +340,13 @@ return [
             'size' => 'Taille',
             'status' => 'Etat'
         ],
+        'parameters' => [
+            'title' => 'Paramètres',
+            'title_short' => 'Paramètres',
+            'help' => 'Cet écran permet de configurer des paramètres optionnels de Mercator',
+            'security_need_auth_helper' => 'Ajoute le critère de sécurité "Authenticité" aux critères Confidentialité, Intégrité, Disponibilité et Traçabilité déjà existants (exigence DORA).',
+            'security_need_auth' => 'Authenticité',
+        ],
     ],
     'database' => [
         'description' => 'Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.',

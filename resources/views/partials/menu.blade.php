@@ -721,6 +721,7 @@
                         request()->is('admin/roles*')||
                         request()->is('admin/certificate*')||
                         request()->is('admin/cve*')||
+                        request()->is('admin/config*')||
                         request()->is('admin/documents*')||
                         request()->is('admin/audit-logs*')||
                         request()->is('admin/history*')
@@ -753,6 +754,14 @@
                             </li>
                         @endcan
                         @can('configure')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.config.parameters") }}" class="nav-link {{ request()->is('admin/config/parameters*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-wrench nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.configuration.parameters.title_short') }}
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route("admin.config.cert") }}" class="nav-link {{ request()->is('admin/config/certificate*') ? 'active' : '' }}">
                                     <i class="fa-fw fas fa-lock nav-icon">

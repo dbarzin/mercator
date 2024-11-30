@@ -39,6 +39,7 @@ class Database extends Model
         'security_need_i',
         'security_need_a',
         'security_need_t',
+        'security_need_auth',
         'external',
         'created_at',
         'updated_at',

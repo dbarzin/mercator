@@ -144,6 +144,21 @@
                                         <option value="4" {{ ($process->security_need_t ? $process->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                     </select>
                                 </td>
+                                @if (config('mercator-config.parameters.security_need_auth'))
+                                <td align="right">
+                                    <label for="security_need">{{ trans('global.authenticity_short') }}</label>
+                                </td>
+                                <td  width="120">
+                                    <select class="form-control select2 risk{{ $errors->has('security_need_auth') ? 'is-invalid' : '' }}" name="security_need_auth" id="security_need_auth">
+                                        <option value="-1"></option>
+                                        <option value="0" {{ ($process->security_need_auth ? $process->security_need_auth : old('security_need_auth')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                        <option value="1" {{ ($process->security_need_auth ? $process->security_need_auth : old('security_need_auth')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                        <option value="2" {{ ($process->security_need_auth ? $process->security_need_auth : old('security_need_auth')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                        <option value="3" {{ ($process->security_need_auth ? $process->security_need_auth : old('security_need_auth')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                        <option value="4" {{ ($process->security_need_auth ? $process->security_need_auth : old('security_need_auth')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                    </select>
+                                </td>
+                                @endif
                             </tr>
                         </table>
                         @if($errors->has('security_need'))

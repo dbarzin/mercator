@@ -123,6 +123,15 @@
                             @if ($process->security_need_t==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
                             @if ($process->security_need_t==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
                             @if ($process->security_need_t==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                        @if (config('mercator-config.parameters.security_need_auth'))
+                        &nbsp;
+                        {{ trans('global.authenticity') }} :
+                            @if ($process->security_need_auth==0){{ trans('global.none') }}@endif
+                            @if ($process->security_need_auth==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
+                            @if ($process->security_need_auth==2)<span class="lowRisk">{{ trans('global.medium') }}</span>@endif
+                            @if ($process->security_need_auth==3)<span class="mediumRisk">{{ trans('global.strong') }}</span>@endif
+                            @if ($process->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
+                        @endif
                         </td>
                     </tr>
                     <tr>

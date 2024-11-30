@@ -59,7 +59,7 @@
                 <br>
         	    <div class="form-group">
             		<div class="form-check form-switch">
-                        <input name="is_external" id='is_external' type="checkbox" value="1" class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked' : '' }}>
+                        <input name="is_external" id='is_external' type="checkbox" class="form-check-input" {{ old('is_external',$entity->is_external) ? 'checked' : '' }}>
                         <label for="is_external">{{ trans('cruds.entity.fields.is_external') }}</label>
             		</div>
             		@if($errors->has('is_external'))
