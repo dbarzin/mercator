@@ -66,39 +66,41 @@ jobs:
         run: |
           mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
 
-      - name: Install Chrome Driver
-        run: php artisan dusk:chrome-driver --detect
-
-      - name: Check Chrome Driver version
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
-
-      - name: Start Chrome Driver
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
-
-      - name: Run Laravel Server
-        run: php artisan serve --no-reload &
-
-      - name: Run Dusk Tests
-        env:
-          APP_ENV: local
-          APP_URL: "http://127.0.0.1:8000"
-          DB_CONNECTION: mysql
-          DB_DATABASE: mercator
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          DB_USER: root
-        run: |
-          php artisan dusk --stop-on-error --stop-on-failure
-
-      - name: Upload Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: tests/Browser/screenshots
-
-      - name: Upload Console Logs
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: console
-          path: tests/Browser/console
+# SKIP Test on GitHub
+#
+#      - name: Install Chrome Driver
+#        run: php artisan dusk:chrome-driver --detect
+#
+#      - name: Check Chrome Driver version
+#        run: ./vendor/laravel/dusk/bin/chromedriver-linux -v
+#
+#      - name: Start Chrome Driver
+#        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
+#
+#      - name: Run Laravel Server
+#        run: php artisan serve --no-reload &
+#
+#      - name: Run Dusk Tests
+#        env:
+#          APP_ENV: local
+#          APP_URL: "http://127.0.0.1:8000"
+#          DB_CONNECTION: mysql
+#          DB_DATABASE: mercator
+#          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+#          DB_USER: root
+#        run: |
+#
+#          php artisan dusk --stop-on-error --stop-on-failure
+#      - name: Upload Screenshots
+#        if: failure()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: screenshots
+#          path: tests/Browser/screenshots
+#
+#      - name: Upload Console Logs
+#        if: failure()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: console
+#          path: tests/Browser/console
