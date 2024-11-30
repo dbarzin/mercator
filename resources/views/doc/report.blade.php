@@ -14,7 +14,7 @@
                     @method('PUT')
                     @csrf
                     <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="title">{{ trans("cruds.report.cartography.granularity") }}</label>
                                 <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}" name="granularity" id="granularity">
