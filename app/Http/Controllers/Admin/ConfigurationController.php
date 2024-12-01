@@ -256,4 +256,48 @@ class ConfigurationController extends Controller
         )
             ->withErrors($msg);
     }
+
+    /*
+    * Return the parameters
+    */
+    public function getParameters()
+    {
+        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get configuration
+        $security_need_auth = config('mercator-config.parameters.security_need_auth');
+
+        // Return
+        return view(
+            'admin.config.parameters',
+            compact('security_need_auth')
+        );
+    }
+
+    /*
+    * Save the parameters
+    */
+    public function saveParameters(Request $request)
+    {
+        abort_if(Gate::denies('configure'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // read request
+        $security_need_auth = request('security_need_auth');
+
+        // Save parameters
+        config(['mercator-config.parameters.security_need_auth' => $security_need_auth]);
+
+        // Save configuration
+        $text = '<?php return ' . var_export(config('mercator-config'), true) . ';';
+        file_put_contents(config_path('mercator-config.php'), $text);
+
+        // Return
+        return view(
+            'admin.config.parameters',
+            compact('security_need_auth')
+        )
+        ->withErrors('Configuration saved !');
+    }
+
+
 }

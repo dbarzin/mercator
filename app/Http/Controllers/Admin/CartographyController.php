@@ -373,6 +373,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
                     //---
@@ -442,6 +453,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
                     // Owner
@@ -594,6 +616,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
 
@@ -762,6 +795,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
 
@@ -1011,6 +1055,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
 
@@ -1394,6 +1449,17 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_t] ?? '') .
+                            (
+                                config('mercator-config.parameters.security_need_auth') ?
+                                    (
+                                    '<br>' .
+                                    trans('global.authenticity') .
+                                    ' : ' .
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_auth] ?? '')
+                                    )
+                                :
+                                    ""
+                            ) .
                             '</p>'
                     );
                     //----

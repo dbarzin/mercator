@@ -386,7 +386,7 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="form-group">
                     <label
                     @if (auth()->user()->granularity>=2)
@@ -451,6 +451,22 @@
                                     <option value="4" {{ ($application->security_need_t ? $application->security_need_t : old('security_need_t')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
                                 </select>
                             </td>
+                            @if (config('mercator-config.parameters.security_need_auth'))
+                            <td align="right" valign="bottom">
+                                <label for="security_need">{{ trans("global.authenticity_short") }}</label>
+                            </td>
+                            <td>
+                                <span class="help-block">{{ trans("global.authenticity") }}</span>
+                                <select class="form-control select2 risk{{ $errors->has('security_need_auth') ? 'is-invalid' : '' }}" name="security_need_auth" id="security_need_auth">
+                                    <option value="-1"></option>
+                                    <option value="0" {{ ($application->security_need_auth ? $application->security_need_auth : old('security_need_auth')) == 0 ? 'selected' : '' }}>{{ trans('global.none') }}</option>
+                                    <option value="1" {{ ($application->security_need_auth ? $application->security_need_auth : old('security_need_auth')) == 1 ? 'selected' : '' }}>{{ trans('global.low') }}</option>
+                                    <option value="2" {{ ($application->security_need_auth ? $application->security_need_auth : old('security_need_auth')) == 2 ? 'selected' : '' }}>{{ trans('global.medium') }}</option>
+                                    <option value="3" {{ ($application->security_need_auth ? $application->security_need_auth : old('security_need_auth')) == 3 ? 'selected' : '' }}>{{ trans('global.strong') }}</option>
+                                    <option value="4" {{ ($application->security_need_auth ? $application->security_need_auth : old('security_need_auth')) == 4 ? 'selected' : '' }}>{{ trans('global.very_strong') }}</option>
+                                </select>
+                            </td>
+                            @endif
                         </tr>
                     </table>
                     @if($errors->has('security_need'))
@@ -468,7 +484,7 @@
                         <tr>
                             <td>
                                 <span class="help-block">{{ trans('global.days') }}</span>
-                                <input type="number" class="form-control" id="rto_days" name="rto_days" min="0" value="{{ old('rto_days', $application->rto_days) }}">
+                                <input type="number" class="form-control" id="rto_days" name="rto_days" min="0" max="365" value="{{ old('rto_days', $application->rto_days) }}">
                             </td>
                             <td>
                                 <span class="help-block">{{ trans('global.hours') }}</span>
@@ -490,7 +506,7 @@
                         <tr>
                             <td>
                                 <span class="help-block">{{ trans('global.days') }}</span>
-                                <input type="number" class="form-control" id="rpo" name="rpo_days" min="0" value="{{ old('rpo_days', $application->rpo_days) }}">
+                                <input type="number" class="form-control" id="rpo" name="rpo_days" min="0" max="365" value="{{ old('rpo_days', $application->rpo_days) }}">
                             </td>
                             <td>
                                 <span class="help-block">{{ trans('global.hours') }}</span>

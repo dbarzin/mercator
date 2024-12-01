@@ -14,7 +14,7 @@
                     @method('PUT')
                     @csrf
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="title">{{ trans("cruds.report.cartography.granularity") }}</label>
                                 <select class="form-control select2 {{ $errors->has('granularity') ? 'is-invalid' : '' }}" name="granularity" id="granularity">
@@ -23,6 +23,15 @@
                                     <option value="3" {{ auth()->user()->granularity == 3 ? 'selected' : '' }}>{{ trans("cruds.user.fields.granularity_3") }}</option>
                                 </select>
                                 <span class="help-block">{{ trans("cruds.report.cartography.granularity_helper") }}</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="vues">&nbsp;</label>
+                                <div class="form-check form-switch">
+                                  <input class="form-check-input" type="checkbox" id="graph" name="graph">
+                                  <label class="form-check-label" for="graph">{{ trans("cruds.report.cartography.graph_helper") }}</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,18 +57,6 @@
                                     </div>
                                 @endif
                                 <span class="help-block">{{ trans("cruds.report.cartography.views_helper") }}</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="vues">&nbsp;</label>
-                                <div style="padding-bottom: 12px">
-                                    <span class="btn btn-xs select-all" style="border-radius: 0"></span>
-                                </div>
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input" type="checkbox" id="graph" name="graph">
-                                  <label class="form-check-label" for="graph">{{ trans("cruds.report.cartography.graph_helper") }}</label>
-                                </div>
                             </div>
                         </div>
                     </div>

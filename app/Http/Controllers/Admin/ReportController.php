@@ -1766,8 +1766,6 @@ class ReportController extends Controller
 
     public function entities()
     {
-        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.ods');
-
         $entities = Entity::All()->sortBy('name');
 
         $header = [
@@ -1820,7 +1818,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/entities-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -1962,6 +1965,7 @@ class ReportController extends Controller
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
         $objWriter->save($filepath);
 
         // return
@@ -1970,8 +1974,6 @@ class ReportController extends Controller
 
     public function activityList()
     {
-        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
-
         $register = DataProcessing::All()->sortBy('name');
 
         $header = [
@@ -2082,7 +2084,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/register-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2090,8 +2097,6 @@ class ReportController extends Controller
 
     public function applicationsByBlocks()
     {
-        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.ods');
-
         $applicationBlocks = ApplicationBlock::All()->sortBy('name');
         $applicationBlocks->load('applications');
 
@@ -2112,7 +2117,13 @@ class ReportController extends Controller
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
+            trans('global.tracability_short')
+        ];
+        if (config('mercator-config.parameters.security_need_auth')) {
+            array_push($header,
+                trans('global.authenticity_short'));
+            }
+        array_push($header,
             trans('cruds.application.fields.RTO'),
             trans('cruds.application.fields.RPO'),
             trans('cruds.application.fields.documentation'),
@@ -2120,43 +2131,48 @@ class ReportController extends Controller
             trans('cruds.physicalServer.title'),
             trans('cruds.workstation.title'),
             trans('cruds.database.title'),
-        ];
+        );
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
-        $sheet->getColumnDimension('A')->setAutoSize(true);  // block
-        $sheet->getColumnDimension('B')->setAutoSize(true);  // name
-        $sheet->getColumnDimension('C')->setWidth(60, 'pt'); // description
-        $sheet->getColumnDimension('D')->setAutoSize(true);  // CPE
-        $sheet->getColumnDimension('E')->setAutoSize(true);  // entity_resp
-        $sheet->getColumnDimension('F')->setAutoSize(true);  // entities
-        $sheet->getColumnDimension('G')->setAutoSize(true);  // resp
-        $sheet->getColumnDimension('H')->setWidth(60, 'pt'); // process
-        $sheet->getColumnDimension('I')->setAutoSize(true);  // editor
-        $sheet->getColumnDimension('J')->setAutoSize(true);  // tech
-        $sheet->getColumnDimension('K')->setAutoSize(true);  // type
-        $sheet->getColumnDimension('L')->setAutoSize(true);  // users
-        $sheet->getColumnDimension('M')->setAutoSize(true);  // external
+        $col = 'A';
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // block
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // name
+        $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // description
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // CPE
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // entity_resp
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // entities
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // resp
+        $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // process
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // editor
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // tech
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // type
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // users
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // external
         // CIAT
-        $sheet->getColumnDimension('N')->setWidth(10, 'pt');
-        $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('O')->setWidth(10, 'pt');
-        $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('P')->setWidth(10, 'pt');
-        $sheet->getStyle('P')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('Q')->setWidth(10, 'pt');
-        $sheet->getStyle('Q')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth')) {
+            $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
         // RTO - RPO
-        $sheet->getColumnDimension('R')->setAutoSize(true);
-        $sheet->getColumnDimension('S')->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
 
-        $sheet->getColumnDimension('T')->setAutoSize(true);
-        $sheet->getColumnDimension('U')->setWidth(200, 'pt');  // logical servers
-        $sheet->getColumnDimension('V')->setWidth(200, 'pt');  // physical serveurs
-        $sheet->getColumnDimension('W')->setWidth(200, 'pt');  // workstations
-        $sheet->getColumnDimension('X')->setWidth(200, 'pt');  // databases
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(200, 'pt');  // logical servers
+        $sheet->getColumnDimension(self::col($i++))->setWidth(200, 'pt');  // physical serveurs
+        $sheet->getColumnDimension(self::col($i++))->setWidth(200, 'pt');  // workstations
+        $sheet->getColumnDimension(self::col($i++))->setWidth(200, 'pt');  // databases
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -2168,37 +2184,43 @@ class ReportController extends Controller
         $row = 2;
         foreach ($applicationBlocks as $applicationBlock) {
             foreach ($applicationBlock->applications as $application) {
-                $sheet->setCellValue("A{$row}", $applicationBlock->name);
-                $sheet->setCellValue("B{$row}", $application->name);
-                $sheet->setCellValue("C{$row}", $html->toRichTextObject($application->description));
-                $sheet->setCellValue("D{$row}", $application->vendor . ':' . $application->product . ':' . $application->version);
-                $sheet->setCellValue("E{$row}", $application->entity_resp ? $application->entity_resp->name : '');
-                $sheet->setCellValue("F{$row}", $application->entities->implode('name', ', '));
-                $sheet->setCellValue("G{$row}", $application->responsible);
-                $sheet->setCellValue("H{$row}", $application->processes->implode('name', ', '));
-                $sheet->setCellValue("I{$row}", $application->editor);
-                $sheet->setCellValue("J{$row}", $application->technology);
-                $sheet->setCellValue("K{$row}", $application->type);
-                $sheet->setCellValue("L{$row}", $application->users);
-                $sheet->setCellValue("M{$row}", $application->external);
+                $col = 'A';
+                $sheet->setCellValue(self::col($i++) . $row, $applicationBlock->name);
+                $sheet->setCellValue(self::col($i++) . $row, $application->name);
+                $sheet->setCellValue(self::col($i++) . $row, $html->toRichTextObject($application->description));
+                $sheet->setCellValue(self::col($i++) . $row, $application->vendor . ':' . $application->product . ':' . $application->version);
+                $sheet->setCellValue(self::col($i++) . $row, $application->entity_resp ? $application->entity_resp->name : '');
+                $sheet->setCellValue(self::col($i++) . $row, $application->entities->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++) . $row, $application->responsible);
+                $sheet->setCellValue(self::col($i++) . $row, $application->processes->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++) . $row, $application->editor);
+                $sheet->setCellValue(self::col($i++) . $row, $application->technology);
+                $sheet->setCellValue(self::col($i++) . $row, $application->type);
+                $sheet->setCellValue(self::col($i++) . $row, $application->users);
+                $sheet->setCellValue(self::col($i++) . $row, $application->external);
 
-                $sheet->setCellValue("N{$row}", $application->security_need_c);
-                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_c);
+                $sheet->setCellValue($col . $row, $application->security_need_c);
+                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_c);
 
-                $sheet->setCellValue("O{$row}", $application->security_need_i);
-                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_i);
+                $sheet->setCellValue($col . $row, $application->security_need_i);
+                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_i);
 
-                $sheet->setCellValue("P{$row}", $application->security_need_a);
-                $this->addSecurityNeedColor($sheet, "P{$row}", $application->security_need_a);
+                $sheet->setCellValue($col . $row, $application->security_need_a);
+                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_a);
 
-                $sheet->setCellValue("Q{$row}", $application->security_need_t);
-                $this->addSecurityNeedColor($sheet, "Q{$row}", $application->security_need_t);
+                $sheet->setCellValue($col . $row, $application->security_need_t);
+                $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_t);
 
-                $sheet->setCellValue("R{$row}", $application->rto);
-                $sheet->setCellValue("S{$row}", $application->rpo);
+                if (config('mercator-config.parameters.security_need_auth')) {
+                    $sheet->setCellValue($col . $row, $application->security_need_auth);
+                    $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_auth);
+                }
 
-                $sheet->setCellValue("T{$row}", $application->documentation);
-                $sheet->setCellValue("U{$row}", $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++) . $row, $application->rto);
+                $sheet->setCellValue(self::col($i++) . $row, $application->rpo);
+
+                $sheet->setCellValue(self::col($i++) . $row, $application->documentation);
+                $sheet->setCellValue(self::col($i++) . $row, $application->logical_servers->implode('name', ', '));
                 $res = null;
 
                 // Done: request improved
@@ -2246,7 +2268,12 @@ class ReportController extends Controller
             }
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/applications-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2254,8 +2281,6 @@ class ReportController extends Controller
 
     public function logicalServers()
     {
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
-
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'applications.application_block');
 
@@ -2322,17 +2347,19 @@ class ReportController extends Controller
             }
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
     }
 
-    // TODO : i18n
     public function externalAccess()
     {
-        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.ods');
-
         $accesses = ExternalConnectedEntity::All()->sortBy('name');
         $accesses->load('entity', 'network');
 
@@ -2394,7 +2421,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/externalAccess-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2404,8 +2436,6 @@ class ReportController extends Controller
 
     public function logicalServerConfigs()
     {
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
-
         $logicalServers = LogicalServer::All()->sortBy('name');
         $logicalServers->load('applications', 'servers');
 
@@ -2482,7 +2512,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xslx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2490,93 +2525,127 @@ class ReportController extends Controller
 
     public function securityNeeds()
     {
-        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
-
         // macroprocess - process - application - base de données - information
-        $header = [
+        $header = [];
+        array_push($header,
             trans('cruds.macroProcessus.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
+            trans('global.tracability_short'));
+        if (config('mercator-config.parameters.security_need_auth'))
+            array_push($header, trans('global.authenticity_short'));
+        array_push($header,
             trans('cruds.process.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
+            trans('global.tracability_short'));
+        if (config('mercator-config.parameters.security_need_auth'))
+            array_push($header, trans('global.authenticity_short'));
+        array_push($header,
             trans('cruds.application.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
+            trans('global.tracability_short'));
+        if (config('mercator-config.parameters.security_need_auth'))
+            array_push($header, trans('global.authenticity_short'));
+        array_push($header,
             trans('cruds.database.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
+            trans('global.tracability_short'));
+        if (config('mercator-config.parameters.security_need_auth'))
+            array_push($header, trans('global.authenticity_short'));
+        array_push($header,
             trans('cruds.information.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'),
-        ];
+            trans('global.tracability_short'));
+        if (config('mercator-config.parameters.security_need_auth'))
+            array_push($header, trans('global.authenticity_short'));
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
         // Widths
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('C')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('D')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('E')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('H')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('I')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('J')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('M')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('N')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('O')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('P')->setAutoSize(true);
-        $sheet->getColumnDimension('Q')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('R')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('S')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('T')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('U')->setAutoSize(true);
-        $sheet->getColumnDimension('V')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('W')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('X')->setWidth(10, 'pt');
-        $sheet->getColumnDimension('Y')->setWidth(10, 'pt');
+        $i=0;
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
 
         // Center
-        $sheet->getStyle('B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('G')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('H')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('I')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('L')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('M')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('N')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('O')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('Q')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('R')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('S')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('T')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-        $sheet->getStyle('V')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('W')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('X')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('Y')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $i=1;
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $i++;
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $i++;
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $i++;
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $i++;
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (config('mercator-config.parameters.security_need_auth'))
+            $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -2618,7 +2687,12 @@ class ReportController extends Controller
                 }
             }
         }
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xslx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2626,7 +2700,6 @@ class ReportController extends Controller
 
     public function physicalInventory()
     {
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
 
         $inventory = [];
 
@@ -2693,7 +2766,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2701,8 +2779,6 @@ class ReportController extends Controller
 
     public function workstations()
     {
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
-
         $workstations = Workstation::All()->sortBy('name');
         $workstations->load('applications', 'site', 'building');
 
@@ -2772,7 +2848,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xslx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2780,8 +2861,6 @@ class ReportController extends Controller
 
     public function vlans()
     {
-        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
-
         $vlans = Vlan::orderBy('Name')->get();
         $vlans->load('subnetworks');
 
@@ -2909,7 +2988,12 @@ class ReportController extends Controller
             $row++;
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        //$writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xslx');
+
         $writer->save($path);
 
         return response()->download($path);
@@ -2925,8 +3009,6 @@ class ReportController extends Controller
     public function cve()
     {
         Log::debug('CVEReport - Start');
-
-        $path = storage_path('app/cve-'. Carbon::today()->format('Ymd') .'.ods');
 
         // loop on applications
         $applications = DB::table('m_applications')
@@ -3036,7 +3118,12 @@ class ReportController extends Controller
             usleep(200);
         }
 
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Ods($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        // $path = storage_path('app/cve-'. Carbon::today()->format('Ymd') .'.ods');
+        $path = storage_path('app/cve-'. Carbon::today()->format('Ymd') .'.xlsx');
+
         $writer->save($path);
 
         Log::debug('CVEReport - Done.');
@@ -3304,77 +3391,121 @@ class ReportController extends Controller
         ?Information $information = null
     ) {
         // Macroprocessus
-        $sheet->setCellValue("A{$row}", $macroprocess->name);
+        $i=0;
+        $sheet->setCellValue(self::col($i++). $row, $macroprocess->name);
 
-        $sheet->setCellValue("B{$row}", $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
-        $this->addSecurityNeedColor($sheet, "B{$row}", $macroprocess->security_need_c);
+        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_c);
 
-        $sheet->setCellValue("C{$row}", $macroprocess->security_need_i >= 0 ? $macroprocess->security_need_i : '');
-        $this->addSecurityNeedColor($sheet, "C{$row}", $macroprocess->security_need_i);
+        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_i >= 0 ? $macroprocess->security_need_i : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_i);
 
-        $sheet->setCellValue("D{$row}", $macroprocess->security_need_a >= 0 ? $macroprocess->security_need_a : '');
-        $this->addSecurityNeedColor($sheet, "D{$row}", $macroprocess->security_need_a);
+        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_a >= 0 ? $macroprocess->security_need_a : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_a);
 
-        $sheet->setCellValue("E{$row}", $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
-        $this->addSecurityNeedColor($sheet, "E{$row}", $macroprocess->security_need_t);
+        $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_t >= 0 ? $macroprocess->security_need_t : '');
+        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_t);
+
+        if (config('mercator-config.parameters.security_need_auth')) {
+            $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_auth >= 0 ? $macroprocess->security_need_auth : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $macroprocess->security_need_auth);
+        }
 
         if ($process !== null) {
             // Processus
-            $sheet->setCellValue("F{$row}", $process->name);
-            $sheet->setCellValue("G{$row}", $process->security_need_c >= 0 ? $process->security_need_c : '');
-            $this->addSecurityNeedColor($sheet, "G{$row}", $process->security_need_c);
+            $sheet->setCellValue(self::col($i++). $row, $process->name);
 
-            $sheet->setCellValue("H{$row}", $process->security_need_i >= 0 ? $process->security_need_i : '');
-            $this->addSecurityNeedColor($sheet, "H{$row}", $process->security_need_i);
+            $sheet->setCellValue(self::col($i). $row, $process->security_need_c >= 0 ? $process->security_need_c : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_c);
 
-            $sheet->setCellValue("I{$row}", $process->security_need_a >= 0 ? $process->security_need_a : '');
-            $this->addSecurityNeedColor($sheet, "I{$row}", $process->security_need_a);
+            $sheet->setCellValue(self::col($i). $row, $process->security_need_i >= 0 ? $process->security_need_i : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_i);
 
-            $sheet->setCellValue("J{$row}", $process->security_need_t >= 0 ? $process->security_need_t : '');
-            $this->addSecurityNeedColor($sheet, "J{$row}", $process->security_need_t);
+            $sheet->setCellValue(self::col($i). $row, $process->security_need_a >= 0 ? $process->security_need_a : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_a);
+
+            $sheet->setCellValue(self::col($i). $row, $process->security_need_t >= 0 ? $process->security_need_t : '');
+            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_t);
+
+            if (config('mercator-config.parameters.security_need_auth')) {
+                $sheet->setCellValue(self::col($i). $row, $process->security_need_auth >= 0 ? $process->security_need_auth : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $process->security_need_auth);
+            }
 
             if ($application !== null) {
                 // Application
-                $sheet->setCellValue("K{$row}", $application->name);
+                $sheet->setCellValue(self::col($i++). $row, $application->name);
 
-                $sheet->setCellValue("L{$row}", $application->security_need_c >= 0 ? $application->security_need_c : '');
-                $this->addSecurityNeedColor($sheet, "L{$row}", $application->security_need_c);
+                $sheet->setCellValue(self::col($i). $row, $application->security_need_c >= 0 ? $application->security_need_c : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_c);
 
-                $sheet->setCellValue("M{$row}", $application->security_need_i >= 0 ? $application->security_need_i : '');
-                $this->addSecurityNeedColor($sheet, "M{$row}", $application->security_need_i);
+                $sheet->setCellValue(self::col($i). $row, $application->security_need_i >= 0 ? $application->security_need_i : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_i);
 
-                $sheet->setCellValue("N{$row}", $application->security_need_a >= 0 ? $application->security_need_a : '');
-                $this->addSecurityNeedColor($sheet, "N{$row}", $application->security_need_a);
+                $sheet->setCellValue(self::col($i). $row, $application->security_need_a >= 0 ? $application->security_need_a : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_a);
 
-                $sheet->setCellValue("O{$row}", $application->security_need_t >= 0 ? $application->security_need_t : '');
-                $this->addSecurityNeedColor($sheet, "O{$row}", $application->security_need_t);
+                $sheet->setCellValue(self::col($i). $row, $application->security_need_t >= 0 ? $application->security_need_t : '');
+                $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_t);
+
+                if (config('mercator-config.parameters.security_need_auth')) {
+                    $sheet->setCellValue(self::col($i). $row, $application->security_need_auth >= 0 ? $application->security_need_auth : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $application->security_need_auth);
+                }
 
                 if ($database !== null) {
                     // Database
-                    $sheet->setCellValue("P{$row}", $database->name);
-                    $sheet->setCellValue("Q{$row}", $database->security_need_c >= 0 ? $database->security_need_c : '');
-                    $this->addSecurityNeedColor($sheet, "Q{$row}", $database->security_need_c);
-                    $sheet->setCellValue("R{$row}", $database->security_need_i >= 0 ? $database->security_need_i : '');
-                    $this->addSecurityNeedColor($sheet, "R{$row}", $database->security_need_i);
-                    $sheet->setCellValue("S{$row}", $database->security_need_a >= 0 ? $database->security_need_a : '');
-                    $this->addSecurityNeedColor($sheet, "S{$row}", $database->security_need_a);
-                    $sheet->setCellValue("T{$row}", $database->security_need_t >= 0 ? $database->security_need_t : '');
-                    $this->addSecurityNeedColor($sheet, "T{$row}", $database->security_need_t);
+                    $sheet->setCellValue(self::col($i++). $row, $database->name);
+
+                    $sheet->setCellValue(self::col($i). $row, $database->security_need_c >= 0 ? $database->security_need_c : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_c);
+
+                    $sheet->setCellValue(self::col($i). $row, $database->security_need_i >= 0 ? $database->security_need_i : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_i);
+
+                    $sheet->setCellValue(self::col($i). $row, $database->security_need_a >= 0 ? $database->security_need_a : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_a);
+
+                    $sheet->setCellValue(self::col($i). $row, $database->security_need_t >= 0 ? $database->security_need_t : '');
+                    $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_t);
+
+                    if (config('mercator-config.parameters.security_need_auth')) {
+                        $sheet->setCellValue(self::col($i). $row, $database->security_need_auth >= 0 ? $database->security_need_auth : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $database->security_need_auth);
+                    }
 
                     if ($information !== null) {
                         // Information
-                        $sheet->setCellValue("U{$row}", $information->name);
-                        $sheet->setCellValue("V{$row}", $information->security_need_c >= 0 ? $information->security_need_c : '');
-                        $this->addSecurityNeedColor($sheet, "V{$row}", $information->security_need_c);
-                        $sheet->setCellValue("W{$row}", $information->security_need_i >= 0 ? $information->security_need_i : '');
-                        $this->addSecurityNeedColor($sheet, "W{$row}", $information->security_need_i);
-                        $sheet->setCellValue("X{$row}", $information->security_need_a >= 0 ? $information->security_need_a : '');
-                        $this->addSecurityNeedColor($sheet, "X{$row}", $information->security_need_a);
-                        $sheet->setCellValue("Y{$row}", $information->security_need_t >= 0 ? $information->security_need_t : '');
-                        $this->addSecurityNeedColor($sheet, "Y{$row}", $information->security_need_t);
+                        $sheet->setCellValue(self::col($i++). $row, $information->name);
+
+                        $sheet->setCellValue(self::col($i). $row, $information->security_need_c >= 0 ? $information->security_need_c : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_c);
+
+                        $sheet->setCellValue(self::col($i). $row, $information->security_need_i >= 0 ? $information->security_need_i : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_i);
+
+                        $sheet->setCellValue(self::col($i). $row, $information->security_need_a >= 0 ? $information->security_need_a : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_a);
+
+                        $sheet->setCellValue(self::col($i). $row, $information->security_need_t >= 0 ? $information->security_need_t : '');
+                        $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_t);
+
+                        if (config('mercator-config.parameters.security_need_auth')) {
+                            $sheet->setCellValue(self::col($i). $row, $information->security_need_auth >= 0 ? $information->security_need_auth : '');
+                            $this->addSecurityNeedColor($sheet, self::col($i++). $row, $information->security_need_auth);
+                        }
                     }
                 }
             }
         }
     }
+
+    // Return the Excel column index from 0 to 52
+    private static function col(int $i) {
+        if ($i<26)
+            return chr(ord('A')+$i);
+        else
+            return 'A' . chr(ord('A')+($i-26));
+        }
+
 }

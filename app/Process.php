@@ -37,6 +37,7 @@ class Process extends Model
         'security_need_i',
         'security_need_a',
         'security_need_t',
+        'security_need_auth',
         'owner',
         'macroprocess_id',
         'created_at',

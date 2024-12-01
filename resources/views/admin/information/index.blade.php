@@ -36,6 +36,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.information.fields.security_need') }}
+                            @if (config('mercator-config.parameters.security_need_auth'))
+                            + {{ trans("global.authenticity_short") }}
+                            @endif
                         </th>
                         <th>
                             &nbsp;
@@ -48,15 +51,15 @@
                             @if(($information->description==null)||
                                 ($information->owner==null)||
                                 ($information->administrator==null)||
-                                ($information->storage==null)||                                
-                                ((auth()->user()->granularity>=2)&&                                
+                                ($information->storage==null)||
+                                ((auth()->user()->granularity>=2)&&
                                     (
                                     ($information->security_need_c==null)||
                                     ($information->security_need_i==null)||
                                     ($information->security_need_a==null)||
                                     ($information->security_need_t==null)
                                     )
-                                )||                                
+                                )||
                                 ($information->sensitivity==null)
                                 )
                                                       class="table-warning"
@@ -79,7 +82,7 @@
                             <td>
                                 {{ $information->sensitivity ?? '' }}
                             </td>
-                            <td>                                
+                            <td>
                                 @if ($information->security_need_c==0)
                                     <span class="noRisk">0</span>
                                 @elseif ($information->security_need_c==1)
@@ -92,7 +95,7 @@
                                     <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($information->security_need_i==0)
                                     <span class="noRisk">0</span>
@@ -106,7 +109,7 @@
                                     <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($information->security_need_a==0)
                                     <span class="noRisk">0</span>
@@ -120,7 +123,7 @@
                                     <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
                                 -
                                 @if ($information->security_need_t==0)
                                     <span class="noRisk">0</span>
@@ -134,7 +137,23 @@
                                     <span class="highRisk">4</span>
                                 @else
                                     <span> * </span>
-                                @endif                                    
+                                @endif
+                                @if (config('mercator-config.parameters.security_need_auth'))
+                                    -
+                                    @if ($information->security_need_auth==0)
+                                        <span class="noRisk">0</span>
+                                    @elseif ($information->security_need_auth==1)
+                                        <span class="veryLowRisk">1</span>
+                                    @elseif ($information->security_need_auth==2)
+                                        <span class="lowRisk">2</span>
+                                    @elseif ($information->security_need_auth==3)
+                                        <span class="mediumRisk">3</span>
+                                    @elseif ($information->security_need_auth==4)
+                                        <span class="highRisk">4</span>
+                                    @else
+                                        <span> * </span>
+                                    @endif
+                                @endif
 
                             </td>
                             <td>
@@ -216,7 +235,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -70,6 +70,8 @@ return [
     'yes' => 'Oui',
     'confidentiality' => 'Confidentialité',
     'confidentiality_short' => 'C',
+    'authenticity_short' => 'A',
+    'authenticity' => 'Authenticité',
     'integrity' => 'Intégrité',
     'integrity_short' => 'I',
     'availability' => 'Disponibilité',
