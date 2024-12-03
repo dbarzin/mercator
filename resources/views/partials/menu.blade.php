@@ -810,5 +810,5 @@
             </li>
         </ul>
     </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024-11-R1</button>
+    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024.12.1</button>
 </div>
