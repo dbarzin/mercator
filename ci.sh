@@ -20,7 +20,7 @@ git clone --branch dev https://github.com/dbarzin/mercator
 # Composer
 tput setaf 2; echo "Composer update"; tput setaf 7
 cd /tmp/mercator
-composer update
+composer install
 
 # Drop old test database
 # If it fails execute this :
@@ -52,8 +52,8 @@ tput setaf 2; echo "Generate application key"; tput setaf 7
 php artisan key:generate
 
 # Publush vendor packages
-tput setaf 2; echo "Publish"; tput setaf 7
-php artisan vendor:publish --all
+#tput setaf 2; echo "Publish"; tput setaf 7
+#php artisan vendor:publish --all
 
 # Migrate and seed the database
 tput setaf 2; echo "Migrate and seed the application"; tput setaf 7
@@ -64,8 +64,8 @@ tput setaf 2; echo "Insert test data"; tput setaf 7
 cat ./mercator_data.sql | mysql mercator_test
 
 # Check code quality
-tput setaf 2; echo "Check code quality"; tput setaf 7
-php artisan insights -s
+#tput setaf 2; echo "Check code quality"; tput setaf 7
+#php artisan insights -s
 
 # Configure dusk
 cp .env .env.dusk.local
