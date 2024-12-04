@@ -243,15 +243,19 @@
     <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <script src="/js/sweetalert2.all.min.js"></script>
 
+    <!-- JQuery -->
     <!--script src="https://code.jquery.com/jquery-3.7.1.js"></script-->
-    <script src="{{ asset ('/js/jquery-3.7.1.js') }}"></script>
+    <!--script src="{{ asset ('/js/jquery-3.7.1.js') }}"></script-->
+    <!--script src="{{ asset ('/js/jquery-3.7.1.js') }}"></script-->
+    <script src="{{ asset ('/js/jquery.min.js') }}"></script>
 
     <!-- Bootstrap -->
     <!-- script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script -->
+    <!--script src="/js/bootstrap.bundle.min.js"></script-->
     <script src="/js/bootstrap.bundle.min.js"></script>
 
     <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script -->
-    <script src="/js/popper.min.js"></script>
+    <!--script src="/js/popper.min.js"></script-->
     <!-- script src="https://unpkg.com/@coreui/coreui@2.1.16/dist/js/coreui.min.js"></script -->
     <script src="/js/coreui.min.js"></script>
     <!-- script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script -->
@@ -284,6 +288,7 @@
     <script src="/js/moment.min.js"></script>
     <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script-->
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
+
     <!--script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script-->
     <script src="/js/select2.full.min.js"></script>
 

@@ -1,4 +1,8 @@
 {
-    "/js/custom-mix.js": "/js/custom-mix.js",
-    "/css/custom-mix.css": "/css/custom-mix.css"
+    "/js/jquery.min.map": "/js/jquery.min.map",
+    "/js/jquery.min.js": "/js/jquery.min.js",
+    "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map",
+    "/js/bootstrap.bundle.min.js": "/js/bootstrap.bundle.min.js",
+    "/js/bootstrap.bundle.min.js.map": "/js/bootstrap.bundle.min.js.map"
 }
