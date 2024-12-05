@@ -27,6 +27,11 @@ mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css.map','public/css');
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js','public/js');
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map','public/js');
 
+// Fontawesome
+mix.copy('node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css','public/css');
+mix.copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css','public/css');
+mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/*','public/webfonts');
+
 /*
 // bootstrap-datetimepicker
 mix.copy('node_modules/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js','public/js');
@@ -35,21 +40,26 @@ mix.copy('node_modules/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.
 mix.copy('node_modules/@popperjs/core/dist/umd/popper.min.js','public/js');
 mix.copy('node_modules/@popperjs/core/dist/umd/popper.min.js.map','public/js');
 
+*/
 // coreui
+/*
 mix.copy('node_modules/@coreui/coreui/dist/css/coreui.min.css','public/css');
 mix.copy('node_modules/@coreui/coreui/dist/css/coreui.min.css.map','public/css');
-mix.copy('node_modules/@coreui/coreui/dist/js/coreui.min.js','public/js');
-mix.copy('node_modules/@coreui/coreui/dist/js/coreui.min.js.map','public/js');
+mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js','public/js');
+mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js.map','public/js');
+*/
 
+/*
 mix.copy('node_modules/@coreui/coreui/dist/js/bootstrap.bundle.min.js','public/js');
 mix.copy('node_modules/@coreui/coreui/dist/js/bootstrap.bundle.min.js.map','public/js');
+*/
 
-// Fontawesome
-mix.copy('node_modules/font-awesome/css/font-awesome.min.css','public/css');
+
 // mix.copy('node_modules/@fortawesome/fontawesome-free/css/solid.min.css','public/css');
 // mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2','public/webfonts');
-mix.copy('node_modules/font-awesome/fonts/fontawesome-webfont.woff2','public/webfonts');
+// mix.copy('node_modules/font-awesome/fonts/fontawesome-webfont.woff2','public/webfonts');
 
+/*
 // dataTables
 mix.copy('node_modules/datatables.net/js/dataTables.min.js','public/js');
 mix.copy('node_modules/datatables.net-select/js/dataTables.select.min.js','public/js');
