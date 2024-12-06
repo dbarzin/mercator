@@ -25,6 +25,7 @@ services:
     volumes:
       - ./PV/mercator/db.sqlite/:/var/www/mercator/sql/db.sqlite
       - ./env/mercator.env:/var/www/mercator/.env
+      - ./storage:/var/www/mercator/storage
       - ../app/Http/Kernel.php:/var/www/mercator/app/Http/Kernel.php
       - ../app/Http/Middleware/ForceXForwardedProto.php:/var/www/mercator/app/Http/Middleware/ForceXForwardedProto.php
     expose:
