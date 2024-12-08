@@ -727,6 +727,7 @@
                         request()->is('admin/history*')
                         ) ? 'open' : '' }}">
                     <a class="nav-link  nav-dropdown-toggle" href="#">
+
                         <i class="fa-fw fas fa-gear nav-icon">
 
                         </i>
@@ -810,5 +811,10 @@
             </li>
         </ul>
     </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2024.12.1</button>
+
+    <button class="sidebar-minimizer brand-minimizer" type="button">
+        <script>
+        '{{ "toto" }}'
+        </script>
+        Version 2024.12.1</button>
 </div>

@@ -4,5 +4,17 @@
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
     "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map",
     "/js/bootstrap.bundle.min.js": "/js/bootstrap.bundle.min.js",
-    "/js/bootstrap.bundle.min.js.map": "/js/bootstrap.bundle.min.js.map"
+    "/js/bootstrap.bundle.min.js.map": "/js/bootstrap.bundle.min.js.map",
+    "/css/fontawesome.min.css": "/css/fontawesome.min.css",
+    "/css/all.min.css": "/css/all.min.css",
+    "/webfonts/fa-brands-400.ttf": "/webfonts/fa-brands-400.ttf",
+    "/webfonts/fa-brands-400.woff2": "/webfonts/fa-brands-400.woff2",
+    "/webfonts/fa-regular-400.ttf": "/webfonts/fa-regular-400.ttf",
+    "/webfonts/fa-regular-400.woff2": "/webfonts/fa-regular-400.woff2",
+    "/webfonts/fa-solid-900.ttf": "/webfonts/fa-solid-900.ttf",
+    "/webfonts/fa-solid-900.woff2": "/webfonts/fa-solid-900.woff2",
+    "/webfonts/fa-v4compatibility.ttf": "/webfonts/fa-v4compatibility.ttf",
+    "/webfonts/fa-v4compatibility.woff2": "/webfonts/fa-v4compatibility.woff2",
+    "/js/moment.min.js": "/js/moment.min.js",
+    "/js/moment.min.js.map": "/js/moment.min.js.map"
 }

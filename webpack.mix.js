@@ -17,7 +17,6 @@ const mix = require('laravel-mix');
 // mix.js('resources/js/app.js', 'public/js').vue();
 
 // JQuery
-
 mix.copy('node_modules/jquery/dist/jquery.min.map','public/js');
 mix.copy('node_modules/jquery/dist/jquery.min.js','public/js');
 
@@ -41,6 +40,7 @@ mix.copy('node_modules/@popperjs/core/dist/umd/popper.min.js','public/js');
 mix.copy('node_modules/@popperjs/core/dist/umd/popper.min.js.map','public/js');
 
 */
+
 // coreui
 /*
 mix.copy('node_modules/@coreui/coreui/dist/css/coreui.min.css','public/css');
@@ -54,10 +54,6 @@ mix.copy('node_modules/@coreui/coreui/dist/js/bootstrap.bundle.min.js','public/j
 mix.copy('node_modules/@coreui/coreui/dist/js/bootstrap.bundle.min.js.map','public/js');
 */
 
-
-// mix.copy('node_modules/@fortawesome/fontawesome-free/css/solid.min.css','public/css');
-// mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2','public/webfonts');
-// mix.copy('node_modules/font-awesome/fonts/fontawesome-webfont.woff2','public/webfonts');
 
 /*
 // dataTables
@@ -77,11 +73,15 @@ mix.copy('node_modules/jszip/dist/jszip.min.js','public/js');
 mix.copy('node_modules/pdfmake/build/pdfmake.min.js','public/js');
 mix.copy('node_modules/pdfmake/build/pdfmake.min.js.map','public/js');
 mix.copy('node_modules/pdfmake/build/vfs_fonts.js','public/js');
+*/
 
 // select2
-mix.copy('node_modules/select2/dist/js/select2.min.js','public/js');
+/*
+mix.copy('node_modules/select2/dist/js/select2.full.min.js','public/js');
 mix.copy('node_modules/select2/dist/css/select2.min.css','public/css');
+*/
 
+/*
 // Chartjs
 mix.copy('node_modules/chartjs/chart.js','public/js');
 
@@ -98,8 +98,7 @@ mix.copy('node_modules/sweetalert2/dist/sweetalert2.css','public/css');
 // CKEditor
 mix.copy('node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js','public/js');
 mix.copy('node_modules/@ckeditor/ckeditor5-editor-classic/theme/classiceditor.css','public/css');
-
+*/
 // Moment
 mix.copy('node_modules/moment/min/moment.min.js','public/js');
 mix.copy('node_modules/moment/min/moment.min.js.map','public/js');
-*/

@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Entity">
+            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
                         <th width="10">
@@ -80,7 +80,7 @@
                             <td>
                                 @if($certificate->end_validity!=null)
                                     {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
-                                @endif                                
+                                @endif
                             </td>
                             <td>
                                 @if ($certificate->status==0)
@@ -90,8 +90,8 @@
                                 @elseif ($certificate->status==2)
                                     {{ trans('cruds.certificate.fields.status_unknown') }}
                                 @endif
-                            </td>                            
-                            <td>
+                            </td>
+                            <td nowrap>
                                 @can('certificate_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.certificates.show', $certificate->id) }}">
                                         {{ trans('global.view') }}
@@ -121,55 +121,16 @@
         </div>
     </div>
 </div>
-
 @endsection
+
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('certificate_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.certificates.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'asc' ]],
-    pageLength: 100, stateSave: true,
-  });
-  let table = $('.datatable-Entity:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
-
+@include('partials.datatable', array(
+    'id' => '#dataTable',
+    'title' => trans("cruds.certificate.title_singular"),
+    'URL' => route('admin.certificates.massDestroy'),
+    'canDelete' => auth()->user()->can('certificate_delete') ? true : false
+));
 </script>
 @endsection

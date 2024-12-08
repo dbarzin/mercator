@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Wan">
+            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
                         <th width="10">
@@ -57,7 +57,7 @@
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
                             </td>
-                            <td>
+                            <td nowrap>
                                 @can('wan_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.wans.show', $wan->id) }}">
                                         {{ trans('global.view') }}
@@ -77,9 +77,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -87,55 +85,16 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
+
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('wan_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.wans.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'asc' ]],
-    pageLength: 100, stateSave: true,
-  });
-  $('.datatable-Wan:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
-})
-
+@include('partials.datatable', array(
+    'id' => '#dataTable',
+    'title' => trans("cruds.wan.title_singular"),
+    'URL' => route('admin.wans.massDestroy'),
+    'canDelete' => auth()->user()->can('wan_delete') ? true : false
+));
 </script>
 @endsection
