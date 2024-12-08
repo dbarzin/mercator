@@ -10,10 +10,10 @@
     <title>{{ trans('panel.site_title') }}</title>
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/font-awesome.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/coreui.min.css') }}" rel="stylesheet" />
-    
+
     <!-- custom css -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
