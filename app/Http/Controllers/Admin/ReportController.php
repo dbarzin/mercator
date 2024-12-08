@@ -1626,7 +1626,7 @@ class ReportController extends Controller
                     }
                     if ($item->peripheral_dest_id !== null) {
                         $found = false;
-                        foreach ($peripherals as $server) {
+                        foreach ($peripherals as $peripheral) {
                             if ($item->peripheral_dest_id === $peripheral->id) {
                                 $found = true;
                                 break;
