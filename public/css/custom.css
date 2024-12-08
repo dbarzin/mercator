@@ -10,22 +10,26 @@ textarea {
 .dataTables_length,
 .dataTables_filter,
 .dt-buttons {
-    margin-bottom: 0.333em;
-    margin-top: .2rem;
+//    margin-bottom: 0.333em;
+//    margin-top: .2rem;
 }
 
 .dataTables_filter {
-    margin-right: .2rem;
+//    margin-right: .2rem;
 }
 
 .dt-buttons .btn {
-    margin-left: 0.333em;
-    border-radius: 0;
+//    margin-left: 0.333em;
+//    border-radius: 0;
+}
+
+.table {
+    line-height : 16px;
 }
 
 .table.datatable {
-    box-sizing: border-box;
-    border-collapse: collapse;
+//    box-sizing: border-box;
+//    border-collapse: collapse;
 }
 
 table.dataTable thead th {
@@ -33,7 +37,11 @@ table.dataTable thead th {
 }
 
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
-    border-bottom: 1px solid #c8ced3;
+//    border-bottom: 1px solid #c8ced3;
+}
+
+.btn {
+margin-left: 5px !important;
 }
 
 .select2 {
@@ -57,10 +65,15 @@ table.dataTable thead th {
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc {
-    background-image: none;
+//    background-image: none;
 }
 
-.navbar-brand-full {
+table.dataTable tbody th.focus, table.dataTable tbody td.focus {
+  outline: 0px;
+  outline-offset: 0px;
+}
+
+table .navbar-brand-full {
     color: #7C123E;
 }
 

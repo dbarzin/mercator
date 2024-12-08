@@ -8,7 +8,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover datatable datatable-Entity">
+            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <th width="10">
                     </th>
@@ -37,6 +37,7 @@
                     </th>
                 </tr>
             </thead>
+            <tbody>
                 @foreach($logs as $log)
                 <tr data-entry-id="{{ $log->id }}">
                     <td>
@@ -68,7 +69,7 @@
                     <td>
                         {{ $log->created_at }}
                     </td>
-                    <td>
+                    <td nowrap>
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.audit-logs.show', $log->id) }}">
                             {{ trans('global.view') }}
                         </a>
@@ -79,7 +80,7 @@
                     </td>
                 </tr>
                 @endforeach
-            </thead>
+            </tbody>
         </table>
         <p>
         {{ $logs->links() }}
@@ -91,24 +92,11 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: false,
-    bPaginate: false,
-    pageLength: 100,
-    stateSave: true,
-    bSort:false,
-    bLengthChange:false,
-    bInfo:false,
-  });
-  let table = $('.datatable-Entity:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-})
-
+@include('partials.datatable', array(
+    'id' => '#dataTable',
+    'title' => trans("cruds.site.title_singular"),
+    'URL' => route('admin.sites.massDestroy'),
+    'canDelete' => auth()->user()->can('site_delete') ? true : false
+));
 </script>
 @endsection

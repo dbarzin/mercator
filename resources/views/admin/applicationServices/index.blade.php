@@ -16,7 +16,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-ApplicationService">
+            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
                         <th width="10">
@@ -27,7 +27,7 @@
                         </th>
                         <th>
                             {{ trans('cruds.applicationService.fields.description') }}
-                        </th>                        
+                        </th>
                         <th>
                             {{ trans('cruds.applicationService.fields.exposition') }}
                         </th>
@@ -64,7 +64,7 @@
                             </td>
                             <td>
                                 {!! $applicationService->description !!}
-                            </td>                            
+                            </td>
                             <td>
                                 {{ $applicationService->exposition ?? '' }}
                             </td>
@@ -88,7 +88,7 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td>
+                            <td nowrap>
                                 @can('application_service_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.application-services.show', $applicationService->id) }}">
                                         {{ trans('global.view') }}
@@ -125,48 +125,11 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('application_service_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.application-services.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'asc' ]],
-    pageLength: 100, stateSave: true,
-  });
-  $('.datatable-ApplicationService:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
-})
-
+@include('partials.datatable', array(
+    'id' => '#dataTable',
+    'title' => trans("cruds.applicationService.title_singular"),
+    'URL' => route('admin.application-services.massDestroy'),
+    'canDelete' => auth()->user()->can('application_service_delete') ? true : false
+));
 </script>
 @endsection
