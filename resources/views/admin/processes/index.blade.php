@@ -80,36 +80,25 @@
                                 {!! $process->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($process->operations as $operation)
-                                    <a href="{{ route('admin.operations.show', $operation->id) }}">
-                                        {{ $operation->name }}
-                                    </a>
-                                    @if (!$loop->last)
-                                    ,
-                                    @endif
-                                @endforeach
+                                {!!
+                                    $process->operations->map(function ($operation) {
+                                        return '<a href="' . route('admin.operations.show', $operation->id) . '">' . $operation->name . '</a>';
+                                    })->implode(', ');
+                                !!}
                             </td>
-                            @if (auth()->user()->granularity>=3)
                             <td>
-                                @foreach($process->activities as $activity)
-                                    <a href="{{ route('admin.activities.show', $activity->id) }}">
-                                        {{ $activity->name }}
-                                    </a>
-                                    @if (!$loop->last)
-                                    ,
-                                    @endif
-                                @endforeach
+                                {!!
+                                    $process->activities->map(function ($activity) {
+                                        return '<a href="' . route('admin.activities.show', $activity->id) . '">' . $activity->name . '</a>';
+                                    })->implode(', ');
+                                !!}
                             </td>
-                            @endif
                             <td>
-                                @foreach($process->processInformation as $information)
-                                    <a href="{{ route('admin.information.show', $information->id) }}">
-                                        {{ $information->name }}
-                                    </span>
-                                    @if (!$loop->last)
-                                    ,
-                                    @endif
-                                @endforeach
+                                {!!
+                                    $process->processInformation->map(function ($information) {
+                                        return '<a href="' . route('admin.information.show', $information->id) . '">' . $information->name . '</a>';
+                                    })->implode(', ');
+                                !!}
                             </td>
                             <td>
                                 @if ($process->macroprocess_id!=null)
