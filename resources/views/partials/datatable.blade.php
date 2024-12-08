@@ -2,6 +2,10 @@
     let table = new DataTable('{{ $id }}',{
         keys: true,
         stateSave: true,
+        responsive: true,
+        colReorder: true,
+		autoWidth: true,
+
         columnDefs: [
             {
                 orderable: false,
@@ -9,29 +13,25 @@
                 targets: 0
             }
         ],
+
         layout:
         {
     		paging: true,
             keys: {
                 columns: ':not(:first-child)',
             },
-            order: [[1, 'asc']],
-    		autoWidth: true,
-            responsive: true,
-            colReorder: true,
         },
+
         select: {
             style: 'os',
             selector: 'td:first-child',
             headerCheckbox: 'select-page',
             items: 'row'
         },
+
         order: [[1, 'asc']],
         pageLength: 100,
-        "lengthMenu": [ 10, 50, 100, 500 ],
-    });
 
-    new DataTable.Buttons(table, {
         buttons: [
             {
               extend: 'colvis',
