@@ -156,7 +156,7 @@
                 {{ trans('panel.menu.tools') }}
             </a>
             <div class="dropdown-menu">
-                @can('patching_show')
+                @can('patching_access')
                 <a class="dropdown-item" href="/admin/patching/index">
                     <i class="fa-fw fas fa-wrench"></i>
                     {{ trans('panel.menu.patching') }}
