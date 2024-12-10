@@ -15,7 +15,7 @@ class PatchingController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('patching_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('patching_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get Attributes
         $attributes_list = $this->getAttributes();
