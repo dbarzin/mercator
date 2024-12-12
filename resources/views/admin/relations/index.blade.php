@@ -58,7 +58,7 @@
                     @foreach($relations as $key => $relation)
                         <tr data-entry-id="{{ $relation->id }}"
                         @if ($relation->active==false)
-                                class="table-dark"
+                                class="table-secondary"
                         @elseif (($relation->end_date!=null)&&Carbon\Carbon::createFromFormat('d/m/Y', $relation->end_date)->lte(today()))
                                 class="table-danger"
                         @elseif (
