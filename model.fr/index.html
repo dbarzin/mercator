@@ -118,7 +118,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#linfrastructure-logiques">L’infrastructure logiques</a>
+    <li class="toctree-l2"><a class="reference internal" href="#linfrastructure-logique">L’infrastructure logique</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#reseaux">Réseaux</a>
     </li>
@@ -231,7 +231,7 @@
 <h2 id="modele-de-donnees">Modèle de données</h2>
 <p><a href="/mercator/images/model.fr.png"><img src="/mercator/images/model.fr.png" width="700"></a></p>
 <h3 id="vue-du-rgpd">Vue du RGPD</h3>
-<p>La vue du RGPD contient l'ensemble des données nécessaires au maintient du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information.</p>
+<p>La vue du RGPD contient l'ensemble des données nécessaires au maintien du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information.</p>
 <p>Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.</p>
 <h4 id="registre">Registre</h4>
 <p>Le registre des activités de traitement contient les informations prévues à l'article 30.1 du RGPD.</p>
@@ -1019,7 +1019,7 @@
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du block applicatif</td>
+<td style="text-align: left;">Description du bloc applicatif</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
@@ -1166,7 +1166,7 @@
 </table>
 <h4 id="service-applicatif">Service applicatif</h4>
 <p>Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.</p>
-<p>Un service applicatif peut, une API, ...</p>
+<p>Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).</p>
 <p>Table <em>application_services</em> :</p>
 <table>
 <thead>
@@ -1389,7 +1389,7 @@
 <tr>
 <td style="text-align: left;">database_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vars la base de données source</td>
+<td style="text-align: left;">Lien vers la base de données source</td>
 </tr>
 <tr>
 <td style="text-align: left;">application_dest_id</td>
@@ -1409,7 +1409,7 @@
 <tr>
 <td style="text-align: left;">database_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la basede données destinataire</td>
+<td style="text-align: left;">Lien vers la base de données destinataire</td>
 </tr>
 <tr>
 <td style="text-align: left;">crypted</td>
@@ -1489,7 +1489,7 @@
 </table>
 <h4 id="service-dannuaire-dadministration">Service d’annuaire d’administration</h4>
 <p>Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.</p>
-<p>Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.</p>
+<p>Il peut s’agir d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.</p>
 <p>Table <em>annuaires</em>;</p>
 <table>
 <thead>
@@ -1591,7 +1591,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="linfrastructure-logiques">L’infrastructure logiques</h3>
+<h3 id="linfrastructure-logique">L’infrastructure logique</h3>
 <p>La vue de l'infrastructure logique correspond à la répartition logique du réseau.</p>
 <p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
 <p>Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.</p>
@@ -1704,7 +1704,7 @@
 <tr>
 <td style="text-align: left;">address</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Range d'adresse du sous-réseau</td>
+<td style="text-align: left;">Plage d'adresse du sous-réseau</td>
 </tr>
 <tr>
 <td style="text-align: left;">default_gateway</td>
@@ -1729,17 +1729,17 @@
 <tr>
 <td style="text-align: left;">dmz</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Zone démilitarisée</td>
 </tr>
 <tr>
 <td style="text-align: left;">wifi</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Réseau WiFi</td>
 </tr>
 <tr>
 <td style="text-align: left;">connected_subnets_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Sous-réseaux connectés</td>
 </tr>
 <tr>
 <td style="text-align: left;">gateway_id</td>
@@ -1862,7 +1862,7 @@
 <tr>
 <td style="text-align: left;">contacts</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Contactes de l'entité</td>
+<td style="text-align: left;">Contacts de l'entité</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -1882,7 +1882,7 @@
 </tbody>
 </table>
 <h4 id="commutateurs-reseau">Commutateurs réseau</h4>
-<p>Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
+<p>Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.</p>
 <p>Table <em>network_switches</em> :</p>
 <table>
 <thead>
@@ -2025,7 +2025,7 @@
 </tbody>
 </table>
 <h4 id="serveurs-dhcp">Serveurs DHCP</h4>
-<p>Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.</p>
+<p>Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.</p>
 <p>Table <em>dhcp_servers</em> :</p>
 <table>
 <thead>
@@ -2069,7 +2069,7 @@
 </tbody>
 </table>
 <h4 id="serveurs-dns">Serveurs DNS</h4>
-<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.</p>
+<p>Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant la conversion d’un nom de domaine en adresse IP.</p>
 <p>Table <em>dnsservers</em> :</p>
 <table>
 <thead>
@@ -2206,7 +2206,7 @@
 <tr>
 <td style="text-align: left;">memory</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Quantité de mémémoire</td>
+<td style="text-align: left;">Quantité de mémoire</td>
 </tr>
 <tr>
 <td style="text-align: left;">environment</td>
@@ -2323,7 +2323,7 @@
 <p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>
 <p>Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.</p>
 <h4 id="sites">Sites</h4>
-<p>Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.</p>
+<p>Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.</p>
 <p>Table <em>dnsservers</em> :</p>
 <table>
 <thead>
@@ -2662,7 +2662,7 @@
 </tbody>
 </table>
 <h4 id="peripheriques">Périphériques</h4>
-<p>Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
+<p>Les périphériques sont des composants physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)</p>
 <p>Table <em>peripherals</em> :</p>
 <table>
 <thead>
@@ -2691,7 +2691,7 @@
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du périphériques</td>
+<td style="text-align: left;">Type / modèle du périphérique</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
@@ -2726,7 +2726,7 @@
 </tbody>
 </table>
 <h4 id="telephones">Téléphones</h4>
-<p>Les téléphones fixe ou portable appartenant à l’organisation.</p>
+<p>Les téléphones fixes ou portables appartenant à l’organisation.</p>
 <table>
 <thead>
 <tr>
