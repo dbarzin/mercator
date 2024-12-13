@@ -10,7 +10,7 @@ L’objectif de Mercator est de pouvoir gérer en équipe la cartographie d'un s
 
 Le maintien d’une cartographie à jour et complète est un travail long et complexe. Mercator permet de diviser ce travail entre plusieurs équipes (infrastructure, réseau, système, application...) et de générer automatiquement les schémas d’infrastructure, d’extraire les inventaires et de générer les rapports de cartographie.
 
-Mercator à l’avantage d’être simple à utiliser, à installer et à mettre en œuvre au sein d’une organisation.
+Mercator a l’avantage d’être simple à utiliser, à installer et à mettre en œuvre au sein d’une organisation.
 
 ### Limitations
 

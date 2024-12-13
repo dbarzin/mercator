@@ -104,7 +104,7 @@ Les requêtes et URI de chaque api est représentée dans le tableau ci-dessous.
 | GET       | /api/objets/{id}   | renvoie l'objet {id}           |
 | POST 	    | /api/objets 	     | sauve un nouvel objet          |
 | PUT/PATCH | /api/objets/{id}   | met à jour l'objet {id}        |
-| DELETE 	| /api/objets/{id}   | supprimer l'objet {id}         |
+| DELETE 	| /api/objets/{id}   | supprime l'objet {id}         |
 
 Les champs à fournir sont ceux décrits dans le [modèle de données](/mercator/model/).
 
@@ -114,7 +114,7 @@ Il faut s'identifier avec un utilisateur de l'application Mercator pour pouvoir 
 Cet utilisateur doit disposer d'un rôle dans Mercator qui lui permet d'accéder / modifier les objets
 accédés par l'API.
 
-Lorsque l'authentification réussi, l'API envoie un "access_token" qui doit être passé dans
+Lorsque l'authentification réussit, l'API envoie un "access_token" qui doit être passé dans
 l'entête "Authorization" de la requête de l'API.
 
 ### Liaison entre les objets
