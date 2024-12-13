@@ -31,11 +31,9 @@
                         <th>
                             {{ trans('cruds.process.fields.operations') }}
                         </th>
-                        @if (auth()->user()->granularity>=3)
                         <th>
                             {{ trans('cruds.process.fields.activities') }}
                         </th>
-                        @endif
                         <th>
                             {{ trans('cruds.process.fields.informations') }}
                         </th>
