@@ -12,15 +12,15 @@ Cette maturité est divisée en trois niveaux correspondant aux trois niveaux de
 
 * La granularité minimale de niveau 1 qui contient les informations indispensables à la cartographie ;
 * La granularité intermédiaire de niveau 2 qui contient les informations importantes à la cartographie ;
-* La granularité fine de niveau 3 qui contient informations utiles à la gestion de la sécurité du système d'information.
+* La granularité fine de niveau 3 qui contient les informations utiles à la gestion de la sécurité du système d'information.
 
 ### Règles de calcul
 
 Un objet est conforme si toutes les informations sur l'objet ont été fournies.
 S'il manque des informations, l'objet est non-conforme.
 
-Cela peut être l'absence d'un attribut : une application sans description, l'absence d'un point de contact pour une entité, 
-la criticité qui n'est pas spécifiés... ou l'absence d'une relation avec d'autres objets : un serveur sans applications, un processus sans acteurs, 
+Cela peut être l'absence d'un attribut : une application sans description, l'absence d'un point de contact pour une entité,
+la criticité qui n'est pas spécifiés... ou l'absence d'une relation avec d'autres objets : un serveur sans applications, un processus sans acteurs,
 une application qui ne sert aucun processus...
 
 Les règles appliquées à ce calcul sont les suivantes :
@@ -74,4 +74,3 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 | Sous-réseau | 1 | doit avoir une description, une adresse IP, une passerelle par défaut, un type d'allocation d'adresse IP, un responsable d'exploitation et un VLAN |
 | Passerelle | 1 | doit avoir une description, un tupe d'authentification et une adresse IP |
 | Entité externe connectée | 1 | doit avoir un type et un contact |
-

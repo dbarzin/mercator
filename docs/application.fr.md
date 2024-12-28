@@ -10,7 +10,7 @@ La page principale est divisée en trois parties :
 
    [<img src="/mercator/images/maturity.png" width="600">](/mercator/images/maturity.png)
 
-* La répartition des objet de la cartographie par domaine 
+* La répartition des objets de la cartographie par domaine
 
    [<img src="/mercator/images/repartition.fr.png" width="600">](/mercator/images/repartition.fr.png)
 
@@ -18,13 +18,13 @@ La page principale est divisée en trois parties :
 
    [<img src="/mercator/images/treemap.fr.png" width="600">](/mercator/images/treemap.fr.png)
 
-Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnées.
+Chaque élément est sélectionnable et donne accès à la liste des objets de la cartographie sélectionnés.
 
 ### Les menus
 
 * Le menu latéral gauche permet d’accéder:
     * au tableau de bord
-    * au travers des vue, aux différents écrans de gestion des objets de la cartographie
+    * au travers des vues, aux différents écrans de gestion des objets de la cartographie
     * aux écrans de gestion des rôles et des utilisateurs
     * au bouton de déconnexion
 * Le menu supérieur donne accès :
@@ -38,12 +38,10 @@ Chaque élément est sélectionnable et donne accès à la liste des objets de l
 Il est possible d'explorer la cartographie. Cette fonction est disponible via le menu "documentation".
 
 
-- Le menu déroulant filtre permet de limiter l'exploration à un ou plusieur domaines.
+- Le menu déroulant filtre permet de limiter l'exploration à un ou plusieurs domaines.
 - Le champ "Objet" permet de sélectionner un élément de la cartographie et de l'ajouter à l'exploration.
-- Le bouton "Supprimer" permet de supprimer un élémenet de l'exploration de la cartographie.
+- Le bouton "Supprimer" permet de supprimer un élément de l'exploration de la cartographie.
 
    [<img src="/mercator/images/explore.fr.png" width="600">](/mercator/images/explore.fr.png)
 
 Un double click sur un objet affiche toutes ses connexions.
-
-

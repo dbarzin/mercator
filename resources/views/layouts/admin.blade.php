@@ -34,9 +34,7 @@
     <!-- DynamicSelect -->
     <link href="{{ asset('css/DynamicSelect.css') }}" rel="stylesheet" />
 
-    <style>
-@yield('styles')
-    </style>
+    @yield('styles')
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed pace-done sidebar-lg-show">
@@ -256,8 +254,6 @@
 
     <!--script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script-->
     <script src="/js/select2.full.min.js"></script>
-
-    <script src="{{ asset('js/main.js') }}"></script>
 
     @yield('scripts')
 

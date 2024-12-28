@@ -18,15 +18,9 @@ Route::get('/test', function () {
     return view('test');
 });
 
-// Cytoscape tests
-Route::get('/cytoscape1', function () {
-    return view('cytoscape1');
-});
-Route::get('/cytoscape2', function () {
-    return view('cytoscape2');
-});
-Route::get('/cytoscape3', function () {
-    return view('cytoscape3');
+// Maxgraph test
+Route::get('/admin/mapping', function () {
+    return view('admin.mapping');
 });
 
 // Authentification routes

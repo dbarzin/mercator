@@ -4,7 +4,7 @@
 
 ### Vue du RGPD
 
-La vue du RGPD contient l'ensemble des données nécessaires au maintient du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information.
+La vue du RGPD contient l'ensemble des données nécessaires au maintien du registre des traitements et fait le lien avec les processus, applications et informations utilisées par le système d'information.
 
 Cette vue permet de remplir les obligations prévues à l’article 30 du RGPD.
 
@@ -273,7 +273,7 @@ Table *application_blocks* :
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
 | name            | varchar(255) | Nom de l'information |
-| description     | longtext     | Description du block applicatif |
+| description     | longtext     | Description du bloc applicatif |
 | responsible     | varchar(255) | Responsable du bloc applicatif |
 | created_at      | timestamp    | Date de création |
 | updated_at      | timestamp    | Date de mise à jour |
@@ -318,7 +318,7 @@ Table *m_applications* :
 
 Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.
 
-Un service applicatif peut, une API, ...
+Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).
 
 Table *application_services* :
 
@@ -390,11 +390,11 @@ Table *fluxes* :
 | application_source_id | int unsigned | Lien vers l'application source |
 | service_source_id     | int unsigned | Lien vers le service source |
 | module_source_id      | int unsigned | Lien vers le module source |
-| database_source_id    | int unsigned | Lien vars la base de données source |
+| database_source_id    | int unsigned | Lien vers la base de données source |
 | application_dest_id   | int unsigned | Lien vers l'application destinataire  |
 | service_dest_id       | int unsigned | Lien vers le service destinataire |
 | module_dest_id        | int unsigned | Lien vers le module destinataire |
-| database_dest_id      | int unsigned | Lien vers la basede données destinataire |
+| database_dest_id      | int unsigned | Lien vers la base de données destinataire |
 | crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non) |
 | bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non)|
 | created_at            | timestamp    | Date de création |
@@ -430,7 +430,7 @@ Table *zone_admins* :
 
 Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.
 
-Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.
+Il peut s’agir d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.
 
 Table *annuaires*;
 
@@ -461,7 +461,7 @@ Table *forest_ads* :
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
-### L’infrastructure logiques
+### L’infrastructure logique
 
 La vue de l'infrastructure logique correspond à la répartition logique du réseau.
 
@@ -502,14 +502,14 @@ table *subnetworks* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du réseau |
 | description          | longtext     | Description du réseau |
-| address              | varchar(255) | Range d'adresse du sous-réseau |
+| address              | varchar(255) | Plage d'adresse du sous-réseau |
 | default_gateway      | varchar(255) | Adresse de la passerelle par défaut |
 | ip_allocation_type   | varchar(255) | Type d'allocation des adresses |
 | responsible_exp      | varchar(255) | Responsable de l'exploitation |
 | zone                 | varchar(255) | Nom de la zone firewall associée |
-| dmz                  | varchar(255) | |
-| wifi                 | varchar(255) | |
-| connected_subnets_id | int unsigned | |
+| dmz                  | varchar(255) | Zone démilitarisée |
+| wifi                 | varchar(255) | Réseau WiFi |
+| connected_subnets_id | int unsigned | Sous-réseaux connectés |
 | gateway_id           | int unsigned | Lien vars la passerelle |
 | vlan_id              | int unsigned | Lien vers le VLAN associé |
 | network_id           | int unsigned | Lien vers le réseau associé |
@@ -547,7 +547,7 @@ Table *external_connected_entities* :
 | name                 | varchar(255) | Nom de l'entité |
 | description          | longtext     | Description de l'entié |
 | responsible_sec      | varchar(255) | Responsable de la sécurité de l'entité |
-| contacts             | varchar(255) | Contactes de l'entité|
+| contacts             | varchar(255) | Contacts de l'entité |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
@@ -555,7 +555,7 @@ Table *external_connected_entities* :
 
 #### Commutateurs réseau
 
-Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.
+Les commutateurs réseau sont les composants gérant les connexions entre les différents serveurs au sein d’un réseau.
 
 Table *network_switches* :
 
@@ -604,7 +604,7 @@ Table *security_devices* :
 
 #### Serveurs DHCP
 
-Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.
+Les serveurs DHCP sont des équipements physiques ou virtuels permettant la gestion des adresses IP d’un réseau.
 
 Table *dhcp_servers* :
 
@@ -619,7 +619,7 @@ Table *dhcp_servers* :
 
 #### Serveurs DNS
 
-Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.
+Les serveurs de noms de domaine (Domain Name System) sont des équipements physiques ou virtuels permettant la conversion d’un nom de domaine en adresse IP.
 
 Table *dnsservers* :
 
@@ -662,7 +662,7 @@ Table *logical_servers* :
 | operating_system     | varchar(255) | Système d'exploitation |
 | address_ip           | varchar(255) | Adresses IP du serveur |
 | cpu                  | varchar(255) | Nombre de CPU |
-| memory               | varchar(255) | Quantité de mémémoire |
+| memory               | varchar(255) | Quantité de mémoire |
 | environment          | varchar(255) | Environnement (prod, dev, test, ...) |
 | disk                 | int          | Espace disque alloué |
 | install_date         | datetime     | Date d'installation du serveur |
@@ -707,7 +707,7 @@ Cette vue correspond à la répartition géographique des équipements réseaux 
 
 #### Sites
 
-Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.
+Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.
 
 Table *dnsservers* :
 
@@ -813,7 +813,7 @@ Table *storage_devices* :
 
 #### Périphériques
 
-Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
+Les périphériques sont des composants physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
 
 Table *peripherals* :
 
@@ -822,7 +822,7 @@ Table *peripherals* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du périphérique |
 | description          | longtext     | Description du périphérique |
-| type                 | varchar(255) | Type / modèle du périphériques |
+| type                 | varchar(255) | Type / modèle du périphérique |
 | site_id              | int unsigned | Référence vers le site |
 | building_id          | int unsigned | Référence vers le building / salle |
 | bay_id               | int unsigned | Référence vers la baie |
@@ -832,7 +832,7 @@ Table *peripherals* :
 
 #### Téléphones
 
-Les téléphones fixe ou portable appartenant à l’organisation.
+Les téléphones fixes ou portables appartenant à l’organisation.
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
