@@ -1,6 +1,10 @@
 {
   "private": true,
   "scripts": {
+<<<<<<< HEAD
+    "dev": "vite",
+    "build": "vite build"
+=======
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
@@ -9,15 +13,24 @@
     "prod": "npm run production",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "bundleup": "webpack-cli"
+<<<<<<< HEAD
+=======
+>>>>>>> 3aeb0bb3 (work on documentation)
+>>>>>>> cdfdbf0cb00f89667a3ee8dc10876072bea61b2d
   },
   "devDependencies": {
     "axios": "^1.3.5",
+    "copy-webpack-plugin": "^12.0.2",
     "cross-env": "^7.0",
+    "html-webpack-plugin": "^5.6.3",
     "laravel-mix": "^6.0.49",
     "lodash": "^4.17.19",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.15.2",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^4.0.0",
+    "laravel-vite-plugin": "^0.8.0"
   },
   "name": "Mercator",
   "description": "[![Latest Release](https://img.shields.io/github/release/dbarzin/deming.svg?style=flat-square)](https://github.com/dbarzin/deming/releases/latest) ![License](https://img.shields.io/github/license/dbarzin/deming.svg?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/dbarzin/deming.svg?style=flat-square) ![Stars](https://img.shields.io/github/stars/dbarzin/deming?style=flat-square)",
@@ -29,6 +42,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.2",
     "@fortawesome/fontawesome-free": "^6.7.1",
+    "@maxgraph/core": "^0.14.0",
     "accepts": "^1.3.8",
     "acorn": "^8.8.2",
     "acorn-import-assertions": "^1.8.0",

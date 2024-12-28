@@ -67,9 +67,9 @@ Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d�
 
 ### Conformité
 
-Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur les éléments suivants :
+Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur la présence des éléments suivants :
 
-Objet                | Niveau | Elements             |
+Objet                | Niveau | Elements requis      |
 ---------------------|--------|----------------------|
 **Ecosystème**       |
 Entités              | 1      | Description, niveau de sécurité, point de contact, au moins un processus |
