@@ -88,6 +88,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conformite">Conformité</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -163,6 +165,234 @@
 <h4 id="mises-a-jour">Mises à jour</h4>
 <p>Cette liste permet d'auditer les changements réalisés sur la cartographie.</p>
 <p>Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d’identifier les changements (créations, suppressions et modifications) par types d'objets réalisés sur la cartographie sur une année.</p>
+<h3 id="conformite">Conformité</h3>
+<p>Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur les éléments suivants :</p>
+<table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Niveau</th>
+<th>Elements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ecosystème</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Entités</td>
+<td>1</td>
+<td>Description, niveau de sécurité, point de contact, au moins un processus</td>
+</tr>
+<tr>
+<td>Relations</td>
+<td>1</td>
+<td>Description, type</td>
+</tr>
+<tr>
+<td>Relations</td>
+<td>2</td>
+<td>Importance</td>
+</tr>
+<tr>
+<td><strong>Métier</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Macro-processus</td>
+<td>2</td>
+<td>Description, niveaux de sécurité</td>
+</tr>
+<tr>
+<td>Macro-processus</td>
+<td>3</td>
+<td>Responsable</td>
+</tr>
+<tr>
+<td>Processus</td>
+<td>1</td>
+<td>Description, entrée-sorties, responsable</td>
+</tr>
+<tr>
+<td>Processus</td>
+<td>2</td>
+<td>Macro-processus, besoins de sécurité</td>
+</tr>
+<tr>
+<td>Activités</td>
+<td>2</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Opérations</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Opérations</td>
+<td>2</td>
+<td>Acteurs</td>
+</tr>
+<tr>
+<td>Opérations</td>
+<td>3</td>
+<td>Tâches</td>
+</tr>
+<tr>
+<td>Tâches</td>
+<td>3</td>
+<td>Description, tâche</td>
+</tr>
+<tr>
+<td>Acteur</td>
+<td>2</td>
+<td>Contact, nature, type</td>
+</tr>
+<tr>
+<td>Informations</td>
+<td>1</td>
+<td>Description, propriétaire, administrateur, stockage</td>
+</tr>
+<tr>
+<td>Informations</td>
+<td>2</td>
+<td>Besoins de sécurité, sensibilité</td>
+</tr>
+<tr>
+<td><strong>Système d'information</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Bloc applicatif</td>
+<td>2</td>
+<td>Description, responsable, applications</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>1</td>
+<td>Description, technologie, type, utilisateurs, processus</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>2</td>
+<td>Responsable, niveaux de sécurité</td>
+</tr>
+<tr>
+<td>Application Services</td>
+<td>2</td>
+<td>Description, applications</td>
+</tr>
+<tr>
+<td>Application Modules</td>
+<td>2</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Base de données</td>
+<td>1</td>
+<td>Description, type, entité responsable, responsable</td>
+</tr>
+<tr>
+<td>Base de données</td>
+<td>2</td>
+<td>Besoins de sécurité</td>
+</tr>
+<tr>
+<td>Flux</td>
+<td>1</td>
+<td>Description, source, destination</td>
+</tr>
+<tr>
+<td><strong>Administration</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Zones</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Annuaires</td>
+<td>1</td>
+<td>Description, solution, zone d'administration</td>
+</tr>
+<tr>
+<td>Forêt</td>
+<td>1</td>
+<td>Description, zone d'administration</td>
+</tr>
+<tr>
+<td>Domaines</td>
+<td>1</td>
+<td>Description, Contrôleur de domaine, nombre d'utilisateurs, nombre de machines, relation inter domaine</td>
+</tr>
+<tr>
+<td><strong>Logique</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Réseaux</td>
+<td>1</td>
+<td>Description, responsable, responsable sécurité, besoins de sécurité</td>
+</tr>
+<tr>
+<td>Sous-réseaux</td>
+<td>1</td>
+<td>Description, adresse, passerelle par défaut, type d'allocation IP, DMZ, WiFi, VLAN</td>
+</tr>
+<tr>
+<td>Passerelles</td>
+<td>1</td>
+<td>Description, authentification, range IP</td>
+</tr>
+<tr>
+<td>Entités externes connectées</td>
+<td>2</td>
+<td>Type, contacts</td>
+</tr>
+<tr>
+<td>Commutateurs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Routeurs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Dispositifs de sécurité</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Clusters</td>
+<td>1</td>
+<td>Description, type</td>
+</tr>
+<tr>
+<td>Serveurs logiques</td>
+<td>1</td>
+<td>Description, OS, environnement, adresse IP, applications, serveurs physique ou clusters</td>
+</tr>
+<tr>
+<td>Certificats</td>
+<td>2</td>
+<td>Description, Type, date de début de validité, date de fin de validité, applications ou serveur logique</td>
+</tr>
+<tr>
+<td><strong>Infrastructure physique</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>
