@@ -444,7 +444,7 @@ class HomeController extends Controller
                             ->where('module_dest_id', '<>', null)
                             ->where('database_dest_id', '<>', null);
                     })
-                    ->where('crypted', '<>', null)
+                    // ->where('crypted', '<>', null)
                     ->count(),
 
             // Administration
