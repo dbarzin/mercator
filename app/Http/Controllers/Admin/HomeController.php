@@ -621,13 +621,6 @@ class HomeController extends Controller
                     ->where('building_id', '<>', null)
                     ->count(),
 
-            'phones' => Phone::count(),
-            'phones' => Phone
-                ::where('description', '<>', null)
-                    ->where('site_id', '<>', null)
-                    ->where('building_id', '<>', null)
-                    ->count(),
-
             'storageDevices' => StorageDevice::count(),
             'storageDevices_lvl1' => StorageDevice
                 ::where('description', '<>', null)
