@@ -64,28 +64,50 @@
                     </table>
 
                     <div id="app-container" style="display: flex; height: 100vh;">
-                      <div id="sidebar" style="width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
+                        <div id="sidebar" style="width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
-                        <i id="tag" class="fas fa-folder" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        <i id="tag" class="fas fa-save" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        ---
-                        <i id="tag" class="fas fa-rotate-left" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        <i id="tag" class="fas fa-rotate-right" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        --
-                        <i id="tag" class="fas fa-pencil" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        <i id="tag" class="fas fa-palette" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        ---
-                        <i id="tag" class="fas fa-object-group" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        <i id="tag" class="fas fa-object-ungroup" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
-                        ---
-                        <i id="zoom-in-btn" class="fas fa-plus" style="width: 20px; height: 20px; color: #000000;display: block;""></i>
-                        <i id="zoom-out-btn" class="fas fa-minus" style="width: 20px; height: 20px; color: #000000;display: block;"></i>
+                            <i id="tag" class="mapping-icon fas fa-folder"></i>
+                            <i id="tag" class="mapping-icon fas fa-save"></i>
+                            ---
+                            <i id="tag" class="mapping-icon fas fa-rotate-left"></i>
+                            <i id="tag" class="mapping-icon fas fa-rotate-right"></i>
+                            --
+                            <i id="tag" class="mapping-icon fas fa-pencil"></i>
+                            <i id="tag" class="mapping-icon fas fa-palette"></i>
+                            ---
+                            <i id="group-btn" class="mapping-icon fas fa-object-group"></i>
+                            <i id="ungroup-btn" class="mapping-icon fas fa-object-ungroup"></i>
+                            ---
+                            <i id="zoom-in-btn" class="mapping-icon fas fa-plus"></i>
+                            <i id="zoom-out-btn" class="mapping-icon fas fa-minus"></i>
 
-                      </div>
+                        </div>
+
+                        <!-- Context Menu for edges -->
+                        <div id="context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
+                            <label for="edge-color-select">Couleur :</label>
+                            <select id="edge-color-select">
+                                <option value="#000000">Noir</option>
+                                <option value="#ff0000">Rouge</option>
+                                <option value="#00ff00">Vert</option>
+                                <option value="#0000ff">Bleu</option>
+                                <option value="#ffa500">Orange</option>
+                            </select>
+                            <br>
+                            <label for="edge-thickness-select">Épaisseur :</label>
+                            <select id="edge-thickness-select">
+                                <option value="1">1 px</option>
+                                <option value="2">2 px</option>
+                                <option value="3">3 px</option>
+                                <option value="4">4 px</option>
+                                <option value="5">5 px</option>
+                            </select>
+                            <br>
+                            <button id="apply-edge-style">Appliquer</button>
+                        </div>
+
                       <div id="graph-container" style="flex: 1; background: #fff;"></div>
                     </div>
-
-                    <!-- div id="graph-container" style="width: 100%; height: 600px"></div-->
                 </div>
             </div>
         </div>
