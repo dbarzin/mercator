@@ -67,9 +67,9 @@ Une cartographie qui ne change jamais n’est pas à jour. Ce rapport permet d�
 
 ### Conformité
 
-Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur les éléments suivants :
+Le calcul des niveaux de conformité pour chaque objet de la cartographie est basé sur la présence des éléments suivants :
 
-Objet                | Niveau | Elements             |
+Objet                | Niveau | Elements requis      |
 ---------------------|--------|----------------------|
 **Ecosystème**       |
 Entités              | 1      | Description, niveau de sécurité, point de contact, au moins un processus |
@@ -113,4 +113,18 @@ Dispositifs de sécurité | 1    | Description |
 Clusters             |  1     | Description, type |  
 Serveurs logiques    | 1      | Description, OS, environnement, adresse IP, applications, serveurs physique ou clusters |
 Certificats          | 2      | Description, Type, date de début de validité, date de fin de validité, applications ou serveur logique |
-**Infrastructure physique** |
+**Infrastructure physique**   |
+Sites                | 1      | Description |
+Buildings            | 1      | Description |
+Baies                | 1      | Description |
+Serveurs physique    | 1      | Description, configuration, site, building, responsable |
+Poste de travail     | 1      | Description, site, building |
+Téléphones           | 1      | Description, site, building |
+Stockage             | 1      | Description, site, building |
+Périphériques        | 1      | Description, site, building, responsable |
+Commutateurs physique | 1     | Description, type, site, building |
+Routeurs physique    | 1      | Description, type, site, building |
+Terminaux WiFi        | 1      | Description, type, site, building |
+Dispositifs de sécurité physique | 1 | Description, type, site, building |
+LANs                  | 1 | Description |
+VLans                | 1 | Description |
