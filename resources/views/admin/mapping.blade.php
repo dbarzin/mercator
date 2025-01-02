@@ -72,7 +72,7 @@
                             <i id="tag" class="mapping-icon fas fa-rotate-left"></i>
                             <i id="tag" class="mapping-icon fas fa-rotate-right"></i>
                             --
-                            <i id="tag" class="mapping-icon fas fa-pencil"></i>
+                            <i id="font-btn" class="mapping-icon fas fa-font"></i>
                             <i id="tag" class="mapping-icon fas fa-palette"></i>
                             ---
                             <i id="group-btn" class="mapping-icon fas fa-object-group"></i>
@@ -106,7 +106,7 @@
                             <button id="apply-edge-style">Appliquer</button>
                         </div>
 
-                      <div id="graph-container" style="flex: 1; background: #fff;"></div>
+                    <div id="graph-container" style="position: relative; overflow: hidden; width: 800px; height: 600px; cursor: default; touch-action: none;">
                     </div>
                 </div>
             </div>
