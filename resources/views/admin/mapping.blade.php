@@ -72,7 +72,7 @@
                             <i id="tag" class="mapping-icon fas fa-rotate-left"></i>
                             <i id="tag" class="mapping-icon fas fa-rotate-right"></i>
                             --
-                            <i id="font-btn" class="mapping-icon fas fa-font"></i>
+                            <i id="font-btn" class="mapping-icon fas fa-font" draggable="true"></i>
                             <i id="tag" class="mapping-icon fas fa-palette"></i>
                             ---
                             <i id="group-btn" class="mapping-icon fas fa-object-group"></i>
