@@ -119,8 +119,6 @@ class EntityController extends Controller
 
     public function update(UpdateEntityRequest $request, Entity $entity)
     {
-        $entity->is_external = $request->has('is_external');
-
         // Save icon
         if (($request->files !== null) && $request->file('iconFile') !== null) {
             $file = $request->file('iconFile');
@@ -144,7 +142,10 @@ class EntityController extends Controller
             $entity->icon_id = null;
         }
 
-        // Get fields
+        // set is_external
+        $request['is_external'] = $request->has('is_external');
+
+        // Update fields
         $entity->update($request->all());
 
         // Save relations
