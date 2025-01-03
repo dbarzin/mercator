@@ -2137,7 +2137,7 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
-        $col = 'A';
+        $i = 0;
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // block
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // name
         $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // description
@@ -2152,16 +2152,16 @@ class ReportController extends Controller
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // users
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // external
         // CIAT
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         if (config('mercator-config.parameters.security_need_auth')) {
-            $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+            $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         // RTO - RPO
@@ -2184,7 +2184,7 @@ class ReportController extends Controller
         $row = 2;
         foreach ($applicationBlocks as $applicationBlock) {
             foreach ($applicationBlock->applications as $application) {
-                $col = 'A';
+                $i = 0;
                 $sheet->setCellValue(self::col($i++) . $row, $applicationBlock->name);
                 $sheet->setCellValue(self::col($i++) . $row, $application->name);
                 $sheet->setCellValue(self::col($i++) . $row, $html->toRichTextObject($application->description));
@@ -2199,20 +2199,20 @@ class ReportController extends Controller
                 $sheet->setCellValue(self::col($i++) . $row, $application->users);
                 $sheet->setCellValue(self::col($i++) . $row, $application->external);
 
-                $sheet->setCellValue($col . $row, $application->security_need_c);
+                $sheet->setCellValue(self::col($i) . $row, $application->security_need_c);
                 $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_c);
 
-                $sheet->setCellValue($col . $row, $application->security_need_i);
+                $sheet->setCellValue(self::col($i) . $row, $application->security_need_i);
                 $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_i);
 
-                $sheet->setCellValue($col . $row, $application->security_need_a);
+                $sheet->setCellValue(self::col($i) . $row, $application->security_need_a);
                 $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_a);
 
-                $sheet->setCellValue($col . $row, $application->security_need_t);
+                $sheet->setCellValue(self::col($i) . $row, $application->security_need_t);
                 $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_t);
 
                 if (config('mercator-config.parameters.security_need_auth')) {
-                    $sheet->setCellValue($col . $row, $application->security_need_auth);
+                    $sheet->setCellValue(self::col($i) . $row, $application->security_need_auth);
                     $this->addSecurityNeedColor($sheet, self::col($i++) . $row, $application->security_need_auth);
                 }
 
