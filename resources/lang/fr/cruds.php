@@ -1146,7 +1146,7 @@ return [
         'lists' => [
             'applications' => 'Applications par groupe applicatif',
             'applications_helper' => 'Liste des applications par groupe applicatif',
-            'entities' => 'Entités et application supportées',
+            'entities' => 'Entités et applications supportées',
             'entities_helper' => "Liste des entités du système d'information et de leurs applications supportées",
             'logical_server_configurations' => 'Configuration des serveurs logiques',
             'logical_server_configurations_helper' => 'Liste de la configuration des serveurs logiques',
