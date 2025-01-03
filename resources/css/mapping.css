@@ -193,3 +193,9 @@ footer {
     display: block;
     cursor: pointer;
 }
+
+/* Exemple de style pour un groupe */
+.group {
+    background-color: rgba(0, 0, 0, 0); /* Fond transparent */
+    border: none; /* Si vous ne voulez pas de bordure */
+}

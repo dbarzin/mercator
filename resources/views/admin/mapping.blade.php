@@ -66,20 +66,17 @@
                     <div id="app-container" style="display: flex; height: 100vh;">
                         <div id="sidebar" style="width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
-                            <i id="tag" class="mapping-icon fas fa-folder"></i>
-                            <i id="tag" class="mapping-icon fas fa-save"></i>
-                            ---
-                            <i id="tag" class="mapping-icon fas fa-rotate-left"></i>
-                            <i id="tag" class="mapping-icon fas fa-rotate-right"></i>
-                            --
-                            <i id="font-btn" class="mapping-icon fas fa-font"></i>
-                            <i id="tag" class="mapping-icon fas fa-palette"></i>
-                            ---
-                            <i id="group-btn" class="mapping-icon fas fa-object-group"></i>
-                            <i id="ungroup-btn" class="mapping-icon fas fa-object-ungroup"></i>
-                            ---
+                            <i id="tag" title="Open" class="mapping-icon fas fa-folder"></i>
+                            <i id="tag" title="Save" class="mapping-icon fas fa-save"></i>
+                            <i id="undoButton" title="Undo" class="mapping-icon fas fa-rotate-left"></i>
+                            <i id="redoButton" title="Redo" class="mapping-icon fas fa-rotate-right"></i>
+                            <i id="font-btn" title="Text" class="mapping-icon fas fa-font" draggable="true"></i>
+                            <i id="square-btn" title="Border" class="mapping-icon fas fa-vector-square" draggable="true"></i>
+                            <i id="group-btn" title="Group" class="mapping-icon fas fa-object-group"></i>
+                            <i id="ungroup-btn" title="Ungroup" class="mapping-icon fas fa-object-ungroup"></i>
                             <i id="zoom-in-btn" class="mapping-icon fas fa-plus"></i>
                             <i id="zoom-out-btn" class="mapping-icon fas fa-minus"></i>
+                            <i id="download-btn" class="mapping-icon fas fa-download"></i>
 
                         </div>
 
