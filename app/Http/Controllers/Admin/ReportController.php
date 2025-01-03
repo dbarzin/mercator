@@ -2137,7 +2137,7 @@ class ReportController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
-        $col = 'A';
+        $i = 0;
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // block
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // name
         $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // description
@@ -2152,13 +2152,13 @@ class ReportController extends Controller
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // users
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // external
         // CIAT
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension($col)->setWidth(10, 'pt');
+        $sheet->getColumnDimension(self::col($i))->setWidth(10, 'pt');
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension($col)->setWidth(10, 'pt');
@@ -2184,7 +2184,7 @@ class ReportController extends Controller
         $row = 2;
         foreach ($applicationBlocks as $applicationBlock) {
             foreach ($applicationBlock->applications as $application) {
-                $col = 'A';
+                $i = 0;
                 $sheet->setCellValue(self::col($i++) . $row, $applicationBlock->name);
                 $sheet->setCellValue(self::col($i++) . $row, $application->name);
                 $sheet->setCellValue(self::col($i++) . $row, $html->toRichTextObject($application->description));
