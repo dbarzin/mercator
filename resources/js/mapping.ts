@@ -7,7 +7,8 @@ import {
     RubberBandHandler,
     GraphDataModel,
     mxEvent,
-    PanningHandler
+    PanningHandler,
+    InternalEvent
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -25,37 +26,61 @@ const plugins: GraphPluginConstructor[] = [
 const container = document.getElementById('graph-container');
 const div = document.createElement('div');
 const graph = new Graph(container, new GraphDataModel(), plugins);
+const model = graph.getDataModel();
 
 //-----------------------------------------------------------------------
 // Initialiser l'UndoManager
+
+// Crée un UndoManager
 const undoManager = new UndoManager();
-const model = graph.getDataModel();
 
-// Écouter les modifications et les ajouter à l'UndoManager
-model.addListener('change', (sender, evt) => {
-    undoManager.undoableEditHappened(evt.getProperty('edit'));
+// Fonction pour enregistrer les modifications dans l'UndoManager
+function registerUndoManager(graph: Graph, undoManager: UndoManager) {
+  const listener = (sender: any, evt: any) => {
+    const edit = evt.getProperty('edit') as UndoableEdit;
+    undoManager.undoableEditHappened(edit);
+  };
+
+  model.addListener(InternalEvent.UNDO, listener);
+  graph.getView().addListener(InternalEvent.UNDO, listener);
+}
+
+// Enregistre les modifications pour Undo/Redo
+registerUndoManager(graph, undoManager);
+
+// Boutons pour Undo/Redo
+const undoButton = document.getElementById('undoButton') as HTMLButtonElement;
+const redoButton = document.getElementById('redoButton') as HTMLButtonElement;
+
+undoButton.addEventListener('click', () => {
+  if (undoManager.canUndo()) {
+    undoManager.undo();
+  }
 });
 
-// Ajouter le gestionnaire à l'événement "undoableEditHappened"
-//graph.getModel().addListener(mxEvent.UNDO, listener);
-//graph.getView().addListener(mxEvent.UNDO, listener);
-
-// Écouter les raccourcis clavier pour annulation (Ctrl+Z)
-document.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
-        console.log('undo');
-        undoManager.undo(); // Exécuter l'annulation
-        event.preventDefault(); // Empêcher le comportement par défaut du navigateur
-    }
+redoButton.addEventListener('click', () => {
+  if (undoManager.canRedo()) {
+    undoManager.redo();
+  }
 });
 
-// Optionnel : Ajouter un raccourci pour refaire (Ctrl+Y)
-document.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'y') {
-        console.log('redo');
-        undoManager.redo(); // Exécuter la restauration
-        event.preventDefault();
+// Gestionnaire pour les raccourcis clavier
+document.addEventListener('keydown', (event: KeyboardEvent) => {
+  if (event.ctrlKey && event.key === 'z') {
+    // Ctrl+Z pour Undo
+    event.preventDefault();
+    if (undoManager.canUndo()) {
+      undoManager.undo();
     }
+  } else if (
+    (event.ctrlKey && event.key === 'y') || // Ctrl+Y pour Redo
+    (event.ctrlKey && event.shiftKey && event.key === 'z') // Ctrl+Shift+Z pour Redo
+  ) {
+    event.preventDefault();
+    if (undoManager.canRedo()) {
+      undoManager.redo();
+    }
+  }
 });
 
 // --------------------------------------------------------------------------------
@@ -67,25 +92,53 @@ const applyButton = document.getElementById('apply-edge-style');
 
 let selectedEdge = null;
 
-// Afficher le menu contextuel lors d'un clic droit sur une arête
 graph.container.addEventListener('contextmenu', (event) => {
     event.preventDefault();
     const cell = graph.getCellAt(event.offsetX, event.offsetY);
+    if (cell==null)
+        return;
+
+    //console.log(cell);
 
     // Vérifier si l'élément cliqué est une arête
-    if (cell && cell.isEdge()) {
+    if (cell.isEdge()) {
         selectedEdge = cell;
+
+        // Obtenir la position de la souris lors du drop
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
 
         // Afficher le menu contextuel
         contextMenu.style.display = 'block';
-        contextMenu.style.left = `${event.pageX}px`;
-        contextMenu.style.top = `${event.pageY}px`;
+        contextMenu.style.left = `${x+75}px`;
+        contextMenu.style.top = `${y+100}px`;
 
         // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
         const currentStyle = graph.getCellStyle(cell);
         colorSelect.value = currentStyle.strokeColor || '#000000';
         thicknessSelect.value = currentStyle.strokeWidth || '1';
-    } else {
+    }
+    else if (cell.isVertex()) {
+        if (cell.style.image==null) {
+            selectedEdge = cell;
+            // Obtenir la position de la souris lors du drop
+            const rect = container.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Afficher le menu contextuel
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = `${x+75}px`;
+            contextMenu.style.top = `${y+100}px`;
+
+            // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
+            const currentStyle = graph.getCellStyle(cell);
+            colorSelect.value = currentStyle.strokeColor || '#000000';
+            thicknessSelect.value = currentStyle.strokeWidth || '1';
+        }
+    }
+    else {
         contextMenu.style.display = 'none';
     }
 });
@@ -93,17 +146,31 @@ graph.container.addEventListener('contextmenu', (event) => {
 // Appliquer les changements de style à l'arête sélectionnée
 applyButton.addEventListener('click', () => {
     if (selectedEdge) {
-        graph.batchUpdate(() => {
-            const style = graph.getCellStyle(selectedEdge);
-            graph.setCellStyle({
-                ...style,
-                strokeColor: colorSelect.value,
-                strokeWidth: parseInt(thicknessSelect.value, 10),
-            }, [selectedEdge]);
-        });
+        console.log("update");
+        if (selectedEdge.style.image==null) {
+            graph.batchUpdate(() => {
+                const style = graph.getCellStyle(selectedEdge);
+                console.log(style);
+                graph.setCellStyle({
+                    ...style,
+                    fillColor: colorSelect.value,
+                    strokeWidth: parseInt(thicknessSelect.value, 10),
+                }, [selectedEdge]);
+            });
+        }
+        else
+            graph.batchUpdate(() => {
+                const style = graph.getCellStyle(selectedEdge);
+                graph.setCellStyle({
+                    ...style,
+                    strokeColor: colorSelect.value,
+                    strokeWidth: parseInt(thicknessSelect.value, 10),
+                }, [selectedEdge]);
+            });
     }
     // Fermer le menu contextuel
     contextMenu.style.display = 'none';
+
 });
 
 // Cacher le menu contextuel en cliquant ailleurs
@@ -270,7 +337,20 @@ graph.batchUpdate(() => {
 
     const e4 = graph.insertEdge({ parent, value: '', source: b3, target: bay1 });
     const e5 = graph.insertEdge({ parent, value: '', source: b3, target: bay2 });
-    const e6 = graph.insertEdge({ parent, value: '', source: b3, target: bay3 });
+    const e6 = graph.insertEdge(
+        { parent,
+            value: '',
+            source: b3,
+            target: bay3,
+            style: {
+            editable: false, //  Ne pas autoriser de changer le label
+                stroke: '#FF', // Edge color
+                strokeWidth: 1,
+                startArrow : 'none', // pas de flèche
+                endArrow : 'none' // pas de flèche
+            },
+        }
+    );
 
     // Ajouter un nœud avec du texte
     graph.insertVertex({
@@ -290,7 +370,7 @@ graph.batchUpdate(() => {
 });
 
 //-------------------------------------------------------------------------
-// Ajoute de texte
+// Ajout de texte
 const fontIcon = document.getElementById('font-btn');
 
 fontIcon.addEventListener('dragstart', (event) => {
@@ -328,6 +408,54 @@ container.addEventListener('drop', (event) => {
                 },
             });
             vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
+        });
+    }
+});
+
+
+//-------------------------------------------------------------------------
+// Ajout de carré
+const squareIcon = document.getElementById('square-btn');
+
+squareIcon.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('node-type', 'square-node');
+});
+
+container.addEventListener('dragover', (event) => {
+    event.preventDefault(); // Nécessaire pour autoriser le drop
+});
+
+container.addEventListener('drop', (event) => {
+    event.preventDefault();
+
+    if (event.dataTransfer.getData('node-type')=='square-node') {
+        // Obtenir la position de la souris lors du drop
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // Ajouter un nouveau nœud à l'emplacement du drop
+        graph.batchUpdate(() => {
+
+            // Ajouter le carré
+            const parent = graph.getDefaultParent();
+            const vertex = graph.insertVertex({
+                parent,
+                // id: "square", // TODO : générer unique ID
+                value: '', // Pas de texte pour le conteneur
+                position: [x, y], // Position du groupe
+                size: [150, 120], // Taille du groupe
+                style: {
+                    fillColor: '#fffacd', // Fond jaune pâle
+                    strokeColor: '#000000', // Bordure noire
+                    strokeWidth: 1, // Épaisseur de la bordure
+                    rounded: 2, // Coins arrondis
+                },
+            });
+            // Mettre en arrière plan
+            graph.orderCells(true, [vertex]);
+
+            // vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
         });
     }
 });
@@ -446,7 +574,7 @@ groupButton.addEventListener('click', () => {
             0,
             100,
             100,
-            'groupStyle'
+            'mxGroup'
         );
 
         // Ajouter le conteneur au graphe
@@ -468,3 +596,56 @@ ungroupButton.addEventListener('click', () => {
         graph.setSelectionCells(cells);
     }
 });
+
+
+//---------------------------------------------------------------------------
+// Export SVG
+
+// Exporter en SVG avec intégration des images
+const svgElement = graph.container.querySelector('svg');
+
+function embedImagesInSVG(svgElement) {
+  const images = svgElement.querySelectorAll('image');
+
+  images.forEach((img) => {
+    const href = img.getAttribute('xlink:href');
+
+    // Charger l'image et convertir en base64
+    fetch(href)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          img.setAttribute('xlink:href', reader.result); // Intègre l'image base64
+        };
+        reader.readAsDataURL(blob);
+      });
+  });
+}
+
+// Fonction de téléchargement
+function downloadSVG() {
+  embedImagesInSVG(svgElement);
+
+  setTimeout(() => {
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(svgElement);
+
+    // Créer un blob pour le fichier SVG
+    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    // Créer un lien pour télécharger
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'graph_with_images.svg';
+    link.click();
+
+    // Nettoyage
+    URL.revokeObjectURL(url);
+  }, 1000); // Attendre la conversion des images
+}
+
+// Ajoutez un bouton pour déclencher l'exportation
+const exportButton = document.getElementById('download-btn');
+exportButton.addEventListener('click', downloadSVG);
