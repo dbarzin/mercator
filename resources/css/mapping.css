@@ -183,13 +183,13 @@ footer {
   overflow: hidden;
 }
 
-/*-----------------------------------------------------------------*
+/*----------------------------------------------------------------*/
 /* Buttons */
 
 .mapping-icon {
     width: 20px;
     height: 20px;
-    color: #000000;
+	color: #7C123E;
     display: block;
     cursor: pointer;
 }
@@ -198,4 +198,36 @@ footer {
 .group {
     background-color: rgba(0, 0, 0, 0); /* Fond transparent */
     border: none; /* Si vous ne voulez pas de bordure */
+}
+
+/*-----------------------------------------------------------------*
+/* Maximisation */
+/* Style pour le div */
+.resizable-div {
+    position: relative;
+	border: 0px solid #ffffff;
+	background-color: #ffffff;
+	padding: 0px;
+    overflow: hidden;
+}
+
+/* Bouton pour maximiser */
+.maximize-icon {
+    background: transparent; /* Pas de fond pour l'icône */
+    border: none; /* Pas de bordure */
+    cursor: pointer; /* Curseur interactif */
+}
+
+/* Style pour le div maximisé */
+.maximized {
+    position: fixed;
+	top: 50px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background-color: #fff; /* Couleur de fond pour maximiser */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto;
 }

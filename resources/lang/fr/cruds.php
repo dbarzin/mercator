@@ -607,6 +607,17 @@ return [
         'title_short' => 'Passerelles',
         'title_singular' => 'Passerelle d’entrée depuis l’extérieur',
     ],
+    'graph' => [
+        'description' => 'Dessin de la cartographie du système d\'information',
+        'fields' => [
+            'name' => 'Nom',
+            'name_helper' => 'Nom de la carte',
+            'type' => 'Type',
+            'name_helper' => 'Type de carte',
+        ],
+        'title' => 'Cartes',
+        'title_singular' => 'Carte',
+    ],
     'information' => [
         'description' => 'Donnée faisant l’objet d’un traitement informatique.',
         'fields' => [

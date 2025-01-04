@@ -205,6 +205,59 @@ container.style.backgroundSize = '10px 10px'; // Taille des cellules de la grill
 graph.setPanning(true); // Active le panning global
 
 //-------------------------------------------------------------------------
+// LOAD / SAVE
+
+// Fonction pour sauvegarder le graphe
+function saveGraph() {
+  const encoder = new mxCodec();
+  const node = encoder.encode(graph.getModel());
+
+  // Convertir l'XML en chaîne de caractères
+  const xml = mxUtils.getXml(node);
+
+  // Télécharger le fichier XML
+  const blob = new Blob([xml], { type: 'text/xml' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'graph.xml';
+  link.click();
+
+  // Nettoyage
+  URL.revokeObjectURL(url);
+}
+
+// Fonction pour recharger le graphe
+function loadGraph(xml: string) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xml, 'text/xml');
+  const decoder = new mxCodec(doc);
+
+  // Décoder et charger le modèle dans le graphe
+  decoder.decode(doc.documentElement, graph.getModel());
+}
+
+// Ajouter un bouton pour sauvegarder
+const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
+saveButton.addEventListener('click', saveGraph);
+
+/*
+// Ajouter un bouton pour recharger
+const loadInput = document.getElementById('Button') as HTMLInputElement;
+loadInput.addEventListener('change', (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const xml = reader.result as string;
+      loadGraph(xml);
+    };
+    reader.readAsText(file);
+  }
+});
+*/
+
+//-------------------------------------------------------------------------
 // Données de test --------------------------------------------------------
 //-------------------------------------------------------------------------
 
