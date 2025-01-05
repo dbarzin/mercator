@@ -18,6 +18,7 @@ class Graph extends Model
 
     public static $searchable = [
         'name',
+        'type'
     ];
 
     protected $dates = [
@@ -27,13 +28,10 @@ class Graph extends Model
     ];
 
     protected $fillable = [
-        'name'
+        'name',
+        'type',
+        'content'
     ];
-
-    public function document()
-    {
-        return $this->belongsTo(Document::class, 'document_id');
-    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

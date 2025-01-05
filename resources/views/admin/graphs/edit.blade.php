@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action='{{ route("admin.graphs.update", [$graph->id]) }}' enctype="multipart/form-data" id="grahForm">
+    <input name='id' type='hidden' value='{{$graph->id}}' id="id"/>
+    @method('PUT')
+    @csrf
 <div class="card">
     <div class="card-header">
         Cartographier
@@ -8,7 +12,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label class="required" for="name">Nom de la carte</label>
+                    <label class="required" for="name">{{ trans('cruds.graph.fields.name') }}</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $graph->name) }}" required maxlength="32">
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
@@ -20,9 +24,9 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="type">{{ trans('cruds.graph.fields.type') }}</label>
-                    <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type" maxlength='64'>
+                    <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
                         @if (!$type_list->contains(old('type')))
-                            <option> {{ old('type') }}</option>'
+                            <option> {{ old('type') }}</option>
                         @endif
                         @foreach($type_list as $t)
                             <option {{ (old('type') ? old('type') : $graph->type) == $t ? 'selected' : '' }}>{{$t}}</option>
@@ -35,7 +39,6 @@
                     @endif
                 </div>
             </div>
-
         </div>
         <div class="row resizable-div" id="myDiv">
             <div class="col-lg-12">
@@ -153,7 +156,7 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.sites.index') }}">
+        <a class="btn btn-default" href="{{ route('admin.graphs.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
         <button class="btn btn-danger" type="submit">
@@ -171,8 +174,14 @@
 @vite('resources/js/mapping.ts')
 
 <script>
+$(document).ready(function () {
     // initialize select2
     $('.select2').select2();
+    $('.select2-free').select2({
+        placeholder: "{{ trans('global.pleaseSelect') }}",
+        allowClear: true,
+        tags: true
+    });
 
     // clear selections
     $('#filters').val(null);
@@ -194,6 +203,7 @@
             if (sidebar) sidebar.style.display = 'none'; // Masquer l'en-tête
         }
     });
+});
 
 </script>
 @endsection

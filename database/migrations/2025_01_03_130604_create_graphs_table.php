@@ -17,8 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type')->nullable();
-            $table->unsignedInteger('document_id')->index('document_id_fk_59300438')->nullable();
-            $table->foreign('document_id', 'document_id_fk_59300438')->references('id')->on('documents')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->longText('content')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->unique(['name', 'deleted_at'], 'graphs_name_unique');
@@ -67,13 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // drop foreign key
-        Schema::table('graphs', function (Blueprint $table) {
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->dropForeign('document_id_fk_59300438');
-            }
-        });
-
         // Drop tabke
         Schema::dropIfExists('graphs');
 

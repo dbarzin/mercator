@@ -314,8 +314,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Graphs
     Route::resource('graphs', Admin\GraphController::class);
-    Route::delete('graphs-destroy', [Admin\GraphsController::class,'massDestroy'])->name('graphs.massDestroy');
-    Route::get('graphs/clone/{id}', [Admin\GraphsController::class,'clone'])->name('graphs.clone');
+    Route::delete('graphs-destroy', [Admin\GraphController::class,'massDestroy'])->name('graphs.massDestroy');
+    Route::get('graphs/clone/{id}', [Admin\GraphController::class,'clone'])->name('graphs.clone');
 
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class,'explore'])->name('report.explore');

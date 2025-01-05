@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Graph;
-use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
-use App\Http\Requests\StoreGraphRequest;
-use App\Http\Requests\UpdateGraphRequest;
+//use App\Http\Requests\StoreGraphRequest;
+//use App\Http\Requests\UpdateGraphRequest;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +31,7 @@ class GraphController extends Controller
         $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // create the graph
-        $graph = Graph::create(["name"=> $name, "type" => null, "document_id" => null]);
+        $graph = Graph::create(["name"=> $name, "type" => null, "content" => null]);
 
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
@@ -61,7 +60,8 @@ class GraphController extends Controller
         return view('admin.graphs.edit', $newGraph);
     }
 
-    public function store(StoreGraphRequest $request)
+/*
+    public function store(Request $request)
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -69,7 +69,7 @@ class GraphController extends Controller
 
         return redirect()->route('admin.graphs.index');
     }
-
+*/
     public function edit(Graph $graph)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -80,11 +80,23 @@ class GraphController extends Controller
         return view('admin.graphs.edit', compact('graph', 'type_list'));
     }
 
-    public function update(UpdateGraphRequest $request, Graph $graph)
+    public function update(Request $request)
     {
+        abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get the graph
+        $graph = Graph::find($request->id);
+
+        // Control not found
+        abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        // set value
         $graph->update($request->all());
 
-        return redirect()->route('admin.graphs.index');
+        // save
+        $graph->update();
+
+        return response()->json();
     }
 
     public function show(Graph $graph)

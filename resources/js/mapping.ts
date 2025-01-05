@@ -8,7 +8,8 @@ import {
     GraphDataModel,
     mxEvent,
     PanningHandler,
-    InternalEvent
+    InternalEvent,
+    ModelXmlSerializer
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -207,34 +208,50 @@ graph.setPanning(true); // Active le panning global
 //-------------------------------------------------------------------------
 // LOAD / SAVE
 
+async function saveGraphToDatabase(id: integer, name: string, type: string, content: string): Promise<void> {
+  console.log('saveGraphToDatabase:' + id + ' name:' + name);
+
+  try {
+    const response = await fetch('/admin/graphs/' + id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '',
+      },
+      body: JSON.stringify({ id: id, name: name, type: type, content: content }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
+    }
+
+    const data = await response.json();
+    console.log('Graphe sauvegardé avec succès :', data.graph);
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde :', error);
+    alert('Erreur lors de la sauvegarde du graphe.');
+  }
+}
+
+
 // Fonction pour sauvegarder le graphe
 function saveGraph() {
-  const encoder = new mxCodec();
-  const node = encoder.encode(graph.getModel());
+    const xml = new ModelXmlSerializer(model).export();
 
-  // Convertir l'XML en chaîne de caractères
-  const xml = mxUtils.getXml(node);
+    //console.log(xml);
 
-  // Télécharger le fichier XML
-  const blob = new Blob([xml], { type: 'text/xml' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'graph.xml';
-  link.click();
-
-  // Nettoyage
-  URL.revokeObjectURL(url);
+    // saveGraphToDatabase
+    saveGraphToDatabase(
+        document.querySelector('#id').value,
+        document.querySelector('#name').value,
+        document.querySelector('#type').value,
+        xml);
 }
 
 // Fonction pour recharger le graphe
 function loadGraph(xml: string) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(xml, 'text/xml');
-  const decoder = new mxCodec(doc);
-
-  // Décoder et charger le modèle dans le graphe
-  decoder.decode(doc.documentElement, graph.getModel());
+    new ModelXmlSerializer(this.graph.getDataModel()).import(xml);
 }
 
 // Ajouter un bouton pour sauvegarder
@@ -257,6 +274,7 @@ loadInput.addEventListener('change', (event: Event) => {
 });
 */
 
+
 //-------------------------------------------------------------------------
 // Données de test --------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -264,11 +282,12 @@ loadInput.addEventListener('change', (event: Event) => {
 graph.batchUpdate(() => {
 
     const parent = graph.getDefaultParent();
+
     /*
-   const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-   const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-   graph.insertEdge(parent, null, '', v1, v2);
-   */
+    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    graph.insertEdge(parent, null, '', v1, v2);
+    */
 
     const group = graph.insertVertex({
         parent,
@@ -282,6 +301,7 @@ graph.batchUpdate(() => {
             rounded: 2, // Coins arrondis
         },
     });
+
     const s1 = graph.insertVertex({
         parent,
         value: 's1', // Pas de texte affiché
@@ -329,7 +349,7 @@ graph.batchUpdate(() => {
     });
 
     const b3 = graph.insertVertex({
-        group,
+        parent,
         value: '', // Pas de texte affiché
         position: [150, 160], // Position de l'image
         size: [32, 32], // Taille du nœud
@@ -420,6 +440,7 @@ graph.batchUpdate(() => {
             verticalAlign: 'middle', // Alignement vertical
         },
     });
+
 });
 
 //-------------------------------------------------------------------------

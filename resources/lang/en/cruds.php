@@ -600,6 +600,17 @@ return [
         'title_short' => 'Gateways',
         'title_singular' => 'Entrance gateway from the outside',
     ],
+    'graph' => [
+        'description' => 'Dessin de la cartographie du système d\'information',
+        'fields' => [
+            'name' => 'Name',
+            'name_helper' => 'Name of the map',
+            'type' => 'Type',
+            'name_helper' => 'Type of the map',
+        ],
+        'title' => 'Maps',
+        'title_singular' => 'Map',
+    ],
     'information' => [
         'description' => 'Data subject to computer processing.',
         'fields' => [
