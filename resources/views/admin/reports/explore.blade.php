@@ -104,6 +104,7 @@
     let network = null;
     let needSavePNG = false;
 
+    // TODO : optimize me
     let _nodes = new Map();
     @foreach($nodes as $node)
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
@@ -593,15 +594,11 @@
 
     $('#filters')
         .on('select2:select', function(e) {
-            // console.log('Select: ' , e.params.data.id);
-            // console.log('val: ' ,   $('#filters').val());
             apply_filter();
         });
 
     $('#filters')
         .on('select2:unselect', function(e) {
-            // console.log('unSelect: ' , e.params.data.id);
-            // console.log('val: ' ,   $('#filters').val());
             apply_filter();
         });
 

@@ -13,6 +13,31 @@ import {
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
+
+// Interface pour une arête (edge)
+interface Edge {
+  attachedNodeId: string;
+  edgeType: string;
+  edgeDirection: string;
+  bidirectional: boolean;
+}
+
+// Interface pour un nœud (node)
+interface Node {
+  id: string;
+  vue: string;
+  label: string;
+  image: string;
+  type: string;
+  edges: Edge[];
+}
+
+// Map contenant les nœuds
+type NodeMap = Map<string, Node>;
+
+declare const _nodes : NodeMap;
+
+//-----------------------------------------------------------------------
 // Import des plugins
 const plugins: GraphPluginConstructor[] = [
     // L'ordre d'import est important !
@@ -208,6 +233,14 @@ graph.setPanning(true); // Active le panning global
 //-------------------------------------------------------------------------
 // LOAD / SAVE
 
+// Fonction pour charger le graphe
+export function loadGraph(xml: string) {
+    new ModelXmlSerializer(model).import(xml);
+}
+
+// Rendez la fonction loadGraph accessible globalement
+(window as any).loadGraph = loadGraph;
+
 async function saveGraphToDatabase(id: integer, name: string, type: string, content: string): Promise<void> {
   console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
@@ -227,19 +260,16 @@ async function saveGraphToDatabase(id: integer, name: string, type: string, cont
     }
 
     const data = await response.json();
-    console.log('Graphe sauvegardé avec succès :', data.graph);
+    // console.log('Graphe sauvegardé avec succès :', data.graph);
   } catch (error) {
     console.error('Erreur lors de la sauvegarde :', error);
     alert('Erreur lors de la sauvegarde du graphe.');
   }
 }
 
-
 // Fonction pour sauvegarder le graphe
 function saveGraph() {
     const xml = new ModelXmlSerializer(model).export();
-
-    //console.log(xml);
 
     // saveGraphToDatabase
     saveGraphToDatabase(
@@ -249,45 +279,21 @@ function saveGraph() {
         xml);
 }
 
-// Fonction pour recharger le graphe
-function loadGraph(xml: string) {
-    new ModelXmlSerializer(this.graph.getDataModel()).import(xml);
-}
-
 // Ajouter un bouton pour sauvegarder
 const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
 saveButton.addEventListener('click', saveGraph);
 
-/*
-// Ajouter un bouton pour recharger
-const loadInput = document.getElementById('Button') as HTMLInputElement;
-loadInput.addEventListener('change', (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const xml = reader.result as string;
-      loadGraph(xml);
-    };
-    reader.readAsText(file);
-  }
-});
-*/
-
-
 //-------------------------------------------------------------------------
 // Données de test --------------------------------------------------------
 //-------------------------------------------------------------------------
-
+/*
 graph.batchUpdate(() => {
 
     const parent = graph.getDefaultParent();
 
-    /*
-    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    graph.insertEdge(parent, null, '', v1, v2);
-    */
+    // const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    // const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    // graph.insertEdge(parent, null, '', v1, v2);
 
     const group = graph.insertVertex({
         parent,
@@ -440,8 +446,8 @@ graph.batchUpdate(() => {
             verticalAlign: 'middle', // Alignement vertical
         },
     });
-
 });
+*/
 
 //-------------------------------------------------------------------------
 // Ajout de texte
@@ -535,8 +541,10 @@ container.addEventListener('drop', (event) => {
 });
 
 //-------------------------------------------------------------------------
-// Gestion des événements drag & drop des icônes
-const nodeIcon = document.getElementById('node-icon');
+// Ajout d'un noeud
+const nodeIcon = document.getElementById('nodeImage');
+const node = document.getElementById('node');
+
 nodeIcon.addEventListener('dragstart', (event) => {
     event.dataTransfer.setData('node-type', 'icon-node'); // Type de nœud
 });
@@ -548,7 +556,9 @@ container.addEventListener('dragover', (event) => {
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    if (event.dataTransfer.getData('node-type')=='icon-node') {
+    if ((event.dataTransfer.getData('node-type')=='icon-node')
+        &&(nodeIcon.src!=''))
+        {
 
         // Obtenir la position de la souris lors du drop
         const rect = container.getBoundingClientRect();
@@ -558,12 +568,30 @@ container.addEventListener('drop', (event) => {
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
             const parent = graph.getDefaultParent();
-            graph.insertVertex({
+
+            const s1 = graph.insertVertex({
                 parent,
-                value: 'New Node',
-                position: [x, y],
-                size: [80, 30],
+                id: node.value,
+                value: _nodes.get(node.value).label,
+                position: [x-16, y-16], // Position de l'image
+                size: [32, 32], // Taille du nœud
+                style: {
+                    shape: 'image', // Définir le nœud comme une image
+                    image: nodeIcon.src,
+                    // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
+                    // imageWidth: 32, // Largeur de l'image
+                    // imageHeight: 32, // Hauteur de l'image
+                    editable: false, //  Ne pas autoriser de changer le label
+                    resizable: false, // Ne pas resizer les images
+                    //imageBorder: 0, // Bordure facultative autour de l'image
+                    verticalLabelPosition: 'bottom',
+                    spacingTop: -15,
+                },
             });
+
+            // add edges
+            //....................
+
         });
     }
 });

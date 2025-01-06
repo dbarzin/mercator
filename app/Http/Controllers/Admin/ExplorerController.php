@@ -11,7 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExplorerController extends Controller
 {
-    public function explore(Request $request)
+    public function explore(Request $request) {
+
+        [$nodes, $edges] = $this->getData();
+
+        return view('admin/reports/explore', compact('nodes', 'edges'));
+    }
+
+    // TODO : return a JSON in place of nodes[] and edges[]
+    // TODO : split me in several private functions by views
+    // TODO : check user rights
+    public function getData() : array
     {
         $nodes = [];
         $edges = [];
@@ -480,6 +490,7 @@ class ExplorerController extends Controller
 
             // Add source <-> destination flows
             foreach ($sources as $source) {
+                /* UNUSED Code
                 // if flow must be explored
                 if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                     // Add source node to request
@@ -489,8 +500,10 @@ class ExplorerController extends Controller
                         $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $source);
                     }
                 }
+                */
                 foreach ($destinations as $destination) {
                     $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_', $destination));
+                    /* UNUSED Code
                     // if flow must be explored
                     if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                         // Add destination node to request
@@ -500,6 +513,7 @@ class ExplorerController extends Controller
                             $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $destination);
                         }
                     }
+                    */
                 }
             }
         }
@@ -781,7 +795,7 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entity_id), $this->formatId('APP_', $join->m_application_id));
         }
 
-        return view('admin/reports/explore', compact('nodes', 'edges'));
+        return [$nodes, $edges];
     }
 
     private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)

@@ -80,12 +80,8 @@
                                       height: 40px;
                                       border: 0px solid #007bff;
                                       border-radius: 8px;">
-                                          <i
-                                          id="node-icon"
-                                          class="fas fa-square"
-                                          draggable="true"
-                                          style="cursor: grab; color: #7C123E">
-                                        </i>
+                                          <img id="nodeImage" src=""
+                                          style="width: 32px; cursor: grab;"/>
                                     </div>
                                 </td>
                                 <td style="vertical-align: top; " >
@@ -100,7 +96,6 @@
                                       border: 0px solid #007bff;
                                       border-radius: 8px;">
                                           <i
-                                          id="node-icon"
                                           class="fas fa-angle-up"
                                           style="cursor: pointer; color: #7C123E">
                                         </i>
@@ -171,9 +166,20 @@
 @endsection
 
 @section('scripts')
-@vite('resources/js/mapping.ts')
 
 <script>
+// TODO : optimize me
+let _nodes = new Map();
+@foreach($nodes as $node)
+    _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
+    foreach($edges as $edge) {
+        if ($edge["from"]==$node["id"])
+            echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
+        if ($edge["to"]==$node["id"])
+            echo '{attachedNodeId:"' . $edge["from"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "FROM", bidirectional:' . ($edge["bidirectional"]?"true":"false") . '},';
+        } ?> ]});
+@endforeach
+
 $(document).ready(function () {
     // initialize select2
     $('.select2').select2();
@@ -183,9 +189,61 @@ $(document).ready(function () {
         tags: true
     });
 
+    function apply_filter() {
+        // Get current filter
+        cur_filter = $('#filters').val();
+
+        // Get filter size
+        if (cur_filter.length==0) {
+            for (let [node, value] of _nodes)
+                $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
+        }
+        else
+        {
+            // filter nodes
+            let activated=0, disabled=0;
+            $("#node").empty();
+            for (let [node, value] of _nodes) {
+                if (cur_filter.includes(value.vue)) {
+                    $("#node").append('<option value="' + value.id + '">' + value.label + '</option>');
+                    activated++;
+                    }
+                else
+                    disabled++;
+            }
+        }
+        // clear node
+        $('#node').val(null).trigger("change");
+        // clear image
+        document.getElementById('nodeImage').src='';
+    }
+
     // clear selections
     $('#filters').val(null);
     $('#node').val(null);
+
+    $('#filters')
+        .on('select2:select', function(e) {
+            apply_filter();
+        });
+
+    $('#filters')
+        .on('select2:unselect', function(e) {
+            apply_filter();
+        });
+
+    $('#node')
+        .on('select2:select', function(e) {
+            // Get current filter
+            cur_node = $('#node').val();
+            // console.log(cur_node);
+            document.getElementById('nodeImage').src=_nodes.get(cur_node).image;
+        });
+
+    $('#node')
+        .on('select2:unselect', function(e) {
+            document.getElementById('nodeImage').src='';
+        });
 
     // Maximisation
     document.getElementById('maximizeBtn').addEventListener('click', function () {
@@ -203,7 +261,13 @@ $(document).ready(function () {
             if (sidebar) sidebar.style.display = 'none'; // Masquer l'en-tête
         }
     });
+
+    const xmlContent = `{!! $graph->content !!}`; // Injecter le contenu XML
+    loadGraph(xmlContent);
 });
 
 </script>
+
+@vite('resources/js/mapping.ts')
+
 @endsection

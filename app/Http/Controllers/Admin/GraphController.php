@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Graph;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyGraphRequest;
-//use App\Http\Requests\StoreGraphRequest;
-//use App\Http\Requests\UpdateGraphRequest;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use App\Http\Controllers\ExploreController;
 
 class GraphController extends Controller
 {
@@ -77,7 +77,14 @@ class GraphController extends Controller
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit', compact('graph', 'type_list'));
+        // get nodes and edges from the explorer
+        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
+
+        // return
+        return view('admin.graphs.edit', compact(
+            'graph', 'type_list',
+            'nodes', 'edges'
+        ));
     }
 
     public function update(Request $request)
