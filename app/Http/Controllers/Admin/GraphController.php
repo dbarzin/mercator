@@ -31,12 +31,15 @@ class GraphController extends Controller
         $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // create the graph
-        $graph = Graph::create(["name"=> $name, "type" => null, "content" => null]);
+        $graph = Graph::create(["name"=> $name, "type" => null, "content" => "<GraphDataModel></GraphDataModel>"]);
+
+        // get nodes and edges from the explorer
+        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit', compact('graph', 'type_list'));
+        return view('admin.graphs.edit', compact('graph', 'type_list', 'nodes', 'edges'));
     }
 
     public function clone(Request $request)
@@ -52,24 +55,28 @@ class GraphController extends Controller
         // Clone the graph
         $lastId = Graph::max('id') ?? 0;
         $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
-        $graph = Graph::create(["name"=> $name]);
 
-        // clone the document
-        dd("Not implemented");
+        // Create graph
+        $graph = Graph::create(["name"=> $name, "type" => $graph->type, "content" => $graph->content]);
 
-        return view('admin.graphs.edit', $newGraph);
+        // get nodes and edges from the explorer
+        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
+
+        // Get types
+        $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
+
+        return view('admin.graphs.edit', compact('graph', 'type_list', 'nodes', 'edges'));
     }
 
-/*
     public function store(Request $request)
     {
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        dd("Not implemented");
+        //dd("Not implemented");
 
         return redirect()->route('admin.graphs.index');
     }
-*/
+
     public function edit(Graph $graph)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -87,6 +94,25 @@ class GraphController extends Controller
         ));
     }
 
+    public function save(Request $request) {
+        abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get the graph
+        $graph = Graph::find($request->id);
+
+        // Control not found
+        abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+
+        // set value
+        $graph->name=$request->name;
+        $graph->type=$request->type;
+        $graph->content=$request->content;
+        $graph->save();
+
+        return true;
+    }
+
+
     public function update(Request $request)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -98,19 +124,19 @@ class GraphController extends Controller
         abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // set value
-        $graph->update($request->all());
+        $graph->name=$request->name;
+        $graph->type=$request->type;
+        $graph->content=$request->content;
+        $graph->save();
 
-        // save
-        $graph->update();
-
-        return response()->json();
+        return redirect()->route('admin.graphs.index');
     }
 
     public function show(Graph $graph)
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.graphs.show');
+        return view('admin.graphs.show', compact('graph'));
     }
 
     public function destroy(Graph $graph)

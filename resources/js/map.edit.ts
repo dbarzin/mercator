@@ -245,27 +245,36 @@ async function saveGraphToDatabase(id: integer, name: string, type: string, cont
   console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
   try {
-    const response = await fetch('/admin/graphs/' + id, {
+    const response = await fetch('/admin/graph/save', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '',
-      },
-      body: JSON.stringify({ id: id, name: name, type: type, content: content }),
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+      body: JSON.stringify({ id, name, type, content }),
     });
 
+    console.log('réponse :', response);
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
     }
 
     const data = await response.json();
-    // console.log('Graphe sauvegardé avec succès :', data.graph);
+    console.log('Graphe sauvegardé avec succès :', data.graph);
   } catch (error) {
     console.error('Erreur lors de la sauvegarde :', error);
     alert('Erreur lors de la sauvegarde du graphe.');
   }
 }
+
+// Fonction pour récupérer le Graph en XML
+function getXMLGraph() {
+    return new ModelXmlSerializer(model).export();
+}
+
+// Rendez la fonction getXMLGraph accessible globalement
+(window as any).getXMLGraph = getXMLGraph;
 
 // Fonction pour sauvegarder le graphe
 function saveGraph() {
@@ -543,7 +552,7 @@ container.addEventListener('drop', (event) => {
 //-------------------------------------------------------------------------
 // Ajout d'un noeud
 const nodeIcon = document.getElementById('nodeImage');
-const node = document.getElementById('node');
+const nodeSelector = document.getElementById('node');
 
 nodeIcon.addEventListener('dragstart', (event) => {
     event.dataTransfer.setData('node-type', 'icon-node'); // Type de nœud
@@ -569,29 +578,58 @@ container.addEventListener('drop', (event) => {
         graph.batchUpdate(() => {
             const parent = graph.getDefaultParent();
 
-            const s1 = graph.insertVertex({
-                parent,
-                id: node.value,
-                value: _nodes.get(node.value).label,
-                position: [x-16, y-16], // Position de l'image
-                size: [32, 32], // Taille du nœud
-                style: {
-                    shape: 'image', // Définir le nœud comme une image
-                    image: nodeIcon.src,
-                    // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
-                    // imageWidth: 32, // Largeur de l'image
-                    // imageHeight: 32, // Hauteur de l'image
-                    editable: false, //  Ne pas autoriser de changer le label
-                    resizable: false, // Ne pas resizer les images
-                    //imageBorder: 0, // Bordure facultative autour de l'image
-                    verticalLabelPosition: 'bottom',
-                    spacingTop: -15,
-                },
-            });
-
-            // add edges
-            //....................
-
+            // Check cell already exists
+            const cell = model.getCell(nodeSelector.value);
+            if (cell!=null) {
+                // sélectionne la cell
+                graph.setSelectionCells(cell);
+                //graph.refresh(cell);
+            }
+            else {
+                const node = _nodes.get(nodeSelector.value);
+                const newNode = graph.insertVertex({
+                    parent,
+                    id: nodeSelector.value,
+                    value: node.label,
+                    position: [x-16, y-16], // Position de l'image
+                    size: [32, 32], // Taille du nœud
+                    style: {
+                        shape: 'image', // Définir le nœud comme une image
+                        image: nodeIcon.src,
+                        // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
+                        // imageWidth: 32, // Largeur de l'image
+                        // imageHeight: 32, // Hauteur de l'image
+                        editable: false, //  Ne pas autoriser de changer le label
+                        resizable: false, // Ne pas resizer les images
+                        //imageBorder: 0, // Bordure facultative autour de l'image
+                        verticalLabelPosition: 'bottom',
+                        spacingTop: -15,
+                    },
+                });
+                // Add edges
+                node.edges.forEach(function (edge) {
+                    // console.log(edge);
+                    // Check target cell present
+                    const targetNode = model.getCell(edge.attachedNodeId);
+                    if (targetNode!=null) {
+                        console.log("add edge to "+edge.attachedNodeId+" ");
+                        // add edge
+                        graph.insertEdge(
+                            { parent,
+                                value: '',
+                                source: newNode,
+                                target: targetNode,
+                                style: {
+                                editable: false, //  Ne pas autoriser de changer le label
+                                    stroke: '#FF', // Edge color
+                                    strokeWidth: 1,
+                                    startArrow : 'none', // pas de flèche
+                                    endArrow : 'none' // pas de flèche
+                                },
+                            });
+                        }
+                });
+            }
         });
     }
 });
@@ -656,7 +694,6 @@ if (addNodeButton) {
 }
 */
 
-
 //-------------------------------------------------------------------------
 // Gestion des groupes
 const groupButton = document.getElementById('group-btn');
@@ -699,6 +736,160 @@ ungroupButton.addEventListener('click', () => {
     }
 });
 
+//---------------------------------------------------------------------------
+// Fonction pour déplacer une cellule
+function moveSelectedVertex(graph, dx, dy) {
+  const selectedCell = graph.getSelectionCell(); // Obtenir la cellule sélectionnée
+  if (selectedCell && selectedCell.isVertex()) {
+      graph.batchUpdate(() => {
+      const geo = selectedCell.getGeometry();
+      if (geo) {
+          // Déplace la cellule
+          geo.translate(dx, dy);
+          // Rafraîchit la vue
+          graph.refresh();
+        }
+    });
+  }
+}
+
+// Écouteur pour les touches directionnelles
+document.addEventListener('keydown', (event) => {
+  const step = 1; // Déplacement de 1 pixel
+  switch (event.key) {
+    case 'ArrowUp':
+      moveSelectedVertex(graph, 0, -step); // Déplacer vers le haut
+      break;
+    case 'ArrowDown':
+      moveSelectedVertex(graph, 0, step); // Déplacer vers le bas
+      break;
+    case 'ArrowLeft':
+      moveSelectedVertex(graph, -step, 0); // Déplacer vers la gauche
+      break;
+    case 'ArrowRight':
+      moveSelectedVertex(graph, step, 0); // Déplacer vers la droite
+      break;
+    default:
+      break;
+  }
+});
+
+//---------------------------------------------------------------------------
+// Double click
+
+type Point = {
+    x: number;
+    y: number;
+};
+
+function placeObjectsOnCircle(center: Point, radius: number, numberOfObjects: number): Point[] {
+    const points: Point[] = [];
+    const angleStep = (2 * Math.PI) / numberOfObjects; // Angle between each object
+
+    for (let i = 0; i < numberOfObjects; i++) {
+        const angle = i * angleStep; // Current angle
+        const objectX = center.x + radius * Math.cos(angle); // X-coordinate
+        const objectY = center.y + radius * Math.sin(angle); // Y-coordinate
+        points.push({ x: objectX, y: objectY });
+    }
+
+    return points;
+}
+
+// Gestionnaire pour l'événement double-clic
+graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
+    const cell = evt.getProperty('cell'); // Récupère la cellule cliquée
+    if (cell && cell.isVertex() && (cell.style.shape=="image")) {
+        // console.log("dbclick on "+cell.id+" "+cell.value);
+        // get the node
+        const node = _nodes.get(cell.id);
+        console.log(node);
+        // Get the new nodes
+        let newNodes: string[] = [];
+        graph.batchUpdate(() => {
+            const parent = graph.getDefaultParent();
+            node.edges.forEach(function (edge) {
+                // Check target cell present
+                const vertex = model.getCell(edge.attachedNodeId);
+                if (vertex==null) {
+                    // check node already present
+                    if (_nodes.has(edge.attachedNodeId)) {
+                        // add it to the new nodes
+                        newNodes.push(edge.attachedNodeId);
+                        console.log(edge.attachedNodeId);
+                        }
+                }
+                else {
+                    // add edge
+                    // console.log("add edge from "+cell+" to "+vertex);
+                    graph.insertEdge(
+                        { parent,
+                            value: '',
+                            source: cell,
+                            target: vertex,
+                            style: {
+                            editable: false, //  Ne pas autoriser de changer le label
+                                stroke: '#FF', // Edge color
+                                strokeWidth: 1,
+                                startArrow : 'none', // pas de flèche
+                                endArrow : 'none' // pas de flèche
+                            },
+                        });
+                }
+            });
+            // compute new node positions
+            const rect = container.getBoundingClientRect();
+            const positions = placeObjectsOnCircle({ x: event.clientX - rect.left - 16, y: event.clientY - rect.top -16}, 80, newNodes.length);
+            console.log(positions);
+
+            // place les objects
+            for (let i = 0; i < positions.length; i++) {
+                // get new target node
+                const newNode = _nodes.get(newNodes[i]);
+                console.log('add newNode id=' + newNode.id +" label="+ newNode.label);
+
+                const vertex = graph.insertVertex({
+                    parent,
+                    id: newNode.id,
+                    value: newNode.label,
+                    position: [ positions[i].x, positions[i].y ], // Position de l'image
+                    size: [32, 32], // Taille du nœud
+                    style: {
+                        shape: 'image', // Définir le nœud comme une image
+                        image: newNode.image,
+                        // image: 'http://127.0.0.1:8000/images/application.png', // URL de l'image
+                        // imageWidth: 32, // Largeur de l'image
+                        // imageHeight: 32, // Hauteur de l'image
+                        editable: false, //  Ne pas autoriser de changer le label
+                        resizable: false, // Ne pas resizer les images
+                        //imageBorder: 0, // Bordure facultative autour de l'image
+                        verticalLabelPosition: 'bottom',
+                        spacingTop: -15,
+                    },
+                });
+
+                // Insert edge with clicked one
+                graph.insertEdge(
+                    { parent,
+                        value: '',
+                        source: cell,
+                        target: vertex,
+                        style: {
+                        editable: false, //  Ne pas autoriser de changer le label
+                            stroke: '#FF', // Edge color
+                            strokeWidth: 1,
+                            startArrow : 'none', // pas de flèche
+                            endArrow : 'none' // pas de flèche
+                        },
+                    });
+
+                // Insert edge with other existing objects
+                // TODO.....
+
+                }
+        });
+    }
+});
 
 //---------------------------------------------------------------------------
 // Export SVG

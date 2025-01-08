@@ -1469,13 +1469,41 @@
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-header">
-            <label><b>{{ trans('cruds.tools.patching') }}</b></label>
+            <label><b>{{ trans('panel.menu.tools') }}</b></label>
         </div>
         <!------------------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-check">
+                        <label>{{ trans('cruds.graph.title') }}</label>
+                        @php($permission = $permissions_sorted['graph'])
+                        <div class="form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][4][0] }}" {{ in_array($permission['actions'][4][0], old('permissions', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][4][0] }}">{{ $permission['actions'][4][1] }}</label>
+                        </div>
+                        <div class="form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][0][0] }}" {{ in_array($permission['actions'][0][0], old('permissions', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][0][0] }}">{{ $permission['actions'][0][1] }}</label>
+                        </div>
+                        <div class="form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][1][0] }}" {{ in_array($permission['actions'][1][0], old('permissions', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][1][0] }}">{{ $permission['actions'][1][1] }}</label>
+                        </div>
+                        <div class="form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][3][0] }}" {{ in_array($permission['actions'][3][0], old('permissions', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][3][0] }}">{{ $permission['actions'][3][1] }}</label>
+                        </div>
+                        <div class="form-switch form-switch-lg">
+                            <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][2][0] }}" {{ in_array($permission['actions'][2][0], old('permissions', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="for_{{ $permission['actions'][2][0] }}">{{ $permission['actions'][2][1] }}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-check">
+                        <label>{{ trans('cruds.tools.patching') }}</label>
                         @php($permission = $permissions_sorted['patching'])
                         <div class="form-switch form-switch-lg">
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="{{ str_replace(' ', '_', $permission['name']) }}" id="perm_{{ $permission['actions'][1][0] }}" value="{{ $permission['actions'][1][0] }}" {{ in_array($permission['actions'][1][0], old('permissions', [])) ? 'checked' : '' }}>
@@ -1501,7 +1529,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2">
-                    <div class="form-check">
+                    <div class="form-group form-check">
                         <label>Password</label>
                         <div class="form-switch form-switch-lg">
                             <input class="form-check-input" type="checkbox" name="permissions[]" data-check="profile_password_edit" id="profile_password_edit" value="256" {{ in_array('profile_password_edit', old('permissions', [])) }}>

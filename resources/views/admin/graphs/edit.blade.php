@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 <form method="POST" action='{{ route("admin.graphs.update", [$graph->id]) }}' enctype="multipart/form-data" id="grahForm">
-    <input name='id' type='hidden' value='{{$graph->id}}' id="id"/>
     @method('PUT')
     @csrf
+    <input name='id' type='hidden' value='{{$graph->id}}' id="id"/>
+    <input name='content' type='hidden' value='' id="content"/>
 <div class="card">
     <div class="card-header">
         Cartographier
@@ -66,6 +67,9 @@
                                     <div class="form-group">
                                         <select class="form-control select2" id="node">
                                             <option></option>
+                                            @foreach($nodes as $node)
+                                            <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
+                                            @endforeach
                                         </select>
                                         <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
                                     </div>
@@ -90,21 +94,18 @@
                                       text-align: right;
                                       display: flex;
                                       justify-content: right;
+                                      font-size: 20px;
                                       align-items: center;
                                       width: 100%;
                                       height: 40px;
-                                      border: 0px solid #007bff;
-                                      border-radius: 8px;">
-                                          <i
-                                          class="fas fa-angle-up"
-                                          style="cursor: pointer; color: #7C123E">
-                                        </i>
-                                    </div>
+                                      border-radius: 8px;
+                                      cursor: pointer;
+                                      color: #7C123E">&#8613;</div>
                                 </td>
                             </tr>
                         </table>
 
-                        <div id="app-container" style="display: flex; height: 100vh;">
+                        <div id="app-container" style="display: flex;">
                             <div id="sidebar" style="width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
                                 <i id="saveButton" title="Save" class="mapping-icon fas fa-save"></i>
@@ -143,7 +144,7 @@
                                 <button id="apply-edge-style">Appliquer</button>
                             </div>
 
-                        <div id="graph-container" style="position: relative; overflow: hidden; width: 800px; height: 600px; cursor: default; touch-action: none;">
+                        <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
                         </div>
                     </div>
                 </div>
@@ -154,7 +155,7 @@
         <a class="btn btn-default" href="{{ route('admin.graphs.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button class="btn btn-danger" type="submit" id="submitButton">
             {{ trans('global.save') }}
         </button>
     </div>
@@ -219,7 +220,7 @@ $(document).ready(function () {
     }
 
     // clear selections
-    $('#filters').val(null);
+    $('#filters').val(null).trigger('change');
     $('#node').val(null);
 
     $('#filters')
@@ -245,6 +246,7 @@ $(document).ready(function () {
             document.getElementById('nodeImage').src='';
         });
 
+    //--------------------------------------------------------------
     // Maximisation
     document.getElementById('maximizeBtn').addEventListener('click', function () {
         const div = document.getElementById('myDiv');
@@ -255,19 +257,36 @@ $(document).ready(function () {
             // Restaurer la taille initiale
             div.classList.remove('maximized');
             if (sidebar) sidebar.style.display = 'block'; // Rendre l'en-tête visible
+            document.getElementById('maximizeBtn').innerHTML = "&#8613;"
         } else {
             // Maximiser
             div.classList.add('maximized');
             if (sidebar) sidebar.style.display = 'none'; // Masquer l'en-tête
+            document.getElementById('maximizeBtn').innerHTML = "&#8615;"
         }
     });
 
-    const xmlContent = `{!! $graph->content !!}`; // Injecter le contenu XML
-    loadGraph(xmlContent);
-});
+    //--------------------------------------------------------------
+    // Chargement du graphe
+    loadGraph(`{!! $graph->content !!}`);
 
+    //--------------------------------------------------------------
+    // Save graph
+    form = document.getElementById('grahForm');
+    form.addEventListener('submit', function (event) {
+        console.log("save called !");
+        // Prevent the form from submitting immediately
+        event.preventDefault();
+
+        document.getElementById('content').value=getXMLGraph();
+
+        // Now submit the form
+        form.submit();
+    });
+
+});
 </script>
 
-@vite('resources/js/mapping.ts')
+@vite('resources/js/map.edit.ts')
 
 @endsection

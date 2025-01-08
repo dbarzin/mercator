@@ -39,7 +39,7 @@
 
                             </td>
                             <td>
-                                <a href="{{ route('admin.graphs.edit', $graph->id) }}">
+                                <a href="{{ route('admin.graphs.show', $graph->id) }}">
                                     {{ $graph->name ?? '' }}
                                 </a>
                             </td>

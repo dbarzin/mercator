@@ -589,7 +589,7 @@
     $('.select2').select2();
 
     // clear selections
-    $('#filters').val(null);
+    $('#filters').val(null).trigger('change');
     $('#node').val(null);
 
     $('#filters')
