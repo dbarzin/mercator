@@ -142,7 +142,7 @@
                                     <option value="5">5 px</option>
                                 </select>
                                 <br>
-                                <button id="apply-edge-style">Appliquer</button>
+                                <button id="apply-edge-style" onclick="retun false;">Appliquer</button>
                             </div>
 
                         <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
