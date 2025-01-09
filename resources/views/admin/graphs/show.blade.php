@@ -60,6 +60,12 @@
 
 @section('scripts')
 <script>
+// TODO : optimize me
+let _nodes = new Map();
+@foreach($nodes as $node)
+    _nodes.set( "{{ $node["id"] }}" ,{ type: "{{ $node["type"] }}"});
+@endforeach
+
 $(document).ready(function () {
     const xmlContent = `{!! $graph->content !!}`;
     loadGraph(xmlContent);

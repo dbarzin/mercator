@@ -9,18 +9,19 @@ import {
     mxEvent,
     PanningHandler,
     InternalEvent,
-    ModelXmlSerializer
+    ModelXmlSerializer,
+    InternalEvent
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
 // Import des plugins
 const plugins: GraphPluginConstructor[] = [
     // L'ordre d'import est important !
-    CellEditorHandler,
-    SelectionCellsHandler,
-    SelectionHandler,
-    PanningHandler,
-    RubberBandHandler,
+    // CellEditorHandler,
+    // SelectionCellsHandler,
+    // SelectionHandler,
+    // PanningHandler,
+    //RubberBandHandler,
 ];
 
 // Initialiser un graphique de base
@@ -28,25 +29,73 @@ const container = document.getElementById('graph-container');
 const graph = new Graph(container, new GraphDataModel(), plugins);
 const model = graph.getDataModel();
 
-// --------------------------------------------------------------------------------
-// Configuration de la grille
-//graph.setGridEnabled(true); // Active la grille
-//graph.setGridSize(10); // Taille des cellules de la grille
+//-----------------------------------------------------------------------
 
-// Personnaliser la grille avec CSS
-/*
-container.style.backgroundImage = `
-  linear-gradient(to right, #e0e0e0 1px, transparent 1px),
-  linear-gradient(to bottom, #e0e0e0 1px, transparent 1px)
-  `;
-container.style.backgroundSize = '10px 10px'; // Taille des cellules de la grille
-*/
+// Interface pour une arête (edge)
+interface Edge {
+  attachedNodeId: string;
+  name: string,
+  edgeType: string;
+  edgeDirection: string;
+  bidirectional: boolean;
+}
+
+// Interface pour un nœud (node)
+interface Node {
+  id: string;
+  vue: string;
+  label: string;
+  image: string;
+  type: string;
+  edges: Edge[];
+}
+
+// Map contenant les nœuds
+type NodeMap = Map<string, Node>;
+
+declare const _nodes : NodeMap;
+
+//-----------------------------------------------------------------------
+const defaultVertexStyle = graph.getStylesheet().getDefaultVertexStyle();
+defaultVertexStyle.cursor = 'pointer'; // Définit le curseur en main
+
+//-----------------------------------------------------------------------
+// Style des liens
+
+var style = graph.getStylesheet().getDefaultEdgeStyle();
+style.labelBackgroundColor = '#FFFFFF';
+style.strokeWidth = 2;
+style.rounded = true;
+style.entryPerimeter = false;
+//style.entryY = 0.25;
+//style.entryX = 0;
+// After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
+style.edgeStyle = 'manhattanEdgeStyle';
+
 // -----------------------------------------------------------------------
 // Panning
-
 // Permettre le déplacement de la grille
-graph.setPanning(true); // Active le panning global
+// graph.setPanning(true); // Active le panning global
+
+// Désactive le graphe
 graph.setEnabled(false);
+
+//-----------------------------------------------------------------------
+// Menu contextuer
+
+// Désactiver le menu contextuel par défaut :
+InternalEvent.disableContextMenu(container)
+
+// Ajouter un écouteur d'événements pour le clic droit
+graph.addListener('contextmenu', (evt) => {
+    console.log('click');
+    const cell = graph.getCellAt(evt.getProperty('event').clientX, evt.getProperty('event').clientY);
+    if (cell && graph.isVertex(cell)) {
+        // Afficher votre menu contextuel ici
+        console.log('Menu contextuel pour le vertex:', cell);
+        // Code pour afficher le menu contextuel
+    }
+});
 
 //-------------------------------------------------------------------------
 // LOAD / SAVE
@@ -86,3 +135,21 @@ function downloadSVG() {
 // Ajoutez un bouton pour déclencher l'exportation
 //const exportButton = document.getElementById('download-btn');
 //exportButton.addEventListener('click', downloadSVG);
+
+//--------------------------------------------------------------------------
+// Gestionnaire de clic
+/*
+graph.addListener(InternalEvent.CLICK, (sender, evt) => {
+    const cell = evt.getProperty('cell');
+    if (cell && cell.isVertex()) {
+        console.log('Vertex cliqué :', cell.value);
+        // Ajoutez ici le code pour gérer le clic sur le vertex
+        const node = _nodes.get(cell.id);
+        // deleted ?
+        if (node==null)
+            return;
+        const id = cell.id.split("_").pop();
+        window.location.href = "/admin/"+node.type+"/"+id;
+    }
+});
+*/

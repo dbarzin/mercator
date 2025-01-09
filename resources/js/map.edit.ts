@@ -9,7 +9,9 @@ import {
     mxEvent,
     PanningHandler,
     InternalEvent,
-    ModelXmlSerializer
+    ModelXmlSerializer,
+    HandleConfig,
+    VertexHandlerConfig
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -17,6 +19,7 @@ import {
 // Interface pour une arête (edge)
 interface Edge {
   attachedNodeId: string;
+  name: string,
   edgeType: string;
   edgeDirection: string;
   bidirectional: boolean;
@@ -53,6 +56,23 @@ const container = document.getElementById('graph-container');
 const div = document.createElement('div');
 const graph = new Graph(container, new GraphDataModel(), plugins);
 const model = graph.getDataModel();
+
+//-----------------------------------------------------------------------
+// Style des liens
+
+var style = graph.getStylesheet().getDefaultEdgeStyle();
+style.labelBackgroundColor = '#FFFFFF';
+style.strokeWidth = 2;
+style.rounded = true;
+style.entryPerimeter = false;
+//style.entryY = 0.25;
+//style.entryX = 0;
+// After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
+style.edgeStyle = 'manhattanEdgeStyle';
+
+// Changes vertex selection colors and size
+VertexHandlerConfig.selectionColor = '#00a8ff';
+VertexHandlerConfig.selectionStrokeWidth = 2;
 
 //-----------------------------------------------------------------------
 // Initialiser l'UndoManager
@@ -172,11 +192,11 @@ graph.container.addEventListener('contextmenu', (event) => {
 // Appliquer les changements de style à l'arête sélectionnée
 applyButton.addEventListener('click', () => {
     if (selectedEdge) {
-        console.log("update");
+        // console.log("update");
         if (selectedEdge.style.image==null) {
             graph.batchUpdate(() => {
                 const style = graph.getCellStyle(selectedEdge);
-                console.log(style);
+                // console.log(style);
                 graph.setCellStyle({
                     ...style,
                     fillColor: colorSelect.value,
@@ -242,7 +262,7 @@ export function loadGraph(xml: string) {
 (window as any).loadGraph = loadGraph;
 
 async function saveGraphToDatabase(id: integer, name: string, type: string, content: string): Promise<void> {
-  console.log('saveGraphToDatabase:' + id + ' name:' + name);
+  // console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
   try {
     const response = await fetch('/admin/graph/save', {
@@ -254,7 +274,7 @@ async function saveGraphToDatabase(id: integer, name: string, type: string, cont
       body: JSON.stringify({ id, name, type, content }),
     });
 
-    console.log('réponse :', response);
+    // console.log('réponse :', response);
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
@@ -612,7 +632,7 @@ container.addEventListener('drop', (event) => {
                     // Check target cell present
                     const targetNode = model.getCell(edge.attachedNodeId);
                     if (targetNode!=null) {
-                        console.log("add edge to "+edge.attachedNodeId+" ");
+                        // console.log("add edge to "+edge.attachedNodeId+" ");
                         // add edge
                         graph.insertEdge(
                             { parent,
@@ -756,6 +776,7 @@ function moveSelectedVertex(graph, dx, dy) {
 // Écouteur pour les touches directionnelles
 document.addEventListener('keydown', (event) => {
   const step = 1; // Déplacement de 1 pixel
+  // console.log('keydown='+event.key);
   switch (event.key) {
     case 'ArrowUp':
       moveSelectedVertex(graph, 0, -step); // Déplacer vers le haut
@@ -796,57 +817,113 @@ function placeObjectsOnCircle(center: Point, radius: number, numberOfObjects: nu
     return points;
 }
 
-// Gestionnaire pour l'événement double-clic
+// Get filtered entries
+function getFilter(){
+    let filter = [];
+    for (let option of document.getElementById('filters').options)
+        if (option.selected)
+          filter.push(option.value);
+    return filter
+}
+
+// Check edge already present
+function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
+    let found = false;
+    const edges = graph.getEdges(src);
+    edges.forEach(edge => {
+        if ((edge.target==dest)&&((name==null)||(edge.value==name))) {
+            found = true;
+            return;
+        }
+    });
+    if (!found) {
+        const edges = graph.getEdges(dest);
+        edges.forEach(edge => {
+            if ((edge.target==src)&&((name==null)||(edge.value==name))) {
+                found = true;
+                return;
+            }
+        });
+    }
+    return found;
+}
+
+//----------------------------------------------------------------
+// Gestionnaire pour l'événement double-clic sur icône
 graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
-    const cell = evt.getProperty('cell'); // Récupère la cellule cliquée
+    // Get the cell
+    const cell = evt.getProperty('cell');
+    // Check it is an image
     if (cell && cell.isVertex() && (cell.style.shape=="image")) {
-        // console.log("dbclick on "+cell.id+" "+cell.value);
         // get the node
         const node = _nodes.get(cell.id);
-        console.log(node);
-        // Get the new nodes
-        let newNodes: string[] = [];
+        // node deleted
+        if (node==null)
+            return;
+        // console.log(node);
+        // Batch Update
         graph.batchUpdate(() => {
+            // Get the new nodes
+            let newEdges: edge[] = [];
+            //
             const parent = graph.getDefaultParent();
+            const filter = getFilter();
+            // console.log("filter= "+filter);
+            // Loop on edges
             node.edges.forEach(function (edge) {
-                // Check target cell present
-                const vertex = model.getCell(edge.attachedNodeId);
-                if (vertex==null) {
-                    // check node already present
-                    if (_nodes.has(edge.attachedNodeId)) {
-                        // add it to the new nodes
-                        newNodes.push(edge.attachedNodeId);
-                        console.log(edge.attachedNodeId);
+                // Get destination node
+                let targetNode = _nodes.get(edge.attachedNodeId);
+                // Node deleted ?
+                if (targetNode != null) {
+                    // Check node already present
+                    const vertex = model.getCell(edge.attachedNodeId);
+                    if (vertex==null) {
+                        // apply filter on nodes
+                        if (
+                            ((filter.length == 0) || filter.includes(targetNode.vue))
+                            ||
+                            (filter.includes("8") && (edge.edgeType === 'CABLE'))
+                            ||
+                            (filter.includes("9") && (edge.edgeType === 'FLUX'))
+                        ) {
+                            // add it to the new nodes
+                            newEdges.push(edge);
+                            // console.log(edge.attachedNodeId);
+                            }
+                    }
+                    else {
+                        // check edge already present ?
+                        if (!hasEdge(cell, vertex, edge.name)) {
+                            // add edge
+                            graph.insertEdge(
+                                {   parent,
+                                    value: edge.name,
+                                    source: cell,
+                                    target: vertex,
+                                    style: {
+                                    editable: false, //  Ne pas autoriser de changer le label
+                                        stroke: '#FF', // Edge color
+                                        strokeWidth: 1,
+                                        startArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='FROM'))) ? 'classic' : 'none',
+                                        endArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='TO'))) ? 'classic' : 'none',
+                                    },
+                                });
+                            }
                         }
-                }
-                else {
-                    // add edge
-                    // console.log("add edge from "+cell+" to "+vertex);
-                    graph.insertEdge(
-                        { parent,
-                            value: '',
-                            source: cell,
-                            target: vertex,
-                            style: {
-                            editable: false, //  Ne pas autoriser de changer le label
-                                stroke: '#FF', // Edge color
-                                strokeWidth: 1,
-                                startArrow : 'none', // pas de flèche
-                                endArrow : 'none' // pas de flèche
-                            },
-                        });
-                }
-            });
-            // compute new node positions
+                    }
+                });
+            // Compute new nodes positions
             const rect = container.getBoundingClientRect();
-            const positions = placeObjectsOnCircle({ x: event.clientX - rect.left - 16, y: event.clientY - rect.top -16}, 80, newNodes.length);
-            console.log(positions);
+            const positions = placeObjectsOnCircle({ x: cell.getGeometry().x, y: cell.getGeometry().y } , 80, newEdges.length);
+            // console.log(positions);
 
-            // place les objects
+            // Place les objects
             for (let i = 0; i < positions.length; i++) {
                 // get new target node
-                const newNode = _nodes.get(newNodes[i]);
-                console.log('add newNode id=' + newNode.id +" label="+ newNode.label);
+                const edge = newEdges[i];
+                const newNode = _nodes.get(edge.attachedNodeId);
+                // console.log('add newNode id=' + newNode.id +" label="+ newNode.label);
+                // console.log('add edge type=' + edge.edgeType);
 
                 const vertex = graph.insertVertex({
                     parent,
@@ -871,15 +948,15 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                 // Insert edge with clicked one
                 graph.insertEdge(
                     { parent,
-                        value: '',
+                        value: newEdges[i].name,
                         source: cell,
                         target: vertex,
                         style: {
                         editable: false, //  Ne pas autoriser de changer le label
                             stroke: '#FF', // Edge color
                             strokeWidth: 1,
-                            startArrow : 'none', // pas de flèche
-                            endArrow : 'none' // pas de flèche
+                            startArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='FROM'))) ? 'classic' : 'none',
+                            endArrow : ((edge.edgeType=='FLUX') && ((edge.bidirectional)||(edge.edgeDirection=='TO'))) ? 'classic' : 'none',
                         },
                     });
 
@@ -942,3 +1019,6 @@ function downloadSVG() {
 // Ajoutez un bouton pour déclencher l'exportation
 const exportButton = document.getElementById('download-btn');
 exportButton.addEventListener('click', downloadSVG);
+
+//---------------------------------------------------------------------------
+// Menu

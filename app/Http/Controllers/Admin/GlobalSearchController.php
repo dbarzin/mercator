@@ -58,6 +58,8 @@ class GlobalSearchController extends Controller
         'Activity' => 'cruds.activity.title',
         'DataProcessing' => 'cruds.dataProcessing.title',
         'SecurityControl' => 'cruds.securityControl.title',
+        'LogicalFlow' => 'cruds.LogicalFlow.title',
+        'Graph' => 'cruds.graph.title',
     ];
 
     public function search(Request $request)

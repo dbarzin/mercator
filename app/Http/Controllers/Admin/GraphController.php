@@ -136,7 +136,10 @@ class GraphController extends Controller
     {
         abort_if(Gate::denies('graph_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.graphs.show', compact('graph'));
+        // get nodes and edges from the explorer
+        [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
+
+        return view('admin.graphs.show', compact('graph', 'nodes'));
     }
 
     public function destroy(Graph $graph)

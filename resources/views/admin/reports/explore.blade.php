@@ -552,11 +552,11 @@
 
     // Gets filtered entities from #filter field
     function getFilter(){
-            let filter = [];
-            for (let option of document.getElementById('filters').options)
-                if (option.selected)
-                  filter.push(option.value);
-            return filter
+        let filter = [];
+        for (let option of document.getElementById('filters').options)
+            if (option.selected)
+              filter.push(option.value);
+        return filter
     }
 
     function apply_filter() {

@@ -115,6 +115,7 @@
                                 <i id="square-btn" title="Border" class="mapping-icon fas fa-vector-square" draggable="true"></i>
                                 <i id="group-btn" title="Group" class="mapping-icon fas fa-object-group"></i>
                                 <i id="ungroup-btn" title="Ungroup" class="mapping-icon fas fa-object-ungroup"></i>
+                                <br>
                                 <i id="zoom-in-btn" class="mapping-icon fas fa-plus"></i>
                                 <i id="zoom-out-btn" class="mapping-icon fas fa-minus"></i>
                                 <i id="download-btn" class="mapping-icon fas fa-download"></i>
