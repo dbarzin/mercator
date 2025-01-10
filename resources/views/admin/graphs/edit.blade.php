@@ -115,23 +115,17 @@
                                 <i id="square-btn" title="Border" class="mapping-icon fas fa-vector-square" draggable="true"></i>
                                 <i id="group-btn" title="Group" class="mapping-icon fas fa-object-group"></i>
                                 <i id="ungroup-btn" title="Ungroup" class="mapping-icon fas fa-object-ungroup"></i>
-                                <br>
-                                <i id="zoom-in-btn" class="mapping-icon fas fa-plus"></i>
-                                <i id="zoom-out-btn" class="mapping-icon fas fa-minus"></i>
-                                <i id="download-btn" class="mapping-icon fas fa-download"></i>
+                                <i id="zoom-in-btn" title="Zoom in" class="mapping-icon fas fa-plus"></i>
+                                <i id="zoom-out-btn" title="Zoom out" class="mapping-icon fas fa-minus"></i>
+                                <i id="update-btn" title="Update" class="mapping-icon fas fa-bolt"></i>
+                                <i id="download-btn" title="Export" class="mapping-icon fas fa-download"></i>
 
                             </div>
 
                             <!-- Context Menu for edges -->
                             <div id="context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
                                 <label for="edge-color-select">Couleur :</label>
-                                <select id="edge-color-select">
-                                    <option value="#000000">Noir</option>
-                                    <option value="#ff0000">Rouge</option>
-                                    <option value="#00ff00">Vert</option>
-                                    <option value="#0000ff">Bleu</option>
-                                    <option value="#ffa500">Orange</option>
-                                </select>
+                                <input type="color" id="edge-color-select" name="favorite-color" value="#ff0000">
                                 <br>
                                 <label for="edge-thickness-select">Épaisseur :</label>
                                 <select id="edge-thickness-select">
@@ -142,7 +136,7 @@
                                     <option value="5">5 px</option>
                                 </select>
                                 <br>
-                                <button id="apply-edge-style" onclick="retun false;">Appliquer</button>
+                                <button id="apply-edge-style">Appliquer</button>
                             </div>
 
                         <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">

@@ -154,16 +154,22 @@
                 {{ trans('panel.menu.tools') }}
             </a>
             <div class="dropdown-menu">
-                @can('patching_access')
-                <a class="dropdown-item" href="/admin/patching/index">
-                    <i class="fa-fw fas fa-wrench"></i>
-                    {{ trans('panel.menu.patching') }}
+                @can('graph_access')
+                <a class="dropdown-item" href="/admin/graphs">
+                    <i class="fa-fw fas fa-map"></i>
+                    {{ trans('cruds.graph.title') }}
                 </a>
                 @endcan
                 <a class="dropdown-item" href="/admin/report/explore">
                     <i class="fa-fw fas fa-globe"></i>
                     {{ trans('panel.menu.explore') }}
                 </a>
+                @can('patching_access')
+                <a class="dropdown-item" href="/admin/patching/index">
+                    <i class="fa-fw fas fa-wrench"></i>
+                    {{ trans('panel.menu.patching') }}
+                </a>
+                @endcan
                 <a class="dropdown-item" href="/admin/doc/report">
                     <i class="fa-fw fas fa-file"></i>
                     {{ trans('panel.menu.reports') }}

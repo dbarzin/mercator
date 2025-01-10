@@ -191,32 +191,32 @@ graph.container.addEventListener('contextmenu', (event) => {
 
 // Appliquer les changements de style à l'arête sélectionnée
 applyButton.addEventListener('click', () => {
+    console.log("change style")
+    // Do not submit form
+    event.preventDefault();
+    // edge selected ?
     if (selectedEdge) {
-        // console.log("update");
-        if (selectedEdge.style.image==null) {
-            graph.batchUpdate(() => {
-                const style = graph.getCellStyle(selectedEdge);
-                // console.log(style);
-                graph.setCellStyle({
-                    ...style,
-                    fillColor: colorSelect.value,
-                    strokeWidth: parseInt(thicknessSelect.value, 10),
-                }, [selectedEdge]);
-            });
-        }
-        else
-            graph.batchUpdate(() => {
-                const style = graph.getCellStyle(selectedEdge);
+        console.log(selectedEdge);
+        console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
+        graph.batchUpdate(() => {
+            const style = graph.getCellStyle(selectedEdge);
+            console.log(style);
+            if (selectedEdge.isEdge())
                 graph.setCellStyle({
                     ...style,
                     strokeColor: colorSelect.value,
                     strokeWidth: parseInt(thicknessSelect.value, 10),
                 }, [selectedEdge]);
-            });
+            else
+                graph.setCellStyle({
+                    ...style,
+                    fillColor: colorSelect.value,
+                    strokeWidth: parseInt(thicknessSelect.value, 10),
+                }, [selectedEdge]);
+        });
     }
     // Fermer le menu contextuel
     contextMenu.style.display = 'none';
-
 });
 
 // Cacher le menu contextuel en cliquant ailleurs
@@ -311,172 +311,6 @@ function saveGraph() {
 // Ajouter un bouton pour sauvegarder
 const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
 saveButton.addEventListener('click', saveGraph);
-
-//-------------------------------------------------------------------------
-// Données de test --------------------------------------------------------
-//-------------------------------------------------------------------------
-/*
-graph.batchUpdate(() => {
-
-    const parent = graph.getDefaultParent();
-
-    // const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    // const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    // graph.insertEdge(parent, null, '', v1, v2);
-
-    const group = graph.insertVertex({
-        parent,
-        value: '', // Pas de texte pour le conteneur
-        position: [90, 140], // Position du groupe
-        size: [150, 120], // Taille du groupe
-        style: {
-            fillColor: '#fffacd', // Fond jaune pâle
-            strokeColor: '#000000', // Bordure noire
-            strokeWidth: 1, // Épaisseur de la bordure
-            rounded: 2, // Coins arrondis
-        },
-    });
-
-    const s1 = graph.insertVertex({
-        parent,
-        value: 's1', // Pas de texte affiché
-        position: [150, 50], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/site.png', // URL de l'image
-            // imageWidth: 32, // Largeur de l'image
-            // imageHeight: 32, // Hauteur de l'image
-            editable: false, //  Ne pas autoriser de changer le label
-            resizable: false, // Ne pas resizer les images
-            //imageBorder: 0, // Bordure facultative autour de l'image
-            verticalLabelPosition: 'bottom',
-            spacingTop: -15,
-        },
-    });
-
-    const b1 = graph.insertVertex({
-        parent,
-        value: '', // Pas de texte affiché
-        position: [50, 50], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/building.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const b2 = graph.insertVertex({
-        parent,
-        value: '', // Pas de texte affiché
-        position: [100, 100], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/building.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const b3 = graph.insertVertex({
-        parent,
-        value: '', // Pas de texte affiché
-        position: [150, 160], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/building.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const e1 = graph.insertEdge({ parent, value: '', source: s1, target: b1 });
-    const e2 = graph.insertEdge({ parent, value: '', source: s1, target: b2 });
-    const e3 = graph.insertEdge({ parent, value: '', source: s1, target: b3 });
-
-    const bay1 = graph.insertVertex({
-        group,
-        value: '', // Pas de texte affiché
-        position: [150, 220], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/bay.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const bay2 = graph.insertVertex({
-        group,
-        value: '', // Pas de texte affiché
-        position: [100, 220], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/bay.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const bay3 = graph.insertVertex({
-        group,
-        value: '', // Pas de texte affiché
-        position: [200, 220], // Position de l'image
-        size: [32, 32], // Taille du nœud
-        style: {
-            shape: 'image', // Définir le nœud comme une image
-            image: '/images/bay.png', // URL de l'image
-            imageWidth: 32, // Largeur de l'image
-            imageHeight: 32, // Hauteur de l'image
-            imageBorder: 0, // Bordure facultative autour de l'image
-        },
-    });
-
-    const e4 = graph.insertEdge({ parent, value: '', source: b3, target: bay1 });
-    const e5 = graph.insertEdge({ parent, value: '', source: b3, target: bay2 });
-    const e6 = graph.insertEdge(
-        { parent,
-            value: '',
-            source: b3,
-            target: bay3,
-            style: {
-            editable: false, //  Ne pas autoriser de changer le label
-                stroke: '#FF', // Edge color
-                strokeWidth: 1,
-                startArrow : 'none', // pas de flèche
-                endArrow : 'none' // pas de flèche
-            },
-        }
-    );
-
-    // Ajouter un nœud avec du texte
-    graph.insertVertex({
-        parent,
-        value: 'mySample graph !', // Texte à afficher
-        position: [0, 0], // Position du nœud
-        size: [150, 50], // Taille du nœud
-        style: {
-            fillColor: 'none', // Pas de fond
-            strokeColor: 'none', // Pas de bordure
-            fontColor: '#000000', // Couleur du texte
-            fontSize: 14, // Taille du texte
-            align: 'center', // Alignement horizontal
-            verticalAlign: 'middle', // Alignement vertical
-        },
-    });
-});
-*/
 
 //-------------------------------------------------------------------------
 // Ajout de texte
@@ -968,6 +802,39 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
     }
 });
 
+//-------------------------------------------------------------------------
+// Update
+const updateButton = document.getElementById('update-btn');
+
+updateButton.addEventListener('click', () => {
+
+    graph.batchUpdate(() => {
+        const allCells = graph.getChildCells();
+
+        allCells.forEach((cell) => {
+            // Type of cell ?
+            if (cell.isEdge()) {
+                // Not implemented yew
+            }
+            else if (cell.style.image!=null) {
+                // Node
+                const node = _nodes.get(cell.id);
+                // console.log(cell);
+                if (node==null) {
+                    // remove cell
+                    graph.removeCells([cell], true);
+                }
+                else {
+                    // update cell
+                    cell.value = node.label;
+                    cell.style.image = node.image;
+                }
+            }
+        });
+        graph.refresh();
+    });
+});
+
 //---------------------------------------------------------------------------
 // Export SVG
 
@@ -1019,6 +886,3 @@ function downloadSVG() {
 // Ajoutez un bouton pour déclencher l'exportation
 const exportButton = document.getElementById('download-btn');
 exportButton.addEventListener('click', downloadSVG);
-
-//---------------------------------------------------------------------------
-// Menu
