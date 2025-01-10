@@ -29,6 +29,9 @@
                             {{ trans('cruds.logicalServer.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.logicalServer.fields.attributes') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.logicalServer.fields.description') }}
                         </th>
                         <th>
@@ -49,8 +52,10 @@
                 <tbody>
                     @foreach($logicalServers as $key => $logicalServer)
                         <tr data-entry-id="{{ $logicalServer->id }}"
-
-                        @if (($logicalServer->description==null)||
+                        @if ($logicalServer->active!=1)
+                            class="table-secondary"
+                        @elseif (
+                            ($logicalServer->description==null)||
                             ($logicalServer->operating_system==null)||
                             ($logicalServer->environment==null)||
                             ($logicalServer->address_ip==null)||
@@ -60,7 +65,6 @@
                             ))
                                 class="table-warning"
                         @endif
-
                           >
                             <td>
 
@@ -72,6 +76,11 @@
                             </td>
                             <td>
                                 {{ $logicalServer->type }}
+                            </td>
+                            <td>
+                                @foreach(explode(" ",$logicalServer->attributes) as $attribute)
+                                <span class="badge badge-info">{{ $attribute }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 {!! $logicalServer->description !!}

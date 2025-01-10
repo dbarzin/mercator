@@ -516,7 +516,20 @@ document.addEventListener('keydown', (event) => {
 });
 
 //-------------------------------------------------------------------------
+// Select all cells
+
+$('body').keydown(function(event){
+    // CTRL-a
+    if(event.ctrlKey && (event.keyCode== 65)) {
+        event.preventDefault();
+        event.stopPropagation();
+        graph.selectAll();
+    }
+ });
+
+//-------------------------------------------------------------------------
 // Empêcher les flèches de se déconnecter
+
 graph.setConnectable(false); // Désactive les nouvelles connexions
 graph.isCellDisconnectable = function () {
     return false; // Empêche la déconnexion des arêtes existantes
@@ -702,7 +715,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
             //
             const parent = graph.getDefaultParent();
             const filter = getFilter();
-            // console.log("filter= "+filter);
+            console.log("filter= "+filter + " filter.includes(8) "+filter.includes("8"));
             // Loop on edges
             node.edges.forEach(function (edge) {
                 // Get destination node

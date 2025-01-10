@@ -692,6 +692,8 @@ return [
     'logicalServer' => [
         'description' => 'Découpage logique d’un serveur physique.',
         'fields' => [
+            'active' => 'Actif',
+            'active_helper' => 'Le serveur logique est toujours en activité',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6)|...',
             'applications' => 'Applications',
@@ -715,7 +717,7 @@ return [
             'environment' => 'Environnement',
             'environment_helper' => 'Ex: Prod, Préprod, Intégration, Test, Dev,  ...',
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Dénomination du serveur logique',
             'net_services' => 'Services réseau',
             'net_services_helper' => 'Liste des services réseaux actifs',
             'servers' => 'Serveurs physiques',

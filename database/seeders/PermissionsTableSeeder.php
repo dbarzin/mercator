@@ -1137,7 +1137,7 @@ class PermissionsTableSeeder extends Seeder
             // Patching
             [
                 'id'    => '279',
-                'title' => 'patching_show',
+                'title' => 'patching_access',
             ],
             [
                 'id'    => '280',

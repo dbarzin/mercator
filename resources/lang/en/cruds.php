@@ -683,6 +683,8 @@ return [
     'logicalServer' => [
         'description' => 'Logical division of a physical server.',
         'fields' => [
+            'active' => 'Active',
+            'active' => 'The logical server is still active',
             'address_ip' => 'IP address (es)',
             'address_ip_helper' => 'Filter: (IPv4|IPv6), ...',
             'applications' => 'Applications',
@@ -708,7 +710,7 @@ return [
             'memory' => 'Memory',
             'memory_helper' => 'Amount of memory allocated',
             'name' => 'Name',
-            'name_helper' => '',
+            'name_helper' => 'Logical server name',
             'net_services' => 'Active network services',
             'net_services_helper' => '',
             'operating_system' => 'Operating System',

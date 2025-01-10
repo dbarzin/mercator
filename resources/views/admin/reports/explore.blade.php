@@ -208,9 +208,9 @@
             navigationButtons: true,
           },
           nodes: {
-            shape:'circularImage',
+            shape:'image',
             size: 30,
-            color: { border: "#aaaaaa", background: "#ffffff"},
+            color: { border: "#fffffff", background: "#ffffff"},
             imagePadding: 10,
             font: { color: "#000000", background: "#ffffff"},
 
@@ -398,9 +398,10 @@
 
     const network_container = document.getElementById('mynetwork');
 
-    document.addEventListener('keypress', fullscreen_network);
+    document.addEventListener('keypress', handle_keypressed);
 
-    function fullscreen_network(e) {
+    function handle_keypressed(e) {
+        console.log("e.key= "+e.key)
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
@@ -417,6 +418,16 @@
         network_container.classList.remove('fullscreen_network');
       }
     }
+
+    $('body').keydown(function(event){
+        console.log(event,event.ctrlKey,event.keyCode);
+    event.preventDefault();//prevents the keypress event, is this intended behavior?
+    event.stopPropagation();
+        // delete
+        if(event.keyCode == 46) {
+            network.deleteSelected()
+        }
+     });
 
     // Enable/Disable physics on network
     let physicsCheckbox = document.getElementById('physicsCheckbox');

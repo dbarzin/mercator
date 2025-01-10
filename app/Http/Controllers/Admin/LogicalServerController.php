@@ -55,6 +55,10 @@ class LogicalServerController extends Controller
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->whereNotNull('operating_system')->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->whereNotNull('environment')->distinct()->orderBy('environment')->pluck('environment');
+        $attributes_list = $this->getAttributes();
+
+        // default active
+        $active = true;
 
         return view(
             'admin.logicalServers.create',
@@ -66,14 +70,19 @@ class LogicalServerController extends Controller
                 'databases',
                 'type_list',
                 'environment_list',
-                'operating_system_list'
+                'operating_system_list',
+                'attributes_list',
+                'active'
             )
         );
     }
 
     public function store(StoreLogicalServerRequest $request)
     {
+        $request['active'] = $request->has('active');
+
         $logicalServer = LogicalServer::create($request->all());
+
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
@@ -97,6 +106,7 @@ class LogicalServerController extends Controller
         $type_list = LogicalServer::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
         $operating_system_list = LogicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
+        $attributes_list = $this->getAttributes();
 
         $logicalServer->load('servers', 'applications');
 
@@ -111,6 +121,7 @@ class LogicalServerController extends Controller
                 'type_list',
                 'operating_system_list',
                 'environment_list',
+                'attributes_list',
                 'logicalServer'
             )
         );
@@ -118,7 +129,11 @@ class LogicalServerController extends Controller
 
     public function update(UpdateLogicalServerRequest $request, LogicalServer $logicalServer)
     {
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
+        $request['active'] = $request->has('active');
+
         $logicalServer->update($request->all());
+
         $logicalServer->servers()->sync($request->input('servers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
@@ -149,5 +164,23 @@ class LogicalServerController extends Controller
         LogicalServer::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    private function getAttributes()
+    {
+        $attributes_list = LogicalServer::select('attributes')
+            ->where('attributes', '<>', null)
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        return array_unique($res);
     }
 }
