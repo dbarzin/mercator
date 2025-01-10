@@ -1137,7 +1137,7 @@ class PermissionsTableSeeder extends Seeder
             // Patching
             [
                 'id'    => '279',
-                'title' => 'patching_show',
+                'title' => 'patching_access',
             ],
             [
                 'id'    => '280',
@@ -1185,6 +1185,7 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '290',
                 'title' => 'logical_flow_access',
             ],
+            // Admin users
             [
                 'id'    => '291',
                 'title' => 'admin_user_create',
@@ -1204,6 +1205,27 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'    => '295',
                 'title' => 'admin_user_access',
+            ],
+            // Graph
+            [
+                'id'    => '296',
+                'title' => 'graph_create',
+            ],
+            [
+                'id'    => '297',
+                'title' => 'graph_edit',
+            ],
+            [
+                'id'    => '298',
+                'title' => 'graph_show',
+            ],
+            [
+                'id'    => '299',
+                'title' => 'graph_delete',
+            ],
+            [
+                'id'    => '300',
+                'title' => 'graph_access',
             ],
         ];
 

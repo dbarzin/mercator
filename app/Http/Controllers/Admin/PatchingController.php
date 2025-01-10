@@ -48,7 +48,9 @@ class PatchingController extends Controller
             'attributes',
             'update_date',
             'next_update'
-        );
+        )
+            ->where("active","=","1");
+
         $applications = MApplication::select(
             DB::raw(
                 "'APP' as type"
@@ -208,7 +210,9 @@ class PatchingController extends Controller
             'attributes',
             'update_date',
             'next_update'
-        );
+        )
+            ->where("active","=",1);
+
         $applications = MApplication::select(
             DB::raw(
                 "'APP' as type"

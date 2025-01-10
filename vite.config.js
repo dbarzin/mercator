@@ -5,7 +5,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/js/mapping.ts',
+                'resources/js/map.show.ts',
+                'resources/js/map.edit.ts',
                 'resources/css/mapping.css',
             ],
             refresh: true,

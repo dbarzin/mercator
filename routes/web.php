@@ -18,11 +18,6 @@ Route::get('/test', function () {
     return view('test');
 });
 
-// Maxgraph test
-Route::get('/admin/mapping', function () {
-    return view('admin.mapping');
-});
-
 // Authentification routes
 Auth::routes([
     'login' => true,
@@ -316,6 +311,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Experimental views
     Route::get('report/zones', [Admin\ReportController::class,'zones'])->name('report.view.zones');
+
+    // Graphs
+    Route::resource('graphs', Admin\GraphController::class);
+    Route::put('graph/save', [Admin\GraphController::class,'save']);
+    Route::delete('graphs-destroy', [Admin\GraphController::class,'massDestroy'])->name('graphs.massDestroy');
+    Route::get('graphs/clone/{id}', [Admin\GraphController::class,'clone'])->name('graphs.clone');
+
+    // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class,'explore'])->name('report.explore');
 
     // Maturity levels

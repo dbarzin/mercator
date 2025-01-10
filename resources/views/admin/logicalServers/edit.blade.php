@@ -11,7 +11,7 @@
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.logicalServer.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $logicalServer->name) }}" required maxlength='32'>
@@ -23,7 +23,7 @@
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.name_helper') }}</span>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="type">{{ trans('cruds.logicalServer.fields.type') }}</label>
                 <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type" maxlength='255'>
@@ -42,7 +42,33 @@
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.type_helper') }}</span>
             </div>
         </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
+                <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
+                    @foreach($attributes_list as $a)
+                        <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || str_contains($logicalServer->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('attributes'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('attributes') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.logicalServer.fields.attributes_helper') }}</span>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="form-check">
+                <label for="crypted">{{ trans('cruds.logicalServer.fields.active') }}</label>
+                <div class="form-switch">
+                  <input class="form-check-input" type="checkbox" id="active" name="active" {{ $logicalServer->active ? "checked" : "" }}>
+                </div>
+            </div>
+        </div>
+
       </div>
+      <!----------------------------------------------------------------------->
       <div class="row">
         <div class="col-sm">
             <div class="form-group">

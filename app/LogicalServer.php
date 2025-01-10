@@ -34,6 +34,7 @@ class LogicalServer extends Model
     protected $fillable = [
         'name',
         'type',
+        'active',
         'description',
         'operating_system',
         'install_date',

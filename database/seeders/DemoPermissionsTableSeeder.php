@@ -1412,7 +1412,7 @@ class DemoPermissionsTableSeeder extends Seeder
             278 =>
             array (
                 'id' => 279,
-                'title' => 'patching_show',
+                'title' => 'patching_access',
             ),
             279 =>
             array (

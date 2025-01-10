@@ -40,12 +40,29 @@
                     <td>
                         {{ $logicalServer->name }}
                     </td>
+                    <th width="10%">
+                        {{ trans('cruds.logicalServer.fields.type') }}
+                    </th>
+                    <td>
+                        {{ $logicalServer->type }}
+                    </td>
+                    <th width="10%">
+                        {{ trans('cruds.logicalServer.fields.attributes') }}
+                    </th>
+                    <td>
+                        @foreach(explode(" ",$logicalServer->attributes) as $attribute)
+                        <span class="badge badge-info">{{ $attribute }}</span>
+                        @endforeach
+                    </td>
+                    <td width=10%>
+                        {{ $logicalServer->active ? "Active" : "" }}
+                    </td>
                 </tr>
                 <tr>
                     <th>
                         {{ trans('cruds.logicalServer.fields.description') }}
                     </th>
-                    <td>
+                    <td colspan=6>
                         {!! $logicalServer->description !!}
                     </td>
                 </tr>

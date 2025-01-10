@@ -11,7 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExplorerController extends Controller
 {
-    public function explore(Request $request)
+    public function explore(Request $request) {
+
+        [$nodes, $edges] = $this->getData();
+
+        return view('admin/reports/explore', compact('nodes', 'edges'));
+    }
+
+    // TODO : return a JSON in place of nodes[] and edges[]
+    // TODO : split me in several private functions by views
+    // TODO : check user rights
+    public function getData() : array
     {
         $nodes = [];
         $edges = [];
@@ -30,7 +40,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId('SITE_', $site->id),
                 $site->name,
-                $site->icon_id === null ? '/images/site.png' : route('admin.documents.show', $site->icon_id),
+                $site->icon_id === null ? '/images/site.png' : "/admin/documents/{$site->icon_id}",
                 'sites'
             );
             // link to build
@@ -70,7 +80,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId('WORK_', $workstation->id),
                 $workstation->name,
-                $workstation->icon_id === null ? '/images/workstation.png' : route('admin.documents.show', $workstation->icon_id),
+                $workstation->icon_id === null ? '/images/workstation.png' : "/admin/documents/{$workstation->icon_id}",
                 'workstations',
                 $workstation->address_ip
             );
@@ -149,7 +159,7 @@ class ExplorerController extends Controller
                 6,
                 $this->formatId('PERIF_', $peripheral->id),
                 $peripheral->name,
-                $peripheral->icon_id === null ? '/images/peripheral.png' : route('admin.documents.show', $peripheral->icon_id),
+                $peripheral->icon_id === null ? '/images/peripheral.png' : "/admin/documents/{$peripheral->icon_id}",
                 'peripherals',
                 $peripheral->address_ip
             );
@@ -480,6 +490,7 @@ class ExplorerController extends Controller
 
             // Add source <-> destination flows
             foreach ($sources as $source) {
+                /* UNUSED Code
                 // if flow must be explored
                 if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                     // Add source node to request
@@ -489,8 +500,10 @@ class ExplorerController extends Controller
                         $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $source);
                     }
                 }
+                */
                 foreach ($destinations as $destination) {
                     $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_', $destination));
+                    /* UNUSED Code
                     // if flow must be explored
                     if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
                         // Add destination node to request
@@ -500,6 +513,7 @@ class ExplorerController extends Controller
                             $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $destination);
                         }
                     }
+                    */
                 }
             }
         }
@@ -521,7 +535,7 @@ class ExplorerController extends Controller
         // Zones
         $zoneAdmins = DB::table('zone_admins')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($zoneAdmins as $zone) {
-            $this->addNode($nodes, 4, $this->formatId('ZONE_', $zone->id), $zone->name, '/images/zoneadmin.png', 'zone_admins');
+            $this->addNode($nodes, 4, $this->formatId('ZONE_', $zone->id), $zone->name, '/images/zoneadmin.png', 'zone-admins');
         }
         // Annuaires
         $annuaires = DB::table('annuaires')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
@@ -532,7 +546,7 @@ class ExplorerController extends Controller
         // Forest
         $forests = DB::table('forest_ads')->select('id', 'name', 'zone_admin_id')->whereNull('deleted_at')->get();
         foreach ($forests as $forest) {
-            $this->addNode($nodes, 4, $this->formatId('FOREST_', $forest->id), $forest->name, '/images/ldap.png', 'forests-ads');
+            $this->addNode($nodes, 4, $this->formatId('FOREST_', $forest->id), $forest->name, '/images/ldap.png', 'forest-ads');
             $this->addLinkEdge($edges, $this->formatId('FOREST_', $forest->id), $this->formatId('ZONE_', $forest->zone_admin_id));
         }
         // Domain
@@ -570,7 +584,7 @@ class ExplorerController extends Controller
                 3,
                 $this->formatId('APP_', $application->id),
                 $application->name,
-                $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id),
+                $application->icon_id === null ? '/images/application.png' : "/admin/documents/{$application->icon_id}",
                 'applications'
             );
             $this->addLinkEdge($edges, $this->formatId('BLOCK_', $application->application_block_id), $this->formatId('APP_', $application->id));
@@ -755,7 +769,7 @@ class ExplorerController extends Controller
                 1,
                 $this->formatId('ENTITY_', $entity->id),
                 $entity->name,
-                $entity->icon_id === null ? '/images/entity.png' : route('admin.documents.show', $entity->icon_id),
+                $entity->icon_id === null ? '/images/entity.png' : "/admin/documents/{$entity->icon_id}",
                 'entities'
             );
             if ($entity->parent_entity_id !== null) {
@@ -781,7 +795,7 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('ENTITY_', $join->entity_id), $this->formatId('APP_', $join->m_application_id));
         }
 
-        return view('admin/reports/explore', compact('nodes', 'edges'));
+        return [$nodes, $edges];
     }
 
     private function addNode(&$nodes, $vue, $id, $label, $image, $type, $title = null)

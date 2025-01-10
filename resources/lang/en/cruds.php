@@ -600,6 +600,17 @@ return [
         'title_short' => 'Gateways',
         'title_singular' => 'Entrance gateway from the outside',
     ],
+    'graph' => [
+        'description' => 'Dessin de la cartographie du système d\'information',
+        'fields' => [
+            'name' => 'Name',
+            'name_helper' => 'Name of the map',
+            'type' => 'Type',
+            'name_helper' => 'Type of the map',
+        ],
+        'title' => 'Maps',
+        'title_singular' => 'Map',
+    ],
     'information' => [
         'description' => 'Data subject to computer processing.',
         'fields' => [
@@ -672,6 +683,8 @@ return [
     'logicalServer' => [
         'description' => 'Logical division of a physical server.',
         'fields' => [
+            'active' => 'Active',
+            'active' => 'The logical server is still active',
             'address_ip' => 'IP address (es)',
             'address_ip_helper' => 'Filter: (IPv4|IPv6), ...',
             'applications' => 'Applications',
@@ -697,7 +710,7 @@ return [
             'memory' => 'Memory',
             'memory_helper' => 'Amount of memory allocated',
             'name' => 'Name',
-            'name_helper' => '',
+            'name_helper' => 'Logical server name',
             'net_services' => 'Active network services',
             'net_services_helper' => '',
             'operating_system' => 'Operating System',
@@ -871,13 +884,13 @@ return [
             'name' => 'Name',
             'name_helper' => '',
             'responsible' => 'Responsible',
-            'responsible_helper' => '',
+            'responsible_helper' => 'In-house equipment management.',
             'site' => 'Site',
             'site_helper' => 'Site where the device is located',
             'type' => 'Type',
             'type_helper' => 'Printer, scanner, etc.',
             'provider' => 'Provider',
-            'provider_helper' => '',
+            'provider_helper' => 'Device supplier (entity in the ecosystem view).',
             'domain' => 'Domain',
             'domain_helper' => 'ex: IT, OT, IOT ...',
             'responsible' => 'Responsible',

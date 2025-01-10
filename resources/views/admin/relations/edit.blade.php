@@ -57,7 +57,6 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.relation.fields.attributes_helper') }}</span>
                     </div>
-
                 </div>
             </div>
             <!---------------------------------------------------------------------------------------------------->

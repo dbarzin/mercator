@@ -607,6 +607,17 @@ return [
         'title_short' => 'Passerelles',
         'title_singular' => 'Passerelle d’entrée depuis l’extérieur',
     ],
+    'graph' => [
+        'description' => 'Dessin de la cartographie du système d\'information',
+        'fields' => [
+            'name' => 'Nom',
+            'name_helper' => 'Nom de la carte',
+            'type' => 'Type',
+            'name_helper' => 'Type de carte',
+        ],
+        'title' => 'Cartes',
+        'title_singular' => 'Carte',
+    ],
     'information' => [
         'description' => 'Donnée faisant l’objet d’un traitement informatique.',
         'fields' => [
@@ -681,6 +692,8 @@ return [
     'logicalServer' => [
         'description' => 'Découpage logique d’un serveur physique.',
         'fields' => [
+            'active' => 'Actif',
+            'active_helper' => 'Le serveur logique est toujours en activité',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6)|...',
             'applications' => 'Applications',
@@ -704,7 +717,7 @@ return [
             'environment' => 'Environnement',
             'environment_helper' => 'Ex: Prod, Préprod, Intégration, Test, Dev,  ...',
             'name' => 'Nom',
-            'name_helper' => '',
+            'name_helper' => 'Dénomination du serveur logique',
             'net_services' => 'Services réseau',
             'net_services_helper' => 'Liste des services réseaux actifs',
             'servers' => 'Serveurs physiques',
@@ -885,11 +898,11 @@ return [
             'type' => 'Type',
             'type_helper' => 'ex: imprimante, scanner...',
             'provider' => 'Fournisseur',
-            'provider_helper' => 'Fournisseur du périphérique',
+            'provider_helper' => 'Fournisseur du périphérique (entité dans la vue de l\'écosystème).',
             'domain' => 'Domaine',
             'domain_helper' => 'ex: IT, OT, IOT...',
             'responsible' => 'Responsable',
-            'responsible_helper' => '',
+            'responsible_helper' => 'Responsable interne de la gestion de l\'équipement.',
             'vendor' => 'CPE Editeur',
             'vendor_helper' => "Editeur de l'application",
             'product' => 'CPE Produit',

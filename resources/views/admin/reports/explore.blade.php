@@ -104,6 +104,7 @@
     let network = null;
     let needSavePNG = false;
 
+    // TODO : optimize me
     let _nodes = new Map();
     @foreach($nodes as $node)
         _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: "{!! str_replace('"','\\"',$node["label"]) !!}", {!! array_key_exists('title',$node) ? ('title: "' . $node["title"] . '",') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
@@ -207,9 +208,9 @@
             navigationButtons: true,
           },
           nodes: {
-            shape:'circularImage',
+            shape:'image',
             size: 30,
-            color: { border: "#aaaaaa", background: "#ffffff"},
+            color: { border: "#fffffff", background: "#ffffff"},
             imagePadding: 10,
             font: { color: "#000000", background: "#ffffff"},
 
@@ -397,9 +398,10 @@
 
     const network_container = document.getElementById('mynetwork');
 
-    document.addEventListener('keypress', fullscreen_network);
+    document.addEventListener('keypress', handle_keypressed);
 
-    function fullscreen_network(e) {
+    function handle_keypressed(e) {
+        console.log("e.key= "+e.key)
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
@@ -416,6 +418,13 @@
         network_container.classList.remove('fullscreen_network');
       }
     }
+
+    $('body').keydown(function(event){
+        // delete
+        if((event.keyCode == 8)||(event.keyCode == 46)) {
+            network.deleteSelected()
+        }
+     });
 
     // Enable/Disable physics on network
     let physicsCheckbox = document.getElementById('physicsCheckbox');
@@ -551,11 +560,11 @@
 
     // Gets filtered entities from #filter field
     function getFilter(){
-            let filter = [];
-            for (let option of document.getElementById('filters').options)
-                if (option.selected)
-                  filter.push(option.value);
-            return filter
+        let filter = [];
+        for (let option of document.getElementById('filters').options)
+            if (option.selected)
+              filter.push(option.value);
+        return filter
     }
 
     function apply_filter() {
@@ -588,20 +597,16 @@
     $('.select2').select2();
 
     // clear selections
-    $('#filters').val(null);
+    $('#filters').val(null).trigger('change');
     $('#node').val(null);
 
     $('#filters')
         .on('select2:select', function(e) {
-            // console.log('Select: ' , e.params.data.id);
-            // console.log('val: ' ,   $('#filters').val());
             apply_filter();
         });
 
     $('#filters')
         .on('select2:unselect', function(e) {
-            // console.log('unSelect: ' , e.params.data.id);
-            // console.log('val: ' ,   $('#filters').val());
             apply_filter();
         });
 

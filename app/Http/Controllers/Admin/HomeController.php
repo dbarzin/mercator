@@ -549,6 +549,7 @@ class HomeController extends Controller
             'logicalServers' => LogicalServer::count(),
             'logicalServers_lvl1' => LogicalServer
                 ::where('description', '<>', null)
+                    ->where('active','=',1)
                     ->where('operating_system', '<>', null)
                     ->where('environment', '<>', null)
                     ->where('address_ip', '<>', null)
