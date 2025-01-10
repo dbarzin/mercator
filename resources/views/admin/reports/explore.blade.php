@@ -420,9 +420,8 @@
     }
 
     $('body').keydown(function(event){
-        console.log(event,event.ctrlKey,event.keyCode);
         // delete
-        if(event.keyCode == 46) {
+        if((event.keyCode == 8)||(event.keyCode == 46)) {
             network.deleteSelected()
         }
      });
