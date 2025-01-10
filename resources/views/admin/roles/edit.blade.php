@@ -1695,12 +1695,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
-    <div class="form-check">
+    <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.roles.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>

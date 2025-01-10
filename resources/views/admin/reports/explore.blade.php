@@ -421,8 +421,6 @@
 
     $('body').keydown(function(event){
         console.log(event,event.ctrlKey,event.keyCode);
-    event.preventDefault();//prevents the keypress event, is this intended behavior?
-    event.stopPropagation();
         // delete
         if(event.keyCode == 46) {
             network.deleteSelected()

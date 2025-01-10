@@ -3,12 +3,12 @@
     "file": "assets/ModelXmlSerializer-35f2b72c.js"
   },
   "resources/css/mapping.css": {
-    "file": "assets/mapping-e387f721.css",
+    "file": "assets/mapping-51b32789.css",
     "isEntry": true,
     "src": "resources/css/mapping.css"
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-8b7439ff.js",
+    "file": "assets/map.edit-54e4eb4d.js",
     "imports": [
       "_ModelXmlSerializer-35f2b72c.js"
     ],
@@ -16,7 +16,7 @@
     "src": "resources/js/map.edit.ts"
   },
   "resources/js/map.show.ts": {
-    "file": "assets/map.show-b6dfdd6a.js",
+    "file": "assets/map.show-bf13da4d.js",
     "imports": [
       "_ModelXmlSerializer-35f2b72c.js"
     ],

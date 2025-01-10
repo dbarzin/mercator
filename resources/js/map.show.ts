@@ -1,28 +1,13 @@
 import {
     Graph,
-    CellEditorHandler,
-    UndoManager,
-    SelectionCellsHandler,
-    SelectionHandler,
-    RubberBandHandler,
     GraphDataModel,
-    mxEvent,
-    PanningHandler,
     InternalEvent,
     ModelXmlSerializer,
-    InternalEvent
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
 // Import des plugins
-const plugins: GraphPluginConstructor[] = [
-    // L'ordre d'import est important !
-    // CellEditorHandler,
-    // SelectionCellsHandler,
-    // SelectionHandler,
-    // PanningHandler,
-    //RubberBandHandler,
-];
+const plugins: GraphPluginConstructor[] = [ ];
 
 // Initialiser un graphique de base
 const container = document.getElementById('graph-container');
@@ -132,17 +117,13 @@ function downloadSVG() {
   }, 1000); // Attendre la conversion des images
 }
 
-// Ajoutez un bouton pour déclencher l'exportation
-//const exportButton = document.getElementById('download-btn');
-//exportButton.addEventListener('click', downloadSVG);
-
 //--------------------------------------------------------------------------
 // Gestionnaire de clic
-/*
+
 graph.addListener(InternalEvent.CLICK, (sender, evt) => {
     const cell = evt.getProperty('cell');
     if (cell && cell.isVertex()) {
-        console.log('Vertex cliqué :', cell.value);
+        // console.log('Vertex cliqué :', cell.value);
         // Ajoutez ici le code pour gérer le clic sur le vertex
         const node = _nodes.get(cell.id);
         // deleted ?
@@ -152,4 +133,3 @@ graph.addListener(InternalEvent.CLICK, (sender, evt) => {
         window.location.href = "/admin/"+node.type+"/"+id;
     }
 });
-*/
