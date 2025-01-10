@@ -191,28 +191,25 @@ graph.container.addEventListener('contextmenu', (event) => {
 
 // Appliquer les changements de style à l'arête sélectionnée
 applyButton.addEventListener('click', () => {
-    console.log("change style")
+    // console.log("change style")
     // Do not submit form
     event.preventDefault();
     // edge selected ?
     if (selectedEdge) {
-        console.log(selectedEdge);
+        // console.log(selectedEdge);
         console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
         graph.batchUpdate(() => {
             const style = graph.getCellStyle(selectedEdge);
-            console.log(style);
-            if (selectedEdge.isEdge())
-                graph.setCellStyle({
-                    ...style,
-                    strokeColor: colorSelect.value,
-                    strokeWidth: parseInt(thicknessSelect.value, 10),
-                }, [selectedEdge]);
-            else
-                graph.setCellStyle({
-                    ...style,
-                    fillColor: colorSelect.value,
-                    strokeWidth: parseInt(thicknessSelect.value, 10),
-                }, [selectedEdge]);
+            // console.log(style);
+            if (selectedEdge.isEdge()) {
+                selectedEdge.style.strokeColor = colorSelect.value;
+                selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
+                }
+            else {
+                selectedEdge.style.fillColor = colorSelect.value;
+                selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
+                }
+            graph.refresh(selectedEdge);
         });
     }
     // Fermer le menu contextuel
