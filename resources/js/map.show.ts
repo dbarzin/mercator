@@ -133,3 +133,23 @@ graph.addListener(InternalEvent.CLICK, (sender, evt) => {
         window.location.href = "/admin/"+node.type+"/"+id;
     }
 });
+
+//-----------------------------------------------------------------
+// Change le pointeur lorsque l'on est sur un Vexter
+graph.addMouseListener({
+    currentState: null,
+    mouseMove(sender, me) {
+        const cell = me.getCell();
+        if (cell && cell.isVertex()) {
+            // Si la souris est sur un Vertex
+            graph.container.style.cursor = 'pointer';
+            this.currentState = graph.view.getState(cell);
+        } else {
+            // Rétablir le curseur par défaut
+            graph.container.style.cursor = 'default';
+            this.currentState = null;
+        }
+    },
+    mouseDown(sender, me) {},
+    mouseUp(sender, me) {},
+});
