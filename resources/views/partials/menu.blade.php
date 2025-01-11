@@ -812,9 +812,5 @@
         </ul>
     </nav>
 
-    <button class="sidebar-minimizer brand-minimizer" type="button">
-        <script>
-        '{{ "toto" }}'
-        </script>
-        Version 2024.12.1</button>
+    <button class="sidebar-minimizer brand-minimizer" type="button">Version 2025.01.01</button>
 </div>
