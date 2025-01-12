@@ -140,7 +140,7 @@ graph.addMouseListener({
     currentState: null,
     mouseMove(sender, me) {
         const cell = me.getCell();
-        if (cell && cell.isVertex()) {
+        if (cell && cell.isVertex() && (cell.style.image!=null)) {
             // Si la souris est sur un Vertex
             graph.container.style.cursor = 'pointer';
             this.currentState = graph.view.getState(cell);
