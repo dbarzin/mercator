@@ -16,7 +16,7 @@
     "src": "resources/js/map.edit.ts"
   },
   "resources/js/map.show.ts": {
-    "file": "assets/map.show-273d8c4c.js",
+    "file": "assets/map.show-d8a391dd.js",
     "imports": [
       "_ModelXmlSerializer-35f2b72c.js"
     ],
