@@ -516,6 +516,7 @@ document.addEventListener('keydown', (event) => {
 // Select all cells
 
 $('body').keydown(function(event){
+    console.log(event);
     // CTRL-a
     if(event.ctrlKey && (event.keyCode== 65)) {
         event.preventDefault();
