@@ -88,6 +88,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#compliance">Compliance</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -132,29 +134,29 @@
 </ul>
 <h2 id="reports">Reports</h2>
 <h3 id="mapping-report">Mapping report</h3>
-<p>The cartography report contains all the objects making up the cartography and the links between them. </p>
+<p>The cartography report contains all the objects making up the cartography and the links between them.</p>
 <p><a href="/mercator/images/report.png"><img src="/mercator/images/report.png" width="600"></a></p>
 <p>This is a Word document containing information on all the objects in the selected views at the desired level of granularity.</p>
 <h3 id="lists">Lists</h3>
 <p>Mercator allows you to extract a range of information in the form of lists:</p>
 <h4 id="supported-entities-and-applications">Supported entities and applications</h4>
-<p>Generates a list of information system entities and their supported applications. </p>
+<p>Generates a list of information system entities and their supported applications.</p>
 <p>This list can be used to draw up an inventory of the entities responsible for the various information system applications, along with their managers and contact points.</p>
 <h4 id="applications-by-application-group">Applications by application group</h4>
-<p>List of applications by application group </p>
+<p>List of applications by application group</p>
 <p>This list provides an overview of all the applications in the information system, classified by application group. This list can be used to monitor vulnerabilities in information system applications.</p>
 <h4 id="logical-servers">Logical servers</h4>
 <p>List of logical servers by applications and managers.</p>
 <p>This list can be used to identify logical server managers and the applications they serve.</p>
 <h4 id="security-needs-analysis">Security needs analysis</h4>
-<p>List of security requirements between macro-processes, processes, applications, databases and information. </p>
+<p>List of security requirements between macro-processes, processes, applications, databases and information.</p>
 <p>This list is used to analyze the consistency of the information classification plan in terms of confidentiality, integrity, availability and traceability between processes, applications, databases and the information they contain.</p>
 <h4 id="logical-server-configuration">Logical server configuration</h4>
 <p>Logical server configuration list.</p>
 <p>This list is used to analyze the configuration of logical servers.</p>
 <p>This list can be used to analyze the capacity required to run the information system, and to make year-on-year projections.</p>
 <h4 id="physical-infrastructure-inventory">Physical infrastructure inventory</h4>
-<p>List of equipment by site/location </p>
+<p>List of equipment by site/location</p>
 <p>This list is used to review the physical inventory of information system equipment.</p>
 <p>Every year, we recommend you print out this list and check that the equipment in the inventory corresponds to what is actually present in the corresponding premises, sites and bays.</p>
 <h3 id="audit">Audit</h3>
@@ -163,6 +165,304 @@
 <h4 id="updates">Updates</h4>
 <p>This list is used to audit changes made to the mapping.</p>
 <p>A map that never changes is not up-to-date. This report identifies the changes (creations, deletions and modifications) made to the cartography by object type over the course of a year.</p>
+<h3 id="compliance">Compliance</h3>
+<p>The calculation of conformity levels for each mapping object is based on the presence of the following elements:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Level</th>
+<th>Required elements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ecosystem</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Entities</td>
+<td>1</td>
+<td>Description, security level, point of contact, at least one process</td>
+</tr>
+<tr>
+<td>Relationships</td>
+<td>1</td>
+<td>Description, type</td>
+</tr>
+<tr>
+<td>Relationships</td>
+<td>2</td>
+<td>Importance</td>
+</tr>
+<tr>
+<td><strong>Business</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Macro-processes</td>
+<td>2</td>
+<td>Description, security levels</td>
+</tr>
+<tr>
+<td>Macro-processes</td>
+<td>3</td>
+<td>Responsible</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>1</td>
+<td>Description, input-output, responsible</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>2</td>
+<td>Macro-processes, security requirements</td>
+</tr>
+<tr>
+<td>Activities</td>
+<td>2</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Operations</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Operations</td>
+<td>2</td>
+<td>Actors</td>
+</tr>
+<tr>
+<td>Operations</td>
+<td>3</td>
+<td>Tasks</td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td>3</td>
+<td>Description, task</td>
+</tr>
+<tr>
+<td>Actor</td>
+<td>2</td>
+<td>Contact, nature, type</td>
+</tr>
+<tr>
+<td>Information</td>
+<td>1</td>
+<td>Description, owner, administrator, storage</td>
+</tr>
+<tr>
+<td>Information</td>
+<td>2</td>
+<td>Security Requirements, Sensitivity</td>
+</tr>
+<tr>
+<td><strong>Information system</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Application block</td>
+<td>2</td>
+<td>Description, responsible, applications</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>1</td>
+<td>Description, technology, type, users, process</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>2</td>
+<td>Responsible, security levels</td>
+</tr>
+<tr>
+<td>Application Services</td>
+<td>2</td>
+<td>Description, applications</td>
+</tr>
+<tr>
+<td>Application Modules</td>
+<td>2</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>1</td>
+<td>Description, type, responsible entity, responsible person</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>2</td>
+<td>Security requirements</td>
+</tr>
+<tr>
+<td>Flows</td>
+<td>1</td>
+<td>Description, source, destination</td>
+</tr>
+<tr>
+<td><strong>Administration</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Zones</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Directories</td>
+<td>1</td>
+<td>Description, solution, administration area</td>
+</tr>
+<tr>
+<td>Forest</td>
+<td>1</td>
+<td>Description, administration area</td>
+</tr>
+<tr>
+<td>Domains</td>
+<td>1</td>
+<td>Description, domain controller, number of users, number of machines, inter-domain relationship</td>
+</tr>
+<tr>
+<td><strong>Logical</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Networks</td>
+<td>1</td>
+<td>Description, manager, security manager, security requirements</td>
+</tr>
+<tr>
+<td>Subnets</td>
+<td>1</td>
+<td>Description, address, default gateway, IP allocation type, DMZ, WiFi, VLAN</td>
+</tr>
+<tr>
+<td>Gateways</td>
+<td>1</td>
+<td>Description, authentication, IP range</td>
+</tr>
+<tr>
+<td>Connected external devices</td>
+<td>2</td>
+<td>Type, contacts</td>
+</tr>
+<tr>
+<td>Switches</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Routers</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Security devices</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Clusters</td>
+<td>1</td>
+<td>Description, type</td>
+</tr>
+<tr>
+<td>Logical servers</td>
+<td>1</td>
+<td>Description, OS, environment, IP address, applications, physical servers or clusters</td>
+</tr>
+<tr>
+<td>Certificates</td>
+<td>2</td>
+<td>Description, Type, validity start date, validity end date, applications or logical server</td>
+</tr>
+<tr>
+<td><strong>Physical infrastructure</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sites</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Buildings</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Bays</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>Physical servers</td>
+<td>1</td>
+<td>Description, configuration, site, building, responsible</td>
+</tr>
+<tr>
+<td>Workstations</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Telephones</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>1</td>
+<td>Description, site, building</td>
+</tr>
+<tr>
+<td>Peripherals</td>
+<td>1</td>
+<td>Description, site, building, responsible</td>
+</tr>
+<tr>
+<td>Physical switches</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>Physical routers</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>WiFi terminals</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>Physical security devices</td>
+<td>1</td>
+<td>Description, type, site, building</td>
+</tr>
+<tr>
+<td>LANs</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>VLans</td>
+<td>1</td>
+<td>Description</td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>
