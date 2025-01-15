@@ -355,6 +355,14 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('LAN_', $join->lan_id), $this->formatId('WAN_', $join->wan_id));
         }
 
+        // External connected entities
+        $externals = DB::table('external_connected_entities')->select('id','name','network_id', 'entity_id')->get();
+        foreach ($externals as $external) {
+            $this->addNode($nodes, 5, $this->formatId('EXT_', $external->id), $external->name, '/images/entity.png', 'external-connected-entities');
+            $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('NETWORK_', $external->network_id));
+            $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('ENTITY_', $external->entity_id));
+        }
+
         // Subnetworks
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
