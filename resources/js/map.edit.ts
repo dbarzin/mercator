@@ -197,7 +197,7 @@ applyButton.addEventListener('click', () => {
     // edge selected ?
     if (selectedEdge) {
         // console.log(selectedEdge);
-        console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
+        // console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
         graph.batchUpdate(() => {
             const style = graph.getCellStyle(selectedEdge);
             // console.log(style);
@@ -516,7 +516,7 @@ document.addEventListener('keydown', (event) => {
 // Select all cells
 
 $('body').keydown(function(event){
-    console.log(event);
+    // console.log(event);
     // CTRL-a
     if(event.ctrlKey && (event.keyCode== 65)) {
         event.preventDefault();
@@ -570,16 +570,20 @@ groupButton.addEventListener('click', () => {
 
     if (cells.length > 0) {
         // Créer un nouveau conteneur pour le groupe
-        const group = graph.createVertex(
-            null,
-            null,
-            '',
-            0,
-            0,
-            100,
-            100,
-            'mxGroup'
-        );
+
+        // Ajouter le carré
+        const parent = graph.getDefaultParent();
+        const group = graph.insertVertex({
+            parent,
+            position: [0, 0], // Position du groupe
+            size: [100, 100], // Taille du groupe
+            style: {
+                fillColor: null, // transparent
+                strokeColor: null, // transparent
+                strokeWidth: 0, // Épaisseur de la bordure
+                rounded: 2, // Coins arrondis
+            },
+        });
 
         // Ajouter le conteneur au graphe
         graph.addCell(group);
@@ -713,7 +717,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
             //
             const parent = graph.getDefaultParent();
             const filter = getFilter();
-            console.log("filter= "+filter + " filter.includes(8) "+filter.includes("8"));
+            // console.log("filter= "+filter + " filter.includes(8) "+filter.includes("8"));
             // Loop on edges
             node.edges.forEach(function (edge) {
                 // Get destination node

@@ -8,7 +8,7 @@
     "src": "resources/css/mapping.css"
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-cbbe04d6.js",
+    "file": "assets/map.edit-b189b7a5.js",
     "imports": [
       "_ModelXmlSerializer-35f2b72c.js"
     ],
