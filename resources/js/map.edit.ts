@@ -271,14 +271,14 @@ async function saveGraphToDatabase(id: integer, name: string, type: string, cont
       body: JSON.stringify({ id, name, type, content }),
     });
 
-    // console.log('réponse :', response);
-    if (!response.ok) {
+    //console.log('réponse :', response.status);
+    if (response.status != 200) {
       const error = await response.json();
       throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
     }
 
-    const data = await response.json();
-    console.log('Graphe sauvegardé avec succès :', data.graph);
+    // const data = await response.json();
+    // console.log('Graphe sauvegardé avec succès');
   } catch (error) {
     console.error('Erreur lors de la sauvegarde :', error);
     alert('Erreur lors de la sauvegarde du graphe.');
