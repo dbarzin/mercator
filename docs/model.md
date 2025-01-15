@@ -321,7 +321,7 @@ Table *m_applications* :
 
 Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.
 
-Un service applicatif peut, une API, ...
+Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).
 
 Table *application_services* :
 
@@ -375,13 +375,13 @@ Table *databases* :
 | updated_at      | timestamp    | Date de mise à jour |
 | deleted_at      | timestamp    | Date de suppression |
 
-#### Flux
+#### Flow
 
-Un flux est un échange d’informations entre un émetteur ou un récepteur (application, service applicatif, module applicatif ou base de données).
+A flow is an exchange of information between a sender and a receiver (application, application service, application module or database).
 
-Un flux représente un échange d’information entre deux éléments du système d’information. Il faut éviter de représenter en termes de flux l’ensemble des règles de filtrage du firewall.
+A flow represents an exchange of information between two elements of the information system. It is important to avoid representing all firewall filtering rules in terms of flows.
 
-Par exemple, les requêtes DNS ou NTP ne devraient pas être représentées comme des flux.
+For example, DNS or NTP requests should not be represented as flows.
 
 Table *fluxes* :
 
@@ -404,19 +404,19 @@ Table *fluxes* :
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
-### L’administration
+### Administration
 
-La vue de l’administration répertorie l’administration des ressources, des annuaires et les niveaux de privilèges des utilisateurs du système d’information.
+The administration view lists the administration of resources, directories and privilege levels of information system users.
 
-[<img src="/mercator/images/administration.png" width="400">](/mercator/images/administration.png)
+[<img src=“/mercator/images/administration.png” width=“400”>](/mercator/images/administration.png)
 
-Disposer d’annuaires et d’une centralisation des droits d’accès des utilisateurs est fortement recommandé pour les opérateurs d’importance vitale (OIV).
+Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).
 
-#### Zone d’administration
+#### Administration area
 
-Une zone d’administration est un ensemble de ressources (personnes, données, équipements) sous la responsabilité d’un (ou plusieurs) administrateur(s).
+An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).
 
-Une zone d’administration est composée de services d’annuaires et de forêts Active Directory (AD) ou d’arborescences LDAP.
+An administration zone is made up of Active Directory (AD) directory services and forests, or LDAP trees.
 
 Table *zone_admins* :
 
@@ -429,11 +429,11 @@ Table *zone_admins* :
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
-#### Service d’annuaire d’administration
+#### Administration directory service
 
-Un service d’annuaire d’administration est une application regroupant les données sur les utilisateurs ou les équipements informatiques de l’entreprise et permettant leur administration.
+An administration directory service is an application that collects data on a company's users or IT equipment, enabling them to be administered.
 
-Il peut s’agit d’un outil d’inventaire servant à la gestion des changements ou des tickets ou d’un outil de cartographie comme Mercator.
+It can be an inventory tool used to manage changes or tickets, or a mapping tool such as Mercator.
 
 Table *annuaires*;
 
@@ -448,7 +448,7 @@ Table *annuaires*;
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
-#### Forêt Active Directory / Arborescence LDAP
+#### Active Directory forest / LDAP tree structure
 
 Ces objets représentent un regroupement organisé de domaines Active Directory ou d’arborescence LDAP.
 
@@ -464,17 +464,17 @@ Table *forest_ads* :
 | updated_at            | timestamp    | Date de mise à jour |
 | deleted_at            | timestamp    | Date de suppression |
 
-### L’infrastructure logiques
+### Logical infrastructure
 
-La vue de l'infrastructure logique correspond à la répartition logique du réseau.
+The logical infrastructure view corresponds to the logical distribution of the network.
 
-[<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
+[<img src=“/mercator/images/logical.png” width=“400”>](/mercator/images/logical.png)
 
-Elle illustre le cloisonnement des réseaux et les liens logiques entre eux. En outre, elle répertorie les équipements réseau en charge du trafic.
+It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.
 
-#### Réseaux
+#### Networks
 
-Les réseaux sont un ensemble d’équipements reliés logiquement entre eux et qui échangent des informations.
+Networks are a set of logically interconnected devices that exchange information.
 
 Table *networks* :
 
@@ -494,9 +494,9 @@ Table *networks* :
 | updated_at      | timestamp    | Date de mise à jour |
 | deleted_at      | timestamp    | Date de suppression |
 
-#### Sous-réseaux
+#### Subnetworks
 
-Les sous-réseaux sont une subdivision logique d’un réseau de taille plus importante.
+Subnetworks are a logical subdivision of a larger network.
 
 table *subnetworks* :
 
@@ -520,9 +520,9 @@ table *subnetworks* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Passerelles d’entrées depuis l’extérieur
+#### External input gateways
 
-Les passerelles sont des composants permettant de relier un réseau local avec l’extérieur.
+Gateways are components used to connect a local network to the outside world.
 
 Table *gateways* :
 
@@ -538,9 +538,9 @@ Table *gateways* :
 | deleted_at           | timestamp    | Date de suppression |
 
 
-#### Entités extérieures connectées
+#### Connected external entities
 
-Les entités extérieures connectées représentent les entités externes connectées au réseau.
+Connected external entities represent external entities connected to the network.
 
 Table *external_connected_entities* :
 
@@ -556,9 +556,9 @@ Table *external_connected_entities* :
 | deleted_at           | timestamp    | Date de suppression |
 
 
-#### Commutateurs réseau
+#### Network switches
 
-Les commutateurs réseaux sont les composant gérant les connexions entre les différents serveurs au sein d’un réseau.
+Network switches are the components that manage connections between the various servers on a network.
 
 Table *network_switches* :
 
@@ -572,9 +572,9 @@ Table *network_switches* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Routeurs logiques
+#### Logical routers
 
-Les routeurs logiques sont des composants logiques gérant les connexions entre différents réseaux.
+Logical routers are logical components that manage connections between different networks.
 
 Table *routers* :
 
@@ -588,11 +588,11 @@ Table *routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Équipements de sécurité
+#### Security equipment
 
-Les équipements de sécurité sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information.
+Security devices are components used for network supervision, incident detection, equipment protection and information system security.
 
-Les équipements de sécurité sont des systèmes de détection d'intrusion (ou IDS : Intrusion Detection System), des systèmes de prévention d'intrusion (ou IPS : Intrustion Prevention System), des systèmes de surveillance des équipements.
+Security equipment includes intrusion detection systems (IDS: Intrusion Detection System), intrusion prevention systems (IPS: Intrusion Prevention System) and equipment monitoring systems.
 
 Table *security_devices* :
 
@@ -605,9 +605,9 @@ Table *security_devices* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Serveurs DHCP
+#### DHCP servers
 
-Les serveurs DHCP sont des équipements physiques ou virtuel permettant la gestion des adresses IP d’un réseau.
+DHCP servers are physical or virtual devices that manage a network's IP addresses.
 
 Table *dhcp_servers* :
 
@@ -620,9 +620,9 @@ Table *dhcp_servers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Serveurs DNS
+#### DNS servers
 
-Les serveurs de noms de domaine (Domain Name System) sont des équipements physique ou virtuel permettant la conversion d’un nom de domaine en adresse IP.
+Domain Name System (DNS) servers are physical or virtual devices that convert a domain name into an IP address.
 
 Table *dnsservers* :
 
@@ -637,7 +637,7 @@ Table *dnsservers* :
 
 #### Clusters
 
-Les clusters représentent un ensemble de serveurs logiques hébergés sur un ou plusieurs serveurs physiques
+Clusters are a set of logical servers hosted on one or more physical servers.
 
 Table *clusters* :
 
@@ -650,9 +650,9 @@ Table *clusters* :
 | address_ip           | varchar(255) | Adresses IP du cluster |
 
 
-#### Serveurs logiques
+#### Logical servers
 
-Les serveurs logiques sont un découpage logique d’un serveur physique. Si le serveur physique n’est pas virtualisé, il est découpé en un seul serveur logique.
+Logical servers are a logical breakdown of a physical server. If the physical server is not virtualized, it is split into a single logical server.
 
 
 Table *logical_servers* :
@@ -676,11 +676,11 @@ Table *logical_servers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Certificats
+#### Certificates
 
-Les certificats électroniques sont utilisés pour identifier et authentifier des services, des personnes physiques ou morales, mais aussi pour chiffrer des échanges.  
+Electronic certificates are used to identify and authenticate services and individuals, as well as to encrypt exchanges.  
 
-Les certificats sont des clés SSL, des certificats HTTPS, … Ils sont associés à des serveurs logiques ou des applications.
+Certificates are SSL keys, HTTPS certificates, etc. They are associated with logical servers or applications.
 
 Table *certificates* :
 
@@ -697,24 +697,40 @@ Table *certificates* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-* Note :
-    * status = 0 : "Bon"
-    * status = 1 : "Révoqué"
-    * status = 2 : "Inconnu"
+* Note:
+    * status = 0: “Good”
+    * status = 1: “Revoked
+    * status = 2 : “Unknown
+    
+#### VLAN
 
-### L’infrastructure physique
+A VLAN (Virtual Local Area Network) or virtual local area network (LAN) enables equipment to be logically grouped together, free from physical constraints.
 
-La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci.
+Table *vlans* :
 
-[<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du VLAN |
+| description          | longtext     | Description du VLAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
 
-Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.
+
+### Physical infrastructure
+
+The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
+
+[<img src=“/mercator/images/physical.png” width=“700”>](/mercator/images/physical.png)
+
+This view corresponds to the geographical distribution of network equipment within the various sites.
 
 #### Sites
 
-Les sites sont des emplacements géographique rassemblant un ensemble de personnes et/ou de ressources.
+Sites are geographical locations that bring together a group of people and/or resources.
 
-Table *dnsservers* :
+Table *sites* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -725,9 +741,9 @@ Table *dnsservers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Bâtiments / Salles
+#### Buildings / Rooms
 
-Les bâtiments ou salles représentent la localisation des personnes ou ressources à l’intérieur d’un site.
+Buildings or rooms represent the location of people or resources within a site.
 
 Table *buildings* :
 
@@ -743,9 +759,9 @@ Table *buildings* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Baies
+#### Racks
 
-Les baies sont des armoires techniques rassemblant des équipements de réseau informatique ou de téléphonie.
+Racks are technical cabinets housing computer network or telephony equipment.
 
 Table *bays* :
 
@@ -759,9 +775,9 @@ Table *bays* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Serveurs physiques
+#### Physical servers
 
-Les serveurs physiques sont des machines physiques exécutant un ensemble de services informatiques.
+Physical servers are physical machines running a set of IT services.
 
 Table *physical_servers* :
 
@@ -780,9 +796,9 @@ Table *physical_servers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Postes de travail
+#### Workstations
 
-Les postes de travail sont des machines physiques permettant à un utilisateur d’accéder au système d’information.
+Workstations are physical machines that enable a user to access the information system.
 
 Table *workstations* :
 
@@ -799,9 +815,9 @@ Table *workstations* :
 | deleted_at           | timestamp    | Date de suppression |
 
 
-#### Infrastructures de stockage
+#### Storage infrastructures
 
-Les infrastructures de stockage sont des supports physiques ou réseaux de stockage de données : serveur de stockage en réseau (NAS), réseau de stockage (SAN), disque dur…
+Storage infrastructures are physical media or data storage networks: network attached storage (NAS), storage area network (SAN), hard disk...
 
 Table *storage_devices* :
 
@@ -816,9 +832,9 @@ Table *storage_devices* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Périphériques
+#### Peripherals
 
-Les périphériques sont des composant physiques connectés à un poste de travail afin d’ajouter de nouvelles fonctionnalités (ex. : clavier, souris, imprimante, scanner, etc.)
+Peripherals are physical components connected to a workstation to add new functions (e.g. keyboard, mouse, printer, scanner, etc.).
 
 Table *peripherals* :
 
@@ -835,9 +851,9 @@ Table *peripherals* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Téléphones
+#### Phones
 
-Les téléphones fixe ou portable appartenant à l’organisation.
+Fixed and mobile phones belonging to the organization.
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -851,9 +867,9 @@ Les téléphones fixe ou portable appartenant à l’organisation.
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Commutateurs physiques
+#### Physical switches
 
-Les commutateurs physiques sont des composants physiques gérant les connexions entre les différents serveurs au sein d’un réseau.
+Physical switches are physical components that manage connections between different servers within a network.
 
 Table *physical_switches* :
 
@@ -869,9 +885,9 @@ Table *physical_switches* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Routeurs physiques
+#### Physical routers
 
-Les routeurs physiques sont des composants physiques gérant les connexions entre différents réseaux.
+Physical routers are physical components that manage connections between different networks.
 
 Table *physical_routers* :
 
@@ -887,9 +903,9 @@ Table *physical_routers* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Bornes WiFi
+#### WiFi terminals
 
-Les bornes WiFi sont des équipements matériel permettant l’accès au réseau sans fil wifi.
+WiFi hotspots are hardware devices that enable access to the WiFi wireless network.
 
 Table *wifi_terminals* :
 
@@ -905,11 +921,11 @@ Table *wifi_terminals* :
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
 
-#### Équipements de sécurité physique
+#### Physical security equipment
 
-Les équipements de sécurité physique sont des composants permettant la supervision du réseau, la détection d’incidents, la protection des équipements ou ayant une fonction de sécurisation du système d’information
+Physical security equipment includes components for network supervision, incident detection, equipment protection and information system security.
 
-Les équipements de sécurité physique sont des sondes de températures, des caméras, des portes sécurisées, ...
+Physical security equipment includes temperature sensors, cameras, security doors, etc.
 
 Table *physical_security_devices* :
 
@@ -927,7 +943,7 @@ Table *physical_security_devices* :
 
 #### WAN
 
-Les WAN (Wide Area Network) sont des réseaux informatiques reliant des équipements sur des distances importantes. Ils interconnectent généralement des MAN ou LAN entre eux.
+WANs (Wide Area Networks) are computer networks linking equipment over long distances. They generally interconnect MANs or LANs.
 
 Table *wans* :
 
@@ -942,7 +958,7 @@ Table *wans* :
 
 #### MAN
 
-Les MAN (Middle Area Network) sont des réseaux informatiques reliant des équipements sur des distances moyennement importantes. Ils interconnectent généralement des LAN entre eux.
+MANs (Middle Area Networks) are computer networks linking equipment over medium-sized distances. They generally interconnect LANs.
 
 Table *mans* :
 
@@ -956,7 +972,7 @@ Table *mans* :
 
 #### LAN
 
-Les LAN (Local Area Network) sont des réseaux informatiques reliant des équipements sur une aire géographique réduite.
+LANs (Local Area Networks) are computer networks linking equipment over a small geographical area.
 
 Table *lans* :
 
@@ -965,22 +981,6 @@ Table *lans* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du LAN |
 | description          | longtext     | Description du LAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
-
-
-#### VLAN
-
-Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.
-
-Table *vlans* :
-
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du VLAN |
-| description          | longtext     | Description du VLAN |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |

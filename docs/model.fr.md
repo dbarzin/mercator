@@ -697,6 +697,22 @@ Table *certificates* :
     * status = 1 : "Révoqué"
     * status = 2 : "Inconnu"
 
+#### VLAN
+
+Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.
+
+Table *vlans* :
+
+| Champ                | Type         | Description      |
+|:---------------------|:-------------|:-----------------|
+| id                   | int unsigned | auto_increment |
+| name                 | varchar(255) | Nom du VLAN |
+| description          | longtext     | Description du VLAN |
+| created_at           | timestamp    | Date de création |
+| updated_at           | timestamp    | Date de mise à jour |
+| deleted_at           | timestamp    | Date de suppression |
+
+
 ### L’infrastructure physique
 
 La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci.
@@ -709,7 +725,7 @@ Cette vue correspond à la répartition géographique des équipements réseaux 
 
 Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.
 
-Table *dnsservers* :
+Table *sites* :
 
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
@@ -960,22 +976,6 @@ Table *lans* :
 | id                   | int unsigned | auto_increment |
 | name                 | varchar(255) | Nom du LAN |
 | description          | longtext     | Description du LAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
-
-
-#### VLAN
-
-Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.
-
-Table *vlans* :
-
-| Champ                | Type         | Description      |
-|:---------------------|:-------------|:-----------------|
-| id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du VLAN |
-| description          | longtext     | Description du VLAN |
 | created_at           | timestamp    | Date de création |
 | updated_at           | timestamp    | Date de mise à jour |
 | deleted_at           | timestamp    | Date de suppression |
