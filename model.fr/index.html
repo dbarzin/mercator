@@ -144,6 +144,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#certificats">Certificats</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vlan">VLAN</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#linfrastructure-physique">L’infrastructure physique</a>
@@ -177,8 +179,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#man">MAN</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#lan">LAN</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#vlan">VLAN</a>
     </li>
         </ul>
     </li>
@@ -2318,13 +2318,57 @@
 </ul>
 </li>
 </ul>
+<h4 id="vlan">VLAN</h4>
+<p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
+<p>Table <em>vlans</em> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Champ</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">int unsigned</td>
+<td style="text-align: left;">auto_increment</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Nom du VLAN</td>
+</tr>
+<tr>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">longtext</td>
+<td style="text-align: left;">Description du VLAN</td>
+</tr>
+<tr>
+<td style="text-align: left;">created_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de création</td>
+</tr>
+<tr>
+<td style="text-align: left;">updated_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de mise à jour</td>
+</tr>
+<tr>
+<td style="text-align: left;">deleted_at</td>
+<td style="text-align: left;">timestamp</td>
+<td style="text-align: left;">Date de suppression</td>
+</tr>
+</tbody>
+</table>
 <h3 id="linfrastructure-physique">L’infrastructure physique</h3>
 <p>La vue des infrastructures physiques décrit les équipements physiques qui composent le système d’information ou qui sont utilisés par celui-ci.</p>
 <p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>
 <p>Cette vue correspond à la répartition géographique des équipements réseaux au sein des différents sites.</p>
 <h4 id="sites">Sites</h4>
 <p>Les sites sont des emplacements géographiques rassemblant un ensemble de personnes et/ou de ressources.</p>
-<p>Table <em>dnsservers</em> :</p>
+<p>Table <em>sites</em> :</p>
 <table>
 <thead>
 <tr>
@@ -3124,50 +3168,6 @@
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
 <td style="text-align: left;">Description du LAN</td>
-</tr>
-<tr>
-<td style="text-align: left;">created_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
-</tr>
-<tr>
-<td style="text-align: left;">updated_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
-</tr>
-<tr>
-<td style="text-align: left;">deleted_at</td>
-<td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
-</tr>
-</tbody>
-</table>
-<h4 id="vlan">VLAN</h4>
-<p>Un VLAN (Virtual Local Area Network) ou réseau local (LAN) virtuel permettant de regrouper logiquement des équipements en s’affranchissant des contraintes physiques.</p>
-<p>Table <em>vlans</em> :</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Champ</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">id</td>
-<td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">auto_increment</td>
-</tr>
-<tr>
-<td style="text-align: left;">name</td>
-<td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du VLAN</td>
-</tr>
-<tr>
-<td style="text-align: left;">description</td>
-<td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
