@@ -6,7 +6,7 @@ Ce dossier contient les éléments permettant de dockeriser l'application Mercat
 
 ## Initialisation
 
-copier le dépot source
+Copier le dépot source
 
     git clone https://github.com/dbarzin/mercator
 
@@ -68,9 +68,9 @@ Démarrage des 2 services app et db
 
     docker-compose up -d
 
-L'application répond sur le pour 8000 ; login par défaut: admin@admin.com / password
+L'application répond sur le pour 80 ; login par défaut: admin@admin.com / password
 
-    wget http://127.0.0.1:8000
+    wget http://127.0.0.1
 
 Pour observer les logs applicatifs
 
