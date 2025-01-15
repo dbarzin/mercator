@@ -6,7 +6,7 @@ Ce dossier contient les éléments permettant de dockeriser l'application Mercat
 
 ## Initialisation
 
-copier le dépot source
+Copier le dépot source
 
     git clone https://github.com/dbarzin/mercator
 
