@@ -70,6 +70,9 @@ style.entryPerimeter = false;
 // After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
 style.edgeStyle = 'manhattanEdgeStyle';
 
+// reset expanded image
+graph.options.expandedImage=null;
+
 // Changes vertex selection colors and size
 VertexHandlerConfig.selectionColor = '#00a8ff';
 VertexHandlerConfig.selectionStrokeWidth = 2;
@@ -149,11 +152,10 @@ graph.container.addEventListener('contextmenu', (event) => {
     // Vérifier si l'élément cliqué est une arête
     if (cell.isEdge()) {
         selectedEdge = cell;
-
         // Obtenir la position de la souris lors du drop
         const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const x = (event.clientX - rect.left) ;
+        const y = ( event.clientY - rect.top) ;
 
         // Afficher le menu contextuel
         contextMenu.style.display = 'block';
@@ -379,6 +381,7 @@ container.addEventListener('drop', (event) => {
 
             // Ajouter le carré
             const parent = graph.getDefaultParent();
+
             const vertex = graph.insertVertex({
                 parent,
                 // id: "square", // TODO : générer unique ID
@@ -392,7 +395,8 @@ container.addEventListener('drop', (event) => {
                     rounded: 2, // Coins arrondis
                 },
             });
-            // Mettre en arrière plan
+
+           // Mettre en arrière plan
             graph.orderCells(true, [vertex]);
 
             // vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
@@ -422,8 +426,8 @@ container.addEventListener('drop', (event) => {
 
         // Obtenir la position de la souris lors du drop
         const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const x = (event.clientX - rect.left) ;
+        const y = (event.clientY - rect.top) ;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -490,12 +494,17 @@ container.addEventListener('drop', (event) => {
 const zoomInButton = document.getElementById('zoom-in-btn');
 const zoomOutButton = document.getElementById('zoom-out-btn');
 
+var zoom = 0;
+
 zoomInButton.addEventListener('click', () => {
-    graph.zoom(1.2); // Zoom in (agrandit le graphique de 20%)
+    graph.zoomIn();
+    zoom++;
+    console.log(zoom);
 });
 
 zoomOutButton.addEventListener('click', () => {
-    graph.zoom(0.8); // Zoom out (réduit le graphique de 20%)
+    graph.zoomOut();
+    zoom--;
 });
 
 //-------------------------------------------------------------------------
@@ -568,17 +577,34 @@ groupButton.addEventListener('click', () => {
     // Obtenir les cellules sélectionnées
     const cells = graph.getSelectionCells();
 
-    if (cells.length > 0) {
+    if (cells.length > 1) {
         // Créer un nouveau conteneur pour le groupe
         const parent = graph.getDefaultParent();
+
         const group = graph.insertVertex({
             parent,
             style: {
-                fillColor: null, // transparent
-                strokeColor: null, // transparent
+                fillColor: 'none', // transparent
+                strokeColor: 'none', // transparent
             },
         });
 
+        group.setAttribute('fill', 'transparent');
+
+        /*
+            const group = graph.createVertex(
+                null,
+                null,
+                '',
+                0,
+                0,
+                100,
+                100,
+                'mxGroup'
+            );
+            // group.style.fillColor='';
+            // group.style.strokeColor='';
+            */
         // Ajouter le conteneur au graphe
         graph.addCell(group);
 
@@ -590,7 +616,7 @@ groupButton.addEventListener('click', () => {
 ungroupButton.addEventListener('click', () => {
     // Obtenir les cellules sélectionnées
     const cells = graph.getSelectionCells();
-    if (cells.length > 0) {
+    if (cells.length == 1) {
         // Dégrouper les cellules sélectionnées
         graph.ungroupCells(cells);
 

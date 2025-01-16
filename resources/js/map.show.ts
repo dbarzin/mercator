@@ -44,6 +44,9 @@ declare const _nodes : NodeMap;
 const defaultVertexStyle = graph.getStylesheet().getDefaultVertexStyle();
 defaultVertexStyle.cursor = 'pointer'; // Définit le curseur en main
 
+// reset expanded image
+graph.options.expandedImage=null;
+
 //-----------------------------------------------------------------------
 // Style des liens
 
@@ -66,7 +69,7 @@ style.edgeStyle = 'manhattanEdgeStyle';
 graph.setEnabled(false);
 
 //-----------------------------------------------------------------------
-// Menu contextuer
+// Menu contextuel
 
 // Désactiver le menu contextuel par défaut :
 InternalEvent.disableContextMenu(container)
