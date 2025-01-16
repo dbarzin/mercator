@@ -704,9 +704,14 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('INFO_', $join->information_id), $this->formatId('DATABASE_', $join->database_id));
         }
         // process
-        $processes = DB::table('processes')->select('id', 'name', 'macroprocess_id')->whereNull('deleted_at')->get();
+        $processes = DB::table('processes')->select('id', 'name', 'icon_id', 'macroprocess_id')->whereNull('deleted_at')->get();
         foreach ($processes as $process) {
-            $this->addNode($nodes, 2, $this->formatId('PROCESS_', $process->id), $process->name, '/images/process.png', 'processes');
+            $this->addNode($nodes,
+                2,
+                $this->formatId('PROCESS_', $process->id),
+                $process->name,
+                $process->icon_id === null ? '/images/process.png' : "/admin/documents/{$process->icon_id}",
+                'processes');
             $this->addLinkEdge($edges, $this->formatId('PROCESS_', $process->id), $this->formatId('MACROPROCESS_', $process->macroprocess_id));
         }
         // information_process

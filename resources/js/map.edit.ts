@@ -570,18 +570,12 @@ groupButton.addEventListener('click', () => {
 
     if (cells.length > 0) {
         // Créer un nouveau conteneur pour le groupe
-
-        // Ajouter le carré
         const parent = graph.getDefaultParent();
         const group = graph.insertVertex({
             parent,
-            position: [0, 0], // Position du groupe
-            size: [100, 100], // Taille du groupe
             style: {
                 fillColor: null, // transparent
                 strokeColor: null, // transparent
-                strokeWidth: 0, // Épaisseur de la bordure
-                rounded: 2, // Coins arrondis
             },
         });
 
@@ -589,7 +583,7 @@ groupButton.addEventListener('click', () => {
         graph.addCell(group);
 
         // Déplacer les cellules sélectionnées dans le conteneur
-        graph.groupCells(group, 0, cells);
+        graph.groupCells(group, 5, cells);
         }
     });
 
