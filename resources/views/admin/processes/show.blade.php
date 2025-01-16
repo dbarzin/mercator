@@ -39,7 +39,7 @@
                         <th width="10%">
                             {{ trans('cruds.process.fields.name') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             {{ $process->name }}
                         </td>
                     </tr>
@@ -50,12 +50,19 @@
                         <td>
                             {!! $process->description !!}
                         </td>
+                        <td width="10%">
+                            @if ($process->icon_id === null)
+                            <img src='/images/process.png' width='120' height='120'>
+                            @else
+                            <img src='{{ route('admin.documents.show', $process->icon_id) }}' width='120' height='120'>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.process.fields.in_out') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             {!! $process->in_out !!}
                         </td>
                     </tr>
@@ -64,7 +71,7 @@
                         <th>
                             {{ trans('cruds.process.fields.activities') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             @foreach($process->activities as $activity)
                                 <a href="{{ route('admin.activities.show', $activity->id) }}">
                                 {{ $activity->name }}
@@ -80,7 +87,7 @@
                         <th>
                             {{ trans('cruds.process.fields.entities') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             @foreach($process->entities as $entity)
                                 <a href="{{ route('admin.entities.show', $entity->id) }}">
                                 {{ $entity->name }}
@@ -95,7 +102,7 @@
                         <th>
                             {{ trans('cruds.process.fields.security_need') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                         {{ trans('global.confidentiality') }} :
                             @if ($process->security_need_c==0){{ trans('global.none') }}@endif
                             @if ($process->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
@@ -138,7 +145,7 @@
                         <th>
                             {{ trans('cruds.process.fields.owner') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             {{ $process->owner }}
                         </td>
                     </tr>
@@ -146,7 +153,7 @@
                         <th>
                             {{ trans('cruds.process.fields.macroprocessus') }}
                         </th>
-                        <td>
+                        <td colspan="2">
                             @if($process->macroProcess!=null)
                                 <a href="{{ route('admin.macro-processuses.show', $process->macroProcess->id) }}">
                                     {{ $process->macroProcess->name }}

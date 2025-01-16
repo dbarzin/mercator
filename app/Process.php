@@ -19,6 +19,7 @@ class Process extends Model
     public static $searchable = [
         'name',
         'description',
+        'icon_id',
         'in_out',
         'owner',
     ];
