@@ -494,17 +494,12 @@ container.addEventListener('drop', (event) => {
 const zoomInButton = document.getElementById('zoom-in-btn');
 const zoomOutButton = document.getElementById('zoom-out-btn');
 
-var zoom = 0;
-
 zoomInButton.addEventListener('click', () => {
     graph.zoomIn();
-    zoom++;
-    console.log(zoom);
 });
 
 zoomOutButton.addEventListener('click', () => {
     graph.zoomOut();
-    zoom--;
 });
 
 //-------------------------------------------------------------------------
@@ -589,22 +584,6 @@ groupButton.addEventListener('click', () => {
             },
         });
 
-        group.setAttribute('fill', 'transparent');
-
-        /*
-            const group = graph.createVertex(
-                null,
-                null,
-                '',
-                0,
-                0,
-                100,
-                100,
-                'mxGroup'
-            );
-            // group.style.fillColor='';
-            // group.style.strokeColor='';
-            */
         // Ajouter le conteneur au graphe
         graph.addCell(group);
 
