@@ -177,7 +177,7 @@ ajouter cette ligne dans le crontab
 Si vous souhaitez connecter Mercator avec un Active Diretory ou un serveur LDAP,
 dans le fichier .env, mettez les paramètres de connexion en décommentant les lignes :
 
-    # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer
+    # Plusieurs types possibles : AD, OpenLDAP, FreeIPA, DirectoryServer, Custom
     LDAP_TYPE="AD"
     # If true, LDAP actions will be written to the application's default log file
     LDAP_LOGGING=true
@@ -197,6 +197,24 @@ dans le fichier .env, mettez les paramètres de connexion en décommentant les l
     LDAP_GROUPS="Delivering,Help Desk"
 
 Retrouvez une documentation plus complète sur la configuration de [LdapRecord](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+
+Si vous choisissez le type Custom, vous devez fournir une classe LdapUserCustom dans le fichier `app/Ldap/LdapUserCustom.php`, par exemple :
+
+```php
+<?php
+
+namespace App\Ldap;
+
+use LdapRecord\Models\OpenLDAP\User as OpenLdapUser;
+use LdapRecord\Models as Models;
+
+class LdapUserCustom extends OpenLdapUser
+{
+        public function groups(): Models\Relations\HasMany {
+                return $this->hasMany(Models\OpenLDAP\Group::class, 'memberUid', 'uid');
+        }
+}
+```
 
 ## Configuration de Keycloak (optionel)
 

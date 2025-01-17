@@ -177,7 +177,7 @@ add this line in the crontab
 
 Modify .env file, and uncomment LDAP configuration :
 
-    # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer
+    # Several possible types: AD, OpenLDAP, FreeIPA, DirectoryServer, Custom
     LDAP_TYPE="AD"
     # If true, LDAP's actions will be log into
     LDAP_LOGGING=true
@@ -197,6 +197,25 @@ Modify .env file, and uncomment LDAP configuration :
     LDAP_GROUPS="Delivering,Help Desk"
 
 Find more complete documentation on LDAP configuration [here](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
+
+If you choose Custom, you have to provide a LdapUserCustom class in  `app/Ldap/LdapUserCustom.php` file, ie : 
+
+```php
+<?php
+
+namespace App\Ldap;
+
+use LdapRecord\Models\OpenLDAP\User as OpenLdapUser;
+use LdapRecord\Models as Models;
+
+class LdapUserCustom extends OpenLdapUser
+{
+        public function groups(): Models\Relations\HasMany {
+                return $this->hasMany(Models\OpenLDAP\Group::class, 'memberUid', 'uid');
+        }
+}
+```
+
 
 ## KeyCloak Configuration (optional)
 
