@@ -11,7 +11,9 @@ import {
     InternalEvent,
     ModelXmlSerializer,
     HandleConfig,
-    VertexHandlerConfig
+    VertexHandlerConfig,
+    styleUtils,
+    eventUtils,
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -327,10 +329,16 @@ container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='text-node') {
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        // Gets drop location point for vertex
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -371,10 +379,16 @@ container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='square-node') {
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        // Gets drop location point for vertex
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -423,11 +437,16 @@ container.addEventListener('drop', (event) => {
     if ((event.dataTransfer.getData('node-type')=='icon-node')
         &&(nodeIcon.src!=''))
         {
-
         // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = (event.clientX - rect.left) ;
-        const y = (event.clientY - rect.top) ;
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
