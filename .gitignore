@@ -11,7 +11,6 @@ yarn-error.log
 mercator.sublime-project
 mercator.sublime-workspace
 .idea/
-app/Ldap/LdapUserCustom.php
 config/datatables-buttons.php
 config/datatables-fractal.php
 config/datatables-html.php
