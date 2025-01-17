@@ -29,7 +29,7 @@ services:
       - ../app/Http/Kernel.php:/var/www/mercator/app/Http/Kernel.php
       - ../app/Http/Middleware/ForceXForwardedProto.php:/var/www/mercator/app/Http/Middleware/ForceXForwardedProto.php
     expose:
-      - 80
+      - 8080
     environment:
       ##########################################
       # CONFIG set to your company's domain name
