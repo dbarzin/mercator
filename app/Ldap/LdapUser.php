@@ -8,6 +8,12 @@ use LdapRecord\Models\FreeIPA\User as FreeIPAUser;
 use LdapRecord\Models\OpenLDAP\User as OpenLdapUser;
 
 switch (strtolower(config('app.ldap_type', 'AD'))) {
+    case 'custom':
+        class LdapUser extends LdapUserCustom
+        {
+        }
+        break;
+        // no break
     case 'openldap':
         class LdapUser extends OpenLdapUser
         {
