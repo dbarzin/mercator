@@ -117,21 +117,20 @@ redoButton.addEventListener('click', () => {
 
 // Gestionnaire pour les raccourcis clavier
 document.addEventListener('keydown', (event: KeyboardEvent) => {
-  if (event.ctrlKey && event.key === 'z') {
     // Ctrl+Z pour Undo
-    event.preventDefault();
-    if (undoManager.canUndo()) {
-      undoManager.undo();
+    if (event.ctrlKey && event.key === 'z') {
+        event.preventDefault();
+            if (undoManager.canUndo()) {
+                undoManager.undo();
+            }
+    // Ctrl+Y pour ReDo
+        } else if (event.ctrlKey && event.key === 'y')
+          {
+            event.preventDefault();
+            if (undoManager.canRedo()) {
+                undoManager.redo();
+        }
     }
-  } else if (
-    (event.ctrlKey && event.key === 'y') || // Ctrl+Y pour Redo
-    (event.ctrlKey && event.shiftKey && event.key === 'z') // Ctrl+Shift+Z pour Redo
-  ) {
-    event.preventDefault();
-    if (undoManager.canRedo()) {
-      undoManager.redo();
-    }
-  }
 });
 
 // --------------------------------------------------------------------------------
