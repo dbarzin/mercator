@@ -103,8 +103,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoMApplicationEventsTableSeeder::class);
             $this->call(DemoMApplicationWorkstationTableSeeder::class);
             $this->call(DemoDatabaseLogicalServerTableSeeder::class);
-            // $this->call(DemoCpeVendorsTableSeeder::class);
-            // $this->call(DemoCpeProductsTableSeeder::class);
             $this->call(DemoActivityProcessTableSeeder::class);
             $this->call(DemoActivityDocumentTableSeeder::class);
             $this->call(DemoDocumentsTableSeeder::class);
@@ -115,8 +113,6 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoDataProcessingInformationTableSeeder::class);
             $this->call(DemoDataProcessingMApplicationTableSeeder::class);
             $this->call(DemoDataProcessingProcessTableSeeder::class);
-            $this->call(PermissionRoleTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
-    }
+        }
     }
 }
