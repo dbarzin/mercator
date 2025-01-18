@@ -148,33 +148,15 @@ graph.container.addEventListener('contextmenu', (event) => {
     if (cell==null)
         return;
 
-    //console.log(cell);
+    // console.log(cell);
 
     // Vérifier si l'élément cliqué est une arête
     if (cell.isEdge()) {
-        selectedEdge = cell;
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = (event.clientX - rect.left) ;
-        const y = ( event.clientY - rect.top) ;
-
-        // Afficher le menu contextuel
-        contextMenu.style.display = 'block';
-        contextMenu.style.left = `${x+75}px`;
-        contextMenu.style.top = `${y+100}px`;
-
-        // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
-        const currentStyle = graph.getCellStyle(cell);
-        colorSelect.value = currentStyle.strokeColor || '#000000';
-        thicknessSelect.value = currentStyle.strokeWidth || '1';
-    }
-    else if (cell.isVertex()) {
-        if (cell.style.image==null) {
             selectedEdge = cell;
             // Obtenir la position de la souris lors du drop
             const rect = container.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = (event.clientX - rect.left) ;
+            const y = ( event.clientY - rect.top) ;
 
             // Afficher le menu contextuel
             contextMenu.style.display = 'block';
@@ -185,6 +167,25 @@ graph.container.addEventListener('contextmenu', (event) => {
             const currentStyle = graph.getCellStyle(cell);
             colorSelect.value = currentStyle.strokeColor || '#000000';
             thicknessSelect.value = currentStyle.strokeWidth || '1';
+    }
+    else if (cell.isVertex()) {
+        // Not an image and not a group
+        if ((cell.style.image==null)&&(cell.children.length==0)) {
+                selectedEdge = cell;
+                // Obtenir la position de la souris lors du drop
+                const rect = container.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                // Afficher le menu contextuel
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = `${x+75}px`;
+                contextMenu.style.top = `${y+100}px`;
+
+                // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
+                const currentStyle = graph.getCellStyle(cell);
+                colorSelect.value = currentStyle.strokeColor || '#000000';
+                thicknessSelect.value = currentStyle.strokeWidth || '1';
         }
     }
     else {
