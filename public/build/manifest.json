@@ -1,6 +1,6 @@
 {
-  "_ModelXmlSerializer-35f2b72c.js": {
-    "file": "assets/ModelXmlSerializer-35f2b72c.js"
+  "_ModelXmlSerializer-0e8aa138.js": {
+    "file": "assets/ModelXmlSerializer-0e8aa138.js"
   },
   "resources/css/mapping.css": {
     "file": "assets/mapping-51b32789.css",
@@ -8,17 +8,17 @@
     "src": "resources/css/mapping.css"
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-b0028974.js",
+    "file": "assets/map.edit-6ce38a70.js",
     "imports": [
-      "_ModelXmlSerializer-35f2b72c.js"
+      "_ModelXmlSerializer-0e8aa138.js"
     ],
     "isEntry": true,
     "src": "resources/js/map.edit.ts"
   },
   "resources/js/map.show.ts": {
-    "file": "assets/map.show-8e50bf88.js",
+    "file": "assets/map.show-8a2cde52.js",
     "imports": [
-      "_ModelXmlSerializer-35f2b72c.js"
+      "_ModelXmlSerializer-0e8aa138.js"
     ],
     "isEntry": true,
     "src": "resources/js/map.show.ts"

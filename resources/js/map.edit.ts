@@ -523,7 +523,7 @@ zoomOutButton.addEventListener('click', () => {
 //-------------------------------------------------------------------------
 // Activer la suppression avec la touche Delete
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Delete') {
+    if ((event.key === 'Delete')||(event.key === 'Backspace')) {
         // Récupérer les objets sélectionnés
         const cells = graph.getSelectionCells();
 
