@@ -5,63 +5,65 @@ namespace App\Http\Controllers\Admin;
 // RGPD
 use App\Activity;
 // ecosystem
-use App\Actor;
-use App\Annuaire;
+use App\Entity;
+use App\Relation;
 // information system
+use App\MacroProcessus;
+use App\Process;
+use App\Task;
+use App\Operation;
+use App\Information;
+use App\Actor;
+// Applications
 use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Bay;
-use App\Building;
-// Applications
-use App\Certificate;
 use App\Database;
-use App\DhcpServer;
-use App\Dnsserver;
-use App\DomaineAd;
-use App\Entity;
 use App\ExternalConnectedEntity;
 // Administration
-use App\Flux;
+use App\ZoneAdmin;
 use App\ForestAd;
-use App\Gateway;
-use App\Http\Controllers\Controller;
-use App\Information;
+use App\Annuaire;
+use App\DomaineAd;
 // Logique
-use App\Lan;
+use App\Gateway;
+use App\Flux;
+use App\Certificate;
 use App\LogicalServer;
-use App\MacroProcessus;
-use App\Man;
-use App\MApplication;
+use App\Container;
+use App\Cluster;
 use App\Network;
+use App\Subnetwork;
 use App\NetworkSwitch;
-use App\Operation;
+use App\DhcpServer;
+use App\Dnsserver;
+use App\Vlan;
+// Physique
 use App\Peripheral;
 use App\Phone;
-// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
 use App\Router;
 use App\SecurityDevice;
-use App\Site;
 use App\StorageDevice;
-use App\Subnetwork;
-use App\Task;
-use App\Vlan;
-use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
-// Log
-use App\ZoneAdmin;
+use App\Site;
+use App\Building;
+use App\Bay;
+use App\Wan;
+use App\Man;
+use App\Lan;
 // PhpOffice
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 // Laravel
+use Auth;
+use App\Http\Controllers\Controller;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
@@ -179,7 +181,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1);
             }
 
-            // ===============================
+            // ===============================xxxxxx
             $section->addTitle(trans('cruds.entity.title'), 2);
             $section->addText(trans('cruds.entity.description'));
             $section->addTextBreak(1);
@@ -402,7 +404,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($processes->count() > 0) {
+            if (Auth::user()->can('process_show') && ($processes->count() > 0)) {
                 $section->addTitle(trans('cruds.process.title'), 2);
                 $section->addText(trans('cruds.process.description'));
                 $section->addTextBreak(1);
@@ -473,7 +475,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (($activities->count() > 0) && ($granularity === 3)) {
+            if (Auth::user()->can('activity_show') && ($activities->count() > 0)) {
                 $section->addTitle(trans('cruds.activity.title'), 2);
                 $section->addText(trans('cruds.activity.description'));
                 $section->addTextBreak(1);
@@ -495,7 +497,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($operations->count() > 0) {
+            if (Auth::user()->can('operation_show') && ($operations->count() > 0)) {
                 $section->addTitle(trans('cruds.operation.title'), 2);
                 $section->addText(trans('cruds.operation.description'));
                 $section->addTextBreak(1);
@@ -529,7 +531,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (($tasks->count() > 0) && ($granularity === 3)) {
+            if (Auth::user()->can('task_show') && ($tasks->count() > 0)) {
                 $section->addTitle(trans('cruds.task.title'), 2);
                 $section->addText(trans('cruds.task.description'));
                 $section->addTextBreak(1);
@@ -552,7 +554,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (($actors->count() > 0) && ($granularity >= 2)) {
+            if (Auth::user()->can('actor_show') && ($actors->count() > 0)){
                 $section->addTitle(trans('cruds.actor.title'), 2);
                 $section->addText(trans('cruds.actor.description'));
                 $section->addTextBreak(1);
@@ -576,7 +578,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($informations->count() > 0) {
+            if (Auth::user()->can('information_show') && ($informations->count() > 0)) {
                 $section->addTitle(trans('cruds.information.title'), 2);
                 $section->addText(trans('cruds.information.description'));
                 $section->addTextBreak(1);
@@ -702,7 +704,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($applicationBlocks->count() > 0) {
+            if (Auth::user()->can('application_block_show') && ($applicationBlocks->count() > 0)) {
                 $section->addTitle(trans('cruds.applicationBlock.title'), 2);
                 $section->addText(trans('cruds.applicationBlock.description'));
                 $section->addTextBreak(1);
@@ -725,7 +727,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($applications->count() > 0) {
+            if (Auth::user()->can('m_application_show') && ($applications->count() > 0)) {
                 $section->addTitle(trans('cruds.application.title'), 2);
                 $section->addText(trans('cruds.application.description'));
                 $section->addTextBreak(1);
@@ -887,7 +889,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($applicationServices->count() > 0) {
+            if (Auth::user()->can('application_service_show') && ($applicationServices->count() > 0)) {
                 $section->addTitle(trans('cruds.applicationService.title'), 2);
                 $section->addText(trans('cruds.applicationService.description'));
                 $section->addTextBreak(1);
@@ -939,7 +941,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($applicationModules->count() > 0) {
+            if (Auth::user()->can('application_module_show') && ($applicationModules->count() > 0)) {
                 $section->addTitle(trans('cruds.applicationModule.title'), 2);
                 $section->addText(trans('cruds.applicationModule.description'));
                 $section->addTextBreak(1);
@@ -980,7 +982,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($databases->count() > 0) {
+            if (Auth::user()->can('database_show') && ($databases->count() > 0)) {
                 $section->addTitle(trans('cruds.database.title'), 2);
                 $section->addText(trans('cruds.database.description'));
                 $section->addTextBreak(1);
@@ -1076,7 +1078,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($fluxes->count() > 0) {
+            if (Auth::user()->can('logical_flow_show') && ($fluxes->count() > 0)) {
                 $section->addTitle(trans('cruds.flux.title'), 2);
                 $section->addText(trans('cruds.flux.description'));
                 $section->addTextBreak(1);
@@ -1181,7 +1183,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($zones->count() > 0) {
+            if (Auth::user()->can('zone_show') && ($zones->count() > 0)) {
                 $section->addTitle(trans('cruds.zoneAdmin.title'), 2);
                 $section->addText(trans('cruds.zoneAdmin.description'));
                 $section->addTextBreak(1);
@@ -1213,7 +1215,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($annuaires->count() > 0) {
+            if (Auth::user()->can('annuaire_show') && ($annuaires->count() > 0)) {
                 $section->addTitle(trans('cruds.annuaire.title'), 2);
                 $section->addText(trans('cruds.annuaire.description'));
                 $section->addTextBreak(1);
@@ -1236,7 +1238,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($forests->count() > 0) {
+            if (Auth::user()->can('forest_show') && ($forests->count() > 0)) {
                 $section->addTitle(trans('cruds.forestAd.title'), 2);
                 $section->addText(trans('cruds.forestAd.description'));
                 $section->addTextBreak(1);
@@ -1265,7 +1267,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($domains->count() > 0) {
+            if (Auth::user()->can('domain_show') && ($domains->count() > 0)) {
                 $section->addTitle(trans('cruds.domaineAd.title'), 2);
                 $section->addText(trans('cruds.domaineAd.description'));
                 $section->addTextBreak(1);
@@ -1313,7 +1315,9 @@ class CartographyController extends Controller
             $dhcpServers = DhcpServer::orderBy('name')->get();
             $dnsservers = Dnsserver::orderBy('name')->get();
             $logicalServers = LogicalServer::orderBy('name')->get();
+            $clusters = Cluster::orderBy('name')->get();
             $certificates = Certificate::orderBy('name')->get();
+            $containers = Container::orderBy('name')->get();
             $vlans = Vlan::orderBy('name')->get();
 
             // Generate Graph
@@ -1415,7 +1419,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($networks->count() > 0) {
+            if (Auth::user()->can('network_show') && ($networks->count() > 0)) {
                 $section->addTitle(trans('cruds.network.title'), 2);
                 $section->addText(trans('cruds.network.description'));
                 $section->addTextBreak(1);
@@ -1486,7 +1490,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($subnetworks->count() > 0) {
+            if (Auth::user()->can('subnetwork_show') && ($subnetworks->count() > 0)) {
                 $section->addTitle(trans('cruds.subnetwork.title'), 2);
                 $section->addText(trans('cruds.subnetwork.description'));
                 $section->addTextBreak(1);
@@ -1520,7 +1524,7 @@ class CartographyController extends Controller
 
             // =====================================
 
-            if ($networkSwitches->count() > 0) {
+            if (Auth::user()->can('network_switch_show') && ($networkSwitches->count() > 0)) {
                 $section->addTitle(trans('cruds.networkSwitch.title'), 2);
                 $section->addText(trans('cruds.networkSwitch.description'));
                 $section->addTextBreak(1);
@@ -1536,7 +1540,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($routers->count() > 0) {
+            if (Auth::user()->can('routeur_show') && ($routers->count() > 0)) {
                 $section->addTitle(trans('cruds.router.title'), 2);
                 $section->addText(trans('cruds.router.description'));
                 $section->addTextBreak(1);
@@ -1554,7 +1558,7 @@ class CartographyController extends Controller
 
             // =====================================
 
-            if ($securityDevices->count() > 0) {
+            if (Auth::user()->can('security_device_show') && ($securityDevices->count() > 0)) {
                 $section->addTitle(trans('cruds.securityDevice.title'), 2);
                 $section->addText(trans('cruds.securityDevice.description'));
                 $section->addTextBreak(1);
@@ -1569,7 +1573,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($gateways->count() > 0) {
+            if (Auth::user()->can('gateway_show') && ($gateways->count() > 0)) {
                 $section->addTitle(trans('cruds.gateway.title'), 2);
                 $section->addText(trans('cruds.gateway.description'));
                 $section->addTextBreak(1);
@@ -1596,7 +1600,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($externalConnectedEntities->count() > 0) {
+            if (Auth::user()->can('external_connected_entity_show') && ($externalConnectedEntities->count() > 0)) {
                 $section->addTitle(trans('cruds.externalConnectedEntity.title'), 2);
                 $section->addText(trans('cruds.externalConnectedEntity.description'));
                 $section->addTextBreak(1);
@@ -1625,7 +1629,39 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($logicalServers->count() > 0) {
+            if (Auth::user()->can('cluster_show') && ($clusters->count() > 0)) {
+                $section->addTitle(trans('cruds.cluster.title'), 2);
+                $section->addText(trans('cruds.cluster.description'));
+                $section->addTextBreak(1);
+
+                foreach ($clusters as $cluster) {
+                    $section->addBookmark('CLUSTER'.$cluster->id);
+                    $table = $this->addTable($section, $cluster->name);
+                    $this->addTextRow($table, trans('cruds.cluster.fields.type'), $cluster->type);
+                    $this->addHTMLRow($table, trans('cruds.cluster.fields.description'), $cluster->description);
+                    $this->addTextRow($table, trans('cruds.cluster.fields.address_ip'), $cluster->address_ip);
+                    // Logical Servers
+                    $textRun = $this->addTextRunRow($table, trans('cruds.cluster.fields.logical_servers'));
+                    foreach ($cluster->logicalServers as $server) {
+                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        if ($cluster->logicalServers->last() !== $server) {
+                            $textRun->addText(', ');
+                        }
+                    }
+                    // Physical Servers
+                    $textRun = $this->addTextRunRow($table, trans('cruds.cluster.fields.physical_servers'));
+                    foreach ($cluster->physicalServers as $server) {
+                        $textRun->addLink('PHYSICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        if ($cluster->physicalServers->last() !== $server) {
+                            $textRun->addText(', ');
+                        }
+                    }
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
+            if (Auth::user()->can('logical_server_show') && ($logicalServers->count() > 0)) {
                 $section->addTitle(trans('cruds.logicalServer.title'), 2);
                 $section->addText(trans('cruds.logicalServer.description'));
                 $section->addTextBreak(1);
@@ -1682,7 +1718,38 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($dhcpServers->count() > 0) {
+            if (Auth::user()->can('container_show') && ($containers->count() > 0)) {
+                $section->addTitle(trans('cruds.container.title'), 2);
+                $section->addText(trans('cruds.container.description'));
+                $section->addTextBreak(1);
+
+                foreach ($containers as $container) {
+                    $section->addBookmark('CONTAINER'.$container->id);
+                    $table = $this->addTable($section, $container->name);
+                    $this->addTextRow($table, trans('cruds.container.fields.type'), $container->type);
+                    $this->addHTMLRow($table, trans('cruds.container.fields.description'), $container->description);
+                    // Logical Servers
+                    $textRun = $this->addTextRunRow($table, trans('cruds.container.fields.logical_servers'));
+                    foreach ($container->logicalServers as $server) {
+                        $textRun->addLink('LOGICAL_SERVER'.$server->id, $server->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        if ($container->logicalServers->last() !== $server) {
+                            $textRun->addText(', ');
+                        }
+                    }
+                    // Applications
+                    $textRun = $this->addTextRunRow($table, trans('cruds.container.fields.applications'));
+                    foreach ($container->applications as $application) {
+                        $textRun->addLink('APPLICATION'.$application->id, $application->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        if ($container->applications->last() !== $application) {
+                            $textRun->addText(', ');
+                        }
+                    }
+                    $section->addTextBreak(1);
+                }
+            }
+
+            // =====================================
+            if (Auth::user()->can('dhcp_server_show') && ($dhcpServers->count() > 0)) {
                 $section->addTitle(trans('cruds.dhcpServer.title'), 2);
                 $section->addText(trans('cruds.dhcpServer.description'));
                 $section->addTextBreak(1);
@@ -1698,7 +1765,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($dnsservers->count() > 0) {
+            if (Auth::user()->can('dnsserver_show') && ($dnsservers->count() > 0)) {
                 $section->addTitle(trans('cruds.dnsserver.title'), 2);
                 $section->addText(trans('cruds.dnsserver.description'));
                 $section->addTextBreak(1);
@@ -1714,7 +1781,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($certificates->count() > 0) {
+            if (Auth::user()->can('certificate_show') && ($certificates->count() > 0)) {
                 $section->addTitle(trans('cruds.certificate.title'), 2);
                 $section->addText(trans('cruds.certificate.description'));
                 $section->addTextBreak(1);
@@ -1752,9 +1819,8 @@ class CartographyController extends Controller
                 }
             }
             // =====================================
-            if ($vlans->count() > 0) {
+            if (Auth::user()->can('vlan_show') && ($vlans->count() > 0)) {
                 $section->addTitle(trans('cruds.vlan.title'), 2);
-                $section->addText(trans('cruds.vlan.vlan_id'));
                 $section->addText(trans('cruds.vlan.description'));
                 $section->addTextBreak(1);
 
@@ -1904,7 +1970,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($sites->count() > 0) {
+            if (Auth::user()->can('site_show') && ($sites->count() > 0)) {
                 $section->addTitle(trans('cruds.site.title'), 2);
                 $section->addText(trans('cruds.site.description'));
                 $section->addTextBreak(1);
@@ -1928,7 +1994,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($buildings->count() > 0) {
+            if (Auth::user()->can('building_show') && ($buildings->count() > 0)) {
                 $section->addTitle(trans('cruds.building.title'), 2);
                 $section->addText(trans('cruds.building.description'));
                 $section->addTextBreak(1);
@@ -1954,7 +2020,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($buildings->count() > 0) {
+            if (Auth::user()->can('bay_show') && ($bays->count() > 0)) {
                 $section->addTitle(trans('cruds.bay.title'), 2);
                 $section->addText(trans('cruds.bay.description'));
                 $section->addTextBreak(1);
@@ -2035,7 +2101,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($physicalServers->count() > 0) {
+            if (Auth::user()->can('physical_server_show') && ($physicalServers->count() > 0)) {
                 $section->addTitle(trans('cruds.physicalServer.title'), 2);
                 $section->addText(trans('cruds.physicalServer.description'));
                 $section->addTextBreak(1);
@@ -2077,7 +2143,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($workstations->count() > 0) {
+            if (Auth::user()->can('workstation_show') && ($workstations->count() > 0)) {
                 $section->addTitle(trans('cruds.workstation.title'), 2);
                 $section->addText(trans('cruds.workstation.description'));
                 $section->addTextBreak(1);
@@ -2116,7 +2182,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($storageDevices->count() > 0) {
+            if (Auth::user()->can('storage_device_show') && ($storageDevices->count() > 0)) {
                 $section->addTitle(trans('cruds.storageDevice.title'), 2);
                 $section->addText(trans('cruds.storageDevice.description'));
                 $section->addTextBreak(1);
@@ -2146,7 +2212,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($peripherals->count() > 0) {
+            if (Auth::user()->can('peripheral_show') && ($peripherals->count() > 0)) {
                 $section->addTitle(trans('cruds.peripheral.title'), 2);
                 $section->addText(trans('cruds.peripheral.description'));
                 $section->addTextBreak(1);
@@ -2179,7 +2245,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($phones->count() > 0) {
+            if (Auth::user()->can('phone_show') && ($phones->count() > 0)) {
                 $section->addTitle(trans('cruds.phone.title'), 2);
                 $section->addText(trans('cruds.phone.description'));
                 $section->addTextBreak(1);
@@ -2206,7 +2272,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($physicalSwitches->count() > 0) {
+            if (Auth::user()->can('physical_switch_show') && ($physicalSwitches->count() > 0)) {
                 $section->addTitle(trans('cruds.physicalSwitch.title'), 2);
                 $section->addText(trans('cruds.physicalSwitch.description'));
                 $section->addTextBreak(1);
@@ -2238,7 +2304,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($physicalRouters->count() > 0) {
+            if (Auth::user()->can('physical_router_show') && ($physicalRouters->count() > 0)) {
                 $section->addTitle(trans('cruds.physicalRouter.title'), 2);
                 $section->addText(trans('cruds.physicalRouter.description'));
                 $section->addTextBreak(1);
@@ -2269,7 +2335,7 @@ class CartographyController extends Controller
                 }
             }
             // =====================================
-            if ($wifiTerminals->count() > 0) {
+            if (Auth::user()->can('wifi_terminal_show') && ($wifiTerminals->count() > 0)) {
                 $section->addTitle(trans('cruds.wifiTerminal.title'), 2);
                 $section->addText(trans('cruds.wifiTerminal.description'));
                 $section->addTextBreak(1);
@@ -2295,7 +2361,7 @@ class CartographyController extends Controller
                 }
             }
             // =====================================
-            if ($physicalSecurityDevices->count() > 0) {
+            if (Auth::user()->can('physical_security_device_show') && ($physicalSecurityDevices->count() > 0)) {
                 $section->addTitle(trans('cruds.physicalSecurityDevice.title'), 2);
                 $section->addText(trans('cruds.physicalSecurityDevice.description'));
                 $section->addTextBreak(1);
@@ -2327,7 +2393,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($wans->count() > 0) {
+            if (Auth::user()->can('wan_show') && ($wans->count() > 0)) {
                 $section->addTitle(trans('cruds.wan.title'), 2);
                 $section->addText(trans('cruds.wan.description'));
                 $section->addTextBreak(1);
@@ -2359,7 +2425,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($mans->count() > 0) {
+            if (Auth::user()->can('man_show') && ($mans->count() > 0)) {
                 $section->addTitle(trans('cruds.man.title'), 2);
                 $section->addText(trans('cruds.man.description'));
                 $section->addTextBreak(1);
@@ -2383,7 +2449,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if ($lans->count() > 0) {
+            if (Auth::user()->can('lan_show') && ($lans->count() > 0)) {
                 $section->addTitle(trans('cruds.lan.title'), 2);
                 $section->addText(trans('cruds.lan.description'));
                 $section->addTextBreak(1);
