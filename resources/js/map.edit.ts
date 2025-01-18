@@ -203,6 +203,7 @@ applyButton.addEventListener('click', () => {
         // console.log(selectedEdge);
         // console.log("update edge "+colorSelect.value + " "+thicknessSelect.value);
         graph.batchUpdate(() => {
+
             const style = graph.getCellStyle(selectedEdge);
             // console.log(style);
             if (selectedEdge.isEdge()) {
@@ -213,6 +214,7 @@ applyButton.addEventListener('click', () => {
                 selectedEdge.style.fillColor = colorSelect.value;
                 selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
                 }
+
             graph.refresh(selectedEdge);
         });
     }
