@@ -182,6 +182,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('logical-servers', Admin\LogicalServerController::class);
     Route::delete('logical-servers-destroy', [Admin\LogicalServerController::class,'massDestroy'])->name('logical-servers.massDestroy');
 
+    // Containers
+    Route::resource('containers', Admin\ContainerController::class);
+    Route::delete('containers-destroy', [Admin\ContainerController::class,'massDestroy'])->name('containers.massDestroy');
+
     // Logical Flows
     Route::resource('logical-flows', Admin\LogicalFlowController::class);
     Route::delete('logical-flows-destroy', [Admin\LogicalFlowController::class,'massDestroy'])->name('logical-flows.massDestroy');

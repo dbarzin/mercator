@@ -151,12 +151,12 @@
                 <th>
                     <center>
                     {{
-                        ($networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$clusters+$logicalServers)>0
+                        ($networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$clusters+$logicalServers+$containers)>0
                         ?
                         number_format(
-                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$clusters_lvl1+$logicalServers_lvl1)
+                        ($networks_lvl1+$subnetworks_lvl1+$gateways_lvl1+$switches_lvl1+$routers_lvl1+$securityDevices_lvl1+$clusters_lvl1+$logicalServers_lvl1+$containers_lvl1)
                         *100 /
-                        ($networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$clusters+$logicalServers),0)
+                        ($networks+$subnetworks+$gateways+$switches+$routers+$securityDevices+$clusters+$logicalServers+$containers),0)
                         : 0
                     }}
                     %
@@ -220,6 +220,14 @@
                     <td><center>{{ $logicalServers_lvl1 }}</center></td>
                     <td><center>{{ $logicalServers>0 ? number_format($logicalServers_lvl1*100/$logicalServers,0):0 }}%</center></td>
                 </tr>
+
+                <tr>
+                    <td><a href="/admin/containers">{{ trans("cruds.container.title") }}</a></td>
+                    <td><center>{{ $containers }}</center></td>
+                    <td><center>{{ $containers_lvl1 }}</center></td>
+                    <td><center>{{ $containers>0 ? number_format($containers_lvl1*100/$containers,0):0 }}%</center></td>
+                </tr>
+
             </tbody>
 
 

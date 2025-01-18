@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label for="type">{{ trans('cruds.logicalServer.fields.type') }}</label>
                 <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type" maxlength='255'>
-                    @if (!$operating_system_list->contains(old('type')))
+                    @if (!$type_list->contains(old('type')))
                         <option> {{ old('type') }}</option>'
                     @endif
                     @foreach($type_list as $t)
@@ -285,9 +285,9 @@
                                 <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $logicalServer->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('servers'))
+                        @if($errors->has('applications'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('servers') }}
+                                {{ $errors->first('applications') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.applications_helper') }}</span>

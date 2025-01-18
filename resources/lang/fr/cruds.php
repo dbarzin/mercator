@@ -348,6 +348,23 @@ return [
             'security_need_auth' => 'Authenticité',
         ],
     ],
+    'container' => [
+        'description' => 'Unité logicielle légère et portable qui regroupe une application et toutes ses dépendances dans un environnement isolé afin d\'assurer son exécution cohérente sur n\'importe quelle infrastructure',
+        'fields' => [
+            'type' => 'Type',
+            'type_helper' => 'ex: Kubernetes, Docker...',
+            'description' => 'Description',
+            'description_helper' => '',
+            'name' => 'Nom',
+            'name_helper' => 'Nom du conteneur',
+            'applications' => 'Applications',
+            'applications_helper' => 'Application se trouvant dans le conteneur',
+            'logical_servers' => 'Serveurs logiques',
+            'logical_servers_helper' => 'Serveurs logiques sur lesquel le conteneur est déployé',
+        ],
+        'title' => 'Conteneurs',
+        'title_singular' => 'Conteneur',
+    ],
     'database' => [
         'description' => 'Ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.',
         'fields' => [

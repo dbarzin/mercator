@@ -37,7 +37,6 @@
                     <td>
                         {{ $application->name }}
                     </td>
-                    @if (auth()->user()->granularity>=2)
                     <th width="10%">
                         <dt>{{ trans('cruds.application.fields.application_block') }}</dt>
                     </th>
@@ -48,11 +47,10 @@
                     </td>
                     <th width="10%">
                         <dt>{{ trans('cruds.application.fields.attributes') }}</dt>
-                    </td>
+                    </th>
                     <td width="10%">
                         {{ $application->attributes }}
                     </td>
-                    @endif
                 </tr>
                 <tr>
                     <th>

@@ -446,7 +446,6 @@
                                 </a>
                             </li>
                         @endcan
-                        @if (auth()->user()->granularity>=2)
                         @can('dhcp_server_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.dhcp-servers.index") }}" class="nav-link {{ request()->is('admin/dhcp-servers*') ? 'active' : '' }}">
@@ -467,7 +466,6 @@
                                 </a>
                             </li>
                         @endcan
-                        @endif
                         @can('cluster_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.clusters.index") }}" class="nav-link {{ request()->is('admin/clusters*') ? 'active' : '' }}">
@@ -485,6 +483,16 @@
 
                                     </i>
                                     {{ trans('cruds.logicalServer.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        @can('container_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.containers.index") }}" class="nav-link {{ request()->is('admin/containers*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.container.title') }}
                                 </a>
                             </li>
                         @endcan

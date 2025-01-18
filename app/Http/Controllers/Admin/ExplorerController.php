@@ -446,6 +446,30 @@ class ExplorerController extends Controller
             $this->addNode($nodes, 5, $this->formatId('CLUSTER_', $cluster->id), $cluster->name, '/images/cluster.png', 'clusters');
         }
 
+        // Containers
+        $containers = DB::table('containers')->select('id', 'name', 'icon_id')->get();
+        foreach ($containers as $container) {
+            $this->addNode(
+                $nodes,
+                5,
+                $this->formatId('CONT_', $container->id),
+                $container->name,
+                $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
+                'containers');
+        }
+
+        // Container - Logical Servers
+        $joins = DB::table('container_logical_server')->select('container_id', 'logical_server_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('LSERVER_', $join->logical_server_id));
+        }
+
+        // Container - Applications
+        $joins = DB::table('container_m_application')->select('container_id', 'm_application_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('APP_', $join->m_application_id));
+        }
+
         // Logical Servers
         $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip', 'cluster_id', 'domain_id')->get();
         foreach ($logicalServers as $logicalServer) {

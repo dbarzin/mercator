@@ -184,7 +184,7 @@
             <ul class="dropdown-menu">
               <li>
                   <a class="dropdown-item" href="/admin/doc/schema">
-                        <i class="fa-fw fas fa-map nav-icon"></i>
+                        <i class="fa-fw fas fa-database nav-icon"></i>
                         {{ trans('panel.menu.schema') }}
                   </a>
               </li>

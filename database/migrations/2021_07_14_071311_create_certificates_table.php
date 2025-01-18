@@ -22,7 +22,6 @@ class CreateCertificatesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type')->nullable();
-            ;
             $table->longText('description')->nullable();
             $table->date('start_validity')->nullable();
             $table->date('end_validity')->nullable();

@@ -625,6 +625,72 @@
                 @endif
             @endcan
 
+            @can('container_access')
+            @if ($containers->count()>0)
+            <div class="card">
+                <div class="card-header">
+                    {{ trans("cruds.container.title") }}
+                </div>
+                <div class="card-body">
+                    <p>{{ trans("cruds.container.description") }}</p>
+                        @foreach($containers as $container)
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead id="CONT{{ $container->id }}">
+                                        <th colspan="2">
+                                            <a href="/admin/containers/{{ $container->id }}">{{ $container->name }}</a>
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                          <th width="20%">{{ trans("cruds.container.fields.type") }}</th>
+                                          <td>{{ $container->type }}</td>
+                                        </tr>
+                                        <tr>
+                                          <th width="20%">{{ trans("cruds.container.fields.description") }}</th>
+                                          <td>{!! $container->description !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.container.fields.logical_servers') }}
+                                            </th>
+                                            <td>
+                                                @foreach($container->logicalServers as $server)
+                                                    <a href="{{ route('admin.logical-servers.show', $server->id) }}">
+                                                        {{ $server->name }}
+                                                    </a>
+                                                    @if(!$loop->last)
+                                                    <br>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                {{ trans('cruds.container.fields.applications') }}
+                                            </th>
+                                            <td>
+                                                @foreach($container->applications as $application)
+                                                    <a href="{{ route('admin.applications.show', $application->id) }}">
+                                                        {{ $application->name }}
+                                                    </a>
+                                                    @if(!$loop->last)
+                                                    <br>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
+                </div>
+            </div>
+            @endif
+            @endcan
+
             @can('workstation_access')
             @if ($workstations->count()>0)
             <div class="card">
@@ -1222,23 +1288,27 @@ digraph  {
         @endif
     @endforeach
     @endcan
+
     @can('cluster_access')
-    @php
-        $usedClusterIds = array();
-    @endphp
-    @foreach($logicalServers as $logicalServer)
-        @if (($logicalServer->cluster_id!==null) && (!in_array($logicalServer->cluster_id, $usedClusterIds)))
-            @php
-                array_push($usedClusterIds, $logicalServer->cluster_id);
-            @endphp
-        @endif
-    @endforeach
-    @foreach($clusters as $cluster)
-        @if (in_array($cluster->id,$usedClusterIds))
-            CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
-        @endif
-    @endforeach
+        @php
+            $usedClusterIds = array();
+        @endphp
+
+        @foreach($logicalServers as $logicalServer)
+            @if (($logicalServer->cluster_id!==null) && (!in_array($logicalServer->cluster_id, $usedClusterIds)))
+                @php
+                    array_push($usedClusterIds, $logicalServer->cluster_id);
+                @endphp
+            @endif
+        @endforeach
+
+        @foreach($clusters as $cluster)
+            @if (in_array($cluster->id,$usedClusterIds))
+                CLUSTER{{ $cluster->id}} [label="{{ $cluster->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/cluster.png" href="#CLUSTER{{$cluster->id}}"]
+            @endif
+        @endforeach
     @endcan
+
     @can('logical_server_access')
     @foreach($logicalServers as $logicalServer)
         LOGICAL_SERVER{{ $logicalServer->id }} [label="{{ $logicalServer->name }} {{ Session::get('show_ip') ? chr(13) . $logicalServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($logicalServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#LOGICAL_SERVER{{$logicalServer->id}}"]
@@ -1262,6 +1332,7 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
     @can('dhcp_server_access')
     @foreach($dhcpServers as $dhcpServer)
         DHCP_SERVER{{ $dhcpServer->id }} [label="{{ $dhcpServer->name }} {{ Session::get('show_ip') ? chr(13) . $dhcpServer->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dhcpServer->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#DHCP_SERVER{{$dhcpServer->id}}"]
@@ -1275,6 +1346,7 @@ digraph  {
         @endif
     @endforeach
     @endcan
+
     @can('dnsserver_access')
     @foreach($dnsservers as $dnsserver)
         DNS_SERVER{{ $dnsserver->id }} [label="{{ $dnsserver->name }} {{ Session::get('show_ip') ? chr(13) . $dnsserver->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($dnsserver->address_ip!=null) ? '1.5' :'1.1' }} image="/images/server.png" href="#DNS_SERVER{{$dnsserver->id}}"]
@@ -1288,6 +1360,7 @@ digraph  {
         @endif
     @endforeach
     @endcan
+
     @can('certificate_access')
     @foreach($certificates as $certificate)
         @if ($certificate->logical_servers->count()>0)
@@ -1295,6 +1368,18 @@ digraph  {
         @endif
     @endforeach
     @endcan
+
+    @can('container_access')
+    @foreach($containers as $container)
+        @if ($container->logicalServers->count()>0)
+            CONT{{ $container->id }} [label="{{ $container->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $container->icon_id === null ? '/images/container.png' : route('admin.documents.show', $container->icon_id) }}" href="#CONT{{$container->id}}"]
+            @foreach($container->logicalServers as $logicalServer)
+                LOGICAL_SERVER{{ $logicalServer->id }} -> CONT{{ $container->id }}
+            @endforeach
+        @endif
+    @endforeach
+    @endcan
+
     @can('workstation_access')
     @foreach($workstations as $workstation)
         WS{{ $workstation->id }} [label="{{ $workstation->name }} {{ Session::get('show_ip') ? chr(13) . $workstation->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($workstation->address_ip!=null) ? '1.5' :'1.1' }} image="/images/workstation.png" href="#WORKSTATION{{$workstation->id}}"]
@@ -1307,6 +1392,7 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
     @can('wifi_terminal_access')
     @foreach($wifiTerminals as $wifiTerminal)
         WIFI{{ $wifiTerminal->id }} [label="{{ $wifiTerminal->name }} {{ Session::get('show_ip') ? chr(13) . $wifiTerminal->address_ip : '' }}" shape=none labelloc="b"  width=1 height={{ Session::get('show_ip') && ($wifiTerminal->address_ip!=null) ? '1.5' :'1.1' }} image="/images/wifi.png" href="#WIFI{{$wifiTerminal->id}}"]
@@ -1410,6 +1496,7 @@ digraph  {
         @endforeach
     @endforeach
     @endcan
+
     @can('vlan_access')
     @foreach($vlans as $vlan)
         VLAN{{ $vlan->id }} [label="{{ $vlan->name }}" shape=none labelloc="b" width=1 height=1.1 image="/images/vlan.png" href="#VLAN{{$vlan->id}}"]
@@ -1426,6 +1513,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/router.png", "64px", "64px")
     .addImage("/images/switch.png", "64px", "64px")
     .addImage("/images/cluster.png", "64px", "64px")
+    .addImage("/images/container.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/workstation.png", "64px", "64px")
     .addImage("/images/phone.png", "64px", "64px")
@@ -1434,6 +1522,11 @@ d3.select("#graph").graphviz()
     .addImage("/images/peripheral.png", "64px", "64px")
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/vlan.png", "64px", "64px")
+    @foreach($containers as $container)
+       @if ($container->icon_id!==null)
+       .addImage("{{ route('admin.documents.show', $container->icon_id) }}", "64px", "64px")
+       @endif
+    @endforeach
     .renderDot(dotSrc);
 
 </script>

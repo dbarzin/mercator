@@ -133,6 +133,11 @@ class LogicalServer extends Model
         return $this->belongsToMany(Certificate::class)->orderBy('name');
     }
 
+    public function containers()
+    {
+        return $this->belongsToMany(Container::class)->orderBy('name');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');

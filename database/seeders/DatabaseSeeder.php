@@ -115,6 +115,7 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoDataProcessingInformationTableSeeder::class);
             $this->call(DemoDataProcessingMApplicationTableSeeder::class);
             $this->call(DemoDataProcessingProcessTableSeeder::class);
-        }
+            $this->call(PermissionRoleTableSeeder::class);
+    }
     }
 }

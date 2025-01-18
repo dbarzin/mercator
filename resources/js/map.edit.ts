@@ -11,7 +11,9 @@ import {
     InternalEvent,
     ModelXmlSerializer,
     HandleConfig,
-    VertexHandlerConfig
+    VertexHandlerConfig,
+    styleUtils,
+    eventUtils,
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -115,21 +117,20 @@ redoButton.addEventListener('click', () => {
 
 // Gestionnaire pour les raccourcis clavier
 document.addEventListener('keydown', (event: KeyboardEvent) => {
-  if (event.ctrlKey && event.key === 'z') {
     // Ctrl+Z pour Undo
-    event.preventDefault();
-    if (undoManager.canUndo()) {
-      undoManager.undo();
+    if (event.ctrlKey && event.key === 'z') {
+        event.preventDefault();
+            if (undoManager.canUndo()) {
+                undoManager.undo();
+            }
+    // Ctrl+Y pour ReDo
+        } else if (event.ctrlKey && event.key === 'y')
+          {
+            event.preventDefault();
+            if (undoManager.canRedo()) {
+                undoManager.redo();
+        }
     }
-  } else if (
-    (event.ctrlKey && event.key === 'y') || // Ctrl+Y pour Redo
-    (event.ctrlKey && event.shiftKey && event.key === 'z') // Ctrl+Shift+Z pour Redo
-  ) {
-    event.preventDefault();
-    if (undoManager.canRedo()) {
-      undoManager.redo();
-    }
-  }
 });
 
 // --------------------------------------------------------------------------------
@@ -147,33 +148,15 @@ graph.container.addEventListener('contextmenu', (event) => {
     if (cell==null)
         return;
 
-    //console.log(cell);
+    // console.log(cell);
 
     // Vérifier si l'élément cliqué est une arête
     if (cell.isEdge()) {
-        selectedEdge = cell;
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = (event.clientX - rect.left) ;
-        const y = ( event.clientY - rect.top) ;
-
-        // Afficher le menu contextuel
-        contextMenu.style.display = 'block';
-        contextMenu.style.left = `${x+75}px`;
-        contextMenu.style.top = `${y+100}px`;
-
-        // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
-        const currentStyle = graph.getCellStyle(cell);
-        colorSelect.value = currentStyle.strokeColor || '#000000';
-        thicknessSelect.value = currentStyle.strokeWidth || '1';
-    }
-    else if (cell.isVertex()) {
-        if (cell.style.image==null) {
             selectedEdge = cell;
             // Obtenir la position de la souris lors du drop
             const rect = container.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = (event.clientX - rect.left) ;
+            const y = ( event.clientY - rect.top) ;
 
             // Afficher le menu contextuel
             contextMenu.style.display = 'block';
@@ -184,6 +167,25 @@ graph.container.addEventListener('contextmenu', (event) => {
             const currentStyle = graph.getCellStyle(cell);
             colorSelect.value = currentStyle.strokeColor || '#000000';
             thicknessSelect.value = currentStyle.strokeWidth || '1';
+    }
+    else if (cell.isVertex()) {
+        // Not an image and not a group
+        if ((cell.style.image==null)&&(cell.children.length==0)) {
+                selectedEdge = cell;
+                // Obtenir la position de la souris lors du drop
+                const rect = container.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                // Afficher le menu contextuel
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = `${x+75}px`;
+                contextMenu.style.top = `${y+100}px`;
+
+                // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
+                const currentStyle = graph.getCellStyle(cell);
+                colorSelect.value = currentStyle.strokeColor || '#000000';
+                thicknessSelect.value = currentStyle.strokeWidth || '1';
         }
     }
     else {
@@ -327,10 +329,16 @@ container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='text-node') {
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        // Gets drop location point for vertex
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -371,10 +379,16 @@ container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='square-node') {
-        // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        // Gets drop location point for vertex
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -386,8 +400,8 @@ container.addEventListener('drop', (event) => {
                 parent,
                 // id: "square", // TODO : générer unique ID
                 value: '', // Pas de texte pour le conteneur
-                position: [x, y], // Position du groupe
-                size: [150, 120], // Taille du groupe
+                position: [x, y], // Position du carré
+                size: [150, 120], // Taille du carré
                 style: {
                     fillColor: '#fffacd', // Fond jaune pâle
                     strokeColor: '#000000', // Bordure noire
@@ -423,11 +437,16 @@ container.addEventListener('drop', (event) => {
     if ((event.dataTransfer.getData('node-type')=='icon-node')
         &&(nodeIcon.src!=''))
         {
-
         // Obtenir la position de la souris lors du drop
-        const rect = container.getBoundingClientRect();
-        const x = (event.clientX - rect.left) ;
-        const y = (event.clientY - rect.top) ;
+        const pt = styleUtils.convertPoint(
+          graph.container,
+          eventUtils.getClientX(event),
+          eventUtils.getClientY(event)
+        );
+        const tr = graph.view.translate;
+        const { scale } = graph.view;
+        const x = pt.x / scale - tr.x;
+        const y = pt.y / scale - tr.y;
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -505,7 +524,7 @@ zoomOutButton.addEventListener('click', () => {
 //-------------------------------------------------------------------------
 // Activer la suppression avec la touche Delete
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Delete') {
+    if ((event.key === 'Delete')||(event.key === 'Backspace')) {
         // Récupérer les objets sélectionnés
         const cells = graph.getSelectionCells();
 

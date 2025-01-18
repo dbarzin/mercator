@@ -6,17 +6,18 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 // ecosystem
 use App\Actor;
-use App\AdminUser;
+use App\Relation;
 // information system
-use App\Annuaire;
+use App\MacroProcessus;
+use App\Task;
+use App\Information;
+use App\Operation;
+use App\Process;
+// Application
 use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Bay;
-// Application
-use App\Building;
-use App\Certificate;
-use App\Cluster;
 use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
@@ -24,43 +25,45 @@ use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
 // Administration
-use App\ExternalConnectedEntity;
-use App\Flux;
+use App\Annuaire;
 use App\ForestAd;
-use App\Gateway;
-use App\Http\Controllers\Controller;
+use App\ZoneAdmin;
+use App\AdminUser;
 // Logique
-use App\Information;
+use App\ExternalConnectedEntity;
+use App\Gateway;
+use App\Certificate;
+use App\Cluster;
+use App\Container;
 use App\LogicalServer;
-use App\MacroProcessus;
-use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
+use App\Container;
+use App\Vlan;
+use App\Flux;
+// Physique
 use App\Peripheral;
 use App\Phone;
 use App\PhysicalLink;
-// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
 use App\Router;
 use App\SecurityDevice;
 use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
-use App\Task;
-use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
+use App\Bay;
+use App\Building;
+//
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -957,6 +960,19 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // Get Containers
+            $containers = Container::All()->load('logicalServers')->sortBy('name')
+                ->filter(function ($item) use ($logicalServers) {
+                    foreach ($logicalServers as $logical_server) {
+                        foreach ($logical_server->containers as $container) {
+                            if ($container->id === $item->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
             // Get VLANS
             $vlans = Vlan::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
@@ -983,6 +999,7 @@ class ReportController extends Controller
             $dnsservers = Dnsserver::All()->sortBy('name');
             $clusters = Cluster::All()->sortBy('name');
             $logicalServers = LogicalServer::All()->sortBy('name');
+            $containers = Container::All()->sortBy('name');
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
         }
@@ -1010,6 +1027,7 @@ class ReportController extends Controller
                 'clusters',
                 'logicalServers',
                 'certificates',
+                'containers',
                 'vlans'
             )
         );
