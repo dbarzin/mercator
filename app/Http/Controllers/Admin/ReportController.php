@@ -40,6 +40,7 @@ use App\Operation;
 use App\Peripheral;
 use App\Phone;
 use App\PhysicalLink;
+use App\Container;
 // Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
@@ -957,6 +958,19 @@ class ReportController extends Controller
                     return false;
                 });
 
+            // Get Containers
+            $containers = Container::All()->load('logicalServers')->sortBy('name')
+                ->filter(function ($item) use ($logicalServers) {
+                    foreach ($logicalServers as $logical_server) {
+                        foreach ($logical_server->containers as $container) {
+                            if ($container->id === $item->id) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+
             // Get VLANS
             $vlans = Vlan::All()->sortBy('name')
                 ->filter(function ($item) use ($subnetworks) {
@@ -983,6 +997,7 @@ class ReportController extends Controller
             $dnsservers = Dnsserver::All()->sortBy('name');
             $clusters = Cluster::All()->sortBy('name');
             $logicalServers = LogicalServer::All()->sortBy('name');
+            $containers = Container::All()->sortBy('name');
             $certificates = Certificate::All()->sortBy('name');
             $vlans = Vlan::All()->sortBy('name');
         }
@@ -1010,6 +1025,7 @@ class ReportController extends Controller
                 'clusters',
                 'logicalServers',
                 'certificates',
+                'containers',
                 'vlans'
             )
         );

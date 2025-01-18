@@ -777,11 +777,9 @@ digraph  {
     @can('application_access')
     @foreach($applications as $application)
         A{{ $application->id }} [label="{{ $application->name }}" shape=none labelloc="b"  width=1 height=1.1 image="{{ $application->icon_id === null ? '/images/application.png' : route('admin.documents.show', $application->icon_id) }}" href="#APPLICATION{{$application->id}}"]
-        @if (auth()->user()->granularity>=2)
-            @foreach($application->services as $service)
-                A{{ $application->id }} -> AS{{ $service->id}}
-            @endforeach
-        @endif
+        @foreach($application->services as $service)
+            A{{ $application->id }} -> AS{{ $service->id}}
+        @endforeach
         @foreach($application->databases as $database)
             A{{ $application->id }} -> DB{{ $database->id}}
         @endforeach
@@ -793,17 +791,15 @@ digraph  {
     @endforEach
     @endcan
     @can('application_service_access')
-    @if (auth()->user()->granularity>=2)
-        @foreach($applicationServices as $service)
-            AS{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#APPLICATIONSERVICE{{$service->id}}"]
-            @foreach($service->modules as $module)
-                AS{{ $service->id }} -> M{{$module->id}}
-            @endforeach
+    @foreach($applicationServices as $service)
+        AS{{ $service->id }} [label="{{ $service->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationservice.png" href="#APPLICATIONSERVICE{{$service->id}}"]
+        @foreach($service->modules as $module)
+            AS{{ $service->id }} -> M{{$module->id}}
         @endforeach
-        @foreach($applicationModules as $module)
-            M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#APPLICATIONMODULE{{$module->id}}"]
-        @endforeach
-    @endif
+    @endforeach
+    @foreach($applicationModules as $module)
+        M{{ $module->id }} [label="{{ $module->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/applicationmodule.png" href="#APPLICATIONMODULE{{$module->id}}"]
+    @endforeach
     @endcan
     @can('database_access')
     @foreach($databases as $database)
