@@ -28,7 +28,7 @@ return new class extends Migration
         });
 
         Schema::create('container_logical_server', function (Blueprint $table) {
-            $table->unsignedInteger('container_id')->index('container_id_fk_54932832');
+            $table->unsignedInteger('container_id')->index('container_id_fk_54933032');
             $table->unsignedInteger('logical_server_id')->index('logical_server_id_fk_4394832');
 
             $table->foreign('container_id')->references('id')->on('containers')->onUpdate('NO ACTION')->onDelete('CASCADE');
@@ -69,6 +69,15 @@ return new class extends Migration
                 ],
             ];
             Permission::insert($permissions);
+
+            // Add permissions in roles :
+            // Admin
+            Role::findOrFail(1)->permissions()->sync([301,302,303,304,305], false);
+            // User
+            Role::findOrFail(2)->permissions()->sync([301,302,303,304,305], false);
+            // Auditor
+            Role::findOrFail(3)->permissions()->sync([303,305], false);
+
         }
 
     }
