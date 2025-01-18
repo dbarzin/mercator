@@ -1,6 +1,6 @@
 <?php
 return [
-'activity' => [
+    'activity' => [
       'description' => 'Step needed to complete a process. It corresponds to a speciﬁc know-how and not necessarily to an organizational structure of the company.',
       'fields' => [
           'name' => 'Name',
@@ -347,6 +347,23 @@ return [
             'security_need_auth' => 'Authenticity',
             'security_need_auth_helper' => 'Adds the Authenticity security criterion to the existing Confidentiality, Integrity, Availability and Traceability criteria',
         ],
+    ],
+    'container' => [
+        'description' => 'Lightweight, portable software unit that groups an application and all its dependencies in an isolated environment to ensure consistent execution on any infrastructure',
+        'fields' => [
+            'type' => 'Type',
+            'type_helper' => 'ex: Kubernetes, Docker...',
+            'description' => 'Description',
+            'description_helper' => '',
+            'name' => 'Name',
+            'name_helper' => 'Container name',
+            'applications' => 'Applications',
+            'applications_helper' => 'Application in container',
+            'logical_servers' => 'Logical servers',
+            'logical_servers_helper' => 'Logical servers on which the container is deployed',
+        ],
+        'title' => 'Containers',
+        'title_singular' => 'Container',
     ],
     'database' => [
         'description' => 'Structured and ordered set of information intended to be exploited by computer.',

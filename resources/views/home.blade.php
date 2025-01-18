@@ -454,6 +454,14 @@
           url: "/admin/logical-servers"
         },
         @endcan
+        @can('container_access')
+        {
+          label: "{!! trans('cruds.container.title') !!}",
+          data: [0, 0, 0, 0, 0, {!! $containers !!}, 0],
+          value: {!! $containers !!},
+          url: "/admin/containers"
+        },
+        @endcan
         @can('certificate_access')
         {
           label: "{!! trans('cruds.certificate.title_short') !!}",
@@ -756,6 +764,7 @@
     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.securityDevice.title_short') !!}" , num:{!! $securityDevices !!}, url: "/admin/security-devices" },
     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.cluster.title_short') !!}" , num:{!! $clusters !!}, url: "/admin/clusters" },
     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.logicalServer.title_short') !!}" , num:{!! $logicalServers !!}, url: "/admin/logical-servers" },
+    {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.container.title') !!}" , num:{!! $containers !!}, url: "/admin/containers" },
     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.vlan.title_short') !!}" , num:{!! $vlans !!}, url: "/admin/vlans" },
     {group:"{!! trans('cruds.menu.logical_infrastructure.title_short') !!}", tag:"{!! trans('cruds.certificate.title_short') !!}" , num:{!! $certificates !!}, url: "/admin/certificates" },
     @endcan

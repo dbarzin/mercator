@@ -557,6 +557,19 @@ class AuditController extends HomeController
         $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
         $row++;
 
+        // Containers
+        $sheet->setCellValue("A{$row}", trans('cruds.container.title'));
+        $sheet->setCellValue("B{$row}", $levels['containers_lvl1']);
+        $sheet->setCellValue("C{$row}", $levels['containers']);
+        $sheet->setCellValue("D{$row}", "=B{$row}/C{$row}");
+        $sheet->setCellValue("E{$row}", $levels['containers_lvl1']);
+        $sheet->setCellValue("F{$row}", $levels['containers']);
+        $sheet->setCellValue("G{$row}", "=E{$row}/F{$row}");
+        $sheet->setCellValue("H{$row}", $levels['containers_lvl1']);
+        $sheet->setCellValue("I{$row}", $levels['containers']);
+        $sheet->setCellValue("J{$row}", "=H{$row}/I{$row}");
+        $row++;
+
         // VLAN
         $sheet->setCellValue("A{$row}", trans('cruds.vlan.title'));
         $sheet->setCellValue("B{$row}", $levels['vlans_lvl1']);

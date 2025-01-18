@@ -399,8 +399,8 @@ container.addEventListener('drop', (event) => {
                 parent,
                 // id: "square", // TODO : générer unique ID
                 value: '', // Pas de texte pour le conteneur
-                position: [x, y], // Position du groupe
-                size: [150, 120], // Taille du groupe
+                position: [x, y], // Position du carré
+                size: [150, 120], // Taille du carré
                 style: {
                     fillColor: '#fffacd', // Fond jaune pâle
                     strokeColor: '#000000', // Bordure noire
