@@ -68,7 +68,7 @@ Démarrage des 2 services app et db
 
     docker-compose up -d
 
-L'application répond sur le pour 80 ; login par défaut: admin@admin.com / password
+L'application répond sur le port 8080 ; login par défaut: admin@admin.com / password
 
     wget http://127.0.0.1
 

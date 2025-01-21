@@ -38,7 +38,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # Add mercator:www user
 RUN addgroup --g 1000 -S www && \
   adduser -u 1000 -S mercator -G www && \
-  chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d
+  chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
+  chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d 
 
 # Clone sources from Github
 #WORKDIR /var/www/
@@ -50,9 +51,15 @@ COPY . .
 # Copy config files
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # change owner
-RUN chown -R mercator:www /var/www/mercator
+RUN chown -R mercator:www /var/www/mercator && \
+  chmod -R g=u /var/www/mercator && \
+  chmod +x /usr/local/bin/entrypoint.sh
+
+RUN chmod g=u /etc/passwd && \
+  chgrp www /etc/passwd
 
 # Now work with Mercator user
 USER mercator:www
@@ -71,4 +78,5 @@ RUN cp .env.sqlite .env
 
 # Start surpervisord
 EXPOSE 8000
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
