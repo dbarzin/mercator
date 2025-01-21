@@ -15,7 +15,7 @@
     "sass": "^1.15.2",
     "sass-loader": "^8.0.0",
     "typescript": "^5.0.0",
-    "vite": "^4.0.0",
+    "vite": "^4.5.9",
     "laravel-vite-plugin": "^0.8.0"
   },
   "name": "Mercator",
