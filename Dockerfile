@@ -2,7 +2,7 @@ FROM php:8.3-fpm-alpine3.19
 
 # system deps
 RUN apk update && apk add git curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev nginx gettext supervisor
-RUN apk add postgresql-dev postgresql-client
+RUN apk add postgresql-dev postgresql-client mariadb-client mariadb-connector-c-dev
 
 # run font cache
 RUN fc-cache -f
