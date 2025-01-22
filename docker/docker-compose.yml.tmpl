@@ -18,7 +18,7 @@ services:
       - ./data/sql/:/var/www/mercator/sql/
       # entrypoint: /bin/sleep 3600 # pour debug
       #   - ./:/var/www
-    #nginx conf listen port 80 or other if custom
+    #nginx conf listen port 8080 or other if custom
     environment:
       - DB_CONNECTION=$DB_CONNECTION
       - DB_HOST=$DB_HOST
@@ -29,7 +29,7 @@ services:
       - APP_ENV=$APP_ENV
       - USE_DEMO_DATA=1
     ports:
-      - 8000:80
+      - 8080:8080
     networks:
       - local
 
