@@ -78,7 +78,7 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Chart.Name }}-postgresql
+                name: {{ .Values.postgresql.auth.existingSecret | quote }}
                 key: password
           - name: BROADCAST_DRIVER
             value: "log"

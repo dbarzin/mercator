@@ -159,6 +159,7 @@ affinity: {}
 
 secret:
   postgres:
+    managed: true
     postgresPassword: "2ù_-qeeYT21!8zA2~"
     password: "1ù_-qeeRH21!8zA1~"
 
