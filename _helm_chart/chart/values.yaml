@@ -31,7 +31,8 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext: 
+  runAsGroup: 1000
   # capabilities:
   #   drop:
   #   - ALL
@@ -125,11 +126,11 @@ keycloak:
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8080-tcp
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8080-tcp
 
 autoscaling:
   enabled: false

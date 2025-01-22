@@ -43,8 +43,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - name: 8080-tcp
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
@@ -76,7 +76,10 @@ spec:
           - name: DB_USERNAME
             value: {{ .Values.postgresql.auth.username | quote }}
           - name: DB_PASSWORD
-            value: {{ .Values.secret.postgres.password }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Chart.Name }}-postgresql
+                key: password
           - name: BROADCAST_DRIVER
             value: "log"
           - name: CACHE_DRIVER
