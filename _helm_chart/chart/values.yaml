@@ -31,8 +31,7 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: 
-  runAsGroup: 1000
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
