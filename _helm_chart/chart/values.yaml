@@ -125,11 +125,11 @@ keycloak:
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8080-tcp
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8080-tcp
 
 autoscaling:
   enabled: false
@@ -159,6 +159,7 @@ affinity: {}
 
 secret:
   postgres:
+    managed: true
     postgresPassword: "2ù_-qeeYT21!8zA2~"
     password: "1ù_-qeeRH21!8zA1~"
 
