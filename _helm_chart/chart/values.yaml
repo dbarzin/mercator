@@ -124,12 +124,12 @@ keycloak:
 
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /login
+    port: 8080
 readinessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /login
+    port: 8080
 
 autoscaling:
   enabled: false
