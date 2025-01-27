@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64 #, linux/arm64 (build fails)
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
