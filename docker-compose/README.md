@@ -39,7 +39,7 @@ Check all CONFIG lines in the following files, and adapt it to your domain name
 docker-compose up -d
 ```
 
-# If USE_DEMO_DATA is disable, you need to create a first admin account with :
+# If USE_DEMO_DATA is disabled, you need to create a first admin account with :
 ```
 php artisan migrate:fresh --seed --force
 ```
