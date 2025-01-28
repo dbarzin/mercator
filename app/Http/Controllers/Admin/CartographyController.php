@@ -475,7 +475,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (Auth::user()->can('activity_show') && ($activities->count() > 0)) {
+            if (Auth::user()->can('activity_show') && ($activities->count() > 0) && ($granularity === 3)) {
                 $section->addTitle(trans('cruds.activity.title'), 2);
                 $section->addText(trans('cruds.activity.description'));
                 $section->addTextBreak(1);
@@ -531,7 +531,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (Auth::user()->can('task_show') && ($tasks->count() > 0)) {
+            if (Auth::user()->can('task_show') && ($tasks->count() > 0) && ($granularity === 3)) {
                 $section->addTitle(trans('cruds.task.title'), 2);
                 $section->addText(trans('cruds.task.description'));
                 $section->addTextBreak(1);
@@ -554,7 +554,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (Auth::user()->can('actor_show') && ($actors->count() > 0)){
+            if (Auth::user()->can('actor_show') && ($actors->count() > 0) && ($granularity >= 2)){
                 $section->addTitle(trans('cruds.actor.title'), 2);
                 $section->addText(trans('cruds.actor.description'));
                 $section->addTextBreak(1);
