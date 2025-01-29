@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExplorerController extends Controller
 {
-    public function explore(Request $request) {
-
+    public function explore(Request $request)
+    {
         [$nodes, $edges] = $this->getData();
 
         return view('admin/reports/explore', compact('nodes', 'edges'));
@@ -21,7 +21,7 @@ class ExplorerController extends Controller
     // TODO : return a JSON in place of nodes[] and edges[]
     // TODO : split me in several private functions by views
     // TODO : check user rights
-    public function getData() : array
+    public function getData(): array
     {
         $nodes = [];
         $edges = [];
@@ -356,7 +356,7 @@ class ExplorerController extends Controller
         }
 
         // External connected entities
-        $externals = DB::table('external_connected_entities')->select('id','name','network_id', 'entity_id')->get();
+        $externals = DB::table('external_connected_entities')->select('id', 'name', 'network_id', 'entity_id')->get();
         foreach ($externals as $external) {
             $this->addNode($nodes, 5, $this->formatId('EXT_', $external->id), $external->name, '/images/entity.png', 'external-connected-entities');
             $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('NETWORK_', $external->network_id));
@@ -455,7 +455,8 @@ class ExplorerController extends Controller
                 $this->formatId('CONT_', $container->id),
                 $container->name,
                 $container->icon_id === null ? '/images/container.png' : "/admin/documents/{$container->icon_id}",
-                'containers');
+                'containers'
+            );
         }
 
         // Container - Logical Servers
@@ -730,12 +731,14 @@ class ExplorerController extends Controller
         // process
         $processes = DB::table('processes')->select('id', 'name', 'icon_id', 'macroprocess_id')->whereNull('deleted_at')->get();
         foreach ($processes as $process) {
-            $this->addNode($nodes,
+            $this->addNode(
+                $nodes,
                 2,
                 $this->formatId('PROCESS_', $process->id),
                 $process->name,
                 $process->icon_id === null ? '/images/process.png' : "/admin/documents/{$process->icon_id}",
-                'processes');
+                'processes'
+            );
             $this->addLinkEdge($edges, $this->formatId('PROCESS_', $process->id), $this->formatId('MACROPROCESS_', $process->macroprocess_id));
         }
         // information_process

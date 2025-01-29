@@ -18,7 +18,7 @@ class DocumentController extends Controller
         $path = storage_path('docs/' . $id);
 
         // Check file exists
-        abort_if(!file_exists($path), Response::HTTP_NOT_FOUND, '404 Not Found');
+        abort_if(! file_exists($path), Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Get the content of the file
         $file_contents = file_get_contents($path);

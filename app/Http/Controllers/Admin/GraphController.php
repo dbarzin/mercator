@@ -9,8 +9,6 @@ use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Http\Controllers\ExploreController;
-
 class GraphController extends Controller
 {
     public function index()
@@ -31,7 +29,7 @@ class GraphController extends Controller
         $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // create the graph
-        $graph = Graph::create(["name"=> $name, "type" => null, "content" => "<GraphDataModel></GraphDataModel>"]);
+        $graph = Graph::create(['name' => $name, 'type' => null, 'content' => '<GraphDataModel></GraphDataModel>']);
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -57,7 +55,7 @@ class GraphController extends Controller
         $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // Create graph
-        $graph = Graph::create(["name"=> $name, "type" => $graph->type, "content" => $graph->content]);
+        $graph = Graph::create(['name' => $name, 'type' => $graph->type, 'content' => $graph->content]);
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -89,12 +87,15 @@ class GraphController extends Controller
 
         // return
         return view('admin.graphs.edit', compact(
-            'graph', 'type_list',
-            'nodes', 'edges'
+            'graph',
+            'type_list',
+            'nodes',
+            'edges'
         ));
     }
 
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get the graph
@@ -104,14 +105,13 @@ class GraphController extends Controller
         abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // set value
-        $graph->name=$request->name;
-        $graph->type=$request->type;
-        $graph->content=$request->content;
+        $graph->name = $request->name;
+        $graph->type = $request->type;
+        $graph->content = $request->content;
         $graph->save();
 
         return true;
     }
-
 
     public function update(Request $request)
     {
@@ -124,9 +124,9 @@ class GraphController extends Controller
         abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // set value
-        $graph->name=$request->name;
-        $graph->type=$request->type;
-        $graph->content=$request->content;
+        $graph->name = $request->name;
+        $graph->type = $request->type;
+        $graph->content = $request->content;
         $graph->save();
 
         return redirect()->route('admin.graphs.index');

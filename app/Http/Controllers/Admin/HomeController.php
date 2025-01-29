@@ -6,61 +6,61 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 use App\Actor;
 // ecosystem
-use App\Entity;
-use App\Relation;
-// information system
-use App\MacroProcessus;
-use App\Certificate;
-use App\Cluster;
-use App\Process;
-use App\Task;
-// Applications
+use App\Annuaire;
 use App\ApplicationBlock;
-use App\MApplication;
+// information system
 use App\ApplicationModule;
 use App\ApplicationService;
+use App\Bay;
+use App\Building;
+use App\Certificate;
+// Applications
+use App\Cluster;
+use App\Container;
 use App\Database;
 use App\DataProcessing;
-use App\Flux;
-// Administration
-use App\ForestAd;
-use App\ZoneAdmin;
+use App\DhcpServer;
+use App\Dnsserver;
 use App\DomaineAd;
-use App\Annuaire;
-// Logique
+// Administration
+use App\Entity;
 use App\ExternalConnectedEntity;
+use App\Flux;
+use App\ForestAd;
+// Logique
 use App\Gateway;
+use App\Http\Controllers\Controller;
 use App\Information;
+use App\Lan;
 use App\LogicalServer;
-use App\Container;
+use App\MacroProcessus;
+use App\Man;
+use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
-use App\Subnetwork;
-use App\Vlan;
-use App\DhcpServer;
-use App\Dnsserver;
-// Physique
 use App\Peripheral;
+// Physique
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
+use App\Process;
+use App\Relation;
 use App\Router;
 use App\SecurityControl;
 use App\SecurityDevice;
+use App\Site;
 use App\StorageDevice;
+use App\Subnetwork;
+use App\Task;
+use App\Vlan;
+use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\Site;
-use App\Building;
-use App\Bay;
-use App\Wan;
-use App\Man;
-use App\Lan;
-//
-use App\Http\Controllers\Controller;
+
+use App\ZoneAdmin;
 
 class HomeController extends Controller
 {
@@ -551,7 +551,7 @@ class HomeController extends Controller
             'logicalServers' => LogicalServer::count(),
             'logicalServers_lvl1' => LogicalServer
                 ::where('description', '<>', null)
-                    ->where('active','=',1)
+                    ->where('active', '=', 1)
                     ->where('operating_system', '<>', null)
                     ->where('environment', '<>', null)
                     ->where('address_ip', '<>', null)

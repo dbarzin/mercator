@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\MApplication;
-use App\LogicalServer;
 use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;

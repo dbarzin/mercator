@@ -6,9 +6,8 @@ use App\Certificate;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class CertificateExpiracy extends Command
 {
@@ -68,9 +67,10 @@ class CertificateExpiracy extends Command
                         $cert->save();
                     } elseif (
                         Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $cert->last_notification)
-                        ->greaterThan(
-                        now()->addDays(-intval(config('mercator-config.cert.expire-delay'))))
-                        ) {
+                            ->greaterThan(
+                                now()->addDays(-intval(config('mercator-config.cert.expire-delay')))
+                            )
+                    ) {
                         Log::debug('CertificateExpiracy - ' . $cert->name . ' already notified on ' . $cert->last_notification);
                         $certificates->forget($key);
                     } else {
@@ -102,25 +102,26 @@ class CertificateExpiracy extends Command
                     $mail->isSMTP();                               // Use SMTP
                     // Server settings
                     $mail->isSMTP();                                     // Use SMTP
-                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
-                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
-                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
-                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
-                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->Host = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
                     $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
+                    $mail->Port = env('MAIL_PORT');               // TCP port to connect to
 
                     // Recipients
                     $mail->setFrom($mail_from);
-                    foreach(explode(",",$to_email) as $email)
+                    foreach (explode(',', $to_email) as $email) {
                         $mail->addAddress($email);
+                    }
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
 
                     // Optional: Add DKIM signing
                     $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
                     $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
                     $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
                     $mail->DKIM_identity = $mail->From;
@@ -142,7 +143,7 @@ class CertificateExpiracy extends Command
                         Log::debug("Mail sent to {$to_email}");
                     } else {
                         foreach ($certificates as $cert) {
-                            $mail->Subject  = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
+                            $mail->Subject = $subject . ' - ' . $cert->end_validity . ' - ' . $cert->name;
                             $message = $cert->description;
 
                             // Send mail

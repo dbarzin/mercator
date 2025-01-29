@@ -18,7 +18,7 @@ class Graph extends Model
 
     public static $searchable = [
         'name',
-        'type'
+        'type',
     ];
 
     protected $dates = [
@@ -30,7 +30,7 @@ class Graph extends Model
     protected $fillable = [
         'name',
         'type',
-        'content'
+        'content',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

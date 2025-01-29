@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Document;
 use App\Activity;
+use App\Document;
 use App\Entity;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyProcessRequest;
@@ -14,7 +14,6 @@ use App\MacroProcessus;
 use App\MApplication;
 use App\Process;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProcessController extends Controller
@@ -101,8 +100,16 @@ class ProcessController extends Controller
 
         return view(
             'admin.processes.edit',
-            compact('activities', 'entities', 'informations', 'process',
-                'macroProcessuses', 'owner_list', 'applications', 'icons')
+            compact(
+                'activities',
+                'entities',
+                'informations',
+                'process',
+                'macroProcessuses',
+                'owner_list',
+                'applications',
+                'icons'
+            )
         );
     }
 

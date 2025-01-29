@@ -1,16 +1,16 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
+use App\Container;
 use App\Document;
-use App\LogicalServer;
-use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
-use App\Container;
+use App\LogicalServer;
+use App\MApplication;
 use Gate;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContainerController extends Controller
@@ -79,8 +79,10 @@ class ContainerController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.containers.edit',
-            compact('container', 'icons', 'type_list', 'logical_servers', 'applications'));
+        return view(
+            'admin.containers.edit',
+            compact('container', 'icons', 'type_list', 'logical_servers', 'applications')
+        );
     }
 
     public function update(UpdateContainerRequest $request, Container $container)

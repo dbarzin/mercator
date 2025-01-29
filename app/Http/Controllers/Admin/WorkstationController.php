@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Document;
 use App\Building;
+use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
@@ -56,9 +56,15 @@ class WorkstationController extends Controller
 
         return view(
             'admin.workstations.create',
-            compact('sites', 'buildings', 'icons',
-                    'type_list', 'operating_system_list',
-                    'cpu_list', 'application_list')
+            compact(
+                'sites',
+                'buildings',
+                'icons',
+                'type_list',
+                'operating_system_list',
+                'cpu_list',
+                'application_list'
+            )
         );
     }
 
@@ -101,8 +107,15 @@ class WorkstationController extends Controller
 
         return view(
             'admin.workstations.create',
-            compact('sites', 'buildings', 'icons', 'type_list',
-                    'operating_system_list', 'cpu_list', 'application_list')
+            compact(
+                'sites',
+                'buildings',
+                'icons',
+                'type_list',
+                'operating_system_list',
+                'cpu_list',
+                'application_list'
+            )
         );
     }
 
@@ -171,9 +184,15 @@ class WorkstationController extends Controller
         return view(
             'admin.workstations.edit',
             compact(
-                'sites', 'buildings', 'icons',
-                'workstation', 'type_list', 'operating_system_list',
-                'cpu_list', 'application_list')
+                'sites',
+                'buildings',
+                'icons',
+                'workstation',
+                'type_list',
+                'operating_system_list',
+                'cpu_list',
+                'application_list'
+            )
         );
     }
 
