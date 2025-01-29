@@ -5,65 +5,65 @@ namespace App\Http\Controllers\Admin;
 // RGPD
 use App\Activity;
 // ecosystem
-use App\Entity;
-use App\Relation;
-// information system
-use App\MacroProcessus;
-use App\Process;
-use App\Task;
-use App\Operation;
-use App\Information;
 use App\Actor;
-// Applications
+use App\Annuaire;
+// information system
 use App\ApplicationBlock;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
-use App\Database;
-use App\ExternalConnectedEntity;
-// Administration
-use App\ZoneAdmin;
-use App\ForestAd;
-use App\Annuaire;
-use App\DomaineAd;
-// Logique
-use App\Gateway;
-use App\Flux;
+use App\Bay;
+use App\Building;
 use App\Certificate;
-use App\LogicalServer;
-use App\Container;
+// Applications
 use App\Cluster;
-use App\Network;
-use App\Subnetwork;
-use App\NetworkSwitch;
+use App\Container;
+use App\Database;
 use App\DhcpServer;
 use App\Dnsserver;
-use App\Vlan;
-// Physique
+use App\DomaineAd;
+// Administration
+use App\Entity;
+use App\ExternalConnectedEntity;
+use App\Flux;
+use App\ForestAd;
+// Logique
+use App\Gateway;
+use App\Http\Controllers\Controller;
+use App\Information;
+use App\Lan;
+use App\LogicalServer;
+use App\MacroProcessus;
+use App\Man;
+use App\MApplication;
+use App\Network;
+use App\NetworkSwitch;
+use App\Operation;
 use App\Peripheral;
+// Physique
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
+use App\Process;
+use App\Relation;
 use App\Router;
 use App\SecurityDevice;
+use App\Site;
 use App\StorageDevice;
+use App\Subnetwork;
+use App\Task;
+use App\Vlan;
+use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\Site;
-use App\Building;
-use App\Bay;
-use App\Wan;
-use App\Man;
-use App\Lan;
 // PhpOffice
+use App\ZoneAdmin;
+use Auth;
 use Carbon\Carbon;
+// Laravel
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-// Laravel
-use Auth;
-use App\Http\Controllers\Controller;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Shared\Html;
@@ -375,17 +375,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$macroProcess->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
                     //---
@@ -455,17 +451,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$process->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
                     // Owner
@@ -554,7 +546,7 @@ class CartographyController extends Controller
             }
 
             // =====================================
-            if (Auth::user()->can('actor_show') && ($actors->count() > 0) && ($granularity >= 2)){
+            if (Auth::user()->can('actor_show') && ($actors->count() > 0) && ($granularity >= 2)) {
                 $section->addTitle(trans('cruds.actor.title'), 2);
                 $section->addText(trans('cruds.actor.description'));
                 $section->addTextBreak(1);
@@ -618,17 +610,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$information->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
 
@@ -797,17 +785,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$application->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
 
@@ -1057,17 +1041,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$database->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
 
@@ -1453,17 +1433,13 @@ class CartographyController extends Controller
                             trans('global.tracability') .
                             ' : ' .
                             ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_t] ?? '') .
-                            (
-                                config('mercator-config.parameters.security_need_auth') ?
-                                    (
-                                    '<br>' .
+                            (config('mercator-config.parameters.security_need_auth') ?
+                                    ('<br>' .
                                     trans('global.authenticity') .
                                     ' : ' .
-                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_auth] ?? '')
-                                    )
+                                    ([1 => trans('global.low'),2 => trans('global.medium'),3 => trans('global.strong'),4 => trans('global.very_strong')][$network->security_need_auth] ?? ''))
                                 :
-                                    ""
-                            ) .
+                                    '') .
                             '</p>'
                     );
                     //----

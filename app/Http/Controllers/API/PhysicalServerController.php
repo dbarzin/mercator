@@ -27,8 +27,9 @@ class PhysicalServerController extends Controller
         abort_if(Gate::denies('physical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $physicalserver = PhysicalServer::create($request->all());
-        if ($request->has('applications'))
+        if ($request->has('applications')) {
             $physicalserver->applications()->sync($request->input('applications', []));
+        }
 
         return response()->json($physicalserver, 201);
     }

@@ -43,7 +43,7 @@ class AuditLogsController extends Controller
     {
         abort_if(Gate::denies('audit_log_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        abort_if(($request->id==null)||($request->type==null), 500, '500 missing parameters');
+        abort_if(($request->id === null) || ($request->type === null), 500, '500 missing parameters');
 
         // Get the list
         $auditLogs =
@@ -65,12 +65,11 @@ class AuditLogsController extends Controller
                 ->orderBy('audit_logs.id')
                 ->get();
 
-
         abort_if($auditLogs->isEmpty(), 404, 'Not found');
 
         // JSON decode all properties
-        foreach($auditLogs as $auditLog) {
-            $auditLog->properties = json_decode(trim(stripslashes($auditLog->properties),'"'));
+        foreach ($auditLogs as $auditLog) {
+            $auditLog->properties = json_decode(trim(stripslashes($auditLog->properties), '"'));
         }
 
         return view('admin.auditLogs.history', compact('auditLogs'));

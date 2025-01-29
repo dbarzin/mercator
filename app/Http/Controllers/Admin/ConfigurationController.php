@@ -1,14 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Gate;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
-
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class ConfigurationController extends Controller
 {
@@ -86,27 +85,28 @@ class ConfigurationController extends Controller
                     $mail->isSMTP();                               // Use SMTP
                     // Server settings
                     $mail->isSMTP();                                     // Use SMTP
-                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
-                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
-                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
-                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
-                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->Host = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
                     $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
+                    $mail->Port = env('MAIL_PORT');               // TCP port to connect to
 
                     // Recipients
                     $mail->setFrom($mail_from);
-                    foreach(explode(",",$mail_to) as $email)
+                    foreach (explode(',', $mail_to) as $email) {
                         $mail->addAddress($email);
+                    }
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
                     $mail->Subject = $mail_subject;
-                    $mail->Body    = '<html><body><br>This is a test message !<br><br></body></html>';
+                    $mail->Body = '<html><body><br>This is a test message !<br><br></body></html>';
 
                     // Optional: Add DKIM signing
                     $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
                     $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
                     $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
                     $mail->DKIM_identity = $mail->From;
@@ -196,27 +196,28 @@ class ConfigurationController extends Controller
                     $mail->isSMTP();                               // Use SMTP
                     // Server settings
                     $mail->isSMTP();                                     // Use SMTP
-                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
-                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
-                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
-                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
-                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->Host = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
                     $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
+                    $mail->Port = env('MAIL_PORT');               // TCP port to connect to
 
                     // Recipients
                     $mail->setFrom($mail_from);
-                    foreach(explode(",",$mail_to) as $email)
+                    foreach (explode(',', $mail_to) as $email) {
                         $mail->addAddress($email);
+                    }
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
                     $mail->Subject = $mail_subject;
-                    $mail->Body    = '<html><body><br>This is a test message !<br><br></body></html>';
+                    $mail->Body = '<html><body><br>This is a test message !<br><br></body></html>';
 
                     // Optional: Add DKIM signing
                     $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
                     $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
                     $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
                     $mail->DKIM_identity = $mail->From;
@@ -242,7 +243,7 @@ class ConfigurationController extends Controller
                         $msg = 'Could not connect to provider';
                     } else {
                         //dd($json);
-                        $msg = "Last NVD update :" . $json->last_updates->nvd . " Total db size = " . $json->db_sizes->total;
+                        $msg = 'Last NVD update :' . $json->last_updates->nvd . ' Total db size = ' . $json->db_sizes->total;
                     }
                 }
                 break;
@@ -296,8 +297,6 @@ class ConfigurationController extends Controller
             'admin.config.parameters',
             compact('security_need_auth')
         )
-        ->withErrors('Configuration saved !');
+            ->withErrors('Configuration saved !');
     }
-
-
 }

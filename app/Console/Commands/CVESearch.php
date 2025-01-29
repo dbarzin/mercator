@@ -7,9 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class CVESearch extends Command
 {
@@ -55,9 +54,10 @@ class CVESearch extends Command
             $check_frequency = config('mercator-config.cve.check-frequency');
 
             // update provider
-            if (($provider == 'https://cvepremium.circl.lu')||($provider === 'https//cve.circl.lu')) {
+            if (($provider === 'https://cvepremium.circl.lu') || ($provider === 'https//cve.circl.lu')) {
                 // change variable
-                $provider = 'https://vulnerability.circl.lu';;
+                $provider = 'https://vulnerability.circl.lu';
+
                 config(['mercator-config.cve.provider' => $provider]);
 
                 // Save configuration
@@ -74,7 +74,7 @@ class CVESearch extends Command
             }
 
             $json = json_decode($response);
-            $msg = "Last NVD update :" . $json->last_updates->nvd . " Total db size = " . $json->db_sizes->total;
+            $msg = 'Last NVD update :' . $json->last_updates->nvd . ' Total db size = ' . $json->db_sizes->total;
             Log::debug('CVESearch - ' . $msg);
 
             // start timestamp
@@ -92,45 +92,45 @@ class CVESearch extends Command
                 ->orderBy('name')
                 ->get();
 
-/*
-            foreach ($applications as $app) {
-                $url = $provider . '/api/cvefor/cpe:2.3:a:' . $app->vendor . ':' . $app->product . ':' . $app->version;
+            /*
+                        foreach ($applications as $app) {
+                            $url = $provider . '/api/cvefor/cpe:2.3:a:' . $app->vendor . ':' . $app->product . ':' . $app->version;
 
-                Log::debug('CVEReport - url ' . $url);
+                            Log::debug('CVEReport - url ' . $url);
 
-                $http = curl_init($url);
-                curl_setopt($http, CURLOPT_RETURNTRANSFER, true);
+                            $http = curl_init($url);
+                            curl_setopt($http, CURLOPT_RETURNTRANSFER, true);
 
-                $response = curl_exec($http);
-                if ($response === false) {
-                    Log::debug('CVESearch - Could not query the provider');
-                    return;
-                }
+                            $response = curl_exec($http);
+                            if ($response === false) {
+                                Log::debug('CVESearch - Could not query the provider');
+                                return;
+                            }
 
-                $http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
-                Log::debug('CVEReport - status ' . $http_status);
-                curl_close($http);
+                            $http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
+                            Log::debug('CVEReport - status ' . $http_status);
+                            curl_close($http);
 
-                $json = json_decode($response);
+                            $json = json_decode($response);
 
-                // loop on all CVE
-                if ($http_status === 200) {
-                    // loop on all CVE
-                    foreach ($json as $cve) {
-                        // check CVE in frequency range
-                        if (strtotime($cve->Published) >= $min_timestamp) {
-                            // put summary in lowercase
-                            $cve->summary = strtolower($cve->summary);
-                            // Log::debug('CVESearch - CVE summary ' . $cve->summary);
-                            $cve->application = $name;
-                            $cve_match[] = $cve;
+                            // loop on all CVE
+                            if ($http_status === 200) {
+                                // loop on all CVE
+                                foreach ($json as $cve) {
+                                    // check CVE in frequency range
+                                    if (strtotime($cve->Published) >= $min_timestamp) {
+                                        // put summary in lowercase
+                                        $cve->summary = strtolower($cve->summary);
+                                        // Log::debug('CVESearch - CVE summary ' . $cve->summary);
+                                        $cve->application = $name;
+                                        $cve_match[] = $cve;
+                                    }
+                                }
+                            }
+                            // Be nice with CIRCL, wait few miliseconds
+                            usleep(200);
                         }
-                    }
-                }
-                // Be nice with CIRCL, wait few miliseconds
-                usleep(200);
-            }
-*/
+            */
             // QUERY
             $client = curl_init($provider . '/api/last');
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
@@ -149,64 +149,60 @@ class CVESearch extends Command
                 });
 
             // CVE counters
-            $found=false;
+            $found = false;
             $message = '<html><body>';
 
             // loop on all CVE
             foreach ($json as $cve) {
-#print_r("-----------------------------------------------------\n");
-#print_r($cve);
+                #print_r("-----------------------------------------------------\n");
+                #print_r($cve);
                 // check CVE in frequency range
-                if (property_exists($cve,"dataType") && $cve->dataType=="CVE_RECORD") {
-                    if (strtotime($cve->cveMetadata->datePublished)>= $min_timestamp) {
+                if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
+                    if (strtotime($cve->cveMetadata->datePublished) >= $min_timestamp) {
                         // put summary in lowercase
-                        $text= strtolower($cve->containers->cna->title);
+                        $text = strtolower($cve->containers->cna->title);
                         Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             // Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
                                 Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
-                                $found=true;
+                                $found = true;
                             }
                         }
                     }
-                }
-                elseif (property_exists($cve,"details") && property_exists($cve,"published")) {
-                    if (strtotime($cve->published)>= $min_timestamp) {
+                } elseif (property_exists($cve, 'details') && property_exists($cve, 'published')) {
+                    if (strtotime($cve->published) >= $min_timestamp) {
                         // put summary in lowercase
-                        $text= strtolower($cve->details);
+                        $text = strtolower($cve->details);
                         Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             if (str_contains($text, $name)) {
                                 Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->aliases[0] . ' </b> - ' . $cve->details . '<br>';
-                                $found=true;
+                                $found = true;
                             }
                         }
                     }
-                }
-                elseif (property_exists($cve,"document") &&
-                        property_exists($cve->document,"category") &&
-                        ($cve->document->category == "csaf_security_advisory")) {
-                    if (strtotime($cve->document->tracking->current_release_date)>= $min_timestamp) {
+                } elseif (property_exists($cve, 'document') &&
+                        property_exists($cve->document, 'category') &&
+                        ($cve->document->category === 'csaf_security_advisory')) {
+                    if (strtotime($cve->document->tracking->current_release_date) >= $min_timestamp) {
                         // put summary in lowercase
-                        $text= strtolower($cve->document->title);
+                        $text = strtolower($cve->document->title);
                         Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             if (str_contains($text, $name)) {
                                 Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->document->title . ' </b> - ' . $cve->document->notes[0]->text . '<br>';
-                                $found=true;
+                                $found = true;
                             }
                         }
                     }
-                }
-                elseif (property_exists($cve,"circl")) {
+                } elseif (property_exists($cve, 'circl')) {
                     // SKIP
-                }
-                else {
-                    Log::error("Unknown CVE format !");
+                } else {
+                    Log::error('Unknown CVE format !');
                     print_r("Unknwon CVE format:\n");
                     print_r($cve);
                 }
@@ -214,7 +210,6 @@ class CVESearch extends Command
             $message .= '</body></html>';
 
             if ($found) {
-
                 Log::debug("CVESearch - Message {$message}");
 
                 // Send mail
@@ -225,18 +220,19 @@ class CVESearch extends Command
                     $mail->isSMTP();                               // Use SMTP
                     // Server settings
                     $mail->isSMTP();                                     // Use SMTP
-                    $mail->Host        = env('MAIL_HOST');               // Set the SMTP server
-                    $mail->SMTPAuth    = env('MAIL_AUTH');               // Enable SMTP authentication
-                    $mail->Username    = env('MAIL_USERNAME');           // SMTP username
-                    $mail->Password    = env('MAIL_PASSWORD');           // SMTP password
-                    $mail->SMTPSecure  = env('MAIL_SMTP_SECURE',false);  // Enable TLS encryption, `ssl` also accepted
+                    $mail->Host = env('MAIL_HOST');               // Set the SMTP server
+                    $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
+                    $mail->Username = env('MAIL_USERNAME');           // SMTP username
+                    $mail->Password = env('MAIL_PASSWORD');           // SMTP password
+                    $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
                     $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
-                    $mail->Port        = env('MAIL_PORT');               // TCP port to connect to
+                    $mail->Port = env('MAIL_PORT');               // TCP port to connect to
 
                     // Recipients
                     $mail->setFrom(config('mercator-config.cve.mail-from'));
-                    foreach(explode(",",config('mercator-config.cve.mail-to')) as $email)
+                    foreach (explode(',', config('mercator-config.cve.mail-to')) as $email) {
                         $mail->addAddress($email);
+                    }
 
                     // Content
                     $mail->isHTML(true);                            // Set email format to HTML
@@ -244,7 +240,7 @@ class CVESearch extends Command
 
                     // Optional: Add DKIM signing
                     $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
-                    $mail->DKIM_private =  env('MAIL_DKIM_PRIVATE');
+                    $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
                     $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
                     $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
                     $mail->DKIM_identity = $mail->From;
@@ -255,7 +251,7 @@ class CVESearch extends Command
                     $mail->send();
 
                     // Log
-                    Log::debug("CVESearch - Mail sent");
+                    Log::debug('CVESearch - Mail sent');
                 } catch (Exception $e) {
                     Log::error("CVESearch - Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
                 }

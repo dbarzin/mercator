@@ -29,7 +29,7 @@ class RelationController extends Controller
 
         $sources = DB::table('entities')->select(['id','name'])->whereNull('deleted_at')->orderBy('name')->get();
         $destinations = $sources;
-        
+
         // lists
         $type_list = Relation::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $attributes_list = $this->getAttributes();

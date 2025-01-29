@@ -6,18 +6,18 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 // ecosystem
 use App\Actor;
-use App\Relation;
+use App\AdminUser;
 // information system
-use App\MacroProcessus;
-use App\Task;
-use App\Information;
-use App\Operation;
-use App\Process;
-// Application
+use App\Annuaire;
 use App\ApplicationBlock;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
+use App\Bay;
+// Application
+use App\Building;
+use App\Certificate;
+use App\Cluster;
+use App\Container;
 use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
@@ -25,44 +25,44 @@ use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
 // Administration
-use App\Annuaire;
-use App\ForestAd;
-use App\ZoneAdmin;
-use App\AdminUser;
-// Logique
 use App\ExternalConnectedEntity;
+use App\Flux;
+use App\ForestAd;
 use App\Gateway;
-use App\Certificate;
-use App\Cluster;
-use App\Container;
+// Logique
+use App\Http\Controllers\Controller;
+use App\Information;
 use App\LogicalServer;
+use App\MacroProcessus;
+use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
-use App\Vlan;
-use App\Flux;
-// Physique
+use App\Operation;
 use App\Peripheral;
 use App\Phone;
+// Physique
 use App\PhysicalLink;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
+use App\Process;
+use App\Relation;
 use App\Router;
 use App\SecurityDevice;
 use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
+use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use App\Bay;
-use App\Building;
-//
+
+use App\ZoneAdmin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 // PhpOffice
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -2134,13 +2134,16 @@ class ReportController extends Controller
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short')
+            trans('global.tracability_short'),
         ];
         if (config('mercator-config.parameters.security_need_auth')) {
-            array_push($header,
-                trans('global.authenticity_short'));
-            }
-        array_push($header,
+            array_push(
+                $header,
+                trans('global.authenticity_short')
+            );
+        }
+        array_push(
+            $header,
             trans('cruds.application.fields.RTO'),
             trans('cruds.application.fields.RPO'),
             trans('cruds.application.fields.documentation'),
@@ -2544,125 +2547,150 @@ class ReportController extends Controller
     {
         // macroprocess - process - application - base de données - information
         $header = [];
-        array_push($header,
+        array_push(
+            $header,
             trans('cruds.macroProcessus.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'));
-        if (config('mercator-config.parameters.security_need_auth'))
+            trans('global.tracability_short')
+        );
+        if (config('mercator-config.parameters.security_need_auth')) {
             array_push($header, trans('global.authenticity_short'));
-        array_push($header,
+        }
+        array_push(
+            $header,
             trans('cruds.process.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'));
-        if (config('mercator-config.parameters.security_need_auth'))
+            trans('global.tracability_short')
+        );
+        if (config('mercator-config.parameters.security_need_auth')) {
             array_push($header, trans('global.authenticity_short'));
-        array_push($header,
+        }
+        array_push(
+            $header,
             trans('cruds.application.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'));
-        if (config('mercator-config.parameters.security_need_auth'))
+            trans('global.tracability_short')
+        );
+        if (config('mercator-config.parameters.security_need_auth')) {
             array_push($header, trans('global.authenticity_short'));
-        array_push($header,
+        }
+        array_push(
+            $header,
             trans('cruds.database.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'));
-        if (config('mercator-config.parameters.security_need_auth'))
+            trans('global.tracability_short')
+        );
+        if (config('mercator-config.parameters.security_need_auth')) {
             array_push($header, trans('global.authenticity_short'));
-        array_push($header,
+        }
+        array_push(
+            $header,
             trans('cruds.information.title'),
             trans('global.confidentiality_short'),
             trans('global.integrity_short'),
             trans('global.availability_short'),
-            trans('global.tracability_short'));
-        if (config('mercator-config.parameters.security_need_auth'))
+            trans('global.tracability_short')
+        );
+        if (config('mercator-config.parameters.security_need_auth')) {
             array_push($header, trans('global.authenticity_short'));
+        }
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->fromArray([$header], null, 'A1');
 
         // Widths
-        $i=0;
+        $i = 0;
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        }
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
         $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getColumnDimension(self::col($i++))->setWidth(12, 'pt');
+        }
 
         // Center
-        $i=1;
+        $i = 1;
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
         $i++;
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
         $i++;
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
         $i++;
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
         $i++;
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        if (config('mercator-config.parameters.security_need_auth'))
+        if (config('mercator-config.parameters.security_need_auth')) {
             $sheet->getStyle(self::col($i++))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
 
         // bold title
         $sheet->getStyle('1')->getFont()->setBold(true);
@@ -2717,7 +2745,6 @@ class ReportController extends Controller
 
     public function physicalInventory()
     {
-
         $inventory = [];
 
         // for all sites
@@ -3408,7 +3435,7 @@ class ReportController extends Controller
         ?Information $information = null
     ) {
         // Macroprocessus
-        $i=0;
+        $i = 0;
         $sheet->setCellValue(self::col($i++). $row, $macroprocess->name);
 
         $sheet->setCellValue(self::col($i). $row, $macroprocess->security_need_c >= 0 ? $macroprocess->security_need_c : '');
@@ -3518,11 +3545,11 @@ class ReportController extends Controller
     }
 
     // Return the Excel column index from 0 to 52
-    private static function col(int $i) {
-        if ($i<26)
-            return chr(ord('A')+$i);
-        else
-            return 'A' . chr(ord('A')+($i-26));
+    private static function col(int $i)
+    {
+        if ($i < 26) {
+            return chr(ord('A') + $i);
         }
-
+        return 'A' . chr(ord('A') + $i - 26);
+    }
 }
