@@ -80,6 +80,7 @@ class LogicalServerController extends Controller
     public function store(StoreLogicalServerRequest $request)
     {
         $request['active'] = $request->has('active');
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
 
         $logicalServer = LogicalServer::create($request->all());
 

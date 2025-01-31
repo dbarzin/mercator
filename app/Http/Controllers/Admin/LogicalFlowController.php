@@ -36,7 +36,7 @@ class LogicalFlowController extends Controller
 
     public function store(StoreLogicalFlowRequest $request)
     {
-        $logicalFlow = LogicalFlow::create($request->all());
+        LogicalFlow::create($request->all());
 
         return redirect()->route('admin.logical-flows.index');
     }
