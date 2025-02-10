@@ -278,10 +278,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::resource('application-modules', Admin\ApplicationModuleController::class);
     Route::delete('application-modules-destroy', [Admin\ApplicationModuleController::class,'massDestroy'])->name('application-modules.massDestroy');
 
-    // Audit Logs
-    Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
-    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class,'history'])->name('history');
-
     // Macro Processuses
     Route::resource('macro-processuses', Admin\MacroProcessusController::class);
     Route::delete('macro-processuses-destroy', [Admin\MacroProcessusController::class,'massDestroy'])->name('macro-processuses.massDestroy');
@@ -371,6 +367,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/documents/{id}', [Admin\DocumentController::class,'get'])->name('documents.show');
     Route::get('/config/documents', [Admin\DocumentController::class,'stats'])->name('config.documents');
     Route::get('/config/documents/check', [Admin\DocumentController::class,'check'])->name('config.documents.check');
+
+    // Audit Logs
+    Route::resource('audit-logs', Admin\AuditLogsController::class, ['except' => ['create', 'store', 'update', 'destroy']]);
+    Route::get('history/{type}/{id}', [Admin\AuditLogsController::class,'history'])->name('history');
 
     // Monarc
     Route::get('monarc', [Admin\MonarcController::class,'index'])->name('monarc');

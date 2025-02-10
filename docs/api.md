@@ -338,3 +338,41 @@ token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:
 curl -s -H "Content-Type: application/json" -H "Authorization: Bearer ${token}" "http://127.0.0.1:8000/api/users" | jq .
 
 ```
+
+Other Bash example
+
+```
+#!/usr/bin/bash
+
+API_URL="http://localhost:8000/api"
+
+# valid login and password
+data='{"email":"admin@admin.com","password":"password"}'
+
+# Cet a token after correct login
+TOKEN=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:8000/api/login | jq -r .access_token)
+
+# Récupération de l'objet
+OBJECT_ID=1
+
+RESPONSE=$(curl -s -X GET "$API_URL/sites/$OBJECT_ID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Accept: application/json")
+
+echo "Objet récupéré: $RESPONSE"
+
+# Mise à jour d'une valeur avec une requête PUT
+
+curl -s -X PUT "$API_URL/sites/$OBJECT_ID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "cache-control: no-cache" \
+  -d "{\"name\": \"New site name\", \"description\": \"New description\"}"
+
+# Vérification de la mise à jour
+UPDATED_OBJECT=$(curl -s -X GET "$API_URL/sites/$OBJECT_ID" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Accept: application/json")
+
+echo "Objet mis à jour: $UPDATED_OBJECT"
+```
