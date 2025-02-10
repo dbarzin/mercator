@@ -63,11 +63,18 @@ Pour des instructions détaillées, veuillez vous référer aux guides d'install
 
 ### 🐳 Installation via Docker
 
-Démarrez rapidement avec Docker. Exécutez une instance locale en mode développement :
+Démarrez rapidement avec Docker. Exécutez une instance locale en mode développement avec la base de données de démonstration :
 
 ```bash
-docker run -it --rm -e USE_DEMO_DATA=1 -p 8080:8080 ghcr.io/dbarzin/mercator:latest
+docker run -it --rm -e USE_DEMO_DATA=1 -p 8080:8080 --name mercator ghcr.io/dbarzin/mercator:latest
 ```
+
+Si vous ne souhaitez pas utiliser la base de données de démonstration, la première fois que vous démarrez Docker, vous devez initialiser la base de données pour créer l'utilisateur administrateur avec l'option SEED_DATABASE:
+
+```bash
+docker run -it --rm -e SEED_DATABASE=1 -p 8080:8080 --name mercator ghcr.io/dbarzin/mercator:latest
+```
+
 Pour rendre vos données persistantes avec SQLite :
 
 ```bash
