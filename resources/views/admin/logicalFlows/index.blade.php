@@ -99,7 +99,7 @@
                             <td>
                                 {{ $logicalFlow->dest_port ?? "ANY" }}
                             </td>
-                            <td>
+                            <td nowarp>
                                 @can('logical_flow_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.logical-flows.show', $logicalFlow->id) }}">
                                         {{ trans('global.view') }}

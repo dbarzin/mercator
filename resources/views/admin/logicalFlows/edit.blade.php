@@ -96,7 +96,14 @@
                 <div class="col-sm-1">
                     <div class="form-group">
                         <label class="recommended" for="name">{{ trans('cruds.logicalFlow.fields.protocol') }}</label>
-                        <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text" name="protocol" id="protocol" value="{{ old('protocol', $logicalFlow->protocol) }}" required>
+                        <select class="form-control select2-free {{ $errors->has('protocol') ? 'is-invalid' : '' }}" name="protocol" id="protocol">
+                            @if (!$protocol_list->contains(old('protocol')))
+                                <option> {{ old('protocol') }}</option>'
+                            @endif
+                            @foreach($protocol_list as $protocol)
+                                <option {{ (old('protocol') ? old('protocol') : $logicalFlow->protocol) == $protocol ? 'selected' : '' }}>{{$protocol}}</option>
+                            @endforeach
+                        </select>
                         @if($errors->has('protocol'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('protocol') }}
