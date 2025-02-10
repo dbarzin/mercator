@@ -43,4 +43,3 @@ docker-compose up -d
 ```
 php artisan migrate:fresh --seed --force
 ```
-
