@@ -66,9 +66,14 @@ For detailed instructions, please refer to the installation guides:
 Get up and running quickly using Docker. Run a local instance in development mode:
 
 ```bash
-docker run -it --rm -e USE_DEMO_DATA=1 -p 8080:8080 ghcr.io/dbarzin/mercator:latest
+docker run -it --rm -e USE_DEMO_DATA=1 -p 8080:8080 --name mercator ghcr.io/dbarzin/mercator:latest
 ```
 
+If you don't want to use the demo database, the first time you start the Docker you have to seed the database to create the admin user :
+
+```bash
+docker run -it --rm -e SEED_DATABASE=1 -p 8080:8080 --name mercator ghcr.io/dbarzin/mercator:latest
+```
 To persist your data using SQLite:
 
 ```bash
