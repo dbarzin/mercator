@@ -27,10 +27,11 @@ class LogicalFlowController extends Controller
         abort_if(Gate::denies('logical_flow_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
+        $protocol_list = LogicalFlow::select('protocol')->where('protocol', '<>', null)->distinct()->orderBy('protocol')->pluck('protocol');
 
         return view(
             'admin.logicalFlows.create',
-            compact('routers')
+            compact('routers', 'protocol_list')
         );
     }
 
@@ -47,9 +48,11 @@ class LogicalFlowController extends Controller
 
         $routers = Router::all()->sortBy('name')->pluck('name', 'id');
 
+        $protocol_list = LogicalFlow::select('protocol')->where('protocol', '<>', null)->distinct()->orderBy('protocol')->pluck('protocol');
+
         return view(
             'admin.logicalFlows.edit',
-            compact('logicalFlow', 'routers')
+            compact('logicalFlow', 'routers', 'protocol_list')
         );
     }
 

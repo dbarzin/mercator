@@ -344,35 +344,44 @@ Other Bash example
 ```
 #!/usr/bin/bash
 
-API_URL="http://localhost:8000/api"
+API_URL=http://127.0.0.1:8000/api
 
 # valid login and password
+
 data='{"email":"admin@admin.com","password":"password"}'
 
-# Cet a token after correct login
-TOKEN=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:8000/api/login | jq -r .access_token)
+# Get a token after correct login
+
+TOKEN=$(curl -s -d ${data} -H "Content-Type: application/json" ${API_URL}/login | jq -r .access_token)
 
 # Récupération de l'objet
-OBJECT_ID=1
 
-RESPONSE=$(curl -s -X GET "$API_URL/sites/$OBJECT_ID" \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Accept: application/json")
+OBJECT_ID=10
 
-echo "Objet récupéré: $RESPONSE"
+RESPONSE=$(curl -s -X GET "${API_URL}/logical-servers/${OBJECT_ID}" \
+ -H "Authorization: Bearer ${TOKEN}" \
+ -H "Accept: application/json")
+
+echo "Objet récupéré: ${RESPONSE}"
 
 # Mise à jour d'une valeur avec une requête PUT
 
-curl -s -X PUT "$API_URL/sites/$OBJECT_ID" \
-  -H "Authorization: Bearer $TOKEN" \
+RESPONSE=$(echo "$RESPONSE" | jq -c '.data')
+RESPONSE=$(echo "$RESPONSE" | jq -r '.operating_system="Linux"')
+
+echo "Objet modifié: ${RESPONSE}"
+
+curl -s -X PUT "${API_URL}/logical-servers/${OBJECT_ID}" \
+  -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -H "cache-control: no-cache" \
-  -d "{\"name\": \"New site name\", \"description\": \"New description\"}"
+  -d "$RESPONSE"
 
 # Vérification de la mise à jour
-UPDATED_OBJECT=$(curl -s -X GET "$API_URL/sites/$OBJECT_ID" \
-  -H "Authorization: Bearer $TOKEN" \
+
+UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/logical-servers/${OBJECT_ID}" \
+  -H "Authorization: Bearer ${TOKEN}" \
   -H "Accept: application/json")
 
-echo "Objet mis à jour: $UPDATED_OBJECT"
+echo "Objet mis à jour: ${UPDATED_OBJECT}"
 ```
