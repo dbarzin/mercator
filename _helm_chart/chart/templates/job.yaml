@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}"
+  labels:
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 8
+  template:
+    metadata:
+      name: {{ .Chart.Name }}-init-admin
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: init-admin-user
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          command: ["php", "artisan", "migrate:fresh", "--force", "--seed"]
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          env: 
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            value: {{ .Chart.Name | quote }}
+          - name: REDIS_HOST
+            value: {{ .Values.redis.fullnameOverride | quote }}
+          - name: REDIS_PASSWORD
+            value: "null"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: DB_CONNECTION
+            value: "pgsql"
+          - name: DB_HOST
+            value: {{ .Values.postgresql.fullnameOverride | quote }}
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_DATABASE
+            value: {{ .Values.postgresql.auth.database | quote }}
+          - name: DB_USERNAME
+            value: {{ .Values.postgresql.auth.username | quote }}
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.postgresql.auth.existingSecret | quote }}
+                key: password
