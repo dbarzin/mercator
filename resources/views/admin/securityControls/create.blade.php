@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label for="description">{{ trans('cruds.securityControl.fields.description') }}</label>
-                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
+                <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
                         {{ $errors->first('description') }}
@@ -40,6 +40,19 @@
         </button>
     </div>
 </form>
+@endsection
 
-
+@section('scripts')
+<script>
+    $(document).ready(function () {
+      var allEditors = document.querySelectorAll('.ckeditor');
+      for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(
+          allEditors[i], {
+            extraPlugins: []
+          }
+        );
+      }
+    });
+</script>
 @endsection

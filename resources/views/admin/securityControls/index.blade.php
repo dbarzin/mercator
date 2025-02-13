@@ -48,7 +48,7 @@
                                 </a>
                             </td>
                             <td>
-                                {{ $control->description ?? '' }}
+                                {!! $control->description ?? '' !!}
                             </td>
                             <td nowrap>
                                 @can('security_controls_show')
