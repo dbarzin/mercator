@@ -108,6 +108,11 @@ class LogicalServer extends Model
         return $this->belongsToMany(PhysicalServer::class)->orderBy('name');
     }
 
+    public function serverIds()
+    {
+        return $this->belongsToMany(PhysicalServer::class)->pluck('id');
+    }
+
     public function documents()
     {
         return $this->belongsToMany(Document::class)->orderBy('document_id');

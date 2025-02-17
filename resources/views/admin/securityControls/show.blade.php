@@ -41,7 +41,7 @@
                         {{ trans('cruds.securityControl.fields.description') }}
                     </th>
                     <td>
-                        {{ $securityControl->description }}
+                        {!! $securityControl->description !!}
                     </td>
                 </tr>
             </tbody>

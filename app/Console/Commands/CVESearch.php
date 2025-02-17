@@ -69,7 +69,7 @@ class CVESearch extends Command
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($client);
             if ($response === false) {
-                Log::debug('CVESearch - Could not connect to provider');
+                Log::debug("CVESearch - Could not connect to provider {$provider}");
                 return;
             }
 
@@ -78,8 +78,9 @@ class CVESearch extends Command
             Log::debug('CVESearch - ' . $msg);
 
             // start timestamp
-            $min_timestamp = strtotime(sprintf('-%d days', $check_frequency), strtotime('now'));
-            Log::debug('CVESearch - Check CVE published before '.date('l dS \o\f F Y h:i:s A', $min_timestamp));
+            $min_timestamp = date('Y-m-d', strtotime(sprintf('-%d days', $check_frequency), strtotime('now')));
+            Log::debug('CVESearch - Check CVE published before '.   $min_timestamp);
+            print_r("min_timestamp : {$min_timestamp}");
 
             // CVE counters
             $cpe_match = [];
@@ -139,6 +140,7 @@ class CVESearch extends Command
                 Log::debug('CVESearch - Could not query the provider');
                 return;
             }
+            $json = json_decode($response);
 
             // get application names in lowercase
             $names = MApplication::all()
@@ -154,16 +156,15 @@ class CVESearch extends Command
 
             // loop on all CVE
             foreach ($json as $cve) {
-                #print_r("-----------------------------------------------------\n");
-                #print_r($cve);
+                Log::debug("Check CVE");
                 // check CVE in frequency range
                 if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
-                    if (strtotime($cve->cveMetadata->datePublished) >= $min_timestamp) {
+                    if (substr($cve->cveMetadata->datePublished,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->containers->cna->title);
                         Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
-                            // Log::debug('CVESearch - check ' . $name);
+                            Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
                                 Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
@@ -171,8 +172,11 @@ class CVESearch extends Command
                             }
                         }
                     }
+                    else {
+                        Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);
+                    }
                 } elseif (property_exists($cve, 'details') && property_exists($cve, 'published')) {
-                    if (strtotime($cve->published) >= $min_timestamp) {
+                    if (substr($cve->published,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->details);
                         Log::debug('CVESearch - CVE text ' . $text);
@@ -184,10 +188,13 @@ class CVESearch extends Command
                             }
                         }
                     }
+                    else {
+                        Log::debug('CVESearch - skip old ' . $cve->published);
+                    }
                 } elseif (property_exists($cve, 'document') &&
                         property_exists($cve->document, 'category') &&
                         ($cve->document->category === 'csaf_security_advisory')) {
-                    if (strtotime($cve->document->tracking->current_release_date) >= $min_timestamp) {
+                    if (substr($cve->document->tracking->current_release_date,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->document->title);
                         Log::debug('CVESearch - CVE text ' . $text);
@@ -199,8 +206,12 @@ class CVESearch extends Command
                             }
                         }
                     }
+                    else {
+                        Log::debug('CVESearch - skip old ' . $cve->document->tracking->current_release_date);
+                    }
                 } elseif (property_exists($cve, 'circl')) {
                     // SKIP
+                    Log::error('Unknown circl format !');
                 } else {
                     Log::error('Unknown CVE format !');
                     print_r("Unknwon CVE format:\n");

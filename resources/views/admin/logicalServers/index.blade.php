@@ -78,9 +78,10 @@
                                 {{ $logicalServer->type }}
                             </td>
                             <td>
-                                @foreach(explode(" ",$logicalServer->attributes) as $attribute)
-                                <span class="badge badge-info">{{ $attribute }}</span>
-                                @endforeach
+                                @php
+                                foreach(explode(" ",$logicalServer->attributes) as $attribute)
+                                    echo "<span class='badge badge-info'>$attribute</span> ";
+                                @endphp
                             </td>
                             <td>
                                 {!! $logicalServer->description !!}

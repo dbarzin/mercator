@@ -109,9 +109,10 @@
                                 @endif
                             </td>
                             <td>
-                                @foreach(explode(" ",$application->attributes) as $a)
-                                    <div class="badge badge-info">{{ $a }}</div>
-                                @endforeach
+                                @php
+                                foreach(explode(" ",$application->attributes) as $a)
+                                    echo "<div class='badge badge-info'>$a</div> ";
+                                @endphp
                             </td>
                             <td nowrap>
                                 @can('m_application_show')
