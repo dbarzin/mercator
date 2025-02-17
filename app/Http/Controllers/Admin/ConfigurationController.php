@@ -96,7 +96,7 @@ class ConfigurationController extends Controller
                     // Recipients
                     $mail->setFrom($mail_from);
                     foreach (explode(',', $mail_to) as $email) {
-                        $mail->addAddress($email);
+                        $mail->addAddress(trim($email));
                     }
 
                     // Content
