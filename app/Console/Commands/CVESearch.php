@@ -79,8 +79,7 @@ class CVESearch extends Command
 
             // start timestamp
             $min_timestamp = date('Y-m-d', strtotime(sprintf('-%d days', $check_frequency), strtotime('now')));
-            Log::debug('CVESearch - Check CVE published before '.   $min_timestamp);
-            print_r("min_timestamp : {$min_timestamp}");
+            Log::debug('CVESearch - Check CVE published after '.   $min_timestamp);
 
             // CVE counters
             $cpe_match = [];
