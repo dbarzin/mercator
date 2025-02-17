@@ -93,45 +93,6 @@ class CVESearch extends Command
                 ->orderBy('name')
                 ->get();
 
-            /*
-                        foreach ($applications as $app) {
-                            $url = $provider . '/api/cvefor/cpe:2.3:a:' . $app->vendor . ':' . $app->product . ':' . $app->version;
-
-                            Log::debug('CVEReport - url ' . $url);
-
-                            $http = curl_init($url);
-                            curl_setopt($http, CURLOPT_RETURNTRANSFER, true);
-
-                            $response = curl_exec($http);
-                            if ($response === false) {
-                                Log::debug('CVESearch - Could not query the provider');
-                                return;
-                            }
-
-                            $http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
-                            Log::debug('CVEReport - status ' . $http_status);
-                            curl_close($http);
-
-                            $json = json_decode($response);
-
-                            // loop on all CVE
-                            if ($http_status === 200) {
-                                // loop on all CVE
-                                foreach ($json as $cve) {
-                                    // check CVE in frequency range
-                                    if (strtotime($cve->Published) >= $min_timestamp) {
-                                        // put summary in lowercase
-                                        $cve->summary = strtolower($cve->summary);
-                                        // Log::debug('CVESearch - CVE summary ' . $cve->summary);
-                                        $cve->application = $name;
-                                        $cve_match[] = $cve;
-                                    }
-                                }
-                            }
-                            // Be nice with CIRCL, wait few miliseconds
-                            usleep(200);
-                        }
-            */
             // QUERY
             $client = curl_init($provider . '/api/last');
             curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
@@ -156,40 +117,40 @@ class CVESearch extends Command
 
             // loop on all CVE
             foreach ($json as $cve) {
-                Log::debug("Check CVE");
+                // Log::debug("Check CVE");
                 // check CVE in frequency range
                 if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
                     if (substr($cve->cveMetadata->datePublished,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->containers->cna->title);
-                        Log::debug('CVESearch - CVE text ' . $text);
+                        // Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
-                            Log::debug('CVESearch - check ' . $name);
+                            // Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
-                                Log::debug('CVESearch - found ' . $name);
+                                // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
                                 $found = true;
                             }
                         }
                     }
                     else {
-                        Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);
+                        // Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);
                     }
                 } elseif (property_exists($cve, 'details') && property_exists($cve, 'published')) {
                     if (substr($cve->published,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->details);
-                        Log::debug('CVESearch - CVE text ' . $text);
+                        // Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             if (str_contains($text, $name)) {
-                                Log::debug('CVESearch - found ' . $name);
+                                // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->aliases[0] . ' </b> - ' . $cve->details . '<br>';
                                 $found = true;
                             }
                         }
                     }
                     else {
-                        Log::debug('CVESearch - skip old ' . $cve->published);
+                        // Log::debug('CVESearch - skip old ' . $cve->published);
                     }
                 } elseif (property_exists($cve, 'document') &&
                         property_exists($cve->document, 'category') &&
@@ -197,17 +158,17 @@ class CVESearch extends Command
                     if (substr($cve->document->tracking->current_release_date,0,10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->document->title);
-                        Log::debug('CVESearch - CVE text ' . $text);
+                        // Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             if (str_contains($text, $name)) {
-                                Log::debug('CVESearch - found ' . $name);
+                                // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->document->title . ' </b> - ' . $cve->document->notes[0]->text . '<br>';
                                 $found = true;
                             }
                         }
                     }
                     else {
-                        Log::debug('CVESearch - skip old ' . $cve->document->tracking->current_release_date);
+                        // Log::debug('CVESearch - skip old ' . $cve->document->tracking->current_release_date);
                     }
                 } elseif (property_exists($cve, 'circl')) {
                     // SKIP
@@ -221,7 +182,7 @@ class CVESearch extends Command
             $message .= '</body></html>';
 
             if ($found) {
-                Log::debug("CVESearch - Message {$message}");
+                // Log::debug("CVESearch - Message {$message}");
 
                 // Send mail
                 $mail = new PHPMailer(true);
@@ -242,7 +203,7 @@ class CVESearch extends Command
                     // Recipients
                     $mail->setFrom(config('mercator-config.cve.mail-from'));
                     foreach (explode(',', config('mercator-config.cve.mail-to')) as $email) {
-                        $mail->addAddress($email);
+                        $mail->addAddress(trim($email));
                     }
 
                     // Content
