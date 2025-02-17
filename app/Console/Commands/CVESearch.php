@@ -46,7 +46,7 @@ class CVESearch extends Command
             // Be nice with CIRCL, wait few seconds !
             $seconds = rand(1, 600);
             Log::debug('CVESearch - wait ' . $seconds . 's');
-            // sleep($seconds);
+            sleep($seconds);
 
             Log::debug('CVESearch - check');
 
@@ -182,7 +182,7 @@ class CVESearch extends Command
             $message .= '</body></html>';
 
             if ($found) {
-                // Log::debug("CVESearch - Message {$message}");
+                Log::debug("CVESearch - CVE found !");
 
                 // Send mail
                 $mail = new PHPMailer(true);
