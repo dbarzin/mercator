@@ -203,7 +203,7 @@ class CVESearch extends Command
                     // Recipients
                     $mail->setFrom(config('mercator-config.cve.mail-from'));
                     foreach (explode(',', config('mercator-config.cve.mail-to')) as $email) {
-                        $mail->addAddress($email);
+                        $mail->addAddress(trim($email));
                     }
 
                     // Content
