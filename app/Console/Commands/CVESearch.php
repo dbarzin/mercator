@@ -17,7 +17,7 @@ class CVESearch extends Command
      *
      * @var string
      */
-    protected $signature = 'mercator:cve-search';
+    protected $signature = 'mercator:cve-search {--nowait :  Whether the job should wait before start}';
 
     /**
      * The console command description.
@@ -43,10 +43,12 @@ class CVESearch extends Command
             // Check for CVE
             Log::debug('CVESearch - check');
 
-            // Be nice with CIRCL, wait few seconds !
-            $seconds = rand(1, 600);
-            Log::debug('CVESearch - wait ' . $seconds . 's');
-            sleep($seconds);
+            if (! $this->option('nowait')) {
+                // Be nice with CIRCL, wait few seconds !
+                $seconds = rand(1, 600);
+                Log::debug('CVESearch - wait ' . $seconds . 's');
+                sleep($seconds);
+            }
 
             Log::debug('CVESearch - check');
 
@@ -100,7 +102,6 @@ class CVESearch extends Command
                 Log::debug('CVESearch - Could not query the provider');
                 return;
             }
-            $json = json_decode($response);
 
             // get application names in lowercase
             $names = MApplication::all()
@@ -111,24 +112,44 @@ class CVESearch extends Command
                 });
 
             // CVE counters
-            $found = false;
+            $cveCount = 0;
             $message = '<html><body>';
+
+            // JSON
+            $json = json_decode($response);
+            $jsonCount = count($json);
+            Log::debug("CVESearch - get {$jsonCount} CVE");
 
             // loop on all CVE
             foreach ($json as $cve) {
-                // Log::debug("Check CVE");
-                // check CVE in frequency range
+                // Log::debug(json_encode($cve, JSON_PRETTY_PRINT));
+                // check CVE_RECORD
                 if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
                     if (substr($cve->cveMetadata->datePublished,0,10) >= $min_timestamp) {
-                        // put summary in lowercase
-                        $text = strtolower($cve->containers->cna->title);
+
+                        // check assignerShortName
+                        $text = strtolower($cve->cveMetadata->assignerShortName);
                         // Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
                             // Log::debug('CVESearch - check ' . $name);
                             if (str_contains($text, $name)) {
                                 // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
-                                $found = true;
+                                $cveCount++;
+                            }
+                        }
+
+                        // look for in affected products
+                        foreach($cve->containers->cna->affected as $affected) {
+                            $text = strtolower($affected->product);
+                            // Log::debug('CVESearch - CVE text ' . $text);
+                            foreach ($names as $name) {
+                                // Log::debug('CVESearch - check ' . $name);
+                                if (str_contains($text, $name)) {
+                                    // Log::debug('CVESearch - found ' . $name);
+                                    $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
+                                    $cveCount++;
+                                }
                             }
                         }
                     }
@@ -144,7 +165,7 @@ class CVESearch extends Command
                             if (str_contains($text, $name)) {
                                 // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->aliases[0] . ' </b> - ' . $cve->details . '<br>';
-                                $found = true;
+                                $cveCount++;
                             }
                         }
                     }
@@ -162,7 +183,7 @@ class CVESearch extends Command
                             if (str_contains($text, $name)) {
                                 // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->document->title . ' </b> - ' . $cve->document->notes[0]->text . '<br>';
-                                $found = true;
+                                $cveCount++;
                             }
                         }
                     }
@@ -180,8 +201,8 @@ class CVESearch extends Command
             }
             $message .= '</body></html>';
 
-            if ($found) {
-                Log::debug("CVESearch - CVE found !");
+            if ($cveCount>0) {
+                Log::debug("CVESearch - {$cveCount} CVE found !");
 
                 // Send mail
                 $mail = new PHPMailer(true);
