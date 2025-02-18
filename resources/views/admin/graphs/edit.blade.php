@@ -122,12 +122,12 @@
 
                             </div>
 
-                            <!-- Context Menu for edges -->
-                            <div id="context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
-                                <label for="edge-color-select">Couleur :</label>
+                            <!-- Contextual menu for edges -->
+                            <div id="edge-context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
+                                <label for="edge-color-select">Color :</label>
                                 <input type="color" id="edge-color-select" name="favorite-color" value="#ff0000">
                                 <br>
-                                <label for="edge-thickness-select">Épaisseur :</label>
+                                <label for="edge-thickness-select">Border :</label>
                                 <select id="edge-thickness-select">
                                     <option value="1">1 px</option>
                                     <option value="2">2 px</option>
@@ -137,6 +137,41 @@
                                 </select>
                                 <br>
                                 <button id="apply-edge-style">Appliquer</button>
+                            </div>
+
+                            <!-- Contextual menu for text -->
+                            <div id="text-context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
+                                <label for="text-font-select">Font </label>
+                                <select id="text-font-select">
+                                    <option>Arial</option>
+                                    <option>Helvetica</option>
+                                    <option>Times New Roman</option>
+                                    <option>Courier New</option>
+                                    <option>Verdana</option>
+                                    <option>Georgia</option>
+                                </select>
+                                <label for="text-size-select">Size </label>
+                                <select id="text-size-select">
+                                    <option value="8">8 px</option>
+                                    <option value="10">10 px</option>
+                                    <option value="12">12 px</option>
+                                    <option value="14">14 px</option>
+                                    <option value="16">16 px</option>
+                                    <option value="18">18 px</option>
+                                    <option value="20">20 px</option>
+                                    <option value="22">22 px</option>
+                                    <option value="24">24 px</option>
+                                    <option value="26">26 px</option>
+                                </select>
+                                <br>
+                                <label for="text-color-select">Color</label>
+                                <input type="color" id="text-color-select" name="favorite-color" value="#ff0000">
+
+                                <button type="button" id="text-bold-select" class="button" style="margin-left: 20px; font-weight: bold;">B</button>
+                                <button type="button" id="text-italic-select" class="button" style="font-style: italic;">I</button>
+                                <button type="button" id="text-underline-select" class="button" style="text-decoration: underline;">U</button>
+                                <br>
+                                <button id="apply-text-style">Appliquer</button>
                             </div>
 
                         <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
@@ -159,6 +194,21 @@
 
 @section('styles')
 @vite('resources/css/mapping.css')
+
+<style>
+    .button {
+        width:35px;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        background-color: #f0f0f0;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .button.selected {
+        background-color: #aaa;
+    }
+</style>
+
 @endsection
 
 @section('scripts')

@@ -135,10 +135,18 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
 
 // --------------------------------------------------------------------------------
 // Context menu for edges
-const contextMenu = document.getElementById('context-menu');
-const colorSelect = document.getElementById('edge-color-select');
+const edgeContextMenu = document.getElementById('edge-context-menu');
+const edgeColorSelect = document.getElementById('edge-color-select');
 const thicknessSelect = document.getElementById('edge-thickness-select');
-const applyButton = document.getElementById('apply-edge-style');
+
+// text context menu
+const textContextMenu = document.getElementById('text-context-menu');
+const textFontSelect = document.getElementById('text-font-select');
+const textColorSelect = document.getElementById('text-color-select');
+const textSizeSelect = document.getElementById('text-size-select');
+const textBoldSelect = document.getElementById('text-bold-select');
+const textItalicSelect = document.getElementById('text-italic-select');
+const textUnderlineSelect = document.getElementById('text-underline-select');
 
 let selectedEdge = null;
 
@@ -159,18 +167,18 @@ graph.container.addEventListener('contextmenu', (event) => {
             const y = ( event.clientY - rect.top) ;
 
             // Afficher le menu contextuel
-            contextMenu.style.display = 'block';
-            contextMenu.style.left = `${x+75}px`;
-            contextMenu.style.top = `${y+100}px`;
+            edgeContextMenu.style.display = 'block';
+            edgeContextMenu.style.left = `${x+75}px`;
+            edgeContextMenu.style.top = `${y+100}px`;
 
             // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
             const currentStyle = graph.getCellStyle(cell);
-            colorSelect.value = currentStyle.strokeColor || '#000000';
+            edgeColorSelect.value = currentStyle.strokeColor || '#000000';
             thicknessSelect.value = currentStyle.strokeWidth || '1';
     }
     else if (cell.isVertex()) {
-        // Not an image and not a group
-        if ((cell.style.image==null)&&(cell.children.length==0)) {
+
+        if ((cell.value!=null) && (cell.value != "")) {
                 selectedEdge = cell;
                 // Obtenir la position de la souris lors du drop
                 const rect = container.getBoundingClientRect();
@@ -178,23 +186,58 @@ graph.container.addEventListener('contextmenu', (event) => {
                 const y = event.clientY - rect.top;
 
                 // Afficher le menu contextuel
-                contextMenu.style.display = 'block';
-                contextMenu.style.left = `${x+75}px`;
-                contextMenu.style.top = `${y+100}px`;
+                textContextMenu.style.display = 'block';
+                textContextMenu.style.left = `${x+75}px`;
+                textContextMenu.style.top = `${y+100}px`;
+
+                // Pré-remplir les valeurs du menu avec les styles actuels du texte
+                const currentStyle = graph.getCellStyle(cell);
+                textColorSelect.value = currentStyle.fontColor || '#000000';
+                textFontSelect.value = currentStyle.fontFamily || 'Arial';
+                textSizeSelect.value = currentStyle.fontSize || '12';
+
+                if (selectedEdge.style.fontStyle & 1)
+                    textBoldSelect.classList.add('selected');
+                else
+                    textBoldSelect.classList.remove('selected');
+
+                if (selectedEdge.style.fontStyle & 2)
+                    textItalicSelect.classList.add('selected');
+                else
+                    textItalicSelect.classList.remove('selected');
+
+                if (selectedEdge.style.fontStyle & 4)
+                    textUnderlineSelect.classList.add('selected');
+                else
+                    textUnderlineSelect.classList.remove('selected');
+        }
+        else if ((cell.style.image==null)&&(cell.children.length==0)) {
+                selectedEdge = cell;
+                // Obtenir la position de la souris lors du drop
+                const rect = container.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                // Afficher le menu contextuel
+                edgeContextMenu.style.display = 'block';
+                edgeContextMenu.style.left = `${x+75}px`;
+                edgeContextMenu.style.top = `${y+100}px`;
 
                 // Pré-remplir les valeurs du menu avec les styles actuels de l'arête
                 const currentStyle = graph.getCellStyle(cell);
-                colorSelect.value = currentStyle.strokeColor || '#000000';
+                edgeColorSelect.value = currentStyle.strokeColor || '#000000';
                 thicknessSelect.value = currentStyle.strokeWidth || '1';
         }
     }
     else {
-        contextMenu.style.display = 'none';
+        textContextMenu.style.display = 'none';
+        edgeContextMenu.style.display = 'none';
     }
 });
 
 // Appliquer les changements de style à l'arête sélectionnée
-applyButton.addEventListener('click', () => {
+const edgeApplyButton = document.getElementById('apply-edge-style');
+edgeApplyButton.addEventListener('click', () => {
     // console.log("change style")
     // Do not submit form
     event.preventDefault();
@@ -207,11 +250,11 @@ applyButton.addEventListener('click', () => {
             const style = graph.getCellStyle(selectedEdge);
             // console.log(style);
             if (selectedEdge.isEdge()) {
-                selectedEdge.style.strokeColor = colorSelect.value;
+                selectedEdge.style.strokeColor = edgeColorSelect.value;
                 selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
                 }
             else {
-                selectedEdge.style.fillColor = colorSelect.value;
+                selectedEdge.style.fillColor = edgeColorSelect.value;
                 selectedEdge.style.strokeWidth = parseInt(thicknessSelect.value, 10);
                 }
 
@@ -219,13 +262,60 @@ applyButton.addEventListener('click', () => {
         });
     }
     // Fermer le menu contextuel
-    contextMenu.style.display = 'none';
+    edgeContextMenu.style.display = 'none';
 });
+
+// Appliquer les changements de style au texte sélectionné
+const textApplyButton = document.getElementById('apply-text-style');
+textApplyButton.addEventListener('click', () => {
+    event.preventDefault();
+
+    // edge selected ?
+    if (selectedEdge) {
+        graph.batchUpdate(() => {
+            selectedEdge.style.fontFamily = textFontSelect.value;
+            selectedEdge.style.fontColor = textColorSelect.value;
+            selectedEdge.style.fontSize = parseInt(textSizeSelect.value, 10);
+
+            var flag = 0;
+            flag = flag | (
+                textBoldSelect.classList.contains('selected') ? 1 : 0);
+            flag = flag | (
+                textItalicSelect.classList.contains('selected') ? 2 : 0);
+            flag = flag | (
+                textUnderlineSelect.classList.contains('selected') ? 4 : 0);
+            selectedEdge.style.fontStyle = flag;
+
+            graph.refresh(selectedEdge);
+
+        });
+    }
+    // Fermer le menu contextuel
+    textContextMenu.style.display = 'none';
+});
+
+// Sélectionnez tous les boutons
+const buttons = document.querySelectorAll<HTMLButtonElement>('.button');
+
+// Ajoutez un écouteur d'événement à chaque bouton
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        toggleSelection(button);
+    });
+});
+
+// Fonction pour basculer la sélection du bouton
+function toggleSelection(button: HTMLButtonElement) {
+    const isSelected = button.classList.toggle('selected');
+}
 
 // Cacher le menu contextuel en cliquant ailleurs
 document.addEventListener('click', (event) => {
-    if (!contextMenu.contains(event.target)) {
-        contextMenu.style.display = 'none';
+    if (!textContextMenu.contains(event.target)) {
+        textContextMenu.style.display = 'none';
+    }
+    if (!edgeContextMenu.contains(event.target)) {
+        edgeContextMenu.style.display = 'none';
     }
 });
 
@@ -476,7 +566,7 @@ container.addEventListener('drop', (event) => {
                         // imageWidth: 32, // Largeur de l'image
                         // imageHeight: 32, // Hauteur de l'image
                         editable: false, //  Ne pas autoriser de changer le label
-                        resizable: false, // Ne pas resizer les images
+                        resizable: true, // Ne pas resizer les images
                         //imageBorder: 0, // Bordure facultative autour de l'image
                         verticalLabelPosition: 'bottom',
                         spacingTop: -15,
@@ -807,7 +897,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                         // imageWidth: 32, // Largeur de l'image
                         // imageHeight: 32, // Hauteur de l'image
                         editable: false, //  Ne pas autoriser de changer le label
-                        resizable: false, // Ne pas resizer les images
+                        resizable: true, // Ne pas resizer les images
                         //imageBorder: 0, // Bordure facultative autour de l'image
                         verticalLabelPosition: 'bottom',
                         spacingTop: -15,
