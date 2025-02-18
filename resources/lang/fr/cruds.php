@@ -112,6 +112,8 @@ return [
             'attributes_helper' => 'Liste des attributes de l\'application',
             'processes' => 'Processus',
             'processes_helper' => "Liste des processus soutenus par l'application",
+            'activities' => 'Activités',
+            'activities_helper' => "Liste des activités soutenues par l'application",
             'responsible' => 'Responsable',
             'responsible_helper' => "Equipe ou personnes responsables de l'application",
             'security_need' => 'Besoins de sécurité',

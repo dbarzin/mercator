@@ -111,6 +111,8 @@ return [
             'name_helper' => '',
             'processes' => 'Process',
             'processes_helper' => 'List of processes supported by the application',
+            'activities' => 'Activities',
+            'activities_helper' => 'List of activities supported by the application',
             'responsible' => 'Responsible',
             'responsible_helper' => 'Team or persons responsible for the application',
             'security_need' => 'Security needs',

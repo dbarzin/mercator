@@ -14,6 +14,7 @@ use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
 use App\Process;
+use App\Activity;
 use App\Services\CartographerService;
 use App\Services\EventService;
 use App\User;
@@ -59,6 +60,7 @@ class MApplicationController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
@@ -109,6 +111,7 @@ class MApplicationController extends Controller
                 'entities',
                 'entity_resps',
                 'processes',
+                'activities',
                 'services',
                 'databases',
                 'logical_servers',
@@ -168,6 +171,7 @@ class MApplicationController extends Controller
         // Save relations
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
+        $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
@@ -189,6 +193,7 @@ class MApplicationController extends Controller
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
         $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
@@ -251,6 +256,7 @@ class MApplicationController extends Controller
                 'entities',
                 'entity_resps',
                 'processes',
+                'activities',
                 'services',
                 'databases',
                 'logical_servers',
@@ -308,6 +314,7 @@ class MApplicationController extends Controller
         // Relations
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
+        $application->activities()->sync($request->input('activities', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));

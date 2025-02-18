@@ -2126,6 +2126,7 @@ class ReportController extends Controller
             trans('cruds.application.fields.entities'),
             trans('cruds.application.fields.responsible'),
             trans('cruds.application.fields.processes'),
+            trans('cruds.application.fields.activities'),
             trans('cruds.application.fields.editor'),
             trans('cruds.application.fields.technology'),
             trans('cruds.application.fields.type'),
@@ -2166,6 +2167,7 @@ class ReportController extends Controller
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // entities
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // resp
         $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // process
+        $sheet->getColumnDimension(self::col($i++))->setWidth(60, 'pt'); // activities
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // editor
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // tech
         $sheet->getColumnDimension(self::col($i++))->setAutoSize(true);  // type
@@ -2213,6 +2215,7 @@ class ReportController extends Controller
                 $sheet->setCellValue(self::col($i++) . $row, $application->entities->implode('name', ', '));
                 $sheet->setCellValue(self::col($i++) . $row, $application->responsible);
                 $sheet->setCellValue(self::col($i++) . $row, $application->processes->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++) . $row, $application->activities->implode('name', ', '));
                 $sheet->setCellValue(self::col($i++) . $row, $application->editor);
                 $sheet->setCellValue(self::col($i++) . $row, $application->technology);
                 $sheet->setCellValue(self::col($i++) . $row, $application->type);
