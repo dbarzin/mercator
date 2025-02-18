@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('m_application_id')->index('application_id_fk_0394834858');
             $table->unsignedInteger('activity_id')->index('process_id_fk_394823838');
 
-            $table->foreign('application_id')->references('id')->on('m_applications')->onUpdate('NO ACTION')->onDelete('CASCADE');
+            $table->foreign('m_application_id')->references('id')->on('m_applications')->onUpdate('NO ACTION')->onDelete('CASCADE');
             $table->foreign('activity_id')->references('id')->on('activities')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
