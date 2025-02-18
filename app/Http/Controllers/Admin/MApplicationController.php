@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Activity;
 use App\ApplicationBlock;
 use App\ApplicationService;
 use App\Database;
@@ -14,7 +15,6 @@ use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
 use App\Process;
-use App\Activity;
 use App\Services\CartographerService;
 use App\Services\EventService;
 use App\User;
