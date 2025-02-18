@@ -586,7 +586,7 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-6">
             <div class="form-group">
                 <label class="recommended" for="processes">{{ trans('cruds.application.fields.processes') }}</label>
                 <div style="padding-bottom: 4px">
@@ -606,6 +606,28 @@
                 <span class="help-block">{{ trans('cruds.application.fields.processes_helper') }}</span>
             </div>
         </div>
+        
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="recommended" for="activities">{{ trans('cruds.application.fields.activities') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('activities') ? 'is-invalid' : '' }}" name="activities[]" id="activities" multiple>
+                    @foreach($activities as $id => $activity)
+                    <option value="{{ $id }}" {{ (in_array($id, old('activities', [])) || $application->activities->contains($id)) ? 'selected' : '' }}>{{ $activity }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('activities'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('activities') }}
+                </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.application.fields.activities_helper') }}</span>
+            </div>
+        </div>
+
       </div>
     </div>
     <!------------------------------------------------------------------------------------------------------------->

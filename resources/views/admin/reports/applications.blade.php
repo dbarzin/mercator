@@ -311,6 +311,17 @@
                                             @endforeach
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>{{ trans("cruds.application.fields.activities_helper") }}</th>
+                                        <td>
+                                            @foreach($application->activities as $activity)
+                                                <a href="/admin/report/information_system#ACTIVITY{{$activity->id}}">{{ $activity->name }}</a>
+                                                @if(!$loop->last)
+                                                ,
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
                                     @if (auth()->user()->granularity>=2)
                                     <tr>
                                         <th>{{ trans("cruds.application.fields.services_helper") }}</th>

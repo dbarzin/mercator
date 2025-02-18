@@ -124,6 +124,11 @@ class MApplication extends Model
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class)->orderBy('name');
+    }
+
     public function services()
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');

@@ -17,7 +17,7 @@ class CVESearch extends Command
      *
      * @var string
      */
-    protected $signature = 'mercator:cve-search {--nowait :  Whether the job should not wait before start}';
+    protected $signature = 'mercator:cve-search {--nowait:  Whether the job should not wait before start}';
 
     /**
      * The console command description.
@@ -125,8 +125,7 @@ class CVESearch extends Command
                 // Log::debug(json_encode($cve, JSON_PRETTY_PRINT));
                 // check CVE_RECORD
                 if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
-                    if (substr($cve->cveMetadata->datePublished,0,10) >= $min_timestamp) {
-
+                    if (substr($cve->cveMetadata->datePublished, 0, 10) >= $min_timestamp) {
                         // check assignerShortName
                         $text = strtolower($cve->cveMetadata->assignerShortName);
                         // Log::debug('CVESearch - CVE text ' . $text);
@@ -140,7 +139,7 @@ class CVESearch extends Command
                         }
 
                         // look for in affected products
-                        foreach($cve->containers->cna->affected as $affected) {
+                        foreach ($cve->containers->cna->affected as $affected) {
                             $text = strtolower($affected->product);
                             // Log::debug('CVESearch - CVE text ' . $text);
                             foreach ($names as $name) {
@@ -153,11 +152,10 @@ class CVESearch extends Command
                             }
                         }
                     }
-                    else {
-                        // Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);
-                    }
+
+                    // Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);
                 } elseif (property_exists($cve, 'details') && property_exists($cve, 'published')) {
-                    if (substr($cve->published,0,10) >= $min_timestamp) {
+                    if (substr($cve->published, 0, 10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->details);
                         // Log::debug('CVESearch - CVE text ' . $text);
@@ -169,13 +167,12 @@ class CVESearch extends Command
                             }
                         }
                     }
-                    else {
-                        // Log::debug('CVESearch - skip old ' . $cve->published);
-                    }
+
+                    // Log::debug('CVESearch - skip old ' . $cve->published);
                 } elseif (property_exists($cve, 'document') &&
                         property_exists($cve->document, 'category') &&
                         ($cve->document->category === 'csaf_security_advisory')) {
-                    if (substr($cve->document->tracking->current_release_date,0,10) >= $min_timestamp) {
+                    if (substr($cve->document->tracking->current_release_date, 0, 10) >= $min_timestamp) {
                         // put summary in lowercase
                         $text = strtolower($cve->document->title);
                         // Log::debug('CVESearch - CVE text ' . $text);
@@ -187,9 +184,8 @@ class CVESearch extends Command
                             }
                         }
                     }
-                    else {
-                        // Log::debug('CVESearch - skip old ' . $cve->document->tracking->current_release_date);
-                    }
+
+                    // Log::debug('CVESearch - skip old ' . $cve->document->tracking->current_release_date);
                 } elseif (property_exists($cve, 'circl')) {
                     // SKIP
                     Log::error('Unknown circl format !');
@@ -201,7 +197,7 @@ class CVESearch extends Command
             }
             $message .= '</body></html>';
 
-            if ($cveCount>0) {
+            if ($cveCount > 0) {
                 Log::debug("CVESearch - {$cveCount} CVE found !");
 
                 // Send mail

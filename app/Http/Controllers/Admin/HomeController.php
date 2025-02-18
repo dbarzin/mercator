@@ -59,7 +59,6 @@ use App\Vlan;
 use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
-
 use App\ZoneAdmin;
 
 class HomeController extends Controller

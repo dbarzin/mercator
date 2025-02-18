@@ -839,6 +839,14 @@ class CartographyController extends Controller
                         }
                     }
 
+                    $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.activities'));
+                    foreach ($application->activities as $activity) {
+                        $textRun->addLink('ACTIVITY'.$activity->id, $activity->name, CartographyController::FANCYLINKSTYLE, null, true);
+                        if ($application->activities->last() !== $activity) {
+                            $textRun->addText(', ');
+                        }
+                    }
+
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.services'));
                     foreach ($application->services as $service) {
                         $textRun->addLink('APPLICATIONSERVICE'.$service->id, $service->name, CartographyController::FANCYLINKSTYLE, null, true);
