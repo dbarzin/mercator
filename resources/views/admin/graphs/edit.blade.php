@@ -124,10 +124,9 @@
 
                             <!-- Contextual menu for edges -->
                             <div id="edge-context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
-                                <label for="edge-color-select">Color :</label>
+                                <label for="edge-color-select" style="margin-right: 5px;">Color</label>
                                 <input type="color" id="edge-color-select" name="favorite-color" value="#ff0000">
-                                <br>
-                                <label for="edge-thickness-select">Border :</label>
+                                <label for="edge-thickness-select" style="margin-left: 5px; margin-right: 5px;">Border</label>
                                 <select id="edge-thickness-select">
                                     <option value="1">1 px</option>
                                     <option value="2">2 px</option>
