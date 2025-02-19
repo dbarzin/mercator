@@ -189,6 +189,20 @@ class CVESearch extends Command
                 } elseif (property_exists($cve, 'circl')) {
                     // SKIP
                     Log::error('Unknown circl format !');
+                } elseif (property_exists($cve, 'descriptions') && property_exists($cve, 'id') && substr($cve->id,0,3) === 'CVE') {
+                    // look for in descriptions
+                    foreach ($cve->descritions as $description) {
+                        $text = strtolower($description->value);
+                        // Log::debug('CVESearch - CVE text ' . $text);
+                        foreach ($names as $name) {
+                            // Log::debug('CVESearch - check ' . $name);
+                            if (str_contains($text, $name)) {
+                                // Log::debug('CVESearch - found ' . $name);
+                                $message .= '<b>' . $name . ' </b> : <b>' . $cve->id . ' </b> - ' . $description->value . '<br>';
+                                $cveCount++;
+                            }
+                        }
+                    }
                 } else {
                     Log::error('Unknown CVE format !');
                     print_r("Unknwon CVE format:\n");
