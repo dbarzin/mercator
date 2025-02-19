@@ -17,7 +17,7 @@ class CVESearch extends Command
      *
      * @var string
      */
-    protected $signature = 'mercator:cve-search {--nowait:  Whether the job should not wait before start}';
+    protected $signature = 'mercator:cve-search {--nowait :  Whether the job should not wait before start}';
 
     /**
      * The console command description.
