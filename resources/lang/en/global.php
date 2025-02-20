@@ -1,6 +1,7 @@
 <?php
 return [
     'action' => 'Action',
+    'apply' => 'Apply',
     'action_id' => 'action id',
     'action_model' => 'Action model',
     'actions' => 'stock',
@@ -56,6 +57,7 @@ return [
     'clickHereToVerify' => 'Click to verify',
     'clone' => 'Clone',
     'code' => 'Code',
+    'color' => 'Color',
     'companies' => 'Companies',
     'company' => 'Society',
     'company_name' => 'Company name',

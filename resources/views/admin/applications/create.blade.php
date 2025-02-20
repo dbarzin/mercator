@@ -212,7 +212,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        Technique
+        {{ trans("cruds.application.title_singular") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -309,8 +309,6 @@
         @endif
         <div class="row">
             <div class="col-sm">
-
-
                 @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label for="services">{{ trans('cruds.application.fields.services') }}</label>
@@ -358,7 +356,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        Sécurité
+        {{ trans('cruds.application.title_security') }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">

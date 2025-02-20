@@ -124,7 +124,7 @@
 
                             <!-- Contextual menu for edges -->
                             <div id="edge-context-menu" style="display: none; position: absolute; background: #fff; border: 1px solid #ccc; z-index: 1000; padding: 10px;">
-                                <label for="edge-color-select" style="margin-right: 5px;">Color</label>
+                                <label for="edge-color-select" style="margin-right: 5px;">{{ trans('global.color') }}</label>
                                 <input type="color" id="edge-color-select" name="favorite-color" value="#ff0000">
                                 <label for="edge-thickness-select" style="margin-left: 5px; margin-right: 5px;">Border</label>
                                 <select id="edge-thickness-select">
@@ -135,7 +135,7 @@
                                     <option value="5">5 px</option>
                                 </select>
                                 <br>
-                                <button id="apply-edge-style">Appliquer</button>
+                                <button id="apply-edge-style">{{ trans('global.apply') }}</button>
                             </div>
 
                             <!-- Contextual menu for text -->
@@ -163,14 +163,14 @@
                                     <option value="26">26 px</option>
                                 </select>
                                 <br>
-                                <label for="text-color-select">Color</label>
+                                <label for="text-color-select">{{ trans('global.color') }}</label>
                                 <input type="color" id="text-color-select" name="favorite-color" value="#ff0000">
 
                                 <button type="button" id="text-bold-select" class="button" style="margin-left: 20px; font-weight: bold;">B</button>
                                 <button type="button" id="text-italic-select" class="button" style="font-style: italic;">I</button>
                                 <button type="button" id="text-underline-select" class="button" style="text-decoration: underline;">U</button>
                                 <br>
-                                <button id="apply-text-style">Appliquer</button>
+                                <button id="apply-text-style">{{ trans('global.apply') }}</button>
                             </div>
 
                         <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
