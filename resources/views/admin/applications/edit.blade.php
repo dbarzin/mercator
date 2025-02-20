@@ -224,7 +224,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        Technique
+        {{ trans("cruds.application.title_singular") }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -381,7 +381,7 @@
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        Sécurité
+        {{ trans('cruds.application.title_security') }}
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
@@ -606,7 +606,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.processes_helper') }}</span>
             </div>
         </div>
-        
+
         <div class="col-sm-6">
             <div class="form-group">
                 <label class="recommended" for="activities">{{ trans('cruds.application.fields.activities') }}</label>

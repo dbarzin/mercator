@@ -149,6 +149,7 @@ return [
         'title' => 'Applications',
         'title_short' => 'Applications',
         'title_singular' => 'Application',
+        'title_security' => 'Security',
     ],
     'applicationBlock' => [
         'description' => 'Set of applications.',

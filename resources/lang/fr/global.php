@@ -1,6 +1,7 @@
 <?php
 return [
     'add' => 'Ajouter',
+    'apply' => 'Appliquer',
     'areYouSure' => 'Êtes-vous sûr ?',
     'availability' => 'Disponibilité',
     'back_to_list' => 'Retour à la liste',
@@ -8,6 +9,7 @@ return [
     'change_password_success' => 'Mot de passe changé avec succès',
     'check' => 'Vérifier',
     'clone' => 'Copier',
+    'color' => 'Couleur',
     'confidentiality' => 'Confidentialité',
     'create' => 'Créer',
     'created_at' => 'Créé le',
