@@ -38,6 +38,7 @@ public/vendor/
 resources/views/vendor/
 storage/*.key
 storage/logs
+storage/docs
 stubs/
 vendor/
 *.xlsx
