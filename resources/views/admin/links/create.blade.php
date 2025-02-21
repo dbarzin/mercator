@@ -52,7 +52,7 @@
                                 {{ $errors->first('dest_id') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.physicalLink.fields.src_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.physicalLink.fields.dest_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm-1">
