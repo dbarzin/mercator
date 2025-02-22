@@ -86,7 +86,7 @@ class MApplication extends Model
 
     public function setInstallDateAttribute($value)
     {
-        $this->attributes['install_date'] = $this->parseDate($value, config('panel.date_format'));
+        $this->attributes['install_date'] = $this->parseDate($value);
     }
 
     public function getNextUpdateAttribute($value)

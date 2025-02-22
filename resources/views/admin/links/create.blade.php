@@ -79,9 +79,6 @@
         </button>
     </div>
 </form>
-
-
-
 @endsection
 
 @section('scripts')
