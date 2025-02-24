@@ -143,7 +143,7 @@ Change the access permissions of the key
 
 ## Mail configuration
 
-If you wish to send notification e-mails from Deming.
+If you wish to send notification e-mails from Mercator.
 You have to configure the SMTP server access in .env
 
     MAIL_HOST='smtp.localhost'
