@@ -356,7 +356,7 @@ class ExplorerController extends Controller
         }
 
         // External connected entities
-        $externals = DB::table('external_connected_entities')->select('id', 'name', 'network_id', 'entity_id')->get();
+        $externals = DB::table('external_connected_entities')->select('id', 'name', 'network_id', 'entity_id')->whereNull('deleted_at')->get();
         foreach ($externals as $external) {
             $this->addNode($nodes, 5, $this->formatId('EXT_', $external->id), $external->name, '/images/entity.png', 'external-connected-entities');
             $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('NETWORK_', $external->network_id));
@@ -441,13 +441,13 @@ class ExplorerController extends Controller
         }
 
         // Clusters
-        $clusters = DB::table('clusters')->select('id', 'name')->get();
+        $clusters = DB::table('clusters')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($clusters as $cluster) {
             $this->addNode($nodes, 5, $this->formatId('CLUSTER_', $cluster->id), $cluster->name, '/images/cluster.png', 'clusters');
         }
 
         // Containers
-        $containers = DB::table('containers')->select('id', 'name', 'icon_id')->get();
+        $containers = DB::table('containers')->select('id', 'name', 'icon_id')->whereNull('deleted_at')->get();
         foreach ($containers as $container) {
             $this->addNode(
                 $nodes,
