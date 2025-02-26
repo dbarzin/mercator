@@ -96,7 +96,8 @@
     'id' => '#dataTable',
     'title' => trans("cruds.site.title_singular"),
     'URL' => route('admin.sites.massDestroy'),
-    'canDelete' => auth()->user()->can('site_delete') ? true : false
+    'canDelete' => false,
+    'order' => "[7, 'desc']"
 ));
 </script>
 @endsection
