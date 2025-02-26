@@ -97,6 +97,7 @@
     'title' => trans("cruds.site.title_singular"),
     'URL' => route('admin.sites.massDestroy'),
     'canDelete' => false,
+    'order' => "[7, 'desc']"
 ));
 </script>
 @endsection
