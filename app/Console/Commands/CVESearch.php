@@ -118,7 +118,7 @@ class CVESearch extends Command
             // JSON
             $json = json_decode($response);
             $jsonCount = count($json);
-            Log::debug("CVESearch - get {$jsonCount} CVE");
+            Log::debug("CVESearch - get {$jsonCount} CVE from {$provider}");
 
             // loop on all CVE
             foreach ($json as $cve) {
@@ -127,13 +127,12 @@ class CVESearch extends Command
                 if (property_exists($cve, 'dataType') && $cve->dataType === 'CVE_RECORD') {
                     if (substr($cve->cveMetadata->datePublished, 0, 10) >= $min_timestamp) {
                         // check assignerShortName
-                        $text = strtolower($cve->cveMetadata->assignerShortName);
-                        // Log::debug('CVESearch - CVE text ' . $text);
+                        $text = strtolower($cve->containers->cna->descriptions[0]->value);
                         foreach ($names as $name) {
-                            // Log::debug('CVESearch - check ' . $name);
+                            // Log::debug('CVESearch - check <' . $name . '> in <' . $text . '>');
                             if (str_contains($text, $name)) {
                                 // Log::debug('CVESearch - found ' . $name);
-                                $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
+                                $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $text . '<br>';
                                 $cveCount++;
                             }
                         }
