@@ -12,7 +12,6 @@ Changements prévus en 2025 :
 - [o] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Générer un annuaire de crise
 - [ ] Identifier les chemins critiques
-- [ ] Exploiter les logs - recherche et afficher tout les changements d'un objet
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
 - [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Générer les cartographes dans la gestion des utilisateurs
@@ -40,6 +39,7 @@ Changements réalisés en 2024 :
 - [x] Améliorer la recherche des CVE en assignat un CPE [Common Plateform Enumeration](https://nvd.nist.gov/products/cpe) aux objets de la cartographie.
 - [x] Pouvoir changer les images des objets
 - [x] Upgrade to [Bootstrap 5.3](https://getbootstrap.com/)
+- [x] Exploiter les logs - recherche et afficher tout les changements d'un objet
 
 ## Evolutions mineurs
 

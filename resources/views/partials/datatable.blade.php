@@ -29,7 +29,11 @@
             items: 'row'
         },
 
+        @if (isset($order))
+        order: {!! $order !!},
+        @else
         order: [[1, 'asc']],
+        @endif
         pageLength: 100,
 
         buttons: [
