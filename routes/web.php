@@ -13,11 +13,6 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
-// Test page
-Route::get('/test', function () {
-    return view('test');
-});
-
 // Authentification routes
 Auth::routes([
     'login' => true,
@@ -42,6 +37,9 @@ Route::get('login/keycloak/callback', [App\Http\Controllers\Auth\SsoController::
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
     // Dashboard
     Route::get('/', [Admin\HomeController::class,'index'])->name('home');
+
+    // Test page
+    Route::get('/test', function () { return view('test'); });
 
     // Roles
     Route::resource('roles', Admin\RolesController::class);
