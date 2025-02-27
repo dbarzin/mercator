@@ -129,7 +129,7 @@ class CVESearch extends Command
                         // check assignerShortName
                         $text = strtolower($cve->containers->cna->descriptions[0]->value);
                         foreach ($names as $name) {
-                            Log::debug('CVESearch - check <' . $name . '> in <' . $text . '>');
+                            // Log::debug('CVESearch - check <' . $name . '> in <' . $text . '>');
                             if (str_contains($text, $name)) {
                                 // Log::debug('CVESearch - found ' . $name);
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $text . '<br>';
