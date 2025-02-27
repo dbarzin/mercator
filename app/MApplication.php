@@ -54,6 +54,8 @@ class MApplication extends Model
         'security_need_a',
         'security_need_t',
         'security_need_auth',
+        'rto',
+        'rpo',
         'external',
         'attributes',
         'patching_frequency',
@@ -144,7 +146,7 @@ class MApplication extends Model
         return $this->belongsToMany(Workstation::class)->orderBy('name');
     }
 
-    public function logical_servers()
+    public function logicalServers()
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }

@@ -30,7 +30,7 @@ class ApplicationController extends Controller
         $application->processes()->sync($request->input('processes', []));
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+        $application->logicalServers()->sync($request->input('logical_servers', []));
 
         return response()->json($application, 201);
     }
@@ -47,11 +47,21 @@ class ApplicationController extends Controller
         abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->update($request->all());
-        $application->entities()->sync($request->input('entities', []));
-        $application->processes()->sync($request->input('processes', []));
-        $application->services()->sync($request->input('services', []));
-        $application->databases()->sync($request->input('databases', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+
+        if ($request->has('entities'))
+            $application->entities()->sync($request->input('entities', []));
+        if ($request->has('processes'))
+            $application->processes()->sync($request->input('processes', []));
+        if ($request->has('activities'))
+            $application->activities()->sync($request->input('activities', []));
+        if ($request->has('services'))
+            $application->services()->sync($request->input('services', []));
+        if ($request->has('databases'))
+            $application->databases()->sync($request->input('databases', []));
+        if ($request->has('logical_servers'))
+            $application->logicalServers()->sync($request->input('logical_servers', []));
+        if ($request->has('application_services'))
+            $application->services()->sync($request->input('application_services', []));
 
         return response()->json();
     }

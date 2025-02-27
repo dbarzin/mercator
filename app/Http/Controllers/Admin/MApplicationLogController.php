@@ -82,7 +82,7 @@ class MApplicationLogController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+        $application->logicalServers()->sync($request->input('logical_servers', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
@@ -147,7 +147,7 @@ class MApplicationLogController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+        $application->logicalServers()->sync($request->input('logical_servers', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
