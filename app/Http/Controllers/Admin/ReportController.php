@@ -2242,7 +2242,7 @@ class ReportController extends Controller
                 $sheet->setCellValue(self::col($i++) . $row, $application->rpo);
 
                 $sheet->setCellValue(self::col($i++) . $row, $application->documentation);
-                $sheet->setCellValue(self::col($i++) . $row, $application->logical_servers->implode('name', ', '));
+                $sheet->setCellValue(self::col($i++) . $row, $application->logicalServers->implode('name', ', '));
                 $res = null;
 
                 // Done: request improved

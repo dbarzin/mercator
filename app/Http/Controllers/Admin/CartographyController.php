@@ -869,9 +869,9 @@ class CartographyController extends Controller
                     }
 
                     $textRun = $this->addTextRunRow($table, trans('cruds.application.fields.logical_servers'));
-                    foreach ($application->logical_servers as $logical_server) {
+                    foreach ($application->logicalServers as $logical_server) {
                         $textRun->addLink('LOGICAL_SERVER'.$logical_server->id, $logical_server->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($application->logical_servers->last() !== $logical_server) {
+                        if ($application->logicalServers->last() !== $logical_server) {
                             $textRun->addText(', ');
                         }
                     }

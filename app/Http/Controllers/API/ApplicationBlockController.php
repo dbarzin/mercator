@@ -27,6 +27,7 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationblock = ApplicationBlock::create($request->all());
+        $applicationblock->applications()->sync($request->input('applications', []));
 
         return response()->json($applicationblock, 201);
     }
@@ -43,6 +44,9 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationBlock->update($request->all());
+        
+        if ($request->has('applications'))
+            $applicationblock->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }

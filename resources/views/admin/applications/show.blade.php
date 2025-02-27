@@ -451,7 +451,7 @@
                     {{ trans('cruds.application.fields.logical_servers') }}
                 </th>
                 <td>
-                    @foreach($application->logical_servers as $logical_server)
+                    @foreach($application->logicalServers as $logical_server)
                         <a href='{{ route("admin.logical-servers.show", $logical_server->id) }}'>{{ $logical_server->name }}</a>
                         @if(!$loop->last)
                         ,

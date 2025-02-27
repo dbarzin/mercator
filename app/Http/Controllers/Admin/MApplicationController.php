@@ -175,7 +175,7 @@ class MApplicationController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+        $application->logicalServers()->sync($request->input('logical_servers', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
@@ -318,7 +318,7 @@ class MApplicationController extends Controller
         $application->services()->sync($request->input('services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
-        $application->logical_servers()->sync($request->input('logical_servers', []));
+        $application->logicalServers()->sync($request->input('logical_servers', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
@@ -330,7 +330,7 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logicalServers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
         // Chargement des évènements
         $this->eventService->getLoadAppEvents($application);
 
