@@ -246,7 +246,7 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logical_servers', 'application_block', 'cartographers');
+        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logicalServers', 'application_block', 'cartographers');
         // Chargement des évènements
         $this->eventService->getLoadAppEvents($application);
 
