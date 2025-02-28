@@ -392,6 +392,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('doc/about', function () {
         return view('doc/about');
     });
+
+    // Configuration page
+    Route::get('config', function () {
+        return view('config');
+    });
+
 });
 
 // Profile
