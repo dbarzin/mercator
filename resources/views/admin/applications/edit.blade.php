@@ -646,7 +646,7 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                     @foreach($logical_servers as $id => $logical_servers)
-                    <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $application->logical_servers->contains($id)) ? 'selected' : '' }}>{{ $logical_servers }}</option>
+                    <option value="{{ $id }}" {{ (in_array($id, old('logical_servers', [])) || $application->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $logical_servers }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('logical_servers'))
