@@ -22,7 +22,7 @@
     // Fonction pour tester le parsing de date
     function testDateParsing($dateString) {
         try {
-            $date = Carbon::parse($dateString);
+            $date = Carbon::createFromFormat('Y/m/d', $dateString);
             echo "Date parsée avec succès : " . $date->toDateTimeString() . "<br>";
         } catch (Exception $e) {
             echo "Erreur lors du parsing de la date : " . $e->getMessage() . "<br>";
@@ -31,10 +31,9 @@
 
     // Exemple de chaînes de date à tester
     $dateStrings = [
-        '2023-10-05',
-        '05-10-2023',
-        '2023-10-05 14:30:00',
-        'date invalide',
+        '2023/10/05',
+        '2025/02/28',
+        '2021/02/01',
     ];
 
     foreach ($dateStrings as $dateString) {
