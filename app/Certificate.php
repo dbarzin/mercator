@@ -45,7 +45,10 @@ class Certificate extends Model
 
     public function setStartValidityAttribute($value)
     {
-        $this->attributes['start_validity'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['start_validity'] =
+            $this->parseDate(
+                $value,
+                config('panel.date_format'));
     }
 
     public function getEndValidityAttribute($value)
@@ -55,7 +58,10 @@ class Certificate extends Model
 
     public function setEndValidityAttribute($value)
     {
-        $this->attributes['end_validity'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['end_validity'] = 
+            $this->parseDate(
+                $value,
+                config('panel.date_format'));
     }
 
     public function getLastNotificationAttribute($value)
@@ -76,5 +82,17 @@ class Certificate extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    private function parseDate($value, $format = null)
+    {
+        $format = $format ? $format : config('panel.date_format');
+
+        try {
+            return $value ? Carbon::createFromFormat($format, $value)->format('Y-m-d') : null;
+        } catch (\Exception $e) {
+            Log::error('Invalid date format: ' . $value . ' with format ' . $format);
+            return null;
+        }
     }
 }

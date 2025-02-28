@@ -78,7 +78,10 @@ class MApplication extends Model
 
     public function setUpdateDateAttribute($value)
     {
-        $this->attributes['update_date'] = $this->parseDate($value);
+        $this->attributes['update_date'] =
+            $this->parseDate(
+                $value,
+                config('panel.date_format') . ' ' . config('panel.time_format'));
     }
 
     public function getInstallDateAttribute($value)
@@ -88,7 +91,10 @@ class MApplication extends Model
 
     public function setInstallDateAttribute($value)
     {
-        $this->attributes['install_date'] = $this->parseDate($value);
+        $this->attributes['install_date'] =
+            $this->parseDate(
+                $value,
+                config('panel.date_format') . ' ' . config('panel.time_format'));
     }
 
     public function getNextUpdateAttribute($value)
