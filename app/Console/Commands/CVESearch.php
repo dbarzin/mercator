@@ -190,7 +190,7 @@ class CVESearch extends Command
                     Log::error('Unknown circl format !');
                 } elseif (property_exists($cve, 'descriptions') && property_exists($cve, 'id') && substr($cve->id,0,3) === 'CVE') {
                     // look for in descriptions
-                    foreach ($cve->description as $description) {
+                    foreach ($cve->descriptions as $description) {
                         $text = strtolower($description->value);
                         // Log::debug('CVESearch - CVE text ' . $text);
                         foreach ($names as $name) {
