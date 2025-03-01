@@ -34,7 +34,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServers = LogicalServer::with('applications', 'servers', 'cluster')->orderBy('name')->get();
+        $logicalServers = LogicalServer::with('applications:id,name', 'servers:id,name', 'cluster:id,name')->orderBy('name')->get();
 
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
