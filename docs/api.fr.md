@@ -317,7 +317,8 @@ vheaders['Authorization'] = "Bearer " + response.json()['access_token']
 
 print("Get workstations")
 response = requests.get("http://127.0.0.1:8000/api/workstations", headers=vheaders)
-print(response.json())
+data=response.json()
+print(data)
 print(response.status_code)
 
 ```

@@ -28,9 +28,10 @@ class ApplicationController extends Controller
         $application = MApplication::create($request->all());
         $application->entities()->sync($request->input('entities', []));
         $application->processes()->sync($request->input('processes', []));
-        $application->services()->sync($request->input('services', []));
+        $application->services()->sync($request->input('application_services', []));
         $application->databases()->sync($request->input('databases', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->activities()->sync($request->input('activities', []));
 
         return response()->json($application, 201);
     }
@@ -38,6 +39,13 @@ class ApplicationController extends Controller
     public function show(MApplication $application)
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $application->entities = $application->entities()->pluck('id');
+        $application->processes = $application->processes()->pluck('id');
+        $application->services = $application->services()->pluck('id');
+        $application->databases = $application->databases()->pluck('id');
+        $application->logicalServers = $application->logicalServers()->pluck('id');
+        $application->activities = $application->activities()->pluck('id');
 
         return new ApplicationResource($application);
     }
@@ -54,8 +62,6 @@ class ApplicationController extends Controller
             $application->processes()->sync($request->input('processes', []));
         if ($request->has('activities'))
             $application->activities()->sync($request->input('activities', []));
-        if ($request->has('services'))
-            $application->services()->sync($request->input('services', []));
         if ($request->has('databases'))
             $application->databases()->sync($request->input('databases', []));
         if ($request->has('logical_servers'))
