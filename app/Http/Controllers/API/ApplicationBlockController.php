@@ -28,12 +28,12 @@ class ApplicationBlockController extends Controller
     {
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $applicationblock = ApplicationBlock::create($request->all());
+        $applicationBlock = ApplicationBlock::create($request->all());
         // $applicationblock->applications()->sync($request->input('applications', []));
         MApplication::whereIn('id', $request->input('applications', []))
             ->update(['application_block_id' => $applicationBlock->id]);
 
-        return response()->json($applicationblock, 201);
+        return response()->json($applicationBlock, 201);
     }
 
     public function show(ApplicationBlock $applicationBlock)
