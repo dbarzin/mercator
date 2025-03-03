@@ -297,7 +297,7 @@ class CartographyController extends Controller
                             $graph .= ' P'.$process->id . '->A'. $activity->id;
                         }
                     }
-                    foreach ($process->processInformation as $information) {
+                    foreach ($process->information as $information) {
                         $graph .= ' P'. $process->id .'->I'. $information->id;
                     }
                 }

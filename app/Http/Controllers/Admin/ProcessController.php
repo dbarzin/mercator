@@ -22,7 +22,7 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $processes = Process::with('operations', 'activities', 'processInformation', 'macroProcess')->orderBy('name')->get();
+        $processes = Process::with('operations', 'activities', 'information', 'macroProcess')->orderBy('name')->get();
 
         return view('admin.processes.index', compact('processes'));
     }
@@ -53,7 +53,7 @@ class ProcessController extends Controller
         $process = Process::create($request->all());
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
-        $process->processInformation()->sync($request->input('informations', []));
+        $process->information()->sync($request->input('informations', []));
         $process->applications()->sync($request->input('applications', []));
 
         // Save icon
@@ -96,7 +96,7 @@ class ProcessController extends Controller
         // lists
         $owner_list = Process::select('owner')->where('owner', '<>', null)->distinct()->orderBy('owner')->pluck('owner');
 
-        $process->load('activities', 'entities', 'processInformation', 'applications');
+        $process->load('activities', 'entities', 'information', 'applications');
 
         return view(
             'admin.processes.edit',
@@ -141,7 +141,7 @@ class ProcessController extends Controller
         $process->update($request->all());
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
-        $process->processInformation()->sync($request->input('informations', []));
+        $process->information()->sync($request->input('informations', []));
         $process->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.processes.index');
@@ -151,7 +151,7 @@ class ProcessController extends Controller
     {
         abort_if(Gate::denies('process_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $process->load('activities', 'entities', 'processInformation', 'applications', 'macroProcess');
+        $process->load('activities', 'entities', 'information', 'applications', 'macroProcess');
 
         return view('admin.processes.show', compact('process'));
     }
