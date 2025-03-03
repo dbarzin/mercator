@@ -327,13 +327,46 @@ print(response.status_code)
 
 Voici un exemple d'utilisation de l'API en ligne de commande avec [CURL](https://curl.se/docs/manpage.html) et [JQ](https://stedolan.github.io/jq/)
 ```
+#!/usr/bin/bash
+
+API_URL=http://127.0.0.1:8000/api
+OBJECT=applications
+OBJECT_ID=45
+
 # valid login and password
+
 data='{"email":"admin@admin.com","password":"password"}'
 
-# get a token after correct login
-token=$(curl -s -d ${data} -H "Content-Type: application/json" http://localhost:8000/api/login | jq -r .access_token)
+# Get a token after correct login
 
-# query users and decode JSON data with JQ.
-curl -s -H "Content-Type: application/json" -H "Authorization: Bearer ${token}" "http://127.0.0.1:8000/api/users" | jq .
+TOKEN=$(curl -s -d ${data} -H "Content-Type: application/json" ${API_URL}/login | jq -r .access_token)
+
+# Récupération de l'objet
+RESPONSE=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
+ -H "Authorization: Bearer ${TOKEN}" \
+ -H "Accept: application/json")
+
+echo "Objet récupéré: ${RESPONSE}"
+
+# Mise à jour d'une valeur avec une requête PUT
+
+RESPONSE=$(echo "$RESPONSE" | jq -c '.data')
+RESPONSE=$(echo "$RESPONSE" | jq -r '.activities=[1]')
+
+echo "Objet modifié: ${RESPONSE}"
+
+curl -s -X PUT "${API_URL}/${OBJECT}/${OBJECT_ID}" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -H "cache-control: no-cache" \
+  -d "$RESPONSE"
+
+# Vérification de la mise à jour
+
+UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Accept: application/json")
+
+echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ```
