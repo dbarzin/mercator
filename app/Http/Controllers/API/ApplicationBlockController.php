@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+
 use App\ApplicationBlock;
+use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
@@ -27,7 +29,9 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationblock = ApplicationBlock::create($request->all());
-        $applicationblock->applications()->sync($request->input('applications', []));
+        // $applicationblock->applications()->sync($request->input('applications', []));
+        MApplication::whereIn('id', $request->input('applications', []))
+            ->update(['application_block_id' => $applicationBlock->id]);
 
         return response()->json($applicationblock, 201);
     }
@@ -44,9 +48,10 @@ class ApplicationBlockController extends Controller
         abort_if(Gate::denies('application_block_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applicationBlock->update($request->all());
-        
+
         if ($request->has('applications'))
-            $applicationblock->applications()->sync($request->input('applications', []));
+            MApplication::whereIn('id', $request->input('applications', []))
+                ->update(['application_block_id' => $applicationBlock->id]);
 
         return response()->json();
     }
