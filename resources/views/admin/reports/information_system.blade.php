@@ -599,7 +599,7 @@ digraph  {
                 P{{$process->id}} -> A{{$activity->id}}
             @endforeach
         @endif
-        @foreach($process->processInformation as $information)
+        @foreach($process->information as $information)
             P{{ $process->id }} -> I{{ $information->id }}
         @endforeach
         @if (auth()->user()->granularity>=2)

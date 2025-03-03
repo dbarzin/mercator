@@ -46,7 +46,7 @@ class Process extends Model
         'deleted_at',
     ];
 
-    public function processInformation()
+    public function information()
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }

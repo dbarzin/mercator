@@ -100,6 +100,21 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.process.fields.informations') }}
+                        </th>
+                        <td colspan="2">
+                            @foreach($process->information as $info)
+                                <a href="{{ route('admin.information.show', $info->id) }}">
+                                {{ $info->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.process.fields.security_need') }}
                         </th>
                         <td colspan="2">

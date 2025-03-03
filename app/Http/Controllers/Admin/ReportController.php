@@ -379,7 +379,7 @@ class ReportController extends Controller
             $informations = Information::All()->sortBy('name')
                 ->filter(function ($item) use ($processes) {
                     foreach ($processes as $process) {
-                        foreach ($process->processInformation as $information) {
+                        foreach ($process->information as $information) {
                             if ($item->id === $information->id) {
                                 return true;
                             }

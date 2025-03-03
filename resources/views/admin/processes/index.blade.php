@@ -93,7 +93,7 @@
                             </td>
                             <td>
                                 {!!
-                                    $process->processInformation->map(function ($information) {
+                                    $process->information->map(function ($information) {
                                         return '<a href="' . route('admin.information.show', $information->id) . '">' . $information->name . '</a>';
                                     })->implode(', ');
                                 !!}

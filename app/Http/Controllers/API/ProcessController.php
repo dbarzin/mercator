@@ -29,7 +29,7 @@ class ProcessController extends Controller
         $process = Process::create($request->all());
         $process->activities()->sync($request->input('activities', []));
         $process->entities()->sync($request->input('entities', []));
-        $process->processInformation()->sync($request->input('informations', []));
+        $process->information()->sync($request->input('informations', []));
         $process->applications()->sync($request->input('applications', []));
 
         return response()->json($process, 201);
@@ -47,10 +47,14 @@ class ProcessController extends Controller
         abort_if(Gate::denies('process_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $process->update($request->all());
-        $process->activities()->sync($request->input('activities', []));
-        $process->entities()->sync($request->input('entities', []));
-        $process->processInformation()->sync($request->input('informations', []));
-        $process->applications()->sync($request->input('applications', []));
+        if ($request->has('activities'))
+            $process->activities()->sync($request->input('activities', []));
+        if ($request->has('entities'))
+            $process->entities()->sync($request->input('entities', []));
+        if ($request->has('informations'))
+            $process->information()->sync($request->input('informations', []));
+        if ($request->has('applications'))
+            $process->applications()->sync($request->input('applications', []));
 
         return response()->json();
     }
