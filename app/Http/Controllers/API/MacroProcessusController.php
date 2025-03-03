@@ -8,6 +8,7 @@ use App\Http\Requests\StoreMacroProcessusRequest;
 use App\Http\Requests\UpdateMacroProcessusRequest;
 use App\Http\Resources\Admin\MacroProcessusResource;
 use App\MacroProcessus;
+use App\Process;
 use Gate;
 use Illuminate\Http\Response;
 
@@ -27,8 +28,8 @@ class MacroProcessusController extends Controller
         abort_if(Gate::denies('macro_processus_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus = MacroProcessus::create($request->all());
-        // syncs
-        // $macroprocessus->roles()->sync($request->input('roles', []));
+        Process::whereIn('id', $request->input('processes', []))
+            ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return response()->json($macroProcessus, 201);
     }
@@ -45,8 +46,9 @@ class MacroProcessusController extends Controller
         abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus->update($request->all());
-        // syncs
-        // $macroProcessus->roles()->sync($request->input('roles', []));
+        if ($request->has('processes'))
+            Process::whereIn('id', $request->input('processes', []))
+                ->update(['macroprocess_id' => $macroProcessus->id]);
 
         return response()->json();
     }
