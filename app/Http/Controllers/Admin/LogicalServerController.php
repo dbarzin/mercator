@@ -35,13 +35,13 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /*
         $logicalServers = LogicalServer
             ::with('applications:id,name', 'servers:id,name', 'cluster:id,name')
             ->orderBy('name')
             ->get();
-        */
 
+        /*
+        Work in progress
         $result = DB::table('logical_servers as ls')
             ->select(
                 'ls.*',
@@ -73,18 +73,21 @@ class LogicalServerController extends Controller
         // Start Grouping Objects
         $logicalServers = collect();
         $curLogicalServerId = null;
-        $curPhysicalServerId = null;
-        $curApplicationId = null;
         foreach($result as $res) {
             if ($curLogicalServerId!=$res->id) {
                 $curLogicalServerId = $res->id;
                 $logicalServer.append()
             }
+            // add application to list if not already in
+
+            // add physical server to list if not already in
+
+            // next
 
         }
 
         dd($result, $logicalServers);
-
+        */
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
 
