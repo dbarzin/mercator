@@ -15,6 +15,7 @@ use App\PhysicalServer;
 use App\Services\CartographerService;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class LogicalServerController extends Controller
 {
@@ -35,11 +36,58 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServers = LogicalServer
-            /*::select('id','name','type','attributes','description','configuration','active') */
             ::with('applications:id,name', 'servers:id,name', 'cluster:id,name')
             ->orderBy('name')
             ->get();
 
+        /*
+        Work in progress
+        $result = DB::table('logical_servers as ls')
+            ->select(
+                'ls.*',
+                'ma.id as m_application_id',
+                'ma.name as m_application_name',
+                'ps.id as physical_server_id',
+                'ps.name as physical_server_name',
+                'c.id as cluster_id',
+                'c.name as cluster_name'
+            )
+            ->leftJoin('logical_server_m_application as lsma', 'ls.id', '=', 'lsma.logical_server_id')
+            ->leftJoin('m_applications as ma', function ($join) {
+                $join->on('lsma.m_application_id', '=', 'ma.id')
+                      ->whereNull('ma.deleted_at');
+            })
+            ->leftJoin('logical_server_physical_server as lsps', 'ls.id', '=', 'lsps.logical_server_id')
+            ->leftJoin('physical_servers as ps', function ($join) {
+                $join->on('lsps.physical_server_id', '=', 'ps.id')
+                      ->whereNull('ps.deleted_at');
+            })
+            ->leftJoin('clusters as c', function ($join) {
+                $join->on('ls.cluster_id', '=', 'c.id')
+                      ->whereNull('c.deleted_at');
+            })
+            ->whereNull('ls.deleted_at')
+            ->orderBy('ls.name', 'asc')
+            ->get();
+
+        // Start Grouping Objects
+        $logicalServers = collect();
+        $curLogicalServerId = null;
+        foreach($result as $res) {
+            if ($curLogicalServerId!=$res->id) {
+                $curLogicalServerId = $res->id;
+                $logicalServer.append()
+            }
+            // add application to list if not already in
+
+            // add physical server to list if not already in
+
+            // next
+
+        }
+
+        dd($result, $logicalServers);
+        */
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
 

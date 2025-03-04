@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProcessRequest;
 use App\Http\Requests\UpdateProcessRequest;
 use App\Http\Resources\Admin\ProcessResource;
 use App\Process;
+use App\Operation;
 use Gate;
 use Illuminate\Http\Response;
 
@@ -31,6 +32,8 @@ class ProcessController extends Controller
         $process->entities()->sync($request->input('entities', []));
         $process->information()->sync($request->input('informations', []));
         $process->applications()->sync($request->input('applications', []));
+        Operation::whereIn('id', $request->input('operations', []))
+            ->update(['process_id' => $process->id]);
 
         return response()->json($process, 201);
     }
@@ -55,6 +58,9 @@ class ProcessController extends Controller
             $process->information()->sync($request->input('informations', []));
         if ($request->has('applications'))
             $process->applications()->sync($request->input('applications', []));
+        if ($request->has('operations'))
+            Operation::whereIn('id', $request->input('operations', []))
+                ->update(['process_id' => $process->id]);
 
         return response()->json();
     }

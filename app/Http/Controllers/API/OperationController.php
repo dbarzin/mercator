@@ -30,8 +30,6 @@ class OperationController extends Controller
         $operation->actors()->sync($request->input('actors', []));
         $operation->tasks()->sync($request->input('tasks', []));
         $operation->activities()->sync($request->input('activities', []));
-        // syncs
-        // $operation->roles()->sync($request->input('roles', []));
 
         return response()->json($operation, 201);
     }
@@ -48,11 +46,12 @@ class OperationController extends Controller
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation->update($request->all());
-        $operation->actors()->sync($request->input('actors', []));
-        $operation->tasks()->sync($request->input('tasks', []));
-        $operation->activities()->sync($request->input('activities', []));
-        // syncs
-        // $operation->roles()->sync($request->input('roles', []));
+        if ($request->has('actors'))
+            $operation->actors()->sync($request->input('actors', []));
+        if ($request->has('actors'))
+            $operation->tasks()->sync($request->input('tasks', []));
+        if ($request->has('activities'))
+            $operation->activities()->sync($request->input('activities', []));
 
         return response()->json();
     }
