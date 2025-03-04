@@ -28,7 +28,7 @@ class LogicalServerController extends Controller
 
         $logicalServer = LogicalServer::create($request->all());
         if ($request->has('servers')) {
-            $logicalServer->servers()->sync($request->input('servers', []));
+            $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         }
         if ($request->has('applications')) {
             $logicalServer->applications()->sync($request->input('applications', []));
@@ -44,7 +44,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->servers = $logicalServer->servers()->pluck('id');
+        $logicalServer->physicalServers = $logicalServer->physicalServers()->pluck('id');
         $logicalServer->applications = $logicalServer->applications()->pluck('id');
         $logicalServer->databases = $logicalServer->databases()->pluck('id');
 
@@ -57,7 +57,7 @@ class LogicalServerController extends Controller
 
         $logicalServer->update($request->all());
         if ($request->has('servers')) {
-            $logicalServer->servers()->sync($request->input('servers', []));
+            $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         }
         if ($request->has('applications')) {
             $logicalServer->applications()->sync($request->input('applications', []));

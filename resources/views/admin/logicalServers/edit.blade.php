@@ -296,19 +296,19 @@
 
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="servers">{{ trans('cruds.logicalServer.fields.databases') }}</label>
+                        <label class="recommended" for="databases">{{ trans('cruds.logicalServer.fields.databases') }}</label>
                         <div style="padding-bottom: 4px">
                             <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                             <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                         </div>
-                        <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                        <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
                             @foreach($databases as $id => $name)
-                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->databases->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ (in_array($id, old('databases', [])) || $logicalServer->databases->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('servers'))
+                        @if($errors->has('databases'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('servers') }}
+                                {{ $errors->first('databases') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.databases_helper') }}</span>
@@ -326,7 +326,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="recommended" for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
-                    <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="domain_id" id="domain_id">
+                    <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}" name="domain_id" id="domain_id">
                         <option></option>
                         @foreach($domains as $id => $name)
                             <option value="{{ $id }}" {{ $id==old('domain_id', $logicalServer->domain_id) ? 'selected' : '' }}>{{ $name }}</option>
@@ -351,19 +351,19 @@
         <div class="row">
             <div class="col-md-6">
                     <div class="form-group">
-                        <label class="recommended" for="servers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
+                        <label class="recommended" for="physicalServers">{{ trans('cruds.logicalServer.fields.servers') }}</label>
                         <div style="padding-bottom: 4px">
                             <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                             <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                         </div>
-                        <select class="form-control select2 {{ $errors->has('servers') ? 'is-invalid' : '' }}" name="servers[]" id="servers" multiple>
-                            @foreach($servers as $id => $name)
-                                <option value="{{ $id }}" {{ (in_array($id, old('servers', [])) || $logicalServer->servers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        <select class="form-control select2 {{ $errors->has('physicalServers') ? 'is-invalid' : '' }}" name="physicalServers[]" id="physicalServers" multiple>
+                            @foreach($physicalServers as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('physicalServers', [])) || $logicalServer->physicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('servers'))
+                        @if($errors->has('physicalServers'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('servers') }}
+                                {{ $errors->first('physicalServers') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.servers_helper') }}</span>

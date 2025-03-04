@@ -35,13 +35,14 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        /*
         $logicalServers = LogicalServer
             ::with('applications:id,name', 'servers:id,name', 'cluster:id,name')
             ->orderBy('name')
             ->get();
+        */
 
-        /*
-        Work in progress
+        // Work in progress
         $result = DB::table('logical_servers as ls')
             ->select(
                 'ls.*',
@@ -72,22 +73,56 @@ class LogicalServerController extends Controller
 
         // Start Grouping Objects
         $logicalServers = collect();
-        $curLogicalServerId = null;
+        $curLogicalServer = null;
         foreach($result as $res) {
-            if ($curLogicalServerId!=$res->id) {
-                $curLogicalServerId = $res->id;
-                $logicalServer.append()
+            if ( ($curLogicalServer===null) || ($curLogicalServer->id!==$res->id)) {
+                $curLogicalServerId = $res;
+                $curLogicalServer = (object)
+                    [
+                        'id' => $res->id,
+                        'name' => $res->name,
+                        'description' => $res->description,
+                        'active' => $res->active,
+                        'operating_system' => $res->operating_system,
+                        'environment' => $res->environment,
+                        'type' => $res->type,
+                        'attributes' => $res->attributes,
+                        'configuration' => $res->configuration,
+                        'address_ip' => $res->address_ip,
+                        'cluster' => ($res->cluster_id==null) ? null : (object) [ 'id' => $res->cluster_id, 'name' => $res->cluster_name],
+                        //    ...
+                        'applications' =>  collect(),
+                        'physicalServers' => collect()
+                    ];
+                $logicalServers->push($curLogicalServer);
             }
             // add application to list if not already in
+            if (($res->m_application_id!=null) && !
+                 $curLogicalServer->applications->contains(function ($item) use ($res) {
+                    return $item->id === $res->m_application_id;
+                }))
+            {
+                $curLogicalServer->applications->push(
+                    (object)[
+                    'id' => $res->m_application_id,
+                    'name' => $res->m_application_name]);
+                    }
 
             // add physical server to list if not already in
+            if (($res->physical_server_id!=null) && !
+                 $curLogicalServer->physicalServers->contains(function ($item) use ($res) {
+                    return $item->id === $res->physical_server_id;
+                }))
+                {
+                //dd($curLogicalServer);
+                $curLogicalServer->physicalServers->push((object)[
+                    'id' => $res->physical_server_id,
+                    'name' => $res->physical_server_name]);
+                }
+            }
 
-            // next
+        //dd($result, $logicalServers);
 
-        }
-
-        dd($result, $logicalServers);
-        */
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
 
@@ -136,7 +171,7 @@ class LogicalServerController extends Controller
 
         $logicalServer = LogicalServer::create($request->all());
 
-        $logicalServer->servers()->sync($request->input('servers', []));
+        $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
 
@@ -147,7 +182,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
@@ -161,14 +196,14 @@ class LogicalServerController extends Controller
         $environment_list = LogicalServer::select('environment')->where('environment', '<>', null)->distinct()->orderBy('environment')->pluck('environment');
         $attributes_list = $this->getAttributes();
 
-        $logicalServer->load('servers', 'applications');
+        $logicalServer->load('physicalServers', 'applications');
 
         return view(
             'admin.logicalServers.edit',
             compact(
                 'domains',
                 'clusters',
-                'servers',
+                'physicalServers',
                 'applications',
                 'databases',
                 'type_list',
@@ -187,7 +222,7 @@ class LogicalServerController extends Controller
 
         $logicalServer->update($request->all());
 
-        $logicalServer->servers()->sync($request->input('servers', []));
+        $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
 
@@ -198,7 +233,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalServer->load('servers', 'applications');
+        $logicalServer->load('physicalServers', 'applications');
 
         return view('admin.logicalServers.show', compact('logicalServer'));
     }

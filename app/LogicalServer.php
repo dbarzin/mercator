@@ -103,7 +103,7 @@ class LogicalServer extends Model
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function servers()
+    public function physicalServers()
     {
         return $this->belongsToMany(PhysicalServer::class)->orderBy('name');
     }
