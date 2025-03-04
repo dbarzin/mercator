@@ -36,13 +36,14 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /*
+        // Normal code
         $logicalServers = LogicalServer
-            ::with('applications:id,name', 'servers:id,name', 'cluster:id,name')
+            ::with('applications:id,name', 'physicalServers:id,name', 'cluster:id,name')
             ->orderBy('name')
             ->get();
         */
 
-        // Work in progress
+        // Optimized code
         $result = DB::table('logical_servers as ls')
             ->select(
                 'ls.*',
@@ -89,7 +90,7 @@ class LogicalServerController extends Controller
                         'attributes' => $res->attributes,
                         'configuration' => $res->configuration,
                         'address_ip' => $res->address_ip,
-                        'cluster' => ($res->cluster_id==null) ? null : (object) [ 'id' => $res->cluster_id, 'name' => $res->cluster_name],
+                        'cluster' => ($res->cluster_id==null) ? null : (object)['id' => $res->cluster_id, 'name' => $res->cluster_name ],
                         //    ...
                         'applications' =>  collect(),
                         'physicalServers' => collect()
@@ -120,8 +121,6 @@ class LogicalServerController extends Controller
                     'name' => $res->physical_server_name]);
                 }
             }
-
-        //dd($result, $logicalServers);
 
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
