@@ -72,53 +72,32 @@ class LogicalServerController extends Controller
             ->orderBy('ls.name', 'asc')
             ->get();
 
-        // Start Grouping Objects
-        $logicalServers = collect();
-        $curLogicalServer = null;
-        foreach ($result as $res) {
-            if (($curLogicalServer === null) || ($curLogicalServer->id !== $res->id)) {
-                $curLogicalServerId = $res;
-                $curLogicalServer = (object) [
-                    'id' => $res->id,
-                    'name' => $res->name,
-                    'description' => $res->description,
-                    'active' => $res->active,
-                    'operating_system' => $res->operating_system,
-                    'environment' => $res->environment,
-                    'type' => $res->type,
-                    'attributes' => $res->attributes,
-                    'configuration' => $res->configuration,
-                    'address_ip' => $res->address_ip,
-                    'cluster' => $res->cluster_id === null ? null : (object) ['id' => $res->cluster_id, 'name' => $res->cluster_name ],
-                        //    ...
-                    'applications' => collect(),
-                    'physicalServers' => collect(),
-                ];
-                $logicalServers->push($curLogicalServer);
-            }
-            // add application to list if not already in
-            if (($res->m_application_id !== null) && ! $curLogicalServer->applications->contains(function ($item) use ($res) {
-                return $item->id === $res->m_application_id;
-            })) {
-                $curLogicalServer->applications->push(
-                    (object) [
-                        'id' => $res->m_application_id,
-                        'name' => $res->m_application_name,
-                    ]
-                );
-            }
-
-            // add physical server to list if not already in
-            if (($res->physical_server_id !== null) && ! $curLogicalServer->physicalServers->contains(function ($item) use ($res) {
-                return $item->id === $res->physical_server_id;
-            })) {
-                //dd($curLogicalServer);
-                $curLogicalServer->physicalServers->push((object) [
-                    'id' => $res->physical_server_id,
-                    'name' => $res->physical_server_name,
-                ]);
-            }
-        }
+        $logicalServers = $result->groupBy('id')->map(function ($items) {
+            $logicalServer = $items->first();
+            return (object) [
+                'id' => $logicalServer->id,
+                'name' => $logicalServer->name,
+                'description' => $logicalServer->description,
+                'active' => $logicalServer->active,
+                'operating_system' => $logicalServer->operating_system,
+                'environment' => $logicalServer->environment,
+                'type' => $logicalServer->type,
+                'attributes' => $logicalServer->attributes,
+                'configuration' => $logicalServer->configuration,
+                'address_ip' => $logicalServer->address_ip,
+                'cluster' => $logicalServer->cluster_id ? (object) ['id' => $logicalServer->cluster_id, 'name' => $logicalServer->cluster_name] : null,
+                'applications' => $items->filter(function ($item) {
+                    return !is_null($item->m_application_id);
+                })->unique('m_application_id')->map(function ($item) {
+                    return (object) ['id' => $item->m_application_id, 'name' => $item->m_application_name];
+                })->values(),
+                'physicalServers' => $items->filter(function ($item) {
+                    return !is_null($item->physical_server_id);
+                })->unique('physical_server_id')->map(function ($item) {
+                    return (object) ['id' => $item->physical_server_id, 'name' => $item->physical_server_name];
+                })->values(),
+            ];
+        })->values();
 
         return view('admin.logicalServers.index', compact('logicalServers'));
     }
