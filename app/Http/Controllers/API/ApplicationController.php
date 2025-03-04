@@ -56,18 +56,24 @@ class ApplicationController extends Controller
 
         $application->update($request->all());
 
-        if ($request->has('entities'))
+        if ($request->has('entities')) {
             $application->entities()->sync($request->input('entities', []));
-        if ($request->has('processes'))
+        }
+        if ($request->has('processes')) {
             $application->processes()->sync($request->input('processes', []));
-        if ($request->has('activities'))
+        }
+        if ($request->has('activities')) {
             $application->activities()->sync($request->input('activities', []));
-        if ($request->has('databases'))
+        }
+        if ($request->has('databases')) {
             $application->databases()->sync($request->input('databases', []));
-        if ($request->has('logical_servers'))
+        }
+        if ($request->has('logical_servers')) {
             $application->logicalServers()->sync($request->input('logical_servers', []));
-        if ($request->has('application_services'))
+        }
+        if ($request->has('application_services')) {
             $application->services()->sync($request->input('application_services', []));
+        }
 
         return response()->json();
     }

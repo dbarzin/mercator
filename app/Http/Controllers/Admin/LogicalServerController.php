@@ -14,8 +14,8 @@ use App\MApplication;
 use App\PhysicalServer;
 use App\Services\CartographerService;
 use Gate;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogicalServerController extends Controller
 {
@@ -57,16 +57,16 @@ class LogicalServerController extends Controller
             ->leftJoin('logical_server_m_application as lsma', 'ls.id', '=', 'lsma.logical_server_id')
             ->leftJoin('m_applications as ma', function ($join) {
                 $join->on('lsma.m_application_id', '=', 'ma.id')
-                      ->whereNull('ma.deleted_at');
+                    ->whereNull('ma.deleted_at');
             })
             ->leftJoin('logical_server_physical_server as lsps', 'ls.id', '=', 'lsps.logical_server_id')
             ->leftJoin('physical_servers as ps', function ($join) {
                 $join->on('lsps.physical_server_id', '=', 'ps.id')
-                      ->whereNull('ps.deleted_at');
+                    ->whereNull('ps.deleted_at');
             })
             ->leftJoin('clusters as c', function ($join) {
                 $join->on('ls.cluster_id', '=', 'c.id')
-                      ->whereNull('c.deleted_at');
+                    ->whereNull('c.deleted_at');
             })
             ->whereNull('ls.deleted_at')
             ->orderBy('ls.name', 'asc')
@@ -75,52 +75,50 @@ class LogicalServerController extends Controller
         // Start Grouping Objects
         $logicalServers = collect();
         $curLogicalServer = null;
-        foreach($result as $res) {
-            if ( ($curLogicalServer===null) || ($curLogicalServer->id!==$res->id)) {
+        foreach ($result as $res) {
+            if (($curLogicalServer === null) || ($curLogicalServer->id !== $res->id)) {
                 $curLogicalServerId = $res;
-                $curLogicalServer = (object)
-                    [
-                        'id' => $res->id,
-                        'name' => $res->name,
-                        'description' => $res->description,
-                        'active' => $res->active,
-                        'operating_system' => $res->operating_system,
-                        'environment' => $res->environment,
-                        'type' => $res->type,
-                        'attributes' => $res->attributes,
-                        'configuration' => $res->configuration,
-                        'address_ip' => $res->address_ip,
-                        'cluster' => ($res->cluster_id==null) ? null : (object)['id' => $res->cluster_id, 'name' => $res->cluster_name ],
+                $curLogicalServer = (object) [
+                    'id' => $res->id,
+                    'name' => $res->name,
+                    'description' => $res->description,
+                    'active' => $res->active,
+                    'operating_system' => $res->operating_system,
+                    'environment' => $res->environment,
+                    'type' => $res->type,
+                    'attributes' => $res->attributes,
+                    'configuration' => $res->configuration,
+                    'address_ip' => $res->address_ip,
+                    'cluster' => $res->cluster_id === null ? null : (object) ['id' => $res->cluster_id, 'name' => $res->cluster_name ],
                         //    ...
-                        'applications' =>  collect(),
-                        'physicalServers' => collect()
-                    ];
+                    'applications' => collect(),
+                    'physicalServers' => collect(),
+                ];
                 $logicalServers->push($curLogicalServer);
             }
             // add application to list if not already in
-            if (($res->m_application_id!=null) && !
-                 $curLogicalServer->applications->contains(function ($item) use ($res) {
-                    return $item->id === $res->m_application_id;
-                }))
-            {
+            if (($res->m_application_id !== null) && ! $curLogicalServer->applications->contains(function ($item) use ($res) {
+                return $item->id === $res->m_application_id;
+            })) {
                 $curLogicalServer->applications->push(
-                    (object)[
-                    'id' => $res->m_application_id,
-                    'name' => $res->m_application_name]);
-                    }
+                    (object) [
+                        'id' => $res->m_application_id,
+                        'name' => $res->m_application_name,
+                    ]
+                );
+            }
 
             // add physical server to list if not already in
-            if (($res->physical_server_id!=null) && !
-                 $curLogicalServer->physicalServers->contains(function ($item) use ($res) {
-                    return $item->id === $res->physical_server_id;
-                }))
-                {
+            if (($res->physical_server_id !== null) && ! $curLogicalServer->physicalServers->contains(function ($item) use ($res) {
+                return $item->id === $res->physical_server_id;
+            })) {
                 //dd($curLogicalServer);
-                $curLogicalServer->physicalServers->push((object)[
+                $curLogicalServer->physicalServers->push((object) [
                     'id' => $res->physical_server_id,
-                    'name' => $res->physical_server_name]);
-                }
+                    'name' => $res->physical_server_name,
+                ]);
             }
+        }
 
         return view('admin.logicalServers.index', compact('logicalServers'));
     }

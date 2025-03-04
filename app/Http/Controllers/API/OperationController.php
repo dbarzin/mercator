@@ -46,12 +46,15 @@ class OperationController extends Controller
         abort_if(Gate::denies('operation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operation->update($request->all());
-        if ($request->has('actors'))
+        if ($request->has('actors')) {
             $operation->actors()->sync($request->input('actors', []));
-        if ($request->has('actors'))
+        }
+        if ($request->has('actors')) {
             $operation->tasks()->sync($request->input('tasks', []));
-        if ($request->has('activities'))
+        }
+        if ($request->has('activities')) {
             $operation->activities()->sync($request->input('activities', []));
+        }
 
         return response()->json();
     }

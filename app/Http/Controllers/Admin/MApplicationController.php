@@ -51,7 +51,8 @@ class MApplicationController extends Controller
             'application_block:id,name',
             'entity_resp:id,name',
             'entities:id,name',
-            'processes:id,name')
+            'processes:id,name'
+        )
             ->orderBy('name')->get();
 
         return view('admin.applications.index', compact('applications'));

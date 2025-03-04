@@ -188,7 +188,7 @@ class CVESearch extends Command
                 } elseif (property_exists($cve, 'circl')) {
                     // SKIP
                     Log::error('Unknown circl format !');
-                } elseif (property_exists($cve, 'descriptions') && property_exists($cve, 'id') && substr($cve->id,0,3) === 'CVE') {
+                } elseif (property_exists($cve, 'descriptions') && property_exists($cve, 'id') && substr($cve->id, 0, 3) === 'CVE') {
                     // look for in descriptions
                     foreach ($cve->descriptions as $description) {
                         $text = strtolower($description->value);

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-
 use App\ApplicationBlock;
-use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyApplicationBlockRequest;
 use App\Http\Requests\StoreApplicationBlockRequest;
 use App\Http\Requests\UpdateApplicationBlockRequest;
 use App\Http\Resources\Admin\ApplicationBlockResource;
+use App\MApplication;
 use Gate;
 use Illuminate\Http\Response;
 
@@ -48,9 +47,10 @@ class ApplicationBlockController extends Controller
 
         $applicationBlock->update($request->all());
 
-        if ($request->has('applications'))
+        if ($request->has('applications')) {
             MApplication::whereIn('id', $request->input('applications', []))
                 ->update(['application_block_id' => $applicationBlock->id]);
+        }
 
         return response()->json();
     }

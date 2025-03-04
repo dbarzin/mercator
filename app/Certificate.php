@@ -48,7 +48,8 @@ class Certificate extends Model
         $this->attributes['start_validity'] =
             $this->parseDate(
                 $value,
-                config('panel.date_format'));
+                config('panel.date_format')
+            );
     }
 
     public function getEndValidityAttribute($value)
@@ -58,10 +59,11 @@ class Certificate extends Model
 
     public function setEndValidityAttribute($value)
     {
-        $this->attributes['end_validity'] = 
+        $this->attributes['end_validity'] =
             $this->parseDate(
                 $value,
-                config('panel.date_format'));
+                config('panel.date_format')
+            );
     }
 
     public function getLastNotificationAttribute($value)
