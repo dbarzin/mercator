@@ -46,9 +46,10 @@ class MacroProcessusController extends Controller
         abort_if(Gate::denies('macro_processus_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $macroProcessus->update($request->all());
-        if ($request->has('processes'))
+        if ($request->has('processes')) {
             Process::whereIn('id', $request->input('processes', []))
                 ->update(['macroprocess_id' => $macroProcessus->id]);
+        }
 
         return response()->json();
     }

@@ -39,7 +39,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/', [Admin\HomeController::class,'index'])->name('home');
 
     // Test page
-    Route::get('/test', function () { return view('test'); });
+    Route::get('/test', function () {
+        return view('test');
+    });
 
     // Roles
     Route::resource('roles', Admin\RolesController::class);
@@ -397,7 +399,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('config', function () {
         return view('config');
     });
-
 });
 
 // Profile
