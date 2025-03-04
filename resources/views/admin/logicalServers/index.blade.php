@@ -61,7 +61,7 @@
                             ($logicalServer->address_ip==null)||
                             ($logicalServer->applications->count()==0)||
                             (
-                                ($logicalServer->servers->count()==0) && ($logicalServer->cluster_id==null)
+                                ($logicalServer->physicalServers->count()==0) && ($logicalServer->cluster==null)
                             ))
                                 class="table-warning"
                         @endif
@@ -101,15 +101,15 @@
                             </td>
                             <td>
                                 @if ($logicalServer->cluster!==null)
-                                <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
+                                <a href="{{ route('admin.clusters.show', $logicalServer->cluster->id) }}">
                                   {{ $logicalServer->cluster->name }}
                                 </a>
                                 @endif
-                                @if(count($logicalServer->servers)>0)
-                                    @if ($logicalServer->cluster_id!==null)
+                                @if(count($logicalServer->physicalServers)>0)
+                                    @if ($logicalServer->cluster!==null)
                                     /
                                     @endif
-                                    @foreach($logicalServer->servers as $server)
+                                    @foreach($logicalServer->physicalServers as $server)
                                     <a href="{{ route('admin.physical-servers.show', $server->id) }}">
                                         {{ $server->name }}
                                     </a>

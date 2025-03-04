@@ -2459,7 +2459,7 @@ class ReportController extends Controller
     public function logicalServerConfigs()
     {
         $logicalServers = LogicalServer::All()->sortBy('name');
-        $logicalServers->load('applications', 'servers');
+        $logicalServers->load('applications', 'physicalServers');
 
         $header = [
             trans('cruds.logicalServer.fields.name'),               // A
@@ -2529,7 +2529,7 @@ class ReportController extends Controller
             $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
                 ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
             $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? '');
-            $sheet->setCellValue("O{$row}", $logicalServer->servers->implode('name', ', '));
+            $sheet->setCellValue("O{$row}", $logicalServer->physicalServers->implode('name', ', '));
 
             $row++;
         }
