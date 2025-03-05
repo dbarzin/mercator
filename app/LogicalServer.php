@@ -7,13 +7,13 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * App\LogicalServer
  */
 class LogicalServer extends Model
 {
-    use SoftDeletes, Auditable;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'logical_servers';
 
