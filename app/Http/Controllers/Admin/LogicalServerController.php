@@ -72,6 +72,58 @@ class LogicalServerController extends Controller
             ->orderBy('ls.name', 'asc')
             ->get();
 
+        // Start Grouping Objects
+        /*
+        // Code v1
+        $logicalServers = collect();
+        $curLogicalServer = null;
+        foreach ($result as $res) {
+            if (($curLogicalServer === null) || ($curLogicalServer->id !== $res->id)) {
+                $curLogicalServerId = $res;
+                $curLogicalServer = (object) [
+                    'id' => $res->id,
+                    'name' => $res->name,
+                    'description' => $res->description,
+                    'active' => $res->active,
+                    'operating_system' => $res->operating_system,
+                    'environment' => $res->environment,
+                    'type' => $res->type,
+                    'attributes' => $res->attributes,
+                    'configuration' => $res->configuration,
+                    'address_ip' => $res->address_ip,
+                    'cluster' => $res->cluster_id === null ? null : (object) ['id' => $res->cluster_id, 'name' => $res->cluster_name ],
+                        //    ...
+                    'applications' => collect(),
+                    'physicalServers' => collect(),
+                ];
+                $logicalServers->push($curLogicalServer);
+            }
+            // add application to list if not already in
+            if (($res->m_application_id !== null) && ! $curLogicalServer->applications->contains(function ($item) use ($res) {
+                return $item->id === $res->m_application_id;
+            })) {
+                $curLogicalServer->applications->push(
+                    (object) [
+                        'id' => $res->m_application_id,
+                        'name' => $res->m_application_name,
+                    ]
+                );
+            }
+
+            // add physical server to list if not already in
+            if (($res->physical_server_id !== null) && ! $curLogicalServer->physicalServers->contains(function ($item) use ($res) {
+                return $item->id === $res->physical_server_id;
+            })) {
+                //dd($curLogicalServer);
+                $curLogicalServer->physicalServers->push((object) [
+                    'id' => $res->physical_server_id,
+                    'name' => $res->physical_server_name,
+                ]);
+            }
+        }
+        */
+
+        // Code v2
         $logicalServers = $result->groupBy('id')->map(function ($items) {
             $logicalServer = $items->first();
             return (object) [
