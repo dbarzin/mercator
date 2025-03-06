@@ -22,7 +22,6 @@ class UpdateActorRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:actors,name,' . request()->route('actor')->id,
                 'unique:actors,name,'.request()->route('actor')->id.',id,deleted_at,NULL',
             ],
         ];

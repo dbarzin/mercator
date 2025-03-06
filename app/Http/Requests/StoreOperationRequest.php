@@ -20,7 +20,7 @@ class StoreOperationRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 //'unique:operations',
                 'unique:operations,name,NULL,id,deleted_at,NULL',

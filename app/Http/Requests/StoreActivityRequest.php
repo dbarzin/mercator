@@ -20,9 +20,8 @@ class StoreActivityRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
-                // 'unique:activities',
                 'unique:activities,name,NULL,id,deleted_at,NULL',
 
             ],

@@ -20,9 +20,8 @@ class UpdateActivityRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
-                //'unique:activities,name,' . request()->route('activity')->id,
                 'unique:activities,name,'.request()->route('activity')->id.',id,deleted_at,NULL',
             ],
             'operations.*' => [
