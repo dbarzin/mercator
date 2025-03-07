@@ -158,7 +158,7 @@ class LogicalServerController extends Controller
     {
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $servers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $physicalServers = PhysicalServer::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::with('cartographers')->get();
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
@@ -180,7 +180,7 @@ class LogicalServerController extends Controller
             compact(
                 'domains',
                 'clusters',
-                'servers',
+                'physicalServers',
                 'applications',
                 'databases',
                 'type_list',
