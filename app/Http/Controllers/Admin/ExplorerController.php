@@ -363,11 +363,21 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('EXT_', $external->id), $this->formatId('ENTITY_', $external->entity_id));
         }
 
+        // Gateways
+        $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
+        foreach ($gateways as $gateway) {
+            $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $subnetwork->ip);
+        }
+
         // Subnetworks
         foreach ($subnetworks as $subnetwork) {
             $this->addNode($nodes, 5, $this->formatId('SUBNETWORK_', $subnetwork->id), $subnetwork->name, '/images/network.png', 'subnetworks', $subnetwork->address);
-            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
-            $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('VLAN_', $subnetwork->vlan_id));
+            if ($subnetwork->network_id!=null)
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('NETWORK_', $subnetwork->network_id));
+            if ($subnetwork->vlan_id!=null)
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('VLAN_', $subnetwork->vlan_id));
+            if ($subnetwork->gateway_id!=null)
+                $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GW_', $subnetwork->gateway_id));
             if ($subnetwork->address_ip !== null) {
                 foreach ($subnetworks as $subnetwork) {
                     foreach (explode(',', $logicalServer->address_ip) as $address) {
