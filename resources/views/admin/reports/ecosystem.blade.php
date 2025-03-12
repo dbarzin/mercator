@@ -53,7 +53,7 @@
 		    </table>
 		</form>
 	    </div>
-                <div id="graph"></div>
+                <div class="graphviz" id="graph"></div>
             </div>
         </div>
         <br>

@@ -13,7 +13,7 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div id="graph"></div>
+                <div class="graphviz" id="graph"></div>
             </div>
         </div>
 

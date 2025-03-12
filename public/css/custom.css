@@ -1,8 +1,11 @@
 /***************************************************************************/
+
 body {
     background-color: #dfdfdf;
 }
 
+/***************************************************************************/
+/* Top side menu */
 /***************************************************************************/
 
 .navbar {
@@ -37,6 +40,8 @@ body {
     color: #000000;
 }
 
+/***************************************************************************/
+/* Left side menu */
 /***************************************************************************/
 
 .sidebar {
@@ -199,10 +204,10 @@ margin-left: 5px !important;
     display: block !important;
 }
 
-.btn-info,
 .badge-info {
     color: black;
     background-color: #94e5ff;
+    margin-bottom: 5px;
 }
 
 table.dataTable thead .sorting,
@@ -269,8 +274,9 @@ table .navbar-brand-full {
 }
 
 /***************************************************************************/
+/* Risks colors */
+/***************************************************************************/
 
-/* Risks selest2 colors */
 .highRisk {
   background: #E15759;
   padding: 3px;
@@ -306,6 +312,7 @@ table .navbar-brand-full {
 /**
  * Admin application edit - Evènements
  */
+
 .textarea-custom-size {
     min-height: auto;
     width: 100%;
@@ -419,15 +426,22 @@ table .navbar-brand-full {
   cursor: pointer
 }
 
+/***************************************************************************/
 
 .form-group {
-      margin-bottom: 10px;
-      margin-top: 10px;
+      margin-bottom: 10px !important;
+      margin-top: 10px !important;
 }
 
-//----------------------------------------------------------------------
-.mapping-icon {
-margin-bottom: 10px;
-font-size: 30px;
-color: #000000;
+/***************************************************************************/
+
+.graphviz {
+    max-width: 80vw;
+    overflow-x: auto; /* Ajoute un scroll horizontal si nécessaire */
+    text-align: center; /* Centre le graphe */
 }
+
+.xgraphviz svg {
+    width: 100% !important;
+}
+/***************************************************************************/

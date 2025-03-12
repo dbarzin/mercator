@@ -14,7 +14,6 @@
                     </div>
                 @endif
 
-                @if (auth()->user()->granularity>=2)
                 <div class="col-sm-5">
                     <form action="/admin/report/applications">
                             <table class="table table-bordered table-striped">
@@ -43,10 +42,7 @@
                             </table>
                         </form>
                     </div>
-                @endif
-
-                <div id="graph"></div>
-
+                <div class="graphviz" id="graph"></div>
             </div>
         </div>
 

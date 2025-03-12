@@ -48,8 +48,9 @@
                         </td>
                         <td style="text-align: right; vertical-align: right;">
                             &nbsp;
-                            <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
-                            Photo
+                            <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#">
+                                <i class="bi bi-camera-fill"></i>
+                                Photo
                             </a>
                             <a id="canvasImg" download="filename"></a>
                         </td>
@@ -57,12 +58,12 @@
                     <tr>
                         <td colspan="3">
                     <a href="#" onclick="network.deleteSelected()" class="command">
-                        <i class="fas fa-minus-circle"></i>
+                        <i class="bi bi-dash-circle-fill"></i>
                         {{ trans("cruds.report.explorer.delete") }}
                     </a>
                     &nbsp;
                     <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                        <i class="fas fa-repeat"></i>
+                        <i class="bi bi-arrow-repeat"></i>
                         {{ trans("cruds.report.explorer.reload") }}
                     </a>
                     <input type="checkbox" id="physicsCheckbox" class="command" checked>

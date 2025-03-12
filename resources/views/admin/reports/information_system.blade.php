@@ -44,7 +44,7 @@
                     </form>
                 </div>
                 @endif
-                <div id="graph"></div>
+                <div class="graphviz" id="graph"></div>
             </div>
         </div>
         @can('macro_processus_access')
