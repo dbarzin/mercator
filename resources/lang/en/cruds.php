@@ -414,8 +414,8 @@ return [
             'categories_helper' => 'A description of the categories of data subjects and categories of personal data',
             'recipients' => 'Recipients of the data',
             'recipients_helper' => 'The categories of recipients to whom the personal data has been or will be disclosed, including recipients in third countries or international organizations;',
-            'transfer' => 'Data transfers',
-            'transfer_helper' => 'Transfers of personal data to a third country or international organization, including the identification of such third country or international organization and, where applicable, documentation attesting to the existence of appropriate safeguards.',
+            'transfert' => 'Data transfers',
+            'transfert_helper' => 'Transfers of personal data to a third country or international organization, including the identification of such third country or international organization and, where applicable, documentation attesting to the existence of appropriate safeguards.',
             'retention' => 'retention periods',
             'retention_helper' => "The timeframes provided for the deletion of the different categories of data.",
             'controls' => 'Security measures',
@@ -512,15 +512,15 @@ return [
             'subsidiaries_helper' => '',
         ],
         'filters' => [
-            'internes' => "Internal",
-            'externes' => "External",
-            'all'     => "All",
-            'all_types' => "All types",
+                'internes' => "Internal",
+                'externes' => "External",
+                'all'     => "All",
+                'all_types' => "All types",
+                'title'   => [
+                    'int/ext' => "Situation",
+                    'type' => "Type",
+                ]
         ],
-		'title'   => [
-			'int/ext' => "Internal/External",
-			'type' => "Entity type",
-		],
         'title' => 'Entities',
         'title_singular' => 'Entity',
     ],
@@ -888,7 +888,7 @@ return [
             'process_helper' => 'Process of which this operation is part',
         ],
         'title' => 'Operations',
-        'title_singular' => 'Surgery',
+        'title_singular' => 'Operation',
     ],
     'peripheral' => [
         'description' => 'Physical component connected to a workstation in order to add new functionalities (eg: keyboard, mouse, printer, scanner, etc.).',

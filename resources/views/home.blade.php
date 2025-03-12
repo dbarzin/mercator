@@ -1,71 +1,65 @@
 @extends('layouts.admin')
 @section('content')
-<div class="content">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    {!! trans("panel.maturity_levels") !!}
-                </div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <td align="center">
-                              <a href="/admin/report/maturity1">
-                                <div style="width: 350px; height: 180px;">
-                                  <canvas id="gauge_chart1_div"></canvas>
-                                </div>
-                                {!! trans("panel.level_1.title_short") !!}
-                              </a>
-                            </td>
-                            <td align="center">
-                              <a href="/admin/report/maturity2">
-                                <div style="width: 350px; height: 180px;">
-                                  <canvas id="gauge_chart2_div"></canvas>
-                                </div>
-                                {!! trans("panel.level_2.title_short") !!}
-                              </a>
-                            <td align="center">
-                              <a href="/admin/report/maturity3">
-                                <div style="width: 350px; height: 180px;">
-                                  <canvas id="gauge_chart3_div"></canvas>
-                                </div>
-                                {!! trans("panel.level_3.title_short") !!}
-                              </a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  {!! trans("panel.repartition") !!}
-                </div>
-                <div class="card-body">
-                    <div style="width: 1075px; height: 400px;">
-                      <canvas id="bar_chart_div"></canvas>
+<div class="card">
+    <div class="card-header">
+        {!! trans("panel.maturity_levels") !!}
+    </div>
+    <div class="card-body">
+        <table>
+            <tr>
+                <td align="center">
+                  <a href="/admin/report/maturity1">
+                    <div style="width: 350px; height: 180px;">
+                      <canvas id="gauge_chart1_div"></canvas>
                     </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-header">
-                  {!! trans("panel.treemap") !!}
-                </div>
-                <div class="card-body">
-                    <div style="width: 1050px; height: 500px;">
-                      <canvas id="treemap_chart_div"></canvas>
+                    {!! trans("panel.level_1.title_short") !!}
+                  </a>
+                </td>
+                <td align="center">
+                  <a href="/admin/report/maturity2">
+                    <div style="width: 350px; height: 180px;">
+                      <canvas id="gauge_chart2_div"></canvas>
                     </div>
-                </div>
-
-            </div>
+                    {!! trans("panel.level_2.title_short") !!}
+                  </a>
+                <td align="center">
+                  <a href="/admin/report/maturity3">
+                    <div style="width: 350px; height: 180px;">
+                      <canvas id="gauge_chart3_div"></canvas>
+                    </div>
+                    {!! trans("panel.level_3.title_short") !!}
+                  </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">
+      {!! trans("panel.repartition") !!}
+    </div>
+    <div class="card-body">
+        <div style="width: 1075px; height: 400px;">
+          <canvas id="bar_chart_div"></canvas>
         </div>
     </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header">
+      {!! trans("panel.treemap") !!}
+    </div>
+    <div class="card-body">
+        <div style="width: 1050px; height: 500px;">
+          <canvas id="treemap_chart_div"></canvas>
+        </div>
+    </div>
+
 </div>
 @endsection
 
 @section('scripts')
-
 <script src="/js/Chart.bundle.js"></script>
 <script src="/js/chartjs-gauge.min.js"></script>
 <script src="/js/chartjs-plugin-colorschemes.js"></script>

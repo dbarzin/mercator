@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-
     <style>
         body {
             background-color: #f0f0f0;
@@ -19,7 +18,7 @@
             border-bottom: 1px solid #ddd;
         }
         .navbar-brand {
-            width: 200px;
+            width: 180px;
             text-align: center;
             color: #000000 !important;
         }
@@ -29,6 +28,9 @@
         .navbar-nav .nav-item {
             margin-right: 30px;
         }
+        .navbar-nav .nav-item a {
+            padding-right: 70px;
+        }
         .navbar-nav .nav-item a i {
             margin-right: 20px;
             color: #800000;
@@ -36,11 +38,20 @@
             flex-shrink: 0;
             font-size: 20px;
         }
-
+        .navbar-nav .nav-item  a:hover,
+        .navbar-nav .nav-item  a.selected {
+            background-color: #dcdcdc;
+            color: #000000;
+        }
+        .navbar-nav .nav-item a:hover,
+        .navbar-nav .nav-item  a.selected {
+            background-color: #dcdcdc;
+            color: #000000;
+        }
 
         .sidebar {
             height: 100vh;
-            width: 260px;
+            width: 250px;
             position: fixed;
             top: 56px;
             left: 0;
@@ -50,9 +61,11 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #ddd;
+            overflow-y: auto;
         }
+
         .sidebar a {
-            padding: 10px 15px;
+            padding: 12px 15px;
             text-decoration: none;
             font-size: 16px;
             color: #000000;
@@ -67,7 +80,7 @@
             color: #800000;
             font-weight: bold;
             flex-shrink: 0;
-            font-size: 24px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -81,6 +94,10 @@
         .sidebar a:hover {
             background-color: #f8f9fa;
         }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #dcdcdc;
+        }
+
         .content {
             margin-left: 250px;
             margin-top: 56px;
@@ -136,14 +153,14 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="menu1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vues</a>
                         <ul class="dropdown-menu" aria-labelledby="menu1">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>RGPD</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Ecosystème</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Système d'information</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Applications</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Flux applicatifs</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Administration</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Infrasructure logique</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-2-fill"></i>Infrastructure physique</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>RGPD</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Ecosystème</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Système d'information</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Applications</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Flux applicatifs</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Administration</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Infrasructure logique</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-diagram-3-fill"></i>Infrastructure physique</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -158,7 +175,7 @@
                         <ul class="dropdown-menu" aria-labelledby="menu3">
                             <li><a class="dropdown-item" href="#"><i class="bi bi-map-fill"></i>Cartes</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-globe2"></i>Exploration</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-wrench"></i>Corretifs</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-tools"></i>Corretifs</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-fill"></i>Rapports</a></li>
                         </ul>
                     </li>
@@ -226,8 +243,8 @@
                 <a class="dropdown-toggle" data-bs-toggle="collapse" href="#submenu7" role="button" aria-expanded="false">
                     <i class="bi bi-folder-fill"></i><span class="menu-text">Infrastructures physique</span>
                 </a>
-                <div class="collapse" id="submenu7">
-                    <a href="#" class="ps-4"><i class="bi bi-file-earmark"></i><span class="menu-text">Sous-menu 1</span></a>
+                <div class="collapse show" id="submenu7">
+                    <a href="#" class="ps-4 active"><i class="bi bi-file-earmark"></i><span class="menu-text">Sous-menu 1</span></a>
                     <a href="#" class="ps-4"><i class="bi bi-file-earmark"></i><span class="menu-text">Sous-menu 2</span></a>
                 </div>
                 <a class="dropdown-toggle" data-bs-toggle="collapse" href="#submenu9" role="button" aria-expanded="false">
@@ -248,8 +265,6 @@
             </div>
         </nav>
         <div id="content" class="content flex-grow-1 p-4">
-
-
             <div class="card">
                 <div class="card-header">
                     Title goes here

@@ -1,10 +1,148 @@
+/***************************************************************************/
+body {
+    background-color: #dfdfdf;
+}
+
+/***************************************************************************/
+
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #ddd;
+}
+.navbar-brand {
+    width: 180px;
+    text-align: center;
+    color: #000000 !important;
+}
+.navbar-nav .nav-link {
+    color: #800000 !important;
+}
+.navbar-nav .nav-item {
+    margin-right: 30px;
+}
+.navbar-nav .nav-item a {
+    padding-right: 70px;
+}
+.navbar-nav .nav-item a i {
+    margin-right: 20px;
+    color: #800000;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.navbar-nav .nav-item a:hover,
+.navbar-nav .nav-item a.selected {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+/***************************************************************************/
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    background-color: #ffffff;
+    padding-top: 0px;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    word-wrap: break-word;
+    white-space: normal;
+}
+.sidebar a i {
+    margin-right: 10px;
+    color: #800000;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar a .menu-text {
+    flex-grow: 1;
+}
+.sidebar a .dropdown-indicator {
+    margin-left: auto;
+}
+.sidebar a:hover {
+    background-color: #f0f0f0; // #3d84d1;
+}
+.sidebar a.active {
+    background-color: #f0f0f0;
+}
+
+/***************************************************************************/
+
+.content {
+    margin-left: 250px;
+    margin-top: 56px;
+    transition: margin-left 0.3s ease;
+    background-color: #dfdfdf;
+    padding: 20px;
+}
+
+/***************************************************************************/
+
+.sidebar-hidden {
+    transform: translateX(-100%);
+}
+.content-expanded {
+    margin-left: 0;
+}
+.sidebar-footer {
+    padding: 70px;
+    color: #000000;
+    text-align: center;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    margin-top: auto;
+    border-top: 1px solid #ddd;
+}
+.sidebar .search-box {
+    padding: -10px 15px 10px 15px;
+}
+.sidebar .search-box input:focus {
+    box-shadow: none !important;
+    border-color: #ccc !important;
+}
+.toggle-sidebar-btn {
+    color: #000000 !important;
+    border: 1px;
+}
+
+/***************************************************************************/
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
 }
 
+/***************************************************************************/
+
 .datatable {
     width: 100% !important;
+}
+
+.dataTable td,
+.dataTable th {
+    vertical-align: middle;
 }
 
 .dataTables_length,
@@ -40,6 +178,8 @@ table.dataTable thead th {
 //    border-bottom: 1px solid #c8ced3;
 }
 
+/***************************************************************************/
+
 .btn {
 margin-left: 5px !important;
 }
@@ -53,19 +193,22 @@ margin-left: 5px !important;
     padding-bottom: 5px !important;
 }
 
+/***************************************************************************/
+
 .has-error .invalid-feedback {
     display: block !important;
 }
 
 .btn-info,
 .badge-info {
-    color: white;
+    color: black;
+    background-color: #94e5ff;
 }
 
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc {
-//    background-image: none;
+//    round-image: none;
 }
 
 table.dataTable tbody th.focus, table.dataTable tbody td.focus {
@@ -77,67 +220,7 @@ table .navbar-brand-full {
     color: #7C123E;
 }
 
-.navbar-nav .nav-link {
-    color: #7C123E;
-}
-
-.sidebar {
-    background-color: #FFFFFF;
-}
-
-.sidebar-minimizer {
-    background-color: #FFFFFF;
-}
-
-.sidebar .nav-item {
-    cursor: pointer;
-    color: #000000;
-    background-color: #FFFFFF;
-}
-
-.sidebar .nav-dropdown.open .nav-link {
-    color: #000000;
-    border-left: 0;
-}
-
-.dropdown-item i {
-  color: #7C123E;
-}
-
-.sidebar .nav-link {
-    display: block;
-    padding: .75rem 1rem;
-    color: #000000;
-    background-color: #FFFFFF;
-    text-decoration: none;
-    background: 0 0;
-}
-
-.sidebar .nav-link:hover .nav-icon {
-    color: #7C123E;
-}
-
-.sidebar .nav-link:focus .nav-icon {
-    color: #7C123E;
-}
-
-.sidebar .nav-link .nav-icon {
-    color: #7C123E;
-}
-
-.nav-link {
-    color: #7c123e;
-    background-color: #FFFFFF;
-}
-
-.sidebar .nav-link.active {
-    color: #000000;
-    background-color: #FFFFFF;
-}
-
-.sidebar .nav-link.active:hover {
-    background-color: #20a8d8;
-}
+/***************************************************************************/
 
 .btn-default {
     color: #23282c;
@@ -164,19 +247,8 @@ table .navbar-brand-full {
     border-radius: 3px;
 }
 
-.searchable-title {
-    font-weight: bold;
-}
-.searchable-fields {
-    padding-left:5px;
-}
-.searchable-link {
-    padding:0 5px 0 5px;
-}
-.searchable-link:hover   {
-    cursor: pointer;
-    background: #eaeaea;
-}
+/***************************************************************************/
+
 .select2-results__option {
     padding-left: 0px;
     padding-right: 0px;
@@ -196,11 +268,7 @@ table .navbar-brand-full {
     display: block;
 }
 
-/* Fixed Headers, On-Page Links, and Overlapping Content, Oh My! */
-/* https://css-tricks.com/fixed-headers-on-page-links-and-overlapping-content-oh-my/ */
-html {
-  scroll-padding-top: 70px; /* height of sticky header */
-}
+/***************************************************************************/
 
 /* Risks selest2 colors */
 .highRisk {
@@ -232,6 +300,8 @@ html {
   padding: 3px;
   border-radius: 20% / 30%;
 }
+
+/***************************************************************************/
 
 /**
  * Admin application edit - Evènements
@@ -291,7 +361,7 @@ html {
 }
 
 .help-block {
-    color: #7C123E;
+    color: #7C123E; /* bordeau */
     font-size: 0.7rem;
 }
 
@@ -311,40 +381,53 @@ html {
           padding: 10px 16px;
           list-style: none;
     }
-    #explore_context a:hover{
-          text-decoration:none;
-    }
-    .fullscreen_network{
-        position: fixed;
-        background-color: #fff;
-        top: 0;
-        left: 0;
-        z-index: 1030;
-        height: 100vh !important;
-        width: 100vw;
-    }
 
-    #add_node_button{
-      margin-left: 1rem
-    }
+#explore_context a:hover{
+      text-decoration:none;
+}
+.fullscreen_network{
+    position: fixed;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    height: 100vh !important;
+    width: 100vw;
+}
+
+#add_node_button{
+  margin-left: 1rem
+}
+
+.explore_commands{
+  display: flex;
+  align-items: center;
+}
+.command{
+  margin-left: 1.5rem;
+}
+
+.command[type="checkbox"]{
+  margin: 0 .5rem .5rem 1.5rem;
+}
+
+.explore_commands .fas{
+  margin-bottom: .6rem;
+}
+.explore_commands label{
+  color: #20a8d8;
+  cursor: pointer
+}
 
 
-    .explore_commands{
-      display: flex;
-      align-items: center;
-    }
-    .command{
-      margin-left: 1.5rem;
-    }
+.form-group {
+      margin-bottom: 10px;
+      margin-top: 10px;
+}
 
-    .command[type="checkbox"]{
-      margin: 0 .5rem .5rem 1.5rem;
-    }
-
-    .explore_commands .fas{
-      margin-bottom: .6rem;
-    }
-    .explore_commands label{
-      color: #20a8d8;
-      cursor: pointer
-    }
+//----------------------------------------------------------------------
+.mapping-icon {
+margin-bottom: 10px;
+font-size: 30px;
+color: #000000;
+}
