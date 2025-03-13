@@ -11,6 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.js('resources/js/chart-config.js', 'public/js').vue();
+
+/*
 // mix.js('resources/js/app.js', 'public/js');
 //   .sass('resources/sass/app.scss', 'public/css');
 
@@ -27,9 +30,10 @@ mix.copy('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js','public/js');
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map','public/js');
 
 // Fontawesome
-mix.copy('node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css','public/css');
-mix.copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css','public/css');
-mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/*','public/webfonts');
+//mix.copy('node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css','public/css');
+//mix.copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css','public/css');
+//mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts/*','public/webfonts');
+*/
 
 /*
 // bootstrap-datetimepicker
@@ -100,5 +104,5 @@ mix.copy('node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js','pub
 mix.copy('node_modules/@ckeditor/ckeditor5-editor-classic/theme/classiceditor.css','public/css');
 */
 // Moment
-mix.copy('node_modules/moment/min/moment.min.js','public/js');
-mix.copy('node_modules/moment/min/moment.min.js.map','public/js');
+//mix.copy('node_modules/moment/min/moment.min.js','public/js');
+//mix.copy('node_modules/moment/min/moment.min.js.map','public/js');

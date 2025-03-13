@@ -1,8 +1,14 @@
 /***************************************************************************/
 
+:root {
+    --cui-font-sans-serif: "Poppins", sans-serif;
+}
 body {
     background-color: #dfdfdf;
+    font-family: var(--cui-font-sans-serif);
+    font-size: 12px;
 }
+
 
 /***************************************************************************/
 /* Top side menu */
@@ -13,7 +19,7 @@ body {
     border-bottom: 1px solid #ddd;
 }
 .navbar-brand {
-    width: 180px;
+    width: 150px;
     text-align: center;
     color: #000000 !important;
 }
@@ -24,6 +30,7 @@ body {
     margin-right: 30px;
 }
 .navbar-nav .nav-item a {
+    font-size: 12px;
     padding-right: 70px;
 }
 .navbar-nav .nav-item a i {
@@ -31,7 +38,7 @@ body {
     color: #800000;
     font-weight: bold;
     flex-shrink: 0;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .navbar-nav .nav-item a:hover,
@@ -46,7 +53,7 @@ body {
 
 .sidebar {
     height: 100vh;
-    width: 250px;
+    width: 230px;
     position: fixed;
     top: 56px;
     left: 0;
@@ -69,6 +76,7 @@ body {
     justify-content: space-between;
     word-wrap: break-word;
     white-space: normal;
+    font-size: 12px;
 }
 .sidebar a i {
     margin-right: 10px;
@@ -86,6 +94,10 @@ body {
 .sidebar a .dropdown-indicator {
     margin-left: auto;
 }
+/* Augmente l'espace entre le texte et l'icône */
+.dropdown-toggle::after {
+        margin-left: 8px;
+    }
 .sidebar a:hover {
     background-color: #f0f0f0; // #3d84d1;
 }
@@ -96,7 +108,7 @@ body {
 /***************************************************************************/
 
 .content {
-    margin-left: 250px;
+    margin-left: 230px;
     margin-top: 56px;
     transition: margin-left 0.3s ease;
     background-color: #dfdfdf;
@@ -115,7 +127,7 @@ body {
     padding: 70px;
     color: #000000;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     background-color: #f0f0f0;
     margin-top: auto;
     border-top: 1px solid #ddd;
@@ -185,9 +197,22 @@ table.dataTable thead th {
 
 /***************************************************************************/
 
-.btn {
-margin-left: 5px !important;
+/* Supprime le soulignement dans les liens dans les card-body */
+.card-body a {
+    text-decoration: none;
 }
+
+/* Supprime le soulignement dans les lien des dataTables */
+.dataTable a {
+    text-decoration: none;
+}
+
+/* Supprime le soulignement dans les lien des tables */
+.table a {
+    text-decoration: none;
+}
+
+/***************************************************************************/
 
 .select2 {
     max-width: 100%;
@@ -227,6 +252,11 @@ table .navbar-brand-full {
 
 /***************************************************************************/
 
+.btn {
+    margin-left: 5px !important;
+    font-size: 12px;
+}
+
 .btn-default {
     color: #23282c;
     background-color: #f0f3f5;
@@ -253,6 +283,10 @@ table .navbar-brand-full {
 }
 
 /***************************************************************************/
+
+.form-control {
+    font-size: 12px;
+}
 
 .select2-results__option {
     padding-left: 0px;

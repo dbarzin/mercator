@@ -8,6 +8,8 @@ export default defineConfig({
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
                 'resources/css/mapping.css',
+                'resources/js/app.js',
+                'resources/js/home.js'
             ],
             refresh: true,
         }),

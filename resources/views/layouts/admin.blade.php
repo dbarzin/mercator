@@ -42,7 +42,7 @@
     @include('partials.navbar')
     <div class="d-flex">
     @include('partials.sidebar')
-        <div id="content" class="content flex-grow-1 p-4">
+        <div class="content flex-grow-1 p-4">
             @yield('content')
         </div>
     </div>

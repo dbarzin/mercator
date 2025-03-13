@@ -174,7 +174,7 @@
           SUBNETWORK -> LOGICALROUTER [label="  0-n"]
           SUBNETWORK -> NETWORKSWITCHES [label="  0-n"]
           LOGICALSERVER -> PHYSICALSERVER [label="  n-m"]
-          APPLICATION -> LOGICALSERVER [label="  0-n"]
+          APPLICATION -> LOGICALSERVER [label="  n-m"]
           CERTIFICATE -> LOGICALSERVER [label="  0-n"]
           CERTIFICATE -> APPLICATION [label="  0-n"]
 
