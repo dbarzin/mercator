@@ -203,9 +203,6 @@ var treeMapConfig = {
           return null;
       },
       borderColor: "grey",
-      // backgroundColor: function(ctx) {
-      //   return Chart.colorschemes.tableau.Tableau20[ctx.dataIndex%20];
-      //}
 
       backgroundColor: function (ctx) {
         var item = ctx.dataset.data[ctx.dataIndex];
@@ -219,38 +216,30 @@ var treeMapConfig = {
     }]
   },
   options: {
+      responsive: true,
       plugins: {
-        title: {
-          display: true,
-          text: (ctx) => 'US area by ' + GROUPS.join(' / '),
+        title: { display: false },
+        legend: { display: false },
+        tooltip: { enabled: false }
         },
-        legend: {
-          display: false,
-        },
-    },
-    maintainAspectRatio: false,
-    title: { display: false},
-    legend: { display: false },
-    tooltips: { enabled: false },
-    animation: { duration: 600 },
+        maintainAspectRatio: false,
+        title: { display: false},
+        animation: { duration: 600 },
 
     onClick: function (event, active) {
       var chart = this;
       for (let i = 0; i < active.length; i++) {
         const item = active[i];
-        console.log(this);
-        var data = this.data.datasets[item._datasetIndex].data[item._index];
+        var data = chart.data.datasets[item.datasetIndex].data[item.index];
         if (data._data.children.length === 1) {
           window.location=data._data.children[0].url;
         }
       }
     },
-    hover: {
-        onHover: function(e, el) {
-          $("#treemap_chart_div").css("cursor", el[0] ? "pointer" : "default");
-          }
+    onHover: (event, elements) => {
+        const chartCanvas = event.native.target;
+        chartCanvas.style.cursor = elements.length ? "pointer" : "default";
         }
-
     }
   };
 
