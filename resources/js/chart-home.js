@@ -7,8 +7,6 @@ import { color } from "chart.js/helpers";
 Chart.register(GaugeController);
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend, ChartDataLabels, TreemapController, TreemapElement);
 
-Chart.register(GaugeController);
-Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend, ChartDataLabels, TreemapController, TreemapElement);
 // ===========================================================================
 
 function createGaugeChart(ctx, value) {
@@ -103,7 +101,7 @@ const barChartConfig = {
       },
     },
 
-    // 📌 Échelle des axes en Chart.js 4
+    // Échelle des axes en Chart.js 4
     scales: {
       x: {
         stacked: true,
@@ -118,7 +116,7 @@ const barChartConfig = {
       },
     },
 
-    // 📌 Gestion des clics sur le graphique
+    // Gestion des clics sur le graphique
     onClick: (event, elements) => {
       if (elements.length > 0) {
         const elementIndex = elements[0].datasetIndex;
@@ -126,7 +124,7 @@ const barChartConfig = {
       }
     },
 
-    // 📌 Callback d'affichage terminé
+    // Callback d'affichage terminé
     onComplete: function () {
       const ctx = this.ctx;
       ctx.font = Chart.defaults.font.family;
@@ -194,7 +192,6 @@ var treeMapConfig = {
           default:return "#000";
         }
       },
-      // fontStyle: "Bold",
       font: function (ctx) {
         var item = ctx.dataset.data[ctx.dataIndex];
         if (item.l==1)
@@ -216,21 +213,25 @@ var treeMapConfig = {
     }]
   },
   options: {
-      responsive: true,
+       responsive: true,
       plugins: {
-        title: { display: false },
-        legend: { display: false },
-        tooltip: { enabled: false }
+        title: {
+          display: true,
         },
-        maintainAspectRatio: false,
-        title: { display: false},
-        animation: { duration: 600 },
+        legend: {
+          display: false,
+        },
+    tooltip: { enabled: false },
+    },
+    maintainAspectRatio: false,
+    title: { display: false},
+    animation: { duration: 600 },
 
     onClick: function (event, active) {
       var chart = this;
       for (let i = 0; i < active.length; i++) {
         const item = active[i];
-        var data = chart.data.datasets[item.datasetIndex].data[item.index];
+        var data = this.data.datasets[item.datasetIndex].data[item.index];
         if (data._data.children.length === 1) {
           window.location=data._data.children[0].url;
         }
@@ -239,7 +240,7 @@ var treeMapConfig = {
     onHover: (event, elements) => {
         const chartCanvas = event.native.target;
         chartCanvas.style.cursor = elements.length ? "pointer" : "default";
-        }
+    },
     }
   };
 
