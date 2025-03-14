@@ -506,6 +506,7 @@
     "supports-color": "^5.5.0",
     "supports-preserve-symlinks-flag": "^1.0.0",
     "svgo": "^2.8.0",
+    "sweetalert2": "^11.17.2",
     "tapable": "^2.2.1",
     "terser": "^5.16.9",
     "terser-webpack-plugin": "^5.3.7",

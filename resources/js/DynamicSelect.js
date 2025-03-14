@@ -4,7 +4,7 @@
  *
  * Released under the MIT license
  */
-class DynamicSelect {
+export default class DynamicSelect {
 
     constructor(element, options = {}) {
         let defaults = {
@@ -202,5 +202,3 @@ class DynamicSelect {
         this._eventHandlers();  // Reattach event handlers
     }
 }
-
-document.querySelectorAll('[data-dynamic-select]').forEach(select => new DynamicSelect(select));

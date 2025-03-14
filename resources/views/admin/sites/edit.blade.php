@@ -62,7 +62,6 @@
 @endsection
 
 @section('scripts')
-<script src="/js/DynamicSelect.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 

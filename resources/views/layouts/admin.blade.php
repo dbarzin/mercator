@@ -33,7 +33,7 @@
     <!--link href="{{ asset('css/custom.css') }}" rel="stylesheet" /-->
 
     <!-- DynamicSelect -->
-    <link href="{{ asset('css/DynamicSelect.css') }}" rel="stylesheet" />
+    <!--link href="{{ asset('css/DynamicSelect.css') }}" rel="stylesheet" /-->
 
     @yield('styles')
     <script>
@@ -56,7 +56,7 @@
     @vite(['resources/js/app.js'])
 
     <!-- SweetAlert -->
-    <script src="/js/sweetalert2.all.min.js"></script>
+    <!--script src="/js/sweetalert2.all.min.js"></script-->
 
     <!-- JQuery -->
     <!--script src="/js/jquery.min.js"></script-->
