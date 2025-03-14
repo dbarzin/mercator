@@ -213,15 +213,11 @@ var treeMapConfig = {
     }]
   },
   options: {
-       responsive: true,
-      plugins: {
-        title: {
-          display: true,
-        },
-        legend: {
-          display: false,
-        },
-    tooltip: { enabled: false },
+    responsive: true,
+    plugins: {
+        title: { display: true },
+        legend: { display: false },
+        tooltip: { enabled: false },
     },
     maintainAspectRatio: false,
     title: { display: false},
@@ -240,9 +236,9 @@ var treeMapConfig = {
     onHover: (event, elements) => {
         const chartCanvas = event.native.target;
         chartCanvas.style.cursor = elements.length ? "pointer" : "default";
-    },
+        },
     }
-  };
+};
 
 function createTreeMap(ctx, config) {
       window.treeMapChart=new Chart(ctx, config);

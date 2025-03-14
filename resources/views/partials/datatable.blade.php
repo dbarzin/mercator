@@ -1,19 +1,19 @@
+document.addEventListener("DOMContentLoaded", function () {
 
-    let table = new DataTable('{{ $id }}',{
+table = $('{{ $id }}').DataTable({
         keys: true,
         stateSave: true,
         responsive: true,
         colReorder: true,
 		autoWidth: true,
-
         columnDefs: [
             {
+                targets: 0,
                 orderable: false,
-                render: DataTable.render.select(),
-                targets: 0
-            }
-        ],
-
+                render: function (data, type, row) {
+                    return '<input type="checkbox">';
+                }
+            }],
         layout:
         {
     		paging: true,
@@ -110,8 +110,8 @@
             ],
         }
     );
-
     table
         .buttons(0, null)
         .container()
         .prependTo(table.table().container());
+});
