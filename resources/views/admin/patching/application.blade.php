@@ -198,7 +198,7 @@
 @section('scripts')
 <script>
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     /**
      * Contruction de la liste des évènements

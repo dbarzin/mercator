@@ -226,7 +226,7 @@ let _nodes = new Map();
         } ?> ]});
 @endforeach
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
     // initialize select2
     $('.select2').select2();
     $('.select2-free').select2({

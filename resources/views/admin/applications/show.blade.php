@@ -478,7 +478,7 @@
 @endsection
 @section('scripts')
 <script>
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function () {
         // Variable contenant la liste des évènements affichés sur la popup
         var swalHtml = @json($application->events);
 

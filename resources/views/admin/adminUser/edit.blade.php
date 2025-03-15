@@ -143,7 +143,7 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function () {
         $(".select2-free").select2({
             placeholder: "{{ trans('global.pleaseSelect') }}",
             allowClear: true,

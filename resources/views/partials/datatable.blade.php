@@ -10,9 +10,7 @@ table = $('{{ $id }}').DataTable({
             {
                 targets: 0,
                 orderable: false,
-                render: function (data, type, row) {
-                    return '<input type="checkbox">';
-                }
+                render: DataTable.render.select(),
             }],
         layout:
         {

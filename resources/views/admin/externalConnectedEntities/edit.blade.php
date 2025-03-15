@@ -181,7 +181,7 @@
 
 @section('scripts')
 <script>
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
@@ -192,7 +192,7 @@ $(document).ready(function () {
   }
 });
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   $(".select2-free").select2({
         placeholder: "{{ trans('global.pleaseSelect') }}",
         allowClear: true,

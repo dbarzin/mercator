@@ -66,7 +66,7 @@
 
 @section('scripts')
 <script>
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
