@@ -580,13 +580,7 @@
 @endsection
 
 @section('scripts')
-<!-- //d3js.org/d3.v5.min.js -->
-<script src="/js/d3.v5.min.js"></script>
-<!-- https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js -->
-<script src="/js/index.min.js"></script>
-<!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
-<script src="/js/d3-graphviz.js"></script>
-
+@vite(['resources/js/d3-viz.js'])
 <script>
 let dotSrc=`
 digraph  {
@@ -655,6 +649,7 @@ digraph  {
     @endforeach
 }`;
 
+document.addEventListener('DOMContentLoaded', () => {
 d3.select("#graph").graphviz()
     .addImage("/images/macroprocess.png", "64px", "64px")
     .addImage("/images/process.png", "64px", "64px")
@@ -664,6 +659,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/actor.png", "64px", "64px")
     .addImage("/images/information.png", "64px", "64px")
         .renderDot(dotSrc);
+});
 </script>
 @parent
 @endsection

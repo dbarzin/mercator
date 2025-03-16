@@ -754,39 +754,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            var allEditors = document.querySelectorAll('.ckeditor');
-            for (var i = 0; i < allEditors.length; ++i) {
-                ClassicEditor.create(
-                  allEditors[i], {
-                    extraPlugins: []
-                }
-                );
-            }
-
-            $(".select2-free").select2({
-                placeholder: "{{ trans('global.pleaseSelect') }}",
-                allowClear: true,
-                tags: true
-            });
-
-            $('.risk').select2({
-                templateSelection: function(data, container) {
-                    if (data.id==4)
-                         return '\<span class="highRisk"\>'+data.text+'</span>';
-                    else if (data.id==3)
-                         return '\<span class="mediumRisk"\>'+data.text+'</span>';
-                    else if (data.id==2)
-                         return '\<span class="lowRisk"\>'+data.text+'</span>';
-                    else if (data.id==1)
-                         return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-                    else
-                         return data.text;
-                    },
-                escapeMarkup: function(m) {
-                  return m;
-                }
-            });
-
         // ------------------------------------------------
          $('#vendor-selector').select2({
           placeholder: 'Start typing to search',
@@ -967,7 +934,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
     // Initialize the Dynamic Selects
-    /*
     dynamicSelect = new DynamicSelect('#iconSelect', {
         columns: 2,
         height: '140px',
@@ -1015,7 +981,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Select a PNG image.');
         }
     });
-    */
+
 });
 </script>
 @endsection

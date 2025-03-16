@@ -923,23 +923,9 @@
 @endsection
 
 @section('scripts')
-<!-- //d3js.org/d3.v5.min.js -->
-<script src="/js/d3.v5.min.js"></script>
-<!-- https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js -->
-<script src="/js/index.min.js"></script>
-<!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
-<script src="/js/d3-graphviz.js"></script>
-
+@vite(['resources/js/d3-viz.js'])
 <script>
 <?php
-    /*
-    $tableau20 = array (
-             "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78",
-             "#2CA02C", "#98DF8A", "#D62728", "#FF9896",
-             "#9467BD", "#C5B0D5", "#8C5694", "#C49C94",
-             "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7",
-             "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5");
-    */
     // Lighter colors
     $tableau20 = array (
              "#99cbed", "#dfe9f6", "#ffcc9f", "#ffe4c9",
@@ -1088,6 +1074,7 @@ digraph  {
 
 }`;
 
+document.addEventListener('DOMContentLoaded', () => {
 d3.select("#graph").graphviz()
     .addImage("/images/site.png", "64px", "64px")
     .addImage("/images/building.png", "64px", "64px")
@@ -1113,6 +1100,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/security.png", "64px", "64px")
     .engine('dot')
     .renderDot(dotSrc);
+});
 </script>
 @parent
 @endsection

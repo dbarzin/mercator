@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 // Home page charts
                 'resources/js/chart-home.js',
+                'resources/js/chart-maturity.js',
                 // Mapping TypeScript and styles
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',

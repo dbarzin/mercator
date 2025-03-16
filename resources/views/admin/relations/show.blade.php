@@ -238,56 +238,54 @@
 
 @section('scripts')
 @if ($relation->values()->count()>1)
-<script src="/js/Chart.bundle.js"></script>
 <script>
-    window.onload = function() {
+window.onload = function() {
+    var ctx = document.getElementById('chart_value_canvas').getContext('2d');
 
-      var ctx = document.getElementById('chart_value_canvas').getContext('2d');
-
-      const data = [
+    const data = [
         @foreach($relation->values()->get() as $value)
         { x: new Date('{{ Carbon\Carbon::createFromFormat(config("panel.date_format"), $value->date_price)->format("Y-m-d") }}'), y: {{ $value->price }} },
         @endforeach
-      ];
+    ];
 
-      var chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-
-              datasets: [{
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
                 data: data,
-                }]
-            },
-
-            options: {
-                responsive: true,
-                 legend: {
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
                     display: false,
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
                 },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                   xAxes: [{
-                        type: 'time',
+                x: {
+                    type: 'time',
+                    title: {
                         display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Date'
-                        },
-                        ticks: {
-                            major: {
-                                fontStyle: 'bold',
-                                fontColor: '#FF0000'
-                            }
+                        text: 'Date'
+                    },
+                    ticks: {
+                        major: {
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            },
+                            color: '#FF0000'
                         }
-                    }],
-                },
+                    }
+                }
             }
-        });
-    }
+        }
+    });
+}
 </script>
 @endif
 @endsection

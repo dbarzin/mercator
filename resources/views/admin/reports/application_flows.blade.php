@@ -586,13 +586,7 @@
 @endsection
 
 @section('scripts')
-<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
-<script src="/js/d3.v5.min.js"></script>
-<!-- https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js -->
-<script src="/js/index.min.js"></script>
-<!--<script src="https://unpkg.com/d3-graphviz@4.0.0/build/d3-graphviz.js"></script>-->
-<script src="/js/d3-graphviz.js"></script>
-
+@vite(['resources/js/d3-viz.js'])
 <script>
 let dotSrc=`
 digraph  {
@@ -648,6 +642,7 @@ digraph  {
     @endcan
 }`;
 
+document.addEventListener('DOMContentLoaded', () => {
 d3.select("#graph").graphviz()
     .addImage("/images/application.png", "64px", "64px")
     @foreach($applications as $application)
@@ -660,6 +655,7 @@ d3.select("#graph").graphviz()
     .addImage("/images/database.png", "64px", "64px")
     .engine("circo")
     .renderDot(dotSrc);
+});
 </script>
 @parent
 @endsection
