@@ -673,6 +673,7 @@
 
 @section('scripts')
 <script>
+// $(document).ready(function () {
 document.addEventListener("DOMContentLoaded", function () {
 
         /**
@@ -692,9 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return ret;
         }
 
-        /**
-         * Fire the popup
-         */
+        // Fire the popup
             $('.events_list_button').click(function(e) {
                 e.preventDefault()
                 Swal.fire({
@@ -730,9 +729,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             })
 
-        /**
-         * Send AJAX for adding an event
-         */
+        // Send AJAX for adding an event
             $('#addEventBtn').on('click', function(e) {
                 e.preventDefault();
                 let app_id = {{ $application->id }};
@@ -970,6 +967,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
     // Initialize the Dynamic Selects
+    /*
     dynamicSelect = new DynamicSelect('#iconSelect', {
         columns: 2,
         height: '140px',
@@ -1009,7 +1007,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		                    imgHeight: '100px',
 		                });
 					// refresh
-					dynamicSelect.refresh(imagesData, file.name);
+                    dynamicSelect.refresh(imagesData, file.name);
                 };
                 reader.readAsDataURL(file);
             }
@@ -1017,6 +1015,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Select a PNG image.');
         }
     });
+    */
 });
 </script>
 @endsection

@@ -285,9 +285,16 @@
 @endsection
 
 @section('scripts')
-<script src="/js/DynamicSelect.js"></script>
+<!--script src="/js/DynamicSelect.js"></script-->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+
+//document.addEventListener("DOMContentLoaded", function () {
+window.onload = function () {
+    console.log('DOMContentLoaded - site.edit ');
+
+    select2($);
+
+  $('.select2').select2();
 
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
@@ -345,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             @endforeach
         ];
-
+/*
     // Initialize the Dynamic Selects
     dynamicSelect = new DynamicSelect('#iconSelect', {
         columns: 2,
@@ -394,7 +401,8 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Select a PNG image.');
         }
     });
+*/
+};
 
-});
 </script>
 @endsection

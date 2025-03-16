@@ -293,49 +293,14 @@
 @endsection
 
 @section('scripts')
-<script src="/js/dropzone.js"></script>
-
 <script>
-Dropzone.autoDiscover = false;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-
-    $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-        },
-        escapeMarkup: function(m) {
-          return m;
-      }
-    });
-
-    //=============================================================================
+     //=============================================================================
     var dynamicInputRow = {{ $values->count() }};
 
+    // Initialiser Dropzone
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },

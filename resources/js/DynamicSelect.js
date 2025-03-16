@@ -201,4 +201,5 @@ export default class DynamicSelect {
         this._updateSelected();
         this._eventHandlers();  // Reattach event handlers
     }
+
 }
