@@ -8,9 +8,10 @@ export default defineConfig({
                 // All common resources
                 'resources/js/app.js',
                 'resources/css/app.css',
-                // Home page charts
+                // Charts
                 'resources/js/chart-home.js',
                 'resources/js/chart-maturity.js',
+                'resources/js/chart-relation.js',
                 // Mapping TypeScript and styles
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',

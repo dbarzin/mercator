@@ -265,7 +265,6 @@
 
 @section('scripts')
 @vite(['resources/js/d3-viz.js'])
-
 <script id="dot-input">
  let dotSrc = `
   digraph  {

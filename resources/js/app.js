@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $('.select2').select2();
 
   $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
+        placeholder: "",
         allowClear: true,
         tags: true
     })

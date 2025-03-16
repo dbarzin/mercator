@@ -238,54 +238,13 @@
 
 @section('scripts')
 @if ($relation->values()->count()>1)
+@vite(['resources/js/chart-relation.js'])
 <script>
-window.onload = function() {
-    var ctx = document.getElementById('chart_value_canvas').getContext('2d');
-
-    const data = [
-        @foreach($relation->values()->get() as $value)
-        { x: new Date('{{ Carbon\Carbon::createFromFormat(config("panel.date_format"), $value->date_price)->format("Y-m-d") }}'), y: {{ $value->price }} },
-        @endforeach
-    ];
-
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                data: data,
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false,
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    type: 'time',
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    },
-                    ticks: {
-                        major: {
-                            font: {
-                                weight: 'bold',
-                                size: 12
-                            },
-                            color: '#FF0000'
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
+window.data = [
+    @foreach($relation->values()->get() as $value)
+    { x: new Date('{{ Carbon\Carbon::createFromFormat(config("panel.date_format"), $value->date_price)->format("Y-m-d") }}'), y: {{ $value->price }} },
+    @endforeach
+];
 </script>
 @endif
 @endsection
