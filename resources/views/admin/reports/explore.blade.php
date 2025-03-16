@@ -93,8 +93,7 @@
 @endsection
 
 @section('scripts')
-<script src="/js/vis-network.min.js"></script>
-
+@vite(['resources/js/vis-network.js'])
 <script>
     let nodes = null;
     let edges = null;
@@ -235,9 +234,10 @@
         });
     }
 
-    window.onload = function() {
+//    window.onload = function() {
+document.addEventListener('DOMContentLoaded', () => {
         draw();
-
+});
         network.on("click", function (params) {
             // console.log("click on : "+params.nodes[0]);
             //nodes.remove(params.nodes[0]);
@@ -391,7 +391,7 @@
             }
       });
 
-    }
+    
 
     const network_container = document.getElementById('mynetwork');
 
@@ -590,8 +590,6 @@
         $('#node').val(null).trigger("change");
     }
 
-    // initialize select2
-    $('.select2').select2();
 
     // clear selections
     $('#filters').val(null).trigger('change');

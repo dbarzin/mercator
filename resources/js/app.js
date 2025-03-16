@@ -7,6 +7,7 @@ import select2 from 'select2';
 /* Datatables from : https://datatables.net/download/#bs5/jszip-3.10.1/pdfmake-0.2.7/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1 */
 import jszip from 'jszip';
 import pdfmake from 'pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 //import DataTable from 'datatables.net-dt'; // not -bs5 ????
 import DataTable from 'datatables.net-bs5';
 //import 'datatables.net-bs5'; // not -bs5 ????
@@ -173,11 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
       }, 275);
   })
-
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('sidebar-hidden');
-        document.getElementById('content').classList.toggle('content-expanded');
-    }
 
     let sidebar = document.querySelector(".sidebar");
     let dropdowns = document.querySelectorAll(".sidebar .dropdown-toggle");

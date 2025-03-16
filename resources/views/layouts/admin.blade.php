@@ -12,10 +12,16 @@
     @include('partials.navbar')
     <div class="d-flex">
     @include('partials.sidebar')
-        <div class="content flex-grow-1 p-4">
+        <div id="content-home" class="content flex-grow-1 p-4">
             @yield('content')
         </div>
     </div>
+    <script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('sidebar-hidden');
+        document.getElementById('content-home').classList.toggle('content-expanded');
+    }
+    </script>
     @yield('scripts')
     <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
