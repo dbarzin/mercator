@@ -48,9 +48,8 @@
                         </td>
                         <td style="text-align: right; vertical-align: right;">
                             &nbsp;
-                            <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#">
-                                <i class="bi bi-camera-fill"></i>
-                                Photo
+                            <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                            Photo
                             </a>
                             <a id="canvasImg" download="filename"></a>
                         </td>
@@ -58,12 +57,12 @@
                     <tr>
                         <td colspan="3">
                     <a href="#" onclick="network.deleteSelected()" class="command">
-                        <i class="bi bi-dash-circle-fill"></i>
+                        <i class="fas fa-minus-circle"></i>
                         {{ trans("cruds.report.explorer.delete") }}
                     </a>
                     &nbsp;
                     <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                        <i class="bi bi-arrow-repeat"></i>
+                        <i class="fas fa-repeat"></i>
                         {{ trans("cruds.report.explorer.reload") }}
                     </a>
                     <input type="checkbox" id="physicsCheckbox" class="command" checked>
@@ -92,9 +91,12 @@
 <ul id="explore_context"></ul>
 @endsection
 
+
 @section('scripts')
+
 @vite(['resources/js/vis-network.js'])
 <script>
+
     let nodes = null;
     let edges = null;
     let network = null;
@@ -167,10 +169,10 @@
     // Called when the Visualization API is loaded.
     function draw() {
 
-        nodes = new vis.DataSet();
+        nodes = new DataSet();
 
         // create an array with edges
-        edges = new vis.DataSet([]);
+        edges = new DataSet([]);
 
         // create a network
         let container = document.getElementById("mynetwork");
@@ -216,7 +218,7 @@
           }
         };
 
-        network = new vis.Network(container, data, options);
+        network = new Network(container, data, options);
 
         // Add Nodes from parameter
         @if (Request::get("node")!==null)
@@ -234,10 +236,9 @@
         });
     }
 
-//    window.onload = function() {
-document.addEventListener('DOMContentLoaded', () => {
+    window.onload = function() {
         draw();
-});
+
         network.on("click", function (params) {
             // console.log("click on : "+params.nodes[0]);
             //nodes.remove(params.nodes[0]);
@@ -391,14 +392,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
       });
 
-    
+    }
 
     const network_container = document.getElementById('mynetwork');
 
     document.addEventListener('keypress', handle_keypressed);
 
     function handle_keypressed(e) {
-        console.log("e.key= "+e.key)
+      // console.log("e.key= "+e.key)
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
@@ -416,12 +417,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    $('body').keydown(function(event){
-        // delete
-        if((event.keyCode == 8)||(event.keyCode == 46)) {
-            network.deleteSelected()
-        }
-     });
 
     // Enable/Disable physics on network
     let physicsCheckbox = document.getElementById('physicsCheckbox');
@@ -589,7 +584,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         $('#node').val(null).trigger("change");
     }
-
+document.addEventListener('DOMContentLoaded', () => {
+    $('body').keydown(function(event){
+        // delete
+        if((event.keyCode == 8)||(event.keyCode == 46)) {
+            network.deleteSelected()
+        }
+     });
 
     // clear selections
     $('#filters').val(null).trigger('change');
@@ -604,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .on('select2:unselect', function(e) {
             apply_filter();
         });
-
+    });
 
 </script>
 

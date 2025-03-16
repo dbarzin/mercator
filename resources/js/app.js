@@ -8,9 +8,7 @@ import select2 from 'select2';
 import jszip from 'jszip';
 import pdfmake from 'pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-//import DataTable from 'datatables.net-dt'; // not -bs5 ????
 import DataTable from 'datatables.net-bs5';
-//import 'datatables.net-bs5'; // not -bs5 ????
 import 'datatables.net-autofill-bs5';
 import 'datatables.net-buttons-bs5';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
