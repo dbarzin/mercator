@@ -70,6 +70,3 @@
     </div>
 </form>
 @endsection
-
-@section('scripts')
-@endsection

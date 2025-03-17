@@ -158,32 +158,12 @@
     </div>
 
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.physical-routers.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
 </form>
-@endsection
-
-@section('scripts')
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-
-});
-</script>
 @endsection

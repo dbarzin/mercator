@@ -55,6 +55,8 @@ window.DataTable = DataTable;
 window.select2 = select2;
 window.Dropzone = Dropzone;
 
+console.log("app.js");
+
 // Désactive la configuration automatique
 Dropzone.autoDiscover = false;
 

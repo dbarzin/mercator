@@ -167,7 +167,7 @@
                     <div class="form-group">
                         <label for="vendor">{{ trans('cruds.peripheral.fields.vendor') }}</label>
                         <div class="form-group">
-                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                            <select id="vendor-selector" class="form-control" name="vendor">
                                 <option>{{ old('vendor') }}</option>
                             </select>
                             <span class="help-block">{{ trans('cruds.peripheral.fields.vendor_helper') }}</span>
@@ -178,7 +178,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="product">{{ trans('cruds.peripheral.fields.product') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="product">
+                        <select id="product-selector" class="form-control" name="product">
                             <option>{{ old('product') }}</option>
                         </select>
                         @if($errors->has('product'))
@@ -192,7 +192,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="version">{{ trans('cruds.peripheral.fields.version') }}</label>
-                        <select id="version-selector" class="form-control select2-free" name="version">
+                        <select id="version-selector" class="form-control" name="version">
                             <option>{{ old('version', '') }}</option>
                         </select>
                         @if($errors->has('version'))
@@ -315,20 +315,6 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
 
     // CPE
     // ------------------------------------------------

@@ -65,7 +65,4 @@
         </button>
     </div>
 </form>
-
-
-
 @endsection

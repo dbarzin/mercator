@@ -507,7 +507,7 @@
                     <div class="form-group">
                         <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
                         <div class="form-group">
-                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                            <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
                             </select>
                             <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
@@ -518,7 +518,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="product">{{ trans('cruds.application.fields.product') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="product">
+                        <select id="product-selector" class="form-control" name="product">
                             <option>{{ old('product', '') }}</option>
                         </select>
                         @if($errors->has('product'))
@@ -532,7 +532,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
-                        <select id="version-selector" class="form-control select2-free" name="version">
+                        <select id="version-selector" class="form-control" name="version">
                             <option>{{ old('version', '') }}</option>
                         </select>
                         @if($errors->has('version'))
@@ -648,47 +648,25 @@
 @endsection
 
 @section('scripts')
-<script src="/js/DynamicSelect.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+//$(document).ready(function() {
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
+console.log("document ready");
 
-    $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
+$('#vendor-selector').on('select2:open', function() {
+  console.log('Select2 opened');
+});
 
-    $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-            },
-        escapeMarkup: function(m) {
-          return m;
-        }
-    });
+$('#vendor-selector').on('select2:select', function(e) {
+  console.log('Selected option', e.params.data);
+});
 
     // CPE
     // ------------------------------------------------
-    $('#vendor-selector').select2({
+    $('.vendor-selector').select2({
       placeholder: 'Start typing to search',
+      allowClear: true,
       tags: true,
       ajax: {
         url: '/admin/cpe/search/vendors',
@@ -700,6 +678,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return query;
         },
         processResults: function(data) {
+console.log("Data received:", data);
           var results = [];
           if (data.length) {
             $.each(data, function(id, vendor) {
@@ -709,13 +688,15 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             });
           }
-
+ console.log("Processed results:", results);
           return {
             results: results
           };
         }
       }
     });
+
+console.log("CPE initialized");
 
     // ------------------------------------------------
     $('#product-selector').select2({

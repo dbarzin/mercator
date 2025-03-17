@@ -12,17 +12,18 @@ class CPEController extends Controller
 {
     public function vendors(Request $request)
     {
-        $part = $request->query('part');
-
         $query = CPEVendor::limit(100);
-        $query->where('part', '=', $part);
+
+        $part = $request->query('part');
+        if ($part!==null)
+            $query->where('part', '=', $part);
 
         $search = $request->query('search');
-        if ($search) {
+        if ($search)
             $query->where('name', 'LIKE', $search . '%');
-        }
 
         $vendors = $query->get();
+        
         return response()->json($vendors);
     }
 
