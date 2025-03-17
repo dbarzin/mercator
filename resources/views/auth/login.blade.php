@@ -7,6 +7,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-color: #FFFFFF;
+        height: 800px;
         }
 
     .card {
@@ -49,7 +50,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fa fa-user"></i>
+                                <i class="bi bi-person-fill"></i>
                             </span>
                         </div>
 
@@ -64,7 +65,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></i></span>
                         </div>
 
                         <input id="password" name="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required placeholder="{{ trans('global.login_password') }}">

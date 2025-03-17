@@ -53,14 +53,14 @@
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>
-                        <input class="form-control date" type="text" name="start_validity" id="start_validity" value="{{ old('start_validity', $certificate->start_validity) }}">
+                        <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity', $certificate->start_validity) }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>
-                        <input class="date form-control" type="text" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
+                        <input class="form-control datepicker" type="date" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>
@@ -132,22 +132,6 @@
 @section('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
 });
-
-$(document).ready(function() {
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-  });
 </script>
 @endsection

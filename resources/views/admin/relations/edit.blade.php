@@ -366,13 +366,14 @@ document.addEventListener("DOMContentLoaded", function () {
             	}
           	})
         }
-    //-----------------------------------------
+
+       //-----------------------------------------
         $("#dynamic-ar").click(function () {
             if (($("#inputDateField").val()!='')&&($("#inputValueField").val()!='')) {
                 input = $("#dynamicAddRemove")
                     .append(
                         '<tr>\
-                        <td><div class="col"><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
+                        <td><div class="col"><input type="date" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
                         <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
                         <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
                         </tr>');

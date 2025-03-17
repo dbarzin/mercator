@@ -1,5 +1,5 @@
 import 'bootstrap';
-import "bootstrap-datetime-picker";
+//import "bootstrap-datetime-picker";
 /*==================================*/
 import $ from 'jquery';
 import select2 from 'select2';
@@ -27,7 +27,7 @@ import 'datatables.net-searchbuilder-bs5';
 import 'datatables.net-searchpanes-bs5';
 import 'datatables.net-select-bs5';
 import 'datatables.net-staterestore-bs5';
-//=========================================
+//========================================
 import "datatables.net-bs5/css/dataTables.bootstrap5.css"
 //==========================================
 import DynamicSelect from "./DynamicSelect"
@@ -61,47 +61,13 @@ Dropzone.autoDiscover = false;
 // $(document).ready(function () {
 document.addEventListener("DOMContentLoaded", function () {
 
-  window._token = $('meta[name="csrf-token"]').attr('content')
-  moment.updateLocale('en', {
+    window._token = $('meta[name="csrf-token"]').attr('content')
+    moment.updateLocale('en', {
     week: {dow: 1} // Monday is the first day of the week
-  })
+    })
 
-
-  // Initialiser DataTables sur les éléments ayant la classe .datatable
-  $(".datatable").DataTable();
-
-  $('.date').datetimepicker({
-    format: 'DD/MM/YYYY',
-    locale: 'en',
-    icons: {
-      up: 'fas fa-chevron-up',
-      down: 'fas fa-chevron-down',
-      previous: 'fas fa-chevron-left',
-      next: 'fas fa-chevron-right'
-    }
-  })
-
-  $('.datetime').datetimepicker({
-    format: 'DD/MM/YYYY HH:mm:ss',
-    locale: 'en',
-    sideBySide: true,
-    icons: {
-      up: 'fas fa-chevron-up',
-      down: 'fas fa-chevron-down',
-      previous: 'fas fa-chevron-left',
-      next: 'fas fa-chevron-right'
-    }
-  })
-
-  $('.timepicker').datetimepicker({
-    format: 'HH:mm:ss',
-    icons: {
-      up: 'fas fa-chevron-up',
-      down: 'fas fa-chevron-down',
-      previous: 'fas fa-chevron-left',
-      next: 'fas fa-chevron-right'
-    }
-  })
+    // Initialiser DataTables sur les éléments ayant la classe .datatable
+    $(".datatable").DataTable();
 
   // CKEditor
   var allEditors = document.querySelectorAll('.ckeditor');
@@ -112,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     );
   }
-
 
   // Select2
   $('.select2').select2();
