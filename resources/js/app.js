@@ -20,7 +20,7 @@ import 'datatables.net-fixedcolumns-bs5';
 import 'datatables.net-fixedheader-bs5';
 import 'datatables.net-keytable-bs5';
 import 'datatables.net-responsive-bs5';
-import 'datatables.net-rowgroup-bs5';
+// import 'datatables.net-rowgroup-bs5';
 import 'datatables.net-rowreorder-bs5';
 import 'datatables.net-scroller-bs5';
 import 'datatables.net-searchbuilder-bs5';
@@ -55,15 +55,13 @@ window.DataTable = DataTable;
 window.select2 = select2;
 window.Dropzone = Dropzone;
 
-console.log("app.js");
-
-// Désactive la configuration automatique
+// Désactive la configuration automatique de Dropzone
 Dropzone.autoDiscover = false;
 
-// $(document).ready(function () {
 document.addEventListener("DOMContentLoaded", function () {
 
     window._token = $('meta[name="csrf-token"]').attr('content')
+
     moment.updateLocale('en', {
     week: {dow: 1} // Monday is the first day of the week
     })

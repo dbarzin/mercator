@@ -103,9 +103,7 @@
                                 <div class="col-lg">
                                     &nbsp; &nbsp;
                                     <input class="form-check-input" type="checkbox" name="global_periodicity" />
-                                    <label class="form-check-label" >
                                         Global
-                                    </label>
                                 </div>
                             </div>
                         </label>
@@ -141,7 +139,7 @@
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
                 <div class="form-group">
-                    <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                    <select id="vendor-selector" class="form-control" name="vendor">
                         <option>{{ old('vendor', $application->vendor) }}</option>
                     </select>
                     <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
@@ -152,7 +150,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                <select id="product-selector" class="form-control select2-free" name="product">
+                <select id="product-selector" class="form-control" name="product">
                     <option>{{ old('name', $application->product) }}</option>
                 </select>
                 @if($errors->has('product'))
@@ -166,7 +164,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                <select id="version-selector" class="form-control select2-free" name="version">
+                <select id="version-selector" class="form-control" name="version">
                     <option>{{ old('version', $application->version) }}</option>
                 </select>
                 @if($errors->has('version'))
@@ -443,56 +441,41 @@ $('#guess').click(function (event) {
 
 //=============================================================================
 
-$('#update_date')
-    .datetimepicker({
-        format: 'DD/MM/YYYY'
-    })
-   .on('dp.change', function (e) {
-       if ($('#patching_frequency').val()=="") {
-           $('#next_update').val("");
-       }
-       else {
-           var parts = $('#update_date.datepicker').val().split("/");
-           var d = new Date(parseInt(parts[2], 10),
-                             parseInt(parts[1], 10) - 1,
-                             parseInt(parts[0], 10));
-           d.setMonth(d.getMonth()+parseInt($('#patching_frequency').val()));
-           $("#next_update").val(
-               (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-               (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-       }
-   });
-
-$('#clock').click(function (e) {
-    if ($('#patching_frequency').val()!="") {
-       $('#update_date').val('{{ now()->format('d/m/Y') }}');
-       let d = new Date();
-       d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-       $('#next_update').val(
-           (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-           (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-        }
-    return false;
-});
-
-$('#patching_frequency').on('select2:select', function (e) {
-    if ($('#patching_frequency').val()=="") {
-        $('#next_update').val("");
-    }
-    else {
-        var parts = $('#update_date.datepicker').val().split("/");
-        var d = new Date(parseInt(parts[2], 10),
-                          parseInt(parts[1], 10) - 1,
-                          parseInt(parts[0], 10));
-        d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-        $('#next_update').val(
-            (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-            (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-    }
-});
+  $('#vendor-selector').on('select2:select', function(e) {
+    var selectedValue = e.params.data.id;
+    console.log('Selected value:', selectedValue);
+    // Appel de votre fonction ici
+    yourFunction(selectedValue);
+  });
 
 //=============================================================================
 
+    const update_date = document.getElementById('update_date');
+    const patching_frequency = document.getElementById('patching_frequency');
+    const next_update = document.getElementById('next_update');
+
+    update_date.addEventListener('change', function() {
+       if (patching_frequency.value=="") {
+           next_update.value="";
+       }
+       else {
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
+        }
+    });
+
+    $('#patching_frequency').on('select2:select', function (e) {
+        console.log("patching_frequency changed");
+        if ($('#patching_frequency').val()=="") {
+            $('#next_update').val("");
+        }
+       else {
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
+        }
+    });
 
 });
 
