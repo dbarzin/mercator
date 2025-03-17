@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
           LOGICALSERVER [label="{{ trans('cruds.logicalServer.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/lserver.png" href="/admin/logical-servers"]
           LOGICALROUTER [label="{{ trans('cruds.router.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/routers"]
           NETWORKSWITCHES [label="{{ trans('cruds.networkSwitch.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="/admin/network-switches"]
-          CERTIFICATE [label="{{ trans('cruds.certificate.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="/admin/network-switches"]
+          CERTIFICATE [label="{{ trans('cruds.certificate.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="/admin/certificates"]
 
           }
         subgraph clusterE {
