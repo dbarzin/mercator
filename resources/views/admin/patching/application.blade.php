@@ -85,9 +85,8 @@
                                 </div>
                             </td>
                             <td>
-                                <a href='' class="nav-link" id="clock">
-                                    <i class=" nav-icon fas fa-clock">
-                                    </i>
+                                <a href='' class="nav-link" id="clock" >
+                                    <i style="font-size: 10px;" class="bi bi-alarm"></i>
                                 </a>
                             </td>
                         </tr>
@@ -464,6 +463,16 @@ $('#guess').click(function (event) {
         next_update.value = newDate.format('YYYY-MM-DD');
         }
     });
+
+    $('#clock').click(function (e) {
+        if (patching_frequency.value!="") {
+            var today = moment();
+            update_date.value = today.format('YYYY-MM-DD')
+            var newDate = today.add(patching_frequency.value, 'months');
+            next_update.value = newDate.format('YYYY-MM-DD');
+            }
+        return false;
+        });
 
     $('#patching_frequency').on('select2:select', function (e) {
         console.log("patching_frequency changed");

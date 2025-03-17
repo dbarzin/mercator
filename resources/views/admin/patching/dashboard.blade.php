@@ -42,9 +42,8 @@
 @endsection
 
 @section('scripts')
-<script src="/js/Chart.bundle.js"></script>
-
 <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
 
   const ctx1 = document.getElementById('doughnut_chart1_div').getContext('2d');
 
@@ -63,7 +62,7 @@
                     foreach($patches as $patch) {
                         if ($patch->next_update==null)
                             $undef++;
-                        elseif (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                        elseif (\Carbon\Carbon::parse($patch->next_update)->isPast())
                             $late++;
                         else
                             $made++;
@@ -115,8 +114,8 @@
                 foreach($patches as $patch) {
                     if (
                         ($patch->update_date!==null) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->month===$month) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->year===$year)
+                        (Carbon\Carbon::parse($patch->update_date)->month===$month) &&
+                        (Carbon\Carbon::parse($patch->update_date)->year===$year)
                     )
                         $count++;
                     }
@@ -138,9 +137,9 @@
                 foreach($patches as $patch) {
                     if (
                         ($patch->next_update!==null) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->month==$month) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->year==$year) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today())
+                        (Carbon\Carbon::parse($patch->next_update)->month==$month) &&
+                        (Carbon\Carbon::parse($patch->next_update)->year==$year) &&
+                        (Carbon\Carbon::parse($patch->next_update)->lt(today())
                         )
                     ) {
                         $count++;
@@ -164,9 +163,9 @@
                 foreach($patches as $patch) {
                     if (
                         ($patch->next_update!==null) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->month==$month) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->year==$year) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->gt(today()))
+                        (Carbon\Carbon::parse($patch->next_update)->month==$month) &&
+                        (Carbon\Carbon::parse($patch->next_update)->year==$year) &&
+                        (Carbon\Carbon::parse($patch->next_update)->gt(today()))
                     )
                         $count++;
                     }
@@ -224,7 +223,7 @@
                     if (str_contains($patch->attributes, $attribute)) {
                         if (
                             ($patch->next_update!==null) &&
-                            (!Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                            (!Carbon\Carbon::parse($patch->next_update)->lt(today()))
                         )
                             $count++;
                         }
@@ -247,7 +246,7 @@
                     if (str_contains($patch->attributes, $attribute)) {
                         if (
                         ($patch->next_update!==null) &&
-                        (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                        (Carbon\Carbon::parse($patch->next_update)->lt(today()))
                         )
                     {
                         $count++;
@@ -345,7 +344,7 @@
             tags: true
         });
     });
-
+});
 
 </script>
 @endsection

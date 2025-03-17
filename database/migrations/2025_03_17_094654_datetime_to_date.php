@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::table('m_applications', function (Blueprint $table) {
             $table->date('install_date')->nullable()->change();
             $table->date('update_date')->nullable()->change();
+            $table->date('next_update')->nullable()->change();
+        });
+
+        Schema::table('logical_servers', function (Blueprint $table) {
+            $table->date('install_date')->nullable()->change();
+            $table->date('update_date')->nullable()->change();
         });
     }
 
@@ -23,6 +29,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('m_applications', function (Blueprint $table) {
+            $table->datetime('install_date')->nullable()->change();
+            $table->datetime('update_date')->nullable()->change();
+            $table->datetime('next_update')->nullable()->change();
+        });
+
+        Schema::table('logical_servers', function (Blueprint $table) {
             $table->datetime('install_date')->nullable()->change();
             $table->datetime('update_date')->nullable()->change();
         });
