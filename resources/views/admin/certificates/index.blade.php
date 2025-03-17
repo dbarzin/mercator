@@ -73,14 +73,10 @@
                                 {!! $certificate->description ?? '' !!}
                             </td>
                             <td>
-                                @if($certificate->start_validity!=null)
-                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->start_validity)->format('Y-m-d')  ?? '' !!}
-                                @endif
+                                {{ $certificate->start_validity }}
                             </td>
                             <td>
-                                @if($certificate->end_validity!=null)
-                                    {!! Carbon\Carbon::createFromFormat('d/m/Y', $certificate->end_validity)->format('Y-m-d')  ?? '' !!}
-                                @endif
+                                {{ $certificate->end_validity }}
                             </td>
                             <td>
                                 @if ($certificate->status==0)

@@ -54,13 +54,23 @@
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.start_validity') }}</label>
                         <input class="form-control date-input" type="date" name="start_validity" id="start_validity" value="{{ old('start_validity', $certificate->start_validity) }}">
+                        @if($errors->has('start_validity'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('start_validity') }}
+                            </div>
+                        @endif
                         <span class="help-block">{{ trans('cruds.certificate.fields.start_validity_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm">
                      <div class="form-group">
                         <label for="logical_servers">{{ trans('cruds.certificate.fields.end_validity') }}</label>
-                        <input class="form-control datepicker" type="date" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
+                        <input class="form-control date-input" type="date" id="end_validity" name="end_validity" value="{{ old('end_validity', $certificate->end_validity) }}">
+                        @if($errors->has('end_validity'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('end_validity') }}
+                            </div>
+                        @endif
                         <span class="help-block">{{ trans('cruds.certificate.fields.end_validity_helper') }}</span>
                     </div>
                 </div>

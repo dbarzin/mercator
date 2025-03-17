@@ -77,7 +77,7 @@
                             <td width="90%">
                                 <div class="form-group">
                                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                                    <input class="form-control datepicker" type="text" id="update_date" name="update_date"
+                                    <input class="form-control date" type="date" id="update_date" name="update_date"
                                     value="{{ old('update_date', $server->update_date) }}"
                                     >
                                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
@@ -123,7 +123,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
-                        <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $server->next_update) }}">
+                        <input class="form-control date" type="date" name="next_update"  id="next_update" value="{{ old('next_update', $server->next_update) }}">
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
-                    <input class="form-control date" type="text" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
+                    <input class="form-control date" type="date" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
@@ -322,21 +322,6 @@
 Dropzone.autoDiscover = false;
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
 
 
 //=============================================================================

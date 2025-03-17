@@ -25,11 +25,11 @@ class StoreCertificateRequest extends FormRequest
                 'unique:certificates,name,NULL,id,deleted_at,NULL',
             ],
             'start_validity' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'end_validity' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
                 'after:start_validity',
             ],

@@ -78,7 +78,7 @@
                             <td width="90%">
                                 <div class="form-group">
                                     <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                                    <input class="form-control datepicker" type="text" id="update_date" name="update_date"
+                                    <input class="form-control date" type="date" id="update_date" name="update_date"
                                     value="{{ old('update_date', $application->update_date) }}"
                                     >
                                     <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
@@ -124,7 +124,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="next_update">{{ trans('cruds.application.fields.next_update') }}</label>
-                        <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
+                        <input class="form-control date" type="date" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
                         <span class="help-block">{{ trans('cruds.application.fields.next_update_helper') }}</span>
                     </div>
                 </div>
@@ -281,42 +281,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             }
         });
-
-        var allEditors = document.querySelectorAll('.ckeditor');
-        for (var i = 0; i < allEditors.length; ++i) {
-            ClassicEditor.create(
-              allEditors[i], {
-                extraPlugins: []
-            }
-            );
-        }
-
-        $(".select2-free").select2({
-            placeholder: "{{ trans('global.pleaseSelect') }}",
-            allowClear: true,
-            tags: true
-        });
-
-        function template(data, container) {
-          if (data.id==4) {
-             return '\<span class="highRisk"\>'+data.text+'</span>';
-         } else if (data.id==3) {
-             return '\<span class="mediumRisk"\>'+data.text+'</span>';
-         } else if (data.id==2) {
-             return '\<span class="lowRisk"\>'+data.text+'</span>';
-         } else if (data.id==1) {
-             return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-         } else {
-             return data.text;
-         }
-     }
-
-     $('.risk').select2({
-      templateSelection: template,
-      escapeMarkup: function(m) {
-          return m;
-      }
-    });
 
     // ------------------------------------------------
      $('#vendor-selector').select2({

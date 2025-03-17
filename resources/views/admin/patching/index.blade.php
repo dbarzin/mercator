@@ -79,7 +79,7 @@
                         <tr data-entry-id="{{ $patch->id }}"
                             @if ($patch->next_update===null)
                                 class="table-secondary"
-                            @elseif (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                            @elseif (\Carbon\Carbon::parse($patch->next_update)->isPast())
                                 class="table-danger"
                             @else
                                 class="table-success"
@@ -147,10 +147,10 @@
                                 {{ $patch->attributes ?? '' }}
                             </td>
                             <td>
-                                {{ $patch->update_date!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->format("Y-m-d") : ""}}
+                                {{ $patch->update_date }}
                             </td>
                             <td>
-                                {{ $patch->next_update!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->format("Y-m-d") : ""}}
+                                {{ $patch->next_update }}
                             </td>
                             <td>
                                 @if ($patch->type=="SRV")

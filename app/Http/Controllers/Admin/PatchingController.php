@@ -168,7 +168,7 @@ class PatchingController extends Controller
             foreach ($apps as $s) {
                 $s->patching_frequency = $application->patching_frequency;
                 if ($s->update_date !== null) {
-                    $s->next_update = Carbon::createFromFormat(config('panel.date_format'), $s->update_date)->addMonth($application->patching_frequency)->format(config('panel.date_format'));
+                    $s->next_update = Carbon::parse($s->update_date)->addMonth((int)$application->patching_frequency);
                 }
                 $s->save();
             }
