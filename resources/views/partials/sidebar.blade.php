@@ -431,6 +431,6 @@
         </a>
     </div>
     <div class="sidebar-footer">
-        Version 2025.03.04
+        Version 2025.03.21
     </div>
 </nav>

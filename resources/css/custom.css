@@ -479,8 +479,8 @@ table .navbar-brand-full {
     min-height: 400px;
 }
 
- .graphviz svg {
+.graphviz svg {
     width: 100%;
-    height: auto;
+    height: 400px;
 }
 /***************************************************************************/
