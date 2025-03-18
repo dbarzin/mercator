@@ -25,12 +25,20 @@ class SsoController extends Controller
         }
 
         // Récupérer les rôles de Keycloak
-        $roles = $keycloakUser->user['realm_access']['roles'];
+        try {
+            $roles = $keycloakUser->user['realm_access']['roles'];
+        } catch (\Exception $e) {
+            $roles = array();
+        }
 
         // Trouver ou créer l'utilisateur dans la base de données locale
         $existingUser = User::where('email', $keycloakUser->email)->first();
 
         if (! $existingUser) {
+            if (! env('KEYCLOAK_AUTO_PROVISIONNING')) {
+                return redirect()->route('login')->with('message', 'User "' . $keycloakUser->email . '" is not a valid Mercator user.');
+            }
+
             $existingUser = new User();
             $existingUser->name = $keycloakUser->name; // Supposons que Keycloak fournit le nom de l'utilisateur
             $existingUser->email = $keycloakUser->email;

@@ -103,7 +103,7 @@
                 @if(env('KEYCLOAK') === 'enable')
                     <!-- Ajout du bouton pour se connecter via Keycloak -->
                     <div class="text-right mt-3">
-                        <a href="{{ route('login.keycloak') }}" class="btn btn-secondary">Keycloak</a>
+                        <a href="{{ route('login.keycloak') }}" class="btn btn-secondary">{{ (env('KEYCLOAK_BTN_LABEL') === null) ? "Keycloak" : env('KEYCLOAK_BTN_LABEL') }}</a>
                     </div>
                 @endif
 
