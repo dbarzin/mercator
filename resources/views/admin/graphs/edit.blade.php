@@ -296,21 +296,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('maximizeBtn').addEventListener('click', function () {
         const div = document.getElementById('myDiv');
         const sidebar = document.getElementById('sidebar');
+        const sidebarFooter = document.querySelector('.sidebar-footer');
 
-        // Vérifie si le div est déjà maximisé
         if (div.classList.contains('maximized')) {
-            // Restaurer la taille initiale
             div.classList.remove('maximized');
-            if (sidebar) sidebar.style.display = 'block'; // Rendre l'en-tête visible
-            document.getElementById('maximizeBtn').innerHTML = "&#8613;"
+            if (sidebar) sidebar.style.display = 'block';
+            if (sidebarFooter) sidebarFooter.style.display = 'block';
+            document.getElementById('maximizeBtn').innerHTML = "&#8613;";
         } else {
-            // Maximiser
             div.classList.add('maximized');
-            if (sidebar) sidebar.style.display = 'none'; // Masquer l'en-tête
-            document.getElementById('maximizeBtn').innerHTML = "&#8615;"
+            if (sidebar) sidebar.style.display = 'none';
+            if (sidebarFooter) sidebarFooter.style.display = 'none';
+            document.getElementById('maximizeBtn').innerHTML = "&#8615;";
         }
     });
-
     //--------------------------------------------------------------
     // Chargement du graphe
     loadGraph(`{!! $graph->content !!}`);

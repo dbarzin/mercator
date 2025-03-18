@@ -43,7 +43,7 @@
             <table class="table table-bordered table-striped table-hover datatable datatable-LogicalServer">
                 <thead>
                     <tr>
-                        <th width="10">
+                        <th width="0">
 
                         </th>
                         <th>

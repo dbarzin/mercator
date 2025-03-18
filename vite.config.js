@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
                 'resources/css/mapping.css',
+                'resources/js/d3-viz.js',
             ],
             refresh: true,
         }),

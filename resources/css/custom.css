@@ -122,14 +122,17 @@ body {
 .content-expanded {
     margin-left: 0;
 }
+
 .sidebar-footer {
-    padding: 70px;
+    position: fixed;
+    bottom: 0;
+    width: 230px;
     color: #000000;
     text-align: center;
     font-size: 12px;
     background-color: #f0f0f0;
-    margin-top: auto;
     border-top: 1px solid #ddd;
+    padding: 10px;
 }
 .sidebar .search-box {
     padding: -10px 15px 10px 15px;

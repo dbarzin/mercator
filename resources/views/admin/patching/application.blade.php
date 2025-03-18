@@ -56,9 +56,9 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-4">
                     <div class="form-group">
-                        <label class="recommended" for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
+                        <label class="recommended" for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
                             @foreach($attributes_list as $a)
                                 <option {{ str_contains(old('attributes') ? old('attributes') : $application->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
@@ -69,40 +69,33 @@
                                 {{ $errors->first('attributes') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.attributes_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.attributes_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <table width="100%">
-                        <tr>
-                            <td width="90%">
-                                <div class="form-group">
-                                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                                    <input class="form-control date" type="date" id="update_date" name="update_date"
-                                    value="{{ old('update_date', $application->update_date) }}"
-                                    >
-                                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href='' class="nav-link" id="clock" >
-                                    <i style="font-size: 10px;" class="bi bi-alarm"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-2">
+               <div class="col-3">
+                    <div class="form-group">
+                      <label for="update_date">Mise à jour</label>
+                      <div class="d-flex align-items-center">
+                        <input class="form-control date me-2" type="date" id="update_date" name="update_date" value="2023-10-01">
+                        <a href="#" class="nav-link" id="clock">
+                          <i class="bi bi-alarm-fill"></i>
+                        </a>
+                      </div>
+                      <span class="help-block">Date de mise à jour.</span>
+                    </div>
+                  </div>
+                <div class="col-2">
                     <div class="form-group">
                         <label for="update_date">
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col">
                                     Periodicité
                                 </div>
-                                <div class="col-lg">
-                                    &nbsp; &nbsp;
-                                    <input class="form-check-input" type="checkbox" name="global_periodicity" />
-                                        Global
+                                <div class="col-1 d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox" name="global_periodicity" id="globalCheckbox">
+                                    <label class="form-check-label" for="globalCheckbox">
+                                      Global
+                                    </label>
                                 </div>
                             </div>
                         </label>
@@ -118,23 +111,23 @@
                         <span class="help-block">Fréquence de mise à jour</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-3">
                     <div class="form-group">
-                        <label for="next_update">{{ trans('cruds.application.fields.next_update') }}</label>
+                        <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
                         <input class="form-control date" type="date" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
-                        <span class="help-block">{{ trans('cruds.application.fields.next_update_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
             </div>
         </div>
-<!------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------->
 <div class="card-header">
     Common Plateforme Enumeration (CPE)
 </div>
 <!------------------------------------------------------------------------------------------------------------->
 <div class="card-body">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
                 <div class="form-group">
@@ -146,7 +139,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.product') }}</label>
                 <select id="product-selector" class="form-control" name="product">
@@ -160,7 +153,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-3">
             <div class="form-group">
                 <label for="version">{{ trans('cruds.application.fields.version') }}</label>
                 <select id="version-selector" class="form-control" name="version">
@@ -174,7 +167,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-1">
             <div class="form-group">
                 <br>
                 <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
