@@ -466,11 +466,14 @@ table .navbar-brand-full {
 
 .graphviz {
     max-width: 80vw;
-    overflow-x: auto; /* Ajoute un scroll horizontal si nécessaire */
-    text-align: center; /* Centre le graphe */
+    overflow-x: auto;
+    text-align: center;
+    display: inline-block;
+    min-height: 400px; 
 }
 
-.xgraphviz svg {
-    width: 100% !important;
+ .graphviz svg {
+    width: 100%;
+    height: auto;
 }
 /***************************************************************************/

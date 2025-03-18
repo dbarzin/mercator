@@ -19,6 +19,7 @@ export default defineConfig({
                 'resources/js/map.edit.ts',
                 'resources/css/mapping.css',
                 'resources/js/d3-viz.js',
+                'resources/js/vis-network.js'
             ],
             refresh: true,
         }),
