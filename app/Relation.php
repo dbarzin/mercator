@@ -53,26 +53,6 @@ class Relation extends Model
         'deleted_at',
     ];
 
-    public function getStartDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setStartDateAttribute($value)
-    {
-        $this->attributes['start_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function getEndDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setEndDateAttribute($value)
-    {
-        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
     public function source()
     {
         return $this->belongsTo(Entity::class, 'source_id')->orderBy('name');
@@ -91,10 +71,5 @@ class Relation extends Model
     public function values()
     {
         return $this->hasMany(RelationValue::class, 'relation_id', 'id')->orderBy('date_price');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

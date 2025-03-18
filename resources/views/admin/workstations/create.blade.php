@@ -229,6 +229,9 @@
     </div>
 </div>
     <div class="form-group">
+        <a class="btn btn-default" href="{{ route('admin.workstations.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
         <button class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
@@ -237,7 +240,8 @@
 @endsection
 
 @section('scripts')
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------------------
     // Initialize imageSelect
 	imagesData =

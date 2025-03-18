@@ -163,15 +163,15 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="install_date">{{ trans('cruds.relation.fields.start_date') }}</label>
-                        <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date', $relation->start_date) }}">
+                        <label for="start_date">{{ trans('cruds.relation.fields.start_date') }}</label>
+                        <input class="form-control" type="date" name="start_date" id="start_date" value="{{ old('start_date', $relation->start_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.start_date_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="install_date">{{ trans('cruds.relation.fields.end_date') }}</label>
-                        <input class="form-control date" type="text" name="end_date" id="start_date" value="{{ old('end_date', $relation->end_date) }}">
+                        <label for="end_date">{{ trans('cruds.relation.fields.end_date') }}</label>
+                        <input class="form-control" type="date" name="end_date" id="end_date" value="{{ old('end_date', $relation->end_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.end_date_helper') }}</span>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                     <tr>
                         <td>
                             <div class="col">
-                            <input type="text" class="form-control date" id="inputDateField"/>
+                            <input type="date" class="form-control" id="inputDateField"/>
                             </div>
                         </td>
                         <td>
@@ -229,7 +229,7 @@
                         <tr>
                         <td>
                             <div class="col">
-                            <input type="text" name="dates[]" value="{{ \Carbon\Carbon::parse($value->date_price)->format(config('panel.date_format')) }}" class="form-control date" />
+                            <input type="date" name="dates[]" value="{{ $value->date_price }}" class="form-control" />
                             </div>
                         </td>
                         <td>

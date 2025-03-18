@@ -242,7 +242,7 @@
 <script>
 window.data = [
     @foreach($relation->values()->get() as $value)
-    { x: new Date('{{ Carbon\Carbon::createFromFormat(config("panel.date_format"), $value->date_price)->format("Y-m-d") }}'), y: {{ $value->price }} },
+    { x: new Date('{{ $value->date_price }}'), y: {{ $value->price }} },
     @endforeach
 ];
 </script>
