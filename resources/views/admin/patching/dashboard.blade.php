@@ -80,9 +80,14 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     options: {
       responsive: true,
-      legend: {
-                 display: true,
-             },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      datalabels: {
+        display: false
+      }
+      },
     },
 };
 
@@ -181,17 +186,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     options: {
         responsive: true,
-        legend: {
-                   display: false,
-               },
+        plugins: {
+          legend: {
+            display: false,
+          },
+      datalabels: {
+        display: false
+      }
+    },
        scales: {
-            xAxes: [{
+            x: {
                 stacked: true
-            }],
-            yAxes: [{
+            },
+            y: {
                 stacked: true
-            }]
-        }
+            }
+        },
     }
   };
 
@@ -200,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const ctx3 = document.getElementById('bar_chart3_div').getContext('2d');
 
   const cfg3 = {
-    type: 'horizontalBar',
+    type: 'bar',
     data: {
         labels: [
             <?php
@@ -284,45 +294,49 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     ]},
     options: {
-
+    indexAxis: 'y', 
    responsive: true,
    maintainAspectRatio: false,
 
-  tooltips: {
-    enabled: false },
-
-  hover: {
-    animationDuration: 0 },
+  plugins: {
+    tooltip: {
+      enabled: false
+    },
+    legend: {
+      display: false
+    },
+      datalabels: {
+        display: false
+      }
+  },
 
   scales: {
-    xAxes: [{
+    x: {
       ticks: {
         beginAtZero: true,
-        fontFamily: "'Open Sans Bold', sans-serif",
-        fontSize: 11 },
-
-      scaleLabel: {
-        display: false },
-
-      gridLines: {},
-
-      stacked: true }],
-
-    yAxes: [{
-      gridLines: {
+        font: {
+          family: "'Open Sans Bold', sans-serif",
+          size: 11
+        }
+      },
+      stacked: true
+    },
+    y: {
+      ticks: {
+        font: {
+          family: "'Open Sans Bold', sans-serif",
+          size: 11
+        }
+      },
+      stacked: true,
+      grid: {
         display: false,
         color: "#fff",
         zeroLineColor: "#fff",
-        zeroLineWidth: 0 },
-
-      ticks: {
-        fontFamily: "'Open Sans Bold', sans-serif",
-        fontSize: 11 },
-
-      stacked: true }]
-      },
-  legend: {
-    display: false },
+        zeroLineWidth: 0
+      }
+    }
+  },
     }
 
 };
@@ -337,14 +351,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --------------------------------------------------------------------
 
-    $(function () {
-        $(".select2-free").select2({
-            placeholder: "{{ trans('global.pleaseSelect') }}",
-            allowClear: true,
-            tags: true
-        });
-    });
 });
 
 </script>
+@vite(['resources/js/chart-patching.js'])
 @endsection

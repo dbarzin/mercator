@@ -12,7 +12,9 @@ export default defineConfig({
                 'resources/js/chart-home.js',
                 'resources/js/chart-maturity.js',
                 'resources/js/chart-relation.js',
+                'resources/js/chart-patching.js',
                 // Mapping TypeScript and styles
+                'resources/js/chart-relation.js',
                 'resources/js/map.show.ts',
                 'resources/js/map.edit.ts',
                 'resources/css/mapping.css',

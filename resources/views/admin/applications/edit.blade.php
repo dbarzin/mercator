@@ -12,7 +12,7 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-6">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
                         <input type="text" class="form-control" id="name" name="name" min="0" value="{{ old('name', $application->name) }}">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 @if (auth()->user()->granularity>=2)
-                <div class="col-md-3">
+                <div class="col-3">
                     <div class="form-group">
                         <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                         <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 @endif
-                <div class="col-md-3">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes" multiple>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-9">
                     <div class="form-group">
                         <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $application->description) !!}</textarea>
@@ -67,7 +67,7 @@
                         <span class="help-block">{{ trans('cruds.application.fields.description_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="iconSelect">{{ trans('global.icon_select') }}</label>
                         <select id="iconSelect" name="iconSelect" class="form-control"></select>
@@ -86,7 +86,7 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="responsible">{{ trans('cruds.application.fields.responsible') }}</label>
                     <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="responsibles[]" id="responsibles" multiple>
@@ -103,7 +103,7 @@
                 </div>
             </div>
             @if (auth()->user()->granularity>=2)
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
                     <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}" name="entity_resp_id" id="entity_resp_id">
@@ -120,7 +120,7 @@
                 </div>
             </div>
             @endif
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
                     <select class="form-control select2 {{ $errors->has('entities') ? 'is-invalid' : '' }}" name="entities[]" id="entities" multiple>
@@ -138,7 +138,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="referent">{{ trans('cruds.application.fields.functional_referent') }}</label>
                     <select class="form-control select2-free {{ $errors->has('functional_referent') ? 'is-invalid' : '' }}" name="functional_referent" id="referent">
@@ -157,7 +157,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.functional_referent_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="editor">{{ trans('cruds.application.fields.editor') }}</label>
                     <select class="form-control select2-free {{ $errors->has('editor') ? 'is-invalid' : '' }}" name="editor" id="editor">
@@ -178,7 +178,7 @@
             </div>
 
             @if (auth()->user()->granularity>=2)
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
                     <select class="form-control select2-free {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users" id="users">
@@ -200,7 +200,7 @@
             @endif
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                  <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
                  <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
@@ -230,7 +230,7 @@
     <div class="card-body">
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="technology">{{ trans('cruds.application.fields.technology') }}</label>
                     <select class="form-control select2-free {{ $errors->has('technology') ? 'is-invalid' : '' }}" name="technology" id="technology">
@@ -249,7 +249,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.technology_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="type">{{ trans('cruds.application.fields.type') }}</label>
                     <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -268,7 +268,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.type_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="external">{{ trans('cruds.application.fields.external') }}</label>
                     <select class="form-control select2-free {{ $errors->has('external') ? 'is-invalid' : '' }}" name="external" id="external">
@@ -289,14 +289,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
                     <input class="form-control date" type="date" name="install_date" id="install_date" value="{{ old('install_date', $application->install_date) }}">
                     <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
                     <input class="form-control date" type="date" id="update_date" name="update_date" value="{{ old('update_date', $application->update_date) }}">
@@ -305,11 +305,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="event_desc">{{ trans('cruds.application.fields.events') }}</label>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <textarea id="eventMessage" class="textarea-custom-size" rows="2" placeholder="{{ trans('cruds.application.fields.events_placeholder') }}" class="form-control" type="text" id="event_desc" value=""></textarea>
                             <a href="#" id="addEventBtn" class="btn btn-danger my-2">{{ trans('cruds.application.fields.events_add') }}</a>
                             <button class="btn btn-info my-3 events_list_button">
@@ -319,7 +319,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-6">
                 @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
@@ -386,7 +386,7 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-7">
                 <div class="form-group">
                     <label
                     @if (auth()->user()->granularity>=2)
@@ -530,22 +530,19 @@
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                    <div class="form-group">
-                        <select id="vendor-selector" class="form-control" name="vendor">
+                        <select id="vendor-selector" class="form-control select2-free" name="vendor">
                             <option>{{ old('vendor', $application->vendor) }}</option>
                         </select>
                         <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
                     </div>
-                </div>
             </div>
-
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                    <select id="product-selector" class="form-control" name="product">
+                    <select id="product-selector" class="form-control select2-free" name="product">
                         <option>{{ old('name', $application->product) }}</option>
                     </select>
                     @if($errors->has('product'))
@@ -556,10 +553,10 @@
                     <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-3">
                 <div class="form-group">
                     <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                    <select id="version-selector" class="form-control" name="version">
+                    <select id="version-selector" class="form-control select2-free" name="version">
                         <option>{{ old('version', $application->version) }}</option>
                     </select>
                     @if($errors->has('version'))
@@ -570,7 +567,7 @@
                     <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-1">
                 <div class="form-group">
                     <br>
                     <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
@@ -685,7 +682,7 @@ document.addEventListener("DOMContentLoaded", function () {
             @json($application->events).forEach (function(event) {
                 ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
                 ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
-                ret += '<i data-toggle="wy-nav-top" class="fa fa-times"></i></a>'+event.message+'</br>';
+                ret += '<i data-toggle="wy-nav-top" class="bi bi-trash-fill"></i></a>'+event.message+'</br>';
                 ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY')
                 ret += ' | Utilisateur : '+event.user.name+'</span>';
             });
@@ -753,14 +750,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                 }
             });
-
-        // ------------------------------------------------
-         $('#vendor-selector').select2({
+    //=====================================================
+    // CPE
+    // ------------------------------------------------
+    // $('#vendor-selector').select2('destroy');
+/*
+     $('#vendor-selector').select2({
           placeholder: 'Start typing to search',
           tags: true,
           ajax: {
             url: '/admin/cpe/search/vendors',
             data: function(params) {
+            console.log('Texte saisi :', params);
               var query = {
                 part: "a",
                 search: params.term,
@@ -768,6 +769,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return query;
         },
         processResults: function(data) {
+            console.log('Texte saisi :', params);
           var results = [];
           if (data.length) {
             $.each(data, function(id, vendor) {
@@ -783,6 +785,55 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             }
         });
+
+    /*
+    // Ajouter un gestionnaire d'événement pour le changement
+    $('#vendor-selector').on('change', function() {
+        // Appeler la fonction lorsque le champ change
+        console.log("change");
+        // do Ajax request
+    });
+
+    // Accéder à l'élément de saisie interne de Select2
+    $('#vendor-selector').on('select2:open', function() {
+        var $searchField = $('.select2-search__field');
+        var $selectElement = $(this); // Conserver une référence à l'élément Select2
+
+        // Ajouter un gestionnaire d'événement pour l'événement input
+        $searchField.on('input', function() {
+            var query = $(this).val();
+            console.log('Texte saisi :', query);
+
+            // Envoyer une requête AJAX
+            $.ajax({
+                url: '/admin/cpe/search/vendors',
+                dataType: 'json',
+                data: {
+                    part: "a",
+                    search: query
+                },
+                success: function(data) {
+                    console.log(data);
+
+                    // Convertir les nouvelles options au format attendu par Select2
+                    var select2Options = $.map(data, function(item) {
+                        return {
+                            id: item.id, // Assurez-vous que votre API renvoie un identifiant unique
+                            text: item.name // Assurez-vous que votre API renvoie un nom ou un texte
+                        };
+                    });
+
+                    // Mettre à jour les options du champ Select2
+                    $selectElement.empty().select2({
+                        data: select2Options
+                    }).trigger('change'); // Déclencher le changement pour mettre à jour l'affichage
+                }
+            });
+        });
+    });
+
+    function updateSelect2Options(newOptions) {
+    }
 
         // ------------------------------------------------
          $('#product-selector').select2({
@@ -814,7 +865,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         }
     });
-
         // ------------------------------------------------
          $('#version-selector').select2({
           placeholder: 'Start typing to search',
@@ -847,6 +897,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     });
+    */
 
     // CPE Guesser
     // ===========
@@ -858,7 +909,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ret += '<tr>';
             ret += '<td>' + element.vendor_name + '</td>';
             ret += '<td>' + element.product_name +'</td>';
-            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="bi bi-window-plus" style="color:green"></i></a>'
             ret += '</td>';
             ret += '</tr>';
         });
@@ -869,6 +920,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // CPE Guesser window
     $('#guess').click(function (event) {
         let name = $("#name").val();
+        console.log(name);
         $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
         .then((result)=>
             Swal.fire({
@@ -885,7 +937,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
                         $("#version-selector").val(null);
-                        swal.close();
+                        Swal.close();
                     })
                 },
                 showConfirmButton: false,

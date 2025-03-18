@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $('.select2').select2();
 
   $(".select2-free").select2({
-        placeholder: "",
+        placeholder: "...",
         allowClear: true,
         tags: true
     })

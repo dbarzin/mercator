@@ -13,7 +13,6 @@
                 <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
-                &nbsp;
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -130,19 +129,17 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                <div class="form-group">
-                    <select id="vendor-selector" class="form-control" name="vendor">
-                        <option>{{ old('vendor', $application->vendor) }}</option>
-                    </select>
-                    <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                </div>
+                <select id="vendor-selector" class="form-control select2" name="vendor">
+                    <option>{{ old('vendor', $application->vendor) }}</option>
+                </select>
+                <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
             </div>
         </div>
 
         <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                <select id="product-selector" class="form-control" name="product">
+                <select id="product-selector" class="form-control select2" name="product">
                     <option>{{ old('name', $application->product) }}</option>
                 </select>
                 @if($errors->has('product'))
@@ -156,7 +153,7 @@
         <div class="col-3">
             <div class="form-group">
                 <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                <select id="version-selector" class="form-control" name="version">
+                <select id="version-selector" class="form-control select2" name="version">
                     <option>{{ old('version', $application->version) }}</option>
                 </select>
                 @if($errors->has('version'))
@@ -178,6 +175,9 @@
 </div>
 </div>
 <div class="form-group">
+    <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
     <button class="btn btn-danger" type="submit">
         {{ trans('global.save') }}
     </button>
@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             }
         });
-
+/*
     // ------------------------------------------------
      $('#vendor-selector').select2({
       placeholder: 'Start typing to search',
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 });
-
+*/
 // CPE Guesser
 // ===========
 function generateCPEList(data) {
