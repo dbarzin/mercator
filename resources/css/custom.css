@@ -472,6 +472,7 @@ table .navbar-brand-full {
 /***************************************************************************/
 
 .graphviz {
+    width: 100%;
     max-width: 80vw;
     overflow-x: auto;
     text-align: center;
