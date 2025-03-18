@@ -25,6 +25,7 @@ RUN apk add php-zip \
   php-tokenizer \
   libzip-dev \
   openldap-dev \
+  npm \
   libpng \
   libpng-dev
 
@@ -39,7 +40,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 RUN addgroup --g 1000 -S www && \
   adduser -u 1000 -S mercator -G www && \
   chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
-  chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d 
+  chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # Clone sources from Github
 #WORKDIR /var/www/
@@ -64,8 +65,12 @@ RUN chmod g=u /etc/passwd && \
 # Now work with Mercator user
 USER mercator:www
 
-# Run composer
+# Run Composer
 RUN composer install
+
+# Node Package Management
+npm install
+npm run build
 
 # Create database folder
 RUN mkdir sql

@@ -13,9 +13,9 @@ Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
 
-Installer Apache2, GIT, Graphviz et Composer
+Installer Apache2, GIT, Graphviz, NPM et Composer
 
-    sudo apt install vim apache2 git graphviz composer
+    sudo apt install vim apache2 git graphviz npm composer
 
 Installer PHP et les librairies
 
@@ -39,6 +39,14 @@ Installer les packages avec composer :
 
     cd /var/www/mercator
     composer install
+
+## Node Package Management
+
+Installer les packages avec npm :
+
+    cd /var/www/mercator
+    npm install
+    npm run build
 
 ## MySQL
 
@@ -337,6 +345,8 @@ Migrer la base de données
 Mettre à jour les librairies
 
     sudo -u www-data composer install
+    sudo -u www-data npm install
+    sudo -u www-data npm run build
 
 Vider les caches
 

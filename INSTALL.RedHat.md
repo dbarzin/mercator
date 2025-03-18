@@ -13,9 +13,9 @@ Update linux distribution
 
     sudo dnf update && sudo dnf upgrade
 
-Install Httpd, GIT, Graphviz, Vim and Php
+Install Httpd, GIT, Graphviz, Vim and PHP
 
-    sudo dnf install vim httpd git graphviz php
+    sudo dnf install vim httpd git graphviz php npm
 
 Check that the php 8.2 module is available
 
@@ -44,7 +44,7 @@ Verify that Composer is installed
 
     composer --version
 
-##Project
+## Project
 
 Create the project directory
 
@@ -56,11 +56,19 @@ Clone the project from Github
 
     git clone https://www.github.com/dbarzin/mercator
 
-## Compose
+## Composer
 
 Install packages with composer
 
     composer install
+
+## Node Package Management
+
+Install packages with npm :
+
+    cd /var/www/mercator
+    npm install
+    npm run build
 
 ## MySQL
 
@@ -339,6 +347,8 @@ add this line to the crontab
  Update libraries
 
       sudo -u apache composer install
+      sudo -u apache npm install
+      sudo -u apache npm run build
 
  Clear caches
 
