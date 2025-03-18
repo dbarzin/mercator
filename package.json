@@ -55,7 +55,7 @@
     "popper.js": "^1.16.1",
     "postcss": "^8.4.21",
     "select2": "^4.1.0-rc.0",
-    "sweetalert2": "^11.17.2",
+    "sweetalert2": "^11.6.13",
     "terser": "^5.16.9",
     "uuid": "^8.3.2",
     "vis-data": "^7.1.9",

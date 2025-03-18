@@ -7,11 +7,18 @@ table = $('{{ $id }}').DataTable({
         colReorder: true,
 		autoWidth: true,
         columnDefs: [
+            // Première colonne -> sélections
             {
                 targets: 0,
                 orderable: false,
                 render: DataTable.render.select(),
-            }],
+            },
+            // Dernière colonne allignée à droite
+            {
+                targets: -1,
+                className: 'dt-body-right'
+            }
+        ],
         layout:
         {
     		paging: true,

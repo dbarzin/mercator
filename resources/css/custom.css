@@ -159,11 +159,12 @@ body {
     width: 100% !important;
 }
 
+
 .dataTable td,
 .dataTable th {
     vertical-align: middle;
 }
-
+/*
 .dataTables_length,
 .dataTables_filter,
 .dt-buttons {
@@ -174,7 +175,7 @@ body {
 
 .dt-buttons .btn {
 }
-
+*/
 .table {
     line-height : 16px;
 }
@@ -246,6 +247,12 @@ table .navbar-brand-full {
 }
 
 /***************************************************************************/
+
+@media print {
+    .btn {
+        display: none;
+    }
+}
 
 .btn {
     margin-left: 5px !important;
@@ -469,7 +476,7 @@ table .navbar-brand-full {
     overflow-x: auto;
     text-align: center;
     display: inline-block;
-    min-height: 400px; 
+    min-height: 400px;
 }
 
  .graphviz svg {

@@ -208,11 +208,9 @@
         background-color: #aaa;
     }
 </style>
-
 @endsection
 
 @section('scripts')
-
 <script>
 // TODO : optimize me
 let _nodes = new Map();
@@ -227,13 +225,6 @@ let _nodes = new Map();
 @endforeach
 
 document.addEventListener("DOMContentLoaded", function () {
-    // initialize select2
-    $('.select2').select2();
-    $('.select2-free').select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
 
     function apply_filter() {
         // Get current filter
