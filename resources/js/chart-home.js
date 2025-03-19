@@ -110,7 +110,7 @@ const barChartConfig = {
         beginAtZero: true,
         stacked: true,
         ticks: {
-          stepSize: 5,
+          stepSize: 10,
           max: 100,
         },
       },
