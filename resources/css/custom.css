@@ -481,11 +481,11 @@ table .navbar-brand-full {
     overflow-x: auto;
     text-align: center;
     display: inline-block;
-    min-height: 400px;
+    min-height: 550px;
 }
 
 .graphviz svg {
     width: 100%;
-    height: 400px;
+    height: 550px;
 }
 /***************************************************************************/

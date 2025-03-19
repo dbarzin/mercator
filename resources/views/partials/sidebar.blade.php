@@ -426,7 +426,7 @@
         </div>
         @endcan
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-            <i class="bi bi-box-arrow-in-right"></i><span class="menu-text">{{ trans('global.logout') }}</span>
+            <i class="bi bi-box-arrow-right"></i></i><span class="menu-text">{{ trans('global.logout') }}</span>
         </a>
     </div>
     <div class="sidebar-footer">
