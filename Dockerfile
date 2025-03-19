@@ -70,8 +70,8 @@ USER mercator:www
 RUN composer install
 
 # Node Package Management
-npm install
-npm run build
+RUN npm install
+RUN npm run build
 
 # Create database folder
 RUN mkdir sql
