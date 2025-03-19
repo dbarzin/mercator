@@ -388,7 +388,6 @@
         <div id="submenu9" class="collapse {{ (
             request()->is('admin/users*')||
             request()->is('admin/roles*')||
-            request()->is('admin/certificate*')||
             request()->is('admin/cve*')||
             request()->is('admin/config*')||
             request()->is('admin/documents*')||
@@ -409,7 +408,7 @@
             <a href="{{ route("admin.config.parameters") }}" class="ps-4 {{ request()->is('admin/config/parameters*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.parameters.title_short') }}</span>
             </a>
-            <a href="{{ route("admin.config.cert") }}" class="ps-4 {{ request()->is('admin/config/certificate*') ? 'active' : '' }}">
+            <a href="{{ route("admin.config.cert") }}" class="ps-4 {{ request()->is('admin/config/cert*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.certificate.title_short') }}</span>
             </a>
             <a href="{{ route("admin.config.cve") }}" class="ps-4 {{ request()->is('admin/config/cve*') ? 'active' : '' }}">

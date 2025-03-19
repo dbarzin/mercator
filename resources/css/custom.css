@@ -63,6 +63,8 @@ body {
     flex-direction: column;
     border-right: 1px solid #ddd;
     overflow-y: auto;
+    padding-bottom: 150px;
+    scroll-behavior: smooth;
 }
 
 .sidebar a {
@@ -152,13 +154,15 @@ body {
     min-height: 150px;
 }
 
+.ck-powered-by {
+    display: none !important;
+}
 
 /***************************************************************************/
 
 .datatable {
     width: 100% !important;
 }
-
 
 .dataTable td,
 .dataTable th {

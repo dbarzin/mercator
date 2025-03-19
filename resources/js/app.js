@@ -72,10 +72,18 @@ document.addEventListener("DOMContentLoaded", function () {
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
+        allEditors[i], {
+            removePlugins: ['Table', 'TableToolbar', 'EasyImage','ImageUpload','MediaEmbed'],
+	        toolbar: {
+                  items: [ 'undo', 'redo', '|','bold', 'italic', '|', 'link', '|', 'numberedList', 'bulletedList' ],
+		          shouldNotGroupWhenFull: true
+              }
+        }
+    )
+    .then(editor => {
+        document.querySelector('.ckeditor').style.visibility = 'visible';
+    })
+    .catch(error => console.error(error));;
   }
 
   // Select2
@@ -153,8 +161,11 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 let rect = this.getBoundingClientRect();
                 let sidebarRect = sidebar.getBoundingClientRect();
-                sidebar.scrollTop += rect.top - sidebarRect.top - 50;
-            }, 300);
+                sidebar.scrollTo({
+                    top: sidebar.scrollTop + rect.top - sidebarRect.top - 50,
+                    behavior: 'smooth' // Ajoute une transition douce
+                });
+            }, 100);
         });
     });
 
