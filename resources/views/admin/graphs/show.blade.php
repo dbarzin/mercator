@@ -66,7 +66,7 @@ let _nodes = new Map();
     _nodes.set( "{{ $node["id"] }}" ,{ type: "{{ $node["type"] }}"});
 @endforeach
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
     const xmlContent = `{!! $graph->content !!}`;
     loadGraph(xmlContent);
 });

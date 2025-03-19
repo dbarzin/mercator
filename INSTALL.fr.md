@@ -13,9 +13,9 @@ Mettre à jour la distribution linux
 
     sudo apt update && sudo apt upgrade
 
-Installer Apache2, GIT, Graphviz et Composer
+Installer Apache2, GIT, Graphviz, NPM et Composer
 
-    sudo apt install vim apache2 git graphviz composer
+    sudo apt install vim apache2 git graphviz npm composer
 
 Installer PHP et les librairies
 
@@ -39,6 +39,14 @@ Installer les packages avec composer :
 
     cd /var/www/mercator
     composer install
+
+## Node Package Management
+
+Installer les packages avec npm :
+
+    cd /var/www/mercator
+    npm install
+    npm run build
 
 ## MySQL
 
@@ -230,6 +238,8 @@ KEYCLOAK_CLIENT_SECRET=  # Client Secret
 KEYCLOAK_REDIRECT_URI=<Mercator IP Address>/login/keycloak/callback
 KEYCLOAK_BASE_URL=<KeyCloak IP Address>
 KEYCLOAK_REALM=   # RealM Name
+KEYCLOAK_AUTO_PROVISIONNING= # active/désactive la création automatique d'utilisateurs (valeurs possibles : true/false. 'true' par défaut)
+KEYCLOAK_BTN_LABEL= # défini le libellé du bouton de connexion Keycloak ('Keycloak' par défaut)
 ```
 
 Après avoir défini KEYCLOAK sur enable, un bouton apparaîtra sur la page de connexion, permettant aux utilisateurs de se connecter via Keycloak.
@@ -337,6 +347,8 @@ Migrer la base de données
 Mettre à jour les librairies
 
     sudo -u www-data composer install
+    sudo -u www-data npm install
+    sudo -u www-data npm run build
 
 Vider les caches
 

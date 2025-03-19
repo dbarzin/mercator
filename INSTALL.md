@@ -17,9 +17,9 @@ Install PHP and some PHP libraries
 
     sudo apt install php-zip php-curl php-mbstring php-xml php-ldap php-soap php-xdebug php-mysql php-gd libapache2-mod-php
 
-Install Apache2, GIT, Graphviz et Composer
+Install Apache2, GIT, Graphviz, NPM et Composer
 
-    sudo apt install apache2 git graphviz composer
+    sudo apt install apache2 git graphviz composer npm
 
 ## Project
 
@@ -39,6 +39,14 @@ Install packages with composer :
 
     cd /var/www/mercator
     composer install
+
+## Node Package Management
+
+Install packages with npm :
+
+    cd /var/www/mercator
+    npm install
+    npm run build
 
 ## MySQL
 
@@ -198,7 +206,7 @@ Modify .env file, and uncomment LDAP configuration :
 
 Find more complete documentation on LDAP configuration [here](https://ldaprecord.com/docs/laravel/v2/configuration/#using-an-environment-file-env).
 
-If you choose Custom, you have to provide a LdapUserCustom class in  `app/Ldap/LdapUserCustom.php` file, ie : 
+If you choose Custom, you have to provide a LdapUserCustom class in  `app/Ldap/LdapUserCustom.php` file, ie :
 
 ```php
 <?php
@@ -231,6 +239,8 @@ KEYCLOAK_CLIENT_SECRET=  # Client Secret
 KEYCLOAK_REDIRECT_URI=<Mercator IP Address>/login/keycloak/callback
 KEYCLOAK_BASE_URL=<KeyCloak IP Address>
 KEYCLOAK_REALM=   # RealM Name
+KEYCLOAK_AUTO_PROVISIONNING= # enable/disable the automatic creation of users (possibles values: true/false. defaults to 'true')
+KEYCLOAK_BTN_LABEL= # set the Keycloak login button label (defaults to 'Keycloak')
 ```
 
 Once you make the KEYCLOAK parametre in 'enable' you would see a bouton in Login page that redirect to keycloak server
@@ -334,6 +344,8 @@ Migrate the database
 Update the libraries
 
     composer install
+    npm install
+    npm run build
 
 Empty caches
 

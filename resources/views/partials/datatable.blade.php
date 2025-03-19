@@ -1,19 +1,24 @@
+document.addEventListener("DOMContentLoaded", function () {
 
-    let table = new DataTable('{{ $id }}',{
+table = $('{{ $id }}').DataTable({
         keys: true,
         stateSave: true,
         responsive: true,
         colReorder: true,
 		autoWidth: true,
-
         columnDefs: [
+            // Première colonne -> sélections
             {
+                targets: 0,
                 orderable: false,
                 render: DataTable.render.select(),
-                targets: 0
+            },
+            // Dernière colonne allignée à droite
+            {
+                targets: -1,
+                className: 'dt-body-right'
             }
         ],
-
         layout:
         {
     		paging: true,
@@ -110,8 +115,8 @@
             ],
         }
     );
-
     table
         .buttons(0, null)
         .container()
         .prependTo(table.table().container());
+});

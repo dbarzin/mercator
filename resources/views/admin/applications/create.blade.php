@@ -278,14 +278,14 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.application.fields.install_date') }}</label>
-                    <input class="datetime form-control" type="text" name="install_date" id="install_date" value="{{ old('install_date') }}">
+                    <input class="form-control date" type="date" name="install_date" id="install_date" value="{{ old('install_date') }}">
                     <span class="help-block">{{ trans('cruds.application.fields.install_date_helper') }}</span>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                    <input class="datetime form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date') }}">
+                    <input class="form-control date" type="date" id="update_date" name="update_date" value="{{ old('update_date') }}">
                     <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
                 </div>
             </div>
@@ -507,7 +507,7 @@
                     <div class="form-group">
                         <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
                         <div class="form-group">
-                            <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                            <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
                             </select>
                             <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
@@ -518,7 +518,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="product">{{ trans('cruds.application.fields.product') }}</label>
-                        <select id="product-selector" class="form-control select2-free" name="product">
+                        <select id="product-selector" class="form-control" name="product">
                             <option>{{ old('product', '') }}</option>
                         </select>
                         @if($errors->has('product'))
@@ -532,7 +532,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="recommended" for="version">{{ trans('cruds.application.fields.version') }}</label>
-                        <select id="version-selector" class="form-control select2-free" name="version">
+                        <select id="version-selector" class="form-control" name="version">
                             <option>{{ old('version', '') }}</option>
                         </select>
                         @if($errors->has('version'))
@@ -648,139 +648,101 @@
 @endsection
 
 @section('scripts')
-<script src="/js/DynamicSelect.js"></script>
 <script>
-$(document).ready(function () {
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-    $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
-
-    $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-            },
-        escapeMarkup: function(m) {
-          return m;
-        }
-    });
-
+document.addEventListener("DOMContentLoaded", function () {
+    // ------------------------------------------------
     // CPE
     // ------------------------------------------------
     $('#vendor-selector').select2({
       placeholder: 'Start typing to search',
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/vendors',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, vendor) {
-              results.push({
+          return {
+            results: data.map(function(vendor) {
+              return {
                 id: vendor.name,
                 text: vendor.name
-              });
-            });
-          }
-
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 1 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
 
     // ------------------------------------------------
     $('#product-selector').select2({
       placeholder: 'Start typing to search',
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/products',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
             vendor: $("#vendor-selector").val(),
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, product) {
-              results.push({
+          return {
+            results: data.map(function(product) {
+              return {
                 id: product.name,
                 text: product.name
-              });
-            });
-          }
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
 
     // ------------------------------------------------
     $('#version-selector').select2({
       placeholder: 'Start typing to search',
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/versions',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
             vendor: $("#vendor-selector").val(),
             product: $("#product-selector").val(),
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, version) {
-              results.push({
+          return {
+            results: data.map(function(version) {
+              return {
                 id: version.name,
                 text: version.name
-              });
-            });
-          }
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
+    });
 
-      });
-
+    // ===========
     // CPE Guesser
     // ===========
     function generateCPEList(data) {
@@ -791,7 +753,7 @@ $(document).ready(function () {
             ret += '<tr>';
             ret += '<td>' + element.vendor_name + '</td>';
             ret += '<td>' + element.product_name +'</td>';
-            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="bi bi-window-plus" style="color:green"></i></a>'
             ret += '</td>';
             ret += '</tr>';
         });
@@ -802,6 +764,7 @@ $(document).ready(function () {
     // CPE Guesser window
     $('#guess').click(function (event) {
         let name = $("#name").val();
+        console.log(name);
         $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
         .then((result)=>
             Swal.fire({
@@ -818,7 +781,7 @@ $(document).ready(function () {
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
                         $("#version-selector").val(null);
-                        swal.close();
+                        Swal.close();
                     })
                 },
                 showConfirmButton: false,

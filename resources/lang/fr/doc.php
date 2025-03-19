@@ -1,12 +1,29 @@
 <?php
 return [
     'about' => [
-        'p1' => "Mercator est une application Web permettant de gérer la cartographie d’un système d’information comme décrit dans le <a href='https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation'>Guide pour la cartographie du Système d’information</a> de l’<a href='https://cyber.gouv.fr/'>ANSSI</a>. Le <a href='https://dbarzin.github.io/mercator/index.fr/'>manuel utilisateur</a> et les <a href='https://www.github.com/dbarzin/mercator'>sources de l'application</a> sont disponibles sur Github.",
-        'p2' => 'Gérard Mercator, né le 5 mars 1512 à Rupelmonde et mort le 2 décembre 1594 à Duisbourg, est un mathématicien, géographe et cartographe flamand, inventeur de la projection cartographique qui porte son nom.',
-        'p3' => "La projection Mercator est une projection cartographique de la Terre, dite « cylindrique », tangente à l'équateur du globe terrestre sur une carte plane. Elle s'est imposée comme le planisphère de référence dans le monde grâce à sa précision pour les voyages marins. Ce n'est pas, stricto sensu, une projection centrale : le point de latitude φ n'est pas envoyé, comme on pourrait s'y attendre, sur un point d'ordonnée proportionnelle à tan(φ) mais sur un point d'ordonnée proportionnelle à ln[tan(φ/2 + π/4)].",
-        'p4' => "La projection Mercator est une projection conforme, c’est-à-dire qu'elle conserve les angles. Elle a cependant pour effet des déformations sur les distances et les aires. En effet, une distorsion s’accroît au fur et à mesure de l'éloignement de l'équateur vers les pôles. Une carte de Mercator ne peut ainsi couvrir les pôles : ils seraient infiniment grands. Cela a par exemple pour conséquence la vision d'une égalité de surface entre le Groenland et l'Afrique alors que cette dernière est 14 fois plus grande.",
-        'p5' => "src: <a href='https://fr.wikipedia.org/wiki/Gérard_Mercator'>Wikipedia</a>",
-        'title' => 'A propos',
+        'title' => 'A propos de Mercator',
+        'text' => "
+<p>Mercator est une application open source dédiée à la cartographie des systèmes d’information. Conçue pour répondre aux besoins des RSSI, DSI et autres professionnels de la gestion des risques, Mercator permet de modéliser l’architecture du SI, ses dépendances et ses risques, facilitant ainsi la gouvernance et la résilience du système d’information.</p>
+
+<p><b>Licence et modèle Open Source</b></p>
+
+<p>Mercator est distribué sous licence <a href='https://www.gnu.org/licenses/quick-guide-gplv3.fr.html'>GPLv3</a> (GNU General Public License v3). Cela signifie que vous êtes libre d’utiliser, modifier et redistribuer Mercator, tant que vous respectez les termes de cette licence. L’objectif est d’assurer un écosystème ouvert et collaboratif autour de la cartographie du SI, tout en garantissant la transparence et la sécurité du code.</p>
+
+<p><b>Support et services professionnels</b></p>
+
+<p>Le support professionnel de Mercator est assuré par <a href='https://www.sourcentis.com'>Sourcentis</a>, une société spécialisée dans l’accompagnement des organisations utilisant Mercator et d’autres solutions open source dédiées à la gestion de la sécurité et de la conformité. Sourcentis propose des services de support, de conseil et de formation pour garantir une mise en œuvre optimale et adaptée à vos besoins.</p>
+
+<p><b>Contribuer à Mercator</b></p>
+
+<p>Mercator étant un projet open source, vos contributions sont les bienvenues ! Vous pouvez :</p>
+<ul>
+    <li>Signaler des bugs ou proposer des améliorations via notre dépôt <a href='https://www.github.com/dbarzin/mercator'>GitHub</a>.</li>
+    <li>Participer aux <a href='https://github.com/dbarzin/mercator/discussions'>discussions</a> et à l’évolution du projet.</li>
+    <li>Développer de nouvelles fonctionnalités et partager vos <a href='https://github.com/dbarzin/mercator/pulls'>contributions</a> avec la communauté.</li>
+</ul>
+
+<p>Pour toute question ou demande spécifique, n’hésitez pas à nous contacter via <a href='https://www.sourcentis.com'>Sourcentis</a> ou sur notre dépôt  <a href='https://www.github.com/dbarzin'>GitHub</a>.</p>
+"
     ],
     'guide' => [
         'p1' => 'Les attaques informatiques interviennent dans des environnements en constante évolution. Pour répondre à ces enjeux, il est nécessaire de mettre en place une approche globale de gestion des risques au sein de l’organisation.',

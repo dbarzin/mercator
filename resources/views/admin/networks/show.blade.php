@@ -72,14 +72,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.network.fields.security_need') }}
-                        </th>
-                        <td>
-
-
-
-                    <tr>
-                        <th>
                             {{ trans('cruds.information.fields.security_need') }}
                             @if (config('mercator-config.parameters.security_need_auth'))
                             + {{ trans("global.authenticity_short") }}

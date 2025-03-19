@@ -71,44 +71,6 @@ class MApplication extends Model
             ->exists();
     }
 
-    public function getUpdateDateAttribute($value)
-    {
-        return $this->formatDateForDisplay($value);
-    }
-
-    public function setUpdateDateAttribute($value)
-    {
-        $this->attributes['update_date'] =
-            $this->parseDate(
-                $value,
-                config('panel.date_format') . ' ' . config('panel.time_format')
-            );
-    }
-
-    public function getInstallDateAttribute($value)
-    {
-        return $this->formatDateForDisplay($value);
-    }
-
-    public function setInstallDateAttribute($value)
-    {
-        $this->attributes['install_date'] =
-            $this->parseDate(
-                $value,
-                config('panel.date_format') . ' ' . config('panel.time_format')
-            );
-    }
-
-    public function getNextUpdateAttribute($value)
-    {
-        return $this->formatDateForDisplay($value, config('panel.date_format'));
-    }
-
-    public function setNextUpdateAttribute($value)
-    {
-        $this->attributes['next_update'] = $this->parseDate($value, config('panel.date_format'));
-    }
-
     public function applicationSourceFluxes()
     {
         return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
@@ -177,34 +139,5 @@ class MApplication extends Model
     public function securityControls()
     {
         return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d');
-    }
-
-    private function parseDate($value, $format = null)
-    {
-        $format = $format ? $format : config('panel.date_format') . ' ' . config('panel.time_format');
-
-        try {
-            return $value ? Carbon::createFromFormat($format, $value)->format('Y-m-d H:i:s') : null;
-        } catch (\Exception $e) {
-            Log::error('Invalid date format: ' . $value . ' with format ' . $format);
-            return null;
-        }
-    }
-
-    private function formatDateForDisplay($value, $format = null)
-    {
-        $format = $format ? $format : config('panel.date_format') . ' ' . config('panel.time_format');
-
-        try {
-            return $value ? Carbon::parse($value)->format($format) : null;
-        } catch (\Exception $e) {
-            Log::error('Error parsing date: ' . $value . ' with format ' . $format);
-            return null;
-        }
     }
 }

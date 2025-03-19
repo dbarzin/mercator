@@ -113,14 +113,14 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
-                    <input class="form-control date" type="text" name="install_date" id="install_date" value="{{ old('install_date', $logicalServer->install_date) }}">
+                    <input class="form-control" type="date" name="install_date" id="install_date" value="{{ old('install_date', $logicalServer->install_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
             <div class="col-sm">
                 <div class="form-group">
                     <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                    <input class="date form-control" type="text" id="update_date" name="update_date" value="{{ old('update_date', $logicalServer->update_date) }}">
+                    <input class="form-control" type="date" id="update_date" name="update_date" value="{{ old('update_date', $logicalServer->update_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
                 </div>
             </div>
@@ -381,27 +381,4 @@
         </button>
     </div>
 </form>
-@endsection
-
-@section('scripts')
-<script>
-$(document).ready(function () {
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-});
-
-$(document).ready(function() {
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-  });
-</script>
 @endsection

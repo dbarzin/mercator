@@ -40,10 +40,10 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-LogicalServer">
+            <table class="table table-bordered table-striped table-hover datatable datatable-LogicalServer">
                 <thead>
                     <tr>
-                        <th width="10">
+                        <th width="0">
 
                         </th>
                         <th>
@@ -79,7 +79,7 @@
                         <tr data-entry-id="{{ $patch->id }}"
                             @if ($patch->next_update===null)
                                 class="table-secondary"
-                            @elseif (Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->lt(today()))
+                            @elseif (\Carbon\Carbon::parse($patch->next_update)->isPast())
                                 class="table-danger"
                             @else
                                 class="table-success"
@@ -147,10 +147,10 @@
                                 {{ $patch->attributes ?? '' }}
                             </td>
                             <td>
-                                {{ $patch->update_date!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->update_date)->format("Y-m-d") : ""}}
+                                {{ $patch->update_date }}
                             </td>
                             <td>
-                                {{ $patch->next_update!=null ? Carbon\Carbon::createFromFormat('d/m/Y',$patch->next_update)->format("Y-m-d") : ""}}
+                                {{ $patch->next_update }}
                             </td>
                             <td>
                                 @if ($patch->type=="SRV")
@@ -179,31 +179,49 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+document.addEventListener("DOMContentLoaded", function () {
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'asc' ]],
-    pageLength: 100, stateSave: true,
-    "lengthMenu": [ 10, 50, 100, 500 ],
-    search: {
-        regex: true
+table = $('#table').DataTable({
+        keys: true,
+        stateSave: true,
+        responsive: true,
+        colReorder: true,
+		autoWidth: true,
+        columnDefs: [
+            {
+                targets: 0,
+                orderable: false,
+                render: DataTable.render.select(),
+            }],
+        layout:
+        {
+    		paging: true,
+            keys: {
+                columns: ':not(:first-child)',
+            },
+        },
+
+        select: {
+            style: 'os',
+            selector: 'td:first-child',
+            headerCheckbox: 'select-page',
+            items: 'row'
+        },
+
+        @if (isset($order))
+        order: {!! $order !!},
+        @else
+        order: [[1, 'asc']],
+        @endif
+        pageLength: 100,
+
         }
-    });
-  let table = $('.datatable-LogicalServer:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-
-  $(".select2-free").select2({
-      placeholder: "{{ trans('global.pleaseSelect') }}",
-      allowClear: true,
-      tags: true
-  })
-
-})
+    );
+    table
+        .buttons(0, null)
+        .container()
+        .prependTo(table.table().container());
+});
 
 </script>
 @endsection

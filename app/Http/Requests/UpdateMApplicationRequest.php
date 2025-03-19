@@ -65,11 +65,11 @@ class UpdateMApplicationRequest extends FormRequest
                 'array',
             ],
             'install_date' => [
-                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'date',
                 'nullable',
             ],
             'update_date' => [
-                'date_format:' .config('panel.date_format').' '.config('panel.time_format'),
+                'date',
                 'nullable',
                 'after:install_date',
             ],

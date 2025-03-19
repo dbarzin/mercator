@@ -50,7 +50,7 @@ Make your changes in the new branch. Make sure you :
 
 Before submitting a pull request, make sure that your fork is up to date with the main repository:
 
-``sh
+```sh
 git fetch upstream
 git checkout dev
 git merge upstream/branch-name
@@ -59,7 +59,7 @@ git merge upstream/branch-name
 ### 6. Making a Pull Request
 
 1. Push your branch to your fork:
-    ``sh
+    ```sh
     git push origin branch-name
     ```
 2. Open a pull request on GitHub from your branch to the dev branch of the project.

@@ -60,7 +60,7 @@
                             <td>
 
                             </td>
-                            <td>
+                            <td nowrap>
                                 <a href="{{ route('admin.data-processings.show', $processing->id) }}">
                                 {{ $processing->name ?? '' }}
                                 </a>

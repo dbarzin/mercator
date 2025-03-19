@@ -6,20 +6,15 @@
             {{ trans('panel.menu.schema') }}
         </div>
         <div class="card-body">
-            <div id="graph"></div>
+            <div class="graphviz" id="graph"></div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-<!-- //d3js.org/d3.v5.min.js -->
-<script src="/js/d3.v5.min.js"></script>
-<!-- https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js -->
-<script src="/js/index.min.js"></script>
-<!-- https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js -->
-<script src="/js/d3-graphviz.js"></script>
-
+@vite(['resources/js/d3-viz.js'])
 <script>
+document.addEventListener('DOMContentLoaded', () => {
     d3.select("#graph").graphviz()
 
     .addImage("/images/register.png", "64px", "64px")
@@ -66,7 +61,7 @@
 
 
     .width(window.innerWidth - 250)
-    .height(window.innerHeight - 250)
+    .height(window.innerHeight)
     .renderDot(`
         digraph {
         pencolor="#7c123e"
@@ -127,7 +122,7 @@
           LOGICALSERVER [label="{{ trans('cruds.logicalServer.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/lserver.png" href="/admin/logical-servers"]
           LOGICALROUTER [label="{{ trans('cruds.router.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/routers"]
           NETWORKSWITCHES [label="{{ trans('cruds.networkSwitch.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="/admin/network-switches"]
-          CERTIFICATE [label="{{ trans('cruds.certificate.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="/admin/network-switches"]
+          CERTIFICATE [label="{{ trans('cruds.certificate.title') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/certificate.png" href="/admin/certificates"]
 
           }
         subgraph clusterE {
@@ -174,7 +169,7 @@
           SUBNETWORK -> LOGICALROUTER [label="  0-n"]
           SUBNETWORK -> NETWORKSWITCHES [label="  0-n"]
           LOGICALSERVER -> PHYSICALSERVER [label="  n-m"]
-          APPLICATION -> LOGICALSERVER [label="  0-n"]
+          APPLICATION -> LOGICALSERVER [label="  n-m"]
           CERTIFICATE -> LOGICALSERVER [label="  0-n"]
           CERTIFICATE -> APPLICATION [label="  0-n"]
 
@@ -193,6 +188,7 @@
           BUILDING -> WIFI [label="  0-n"]
 }`)
         .fit(true);
+});
 </script>
 @parent
 @endsection

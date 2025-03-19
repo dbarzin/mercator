@@ -166,15 +166,3 @@
     </div>
 </form>
 @endsection
-
-@section('scripts')
-<script>
-$(document).ready(function () {
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
-});
-</script>
-@endsection

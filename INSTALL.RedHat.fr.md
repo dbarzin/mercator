@@ -13,9 +13,9 @@ Mettre à jour la distribution linux
 
 	sudo dnf update && sudo dnf upgrade
 
-Installer Httpd, GIT, Graphviz, Vim et Php
+Installer Httpd, GIT, Graphviz, Vim et PHP
 
-	sudo dnf install vim httpd git graphviz php
+	sudo dnf install vim httpd git graphviz php npm
 
 Vérifier que le module php 8.2 est disponible
 
@@ -61,7 +61,16 @@ Cloner le projet depuis Github
 
 Installer les packages avec composer
 
+    cd /var/www/mercator
 	composer install
+
+## Node Package Management
+
+Installer les packages avec NPM
+
+    cd /var/www/mercator
+    npm install
+    npm run build
 
 ## MySQL
 
@@ -340,6 +349,8 @@ Migrer la base de données
 Mettre à jour les librairies
 
     sudo -u apache composer install
+    sudo -u apache npm install
+    sudo -u apache npm run build
 
 Vider les caches
 

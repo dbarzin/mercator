@@ -106,19 +106,20 @@
                         </table>
 
                         <div id="app-container" style="display: flex;">
-                            <div id="sidebar" style="width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
+                            <div id="sidebar" style="
+                                width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
-                                <i id="saveButton" title="Save" class="mapping-icon fas fa-save"></i>
-                                <i id="undoButton" title="Undo" class="mapping-icon fas fa-rotate-left"></i>
-                                <i id="redoButton" title="Redo" class="mapping-icon fas fa-rotate-right"></i>
-                                <i id="font-btn" title="Text" class="mapping-icon fas fa-font" draggable="true"></i>
-                                <i id="square-btn" title="Border" class="mapping-icon fas fa-vector-square" draggable="true"></i>
-                                <i id="group-btn" title="Group" class="mapping-icon fas fa-object-group"></i>
-                                <i id="ungroup-btn" title="Ungroup" class="mapping-icon fas fa-object-ungroup"></i>
-                                <i id="zoom-in-btn" title="Zoom in" class="mapping-icon fas fa-plus"></i>
-                                <i id="zoom-out-btn" title="Zoom out" class="mapping-icon fas fa-minus"></i>
-                                <i id="update-btn" title="Update" class="mapping-icon fas fa-bolt"></i>
-                                <i id="download-btn" title="Export" class="mapping-icon fas fa-download"></i>
+                                <i id="saveButton" title="Save" class="mapping-icon bi bi-floppy-fill"></i>
+                                <i id="undoButton" title="Undo" class="mapping-icon bi bi-arrow-counterclockwise"></i>
+                                <i id="redoButton" title="Redo" class="mapping-icon bi bi-arrow-clockwise"></i>
+                                <i id="font-btn" title="Text" class="mapping-icon bi bi-fonts" draggable="true"></i>
+                                <i id="square-btn" title="Border" class="mapping-icon bi bi-bounding-box" draggable="true"></i>
+                                <i id="group-btn" title="Group" class="mapping-icon bi bi-plus-square-dotted"></i>
+                                <i id="ungroup-btn" title="Ungroup" class="mapping-icon bi bi-dash-square-dotted"></i>
+                                <i id="zoom-in-btn" title="Zoom in" class="mapping-icon bi bi-zoom-in"></i>
+                                <i id="zoom-out-btn" title="Zoom out" class="mapping-icon bi bi-zoom-out"></i>
+                                <i id="update-btn" title="Update" class="mapping-icon bi bi-lightning-fill"></i>
+                                <i id="download-btn" title="Export" class="mapping-icon bi bi-download"></i>
 
                             </div>
 
@@ -207,11 +208,9 @@
         background-color: #aaa;
     }
 </style>
-
 @endsection
 
 @section('scripts')
-
 <script>
 // TODO : optimize me
 let _nodes = new Map();
@@ -225,14 +224,7 @@ let _nodes = new Map();
         } ?> ]});
 @endforeach
 
-$(document).ready(function () {
-    // initialize select2
-    $('.select2').select2();
-    $('.select2-free').select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
+document.addEventListener("DOMContentLoaded", function () {
 
     function apply_filter() {
         // Get current filter
@@ -295,21 +287,20 @@ $(document).ready(function () {
     document.getElementById('maximizeBtn').addEventListener('click', function () {
         const div = document.getElementById('myDiv');
         const sidebar = document.getElementById('sidebar');
+        const sidebarFooter = document.querySelector('.sidebar-footer');
 
-        // Vérifie si le div est déjà maximisé
         if (div.classList.contains('maximized')) {
-            // Restaurer la taille initiale
             div.classList.remove('maximized');
-            if (sidebar) sidebar.style.display = 'block'; // Rendre l'en-tête visible
-            document.getElementById('maximizeBtn').innerHTML = "&#8613;"
+            if (sidebar) sidebar.style.display = 'block';
+            if (sidebarFooter) sidebarFooter.style.display = 'block';
+            document.getElementById('maximizeBtn').innerHTML = "&#8613;";
         } else {
-            // Maximiser
             div.classList.add('maximized');
-            if (sidebar) sidebar.style.display = 'none'; // Masquer l'en-tête
-            document.getElementById('maximizeBtn').innerHTML = "&#8615;"
+            if (sidebar) sidebar.style.display = 'none';
+            if (sidebarFooter) sidebarFooter.style.display = 'none';
+            document.getElementById('maximizeBtn').innerHTML = "&#8615;";
         }
     });
-
     //--------------------------------------------------------------
     // Chargement du graphe
     loadGraph(`{!! $graph->content !!}`);

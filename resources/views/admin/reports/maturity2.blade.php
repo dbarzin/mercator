@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -10,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <div style="width: 350px; height: 180px;">
-                      <canvas id="gauge_chart2_div"></canvas>
+                      <canvas id="gauge_chart_div"></canvas>
                     </div>
                 </div>
               </div>
@@ -407,56 +406,20 @@
             </tr>
             <tbody>
         </table>
-                </div>
-              </div>
-            </div>
         </div>
+      </div>
     </div>
+</div>
 
 @endsection
 
 @section('scripts')
-  <script src="/js/Chart.bundle.js"></script>
-  <script src="/js/chartjs-gauge.min.js"></script>
+<script type="text/javascript">
+window.chartData = {
+    maturity: {{ $maturity2 }},
+};
+</script>
 
-  <script type="text/javascript">
+@vite(['resources/js/chart-maturity.js'])
 
-    window.onload = function() {
-
-      var ctx2 = document.getElementById('gauge_chart2_div').getContext('2d');
-
-      var chart2 = new Chart(ctx2, {
-        type: 'gauge',
-        data: {
-          datasets: [{
-            value: {{ $maturity2 }},
-            data: [40, 80,100],
-            backgroundColor: ['#E15759', '#F28E2B', '#59A14F'],
-          }]
-        },
-        options: {
-          needle: {
-            radiusPercentage: 2,
-            widthPercentage: 3.2,
-            lengthPercentage: 80,
-            color: 'rgba(0, 0, 0, 1)'
-          },
-          valueLabel: {
-            display: true,
-            formatter: (value) => {
-              return  {{ $maturity2 }} + '%';
-            },
-            color: 'rgba(255, 255, 255, 1)',
-            backgroundColor: 'rgba(0, 0, 0, 1)',
-            borderRadius: 5,
-            padding: {
-              top: 10,
-              bottom: 10
-            }
-          }
-        }
-      });
-  }
-
-    </script>
 @endsection

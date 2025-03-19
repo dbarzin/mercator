@@ -1,0 +1,25 @@
+/*====================================================*/
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+/*====================================================*/
+@import url('datatables.net-bs5');
+@import url('datatables.net-autofill-bs5');
+@import url('datatables.net-buttons-bs5');
+@import url('datatables.net-colreorder-bs5');
+@import url('datatables.net-fixedcolumns-bs5');
+@import url('datatables.net-fixedheader-bs5');
+@import url('datatables.net-keytable-bs5');
+@import url('datatables.net-responsive-bs5');
+@import url('datatables.net-rowgroup-bs5');
+@import url('datatables.net-rowreorder-bs5');
+@import url('datatables.net-scroller-bs5');
+@import url('datatables.net-searchbuilder-bs5');
+@import url('datatables.net-searchpanes-bs5');
+@import url('datatables.net-select-bs5');
+@import url('datatables.net-staterestore-bs5');
+/*====================================================*/
+@import 'custom.css';
+@import 'DynamicSelect.css';
+@import 'dropzone/dist/dropzone.css';
+/*====================================================*/
+@import 'select2/dist/css/select2.min.css'

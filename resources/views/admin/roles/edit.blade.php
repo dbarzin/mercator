@@ -1740,6 +1740,4 @@
         </button>
     </div>
 </form>
-
-
 @endsection

@@ -163,15 +163,15 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="install_date">{{ trans('cruds.relation.fields.start_date') }}</label>
-                        <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date', $relation->start_date) }}">
+                        <label for="start_date">{{ trans('cruds.relation.fields.start_date') }}</label>
+                        <input class="form-control" type="date" name="start_date" id="start_date" value="{{ old('start_date', $relation->start_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.start_date_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="install_date">{{ trans('cruds.relation.fields.end_date') }}</label>
-                        <input class="form-control date" type="text" name="end_date" id="start_date" value="{{ old('end_date', $relation->end_date) }}">
+                        <label for="end_date">{{ trans('cruds.relation.fields.end_date') }}</label>
+                        <input class="form-control" type="date" name="end_date" id="end_date" value="{{ old('end_date', $relation->end_date) }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.end_date_helper') }}</span>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                     <tr>
                         <td>
                             <div class="col">
-                            <input type="text" class="form-control date" id="inputDateField"/>
+                            <input type="date" class="form-control" id="inputDateField"/>
                             </div>
                         </td>
                         <td>
@@ -229,7 +229,7 @@
                         <tr>
                         <td>
                             <div class="col">
-                            <input type="text" name="dates[]" value="{{ \Carbon\Carbon::parse($value->date_price)->format(config('panel.date_format')) }}" class="form-control date" />
+                            <input type="date" name="dates[]" value="{{ $value->date_price }}" class="form-control" />
                             </div>
                         </td>
                         <td>
@@ -293,49 +293,14 @@
 @endsection
 
 @section('scripts')
-<script src="/js/dropzone.js"></script>
-
 <script>
-Dropzone.autoDiscover = false;
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-
-    $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-        },
-        escapeMarkup: function(m) {
-          return m;
-      }
-    });
-
-    //=============================================================================
+     //=============================================================================
     var dynamicInputRow = {{ $values->count() }};
 
+    // Initialiser Dropzone
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
@@ -401,13 +366,14 @@ $(document).ready(function () {
             	}
           	})
         }
-    //-----------------------------------------
+
+       //-----------------------------------------
         $("#dynamic-ar").click(function () {
             if (($("#inputDateField").val()!='')&&($("#inputValueField").val()!='')) {
                 input = $("#dynamicAddRemove")
                     .append(
                         '<tr>\
-                        <td><div class="col"><input type="text" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
+                        <td><div class="col"><input type="date" name="dates[]" value="' + $("#inputDateField").val() + '" class="form-control date" /></div></td>\
                         <td><input type="text" name="values[]" value="' + $("#inputValueField").val() + '" class="form-control" /></td>\
                         <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>\
                         </tr>');

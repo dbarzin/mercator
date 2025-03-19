@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
-    <div class="row">
     <div class="card">
         <div class="card-header">
             {{ trans("doc.guide.title") }}
@@ -21,9 +19,6 @@
             </div>
         </div>
     </div>
-</div>
-  </div>
-</div>
 @endsection
 
 @section('scripts')

@@ -1,31 +1,4 @@
 @extends('layouts.admin')
-@section('styles')
-<style>
-    body {
-        background-image: url('/images/mercator.png');
-        background-size:  800px 800px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #FFFFFF;
-        }
-
-    .card {
-        background-color: rgba(255, 255, 255, 0.6);
-    }
-
-    .text-muted {
-        color: black;
-    }
-
-    .input-group-text {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .form-control {
-        background-color: rgba(255, 255, 250, 0.7);
-    }
-</style>
-@endsection
 
 @section('content')
 <div class="card">

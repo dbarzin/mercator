@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
     <div class="row">
         <div class="col-lg-12">
 
@@ -72,6 +71,7 @@
 
             </div>
         </div>
+        <br>
         <div class="row">
 
         <div class="col-lg-6">
@@ -165,6 +165,7 @@
             </div>
 
             @can('gdpr_access')
+            <br>
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.gdpr") }}
@@ -190,6 +191,7 @@
             </div>
             @endcan
 
+            <br>
             <div class="card">
                 <div class="card-header">
                     {{ trans("cruds.report.lists.audit") }}
@@ -217,8 +219,6 @@
           </div>
         </div>
         <br><br><br>
-    </div>
-</div>
 @endsection
 
 @section('scripts')

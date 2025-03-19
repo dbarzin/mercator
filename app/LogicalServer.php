@@ -57,47 +57,6 @@ class LogicalServer extends Model
         'deleted_at',
     ];
 
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
-    public function getInstallDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.date_format')) : null;
-    }
-
-    public function setInstallDateAttribute($value)
-    {
-        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
-    public function getNextUpdateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setNextUpdateAttribute($value)
-    {
-        // dd($value);
-        $this->attributes['next_update'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
-    public function getUpdateDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setUpdateDateAttribute($value)
-    {
-        //dd($value);
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
     public function applications()
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
@@ -143,8 +102,4 @@ class LogicalServer extends Model
         return $this->belongsToMany(Container::class)->orderBy('name');
     }
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d');
-    }
 }

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ trans('panel.site_title') }}</title>
-
-    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/all.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/css/coreui.min.css') }}" rel="stylesheet" />
-
-    <!-- custom css -->
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
 </head>
-
-<body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
-    <div class="app flex-row align-items-center">
-        <div class="container">
-            @yield("content")
-        </div>
+<body class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+        @if(session('message'))
+            <div class="row mb-2">
+                <div class="col-lg-12">
+                    <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+                </div>
+            </div>
+        @endif
+        @if($errors->count() > 0)
+            <div class="alert alert-danger">
+                <ul class="list-unstyled">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @yield("content")
     </div>
     @yield('scripts')
 </body>
-
 </html>

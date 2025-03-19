@@ -72,7 +72,7 @@ class RelationController extends Controller
                 $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
-                $relationValue->settDatePriceAttribute($dates[$i]);
+                $relationValue->setDatePriceAttribute($dates[$i]);
                 $relationValue->save();
             }
         }
@@ -138,7 +138,7 @@ class RelationController extends Controller
                 $relationValue = new RelationValue();
                 $relationValue->relation_id = $relation->id;
                 $relationValue->price = floatval($values[$i]);
-                $relationValue->settDatePriceAttribute($dates[$i]);
+                $relationValue->setDatePriceAttribute($dates[$i]);
                 $relationValue->save();
             }
         }

@@ -16,6 +16,9 @@ use App\Services\CartographerService;
 use Gate;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+
+use Yajra\DataTables\DataTables;
 
 class LogicalServerController extends Controller
 {
@@ -29,6 +32,12 @@ class LogicalServerController extends Controller
     public function __construct(CartographerService $cartographerService)
     {
         $this->cartographerService = $cartographerService;
+    }
+
+    public function getData(Request $request)
+    {
+        $logicalServers = LogicalServer::select("id","name","type","attributes","description")->get();
+        return DataTables::of($logicalServers)->make(true);
     }
 
     public function index()

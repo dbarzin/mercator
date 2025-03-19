@@ -1,93 +1,91 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    {{ trans("cruds.report.explorer.title") }}
-                </div>
-                <div class="card-body">
-                    <table width="100%" border=0>
-                        <tr>
-                            <td width="400">
-                                <div class="form-group">
-                                    <label for="title">Filtre</label>
-                                    <select class="form-control select2" id="filters" multiple>
-                                        <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
-                                        <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
-                                        <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
-                                        <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
-                                        <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
-                                        <option value="9">{{ trans("cruds.flux.title") }}</option>
-                                        <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
-                                        <option value="7">{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
-                                        <option value="8">{{ trans("cruds.physicalLink.title") }}</option>
-                                    </select>
-                                    <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
-                                </div>
-                            </td>
-                            <td width=10>
-                            </td>
-                            <td width="400">
-                                <div class="form-group">
-                                    <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
-                                    <select class="form-control select2" id="node">
-                                        <option></option>
-                                        @foreach($nodes as $node)
-                                        <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
-                                </div>
-                            </td>
-                            <td style="text-align: left; vertical-align: middle;">
-                                <a href="#" id="add_node_button" onclick="addNode(document.getElementById('node').value)">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </td>
-                            <td style="text-align: right; vertical-align: right;">
-                                &nbsp;
-                                <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
-                                Photo
-                                </a>
-                                <a id="canvasImg" download="filename"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                        <a href="#" onclick="network.deleteSelected()" class="command">
-                            <i class="fas fa-minus-circle"></i>
-                            {{ trans("cruds.report.explorer.delete") }}
-                        </a>
-                        &nbsp;
-                        <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                            <i class="fas fa-repeat"></i>
-                            {{ trans("cruds.report.explorer.reload") }}
-                        </a>
-                        <input type="checkbox" id="physicsCheckbox" class="command" checked>
-                        <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
-                        &nbsp;
-                        &nbsp;
-                        <select id="depth">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3" selected>3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                            <a href="#" onclick="deployAll()">
-                                <i class="fas fa-star"></i>
-                                {{ trans("cruds.report.explorer.deploy") }}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                {{ trans("cruds.report.explorer.title") }}
+            </div>
+            <div class="card-body">
+                <table width="100%" border=0>
+                    <tr>
+                        <td width="400">
+                            <div class="form-group">
+                                <label for="title">Filtre</label>
+                                <select class="form-control select2" id="filters" multiple>
+                                    <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
+                                    <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
+                                    <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
+                                    <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
+                                    <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
+                                    <option value="9">{{ trans("cruds.flux.title") }}</option>
+                                    <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                    <option value="7">{{ trans("cruds.report.cartography.network_infrastructure") }}</option>
+                                    <option value="8">{{ trans("cruds.physicalLink.title") }}</option>
+                                </select>
+                                <span class="help-block">{{ trans("cruds.report.explorer.filter_helper") }}</span>
+                            </div>
+                        </td>
+                        <td width=10>
+                        </td>
+                        <td width="400">
+                            <div class="form-group">
+                                <label for="title">{{ trans("cruds.report.explorer.object") }}</label>
+                                <select class="form-control select2" id="node">
+                                    <option></option>
+                                    @foreach($nodes as $node)
+                                    <option value="{{ $node['id'] }}">{{ $node["label"] }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ trans("cruds.report.explorer.object_helper") }}</span>
+                            </div>
+                        </td>
+                        <td style="text-align: left; vertical-align: middle;">
+                            <a href="#" id="add_node_button" onclick="addNode(document.getElementById('node').value)">
+                                <i class="bi bi-plus-square-fill"></i>
                             </a>
-                         </td>
+                        </td>
+                        <td style="text-align: right; vertical-align: right;">
+                            &nbsp;
+                            <a onclick="needSavePNG=true; network.redraw();document.getElementById('canvasImg').click();" href="#"><i class="fas fa-camera-retro"></i>
+                            Photo
+                            </a>
+                            <a id="canvasImg" download="filename"></a>
+                        </td>
                     </tr>
-                </table>
-                </div>
-                <div id="mynetwork" style="height:700px;"></div>
-              </div>
-        </div>
+                    <tr>
+                        <td colspan="3">
+                    <a href="#" onclick="network.deleteSelected()" class="command">
+                        <i class="fas fa-minus-circle"></i>
+                        {{ trans("cruds.report.explorer.delete") }}
+                    </a>
+                    &nbsp;
+                    <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
+                        <i class="fas fa-repeat"></i>
+                        {{ trans("cruds.report.explorer.reload") }}
+                    </a>
+                    <input type="checkbox" id="physicsCheckbox" class="command" checked>
+                    <label for="physicsCheckbox">{{trans("cruds.report.explorer.physics")}}</label>
+                    &nbsp;
+                    &nbsp;
+                    <select id="depth">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                        <a href="#" onclick="deployAll()">
+                            <i class="fas fa-star"></i>
+                            {{ trans("cruds.report.explorer.deploy") }}
+                        </a>
+                     </td>
+                </tr>
+            </table>
+            </div>
+            <div id="mynetwork" style="height:500px;"></div>
+          </div>
     </div>
 </div>
 <ul id="explore_context"></ul>
@@ -96,9 +94,9 @@
 
 @section('scripts')
 
-<script src="/js/vis-network.min.js"></script>
-
+@vite(['resources/js/vis-network.js'])
 <script>
+
     let nodes = null;
     let edges = null;
     let network = null;
@@ -171,10 +169,10 @@
     // Called when the Visualization API is loaded.
     function draw() {
 
-        nodes = new vis.DataSet();
+        nodes = new DataSet();
 
         // create an array with edges
-        edges = new vis.DataSet([]);
+        edges = new DataSet([]);
 
         // create a network
         let container = document.getElementById("mynetwork");
@@ -220,7 +218,7 @@
           }
         };
 
-        network = new vis.Network(container, data, options);
+        network = new Network(container, data, options);
 
         // Add Nodes from parameter
         @if (Request::get("node")!==null)
@@ -401,7 +399,7 @@
     document.addEventListener('keypress', handle_keypressed);
 
     function handle_keypressed(e) {
-        console.log("e.key= "+e.key)
+      // console.log("e.key= "+e.key)
       if (e.key === "F"){
 
         if (document.activeElement.classList.contains("select2-search__field"))
@@ -419,12 +417,6 @@
       }
     }
 
-    $('body').keydown(function(event){
-        // delete
-        if((event.keyCode == 8)||(event.keyCode == 46)) {
-            network.deleteSelected()
-        }
-     });
 
     // Enable/Disable physics on network
     let physicsCheckbox = document.getElementById('physicsCheckbox');
@@ -592,9 +584,13 @@
         }
         $('#node').val(null).trigger("change");
     }
-
-    // initialize select2
-    $('.select2').select2();
+document.addEventListener('DOMContentLoaded', () => {
+    $('body').keydown(function(event){
+        // delete
+        if((event.keyCode == 8)||(event.keyCode == 46)) {
+            network.deleteSelected()
+        }
+     });
 
     // clear selections
     $('#filters').val(null).trigger('change');
@@ -609,7 +605,7 @@
         .on('select2:unselect', function(e) {
             apply_filter();
         });
-
+    });
 
 </script>
 

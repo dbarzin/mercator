@@ -49,20 +49,3 @@
     </div>
 </div>
 @endsection
-
-@section('scripts')
-<script>
-$(document).ready(function () {
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-});
-</script>
-@endsection

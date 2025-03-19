@@ -25,12 +25,12 @@ class RelationValue extends Model
 
     public function getDatePriceAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value;
     }
 
-    public function settDatePriceAttribute($value)
+    public function setDatePriceAttribute($value)
     {
-        $this->attributes['date_price'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['date_price'] = $value;
     }
 
     public function relation()

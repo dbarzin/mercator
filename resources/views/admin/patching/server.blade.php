@@ -55,7 +55,7 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-4">
                     <div class="form-group">
                         <label class="recommended" for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
@@ -71,39 +71,29 @@
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.attributes_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <table width="100%">
-                        <tr>
-                            <td width="90%">
-                                <div class="form-group">
-                                    <label for="update_date">{{ trans('cruds.logicalServer.fields.update_date') }}</label>
-                                    <input class="form-control datepicker" type="text" id="update_date" name="update_date"
-                                    value="{{ old('update_date', $server->update_date) }}"
-                                    >
-                                    <span class="help-block">{{ trans('cruds.logicalServer.fields.update_date_helper') }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href='' class="nav-link" id="clock">
-                                    <i class=" nav-icon fas fa-clock">
-                                    </i>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-2">
+               <div class="col-3">
+                    <div class="form-group">
+                      <label for="update_date">Mise à jour</label>
+                      <div class="d-flex align-items-center">
+                        <input class="form-control date me-2" type="date" id="update_date" name="update_date" value="2023-10-01">
+                        <a href="#" class="nav-link" id="clock">
+                          <i class="bi bi-alarm-fill"></i>
+                        </a>
+                      </div>
+                      <span class="help-block">Date de mise à jour.</span>
+                    </div>
+                  </div>
+                <div class="col-2">
                     <div class="form-group">
                         <label for="update_date">
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col">
                                     Periodicité
                                 </div>
-                                <div class="col-lg">
-                                    &nbsp; &nbsp;
-                                    <input class="form-check-input" type="checkbox" name="global_periodicity" />
-                                    <label class="form-check-label" >
-                                        Global
+                                <div class="col-1 d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox" name="global_periodicity" id="globalCheckbox">
+                                    <label class="form-check-label" for="globalCheckbox">
+                                      Global
                                     </label>
                                 </div>
                             </div>
@@ -120,10 +110,10 @@
                         <span class="help-block">Fréquence de mise à jour</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
-                        <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $server->next_update) }}">
+                        <input class="form-control date" type="date" name="next_update"  id="next_update" value="{{ old('next_update', $server->next_update) }}">
                         <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
@@ -159,7 +149,7 @@
             <div class="col-sm">
                 <div class="form-group">
                     <label for="install_date">{{ trans('cruds.logicalServer.fields.install_date') }}</label>
-                    <input class="form-control date" type="text" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
+                    <input class="form-control date" type="date" name="install_date" id="install_date" value="{{ old('install_date', $server->install_date) }}">
                     <span class="help-block">{{ trans('cruds.logicalServer.fields.install_date_helper') }}</span>
                 </div>
             </div>
@@ -316,147 +306,46 @@
 @endsection
 
 @section('scripts')
-<script src="/js/dropzone.js"></script>
-
 <script>
-Dropzone.autoDiscover = false;
+document.addEventListener("DOMContentLoaded", function () {
 
-$(document).ready(function () {
+    const update_date = document.getElementById('update_date');
+    const patching_frequency = document.getElementById('patching_frequency');
+    const next_update = document.getElementById('next_update');
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    });
-
-
-//=============================================================================
-
-$('#update_date')
-    .datetimepicker({
-        format: 'DD/MM/YYYY'
-    })
-   .on('dp.change', function (e) {
-       if ($('#patching_frequency').val()=="") {
-           $('#next_update').val("");
+    update_date.addEventListener('change', function() {
+       if (patching_frequency.value=="") {
+           next_update.value="";
        }
        else {
-           var parts = $('#update_date.datepicker').val().split("/");
-           var d = new Date(parseInt(parts[2], 10),
-                             parseInt(parts[1], 10) - 1,
-                             parseInt(parts[0], 10));
-           d.setMonth(d.getMonth()+parseInt($('#patching_frequency').val()));
-           $("#next_update").val(
-               (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-               (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-       }
-   });
-
-$('#clock').click(function (e) {
-    if ($('#patching_frequency').val()!="") {
-       $('#update_date').val('{{ now()->format('d/m/Y') }}');
-       let d = new Date();
-       d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-       $('#next_update').val(
-           (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-           (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
         }
-        return false;
     });
 
-$('#patching_frequency').on('select2:select', function (e) {
-    if ($('#patching_frequency').val()=="") {
-        $('#next_update').val("");
-    }
-    else {
-        var parts = $('#update_date.datepicker').val().split("/");
-        var d = new Date(parseInt(parts[2], 10),
-                          parseInt(parts[1], 10) - 1,
-                          parseInt(parts[0], 10));
-        d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-        $('#next_update').val(
-            (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-            (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-    }
-});
-
-//=============================================================================
-
-    var image_uploader = new Dropzone("#dropzoneFileUpload", {
-        url: '/admin/documents/store',
-        headers: { 'x-csrf-token': '{{csrf_token()}}' },
-        params: { },
-            maxFilesize: 10,
-            // acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            addRemoveLinks: true,
-            timeout: 50000,
-            removedfile: function(file)
-            {
-                console.log("remove file " + file.name + " " + file.id);
-                $.ajax({
-                    headers: {
-                      'X-CSRF-TOKEN': '{{csrf_token()}}'
-                       },
-                    type: 'GET',
-                    url: '{{ url( "/admin/documents/delete" ) }}'+"/"+file.id,
-                    success: function (data){
-                        console.log("File has been successfully removed");
-                    },
-                    error: function(e) {
-                        console.log("File not removed");
-                        console.log(e);
-                    }});
-                    // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
-                    var fileRef;
-                    return (fileRef = file.previewElement) != null ?
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-            success: function(file, response)
-            {
-                file.id=response.id;
-                console.log("success response");
-                console.log(response);
-            },
-            error: function(file, response)
-            {
-                console.log("error response");
-                console.log(response);
-               return false;
-            },
-            init: function () {
-            //Add existing files into dropzone
-            var existingFiles = [
-                @foreach($server->documents as $document)
-                    { name: "{{ $document->filename }}", size: {{ $document->size }}, id: {{ $document->id }} },
-                @endforeach
-            ];
-            for (i = 0; i < existingFiles.length; i++) {
-                this.emit("addedfile", existingFiles[i]);
-                this.emit("complete", existingFiles[i]);
-                }
+    $('#clock').click(function (e) {
+        if (patching_frequency.value!="") {
+            var today = moment();
+            update_date.value = today.format('YYYY-MM-DD')
+            var newDate = today.add(patching_frequency.value, 'months');
+            next_update.value = newDate.format('YYYY-MM-DD');
             }
+        return false;
         });
 
-        document.onpaste = function(event) {
-          const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-          items.forEach((item) => {
-          	console.log(item.kind);
-            if (item.kind === 'file') {
-              	// adds the file to your dropzone instance
-              	image_uploader.addFile(item.getAsFile())
-            	}
-          	})
+    $('#patching_frequency').on('select2:select', function (e) {
+        console.log("patching_frequency changed");
+        if ($('#patching_frequency').val()=="") {
+            $('#next_update').val("");
         }
-
+       else {
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
+        }
     });
+
+});
 </script>
 @endsection

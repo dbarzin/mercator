@@ -25,11 +25,11 @@ class UpdateCertificateRequest extends FormRequest
                 'unique:certificates,name,'.request()->route('certificate')->id.',id,deleted_at,NULL',
             ],
             'start_validity' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'end_validity' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
                 'after:start_validity',
             ],

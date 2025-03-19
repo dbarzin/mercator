@@ -13,7 +13,6 @@
                 <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
-                &nbsp;
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -56,9 +55,9 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-4">
                     <div class="form-group">
-                        <label class="recommended" for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
+                        <label class="recommended" for="attributes">{{ trans('cruds.logicalServer.fields.attributes') }}</label>
                         <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes[]" multiple>
                             @foreach($attributes_list as $a)
                                 <option {{ str_contains(old('attributes') ? old('attributes') : $application->attributes, $a) ? 'selected' : '' }}>{{$a}}</option>
@@ -69,42 +68,32 @@
                                 {{ $errors->first('attributes') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.application.fields.attributes_helper') }}</span>
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.attributes_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <table width="100%">
-                        <tr>
-                            <td width="90%">
-                                <div class="form-group">
-                                    <label for="update_date">{{ trans('cruds.application.fields.update_date') }}</label>
-                                    <input class="form-control datepicker" type="text" id="update_date" name="update_date"
-                                    value="{{ old('update_date', $application->update_date) }}"
-                                    >
-                                    <span class="help-block">{{ trans('cruds.application.fields.update_date_helper') }}</span>
-                                </div>
-                            </td>
-                            <td>
-                                <a href='' class="nav-link" id="clock">
-                                    <i class=" nav-icon fas fa-clock">
-                                    </i>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-2">
+               <div class="col-3">
+                    <div class="form-group">
+                      <label for="update_date">Mise à jour</label>
+                      <div class="d-flex align-items-center">
+                        <input class="form-control date me-2" type="date" id="update_date" name="update_date" value="2023-10-01">
+                        <a href="#" class="nav-link" id="clock">
+                          <i class="bi bi-alarm-fill"></i>
+                        </a>
+                      </div>
+                      <span class="help-block">Date de mise à jour.</span>
+                    </div>
+                  </div>
+                <div class="col-2">
                     <div class="form-group">
                         <label for="update_date">
                             <div class="row">
-                                <div class="col-sm">
+                                <div class="col">
                                     Periodicité
                                 </div>
-                                <div class="col-lg">
-                                    &nbsp; &nbsp;
-                                    <input class="form-check-input" type="checkbox" name="global_periodicity" />
-                                    <label class="form-check-label" >
-                                        Global
+                                <div class="col-1 d-flex align-items-center">
+                                    <input class="form-check-input me-2" type="checkbox" name="global_periodicity" id="globalCheckbox">
+                                    <label class="form-check-label" for="globalCheckbox">
+                                      Global
                                     </label>
                                 </div>
                             </div>
@@ -121,38 +110,36 @@
                         <span class="help-block">Fréquence de mise à jour</span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-3">
                     <div class="form-group">
-                        <label for="next_update">{{ trans('cruds.application.fields.next_update') }}</label>
-                        <input class="form-control date" type="text" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
-                        <span class="help-block">{{ trans('cruds.application.fields.next_update_helper') }}</span>
+                        <label for="next_update">{{ trans('cruds.logicalServer.fields.next_update') }}</label>
+                        <input class="form-control date" type="date" name="next_update"  id="next_update" value="{{ old('next_update', $application->next_update) }}">
+                        <span class="help-block">{{ trans('cruds.logicalServer.fields.next_update_helper') }}</span>
                     </div>
                 </div>
             </div>
         </div>
-<!------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------->
 <div class="card-header">
     Common Plateforme Enumeration (CPE)
 </div>
 <!------------------------------------------------------------------------------------------------------------->
 <div class="card-body">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                <div class="form-group">
-                    <select id="vendor-selector" class="form-control select2-free" name="vendor">
-                        <option>{{ old('vendor', $application->vendor) }}</option>
-                    </select>
-                    <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                </div>
+                <select id="vendor-selector" class="form-control select2" name="vendor">
+                    <option>{{ old('vendor', $application->vendor) }}</option>
+                </select>
+                <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-4">
             <div class="form-group">
                 <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                <select id="product-selector" class="form-control select2-free" name="product">
+                <select id="product-selector" class="form-control select2" name="product">
                     <option>{{ old('name', $application->product) }}</option>
                 </select>
                 @if($errors->has('product'))
@@ -163,10 +150,10 @@
                 <span class="help-block">{{ trans('cruds.application.fields.product_helper') }}</span>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-3">
             <div class="form-group">
                 <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                <select id="version-selector" class="form-control select2-free" name="version">
+                <select id="version-selector" class="form-control select2" name="version">
                     <option>{{ old('version', $application->version) }}</option>
                 </select>
                 @if($errors->has('version'))
@@ -177,7 +164,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.version_helper') }}</span>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-1">
             <div class="form-group">
                 <br>
                 <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
@@ -188,6 +175,9 @@
 </div>
 </div>
 <div class="form-group">
+    <a class="btn btn-default" href="{{ route('admin.patching.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
     <button class="btn btn-danger" type="submit">
         {{ trans('global.save') }}
     </button>
@@ -198,7 +188,7 @@
 @section('scripts')
 <script>
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     /**
      * Contruction de la liste des évènements
@@ -281,43 +271,7 @@ $(document).ready(function () {
                 })
             }
         });
-
-        var allEditors = document.querySelectorAll('.ckeditor');
-        for (var i = 0; i < allEditors.length; ++i) {
-            ClassicEditor.create(
-              allEditors[i], {
-                extraPlugins: []
-            }
-            );
-        }
-
-        $(".select2-free").select2({
-            placeholder: "{{ trans('global.pleaseSelect') }}",
-            allowClear: true,
-            tags: true
-        });
-
-        function template(data, container) {
-          if (data.id==4) {
-             return '\<span class="highRisk"\>'+data.text+'</span>';
-         } else if (data.id==3) {
-             return '\<span class="mediumRisk"\>'+data.text+'</span>';
-         } else if (data.id==2) {
-             return '\<span class="lowRisk"\>'+data.text+'</span>';
-         } else if (data.id==1) {
-             return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-         } else {
-             return data.text;
-         }
-     }
-
-     $('.risk').select2({
-      templateSelection: template,
-      escapeMarkup: function(m) {
-          return m;
-      }
-    });
-
+/*
     // ------------------------------------------------
      $('#vendor-selector').select2({
       placeholder: 'Start typing to search',
@@ -412,7 +366,7 @@ $(document).ready(function () {
 }
 
 });
-
+*/
 // CPE Guesser
 // ===========
 function generateCPEList(data) {
@@ -479,56 +433,51 @@ $('#guess').click(function (event) {
 
 //=============================================================================
 
-$('#update_date')
-    .datetimepicker({
-        format: 'DD/MM/YYYY'
-    })
-   .on('dp.change', function (e) {
-       if ($('#patching_frequency').val()=="") {
-           $('#next_update').val("");
-       }
-       else {
-           var parts = $('#update_date.datepicker').val().split("/");
-           var d = new Date(parseInt(parts[2], 10),
-                             parseInt(parts[1], 10) - 1,
-                             parseInt(parts[0], 10));
-           d.setMonth(d.getMonth()+parseInt($('#patching_frequency').val()));
-           $("#next_update").val(
-               (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-               (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-       }
-   });
-
-$('#clock').click(function (e) {
-    if ($('#patching_frequency').val()!="") {
-       $('#update_date').val('{{ now()->format('d/m/Y') }}');
-       let d = new Date();
-       d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-       $('#next_update').val(
-           (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-           (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-        }
-    return false;
-});
-
-$('#patching_frequency').on('select2:select', function (e) {
-    if ($('#patching_frequency').val()=="") {
-        $('#next_update').val("");
-    }
-    else {
-        var parts = $('#update_date.datepicker').val().split("/");
-        var d = new Date(parseInt(parts[2], 10),
-                          parseInt(parts[1], 10) - 1,
-                          parseInt(parts[0], 10));
-        d.setMonth(d.getMonth() + parseInt($('#patching_frequency').val()));
-        $('#next_update').val(
-            (d.getDate()>9 ? d.getDate() : ('0' + d.getDate())) + '/' +
-            (d.getMonth()>8 ? (d.getMonth()+1) : ('0' + (d.getMonth()+1))) + '/' + d.getFullYear());
-    }
-});
+  $('#vendor-selector').on('select2:select', function(e) {
+    var selectedValue = e.params.data.id;
+    console.log('Selected value:', selectedValue);
+    // Appel de votre fonction ici
+    yourFunction(selectedValue);
+  });
 
 //=============================================================================
 
+    const update_date = document.getElementById('update_date');
+    const patching_frequency = document.getElementById('patching_frequency');
+    const next_update = document.getElementById('next_update');
+
+    update_date.addEventListener('change', function() {
+       if (patching_frequency.value=="") {
+           next_update.value="";
+       }
+       else {
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
+        }
+    });
+
+    $('#clock').click(function (e) {
+        if (patching_frequency.value!="") {
+            var today = moment();
+            update_date.value = today.format('YYYY-MM-DD')
+            var newDate = today.add(patching_frequency.value, 'months');
+            next_update.value = newDate.format('YYYY-MM-DD');
+            }
+        return false;
+        });
+
+    $('#patching_frequency').on('select2:select', function (e) {
+        console.log("patching_frequency changed");
+        if ($('#patching_frequency').val()=="") {
+            $('#next_update').val("");
+        }
+       else {
+        var startDate = moment(update_date.value, 'YYYY-MM-DD');
+        var newDate = startDate.add(patching_frequency.value, 'months');
+        next_update.value = newDate.format('YYYY-MM-DD');
+        }
+    });
 
 });
 

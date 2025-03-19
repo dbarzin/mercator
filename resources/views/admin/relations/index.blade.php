@@ -59,7 +59,7 @@
                         <tr data-entry-id="{{ $relation->id }}"
                         @if ($relation->active==false)
                                 class="table-secondary"
-                        @elseif (($relation->end_date!=null)&&Carbon\Carbon::createFromFormat('d/m/Y', $relation->end_date)->lte(today()))
+                        @elseif (($relation->end_date!=null)&&Carbon\Carbon::parse($relation->end_date)->isPast())
                                 class="table-danger"
                         @elseif (
                             ($relation->description==null)||
@@ -119,12 +119,12 @@
                             </td>
                             <td>
                                 @if($relation->start_date!=null)
-                                    {{ Carbon\Carbon::createFromFormat('d/m/Y', $relation->start_date)->format('Y-m-d')  ?? '' }}
+                                    {{ $relation->start_date ?? '' }}
                                 @endif
                             </td>
                             <td>
                                 @if($relation->end_date!=null)
-                                    {{ Carbon\Carbon::createFromFormat('d/m/Y', $relation->end_date)->format('Y-m-d')  ?? '' }}
+                                    {{ $relation->end_date ?? '' }}
                                 @endif
                             </td>
                             <td>

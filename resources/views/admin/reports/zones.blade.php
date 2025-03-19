@@ -9,7 +9,7 @@
                     Zones réseau
                 </div>
                 <div class="card-body">
-                    <div id="graph"></div>
+                    <div id="graph" class="graphviz"></div>
                 </div>
               </div>
         </div>
@@ -36,15 +36,15 @@ d3.select("#graph").graphviz()
             fontname=Arial
 <?php
     $tableau20 = array (
-             "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78",  
-             "#2CA02C", "#98DF8A", "#D62728", "#FF9896",  
-             "#9467BD", "#C5B0D5", "#8C5694", "#C49C94",  
-             "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7",  
+             "#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78",
+             "#2CA02C", "#98DF8A", "#D62728", "#FF9896",
+             "#9467BD", "#C5B0D5", "#8C5694", "#C49C94",
+             "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7",
              "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5");
     $idColor = 0;
     $colors = array();
 ?>
-    @foreach($subnetworks as $subnet) 
+    @foreach($subnetworks as $subnet)
 <?php
     if (in_array($subnet->name,$colors))
         $color = $colors[$subnet->name];
@@ -53,12 +53,12 @@ d3.select("#graph").graphviz()
         $colors[$subnet->name] = $color;
     }
 ?>
-        subgraph cluster_{{ crc32($subnet->zone) }} { 
-            label = "{{ $subnet->zone }}" 
-            style="rounded,filled" 
-            fontcolor=white color="{{ $color }}" 
-            edge [style=invis] 
-            
+        subgraph cluster_{{ crc32($subnet->zone) }} {
+            label = "{{ $subnet->zone }}"
+            style="rounded,filled"
+            fontcolor=white color="{{ $color }}"
+            edge [style=invis]
+
             "{{ $subnet->name}}" [
             shape=box
             fontsize=10

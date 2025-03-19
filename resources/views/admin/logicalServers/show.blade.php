@@ -27,7 +27,7 @@
 <div class="card">
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.logicalServer.title') }}
+        {{ trans('cruds.logicalServer.title_singular') }}
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
