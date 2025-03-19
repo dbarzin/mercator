@@ -5,15 +5,12 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "axios": "^1.8.2",
+    "axios": "^1.3.5",
     "laravel-mix": "^6.0.49",
     "laravel-vite-plugin": "^0.8.0",
     "lodash": "^4.17.19",
     "sass": "^1.15.2",
-    "sass-loader": "^8.0.0",
-    "typescript": "^5.0.0",
-    "vite": "^6.2.2",
-    "laravel-vite-plugin": "^1.2.0"
+    "vite": "^4.5.9"
   },
   "name": "Mercator",
   "description": "[![Latest Release](https://img.shields.io/github/release/dbarzin/deming.svg?style=flat-square)](https://github.com/dbarzin/deming/releases/latest) ![License](https://img.shields.io/github/license/dbarzin/deming.svg?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/dbarzin/deming.svg?style=flat-square) ![Stars](https://img.shields.io/github/stars/dbarzin/deming?style=flat-square)",
