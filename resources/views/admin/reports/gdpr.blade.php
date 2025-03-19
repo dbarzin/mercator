@@ -222,12 +222,14 @@ digraph  {
     @endforeach
 }`;
 
+document.addEventListener('DOMContentLoaded', () => {
 d3.select("#graph").graphviz()
     .addImage("/images/macroprocess.png", "64px", "64px")
     .addImage("/images/process.png", "64px", "64px")
     .addImage("/images/dataprocessing.png", "64px", "64px")
     .addImage("/images/application.png", "64px", "64px")
     .renderDot(dotSrc);
+});
 </script>
 @parent
 @endsection
