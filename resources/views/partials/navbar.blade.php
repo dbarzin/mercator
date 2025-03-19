@@ -92,7 +92,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="menu4" role="button" data-bs-toggle="dropdown" aria-expanded="false">Aide</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="menu4" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ trans('panel.menu.help') }}</a>
                         <ul class="dropdown-menu" aria-labelledby="menu4">
                             <li><a class="dropdown-item" href="/admin/doc/schema">
                                 <i class="bi bi-database-fill"></i>{{ trans('panel.menu.schema') }}</a>

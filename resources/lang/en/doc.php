@@ -1,12 +1,29 @@
 <?php
 return [
     'about' => [
-        'p1' => "Mercator is a web application allowing to manage the mapping of an information system as described in the <a href='https://cyber.gouv.fr/en/publications/mapping-information-system'> Mapping The Information System Guide</a> of the <a href='https://cyber.gouv.fr/en/'>ANSSI</a>. The sources of the application are available under <a href='https://www.github.com/dbarzin/mercator'>Github</a>.",
-        'p2' => 'Gérard Mercator, born March 5, 1512 in Rupelmonde and died December 2, 1594 in Duisburg, is a Flemish mathematician, geographer and cartographer, inventor of the cartographic projection which bears his name.',
-        'p3' => 'The Mercator projection is a cartographic projection of the Earth, called "cylindrical", tangent to the equator of the terrestrial globe on a flat map. It has established itself as the benchmark planisphere in the world thanks to its precision for sea travel. It is not, stricto sensu, a central projection: the point of latitude φ is not sent, as one might expect, on a point of ordinate proportional to tan (φ) but on a point of ordinate proportional to ln [tan (φ / 2 + π / 4)].',
-        'p4' => 'The Mercator projection is a conformal projection, that is, it preserves the angles. However, it has the effect of deformations on distances and areas. Indeed, a distortion increases as the distance from the equator towards the poles increases. A Mercator map cannot therefore cover the poles: they would be infinitely large. For example, this results in the vision of an equality of surface between Greenland and Africa when the latter is 14 times greater.',
-        'p5' => "src: <a href='https://en.wikipedia.org/wiki/Gerardus_Mercator'>Wikipedia</a>",
-        'title' => 'About',
+        'title' => 'About Mercator',
+        'text' => "
+<p>Mercator is an open-source application dedicated to IT system mapping. Designed to meet the needs of CISOs, CIOs, and other risk management professionals, Mercator enables the modeling of IT architecture, its dependencies, and risks, thereby facilitating IT governance and resilience.</p>
+
+<p><b>License and Open-Source Model</b></p>
+
+<p>Mercator is distributed under the <a href='https://www.gnu.org/licenses/quick-guide-gplv3.en.html'>GPLv3</a> (GNU General Public License v3). This means you are free to use, modify, and redistribute Mercator as long as you comply with the terms of this license. The goal is to ensure an open and collaborative ecosystem for IT system mapping while maintaining transparency and code security.</p>
+
+<p><b>Support and Professional Services</b></p>
+
+<p>Professional support for Mercator is provided by <a href='https://www.sourcentis.com'>Sourcentis</a>, a company specializing in assisting organizations using Mercator and other open-source solutions for security and compliance management. Sourcentis offers support, consulting, and training services to ensure an optimal and tailored implementation for your needs.</p>
+
+<p><b>Contribute to Mercator</b></p>
+
+<p>As Mercator is an open-source project, your contributions are welcome! You can:</p>
+<ul>
+    <li>Report bugs or suggest improvements via our <a href='https://www.github.com/dbarzin/mercator'>GitHub repository</a>.</li>
+    <li>Participate in <a href='https://github.com/dbarzin/mercator/discussions'>discussions</a> and contribute to the project's evolution.</li>
+    <li>Develop new features and share your <a href='https://github.com/dbarzin/mercator/pulls'>contributions</a> with the community.</li>
+</ul>
+
+<p>For any questions or specific requests, feel free to contact us via <a href='https://www.sourcentis.com'>Sourcentis</a> or through our <a href='https://www.github.com/dbarzin'>GitHub repository</a>.</p>
+"
     ],
     'guide' => [
         'p1' => 'Computer attacks occur in constantly changing environments. To meet these challenges, it is necessary to put in place a comprehensive risk management approach within the organization.',
