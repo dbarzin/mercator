@@ -650,118 +650,99 @@
 @section('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-//$(document).ready(function() {
-
-console.log("document ready");
-
-$('#vendor-selector').on('select2:open', function() {
-  console.log('Select2 opened');
-});
-
-$('#vendor-selector').on('select2:select', function(e) {
-  console.log('Selected option', e.params.data);
-});
-
+    // ------------------------------------------------
     // CPE
     // ------------------------------------------------
-    $('.vendor-selector').select2({
+    $('#vendor-selector').select2({
       placeholder: 'Start typing to search',
-      allowClear: true,
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/vendors',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-console.log("Data received:", data);
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, vendor) {
-              results.push({
+          return {
+            results: data.map(function(vendor) {
+              return {
                 id: vendor.name,
                 text: vendor.name
-              });
-            });
-          }
- console.log("Processed results:", results);
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 1 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
-
-console.log("CPE initialized");
 
     // ------------------------------------------------
     $('#product-selector').select2({
       placeholder: 'Start typing to search',
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/products',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
             vendor: $("#vendor-selector").val(),
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, product) {
-              results.push({
+          return {
+            results: data.map(function(product) {
+              return {
                 id: product.name,
                 text: product.name
-              });
-            });
-          }
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
 
     // ------------------------------------------------
     $('#version-selector').select2({
       placeholder: 'Start typing to search',
-      tags: true,
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
       ajax: {
         url: '/admin/cpe/search/versions',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
         data: function(params) {
-          var query = {
+          return {
             part: "a",
             vendor: $("#vendor-selector").val(),
             product: $("#product-selector").val(),
-            search: params.term,
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
           };
-          return query;
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, version) {
-              results.push({
+          return {
+            results: data.map(function(version) {
+              return {
                 id: version.name,
                 text: version.name
-              });
-            });
-          }
-          return {
-            results: results
+              };
+            })
           };
-        }
-      }
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
+    });
 
-      });
-
+    // ===========
     // CPE Guesser
     // ===========
     function generateCPEList(data) {
@@ -772,7 +753,7 @@ console.log("CPE initialized");
             ret += '<tr>';
             ret += '<td>' + element.vendor_name + '</td>';
             ret += '<td>' + element.product_name +'</td>';
-            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="fa fa-check" style="color:green"></i></a>'
+            ret += '<td>' + '<a class="select_cpe" data-vendor="'+element.vendor_name+'" data-product="'+element.product_name+'" href="#"> <i class="bi bi-window-plus" style="color:green"></i></a>'
             ret += '</td>';
             ret += '</tr>';
         });
@@ -783,6 +764,7 @@ console.log("CPE initialized");
     // CPE Guesser window
     $('#guess').click(function (event) {
         let name = $("#name").val();
+        console.log(name);
         $.get("/admin/cpe/search/guess?search="+encodeURIComponent(name))
         .then((result)=>
             Swal.fire({
@@ -799,7 +781,7 @@ console.log("CPE initialized");
                         $("#product-selector").val(product);
                         $("#version-selector").append('<option></option>');
                         $("#version-selector").val(null);
-                        swal.close();
+                        Swal.close();
                     })
                 },
                 showConfirmButton: false,

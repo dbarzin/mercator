@@ -750,155 +750,99 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                 }
             });
-    //=====================================================
+    // ------------------------------------------------
     // CPE
     // ------------------------------------------------
-    // $('#vendor-selector').select2('destroy');
-/*
-     $('#vendor-selector').select2({
-          placeholder: 'Start typing to search',
-          tags: true,
-          ajax: {
-            url: '/admin/cpe/search/vendors',
-            data: function(params) {
-            console.log('Texte saisi :', params);
-              var query = {
-                part: "a",
-                search: params.term,
-            };
-            return query;
+    $('#vendor-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
+      ajax: {
+        url: '/admin/cpe/search/vendors',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
+        data: function(params) {
+          return {
+            part: "a",
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
+          };
         },
         processResults: function(data) {
-            console.log('Texte saisi :', params);
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, vendor) {
-              results.push({
+          return {
+            results: data.map(function(vendor) {
+              return {
                 id: vendor.name,
                 text: vendor.name
-                });
-            });
-          }
-        return {
-            results: results
-            };
-            }
-            }
-        });
-
-    /*
-    // Ajouter un gestionnaire d'événement pour le changement
-    $('#vendor-selector').on('change', function() {
-        // Appeler la fonction lorsque le champ change
-        console.log("change");
-        // do Ajax request
+              };
+            })
+          };
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 1 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
 
-    // Accéder à l'élément de saisie interne de Select2
-    $('#vendor-selector').on('select2:open', function() {
-        var $searchField = $('.select2-search__field');
-        var $selectElement = $(this); // Conserver une référence à l'élément Select2
-
-        // Ajouter un gestionnaire d'événement pour l'événement input
-        $searchField.on('input', function() {
-            var query = $(this).val();
-            console.log('Texte saisi :', query);
-
-            // Envoyer une requête AJAX
-            $.ajax({
-                url: '/admin/cpe/search/vendors',
-                dataType: 'json',
-                data: {
-                    part: "a",
-                    search: query
-                },
-                success: function(data) {
-                    console.log(data);
-
-                    // Convertir les nouvelles options au format attendu par Select2
-                    var select2Options = $.map(data, function(item) {
-                        return {
-                            id: item.id, // Assurez-vous que votre API renvoie un identifiant unique
-                            text: item.name // Assurez-vous que votre API renvoie un nom ou un texte
-                        };
-                    });
-
-                    // Mettre à jour les options du champ Select2
-                    $selectElement.empty().select2({
-                        data: select2Options
-                    }).trigger('change'); // Déclencher le changement pour mettre à jour l'affichage
-                }
-            });
-        });
-    });
-
-    function updateSelect2Options(newOptions) {
-    }
-
-        // ------------------------------------------------
-         $('#product-selector').select2({
-          placeholder: 'Start typing to search',
-          tags: true,
-          ajax: {
-            url: '/admin/cpe/search/products',
-            data: function(params) {
-              var query = {
-                part: "a",
-                vendor: $("#vendor-selector").val(),
-                search: params.term,
-            };
-            return query;
-            },
-        processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, product) {
-              results.push({
-                id: product.name,
-                text: product.name
-            });
-          });
-        }
-        return {
-            results: results
-            };
-        }
-        }
-    });
-        // ------------------------------------------------
-         $('#version-selector').select2({
-          placeholder: 'Start typing to search',
-          tags: true,
-          ajax: {
-            url: '/admin/cpe/search/versions',
-            data: function(params) {
-              var query = {
-                part: "a",
-                vendor: $("#vendor-selector").val(),
-                product: $("#product-selector").val(),
-                search: params.term,
-            };
-            return query;
+    // ------------------------------------------------
+    $('#product-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
+      ajax: {
+        url: '/admin/cpe/search/products',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
+        data: function(params) {
+          return {
+            part: "a",
+            vendor: $("#vendor-selector").val(),
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
+          };
         },
         processResults: function(data) {
-          var results = [];
-          if (data.length) {
-            $.each(data, function(id, version) {
-              results.push({
+          return {
+            results: data.map(function(product) {
+              return {
+                id: product.name,
+                text: product.name
+              };
+            })
+          };
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
+    });
+
+    // ------------------------------------------------
+    $('#version-selector').select2({
+      placeholder: 'Start typing to search',
+      tags: true, // Permet d'ajouter de nouvelles valeurs si elles ne sont pas dans les résultats
+      ajax: {
+        url: '/admin/cpe/search/versions',
+        dataType: 'json', // Assurez-vous que le backend renvoie bien du JSON
+        delay: 250, // Ajoute un délai pour éviter les requêtes excessives
+        data: function(params) {
+          return {
+            part: "a",
+            vendor: $("#vendor-selector").val(),
+            product: $("#product-selector").val(),
+            search: params.term || '' // Ajoute une gestion des cas où params.term est undefined
+          };
+        },
+        processResults: function(data) {
+          return {
+            results: data.map(function(version) {
+              return {
                 id: version.name,
                 text: version.name
-            });
-          });
-        }
-        return {
-            results: results
-            };
-        }
-    }
-
+              };
+            })
+          };
+        },
+        cache: true // Active le cache pour optimiser les requêtes
+      },
+      minimumInputLength: 0 // Empêche la requête tant qu'un caractère n'est pas tapé
     });
-    */
 
+    // ===========
     // CPE Guesser
     // ===========
     function generateCPEList(data) {

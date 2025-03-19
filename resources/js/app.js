@@ -87,13 +87,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Select2
-  $('.select2').select2();
+    $('.select2').each(function() {
+        // skip already initialised select2
+        // used by CPE search
+        if (this.id!='')
+            $(this).select2();
+    });
 
   $(".select2-free").select2({
         placeholder: "...",
         allowClear: true,
         tags: true
-    })
+    });
 
   $('.select-all').click(function () {
     let $select2 = $(this).parent().siblings('.select2')
