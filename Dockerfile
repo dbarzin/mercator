@@ -25,6 +25,7 @@ RUN apk add php-zip \
   php-tokenizer \
   libzip-dev \
   openldap-dev \
+  nodejs \
   npm \
   libpng \
   libpng-dev
