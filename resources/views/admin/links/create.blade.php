@@ -44,7 +44,7 @@
                         <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}" name="dest_id" id="dest_id">
                                 <option></option>
                             @foreach($devices as $id => $name)
-                                <option value="{{ $id }}" {{ old('src_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
+                                <option value="{{ $id }}" {{ old('dest_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('src_id'))
