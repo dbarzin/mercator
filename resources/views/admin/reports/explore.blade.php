@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card explorer-screen">
             <div class="card-header">
                 {{ trans("cruds.report.explorer.title") }}
             </div>
@@ -84,7 +84,7 @@
                 </tr>
             </table>
             </div>
-            <div id="mynetwork" style="height:500px;"></div>
+            <div id="mynetwork"></div>
           </div>
     </div>
 </div>
