@@ -446,10 +446,30 @@ table .navbar-brand-full {
   margin-left: 1rem
 }
 
+/*****************************************************************************/
+
+.explorer-screen {
+    display: flex;
+    flex-direction: column;
+    height: 85vh; 
+}
+
+.explorer-screen .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.explorer-screen #mynetwork {
+    flex-grow: 1;
+    min-height: 0; /* Important pour éviter les débordements */
+}
+
 .explore_commands{
   display: flex;
   align-items: center;
 }
+
 .command{
   margin-left: 1.5rem;
 }
