@@ -326,7 +326,7 @@
     });
         // Adds a contextmenu for quickaccess from nodes
 
-        let contextMenu = document.getElementById("explore_context");
+        let contextMenu = document.getElementById("context");
         let x = null;
         let y = null;
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreApplicationRequest;
-use App\Http\Requests\UpdateApplicationRequest;
+use App\Http\Requests\StoreMApplicationRequest;
+use App\Http\Requests\UpdateMApplicationRequest;
 use App\Http\Resources\Admin\ApplicationResource;
 use App\MApplication;
 use Gate;
@@ -21,7 +21,7 @@ class ApplicationController extends Controller
         return response()->json($applications);
     }
 
-    public function store(StoreApplicationRequest $request)
+    public function store(StoreMApplicationRequest $request)
     {
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -50,7 +50,7 @@ class ApplicationController extends Controller
         return new ApplicationResource($application);
     }
 
-    public function update(UpdateApplicationRequest $request, MApplication $application)
+    public function update(UpdateMApplicationRequest $request, MApplication $application)
     {
         abort_if(Gate::denies('m_application_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
