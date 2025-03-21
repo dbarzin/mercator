@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreWorkstationRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class StoreWorkstationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:workstations,name,NULL,id,deleted_at,NULL',
+                Rule::unique('workstations')->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreRouterRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class StoreRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:routers,name,NULL,id,deleted_at,NULL',
+                Rule::unique('routers')->whereNull('deleted_at'),
             ],
             'ip_addresses' => [
                 'nullable',

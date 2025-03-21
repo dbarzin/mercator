@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreEntityRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:entities',
-                'unique:entities,name,NULL,id,deleted_at,NULL',
+                Rule::unique('entities')->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'seurity_level' => [

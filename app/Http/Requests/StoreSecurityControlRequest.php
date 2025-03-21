@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreSecurityControlRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StoreSecurityControlRequest extends FormRequest
                 'min:3',
                 'max:255',
                 'required',
-                'unique:security_controls,name,NULL,id,deleted_at,NULL',
+                Rule::unique('security_controls')->whereNull('deleted_at'),
             ],
         ];
     }

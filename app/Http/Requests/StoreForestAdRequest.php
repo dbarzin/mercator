@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreForestAdRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreForestAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:forest_ads',
-                'unique:forest_ads,name,NULL,id,deleted_at,NULL',
+                Rule::unique('forest_ads')->whereNull('deleted_at'),
             ],
             'domaines.*' => [
                 'integer',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreApplicationServiceRequest extends FormRequest
 {
@@ -22,9 +23,7 @@ class StoreApplicationServiceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:application_services',
-                'unique:application_services,name,NULL,id,deleted_at,NULL',
-
+                Rule::unique('application_services')->whereNull('deleted_at'),
             ],
             'modules.*' => [
                 'integer',

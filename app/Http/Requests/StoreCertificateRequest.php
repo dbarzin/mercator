@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreCertificateRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StoreCertificateRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:certificates,name,NULL,id,deleted_at,NULL',
+                Rule::unique('certificates')->whereNull('deleted_at'),
             ],
             'start_validity' => [
                 'date',

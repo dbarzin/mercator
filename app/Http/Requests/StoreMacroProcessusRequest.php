@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreMacroProcessusRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreMacroProcessusRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:macro_processuses',
-                'unique:macro_processuses,name,NULL,id,deleted_at,NULL',
+                Rule::unique('macro_processuses')->whereNull('deleted_at'),
             ],
             'security_need' => [
                 'nullable',

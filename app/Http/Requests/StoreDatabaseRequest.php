@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreDatabaseRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreDatabaseRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:databases',
-                'unique:databases,name,NULL,id,deleted_at,NULL',
+                Rule::unique('databases')->whereNull('deleted_at'),
             ],
             'entities.*' => [
                 'integer',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreLanRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreLanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:lans',
-                'unique:lans,name,NULL,id,deleted_at,NULL',
+                Rule::unique('lans')->whereNull('deleted_at'),
             ],
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StorePhysicalRouterRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StorePhysicalRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:physical_routers,name,NULL,id,deleted_at,NULL',
+                Rule::unique('physical_routers')->whereNull('deleted_at'),
             ],
             'vlans.*' => [
                 'integer',

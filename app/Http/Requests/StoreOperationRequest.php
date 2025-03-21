@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreOperationRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreOperationRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                //'unique:operations',
-                'unique:operations,name,NULL,id,deleted_at,NULL',
+                Rule::unique('operations')->whereNull('deleted_at'),
             ],
             'actors.*' => [
                 'integer',

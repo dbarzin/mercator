@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreApplicationBlockRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreApplicationBlockRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:application_blocks',
-                'unique:application_blocks,name,NULL,id,deleted_at,NULL',
+                Rule::unique('application_blocks')->whereNull('deleted_at'),
             ],
         ];
     }

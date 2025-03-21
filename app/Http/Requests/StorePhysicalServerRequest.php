@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StorePhysicalServerRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class StorePhysicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:physical_servers,name,NULL,id,deleted_at,NULL',
+                Rule::unique('physical_servers')->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

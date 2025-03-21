@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreSiteRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreSiteRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:sites',
-                'unique:sites,name,NULL,id,deleted_at,NULL',
+                Rule::unique('sites')->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
         ];

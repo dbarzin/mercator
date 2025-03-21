@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreDomaineAdRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreDomaineAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:domaine_ads',
-                'unique:domaine_ads,name,NULL,id,deleted_at,NULL',
+                Rule::unique('domaine_ads')->whereNull('deleted_at'),
             ],
             'domain_ctrl_cnt' => [
                 'nullable',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreBuildingRequest extends FormRequest
 {
@@ -22,8 +23,7 @@ class StoreBuildingRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                //'unique:buildings',
-                'unique:buildings,name,NULL,id,deleted_at,NULL',
+                Rule::unique('buildings')->whereNull('deleted_at'),
             ],
         ];
     }

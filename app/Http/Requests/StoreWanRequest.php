@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreWanRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class StoreWanRequest extends FormRequest
             'name' => [
                 'min:3',
                 'max:32',
+                Rule::unique('wans')->whereNull('deleted_at'),
             ],
             'mans.*' => [
                 'integer',

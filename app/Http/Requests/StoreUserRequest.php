@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -20,10 +21,11 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('users')->whereNull('deleted_at'),
             ],
             'email' => [
                 'required',
-                'unique:users,email,NULL,id,deleted_at,NULL',
+                Rule::unique('users')->whereNull('deleted_at'),
             ],
             'roles.*' => [
                 'integer',
