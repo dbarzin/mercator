@@ -7,18 +7,22 @@
         background-position: center;
         background-repeat: no-repeat;
         background-color: #FFFFFF;
+        height: 800px;
         }
 
     .card {
         background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 10px;
+        padding: 2px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .text-muted {
-        color: black;
+        color: black !important;
     }
 
     .input-group-text {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255);
     }
 
     .form-control {
@@ -34,12 +38,6 @@
             <div class="card-body p-4">
 
                 <p class="text-muted">{{ trans('global.reset_password') }}</p>
-
-                @if(session('message'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('message') }}
-                    </div>
-                @endif
 
                 <form method="POST" action="{{ route('forget.password.post') }}">
                     @csrf
