@@ -3,11 +3,8 @@
 namespace App;
 
 use App\Traits\Auditable;
-use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
 
 class MApplication extends Model
 {

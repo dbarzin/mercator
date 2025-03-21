@@ -28,7 +28,7 @@ class SsoController extends Controller
         try {
             $roles = $keycloakUser->user['realm_access']['roles'];
         } catch (\Exception $e) {
-            $roles = array();
+            $roles = [];
         }
 
         // Trouver ou créer l'utilisateur dans la base de données locale

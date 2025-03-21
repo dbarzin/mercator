@@ -6,7 +6,6 @@ use App\Rules\Cidr;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Validation\Rule;
 
 class StoreLogicalFlowRequest extends FormRequest
 {

@@ -15,9 +15,8 @@ use App\PhysicalServer;
 use App\Services\CartographerService;
 use Gate;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
 
 class LogicalServerController extends Controller
@@ -36,7 +35,7 @@ class LogicalServerController extends Controller
 
     public function getData(Request $request)
     {
-        $logicalServers = LogicalServer::select("id","name","type","attributes","description")->get();
+        $logicalServers = LogicalServer::select('id', 'name', 'type', 'attributes', 'description')->get();
         return DataTables::of($logicalServers)->make(true);
     }
 
@@ -148,12 +147,12 @@ class LogicalServerController extends Controller
                 'address_ip' => $logicalServer->address_ip,
                 'cluster' => $logicalServer->cluster_id ? (object) ['id' => $logicalServer->cluster_id, 'name' => $logicalServer->cluster_name] : null,
                 'applications' => $items->filter(function ($item) {
-                    return !is_null($item->m_application_id);
+                    return ! is_null($item->m_application_id);
                 })->unique('m_application_id')->map(function ($item) {
                     return (object) ['id' => $item->m_application_id, 'name' => $item->m_application_name];
                 })->values(),
                 'physicalServers' => $items->filter(function ($item) {
-                    return !is_null($item->physical_server_id);
+                    return ! is_null($item->physical_server_id);
                 })->unique('physical_server_id')->map(function ($item) {
                     return (object) ['id' => $item->physical_server_id, 'name' => $item->physical_server_name];
                 })->values(),
