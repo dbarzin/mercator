@@ -1,26 +1,32 @@
-name: docker
+name: Build & Push Docker Image
 
 on:
   push:
     branches:
-      - "master"
+      - main
+    paths:
+      - 'version.txt'
+      - '**/*.php'
+      - '**/*.js'
+      - '**/*.vue'
+      - 'Dockerfile'
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Test naming
-        run: echo "ghcr.io/${{ github.repository }}:latest"
+      - name: Read version from version.txt
+        id: version
+        run: |
+          VERSION=$(cat version.txt | tr -d ' \n')
+          echo "VERSION=$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to GitHub Container Registry
+      - name: Log in to Docker Hub (optional)
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -31,7 +37,10 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64 #, linux/arm64 (build fails)
+          platforms: linux/amd64  # linux/arm64 peut être rajouté plus tard
           push: true
+          build-args: |
+              APP_VERSION=${{ steps.version.outputs.version }}
           tags: |
+            ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
             ghcr.io/${{ github.repository }}:latest

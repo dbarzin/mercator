@@ -1,88 +1,78 @@
 FROM php:8.3-fpm-alpine3.19
 
-# system deps
-RUN apk update && apk add git curl nano bash ssmtp graphviz fontconfig ttf-freefont ca-certificates sqlite sqlite-dev nginx gettext supervisor
-RUN apk add postgresql-dev postgresql-client mariadb-client mariadb-connector-c-dev
+COPY version.txt ./version.txt
 
-# run font cache
+# Injecter la variable d’environnement
+ARG VERSION
+ENV APP_VERSION=${VERSION}
+
+# Install system dependencies
+RUN apk add --no-cache \
+    git curl bash ssmtp graphviz fontconfig ttf-freefont \
+    ca-certificates sqlite sqlite-dev \
+    postgresql-dev postgresql-client \
+    mariadb-client mariadb-connector-c-dev \
+    openldap-dev libzip-dev \
+    libpng libpng-dev \
+    nginx gettext supervisor \
+    nodejs npm
+
+# Update font cache
 RUN fc-cache -f
 
-# php deps
-RUN apk add php-zip \
-  php-curl \
-  php-mbstring \
-  php-dom \
-  php-ldap \
-  php-soap \
-  php-xdebug \
-  php-sqlite3 \
-  php-gd \
-  php-xdebug \
-  php-gd \
-  php-pdo php-pdo_sqlite \
-  php-fileinfo \
-  php-simplexml php-xml php-xmlreader php-xmlwriter \
-  php-tokenizer \
-  libzip-dev \
-  openldap-dev \
-  nodejs \
-  npm \
-  libpng \
-  libpng-dev
-
 # Install PHP extensions
-RUN docker-php-ext-install gd zip ldap pdo pdo_mysql pdo_pgsql
+RUN docker-php-ext-install \
+    pdo pdo_mysql pdo_pgsql pdo_sqlite \
+    zip ldap gd
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php \
-  && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php && \
+    chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
-# Add mercator:www user
-RUN addgroup --g 1000 -S www && \
-  adduser -u 1000 -S mercator -G www && \
-  chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
-  chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d
+# Create application user and group
+RUN addgroup -g 1000 -S www && \
+    adduser -u 1000 -S mercator -G www && \
+    mkdir -p /var/www/mercator && \
+    chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
+    chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
-# Clone sources from Github
-#WORKDIR /var/www/
-#RUN git clone https://github.com/dbarzin/mercator.git/
-RUN mkdir /var/www/mercator
+# Set working directory
 WORKDIR /var/www/mercator
+
+# Copy application source
 COPY . .
 
-# Copy config files
+# Copy configuration files
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-# change owner
+# Set permissions and ownership
 RUN chown -R mercator:www /var/www/mercator && \
-  chmod -R g=u /var/www/mercator && \
-  chmod +x /usr/local/bin/entrypoint.sh
+    chmod -R g=u /var/www/mercator && \
+    chmod +x /usr/local/bin/entrypoint.sh && \
+    chmod g=u /etc/passwd && \
+    chgrp www /etc/passwd
 
-RUN chmod g=u /etc/passwd && \
-  chgrp www /etc/passwd
-
-# Now work with Mercator user
+# Switch to application user
 USER mercator:www
 
-# Run Composer
-RUN composer install
+# Install PHP dependencies via Composer
+RUN composer install --no-interaction --prefer-dist
 
-# Node Package Management
-RUN npm install
-RUN npm run build
+# Install and build frontend
+RUN VERSION=$(cat version.txt) && \
+    npm install && npm run build -- --appVersion=$VERSION
 
-# Create database folder
-RUN mkdir sql
+# Prepare SQLite database
+RUN mkdir -p sql && touch sql/db.sqlite
 
-# Create the SQLite database file
-RUN touch sql/db.sqlite
-
-# copy environement varaibles file
+# Copy environment file
 RUN cp .env.sqlite .env
 
-# Start surpervisord
+# Expose HTTP port
 EXPOSE 8000
+
+# Entrypoint and default command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

@@ -38,5 +38,11 @@ class AppServiceProvider extends ServiceProvider
                 \Log::info($query->time . ':' . $query->sql);
             });
         }
+
+        view()->composer('*', function ($view) {
+            $version = trim(file_get_contents(base_path('version.txt')));
+            $view->with('appVersion', $version);
+        });
+
     }
 }
