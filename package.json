@@ -1,4 +1,11 @@
 {
+  "name": "Mercator",
+  "description": "[![Latest Release](https://img.shields.io/github/release/dbarzin/deming.svg?style=flat-square)](https://github.com/dbarzin/deming/releases/latest) ![License](https://img.shields.io/github/license/dbarzin/deming.svg?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/dbarzin/deming.svg?style=flat-square) ![Stars](https://img.shields.io/github/stars/dbarzin/deming?style=flat-square)",
+  "version": "2025.03.21",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -11,13 +18,6 @@
     "lodash": "^4.17.19",
     "sass": "^1.15.2",
     "vite": "^4.5.9"
-  },
-  "name": "Mercator",
-  "description": "[![Latest Release](https://img.shields.io/github/release/dbarzin/deming.svg?style=flat-square)](https://github.com/dbarzin/deming/releases/latest) ![License](https://img.shields.io/github/license/dbarzin/deming.svg?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/dbarzin/deming.svg?style=flat-square) ![Stars](https://img.shields.io/github/stars/dbarzin/deming?style=flat-square)",
-  "version": "1.0.0",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.2",

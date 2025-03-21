@@ -430,6 +430,6 @@
         </a>
     </div>
     <div class="sidebar-footer">
-        Version 2025.03.21
+        Version {{ $appVersion }}
     </div>
 </nav>
