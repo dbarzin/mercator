@@ -110,15 +110,26 @@ To import the test database (optional)
 
     sudo mysql mercator < mercator_data.sql
 
-## Import the CPE Database
+## Import/Update the CPE Database (optional)
 
-Decompress CPE databse
+Download the database from NIST.gov:
 
-    gzip -d mercator_cpe.sql.gz
+```sh
+cd /var/www/mercator
+wget https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.gz
+```
 
-Import database
+Decompress the file:
 
-    sudo mysql mercator < mercator_cpe.sql
+```sh
+gzip -d official-cpe-dictionary_v2.3.xml.gz
+```
+
+Import it into Mercator:
+
+```sh
+php artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
+```
 
 ## Start
 

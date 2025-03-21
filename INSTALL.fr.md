@@ -108,15 +108,26 @@ Pour importer la base de données de test (facultatif)
 
     sudo mysql mercator < mercator_data.sql
 
-## Importer la base de données des CPE
+## Importer/mette à jour la base de données des CPE (optionel)
 
-Décompresse la base de données
+Télécharger la base depuis NIST.gov
 
-    gzip -d mercator_cpe.sql.gz
+```sh
+cd /var/www/mercator
+wget https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.gz
+```
 
-Importer la base de données
+La décompresser :
 
-    sudo mysql mercator < mercator_cpe.sql
+```sh
+gzip -d official-cpe-dictionary_v2.3.xml.gz
+```
+
+Importer dans Merator :
+
+```sh
+php artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
+```
 
 ## Démarrage
 
