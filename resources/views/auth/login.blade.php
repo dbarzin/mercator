@@ -92,7 +92,7 @@
                                 {{ trans('global.login') }}
                             </button>
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-6 text-end">
                             @if(Route::has('forget.password.get'))
                                 <a class="btn btn-link px-0" href="{{ route('forget.password.get') }}">
                                     {{ trans('global.forgot_password') }}
