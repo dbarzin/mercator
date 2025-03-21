@@ -62,7 +62,7 @@ RUN composer install --no-interaction --prefer-dist
 
 # Install and build frontend
 RUN VERSION=$(cat version.txt) && \
-    npm install && npm run build -- --appVersion=$VERSION
+    npm install && npm run build
 
 # Prepare SQLite database
 RUN mkdir -p sql && touch sql/db.sqlite
