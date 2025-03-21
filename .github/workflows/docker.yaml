@@ -3,18 +3,13 @@ name: Build & Push Docker Image
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'version.txt'
-      - '**/*.php'
-      - '**/*.js'
-      - '**/*.vue'
-      - 'Dockerfile'
+      - "master"
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
