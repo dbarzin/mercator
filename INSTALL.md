@@ -110,7 +110,7 @@ To import the test database (optional)
 
     sudo mysql mercator < mercator_data.sql
 
-## Import/Update the CPE Database
+## Import/Update the CPE Database (optional)
 
 Download the database from NIST.gov:
 
