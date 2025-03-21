@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreZoneAdminRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreZoneAdminRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:zone_admins',
-                'unique:zone_admins,name,NULL,id,deleted_at,NULL',
+                Rule::unique('zone_admins')->whereNull('deleted_at'),
             ],
         ];
     }

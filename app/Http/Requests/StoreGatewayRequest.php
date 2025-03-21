@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreGatewayRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreGatewayRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:gateways',
-                'unique:gateways,name,NULL,id,deleted_at,NULL',
+                Rule::unique('gateways')->whereNull('deleted_at'),
             ],
         ];
     }

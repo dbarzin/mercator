@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreDnsserverRequest extends FormRequest
@@ -22,9 +23,7 @@ class StoreDnsserverRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:dnsservers',
-                'unique:dnsservers,name,NULL,id,deleted_at,NULL',
-
+                Rule::unique('dnsservers')->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

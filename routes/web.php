@@ -180,7 +180,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Logical Servers
     Route::resource('logical-servers', Admin\LogicalServerController::class);
-    Route::post('logical-servers-data', [Admin\LogicalServerController::class, 'getData'])->name('logical-servers.data');;
+    Route::post('logical-servers-data', [Admin\LogicalServerController::class, 'getData'])->name('logical-servers.data');
+
     Route::delete('logical-servers-destroy', [Admin\LogicalServerController::class,'massDestroy'])->name('logical-servers.massDestroy');
 
     // Containers

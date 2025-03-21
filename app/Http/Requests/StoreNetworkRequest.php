@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreNetworkRequest extends FormRequest
@@ -22,7 +23,7 @@ class StoreNetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:networks,name,NULL,id,deleted_at,NULL',
+                Rule::unique('networks')->whereNull('deleted_at'),
             ],
             'security_need_c' => [
                 'nullable',

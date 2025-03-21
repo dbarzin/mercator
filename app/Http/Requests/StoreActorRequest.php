@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreActorRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreActorRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:actors',
-                'unique:actors,name,NULL,id,deleted_at,NULL',
+                Rule::unique('actors')->whereNull('deleted_at'),
             ],
         ];
     }

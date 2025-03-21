@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorePhysicalSecurityDeviceRequest extends FormRequest
@@ -23,8 +24,7 @@ class StorePhysicalSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:physical_security_devices',
-                'unique:physical_security_devices,name,NULL,id,deleted_at,NULL',
+                Rule::unique('physical_security_devices')->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

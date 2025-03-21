@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreTaskRequest extends FormRequest
@@ -22,7 +23,7 @@ class StoreTaskRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:tasks,name,NULL,id,deleted_at,NULL',
+                Rule::unique('tasks')->whereNull('deleted_at'),
             ],
         ];
     }

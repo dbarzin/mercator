@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreActivityRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreActivityRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:activities,name,NULL,id,deleted_at,NULL',
-
+                Rule::unique('activities')->whereNull('deleted_at'),
             ],
             'operations.*' => [
                 'integer',

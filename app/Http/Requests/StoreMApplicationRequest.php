@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreMApplicationRequest extends FormRequest
@@ -21,7 +22,7 @@ class StoreMApplicationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:m_applications,name,NULL,id,deleted_at,NULL',
+                Rule::unique('m_applications')->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'entities.*' => [

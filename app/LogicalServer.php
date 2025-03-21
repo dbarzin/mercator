@@ -3,11 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use Carbon\Carbon;
-use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 /**
  * App\LogicalServer
  */
@@ -101,5 +100,4 @@ class LogicalServer extends Model
     {
         return $this->belongsToMany(Container::class)->orderBy('name');
     }
-
 }

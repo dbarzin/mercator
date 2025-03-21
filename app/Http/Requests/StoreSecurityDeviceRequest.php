@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreSecurityDeviceRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:security_devices',
-                'unique:security_devices,name,NULL,id,deleted_at,NULL',
+                Rule::unique('security_devices')->whereNull('deleted_at'),
             ],
         ];
     }

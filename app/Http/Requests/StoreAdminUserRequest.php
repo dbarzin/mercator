@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreAdminUserRequest extends FormRequest
@@ -22,6 +23,7 @@ class StoreAdminUserRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
+                Rule::unique('admin_user')->whereNull('deleted_at'),
             ],
         ];
     }

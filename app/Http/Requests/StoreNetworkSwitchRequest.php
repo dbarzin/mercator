@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreNetworkSwitchRequest extends FormRequest
@@ -22,8 +23,7 @@ class StoreNetworkSwitchRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                //'unique:network_switches',
-                'unique:network_switches,name,NULL,id,deleted_at,NULL',
+                Rule::unique('network_switches')->whereNull('deleted_at'),
             ],
         ];
     }

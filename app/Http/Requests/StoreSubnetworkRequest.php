@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\Cidr;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreSubnetworkRequest extends FormRequest
@@ -23,7 +24,7 @@ class StoreSubnetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:subnetworks,name,NULL,id,deleted_at,NULL',
+                Rule::unique('subnetworks')->whereNull('deleted_at'),
             ],
             'address' => [
                 'nullable',

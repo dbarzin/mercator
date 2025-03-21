@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreLogicalServerRequest extends FormRequest
@@ -23,7 +24,7 @@ class StoreLogicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:logical_servers,name,NULL,id,deleted_at,NULL',
+                Rule::unique('logical_servers')->whereNull('deleted_at'),
             ],
             'servers.*' => [
                 'integer',

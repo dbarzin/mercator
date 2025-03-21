@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreDataProcessingRequest extends FormRequest
@@ -22,7 +23,7 @@ class StoreDataProcessingRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:data_processing,name,NULL,id,deleted_at,NULL',
+                Rule::unique('data_processing')->whereNull('deleted_at'),
             ],
             'operations.*' => [
                 'integer',

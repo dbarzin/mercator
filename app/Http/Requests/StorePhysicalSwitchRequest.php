@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class StorePhysicalSwitchRequest extends FormRequest
@@ -22,7 +23,7 @@ class StorePhysicalSwitchRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                'unique:physical_switches,name,NULL,id,deleted_at,NULL',
+                Rule::unique('physical_switches')->whereNull('deleted_at'),
             ],
         ];
     }
