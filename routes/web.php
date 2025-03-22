@@ -401,6 +401,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('config', function () {
         return view('config');
     });
+
+    // Import
+    Route::get('import', function () {
+        return view('admin/import');
+    })->name('doc.report');
+    Route::post('export', [Admin\ExcelSyncController::class, 'export']);
+    Route::post('import', [Admin\ExcelSyncController::class, 'import']);
 });
 
 // Profile
