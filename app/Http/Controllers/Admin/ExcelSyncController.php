@@ -8,35 +8,61 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 use Throwable;
-
-use App\Exports\GenericExport;
 
 class ExcelSyncController extends Controller
 {
     public function export(Request $request)
     {
-        $modelName = $request->get ("export-model");
-        dd($modelName);
+        $modelName = $request->get("model");
+        if($modelName==null)
+            return back()->withErrors(['msg' => 'Model empty']);
 
-        $modelClass = $this->resolveModelClass("app/".$modelName);
-        $this->checkGate($modelName, 'access');
+        $apiClassName = 'App\\Http\\Controllers\\API\\' . ucfirst($modelName) ."Controller";
+        if (!class_exists($apiClassName))
+            return back()->withErrors(['msg' => 'API Class not found']);
 
-        $data = $modelClass::all()->toArray();
+        $controller = app()->make($apiClassName);
+
+        // Appeler le contrôleur
+        $response = app()->call([$controller, 'index']);
+
+        // Récupérer les données JSON en tableau associatif
+        $rawData = $response->getData(true);
+
+        // Exclure les colonnes techniques
+        $columnsToExclude = ['created_at', 'updated_at', 'deleted_at'];
+
+        $data = array_map(function ($row) use ($columnsToExclude) {
+            return collect($row)->except($columnsToExclude)->all();
+        }, $rawData);
+
         $header = array_keys($data[0] ?? []);
 
-        return Excel::download(new GenericExport($data, $header), $modelName . 's.xlsx');
+        return Excel::download(new GenericExport($data, $header), $modelName . '-'. Carbon::today()->format('Ymd') . '.xlsx');
     }
 
-    public function import(Request $request, $modelName)
+    public function import(Request $request)
     {
-        $modelClass = $this->resolveModelClass($modelName);
-        $this->checkGate($modelName, 'edit');
-
         $request->validate([
             'file' => 'required|file|mimes:xlsx'
         ]);
+
+        $modelName = $request->get("model");
+        if($modelName==null)
+            return back()->withErrors(['msg' => 'Model empty']);
+
+        $modelClass = 'App\\' . ucfirst($modelName);
+        if (!class_exists($modelClass))
+            return back()->withErrors(['msg' => 'Class not found']);
+
+        $controller = app()->make($modelClass);
 
         $errors = [];
         $rows = Excel::toCollection(null, $request->file('file'))->first();
@@ -77,19 +103,21 @@ class ExcelSyncController extends Controller
                     }
                 } catch (Throwable $e) {
                     $simulatedErrors[] = "Ligne " . ($index + 2) . ": " . $e->getMessage();
+                    if (sizeof($simulatedErrors)>=10)
+                        break;
                 }
             }
 
             if (count($simulatedErrors)) {
                 DB::rollBack();
-                return response()->json(['status' => 'error', 'errors' => $simulatedErrors], 422);
+                return back()->withErrors($simulatedErrors);
             }
 
             DB::commit();
             return response()->json(['status' => 'success']);
         } catch (Throwable $e) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+            return back()->withErrors(simulatedErrors);
         }
     }
 
@@ -106,5 +134,49 @@ class ExcelSyncController extends Controller
     {
         $permission = strtolower($modelName . '_' . $action);
         abort_if(Gate::denies($permission), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    }
+}
+
+/**
+ * Classe d'export Excel générique.
+ */
+
+class GenericExport implements FromArray, WithHeadings, WithStyles
+{
+    protected $data;
+    protected $headers;
+
+    public function __construct(array $data, array $headers)
+    {
+        $this->data = $data;
+        $this->headers = $headers;
+    }
+
+    public function array(): array
+    {
+        return $this->data;
+    }
+
+    public function headings(): array
+    {
+        return $this->headers;
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $columnCount = count($this->headers);
+        $endColumn = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnCount);
+        $headerRange = 'A1:' . $endColumn . '1';
+
+        return [
+            $headerRange => [
+                'font' => ['bold' => true],
+                'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => 'D9E1F2'],
+                ],
+            ],
+        ];
     }
 }

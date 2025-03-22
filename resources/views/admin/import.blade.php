@@ -27,9 +27,9 @@
                 </div>
 
                 {{-- Formulaire d'export --}}
-                <form action="/admin/export" method="POST" class="mb-5">
+                <form action="/admin/export" method="POST" class="mb-4">
                     @csrf
-                    <input type="hidden" name="model" id="export-model">
+                    <input type="hidden" name="model" id="export-model" value="{{ old('model') }}">
 
                     <div class="row align-items-end">
                         <div class="col-md-4">
@@ -63,9 +63,9 @@
                 </form>
 
                 {{-- Formulaire d'import --}}
-                <form action="/admin/export" method="POST" enctype="multipart/form-data">
+                <form action="/admin/import" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="model" id="import-model">
+                    <input type="hidden" name="model" id="import-model" value="{{ old('model') }}">
 
                     <div class="row align-items-end">
                         <div class="col-md-8">
@@ -157,8 +157,16 @@ const objectMap = {
     ],
 };
 
-document.addEventListener("DOMContentLoaded", function () {
+function findFilterForModel(modelId) {
+    for (const [filterId, models] of Object.entries(objectMap)) {
+        if (models.some(m => m.id === modelId)) {
+            return filterId;
+        }
+    }
+    return null;
+}
 
+document.addEventListener("DOMContentLoaded", function () {
     const allObjects = Object.values(objectMap).flat();
 
     const $filters = $('#filters');
@@ -166,17 +174,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const $exportModel = $('#export-model');
     const $importModel = $('#import-model');
 
-    function updateNodeOptions(objects) {
+    const selectedModel = @json(old('model'));
+    const selectedFilter = findFilterForModel(selectedModel);
+
+    function updateNodeOptions(objects, selectedValue = null) {
         $node.empty();
-        $node.append('<option disabled selected>{{ __("Sélectionnez un objet") }}</option>');
+        $node.append('<option disabled>{{ __("Sélectionnez un objet") }}</option>');
 
         objects.forEach(obj => {
-            $node.append(`<option value="${obj.id}">${obj.label}</option>`);
+            const isSelected = obj.id === selectedValue ? 'selected' : '';
+            $node.append(`<option value="${obj.id}" ${isSelected}>${obj.label}</option>`);
         });
 
-        $node.val(null).trigger('change'); // Réinitialise Select2
-        $exportModel.val('');
-        $importModel.val('');
+        $node.val(selectedValue).trigger('change');
+        $exportModel.val(selectedValue);
+        $importModel.val(selectedValue);
+    }
+
+    $filters.select2();
+    $node.select2();
+
+    if (selectedFilter) {
+        $filters.val(selectedFilter).trigger('change');
+        updateNodeOptions(objectMap[selectedFilter], selectedModel);
+    } else {
+        updateNodeOptions(allObjects, selectedModel);
     }
 
     $filters.on('change', function () {
@@ -190,13 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
         $exportModel.val(value);
         $importModel.val(value);
     });
-
-    // Initialisation Select2 si besoin
-    $filters.select2();
-    $node.select2();
-
-    // Remplissage initial de tous les objets
-    updateNodeOptions(allObjects);
 });
 </script>
 @endsection
