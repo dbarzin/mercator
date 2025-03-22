@@ -16,17 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;
 use Throwable;
 
-class ExcelSyncController extends Controller
+class ImportController extends Controller
 {
     public function export(Request $request)
     {
         $modelName = $request->get("model");
         if($modelName==null)
-            return back()->withErrors(['msg' => 'Model empty']);
+            return back()->withInput()->withErrors(['msg' => 'Model empty']);
 
         $apiClassName = 'App\\Http\\Controllers\\API\\' . ucfirst($modelName) ."Controller";
         if (!class_exists($apiClassName))
-            return back()->withErrors(['msg' => 'API Class not found']);
+            return back()->withInput()->withErrors(['msg' => 'API Class not found']);
 
         $controller = app()->make($apiClassName);
 
@@ -56,11 +56,11 @@ class ExcelSyncController extends Controller
 
         $modelName = $request->get("model");
         if($modelName==null)
-            return back()->withErrors(['msg' => 'Model empty']);
+            return back()->withInput()->withErrors(['msg' => 'Model empty']);
 
         $modelClass = 'App\\' . ucfirst($modelName);
         if (!class_exists($modelClass))
-            return back()->withErrors(['msg' => 'Class not found']);
+            return back()->withInput()->withErrors(['msg' => 'Class not found']);
 
         $controller = app()->make($modelClass);
 
@@ -118,15 +118,15 @@ class ExcelSyncController extends Controller
 
             if (count($simulatedErrors)) {
                 DB::rollBack();
-                return back()->withErrors($simulatedErrors);
+                return back()->withInput()->withErrors($simulatedErrors);
             }
 
             DB::commit();
-            return back()
+            return back()->withInput()
                 ->withMessage("Sucess : {$insertCount} lines inserted, {$updateCount} lines updated and {$deleteCount} lines deleted");
         } catch (Throwable $e) {
             DB::rollBack();
-            return back()->withErrors($simulatedErrors);
+            return back()->withInput()->withErrors($simulatedErrors);
         }
     }
 
