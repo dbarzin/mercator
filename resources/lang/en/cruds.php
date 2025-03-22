@@ -355,18 +355,20 @@ return [
             'title_short' => 'Import',
             'choose' => "Choose the type of object to export",
             'description' => "
-                <p>This interface allows you to <strong>export and import</strong> mapping data using a spreadsheet.</p>
-                <p>
-                    During import:
-                </p>
-                <ul>
-                    <li>If a row contains an identifier (ID) and data, it will be <strong>updated</strong>.</li>
-                    <li>If a row contains only the ID, the corresponding object will be <strong>deleted</strong>.</li>
-                    <li>If the ID is empty, a <strong>new entry will be created</strong>.</li>
-                </ul>
-                <p>
-                    The import is fully validated beforehand: if there is an error in any row, <strong>no changes</strong> will be applied, and the first 10 errors will be displayed.
-                </p>",
+    <p>This interface allows you to <strong>export and import</strong> mapping data using a spreadsheet.</p>
+    <p>
+        During import:
+    </p>
+    <ul>
+        <li>If a row contains an identifier (ID) and data, it will be <strong>updated</strong>.</li>
+        <li>If a row contains only the ID, the corresponding object will be <strong>deleted</strong>.</li>
+        <li>Columns that are not present will not be updated.</li>
+        <li>The order of columns does not matter.</li>
+        <li>If the ID is empty, a <strong>new entry will be created</strong>.</li>
+    </ul>
+    <p>
+        The import is fully validated beforehand: if there is an error in any row, <strong>no changes</strong> will be applied, and the first 10 errors will be displayed.
+    </p>",
         ],
     ],
     'container' => [

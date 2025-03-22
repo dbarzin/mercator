@@ -64,6 +64,11 @@ class ExcelSyncController extends Controller
 
         $controller = app()->make($modelClass);
 
+        // Inititialize counters
+        $deleteCount = 0;
+        $insertCount = 0;
+        $updateCount = 0;
+        //
         $errors = [];
         $rows = Excel::toCollection(null, $request->file('file'))->first();
         $header = $rows->shift(); // Première ligne = entête
@@ -82,6 +87,7 @@ class ExcelSyncController extends Controller
                         $record = $modelClass::find($id);
                         if ($record) {
                             $record->delete();
+                            $deleteCount++;
                         } else {
                             throw new \Exception("ID $id introuvable");
                         }
@@ -92,11 +98,13 @@ class ExcelSyncController extends Controller
                             throw new \Exception(implode(', ', $validator->errors()->all()));
                         }
                         $modelClass::create($rowData->except('id')->toArray());
+                        $insertCount++;
                     } else {
                         // Update
                         $record = $modelClass::find($id);
                         if ($record) {
                             $record->update($rowData->except('id')->toArray());
+                            $updateCount++;
                         } else {
                             throw new \Exception("ID $id introuvable");
                         }
@@ -114,10 +122,11 @@ class ExcelSyncController extends Controller
             }
 
             DB::commit();
-            return back()->withMessage("Sucess");
+            return back()
+                ->withMessage("Sucess : {$insertCount} lines inserted, {$updateCount} lines updated and {$deleteCount} lines deleted");
         } catch (Throwable $e) {
             DB::rollBack();
-            return back()->withErrors(simulatedErrors);
+            return back()->withErrors($simulatedErrors);
         }
     }
 

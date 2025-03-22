@@ -50,7 +50,6 @@
                         </div>
                     </div>
                 </form>
-
                 {{-- Formulaire d'import --}}
                 <form action="{{ route('admin.config.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -59,7 +58,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <label for="file" class="form-label">Fichier Excel</label>
-                            <input type="file" name="file" id="file" class="form-control" required>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.csv"> required>
                             <div class="form-text">Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.</div>
                         </div>
 
@@ -70,7 +69,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

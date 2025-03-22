@@ -362,6 +362,8 @@ return [
                         <ul>
                             <li>Si une ligne contient un identifiant (ID) et des données, elle est <strong>mise à jour</strong>.</li>
                             <li>Si une ligne contient uniquement l’ID, l’objet correspondant est <strong>supprimé</strong>.</li>
+                            <li>Les collones qui ne sont pas présentes ne sont pas mises à jour.</li>
+                            <li>L'ordre des collones n'a pas d'importance.</li>
                             <li>Si l’ID est vide, une <strong>nouvelle entrée est créée</strong>.</li>
                         </ul>
                         <p>
