@@ -114,7 +114,7 @@ class ExcelSyncController extends Controller
             }
 
             DB::commit();
-            return response()->json(['status' => 'success']);
+            return back()->withMessage("Sucess");
         } catch (Throwable $e) {
             DB::rollBack();
             return back()->withErrors(simulatedErrors);
@@ -174,7 +174,7 @@ class GenericExport implements FromArray, WithHeadings, WithStyles
                 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => 'D9E1F2'],
+                    'startColor' => ['rgb' => '306EFF'],
                 ],
             ],
         ];
