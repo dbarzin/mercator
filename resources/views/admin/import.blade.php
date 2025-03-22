@@ -58,7 +58,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <label for="file" class="form-label">Fichier Excel</label>
-                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.csv"> required>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.csv" required>
                             <div class="form-text">Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.</div>
                         </div>
 
