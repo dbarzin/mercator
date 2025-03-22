@@ -23,19 +23,20 @@
                     <div class="row align-items-center">
                         <div class="col-md-3">
                             <label for="filters" class="form-label">Filtre</label>
-                            <select class="form-select select2" id="filters">
+                            <select class="form-select select2" id="filters" name="filter">
                                 <option></option>
-                                <option value="1">{{ trans("cruds.report.cartography.ecosystem") }}</option>
-                                <option value="2">{{ trans("cruds.report.cartography.information_system") }}</option>
-                                <option value="3">{{ trans("cruds.report.cartography.applications") }}</option>
-                                <option value="4">{{ trans("cruds.report.cartography.administration") }}</option>
-                                <option value="5">{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
-                                <option value="6">{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                <option value="1" {{ old('filter')=='1' ? "selected" : "" }}>{{ trans("cruds.report.cartography.ecosystem") }}</option>
+                                <option value="2" {{ old('filter')=='2' ? "selected" : "" }}>{{ trans("cruds.report.cartography.information_system") }}</option>
+                                <option value="3" {{ old('filter')=='3' ? "selected" : "" }}>{{ trans("cruds.report.cartography.applications") }}</option>
+                                <option value="4" {{ old('filter')=='4' ? "selected" : "" }}>{{ trans("cruds.report.cartography.administration") }}</option>
+                                <option value="5" {{ old('filter')=='5' ? "selected" : "" }}>{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
+                                <option value="6" {{ old('filter')=='6' ? "selected" : "" }}>{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
                             </select>
                             <div class="form-text">Filtrer par type d’objet métier</div>
                         </div>
 
                         <div class="col-md-3 node-container">
+                        {{ old('node') }}
                             <label for="node" class="form-label">{{ trans("cruds.report.explorer.object") }}</label>
                             <select class="form-select select2" id="node">
                                 <option></option>
@@ -58,7 +59,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <label for="file" class="form-label">Fichier Excel</label>
-                            <input type="file" name="file" id="file" class="form-control" accept=".xlsx,.csv" required>
+                            <input type="file" name="file" id="file" value="{{ old('file') }}"class="form-control" accept=".xlsx,.csv" required>
                             <div class="form-text">Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.</div>
                         </div>
 
