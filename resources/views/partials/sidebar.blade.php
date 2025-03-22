@@ -414,6 +414,9 @@
             <a href="{{ route("admin.config.cve") }}" class="ps-4 {{ request()->is('admin/config/cve*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.cve.title_short') }}</span>
             </a>
+            <a href="{{ route("admin.config.import") }}" class="ps-4 {{ request()->is('admin/config/import') ? 'active' : '' }}">
+                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans("cruds.configuration.import.title_short") }}</span>
+            </a>
             @endcan
             <a href="{{ route("admin.config.documents") }}" class="ps-4 {{ request()->is('admin/config/documents*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.documents.title_short') }}</span>

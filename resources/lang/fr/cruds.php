@@ -344,12 +344,30 @@ return [
             'status' => 'Etat'
         ],
         'parameters' => [
-            'title' => 'Paramètres',
+            'title' => 'Gestion des paramètres',
             'title_short' => 'Paramètres',
             'help' => 'Cet écran permet de configurer des paramètres optionnels de Mercator',
             'security_need_auth_helper' => 'Ajoute le critère de sécurité "Authenticité" aux critères Confidentialité, Intégrité, Disponibilité et Traçabilité déjà existants (exigence DORA).',
             'security_need_auth' => 'Authenticité',
         ],
+        'import' => [
+            'title' => 'Import / Export des données',
+            'title_short' => 'Import',
+            'choose' => "Choisir le type d'objet à exporter",
+            'description' => "
+                        <p>Cette interface permet d’<strong>exporter et importer</strong> des données de la cartographie dans une feuille de calcul.</p>
+                        <p>
+                            Lors de l’import :
+                        </p>
+                        <ul>
+                            <li>Si une ligne contient un identifiant (ID) et des données, elle est <strong>mise à jour</strong>.</li>
+                            <li>Si une ligne contient uniquement l’ID, l’objet correspondant est <strong>supprimé</strong>.</li>
+                            <li>Si l’ID est vide, une <strong>nouvelle entrée est créée</strong>.</li>
+                        </ul>
+                        <p>
+                            L’import est d’abord entièrement validé : en cas d’erreur sur une ligne, <strong>aucune modification</strong> n’est appliquée, et les 10 premières erreurs sont affichées.
+                        </p>",
+        ]
     ],
     'container' => [
         'description' => 'Unité logicielle légère et portable qui regroupe une application et toutes ses dépendances dans un environnement isolé afin d\'assurer son exécution cohérente sur n\'importe quelle infrastructure',

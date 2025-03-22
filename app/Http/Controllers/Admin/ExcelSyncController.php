@@ -174,7 +174,7 @@ class GenericExport implements FromArray, WithHeadings, WithStyles
                 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => '306EFF'],
+                    'startColor' => ['rgb' => '94e5ff'],
                 ],
             ],
         ];

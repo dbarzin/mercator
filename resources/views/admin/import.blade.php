@@ -5,34 +5,23 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Import / Export des données
+            {{ trans("cruds.configuration.import.title") }}
             </div>
 
             <div class="card-body">
                 <div class="row mb-4">
                     <div class="col-12">
-                        <p>Cette interface permet d’<strong>exporter et importer</strong> des données de la cartographie dans une feuille de calcul.</p>
-                        <p>
-                            Lors de l’import :
-                        </p>
-                        <ul>
-                            <li>Si une ligne contient un identifiant (ID) et des données, elle est <strong>mise à jour</strong>.</li>
-                            <li>Si une ligne contient uniquement l’ID, l’objet correspondant est <strong>supprimé</strong>.</li>
-                            <li>Si l’ID est vide, une <strong>nouvelle entrée est créée</strong>.</li>
-                        </ul>
-                        <p>
-                            L’import est d’abord entièrement validé : en cas d’erreur sur une ligne, <strong>aucune modification</strong> n’est appliquée, et les 10 premières erreurs sont affichées.
-                        </p>
+                        {!! trans("cruds.configuration.import.description") !!}
                     </div>
                 </div>
 
                 {{-- Formulaire d'export --}}
-                <form action="/admin/export" method="POST" class="mb-4">
+                <form action="{{ route('admin.config.export') }}" method="POST" class="mb-4">
                     @csrf
                     <input type="hidden" name="model" id="export-model" value="{{ old('model') }}">
 
-                    <div class="row align-items-end">
-                        <div class="col-md-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
                             <label for="filters" class="form-label">Filtre</label>
                             <select class="form-select select2" id="filters">
                                 <option></option>
@@ -46,12 +35,12 @@
                             <div class="form-text">Filtrer par type d’objet métier</div>
                         </div>
 
-                        <div class="col-md-4 node-container">
+                        <div class="col-md-3 node-container">
                             <label for="node" class="form-label">{{ trans("cruds.report.explorer.object") }}</label>
                             <select class="form-select select2" id="node">
                                 <option></option>
                             </select>
-                            <div class="form-text">Choisir l’objet métier à exporter</div>
+                            <div class="form-text"> {{ trans("cruds.configuration.import.choose") }}</div>
                         </div>
 
                         <div class="col-md-4">
@@ -63,12 +52,12 @@
                 </form>
 
                 {{-- Formulaire d'import --}}
-                <form action="/admin/import" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.config.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="model" id="import-model" value="{{ old('model') }}">
 
-                    <div class="row align-items-end">
-                        <div class="col-md-8">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
                             <label for="file" class="form-label">Fichier Excel</label>
                             <input type="file" name="file" id="file" class="form-control" required>
                             <div class="form-text">Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.</div>
