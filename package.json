@@ -27,7 +27,7 @@
     "build": "vite build --config vite.config.mjs"
   },
   "require": {
-    "laravel/framework": "^12.0"
+    "laravel/framework": "^12.0",
     "laravel/sanctum": "^3.0"
   },
   "dependencies": {
