@@ -515,16 +515,16 @@
         },
         {
             "name": "directorytree/ldaprecord-laravel",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DirectoryTree/LdapRecord-Laravel.git",
-                "reference": "bb0aa206723ed07e2b42eadd7311d5949cc770dd"
+                "reference": "15f56e01319852d41023633d3688ac4aa139aa6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/bb0aa206723ed07e2b42eadd7311d5949cc770dd",
-                "reference": "bb0aa206723ed07e2b42eadd7311d5949cc770dd",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/15f56e01319852d41023633d3688ac4aa139aa6e",
+                "reference": "15f56e01319852d41023633d3688ac4aa139aa6e",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +570,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DirectoryTree/LdapRecord-Laravel/issues",
-                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v3.4.0"
+                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v3.4.1"
             },
             "funding": [
                 {
@@ -578,7 +578,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-26T01:41:53+00:00"
+            "time": "2025-03-21T19:16:44+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -5213,16 +5213,16 @@
         },
         {
             "name": "ramsey/collection",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/collection.git",
-                "reference": "3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109"
+                "reference": "344572933ad0181accbf4ba763e85a0306a8c5e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/collection/zipball/3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109",
-                "reference": "3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/344572933ad0181accbf4ba763e85a0306a8c5e2",
+                "reference": "344572933ad0181accbf4ba763e85a0306a8c5e2",
                 "shasum": ""
             },
             "require": {
@@ -5283,9 +5283,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/collection/issues",
-                "source": "https://github.com/ramsey/collection/tree/2.1.0"
+                "source": "https://github.com/ramsey/collection/tree/2.1.1"
             },
-            "time": "2025-03-02T04:48:29+00:00"
+            "time": "2025-03-22T05:38:12+00:00"
         },
         {
             "name": "ramsey/uuid",

@@ -397,10 +397,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         return view('doc/about');
     });
 
+    // Import
+    Route::get('config.import', function () {
+        return view('admin/import');
+    })->name('config.import');
+    Route::post('config.export', [Admin\ExcelSyncController::class, 'export'])->name('config.export');
+    Route::post('config.import', [Admin\ExcelSyncController::class, 'import'])->name('config.import');
+
     // Configuration page
     Route::get('config', function () {
         return view('config');
     });
+
 });
 
 // Profile
