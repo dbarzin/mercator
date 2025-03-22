@@ -408,7 +408,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('config', function () {
         return view('config');
     });
-
 });
 
 // Profile
