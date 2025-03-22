@@ -24,24 +24,17 @@ class ImportController extends Controller
         if($modelName==null)
             return back()->withInput()->withErrors(['msg' => 'Model empty']);
 
-        $apiClassName = 'App\\Http\\Controllers\\API\\' . ucfirst($modelName) ."Controller";
-        if (!class_exists($apiClassName))
-            return back()->withInput()->withErrors(['msg' => 'API Class not found']);
+        $modelClass = $this->resolveModelClass($modelName);
+        $this->checkGate($modelName, 'access');
 
-        $controller = app()->make($apiClassName);
-
-        // Appeler le contrôleur
-        $response = app()->call([$controller, 'index']);
-
-        // Récupérer les données JSON en tableau associatif
-        $rawData = $response->getData(true);
+        $data = $modelClass::all()->toArray();
 
         // Exclure les colonnes techniques
         $columnsToExclude = ['created_at', 'updated_at', 'deleted_at'];
 
         $data = array_map(function ($row) use ($columnsToExclude) {
             return collect($row)->except($columnsToExclude)->all();
-        }, $rawData);
+        }, $data);
 
         $header = array_keys($data[0] ?? []);
 
@@ -51,18 +44,12 @@ class ImportController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:xlsx'
+            'file' => 'required|file|mimes:xlsx',
+            'model' => 'required'
         ]);
 
-        $modelName = $request->get("model");
-        if($modelName==null)
-            return back()->withInput()->withErrors(['msg' => 'Model empty']);
-
-        $modelClass = 'App\\' . ucfirst($modelName);
-        if (!class_exists($modelClass))
-            return back()->withInput()->withErrors(['msg' => 'Class not found']);
-
-        $controller = app()->make($modelClass);
+        // Get Model
+        $modelClass = $this->resolveModelClass($request->get("model"));
 
         // Inititialize counters
         $deleteCount = 0;
