@@ -396,34 +396,34 @@
             ) ? 'show' : '' }}">
             @can('user_access')
             <a href="{{ route("admin.users.index") }}" class="ps-4 {{ request()->is('admin/users*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.user.title') }}</span>
+                <i class="bi bi-person-fill"></i><span class="menu-text">{{ trans('cruds.user.title') }}</span>
             </a>
             @endcan
             @can('role_access')
             <a href="{{ route("admin.roles.index") }}" class="ps-4 {{ request()->is('admin/roles*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.role.title') }}</span>
+                <i class="bi bi-people-fill"></i></i><span class="menu-text">{{ trans('cruds.role.title') }}</span>
             </a>
             @endcan
             @can('configure')
             <a href="{{ route("admin.config.parameters") }}" class="ps-4 {{ request()->is('admin/config/parameters*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.parameters.title_short') }}</span>
+                <i class="bi bi-wrench-adjustable"></i><span class="menu-text">{{ trans('cruds.configuration.parameters.title_short') }}</span>
             </a>
             <a href="{{ route("admin.config.cert") }}" class="ps-4 {{ request()->is('admin/config/cert*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.certificate.title_short') }}</span>
+                <i class="bi bi-shield-lock-fill"></i></i><span class="menu-text">{{ trans('cruds.configuration.certificate.title_short') }}</span>
             </a>
             <a href="{{ route("admin.config.cve") }}" class="ps-4 {{ request()->is('admin/config/cve*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.cve.title_short') }}</span>
+                <i class="bi bi-bug-fill"></i></i><span class="menu-text">{{ trans('cruds.configuration.cve.title_short') }}</span>
             </a>
             <a href="{{ route("admin.config.import") }}" class="ps-4 {{ request()->is('admin/config/import') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans("cruds.configuration.import.title_short") }}</span>
+                <i class="bi bi-file-earmark-arrow-up-fill"></i><span class="menu-text">{{ trans("cruds.configuration.import.title_short") }}</span>
             </a>
             @endcan
             <a href="{{ route("admin.config.documents") }}" class="ps-4 {{ request()->is('admin/config/documents*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.configuration.documents.title_short') }}</span>
+                <i class="bi bi-file-earmark-text-fill"></i></i><span class="menu-text">{{ trans('cruds.configuration.documents.title_short') }}</span>
             </a>
             @can('audit_log_access')
             <a href="{{ route("admin.audit-logs.index") }}" class="ps-4 {{ request()->is('admin/audit-logs*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.auditLog.title') }}</span>
+                <i class="bi bi-archive-fill"></i></i><span class="menu-text">{{ trans('cruds.auditLog.title') }}</span>
             </a>
             @endcan
         </div>
