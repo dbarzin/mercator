@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row mb-4">
                     <div class="col-12">
-                        <p>Cette interface permet d’<strong>exporter et importer des données métiers</strong> au format Excel.</p>
+                        <p>Cette interface permet d’<strong>exporter et importer</strong> des données de la cartographie dans une feuille de calcul.</p>
                         <p>
                             Lors de l’import :
                         </p>
