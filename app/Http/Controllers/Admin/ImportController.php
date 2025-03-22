@@ -1,47 +1,42 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
-use Carbon\Carbon;
 use Throwable;
 
 class ImportController extends Controller
 {
     public function export(Request $request)
     {
-        $modelName = $request->get("model");
-        if($modelName==null)
+        $modelName = $request->get('model');
+        if ($modelName === null) {
             return back()->withInput()->withErrors(['msg' => 'Model empty']);
+        }
 
-        $apiClassName = 'App\\Http\\Controllers\\API\\' . ucfirst($modelName) ."Controller";
-        if (!class_exists($apiClassName))
-            return back()->withInput()->withErrors(['msg' => 'API Class not found']);
+        $modelClass = $this->resolveModelClass($modelName);
+        $this->checkGate($modelName, 'access');
 
-        $controller = app()->make($apiClassName);
-
-        // Appeler le contrôleur
-        $response = app()->call([$controller, 'index']);
-
-        // Récupérer les données JSON en tableau associatif
-        $rawData = $response->getData(true);
+        $data = $modelClass::all()->toArray();
 
         // Exclure les colonnes techniques
         $columnsToExclude = ['created_at', 'updated_at', 'deleted_at'];
 
         $data = array_map(function ($row) use ($columnsToExclude) {
             return collect($row)->except($columnsToExclude)->all();
-        }, $rawData);
+        }, $data);
 
         $header = array_keys($data[0] ?? []);
 
@@ -51,24 +46,18 @@ class ImportController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:xlsx'
+            'file' => 'required|file|mimes:xlsx',
+            'model' => 'required',
         ]);
 
-        $modelName = $request->get("model");
-        if($modelName==null)
-            return back()->withInput()->withErrors(['msg' => 'Model empty']);
-
-        $modelClass = 'App\\' . ucfirst($modelName);
-        if (!class_exists($modelClass))
-            return back()->withInput()->withErrors(['msg' => 'Class not found']);
-
-        $controller = app()->make($modelClass);
+        // Get Model
+        $modelClass = $this->resolveModelClass($request->get('model'));
 
         // Inititialize counters
         $deleteCount = 0;
         $insertCount = 0;
         $updateCount = 0;
-        //
+
         $errors = [];
         $rows = Excel::toCollection(null, $request->file('file'))->first();
         $header = $rows->shift(); // Première ligne = entête
@@ -89,9 +78,9 @@ class ImportController extends Controller
                             $record->delete();
                             $deleteCount++;
                         } else {
-                            throw new \Exception("ID $id introuvable");
+                            throw new \Exception("ID {$id} introuvable");
                         }
-                    } elseif (!$id) {
+                    } elseif (! $id) {
                         // Insertion
                         $validator = Validator::make($rowData->except('id')->toArray(), $modelClass::$excelValidation ?? []);
                         if ($validator->fails()) {
@@ -106,13 +95,14 @@ class ImportController extends Controller
                             $record->update($rowData->except('id')->toArray());
                             $updateCount++;
                         } else {
-                            throw new \Exception("ID $id introuvable");
+                            throw new \Exception("ID {$id} introuvable");
                         }
                     }
                 } catch (Throwable $e) {
-                    $simulatedErrors[] = "Ligne " . ($index + 2) . ": " . $e->getMessage();
-                    if (sizeof($simulatedErrors)>=10)
+                    $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
+                    if (sizeof($simulatedErrors) >= 10) {
                         break;
+                    }
                 }
             }
 
@@ -133,8 +123,8 @@ class ImportController extends Controller
     private function resolveModelClass($modelName)
     {
         $modelClass = 'App\\' . Str::studly(Str::singular($modelName));
-        if (!class_exists($modelClass)) {
-            abort(404, "Modèle [$modelName] introuvable.");
+        if (! class_exists($modelClass)) {
+            abort(404, "Modèle [{$modelName}] introuvable.");
         }
         return $modelClass;
     }
