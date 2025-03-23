@@ -30,7 +30,7 @@ The `created_at`, `updated_at`, and `deleted_at` columns are automatically **exc
 
 Allows you to update or add data from a structured Excel file.
 
-#### Steps:
+#### Steps
 
 1. Choose the **Excel file** to import.
 2. Click **Import**.
@@ -51,7 +51,7 @@ Allows you to update or add data from a structured Excel file.
 
 If an error is detected in the file, no changes are applied.
 
-### Example of expected Excel header
+#### Example of expected Excel header
 
 ```plaintext
 id, name, description, type, reference

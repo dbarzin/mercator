@@ -52,7 +52,7 @@ Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Ex
 Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.
 
 
-### Exemple d’en-tête Excel attendu
+#### Exemple d’en-tête Excel attendu
 
 ```plaintext
 id, name, description, type, reference
