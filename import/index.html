@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/application/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://dbarzin.githubs.io/mercator/import/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Application - Mercator</title>
+    <title>Import - Mercator</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Application";
-        var mkdocs_page_input_path = "application.md";
-        var mkdocs_page_url = "/mercator/application/";
+        var mkdocs_page_name = "Import";
+        var mkdocs_page_input_path = "import.md";
+        var mkdocs_page_url = "/mercator/import/";
       </script>
     
     <!--[if lt IE 9]>
@@ -47,16 +47,8 @@
                 <li class="toctree-l1"><a class="reference internal" href="../cartography/">Mapping</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Application</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#main-page">Main page</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#menus">Menus</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#explorer">Explorer</a>
-    </li>
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../application/">Application</a>
                 </li>
               </ul>
               <ul>
@@ -75,8 +67,32 @@
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Import</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#accessing-the-page">Accessing the Page</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#available-features">Available Features</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#data-export">Data Export</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#steps">Steps:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#file-format">File format:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#data-import">Data import</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#steps_1">Steps:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#expected-file-format">Expected file format:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#import-behavior">Import behavior:</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                 </li>
               </ul>
               <ul>
@@ -101,9 +117,9 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Application</li>
+      <li class="breadcrumb-item active">Import</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/dbarzin/mercator/edit/master/docs/application.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/dbarzin/mercator/edit/master/docs/import.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -112,57 +128,71 @@
             <div class="section" itemprop="articleBody">
               
                 <ul>
-<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../application.fr/">Français</a></li>
+<li class="i18n-link i18n-link-found i18n-link-fr"><a href="../import.fr/">Français</a></li>
 </ul>
-<h2 id="application">Application</h2>
-<p><a href="/mercator/images/homepage.png"><img src="/mercator/images/homepage.png" width="600"></a></p>
-<h3 id="main-page">Main page</h3>
-<p>The main page is divided into three parts:</p>
+<h2 id="data-importexport-interface">Data Import/Export Interface</h2>
+<p>This interface allows you to import and export information system mapping data via Excel files.</p>
+<h3 id="accessing-the-page">Accessing the Page</h3>
+<p>The data import/export page is accessible via the "Configuration" -&gt; "Import" menu.</p>
+<p><a href="/mercator/images/import.png"><img src="/mercator/images/import.png" width="700"></a></p>
+<h3 id="available-features">Available Features</h3>
+<h4 id="data-export">Data Export</h4>
+<p>Export allows you to download business model data in <code>.xlsx</code> format.</p>
+<h4 id="steps">Steps:</h4>
+<ol>
+<li>Select a <strong>filter</strong>: ecosystem, information system, applications, etc.</li>
+<li>Select an associated <strong>object</strong>.</li>
+<li>Click <strong>Export</strong>.</li>
+</ol>
+<h4 id="file-format">File format:</h4>
+<p>The file contains: a <strong>first row</strong> of headers (columns) and the object data.</p>
+<p>The <code>created_at</code>, <code>updated_at</code>, and <code>deleted_at</code> columns are automatically <strong>excluded</strong>.</p>
+<h3 id="data-import">Data import</h3>
+<p>Allows you to update or add data from a structured Excel file.</p>
+<h4 id="steps_1">Steps:</h4>
+<ol>
+<li>Choose the <strong>Excel file</strong> to import.</li>
+<li>Click <strong>Import</strong>.</li>
+</ol>
+<h4 id="expected-file-format">Expected file format:</h4>
 <ul>
-<li>Compliance levels</li>
+<li><strong>First row</strong>: column names</li>
+<li><strong>First column</strong>: <code>ID</code> field, the order of the other columns does not matter.</li>
+<li>Columns not present in the import file <strong>are not updated</strong>.</li>
 </ul>
-<p><a href="/mercator/images/maturity.png"><img src="/mercator/images/maturity.png" width="600"></a></p>
-<ul>
-<li>The distribution of cartography objects by domain. </li>
-</ul>
-<p><a href="/mercator/images/repartition.png"><img src="/mercator/images/repartition.png" width="600"></a></p>
-<ul>
-<li>The global proportional map of cartography objects.</li>
-</ul>
-<p><a href="/mercator/images/treemap.png"><img src="/mercator/images/treemap.png" width="600"></a></p>
-<p>Each item is selectable and gives access to the list of selected map objects.</p>
-<h3 id="menus">Menus</h3>
-<ul>
-<li>The left side menu provides access to:<ul>
-<li>the dashboard</li>
-<li>through the views, to the various cartographic object management screens</li>
-<li>role and user management screens</li>
-<li>the logout button</li>
-</ul>
-</li>
-<li>The top menu gives access to :<ul>
-<li>Views</li>
-<li>Preferences</li>
-<li>Documentation and reports</li>
-</ul>
-</li>
-<li>Search tool</li>
-</ul>
-<h3 id="explorer">Explorer</h3>
-<p>It is possible to explore the cartography. This function is available via the "documentation" menu.</p>
-<ul>
-<li>The filter drop-down menu allows you to limit exploration to one or more areas.</li>
-<li>The "Object" field is used to select an element of the cartography and add it to the exploration.</li>
-<li>The "Delete" button is used to remove an element from the cartography exploration.</li>
-</ul>
-<p><a href="/mercator/images/explore.png"><img src="/mercator/images/explore.png" width="600"></a></p>
-<p>Double-click on an object to display all its connections.</p>
+<h4 id="import-behavior">Import behavior:</h4>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Action applied</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Row with ID + data</td>
+<td>🔁 Record update</td>
+</tr>
+<tr>
+<td>Row with ID only</td>
+<td>❌ Record deletion</td>
+</tr>
+<tr>
+<td>Row without ID</td>
+<td>➕ New record creation</td>
+</tr>
+</tbody>
+</table>
+<p>If an error is detected in the file, no changes are applied.</p>
+<h2 id="example-of-expected-excel-header">Example of expected Excel header</h2>
+<pre><code class="language-plaintext">id, name, description, type, reference
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../cartography/" class="btn btn-neutral float-left" title="Mapping"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../usecases/" class="btn btn-neutral float-right" title="Use cases">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../admin/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../api/" class="btn btn-neutral float-right" title="API">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -190,10 +220,10 @@
         </span>
     
     
-      <span><a href="../cartography/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../admin/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../usecases/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../api/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

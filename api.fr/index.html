@@ -67,6 +67,10 @@
                 <li class="toctree-l1"><a class="reference internal" href="../admin.fr/">Administration</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../import.fr/">Import</a>
+                </li>
+              </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
     <ul class="current">
@@ -443,27 +447,61 @@ vheaders['Authorization'] = &quot;Bearer &quot; + response.json()['access_token'
 
 print(&quot;Get workstations&quot;)
 response = requests.get(&quot;http://127.0.0.1:8000/api/workstations&quot;, headers=vheaders)
-print(response.json())
+data=response.json()
+print(data)
 print(response.status_code)
 
 </code></pre>
 <h3 id="bash">bash</h3>
 <p>Voici un exemple d'utilisation de l'API en ligne de commande avec <a href="https://curl.se/docs/manpage.html">CURL</a> et <a href="https://stedolan.github.io/jq/">JQ</a></p>
-<pre><code># valid login and password
+<pre><code>#!/usr/bin/bash
+
+API_URL=http://127.0.0.1:8000/api
+OBJECT=applications
+OBJECT_ID=45
+
+# valid login and password
+
 data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
 
-# get a token after correct login
-token=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; http://localhost:8000/api/login | jq -r .access_token)
+# Get a token after correct login
 
-# query users and decode JSON data with JQ.
-curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Bearer ${token}&quot; &quot;http://127.0.0.1:8000/api/users&quot; | jq .
+TOKEN=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; ${API_URL}/login | jq -r .access_token)
+
+# Récupération de l'objet
+RESPONSE=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
+ -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+ -H &quot;Accept: application/json&quot;)
+
+echo &quot;Objet récupéré: ${RESPONSE}&quot;
+
+# Mise à jour d'une valeur avec une requête PUT
+
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.data')
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.activities=[1]')
+
+echo &quot;Objet modifié: ${RESPONSE}&quot;
+
+curl -s -X PUT &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;cache-control: no-cache&quot; \
+  -d &quot;$RESPONSE&quot;
+
+# Vérification de la mise à jour
+
+UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Accept: application/json&quot;)
+
+echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../admin.fr/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../import.fr/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../references.fr/" class="btn btn-neutral float-right" title="Références">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -492,7 +530,7 @@ curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Be
         </span>
     
     
-      <span><a href="../admin.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../import.fr/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../references.fr/" style="color: #fcfcfc">Next &raquo;</a></span>
