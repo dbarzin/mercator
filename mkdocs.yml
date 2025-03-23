@@ -11,7 +11,7 @@ edit_uri: edit/master/docs
 # Copyright
 copyright: Copyright <a href="https://www.gnu.org/licenses/licenses.en.html">GPL</a>.
 
-theme: 
+theme:
   name: readthedocs
 
 plugins:
@@ -52,6 +52,8 @@ nav:
     - Rapports: reports.fr.md
     - Administration: admin.md
     - Administration: admin.fr.md
+    - Import: import.md
+    - Import: import.fr.md
     - API: api.md
     - API: api.fr.md
     - References: references.md
@@ -68,4 +70,3 @@ extra:
     - name: Français
       link: index.fr/
       lang: fr
-

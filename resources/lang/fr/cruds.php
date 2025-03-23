@@ -354,6 +354,8 @@ return [
             'title' => 'Import / Export des données',
             'title_short' => 'Import',
             'choose' => "Choisir le type d'objet à exporter",
+            'filter' => 'Filtre',
+            'filter_helper' => 'Filtrer par type d’objet',
             'description' => "
                         <p>Cette interface permet d’<strong>exporter et importer</strong> des données de la cartographie dans une feuille de calcul.</p>
                         <p>
@@ -369,6 +371,8 @@ return [
                         <p>
                             L’import est d’abord entièrement validé : en cas d’erreur sur une ligne, <strong>aucune modification</strong> n’est appliquée, et les 10 premières erreurs sont affichées.
                         </p>",
+            'file' => 'Fichier Excel',
+            'file_helper' => 'Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.',
         ]
     ],
     'container' => [

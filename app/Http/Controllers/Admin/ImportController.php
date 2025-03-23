@@ -21,23 +21,29 @@ class ImportController extends Controller
 {
     public function export(Request $request)
     {
+        $request->validate([
+            'model' => 'required',
+        ]);
+
+        // Model name from request
         $modelName = $request->get('model');
-        if ($modelName === null) {
-            return back()->withInput()->withErrors(['msg' => 'Model empty']);
-        }
 
+        // Check permission
+        abort_if(Gate::denies($this->permission($modelName, 'access')), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Get class
         $modelClass = $this->resolveModelClass($modelName);
-        $this->checkGate($modelName, 'access');
 
+        // Get Data
         $data = $modelClass::all()->toArray();
 
         // Exclure les colonnes techniques
         $columnsToExclude = ['created_at', 'updated_at', 'deleted_at'];
-
         $data = array_map(function ($row) use ($columnsToExclude) {
             return collect($row)->except($columnsToExclude)->all();
         }, $data);
 
+        // Get header
         $header = array_keys($data[0] ?? []);
 
         return Excel::download(new GenericExport($data, $header), $modelName . '-'. Carbon::today()->format('Ymd') . '.xlsx');
@@ -52,6 +58,9 @@ class ImportController extends Controller
 
         // Get Model
         $modelClass = $this->resolveModelClass($request->get('model'));
+
+        // Check permissions
+        abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Inititialize counters
         $deleteCount = 0;
@@ -130,11 +139,9 @@ class ImportController extends Controller
         return $modelClass;
     }
 
-    private function checkGate($modelName, $action)
+    private static function permission($modelName, $action)
     {
-        // $permission = strtolower($modelName . '_' . $action);
-        // abort_if(Gate::denies($permission), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return true;
+        return ($modelName === 'MApplication' ? 'application' :  Str::snake($modelName, '_')) . '_'. $action;
     }
 }
 
