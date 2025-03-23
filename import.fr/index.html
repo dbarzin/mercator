@@ -76,21 +76,23 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#export-de-donnees">Export de données</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#etapes">Étapes :</a>
+    <li class="toctree-l3"><a class="reference internal" href="#etapes">Étapes</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#format-du-fichier">Format du fichier :</a>
+    <li class="toctree-l3"><a class="reference internal" href="#format-du-fichier">Format du fichier</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#import-de-donnees">Import de données</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#etapes_1">Étapes :</a>
+    <li class="toctree-l3"><a class="reference internal" href="#etapes_1">Étapes</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#format-attendu-du-fichier">Format attendu du fichier :</a>
+    <li class="toctree-l3"><a class="reference internal" href="#format-attendu-du-fichier">Format attendu du fichier</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#comportement-a-limport">Comportement à l’import :</a>
+    <li class="toctree-l3"><a class="reference internal" href="#comportement-a-limport">Comportement à l’import</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exemple-den-tete-excel-attendu">Exemple d’en-tête Excel attendu</a>
     </li>
     </ul>
                 </li>
@@ -138,29 +140,29 @@
 <h3 id="fonctionnalites-disponibles">Fonctionnalités disponibles</h3>
 <h4 id="export-de-donnees">Export de données</h4>
 <p>L’export permet de télécharger les données d’un modèle métier au format <code>.xlsx</code>.</p>
-<h4 id="etapes">Étapes :</h4>
+<h4 id="etapes">Étapes</h4>
 <ol>
 <li>Sélectionner un <strong>filtre</strong> : écosystème, système d'information, applications...</li>
 <li>Sélectionner un <strong>objet</strong> associé.</li>
 <li>Cliquer sur <strong>Exporter</strong>.</li>
 </ol>
-<h4 id="format-du-fichier">Format du fichier :</h4>
+<h4 id="format-du-fichier">Format du fichier</h4>
 <p>Le fichier contient : une <strong>première ligne</strong> d'en-têtes (colonnes) et les données de l'objet.</p>
 <p>Les colonnes <code>created_at</code>, <code>updated_at</code>, <code>deleted_at</code> sont automatiquement <strong>exclues</strong></p>
 <h3 id="import-de-donnees">Import de données</h3>
 <p>Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Excel structuré.</p>
-<h4 id="etapes_1">Étapes :</h4>
+<h4 id="etapes_1">Étapes</h4>
 <ol>
 <li>Choisir le <strong>fichier Excel</strong> à importer.</li>
 <li>Cliquer sur <strong>Importer</strong>.</li>
 </ol>
-<h4 id="format-attendu-du-fichier">Format attendu du fichier :</h4>
+<h4 id="format-attendu-du-fichier">Format attendu du fichier</h4>
 <ul>
 <li><strong>Première ligne</strong> : noms de colonnes</li>
 <li><strong>Première colonne</strong> : champ <code>ID</code>, l'ordre des autres colonnes n'a pas d'importance.</li>
 <li>Le colonne qui ne sont pas présentes dans le fichier d'import <strong>ne sont pas mises à jour</strong>.</li>
 </ul>
-<h4 id="comportement-a-limport">Comportement à l’import :</h4>
+<h4 id="comportement-a-limport">Comportement à l’import</h4>
 <table>
 <thead>
 <tr>
@@ -184,7 +186,7 @@
 </tbody>
 </table>
 <p>Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.</p>
-<h2 id="exemple-den-tete-excel-attendu">Exemple d’en-tête Excel attendu</h2>
+<h3 id="exemple-den-tete-excel-attendu">Exemple d’en-tête Excel attendu</h3>
 <pre><code class="language-plaintext">id, name, description, type, reference
 </code></pre>
               

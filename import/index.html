@@ -76,9 +76,9 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#data-export">Data Export</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#steps">Steps:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#steps">Steps</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#file-format">File format:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#file-format">File format</a>
     </li>
         </ul>
     </li>
@@ -86,11 +86,13 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#steps_1">Steps:</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#expected-file-format">Expected file format:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#expected-file-format">Expected file format</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#import-behavior">Import behavior:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#import-behavior">Import behavior</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example-of-expected-excel-header">Example of expected Excel header</a>
     </li>
     </ul>
                 </li>
@@ -138,13 +140,13 @@
 <h3 id="available-features">Available Features</h3>
 <h4 id="data-export">Data Export</h4>
 <p>Export allows you to download business model data in <code>.xlsx</code> format.</p>
-<h4 id="steps">Steps:</h4>
+<h4 id="steps">Steps</h4>
 <ol>
 <li>Select a <strong>filter</strong>: ecosystem, information system, applications, etc.</li>
 <li>Select an associated <strong>object</strong>.</li>
 <li>Click <strong>Export</strong>.</li>
 </ol>
-<h4 id="file-format">File format:</h4>
+<h4 id="file-format">File format</h4>
 <p>The file contains: a <strong>first row</strong> of headers (columns) and the object data.</p>
 <p>The <code>created_at</code>, <code>updated_at</code>, and <code>deleted_at</code> columns are automatically <strong>excluded</strong>.</p>
 <h3 id="data-import">Data import</h3>
@@ -154,13 +156,13 @@
 <li>Choose the <strong>Excel file</strong> to import.</li>
 <li>Click <strong>Import</strong>.</li>
 </ol>
-<h4 id="expected-file-format">Expected file format:</h4>
+<h4 id="expected-file-format">Expected file format</h4>
 <ul>
 <li><strong>First row</strong>: column names</li>
 <li><strong>First column</strong>: <code>ID</code> field, the order of the other columns does not matter.</li>
 <li>Columns not present in the import file <strong>are not updated</strong>.</li>
 </ul>
-<h4 id="import-behavior">Import behavior:</h4>
+<h4 id="import-behavior">Import behavior</h4>
 <table>
 <thead>
 <tr>
@@ -184,7 +186,7 @@
 </tbody>
 </table>
 <p>If an error is detected in the file, no changes are applied.</p>
-<h2 id="example-of-expected-excel-header">Example of expected Excel header</h2>
+<h3 id="example-of-expected-excel-header">Example of expected Excel header</h3>
 <pre><code class="language-plaintext">id, name, description, type, reference
 </code></pre>
               
