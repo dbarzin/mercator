@@ -353,7 +353,9 @@ return [
         'import' => [
             'title' => 'Data Import / Export',
             'title_short' => 'Import',
-            'choose' => "Choose the type of object to export",
+            'filter' => 'Filter',
+            'filter_helper' => 'Filter by object type',
+            'choose' => 'Choose the type of object to export',
             'description' => "
     <p>This interface allows you to <strong>export and import</strong> mapping data using a spreadsheet.</p>
     <p>
@@ -369,6 +371,8 @@ return [
     <p>
         The import is fully validated beforehand: if there is an error in any row, <strong>no changes</strong> will be applied, and the first 10 errors will be displayed.
     </p>",
+        'file' => 'Excel file',
+        'file_helper' => 'The file must contain a header row with the column names, and a first column with the ID.',
         ],
     ],
     'container' => [

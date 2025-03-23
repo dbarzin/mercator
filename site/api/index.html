@@ -67,6 +67,10 @@
                 <li class="toctree-l1"><a class="reference internal" href="../admin/">Administration</a>
                 </li>
               </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../import/">Import</a>
+                </li>
+              </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">API</a>
     <ul class="current">
@@ -459,11 +463,55 @@ token=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; http://
 curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Bearer ${token}&quot; &quot;http://127.0.0.1:8000/api/users&quot; | jq .
 
 </code></pre>
+<p>Other Bash example</p>
+<pre><code>#!/usr/bin/bash
+
+API_URL=http://127.0.0.1:8000/api
+
+# valid login and password
+
+data='{&quot;email&quot;:&quot;admin@admin.com&quot;,&quot;password&quot;:&quot;password&quot;}'
+
+# Get a token after correct login
+
+TOKEN=$(curl -s -d ${data} -H &quot;Content-Type: application/json&quot; ${API_URL}/login | jq -r .access_token)
+
+# Récupération de l'objet
+
+OBJECT_ID=10
+
+RESPONSE=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+ -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+ -H &quot;Accept: application/json&quot;)
+
+echo &quot;Objet récupéré: ${RESPONSE}&quot;
+
+# Mise à jour d'une valeur avec une requête PUT
+
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -c '.data')
+RESPONSE=$(echo &quot;$RESPONSE&quot; | jq -r '.operating_system=&quot;Linux&quot;')
+
+echo &quot;Objet modifié: ${RESPONSE}&quot;
+
+curl -s -X PUT &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;cache-control: no-cache&quot; \
+  -d &quot;$RESPONSE&quot;
+
+# Vérification de la mise à jour
+
+UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&quot; \
+  -H &quot;Authorization: Bearer ${TOKEN}&quot; \
+  -H &quot;Accept: application/json&quot;)
+
+echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../admin/" class="btn btn-neutral float-left" title="Administration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../import/" class="btn btn-neutral float-left" title="Import"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../references/" class="btn btn-neutral float-right" title="References">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -492,7 +540,7 @@ curl -s -H &quot;Content-Type: application/json&quot; -H &quot;Authorization: Be
         </span>
     
     
-      <span><a href="../admin/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../import/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../references/" style="color: #fcfcfc">Next &raquo;</a></span>

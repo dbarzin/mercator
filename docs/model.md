@@ -701,7 +701,7 @@ Table *certificates* :
     * status = 0: “Good”
     * status = 1: “Revoked
     * status = 2 : “Unknown
-    
+
 #### VLAN
 
 A VLAN (Virtual Local Area Network) or virtual local area network (LAN) enables equipment to be logically grouped together, free from physical constraints.

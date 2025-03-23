@@ -22,7 +22,7 @@
 
                     <div class="row align-items-center">
                         <div class="col-md-3">
-                            <label for="filters" class="form-label">Filtre</label>
+                            <label for="filters" class="form-label">{{ trans("cruds.configuration.import.filter") }}</label>
                             <select class="form-select select2" id="filters" name="filter">
                                 <option></option>
                                 <option value="1" {{ old('filter')=='1' ? "selected" : "" }}>{{ trans("cruds.report.cartography.ecosystem") }}</option>
@@ -32,7 +32,7 @@
                                 <option value="5" {{ old('filter')=='5' ? "selected" : "" }}>{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
                                 <option value="6" {{ old('filter')=='6' ? "selected" : "" }}>{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
                             </select>
-                            <div class="form-text">Filtrer par type d’objet métier</div>
+                            <div class="help-block">{{ trans("cruds.configuration.import.filter_helper") }}</div>
                         </div>
 
                         <div class="col-md-3 node-container">
@@ -41,7 +41,7 @@
                             <select class="form-select select2" id="node">
                                 <option></option>
                             </select>
-                            <div class="form-text"> {{ trans("cruds.configuration.import.choose") }}</div>
+                            <div class="help-block">{{ trans("cruds.configuration.import.choose") }}</div>
                         </div>
 
                         <div class="col-md-4">
@@ -58,9 +58,9 @@
 
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                            <label for="file" class="form-label">Fichier Excel</label>
+                            <label for="file" class="form-label">{{ trans("cruds.configuration.import.file") }}</label>
                             <input type="file" name="file" id="file" value="{{ old('file') }}"class="form-control" accept=".xlsx,.csv" required>
-                            <div class="form-text">Le fichier doit contenir une ligne d’en-tête avec les noms de colonnes, et une première colonne avec l’ID.</div>
+                            <div class="help-block">{{ trans("cruds.configuration.import.file_helper") }}</div>
                         </div>
 
                         <div class="col-md-4 align-items-center">
