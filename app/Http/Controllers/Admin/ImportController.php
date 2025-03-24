@@ -50,18 +50,22 @@ class ImportController extends Controller
                 if ($method->class !== get_class($item)) {
                     continue;
                 }
-
-                if ($method->getNumberOfParameters() === 0) {
-                    try {
-                        $result = $method->invoke($item);
-                        if ($result instanceof BelongsToMany) {
-                            $relationName = $method->getName();
-                            $row[$relationName] = $item->$relationName()->pluck('id')->implode(' ');
-                        }
-                    } catch (\Throwable $e) {
-                        // Ignore toute méthode non relationnelle qui lancerait une erreur
-                        continue;
+                if ($method->getNumberOfParameters() !== 0) {
+                    continue;
+                }
+                $returnType = $method->getReturnType();
+                if (! $returnType instanceof \ReflectionNamedType) {
+                    continue;
+                }
+                try {
+                    $result = $method->invoke($item);
+                    if ($result instanceof BelongsToMany) {
+                        $relationName = $method->getName();
+                        $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
                     }
+                } catch (\Throwable $e) {
+                    // Ignore toute méthode non relationnelle qui lancerait une erreur
+                    continue;
                 }
             }
 
@@ -125,7 +129,7 @@ class ImportController extends Controller
                             $relationInstance = (new $modelClass)->{$key}();
                             if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
                                 // $values must be a list of integer
-                                $relations[$key] = array_filter(array_map('trim', explode(' ', $value)));
+                                $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
                                 $attributes->forget($key);
                             }
                         } catch (\Throwable $e) {
