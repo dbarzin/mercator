@@ -26,6 +26,12 @@ class StoreRouterRequest extends FormRequest
                 'required',
                 Rule::unique('routers')->whereNull('deleted_at'),
             ],
+            'physicalRouters.*' => [
+                'integer',
+            ],
+            'physicalRouters' => [
+                'array',
+            ],
             'ip_addresses' => [
                 'nullable',
                 new IPList(),

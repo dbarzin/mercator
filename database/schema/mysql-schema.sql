@@ -14,8 +14,7 @@ CREATE TABLE `activities` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `activities_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_document`;
@@ -26,8 +25,20 @@ CREATE TABLE `activity_document` (
   `document_id` int(10) unsigned NOT NULL,
   KEY `activity_id_fk_1472714` (`activity_id`),
   KEY `operation_id_fk_1472714` (`document_id`),
-  CONSTRAINT `activity_id_fk_1472784` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `operation_id_fk_1472794` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `activity_document_activity_id_foreign` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`),
+  CONSTRAINT `activity_document_document_id_foreign` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `activity_m_application`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activity_m_application` (
+  `m_application_id` int(10) unsigned NOT NULL,
+  `activity_id` int(10) unsigned NOT NULL,
+  KEY `application_id_fk_0394834858` (`m_application_id`),
+  KEY `process_id_fk_394823838` (`activity_id`),
+  CONSTRAINT `activity_m_application_activity_id_foreign` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `activity_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_operation`;
@@ -38,8 +49,8 @@ CREATE TABLE `activity_operation` (
   `operation_id` int(10) unsigned NOT NULL,
   KEY `activity_id_fk_1472704` (`activity_id`),
   KEY `operation_id_fk_1472704` (`operation_id`),
-  CONSTRAINT `activity_id_fk_1472704` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `operation_id_fk_1472704` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `activity_operation_activity_id_foreign` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`),
+  CONSTRAINT `activity_operation_operation_id_foreign` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_process`;
@@ -50,8 +61,8 @@ CREATE TABLE `activity_process` (
   `activity_id` int(10) unsigned NOT NULL,
   KEY `process_id_fk_1627616` (`process_id`),
   KEY `activity_id_fk_1627616` (`activity_id`),
-  CONSTRAINT `activity_id_fk_1627616` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `process_id_fk_1627616` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `activity_process_activity_id_foreign` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`),
+  CONSTRAINT `activity_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actor_operation`;
@@ -62,8 +73,8 @@ CREATE TABLE `actor_operation` (
   `actor_id` int(10) unsigned NOT NULL,
   KEY `operation_id_fk_1472680` (`operation_id`),
   KEY `actor_id_fk_1472680` (`actor_id`),
-  CONSTRAINT `actor_id_fk_1472680` FOREIGN KEY (`actor_id`) REFERENCES `actors` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `operation_id_fk_1472680` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `actor_operation_actor_id_foreign` FOREIGN KEY (`actor_id`) REFERENCES `actors` (`id`),
+  CONSTRAINT `actor_operation_operation_id_foreign` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actors`;
@@ -78,8 +89,7 @@ CREATE TABLE `actors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `actors_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `admin_users`;
@@ -103,8 +113,8 @@ CREATE TABLE `admin_users` (
   UNIQUE KEY `domain_id_user_id_unique` (`domain_id`,`user_id`,`deleted_at`),
   KEY `domain_id_fk_69385935` (`domain_id`),
   KEY `document_id_fk_129487` (`icon_id`),
-  CONSTRAINT `document_id_fk_129487` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`) ON UPDATE NO ACTION,
-  CONSTRAINT `domain_id_fk_69385935` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `admin_users_domain_id_foreign` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`),
+  CONSTRAINT `document_id_fk_129487` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `annuaires`;
@@ -136,8 +146,7 @@ CREATE TABLE `application_blocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `application_blocks_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_module_application_service`;
@@ -148,8 +157,8 @@ CREATE TABLE `application_module_application_service` (
   `application_module_id` int(10) unsigned NOT NULL,
   KEY `application_service_id_fk_1492414` (`application_service_id`),
   KEY `application_module_id_fk_1492414` (`application_module_id`),
-  CONSTRAINT `application_module_id_fk_1492414` FOREIGN KEY (`application_module_id`) REFERENCES `application_modules` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `application_service_id_fk_1492414` FOREIGN KEY (`application_service_id`) REFERENCES `application_services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `application_module_application_application_module_id_fk` FOREIGN KEY (`application_module_id`) REFERENCES `application_modules` (`id`),
+  CONSTRAINT `application_module_application_application_service_id_fk` FOREIGN KEY (`application_service_id`) REFERENCES `application_services` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_modules`;
@@ -162,8 +171,7 @@ CREATE TABLE `application_modules` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `application_modules_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_service_m_application`;
@@ -174,8 +182,8 @@ CREATE TABLE `application_service_m_application` (
   `application_service_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1482585` (`m_application_id`),
   KEY `application_service_id_fk_1482585` (`application_service_id`),
-  CONSTRAINT `application_service_id_fk_1482585` FOREIGN KEY (`application_service_id`) REFERENCES `application_services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `m_application_id_fk_1482585` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `application_service_m_application_application_service_id_foreign` FOREIGN KEY (`application_service_id`) REFERENCES `application_services` (`id`),
+  CONSTRAINT `application_service_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_services`;
@@ -189,8 +197,7 @@ CREATE TABLE `application_services` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `application_services_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `audit_logs`;
@@ -217,8 +224,8 @@ CREATE TABLE `bay_wifi_terminal` (
   `bay_id` int(10) unsigned NOT NULL,
   KEY `wifi_terminal_id_fk_1485509` (`wifi_terminal_id`),
   KEY `bay_id_fk_1485509` (`bay_id`),
-  CONSTRAINT `bay_id_fk_1485509` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `wifi_terminal_id_fk_1485509` FOREIGN KEY (`wifi_terminal_id`) REFERENCES `wifi_terminals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `bay_wifi_terminal_bay_id_foreign` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`),
+  CONSTRAINT `bay_wifi_terminal_wifi_terminal_id_foreign` FOREIGN KEY (`wifi_terminal_id`) REFERENCES `wifi_terminals` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `bays`;
@@ -233,7 +240,6 @@ CREATE TABLE `bays` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `room_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `bays_name_unique` (`name`,`deleted_at`),
   KEY `room_fk_1483441` (`room_id`),
   CONSTRAINT `room_fk_1483441` FOREIGN KEY (`room_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -251,7 +257,6 @@ CREATE TABLE `buildings` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `site_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `buildings_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1483431` (`site_id`),
   CONSTRAINT `site_fk_1483431` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -269,7 +274,7 @@ CREATE TABLE `cartographer_m_application` (
   PRIMARY KEY (`id`),
   KEY `cartographer_m_application_user_id_foreign` (`user_id`),
   KEY `cartographer_m_application_m_application_id_foreign` (`m_application_id`),
-  CONSTRAINT `cartographer_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cartographer_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
   CONSTRAINT `cartographer_m_application_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -281,8 +286,8 @@ CREATE TABLE `certificate_logical_server` (
   `logical_server_id` int(10) unsigned NOT NULL,
   KEY `certificate_id_fk_9483453` (`certificate_id`),
   KEY `logical_server_id_fk_9483453` (`logical_server_id`),
-  CONSTRAINT `certificate_logical_server_certificate_id_foreign` FOREIGN KEY (`certificate_id`) REFERENCES `certificates` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `certificate_logical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `certificate_logical_server_certificate_id_foreign` FOREIGN KEY (`certificate_id`) REFERENCES `certificates` (`id`),
+  CONSTRAINT `certificate_logical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `certificate_m_application`;
@@ -293,8 +298,8 @@ CREATE TABLE `certificate_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   KEY `certificate_id_fk_4584393` (`certificate_id`),
   KEY `m_application_id_fk_4584393s` (`m_application_id`),
-  CONSTRAINT `certificate_m_application_certificate_id_foreign` FOREIGN KEY (`certificate_id`) REFERENCES `certificates` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `certificate_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `certificate_m_application_certificate_id_foreign` FOREIGN KEY (`certificate_id`) REFERENCES `certificates` (`id`),
+  CONSTRAINT `certificate_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `certificates`;
@@ -312,8 +317,7 @@ CREATE TABLE `certificates` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `certificate_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `clusters`;
@@ -328,8 +332,49 @@ CREATE TABLE `clusters` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `container_logical_server`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `container_logical_server` (
+  `container_id` int(10) unsigned NOT NULL,
+  `logical_server_id` int(10) unsigned NOT NULL,
+  KEY `container_id_fk_54933032` (`container_id`),
+  KEY `logical_server_id_fk_4394832` (`logical_server_id`),
+  CONSTRAINT `container_logical_server_container_id_foreign` FOREIGN KEY (`container_id`) REFERENCES `containers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `container_logical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `container_m_application`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `container_m_application` (
+  `container_id` int(10) unsigned NOT NULL,
+  `m_application_id` int(10) unsigned NOT NULL,
+  KEY `container_id_fk_549854345` (`container_id`),
+  KEY `m_application_id_fk_344234340` (`m_application_id`),
+  CONSTRAINT `container_m_application_container_id_foreign` FOREIGN KEY (`container_id`) REFERENCES `containers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `container_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `containers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `containers` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cluster_name_unique` (`name`,`deleted_at`)
+  UNIQUE KEY `container_name_unique` (`name`,`deleted_at`),
+  KEY `document_id_fk_43948593` (`icon_id`),
+  CONSTRAINT `document_id_fk_434833774` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpe_products`;
@@ -397,8 +442,8 @@ CREATE TABLE `data_processing_document` (
   `document_id` int(10) unsigned NOT NULL,
   KEY `data_processing_id_fk_6930583` (`data_processing_id`),
   KEY `operation_id_fk_4355431` (`document_id`),
-  CONSTRAINT `data_processing_id_fk_42343234` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `document_id_fk_3439483` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `data_processing_document_data_processing_id_foreign` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`),
+  CONSTRAINT `data_processing_document_document_id_foreign` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_information`;
@@ -409,8 +454,8 @@ CREATE TABLE `data_processing_information` (
   `information_id` int(10) unsigned NOT NULL,
   KEY `data_processing_id_fk_58305863` (`data_processing_id`),
   KEY `information_id_fk_4384483` (`information_id`),
-  CONSTRAINT `data_processing_id_fk_493438483` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `information_id_fk_0483434` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `data_processing_information_data_processing_id_foreign` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`),
+  CONSTRAINT `data_processing_information_information_id_foreign` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_m_application`;
@@ -421,8 +466,8 @@ CREATE TABLE `data_processing_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   KEY `data_processing_id_fk_6948435` (`data_processing_id`),
   KEY `m_applications_id_fk_4384483` (`m_application_id`),
-  CONSTRAINT `applications_id_fk_0483434` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `data_processing_id_fk_49838437` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `data_processing_m_application_data_processing_id_foreign` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`),
+  CONSTRAINT `data_processing_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_process`;
@@ -433,8 +478,8 @@ CREATE TABLE `data_processing_process` (
   `process_id` int(10) unsigned NOT NULL,
   KEY `data_processing_id_fk_5435435` (`data_processing_id`),
   KEY `process_id_fk_594358` (`process_id`),
-  CONSTRAINT `data_processing_id_fk_764545345` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `process_id_fk_0483434` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `data_processing_process_data_processing_id_foreign` FOREIGN KEY (`data_processing_id`) REFERENCES `data_processing` (`id`),
+  CONSTRAINT `data_processing_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_entity`;
@@ -445,8 +490,8 @@ CREATE TABLE `database_entity` (
   `entity_id` int(10) unsigned NOT NULL,
   KEY `database_id_fk_1485563` (`database_id`),
   KEY `entity_id_fk_1485563` (`entity_id`),
-  CONSTRAINT `database_id_fk_1485563` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `entity_id_fk_1485563` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `database_entity_database_id_foreign` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`),
+  CONSTRAINT `database_entity_entity_id_foreign` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_information`;
@@ -457,8 +502,8 @@ CREATE TABLE `database_information` (
   `information_id` int(10) unsigned NOT NULL,
   KEY `database_id_fk_1485570` (`database_id`),
   KEY `information_id_fk_1485570` (`information_id`),
-  CONSTRAINT `database_id_fk_1485570` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `information_id_fk_1485570` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `database_information_database_id_foreign` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`),
+  CONSTRAINT `database_information_information_id_foreign` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_logical_server`;
@@ -479,8 +524,8 @@ CREATE TABLE `database_m_application` (
   `database_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1482586` (`m_application_id`),
   KEY `database_id_fk_1482586` (`database_id`),
-  CONSTRAINT `database_id_fk_1482586` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `m_application_id_fk_1482586` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `database_m_application_database_id_foreign` FOREIGN KEY (`database_id`) REFERENCES `databases` (`id`),
+  CONSTRAINT `database_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `databases`;
@@ -501,8 +546,8 @@ CREATE TABLE `databases` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
+  `security_need_auth` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `databases_name_unique` (`name`,`deleted_at`),
   KEY `entity_resp_fk_1485569` (`entity_resp_id`),
   CONSTRAINT `entity_resp_fk_1485569` FOREIGN KEY (`entity_resp_id`) REFERENCES `entities` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -518,8 +563,7 @@ CREATE TABLE `dhcp_servers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `dhcp_servers_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dnsservers`;
@@ -533,8 +577,7 @@ CREATE TABLE `dnsservers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `dnsservers_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `document_logical_server`;
@@ -545,8 +588,8 @@ CREATE TABLE `document_logical_server` (
   `document_id` int(10) unsigned NOT NULL,
   KEY `logical_server_id_fk_43832473` (`logical_server_id`),
   KEY `document_id_fk_1284334` (`document_id`),
-  CONSTRAINT `document_id_fk_1284334` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `logical_server_id_fk_43832473` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `document_logical_server_document_id_foreign` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`),
+  CONSTRAINT `document_logical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `document_relation`;
@@ -557,8 +600,8 @@ CREATE TABLE `document_relation` (
   `document_id` int(10) unsigned NOT NULL,
   KEY `relation_id_fk_6948334` (`relation_id`),
   KEY `document_id_fk_5492844` (`document_id`),
-  CONSTRAINT `document_id_fk_5492844` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `relation_id_fk_6948334` FOREIGN KEY (`relation_id`) REFERENCES `relations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `document_relation_document_id_foreign` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`),
+  CONSTRAINT `document_relation_relation_id_foreign` FOREIGN KEY (`relation_id`) REFERENCES `relations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `documents`;
@@ -584,8 +627,8 @@ CREATE TABLE `domaine_ad_forest_ad` (
   `domaine_ad_id` int(10) unsigned NOT NULL,
   KEY `forest_ad_id_fk_1492084` (`forest_ad_id`),
   KEY `domaine_ad_id_fk_1492084` (`domaine_ad_id`),
-  CONSTRAINT `domaine_ad_id_fk_1492084` FOREIGN KEY (`domaine_ad_id`) REFERENCES `domaine_ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `forest_ad_id_fk_1492084` FOREIGN KEY (`forest_ad_id`) REFERENCES `forest_ads` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `domaine_ad_forest_ad_domaine_ad_id_foreign` FOREIGN KEY (`domaine_ad_id`) REFERENCES `domaine_ads` (`id`),
+  CONSTRAINT `domaine_ad_forest_ad_forest_ad_id_foreign` FOREIGN KEY (`forest_ad_id`) REFERENCES `forest_ads` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `domaine_ads`;
@@ -602,8 +645,7 @@ CREATE TABLE `domaine_ads` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `domaine_ads_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entities`;
@@ -625,7 +667,6 @@ CREATE TABLE `entities` (
   `reference` varchar(255) DEFAULT NULL,
   `parent_entity_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `entities_name_unique` (`name`,`deleted_at`),
   KEY `is_external` (`is_external`),
   KEY `type` (`entity_type`),
   KEY `entity_id_fk_4398013` (`parent_entity_id`),
@@ -642,8 +683,8 @@ CREATE TABLE `entity_document` (
   `document_id` int(10) unsigned NOT NULL,
   KEY `activity_id_fk_4325433` (`entity_id`),
   KEY `operation_id_fk_5837593` (`document_id`),
-  CONSTRAINT `document_id_fk_4355430` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `entity_id_fk_4325432` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `entity_document_document_id_foreign` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`),
+  CONSTRAINT `entity_document_entity_id_foreign` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entity_m_application`;
@@ -654,8 +695,8 @@ CREATE TABLE `entity_m_application` (
   `entity_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1488611` (`m_application_id`),
   KEY `entity_id_fk_1488611` (`entity_id`),
-  CONSTRAINT `entity_id_fk_1488611` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `m_application_id_fk_1488611` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `entity_m_application_entity_id_foreign` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`),
+  CONSTRAINT `entity_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entity_process`;
@@ -666,8 +707,8 @@ CREATE TABLE `entity_process` (
   `entity_id` int(10) unsigned NOT NULL,
   KEY `process_id_fk_1627958` (`process_id`),
   KEY `entity_id_fk_1627958` (`entity_id`),
-  CONSTRAINT `entity_id_fk_1627958` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `process_id_fk_1627958` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `entity_process_entity_id_foreign` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`),
+  CONSTRAINT `entity_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `external_connected_entities`;
@@ -689,11 +730,10 @@ CREATE TABLE `external_connected_entities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `external_connected_entities_name_unique` (`name`,`deleted_at`),
   KEY `entity_id_fk_1295034` (`entity_id`),
   KEY `network_id_fk_8596554` (`network_id`),
-  CONSTRAINT `entity_id_fk_1295034` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `network_id_fk_8596554` FOREIGN KEY (`network_id`) REFERENCES `networks` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `external_connected_entities_entity_id_foreign` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`),
+  CONSTRAINT `external_connected_entities_network_id_foreign` FOREIGN KEY (`network_id`) REFERENCES `networks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fluxes`;
@@ -748,7 +788,6 @@ CREATE TABLE `forest_ads` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `zone_admin_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `forest_ads_name_unique` (`name`,`deleted_at`),
   KEY `zone_admin_fk_1482667` (`zone_admin_id`),
   CONSTRAINT `zone_admin_fk_1482667` FOREIGN KEY (`zone_admin_id`) REFERENCES `zone_admins` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -765,8 +804,22 @@ CREATE TABLE `gateways` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `graphs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `graphs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `gateways_name_unique` (`name`,`deleted_at`)
+  UNIQUE KEY `graphs_name_unique` (`name`,`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `information`;
@@ -789,8 +842,8 @@ CREATE TABLE `information` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `information_name_unique` (`name`,`deleted_at`)
+  `security_need_auth` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `information_process`;
@@ -801,8 +854,8 @@ CREATE TABLE `information_process` (
   `process_id` int(10) unsigned NOT NULL,
   KEY `information_id_fk_1473025` (`information_id`),
   KEY `process_id_fk_1473025` (`process_id`),
-  CONSTRAINT `information_id_fk_1473025` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `process_id_fk_1473025` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `information_process_information_id_foreign` FOREIGN KEY (`information_id`) REFERENCES `information` (`id`),
+  CONSTRAINT `information_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lan_man`;
@@ -813,8 +866,8 @@ CREATE TABLE `lan_man` (
   `lan_id` int(10) unsigned NOT NULL,
   KEY `man_id_fk_1490345` (`man_id`),
   KEY `lan_id_fk_1490345` (`lan_id`),
-  CONSTRAINT `lan_id_fk_1490345` FOREIGN KEY (`lan_id`) REFERENCES `lans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `man_id_fk_1490345` FOREIGN KEY (`man_id`) REFERENCES `mans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `lan_man_lan_id_foreign` FOREIGN KEY (`lan_id`) REFERENCES `lans` (`id`),
+  CONSTRAINT `lan_man_man_id_foreign` FOREIGN KEY (`man_id`) REFERENCES `mans` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lan_wan`;
@@ -825,8 +878,8 @@ CREATE TABLE `lan_wan` (
   `lan_id` int(10) unsigned NOT NULL,
   KEY `wan_id_fk_1490368` (`wan_id`),
   KEY `lan_id_fk_1490368` (`lan_id`),
-  CONSTRAINT `lan_id_fk_1490368` FOREIGN KEY (`lan_id`) REFERENCES `lans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `wan_id_fk_1490368` FOREIGN KEY (`wan_id`) REFERENCES `wans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `lan_wan_lan_id_foreign` FOREIGN KEY (`lan_id`) REFERENCES `lans` (`id`),
+  CONSTRAINT `lan_wan_wan_id_foreign` FOREIGN KEY (`wan_id`) REFERENCES `wans` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lans`;
@@ -839,8 +892,7 @@ CREATE TABLE `lans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `lans_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_flows`;
@@ -866,7 +918,7 @@ CREATE TABLE `logical_flows` (
   `schedule` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `router_id_fk_4382393` (`router_id`),
-  CONSTRAINT `router_id_fk_4382393` FOREIGN KEY (`router_id`) REFERENCES `routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `logical_flows_router_id_foreign` FOREIGN KEY (`router_id`) REFERENCES `routers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_server_m_application`;
@@ -877,8 +929,8 @@ CREATE TABLE `logical_server_m_application` (
   `logical_server_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1488616` (`m_application_id`),
   KEY `logical_server_id_fk_1488616` (`logical_server_id`),
-  CONSTRAINT `logical_server_id_fk_1488616` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `m_application_id_fk_1488616` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `logical_server_m_application_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`),
+  CONSTRAINT `logical_server_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_server_physical_server`;
@@ -889,8 +941,8 @@ CREATE TABLE `logical_server_physical_server` (
   `physical_server_id` int(10) unsigned NOT NULL,
   KEY `logical_server_id_fk_1657961` (`logical_server_id`),
   KEY `physical_server_id_fk_1657961` (`physical_server_id`),
-  CONSTRAINT `logical_server_id_fk_1657961` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_server_id_fk_1657961` FOREIGN KEY (`physical_server_id`) REFERENCES `physical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `logical_server_physical_server_logical_server_id_foreign` FOREIGN KEY (`logical_server_id`) REFERENCES `logical_servers` (`id`),
+  CONSTRAINT `logical_server_physical_server_physical_server_id_foreign` FOREIGN KEY (`physical_server_id`) REFERENCES `physical_servers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_servers`;
@@ -900,6 +952,7 @@ CREATE TABLE `logical_servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
   `description` longtext DEFAULT NULL,
   `net_services` varchar(255) DEFAULT NULL,
   `configuration` longtext DEFAULT NULL,
@@ -913,19 +966,19 @@ CREATE TABLE `logical_servers` (
   `environment` varchar(255) DEFAULT NULL,
   `disk` int(11) DEFAULT NULL,
   `disk_used` int(11) DEFAULT NULL,
-  `install_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
+  `install_date` date DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
   `attributes` varchar(255) DEFAULT NULL,
   `patching_frequency` int(11) DEFAULT NULL,
   `next_update` date DEFAULT NULL,
   `cluster_id` int(10) unsigned DEFAULT NULL,
   `domain_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `logical_servers_name_unique` (`name`,`deleted_at`),
   KEY `cluster_id_fk_5435359` (`cluster_id`),
   KEY `domain_id_fk_493844` (`domain_id`),
-  CONSTRAINT `cluster_id_fk_5435359` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `domain_id_fk_493844` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
+  KEY `logical_servers_active` (`active`),
+  CONSTRAINT `domain_id_fk_493844` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `logical_servers_cluster_id_foreign` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_events`;
@@ -941,7 +994,7 @@ CREATE TABLE `m_application_events` (
   PRIMARY KEY (`id`),
   KEY `m_application_events_user_id_foreign` (`user_id`),
   KEY `m_application_events_m_application_id_foreign` (`m_application_id`),
-  CONSTRAINT `m_application_events_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `m_application_events_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
   CONSTRAINT `m_application_events_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -953,8 +1006,8 @@ CREATE TABLE `m_application_peripheral` (
   `peripheral_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_9878654` (`m_application_id`),
   KEY `peripheral_id_fk_6454564` (`peripheral_id`),
-  CONSTRAINT `m_application_id_fk_9878654` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `peripheral_id_fk_6454564` FOREIGN KEY (`peripheral_id`) REFERENCES `peripherals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `m_application_peripheral_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
+  CONSTRAINT `m_application_peripheral_peripheral_id_foreign` FOREIGN KEY (`peripheral_id`) REFERENCES `peripherals` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_physical_server`;
@@ -965,8 +1018,8 @@ CREATE TABLE `m_application_physical_server` (
   `physical_server_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_5483543` (`m_application_id`),
   KEY `physical_server_id_fk_4543543` (`physical_server_id`),
-  CONSTRAINT `m_application_id_fk_5483543` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_server_id_fk_4543543` FOREIGN KEY (`physical_server_id`) REFERENCES `physical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `m_application_physical_server_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
+  CONSTRAINT `m_application_physical_server_physical_server_id_foreign` FOREIGN KEY (`physical_server_id`) REFERENCES `physical_servers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_process`;
@@ -977,8 +1030,8 @@ CREATE TABLE `m_application_process` (
   `process_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1482573` (`m_application_id`),
   KEY `process_id_fk_1482573` (`process_id`),
-  CONSTRAINT `m_application_id_fk_1482573` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `process_id_fk_1482573` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `m_application_process_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
+  CONSTRAINT `m_application_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_workstation`;
@@ -989,8 +1042,8 @@ CREATE TABLE `m_application_workstation` (
   `workstation_id` int(10) unsigned NOT NULL,
   KEY `m_application_id_fk_1486547` (`m_application_id`),
   KEY `workstation_id_fk_1486547` (`workstation_id`),
-  CONSTRAINT `m_application_id_fk_1486547` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `workstation_id_fk_1486547` FOREIGN KEY (`workstation_id`) REFERENCES `workstations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `m_application_workstation_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
+  CONSTRAINT `m_application_workstation_workstation_id_foreign` FOREIGN KEY (`workstation_id`) REFERENCES `workstations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_applications`;
@@ -1020,16 +1073,16 @@ CREATE TABLE `m_applications` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
+  `security_need_auth` int(11) DEFAULT NULL,
   `version` varchar(255) DEFAULT NULL,
   `rto` int(11) DEFAULT NULL,
   `rpo` int(11) DEFAULT NULL,
-  `install_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
+  `install_date` date DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
   `attributes` varchar(255) DEFAULT NULL,
   `patching_frequency` int(11) DEFAULT NULL,
   `next_update` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `m_applications_name_unique` (`name`,`deleted_at`),
   KEY `entity_resp_fk_1488612` (`entity_resp_id`),
   KEY `application_block_fk_1644592` (`application_block_id`),
   KEY `document_id_fk_4394343` (`icon_id`),
@@ -1054,8 +1107,8 @@ CREATE TABLE `macro_processuses` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `macro_processuses_name_unique` (`name`,`deleted_at`)
+  `security_need_auth` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `man_wan`;
@@ -1066,8 +1119,8 @@ CREATE TABLE `man_wan` (
   `man_id` int(10) unsigned NOT NULL,
   KEY `wan_id_fk_1490367` (`wan_id`),
   KEY `man_id_fk_1490367` (`man_id`),
-  CONSTRAINT `man_id_fk_1490367` FOREIGN KEY (`man_id`) REFERENCES `mans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `wan_id_fk_1490367` FOREIGN KEY (`wan_id`) REFERENCES `wans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `man_wan_man_id_foreign` FOREIGN KEY (`man_id`) REFERENCES `mans` (`id`),
+  CONSTRAINT `man_wan_wan_id_foreign` FOREIGN KEY (`wan_id`) REFERENCES `wans` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mans`;
@@ -1079,8 +1132,7 @@ CREATE TABLE `mans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `men_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `media`;
@@ -1124,8 +1176,8 @@ CREATE TABLE `network_switch_physical_switch` (
   `physical_switch_id` int(10) unsigned NOT NULL,
   KEY `network_switch_id_fk_543323` (`network_switch_id`),
   KEY `physical_switch_id_fk_4543143` (`physical_switch_id`),
-  CONSTRAINT `network_switch_id_fk_543323` FOREIGN KEY (`network_switch_id`) REFERENCES `network_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_switch_id_fk_4543143` FOREIGN KEY (`physical_switch_id`) REFERENCES `physical_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `network_switch_physical_switch_network_switch_id_foreign` FOREIGN KEY (`network_switch_id`) REFERENCES `network_switches` (`id`),
+  CONSTRAINT `network_switch_physical_switch_physical_switch_id_foreign` FOREIGN KEY (`physical_switch_id`) REFERENCES `physical_switches` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `network_switches`;
@@ -1139,8 +1191,7 @@ CREATE TABLE `network_switches` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `network_switches_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `networks`;
@@ -1160,8 +1211,8 @@ CREATE TABLE `networks` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `networks_name_unique` (`name`,`deleted_at`)
+  `security_need_auth` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_access_tokens`;
@@ -1245,8 +1296,8 @@ CREATE TABLE `operation_task` (
   `task_id` int(10) unsigned NOT NULL,
   KEY `operation_id_fk_1472749` (`operation_id`),
   KEY `task_id_fk_1472749` (`task_id`),
-  CONSTRAINT `operation_id_fk_1472749` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `task_id_fk_1472749` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `operation_task_operation_id_foreign` FOREIGN KEY (`operation_id`) REFERENCES `operations` (`id`),
+  CONSTRAINT `operation_task_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `operations`;
@@ -1261,9 +1312,8 @@ CREATE TABLE `operations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `operations_name_unique` (`name`,`deleted_at`),
   KEY `process_id_fk_7945129` (`process_id`),
-  CONSTRAINT `process_id_fk_7945129` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `operations_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_resets`;
@@ -1299,7 +1349,6 @@ CREATE TABLE `peripherals` (
   `domain` varchar(255) DEFAULT NULL,
   `provider_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `peripherals_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485449` (`site_id`),
   KEY `building_fk_1485450` (`building_id`),
   KEY `bay_fk_1485451` (`bay_id`),
@@ -1320,8 +1369,8 @@ CREATE TABLE `permission_role` (
   `permission_id` int(10) unsigned NOT NULL,
   KEY `role_id_fk_1470794` (`role_id`),
   KEY `permission_id_fk_1470794` (`permission_id`),
-  CONSTRAINT `permission_id_fk_1470794` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `role_id_fk_1470794` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`),
+  CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `permissions`;
@@ -1355,7 +1404,6 @@ CREATE TABLE `phones` (
   `physical_switch_id` int(10) unsigned DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `phones_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485479` (`site_id`),
   KEY `building_fk_1485480` (`building_id`),
   KEY `physical_switch_fk_5738332` (`physical_switch_id`),
@@ -1423,30 +1471,30 @@ CREATE TABLE `physical_links` (
   KEY `network_switches_dest_id_fk` (`network_switch_dest_id`),
   KEY `logical_server_src_id_fk` (`logical_server_src_id`),
   KEY `logical_server_dest_id_fk` (`logical_server_dest_id`),
-  CONSTRAINT `logical_server_dest_id_fk` FOREIGN KEY (`logical_server_dest_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `logical_server_src_id_fk` FOREIGN KEY (`logical_server_src_id`) REFERENCES `logical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `network_switch_dest_id_fk` FOREIGN KEY (`network_switch_dest_id`) REFERENCES `network_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `network_switch_src_id_fk` FOREIGN KEY (`network_switch_src_id`) REFERENCES `network_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `peripheral_dest_id_fk` FOREIGN KEY (`peripheral_dest_id`) REFERENCES `peripherals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `peripheral_src_id_fk` FOREIGN KEY (`peripheral_src_id`) REFERENCES `peripherals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `phone_dest_id_fk` FOREIGN KEY (`phone_dest_id`) REFERENCES `phones` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `phone_src_id_fk` FOREIGN KEY (`phone_src_id`) REFERENCES `phones` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_router_dest_id_fk` FOREIGN KEY (`physical_router_dest_id`) REFERENCES `physical_routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_router_src_id_fk` FOREIGN KEY (`physical_router_src_id`) REFERENCES `physical_routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_security_device_dest_id_fk` FOREIGN KEY (`physical_security_device_dest_id`) REFERENCES `physical_security_devices` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_security_device_src_id_fk` FOREIGN KEY (`physical_security_device_src_id`) REFERENCES `physical_security_devices` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_server_dest_id_fk` FOREIGN KEY (`physical_server_dest_id`) REFERENCES `physical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_server_src_id_fk` FOREIGN KEY (`physical_server_src_id`) REFERENCES `physical_servers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_switch_dest_id_fk` FOREIGN KEY (`physical_switch_dest_id`) REFERENCES `physical_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `physical_switch_src_id_fk` FOREIGN KEY (`physical_switch_src_id`) REFERENCES `physical_switches` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `router_dest_id_fk` FOREIGN KEY (`router_dest_id`) REFERENCES `routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `router_src_id_fk` FOREIGN KEY (`router_src_id`) REFERENCES `routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `storage_device_dest_id_fk` FOREIGN KEY (`storage_device_dest_id`) REFERENCES `storage_devices` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `storage_device_src_id_fk` FOREIGN KEY (`storage_device_src_id`) REFERENCES `storage_devices` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `wifi_terminal_dest_id_fk` FOREIGN KEY (`wifi_terminal_dest_id`) REFERENCES `wifi_terminals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `wifi_terminal_src_id_fk` FOREIGN KEY (`wifi_terminal_src_id`) REFERENCES `wifi_terminals` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `workstation_dest_id_fk` FOREIGN KEY (`workstation_dest_id`) REFERENCES `workstations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `workstation_src_id_fk` FOREIGN KEY (`workstation_src_id`) REFERENCES `workstations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `physical_links_logical_server_dest_id_foreign` FOREIGN KEY (`logical_server_dest_id`) REFERENCES `logical_servers` (`id`),
+  CONSTRAINT `physical_links_logical_server_src_id_foreign` FOREIGN KEY (`logical_server_src_id`) REFERENCES `logical_servers` (`id`),
+  CONSTRAINT `physical_links_network_switch_dest_id_foreign` FOREIGN KEY (`network_switch_dest_id`) REFERENCES `network_switches` (`id`),
+  CONSTRAINT `physical_links_network_switch_src_id_foreign` FOREIGN KEY (`network_switch_src_id`) REFERENCES `network_switches` (`id`),
+  CONSTRAINT `physical_links_peripheral_dest_id_foreign` FOREIGN KEY (`peripheral_dest_id`) REFERENCES `peripherals` (`id`),
+  CONSTRAINT `physical_links_peripheral_src_id_foreign` FOREIGN KEY (`peripheral_src_id`) REFERENCES `peripherals` (`id`),
+  CONSTRAINT `physical_links_phone_dest_id_foreign` FOREIGN KEY (`phone_dest_id`) REFERENCES `phones` (`id`),
+  CONSTRAINT `physical_links_phone_src_id_foreign` FOREIGN KEY (`phone_src_id`) REFERENCES `phones` (`id`),
+  CONSTRAINT `physical_links_physical_router_dest_id_foreign` FOREIGN KEY (`physical_router_dest_id`) REFERENCES `physical_routers` (`id`),
+  CONSTRAINT `physical_links_physical_router_src_id_foreign` FOREIGN KEY (`physical_router_src_id`) REFERENCES `physical_routers` (`id`),
+  CONSTRAINT `physical_links_physical_security_device_dest_id_foreign` FOREIGN KEY (`physical_security_device_dest_id`) REFERENCES `physical_security_devices` (`id`),
+  CONSTRAINT `physical_links_physical_security_device_src_id_foreign` FOREIGN KEY (`physical_security_device_src_id`) REFERENCES `physical_security_devices` (`id`),
+  CONSTRAINT `physical_links_physical_server_dest_id_foreign` FOREIGN KEY (`physical_server_dest_id`) REFERENCES `physical_servers` (`id`),
+  CONSTRAINT `physical_links_physical_server_src_id_foreign` FOREIGN KEY (`physical_server_src_id`) REFERENCES `physical_servers` (`id`),
+  CONSTRAINT `physical_links_physical_switch_dest_id_foreign` FOREIGN KEY (`physical_switch_dest_id`) REFERENCES `physical_switches` (`id`),
+  CONSTRAINT `physical_links_physical_switch_src_id_foreign` FOREIGN KEY (`physical_switch_src_id`) REFERENCES `physical_switches` (`id`),
+  CONSTRAINT `physical_links_router_dest_id_foreign` FOREIGN KEY (`router_dest_id`) REFERENCES `routers` (`id`),
+  CONSTRAINT `physical_links_router_src_id_foreign` FOREIGN KEY (`router_src_id`) REFERENCES `routers` (`id`),
+  CONSTRAINT `physical_links_storage_device_dest_id_foreign` FOREIGN KEY (`storage_device_dest_id`) REFERENCES `storage_devices` (`id`),
+  CONSTRAINT `physical_links_storage_device_src_id_foreign` FOREIGN KEY (`storage_device_src_id`) REFERENCES `storage_devices` (`id`),
+  CONSTRAINT `physical_links_wifi_terminal_dest_id_foreign` FOREIGN KEY (`wifi_terminal_dest_id`) REFERENCES `wifi_terminals` (`id`),
+  CONSTRAINT `physical_links_wifi_terminal_src_id_foreign` FOREIGN KEY (`wifi_terminal_src_id`) REFERENCES `wifi_terminals` (`id`),
+  CONSTRAINT `physical_links_workstation_dest_id_foreign` FOREIGN KEY (`workstation_dest_id`) REFERENCES `workstations` (`id`),
+  CONSTRAINT `physical_links_workstation_src_id_foreign` FOREIGN KEY (`workstation_src_id`) REFERENCES `workstations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_router_router`;
@@ -1457,8 +1505,8 @@ CREATE TABLE `physical_router_router` (
   `physical_router_id` int(10) unsigned NOT NULL,
   KEY `router_id_fk_958343` (`router_id`),
   KEY `physical_router_id_fk_124983` (`physical_router_id`),
-  CONSTRAINT `physical_router_id_fk_124983` FOREIGN KEY (`physical_router_id`) REFERENCES `physical_routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `router_id_fk_958343` FOREIGN KEY (`router_id`) REFERENCES `routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `physical_router_router_physical_router_id_foreign` FOREIGN KEY (`physical_router_id`) REFERENCES `physical_routers` (`id`),
+  CONSTRAINT `physical_router_router_router_id_foreign` FOREIGN KEY (`router_id`) REFERENCES `routers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_router_vlan`;
@@ -1469,8 +1517,8 @@ CREATE TABLE `physical_router_vlan` (
   `vlan_id` int(10) unsigned NOT NULL,
   KEY `physical_router_id_fk_1658250` (`physical_router_id`),
   KEY `vlan_id_fk_1658250` (`vlan_id`),
-  CONSTRAINT `physical_router_id_fk_1658250` FOREIGN KEY (`physical_router_id`) REFERENCES `physical_routers` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `vlan_id_fk_1658250` FOREIGN KEY (`vlan_id`) REFERENCES `vlans` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `physical_router_vlan_physical_router_id_foreign` FOREIGN KEY (`physical_router_id`) REFERENCES `physical_routers` (`id`),
+  CONSTRAINT `physical_router_vlan_vlan_id_foreign` FOREIGN KEY (`vlan_id`) REFERENCES `vlans` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_routers`;
@@ -1491,7 +1539,6 @@ CREATE TABLE `physical_routers` (
   `bay_id` int(10) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`,`deleted_at`),
   KEY `site_fk_1485497` (`site_id`),
   KEY `building_fk_1485498` (`building_id`),
   KEY `bay_fk_1485499` (`bay_id`),
@@ -1516,7 +1563,6 @@ CREATE TABLE `physical_security_devices` (
   `bay_id` int(10) unsigned DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_security_devices_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485517` (`site_id`),
   KEY `building_fk_1485518` (`building_id`),
   KEY `bay_fk_1485519` (`bay_id`),
@@ -1558,7 +1604,6 @@ CREATE TABLE `physical_servers` (
   `next_update` date DEFAULT NULL,
   `cluster_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_servers_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485322` (`site_id`),
   KEY `building_fk_1485323` (`building_id`),
   KEY `bay_fk_1485324` (`bay_id`),
@@ -1566,7 +1611,7 @@ CREATE TABLE `physical_servers` (
   KEY `cluster_id_fk_5438543` (`cluster_id`),
   CONSTRAINT `bay_fk_1485324` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `building_fk_1485323` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `cluster_id_fk_5438543` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `physical_servers_cluster_id_foreign` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`),
   CONSTRAINT `physical_switch_fk_8732342` FOREIGN KEY (`physical_switch_id`) REFERENCES `physical_switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `site_fk_1485322` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1589,7 +1634,6 @@ CREATE TABLE `physical_switches` (
   `building_id` int(10) unsigned DEFAULT NULL,
   `bay_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `physical_switches_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485488` (`site_id`),
   KEY `building_fk_1485489` (`building_id`),
   KEY `bay_fk_1485493` (`bay_id`),
@@ -1604,6 +1648,7 @@ DROP TABLE IF EXISTS `processes`;
 CREATE TABLE `processes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `owner` varchar(255) DEFAULT NULL,
   `security_need_c` int(11) DEFAULT NULL,
@@ -1615,9 +1660,11 @@ CREATE TABLE `processes` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
+  `security_need_auth` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `processes_identifiant_unique` (`name`,`deleted_at`),
   KEY `process_fk_4342342` (`macroprocess_id`),
+  KEY `document_id_fk_5938654` (`icon_id`),
+  CONSTRAINT `document_id_fk_5938654` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`) ON UPDATE NO ACTION,
   CONSTRAINT `processes_ibfk_1` FOREIGN KEY (`macroprocess_id`) REFERENCES `macro_processuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1631,7 +1678,7 @@ CREATE TABLE `relation_values` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   KEY `relation_id_fk_43243244` (`relation_id`),
-  CONSTRAINT `relation_id_fk_43243244` FOREIGN KEY (`relation_id`) REFERENCES `relations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `relation_values_relation_id_foreign` FOREIGN KEY (`relation_id`) REFERENCES `relations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `relations`;
@@ -1660,6 +1707,7 @@ CREATE TABLE `relations` (
   `security_need_i` int(11) DEFAULT NULL,
   `security_need_a` int(11) DEFAULT NULL,
   `security_need_t` int(11) DEFAULT NULL,
+  `security_need_auth` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `source_fk_1494372` (`source_id`),
   KEY `destination_fk_1494373` (`destination_id`),
@@ -1675,8 +1723,8 @@ CREATE TABLE `role_user` (
   `role_id` int(10) unsigned NOT NULL,
   KEY `user_id_fk_1470803` (`user_id`),
   KEY `role_id_fk_1470803` (`role_id`),
-  CONSTRAINT `role_id_fk_1470803` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `user_id_fk_1470803` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
+  CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `roles`;
@@ -1704,8 +1752,7 @@ CREATE TABLE `routers` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `ip_addresses` text DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `routers_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_control_m_application`;
@@ -1716,8 +1763,8 @@ CREATE TABLE `security_control_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   KEY `security_control_id_fk_5920381` (`security_control_id`),
   KEY `m_application_id_fk_5837573` (`m_application_id`),
-  CONSTRAINT `m_application_id_fk_304958543` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `security_control_id_fk_49294573` FOREIGN KEY (`security_control_id`) REFERENCES `security_controls` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `security_control_m_application_m_application_id_foreign` FOREIGN KEY (`m_application_id`) REFERENCES `m_applications` (`id`),
+  CONSTRAINT `security_control_m_application_security_control_id_foreign` FOREIGN KEY (`security_control_id`) REFERENCES `security_controls` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_control_process`;
@@ -1728,8 +1775,8 @@ CREATE TABLE `security_control_process` (
   `process_id` int(10) unsigned NOT NULL,
   KEY `security_control_id_fk_54354353` (`security_control_id`),
   KEY `process_id_fk_5837573` (`process_id`),
-  CONSTRAINT `process_id_fk_49485754` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `security_control_id_fk_54354354` FOREIGN KEY (`security_control_id`) REFERENCES `security_controls` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `security_control_process_process_id_foreign` FOREIGN KEY (`process_id`) REFERENCES `processes` (`id`),
+  CONSTRAINT `security_control_process_security_control_id_foreign` FOREIGN KEY (`security_control_id`) REFERENCES `security_controls` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_controls`;
@@ -1742,8 +1789,7 @@ CREATE TABLE `security_controls` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_controls_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_devices`;
@@ -1759,8 +1805,7 @@ CREATE TABLE `security_devices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `security_devices_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `sites`;
@@ -1775,7 +1820,6 @@ CREATE TABLE `sites` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `sites_name_unique` (`name`,`deleted_at`),
   KEY `document_id_fk_129485` (`icon_id`),
   CONSTRAINT `document_id_fk_129485` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1799,7 +1843,6 @@ CREATE TABLE `storage_devices` (
   `bay_id` int(10) unsigned DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `storage_devices_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485361` (`site_id`),
   KEY `building_fk_1485362` (`building_id`),
   KEY `bay_fk_1485363` (`bay_id`),
@@ -1830,7 +1873,6 @@ CREATE TABLE `subnetworks` (
   `network_id` int(10) unsigned DEFAULT NULL,
   `default_gateway` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `subnetwords_name_unique` (`name`,`deleted_at`),
   KEY `connected_subnets_fk_1483256` (`connected_subnets_id`),
   KEY `gateway_fk_1492376` (`gateway_id`),
   KEY `vlan_fk_6844934` (`vlan_id`),
@@ -1851,8 +1893,7 @@ CREATE TABLE `tasks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tasks_nom_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
@@ -1885,8 +1926,7 @@ CREATE TABLE `vlans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `vlans_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wans`;
@@ -1919,7 +1959,6 @@ CREATE TABLE `wifi_terminals` (
   `building_id` int(10) unsigned DEFAULT NULL,
   `address_ip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `wifi_terminals_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485507` (`site_id`),
   KEY `building_fk_1485508` (`building_id`),
   CONSTRAINT `building_fk_1485508` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1950,7 +1989,6 @@ CREATE TABLE `workstations` (
   `memory` varchar(255) DEFAULT NULL,
   `disk` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `workstations_name_unique` (`name`,`deleted_at`),
   KEY `site_fk_1485332` (`site_id`),
   KEY `building_fk_1485333` (`building_id`),
   KEY `physical_switch_fk_0938434` (`physical_switch_id`),
@@ -1971,8 +2009,7 @@ CREATE TABLE `zone_admins` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `zone_admins_name_unique` (`name`,`deleted_at`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -2174,3 +2211,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (189,'2024_09_24_08
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (190,'2024_09_26_160952_building_attributes',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (195,'2024_10_31_220940_add_vlan_id',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (197,'2024_11_13_183902_add_type_to_logical_servers',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (198,'2024_11_26_130914_add_authenticity',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (199,'2025_01_03_130604_create_graphs_table',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (200,'2025_01_10_123601_logical_server_disabled',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (203,'2025_01_16_120601_add_icon_to_process',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (212,'2025_01_17_133444_add_table_containers',6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (221,'2025_02_18_073549_application_assignation',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (222,'2025_03_17_094654_datetime_to_date',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (223,'2025_03_24_082030_remove_on_delete_cascade',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (224,'2025_03_24_132409_remove_unique_name_deleted_at_indexes',8);

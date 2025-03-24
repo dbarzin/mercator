@@ -56,7 +56,7 @@ class ImportController extends Controller
                         $result = $method->invoke($item);
                         if ($result instanceof BelongsToMany) {
                             $relationName = $method->getName();
-                            $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
+                            $row[$relationName] = $item->$relationName()->pluck('id')->implode(' ');
                         }
                     } catch (\Throwable $e) {
                         // Ignore toute méthode non relationnelle qui lancerait une erreur
@@ -78,118 +78,123 @@ class ImportController extends Controller
     }
 
 
-public function import(Request $request)
-{
-    $request->validate([
-        'file' => 'required|file|mimes:xlsx',
-        'model' => 'required',
-    ]);
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx',
+            'model' => 'required',
+        ]);
 
-    $modelName = $request->get('model');
-    $modelClass = $this->resolveModelClass($modelName);
+        $modelName = $request->get('model');
+        $modelClass = $this->resolveModelClass($modelName);
 
-    // Get store validation rules
-    $storeRequestClass = "\\App\\Http\\Requests\\Store" . $modelName . "Request";
-    $storeRequestInstance = new $storeRequestClass;
-    $storeRules = $storeRequestInstance->rules();
+        // Get store validation rules
+        $storeRequestClass = "\\App\\Http\\Requests\\Store" . $modelName . "Request";
+        $storeRequestInstance = new $storeRequestClass;
+        $storeRules = $storeRequestInstance->rules();
 
-    // Get update validation rules
-    $updateRequestClass = "\\App\\Http\\Requests\\Update" . $modelName . "Request";
-    $updateRequestInstance = new $updateRequestClass;
-    // $updateRules = $updateRequestInstance->rules();
+        // Get update validation rules
+        $updateRequestClass = "\\App\\Http\\Requests\\Update" . $modelName . "Request";
+        $updateRequestInstance = new $updateRequestClass;
 
+        abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $deleteCount = 0;
+        $insertCount = 0;
+        $updateCount = 0;
+        $simulatedErrors = [];
 
-    $deleteCount = 0;
-    $insertCount = 0;
-    $updateCount = 0;
-    $simulatedErrors = [];
+        $rows = Excel::toCollection(null, $request->file('file'))->first();
+        $header = $rows->shift();
 
-    $rows = Excel::toCollection(null, $request->file('file'))->first();
-    $header = $rows->shift();
+        DB::beginTransaction();
+        try {
+            foreach ($rows as $index => $row) {
+                $rowData = $header->combine($row);
+                $id = $rowData->get('id');
 
-    DB::beginTransaction();
-    try {
-        foreach ($rows as $index => $row) {
-            $rowData = $header->combine($row);
-            $id = $rowData->get('id');
+                try {
+                    $attributes = $rowData->except('id');
+                    $relations = [];
 
-            try {
-                $attributes = $rowData->except('id');
-                $relations = [];
+                    // Identify relations and remove them from attributes
+                    foreach ($attributes as $key => $value) {
+                        if (! method_exists($modelClass, $key)) continue;
 
-                foreach ($attributes as $key => $value) {
-                    if (! method_exists($modelClass, $key)) continue;
-
-                    try {
-                        $relationInstance = (new $modelClass)->{$key}();
-                        if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
-                            $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
-                            $attributes->forget($key);
-                        }
-                    } catch (\Throwable $e) {
-                        // ignorer si ce n'est pas une relation
-                    }
-                }
-
-                if ($id && $rowData->filter()->count() === 1) {
-                    $record = $modelClass::find($id);
-                    if ($record) {
-                        $record->delete();
-                        $deleteCount++;
-                    }
-                } elseif (! $id) {
-                    $validator = Validator::make($attributes->toArray(), $storeRules);
-                    if ($validator->fails()) {
-                        throw new \Exception(implode(', ', $validator->errors()->all()));
-                    }
-                    $record = $modelClass::create($attributes->toArray());
-                    foreach ($relations as $rel => $ids) {
-                        if ($rowData->has($rel) && !empty($ids)) {
-                            $record->{$rel}()->sync($ids);
+                        try {
+                            $relationInstance = (new $modelClass)->{$key}();
+                            if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
+                                // $values must be a list of integer
+                                $relations[$key] = array_filter(array_map('trim', explode(' ', $value)));
+                                $attributes->forget($key);
+                            }
+                        } catch (\Throwable $e) {
+                            // ignorer si ce n'est pas une relation
                         }
                     }
-                    $insertCount++;
-                } else {
-                    $record = $modelClass::find($id);
-                    if ($record) {
-                        $updateRequestInstance->id = $id;
-                        $updateRules = $updateRequestInstance->rules();
-                        $validator = Validator::make($attributes->toArray(), $updateRules);
+                    if ($id && $rowData->filter()->count() === 1) {
+                        // Delete
+                        $record = $modelClass::find($id);
+                        if ($record) {
+                            $record->delete();
+                            $deleteCount++;
+                        }
+                    } elseif (! $id) {
+                        // Create
+                        $validator = Validator::make($attributes->toArray(), $storeRules);
                         if ($validator->fails()) {
                             throw new \Exception(implode(', ', $validator->errors()->all()));
                         }
-                        $record->update($attributes->toArray());
+                        $record = $modelClass::create($attributes->toArray());
                         foreach ($relations as $rel => $ids) {
-                            if ($rowData->has($rel)) {
+                            if ($rowData->has($rel) && !empty($ids)) {
                                 $record->{$rel}()->sync($ids);
                             }
                         }
-                        $updateCount++;
+                        $insertCount++;
+                    } else {
+                        // Update
+                        $record = $modelClass::find($id);
+                        if ($record) {
+                            $updateRequestInstance->id = $id;
+                            $updateRules = $updateRequestInstance->rules();
+                            $validator = Validator::make($attributes->toArray(), $updateRules);
+                            if ($validator->fails()) {
+                                throw new \Exception(implode(', ', $validator->errors()->all()));
+                            }
+                            $record->update($attributes->toArray());
+                            foreach ($relations as $rel => $ids) {
+                                if ($rowData->has($rel)) {
+                                    $record->{$rel}()->sync($ids);
+                                }
+                            }
+                            $updateCount++;
+                        }
+                        else {
+                            throw new \Exception("record {$id} not found");
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
+                    if (sizeof($simulatedErrors) >= 10) {
+                        break;
                     }
                 }
-            } catch (\Throwable $e) {
-                $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
-                if (sizeof($simulatedErrors) >= 10) {
-                    break;
-                }
             }
-        }
 
-        if (count($simulatedErrors)) {
+            if (count($simulatedErrors)) {
+                DB::rollBack();
+                return back()->withInput()->withErrors($simulatedErrors);
+            }
+
+            DB::commit();
+            return back()->withInput()
+                ->withMessage("Success : {$insertCount} inserted, {$updateCount} updated, {$deleteCount} deleted");
+        } catch (\Throwable $e) {
             DB::rollBack();
-            return back()->withInput()->withErrors($simulatedErrors);
+            return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
         }
-
-        DB::commit();
-        return back()->withInput()
-            ->withMessage("Success : {$insertCount} inserted, {$updateCount} updated, {$deleteCount} deleted");
-    } catch (\Throwable $e) {
-        DB::rollBack();
-        return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
     }
-}
 
     private function resolveModelClass($modelName)
     {
