@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateInformationRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateInformationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:information,name,' . request()->route('information')->id,
-                'unique:information,name,'.request()->route('information')->id.',id,deleted_at,NULL',
+                Rule::unique('information')
+                    ->ignore($this->route('information')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'processes.*' => [
                 'integer',

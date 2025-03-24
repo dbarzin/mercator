@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -20,11 +21,15 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                Rule::unique('users')
+                    ->ignore($this->route('user')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'email' => [
                 'required',
-                //'unique:users,email,' . request()->route('user')->id,
-                'unique:users,name,'.request()->route('user')->id.',id,deleted_at,NULL',
+                Rule::unique('users')
+                    ->ignore($this->route('user')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'roles.*' => [
                 'integer',

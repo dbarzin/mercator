@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateDomaineAdRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateDomaineAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                // 'unique:domaine_ads,name,' . request()->route('domaine_ad')->id,
-                'unique:domaine_ads,name,'.request()->route('domaine_ad')->id.',id,deleted_at,NULL',
+                Rule::unique('domaine_ads')
+                    ->ignore($this->route('domaine_ad')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'domain_ctrl_cnt' => [
                 'nullable',

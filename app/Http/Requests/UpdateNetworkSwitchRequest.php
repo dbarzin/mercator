@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateNetworkSwitchRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateNetworkSwitchRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:network_switches,name,' . request()->route('network_switch')->id,
-                'unique:network_switches,name,'.request()->route('network_switch')->id.',id,deleted_at,NULL',
+                Rule::unique('network_switches')
+                    ->ignore($this->route('network_switch')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

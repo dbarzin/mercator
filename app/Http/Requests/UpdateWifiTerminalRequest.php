@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateWifiTerminalRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdateWifiTerminalRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:wifi_terminals,name,'.request()->route('wifi_terminal')->id.',id,deleted_at,NULL',
+                Rule::unique('wifi_terminals')
+                    ->ignore($this->route('wifi_terminal')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateRouterRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdateRouterRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:routers,name,'.request()->route('router')->id.',id,deleted_at,NULL',
+                Rule::unique('routers')
+                    ->ignore($this->route('router')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'ip_addresses' => [
                 'nullable',

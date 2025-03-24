@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdatePhysicalSwitchRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdatePhysicalSwitchRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                //'unique:physical_switches,name,' . request()->route('physical_switch')->id,
-                'unique:physical_switches,name,'.request()->route('physical_switch')->id.',id,deleted_at,NULL',
+                Rule::unique('physical_switches')
+                    ->ignore($this->route('physical_switch')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

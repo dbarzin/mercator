@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateLogicalServerRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdateLogicalServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:logical_servers,name,'.request()->route('logical_server')->id.',id,deleted_at,NULL',
+                Rule::unique('logical_servers')
+                    ->ignore($this->route('logical_server')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'disk' => [
                 'nullable',

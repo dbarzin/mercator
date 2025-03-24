@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateRelationRequest extends FormRequest
 {
@@ -22,6 +23,9 @@ class UpdateRelationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
+                Rule::unique('relations')
+                    ->ignore($this->route('relation')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'importance' => [
                 'nullable',

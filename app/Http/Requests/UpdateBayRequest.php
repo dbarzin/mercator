@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateBayRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateBayRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:bays,name,' . request()->route('bay')->id,
-                'unique:bays,name,'.request()->route('bay')->id.',id,deleted_at,NULL',
+                Rule::unique('bays')
+                    ->ignore($this->route('bay')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

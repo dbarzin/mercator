@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdatePhoneRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdatePhoneRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:phones,name,'.request()->route('phone')->id.',id,deleted_at,NULL',
+                Rule::unique('phones')
+                    ->ignore($this->route('phone')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

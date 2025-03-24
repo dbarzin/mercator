@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateForestAdRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateForestAdRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:forest_ads,name,' . request()->route('forest_ad')->id,
-                'unique:forest_ads,name,'.request()->route('forest_ad')->id.',id,deleted_at,NULL',
+                Rule::unique('forest_ads')
+                    ->ignore($this->route('forest_ad')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'domaines.*' => [
                 'integer',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateVlanRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateVlanRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:vlans,name,'.request()->route('vlan')->id.',id,deleted_at,NULL',
+                Rule::unique('vlans')
+                    ->ignore($this->route('vlan')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

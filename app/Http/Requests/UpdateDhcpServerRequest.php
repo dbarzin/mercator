@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateDhcpServerRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdateDhcpServerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:dhcp_servers,name,'.request()->route('dhcp_server')->id.',id,deleted_at,NULL',
+                Rule::unique('dhcp_servers')
+                    ->ignore($this->route('dhcp_server')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

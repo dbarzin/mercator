@@ -6,6 +6,7 @@ use App\Rules\Cidr;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateSubnetworkRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdateSubnetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:subnetworks,name,'.request()->route('subnetwork')->id.',id,deleted_at,NULL',
+                Rule::unique('subnetworks')
+                    ->ignore($this->route('subnetwork')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address' => [
                 'nullable',

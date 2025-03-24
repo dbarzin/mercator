@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateOperationRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateOperationRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:operations,name,'.request()->route('operation')->id.',id,deleted_at,NULL',
+                Rule::unique('operations')
+                    ->ignore($this->route('operation')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'actors.*' => [
                 'integer',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateExternalConnectedEntityRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateExternalConnectedEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:external_connected_entities,name,'.request()->route('external_connected_entity')->id.',id,deleted_at,NULL',
+                Rule::unique('external_connected_entities')
+                    ->ignore($this->route('external_connected_entity')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'src' => [
                 'nullable',

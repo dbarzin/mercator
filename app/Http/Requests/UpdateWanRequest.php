@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateWanRequest extends FormRequest
 {
@@ -21,6 +22,9 @@ class UpdateWanRequest extends FormRequest
             'name' => [
                 'min:3',
                 'max:32',
+                Rule::unique('wans')
+                    ->ignore($this->route('wan')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'mans.*' => [
                 'integer',

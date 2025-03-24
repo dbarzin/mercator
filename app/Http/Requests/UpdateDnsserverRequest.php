@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateDnsserverRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateDnsserverRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:dnsservers,name,' . request()->route('dnsserver')->id,
-                'unique:dnsservers,name,'.request()->route('dnsserver')->id.',id,deleted_at,NULL',
+                Rule::unique('dnsservers')
+                    ->ignore($this->route('dnsserver')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

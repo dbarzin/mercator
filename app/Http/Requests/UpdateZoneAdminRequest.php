@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateZoneAdminRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateZoneAdminRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:zone_admins,name,' . request()->route('zone_admin')->id,
-                'unique:zone_admins,name,'.request()->route('zone_admin')->id.',id,deleted_at,NULL',
+                Rule::unique('zone_admins')
+                    ->ignore($this->route('zone_admin')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

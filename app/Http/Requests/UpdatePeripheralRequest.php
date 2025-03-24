@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdatePeripheralRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdatePeripheralRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:peripherals,name,'.request()->route('peripheral')->id.',id,deleted_at,NULL',
+                Rule::unique('peripherals')
+                    ->ignore($this->route('peripheral')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'address_ip' => [

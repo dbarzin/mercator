@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateEntityRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateEntityRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:entities,name,'.request()->route('entity')->id.',id,deleted_at,NULL',
+                Rule::unique('entities')
+                    ->ignore($this->route('entity')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'seurity_level' => [

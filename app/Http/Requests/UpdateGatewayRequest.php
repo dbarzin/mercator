@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateGatewayRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateGatewayRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:gateways,name,' . request()->route('gateway')->id,
-                'unique:gateways,name,'.request()->route('gateway')->id.',id,deleted_at,NULL',
+                Rule::unique('gateways')
+                    ->ignore($this->route('gateway')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

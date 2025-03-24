@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateDatabaseRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateDatabaseRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:databases,name,' . request()->route('database')->id,
-                'unique:databases,name,'.request()->route('database')->id.',id,deleted_at,NULL',
+                Rule::unique('databases')
+                    ->ignore($this->route('database')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'entities.*' => [
                 'integer',

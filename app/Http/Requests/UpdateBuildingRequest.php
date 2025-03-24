@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateBuildingRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateBuildingRequest extends FormRequest
                 'min:2',
                 'max:32',
                 'required',
-                //'unique:buildings,name,' . request()->route('building')->id,
-                'unique:buildings,name,'.request()->route('building')->id.',id,deleted_at,NULL',
+                Rule::unique('buildings')
+                    ->ignore($this->route('building')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }
