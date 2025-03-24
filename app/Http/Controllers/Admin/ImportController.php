@@ -16,6 +16,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use ReflectionClass;
+use ReflectionMethod;
 
 class ImportController extends Controller
 {
@@ -34,14 +37,39 @@ class ImportController extends Controller
         // Get class
         $modelClass = $this->resolveModelClass($modelName);
 
-        // Get Data
-        $data = $modelClass::all()->toArray();
+        // Récupération brute des enregistrements
+        $items = $modelClass::all();
 
-        // Exclure les colonnes techniques
-        $columnsToExclude = ['created_at', 'updated_at', 'deleted_at'];
-        $data = array_map(function ($row) use ($columnsToExclude) {
-            return collect($row)->except($columnsToExclude)->all();
-        }, $data);
+        $data = [];
+        foreach ($items as $item) {
+            $row = $item->toArray();
+
+            // Traite les belongsToMany : transforme en liste d'IDs
+            foreach ((new ReflectionClass($item))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+                // On évite les méthodes héritées de Model ou autres (ex: getKey, save, etc.)
+                if ($method->class !== get_class($item)) {
+                    continue;
+                }
+
+                if ($method->getNumberOfParameters() === 0) {
+                    try {
+                        $result = $method->invoke($item);
+                        if ($result instanceof BelongsToMany) {
+                            $relationName = $method->getName();
+                            $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
+                        }
+                    } catch (\Throwable $e) {
+                        // Ignore toute méthode non relationnelle qui lancerait une erreur
+                        continue;
+                    }
+                }
+            }
+
+            // Exclure les colonnes inutiles
+            unset($row['created_at'], $row['updated_at'], $row['deleted_at']);
+
+            $data[] = $row;
+        }
 
         // Get header
         $header = array_keys($data[0] ?? []);
@@ -49,85 +77,102 @@ class ImportController extends Controller
         return Excel::download(new GenericExport($data, $header), $modelName . '-'. Carbon::today()->format('Ymd') . '.xlsx');
     }
 
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx',
-            'model' => 'required',
-        ]);
 
-        // Get Model
-        $modelClass = $this->resolveModelClass($request->get('model'));
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx',
+        'model' => 'required',
+    ]);
 
-        // Check permissions
-        abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    $modelName = $request->get('model');
+    $modelClass = $this->resolveModelClass($modelName);
 
-        // Inititialize counters
-        $deleteCount = 0;
-        $insertCount = 0;
-        $updateCount = 0;
+    abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $errors = [];
-        $rows = Excel::toCollection(null, $request->file('file'))->first();
-        $header = $rows->shift(); // Première ligne = entête
+    $deleteCount = 0;
+    $insertCount = 0;
+    $updateCount = 0;
+    $simulatedErrors = [];
 
-        DB::beginTransaction();
-        try {
-            $simulatedErrors = [];
+    $rows = Excel::toCollection(null, $request->file('file'))->first();
+    $header = $rows->shift();
 
-            foreach ($rows as $index => $row) {
-                $rowData = $header->combine($row);
-                $id = $rowData->get('id');
+    DB::beginTransaction();
+    try {
+        foreach ($rows as $index => $row) {
+            $rowData = $header->combine($row);
+            $id = $rowData->get('id');
 
-                try {
-                    if ($id && $rowData->filter()->count() === 1) {
-                        // Suppression
-                        $record = $modelClass::find($id);
-                        if ($record) {
-                            $record->delete();
-                            $deleteCount++;
-                        } else {
-                            throw new \Exception("ID {$id} introuvable");
+            try {
+                $attributes = $rowData->except('id');
+                $relations = [];
+
+                foreach ($attributes as $key => $value) {
+                    if (! method_exists($modelClass, $key)) continue;
+
+                    try {
+                        $relationInstance = (new $modelClass)->{$key}();
+                        if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
+                            $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
+                            $attributes->forget($key);
                         }
-                    } elseif (! $id) {
-                        // Insertion
-                        $validator = Validator::make($rowData->except('id')->toArray(), $modelClass::$excelValidation ?? []);
-                        if ($validator->fails()) {
-                            throw new \Exception(implode(', ', $validator->errors()->all()));
-                        }
-                        $modelClass::create($rowData->except('id')->toArray());
-                        $insertCount++;
-                    } else {
-                        // Update
-                        $record = $modelClass::find($id);
-                        if ($record) {
-                            $record->update($rowData->except('id')->toArray());
-                            $updateCount++;
-                        } else {
-                            throw new \Exception("ID {$id} introuvable");
-                        }
-                    }
-                } catch (Throwable $e) {
-                    $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
-                    if (sizeof($simulatedErrors) >= 10) {
-                        break;
+                    } catch (\Throwable $e) {
+                        // ignorer si ce n'est pas une relation
                     }
                 }
-            }
 
-            if (count($simulatedErrors)) {
-                DB::rollBack();
-                return back()->withInput()->withErrors($simulatedErrors);
+                if ($id && $rowData->filter()->count() === 1) {
+                    $record = $modelClass::find($id);
+                    if ($record) {
+                        $record->delete();
+                        $deleteCount++;
+                    }
+                } elseif (! $id) {
+                    $validator = Validator::make($attributes->toArray(), $modelClass::$excelValidation ?? []);
+                    if ($validator->fails()) {
+                        throw new \Exception(implode(', ', $validator->errors()->all()));
+                    }
+                    $record = $modelClass::create($attributes->toArray());
+                    foreach ($relations as $rel => $ids) {
+                        if ($rowData->has($rel) && !empty($ids)) {
+                            $record->{$rel}()->sync($ids);
+                        }
+                    }
+                    $insertCount++;
+                } else {
+                    $record = $modelClass::find($id);
+                    if ($record) {
+                        $record->update($attributes->toArray());
+                        foreach ($relations as $rel => $ids) {
+                            if ($rowData->has($rel)) {
+                                $record->{$rel}()->sync($ids);
+                            }
+                        }
+                        $updateCount++;
+                    }
+                }
+            } catch (\Throwable $e) {
+                $simulatedErrors[] = 'Ligne ' . ($index + 2) . ': ' . $e->getMessage();
+                if (sizeof($simulatedErrors) >= 10) {
+                    break;
+                }
             }
+        }
 
-            DB::commit();
-            return back()->withInput()
-                ->withMessage("Sucess : {$insertCount} lines inserted, {$updateCount} lines updated and {$deleteCount} lines deleted");
-        } catch (Throwable $e) {
+        if (count($simulatedErrors)) {
             DB::rollBack();
             return back()->withInput()->withErrors($simulatedErrors);
         }
+
+        DB::commit();
+        return back()->withInput()
+            ->withMessage("Success : {$insertCount} inserted, {$updateCount} updated, {$deleteCount} deleted");
+    } catch (\Throwable $e) {
+        DB::rollBack();
+        return back()->withInput()->withErrors(['msg' => $e->getMessage()]);
     }
+}
 
     private function resolveModelClass($modelName)
     {

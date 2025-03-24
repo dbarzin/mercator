@@ -14,13 +14,13 @@ La page d'import / export des données est accessible via le menu "Configration"
 
 L’export permet de télécharger les données d’un modèle métier au format `.xlsx`.
 
-#### Étapes :
+#### Étapes
 
 1. Sélectionner un **filtre** : écosystème, système d'information, applications...
 2. Sélectionner un **objet** associé.
 3. Cliquer sur **Exporter**.
 
-#### Format du fichier :
+#### Format du fichier
 
 Le fichier contient : une **première ligne** d'en-têtes (colonnes) et les données de l'objet.
 
@@ -30,18 +30,18 @@ Les colonnes `created_at`, `updated_at`, `deleted_at` sont automatiquement **exc
 
 Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Excel structuré.
 
-#### Étapes :
+#### Étapes
 
 1. Choisir le **fichier Excel** à importer.
 2. Cliquer sur **Importer**.
 
-#### Format attendu du fichier :
+#### Format attendu du fichier
 
 - **Première ligne** : noms de colonnes
 - **Première colonne** : champ `ID`, l'ordre des autres colonnes n'a pas d'importance.
 - Le colonne qui ne sont pas présentes dans le fichier d'import **ne sont pas mises à jour**.
 
-#### Comportement à l’import :
+#### Comportement à l’import
 
 | Cas | Action appliquée |
 |-----|------------------|
@@ -52,7 +52,7 @@ Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Ex
 Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.
 
 
-## Exemple d’en-tête Excel attendu
+#### Exemple d’en-tête Excel attendu
 
 ```plaintext
 id, name, description, type, reference
