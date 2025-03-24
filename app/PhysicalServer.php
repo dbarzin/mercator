@@ -8,6 +8,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\PhysicalServer
  */
@@ -55,69 +59,33 @@ class PhysicalServer extends Model
         'deleted_at',
     ];
 
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
-    public function getInstallDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
-    }
-
-    public function setInstallDateAttribute($value)
-    {
-        $this->attributes['install_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    /**
-     * Permet d'exécuter de modifier un attribut avant que la valeurs soit récupérée du model
-     */
-    public function getUpdateDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
-    }
-
-    public function setUpdateDateAttribute($value)
-    {
-        $this->attributes['update_date'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function applications()
+    public function applications() : BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function cluster()
+    public function cluster() : BelongsTo
     {
         return $this->belongsTo(Cluster::class, 'cluster_id');
     }
 
-    public function serversLogicalServers()
+    public function serversLogicalServers() : BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    public function site()
+    public function site() : BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building()
+    public function building() : BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function bay()
+    public function bay() : BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');
-    }
-
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

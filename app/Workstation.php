@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Workstation
  *
@@ -47,28 +51,19 @@ class Workstation extends Model
         'deleted_at',
     ];
 
-    public function site()
+    public function site() : BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building()
+    public function building() : BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function applications()
+    public function applications() : BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

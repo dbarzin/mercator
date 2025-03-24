@@ -6,6 +6,10 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Relation
  */
@@ -51,22 +55,22 @@ class Relation extends Model
         'deleted_at',
     ];
 
-    public function source()
+    public function source() : BelongsTo
     {
         return $this->belongsTo(Entity::class, 'source_id')->orderBy('name');
     }
 
-    public function destination()
+    public function destination() : BelongsTo
     {
         return $this->belongsTo(Entity::class, 'destination_id')->orderBy('name');
     }
 
-    public function documents()
+    public function documents() : BelongsToMany
     {
         return $this->belongsToMany(Document::class);
     }
 
-    public function values()
+    public function values() : HasMany
     {
         return $this->hasMany(RelationValue::class, 'relation_id', 'id')->orderBy('date_price');
     }

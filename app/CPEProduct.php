@@ -3,6 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 /**
  * App\CPEProduct
@@ -24,12 +28,12 @@ class CPEProduct extends Model
         'name',
     ];
 
-    public function versions()
+    public function versions() : BelongsToMany
     {
         return $this->belongsToMany(CPEVersion::class)->orderBy('name');
     }
 
-    public function vendor()
+    public function vendor() : BelongsTo
     {
         return $this->belongsTo(CPEVendor::class, 'cpe_vendor_id');
     }

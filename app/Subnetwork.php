@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Subnetwork
  */
@@ -46,27 +50,27 @@ class Subnetwork extends Model
         'deleted_at',
     ];
 
-    public function connectedSubnetsSubnetworks()
+    public function connectedSubnetsSubnetworks() : HasMany
     {
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
-    public function network()
+    public function network() : BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    public function connected_subnets()
+    public function connected_subnets() : BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
-    public function gateway()
+    public function gateway() : BelongsTo
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
-    public function vlan()
+    public function vlan() : BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
     }
@@ -207,10 +211,5 @@ class Subnetwork extends Model
         }
 
         return false;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

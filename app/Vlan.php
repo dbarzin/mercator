@@ -7,6 +7,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+
 /**
  * App\Vlan
  */
@@ -36,23 +42,14 @@ class Vlan extends Model
         'deleted_at',
     ];
 
-    public function vlanPhysicalRouters()
+    public function vlanPhysicalRouters() : BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
-    public function subnetworks()
+    public function subnetworks() : HasMany
     {
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');
     }
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

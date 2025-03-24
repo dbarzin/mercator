@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Bay
  */
@@ -36,48 +40,39 @@ class Bay extends Model
         'deleted_at',
     ];
 
-    public function bayPhysicalServers()
+    public function bayPhysicalServers() : HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function bayStorageDevices()
+    public function bayStorageDevices() : HasMany
     {
         return $this->hasMany(StorageDevice::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function bayPeripherals()
+    public function bayPeripherals() : HasMany
     {
         return $this->hasMany(Peripheral::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function bayPhysicalSwitches()
+    public function bayPhysicalSwitches() : HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function bayPhysicalRouters()
+    public function bayPhysicalRouters() : HasMany
     {
         return $this->hasMany(PhysicalRouter::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function bayPhysicalSecurityDevices()
+    public function bayPhysicalSecurityDevices() : HasMany
     {
         return $this->hasMany(PhysicalSecurityDevice::class, 'bay_id', 'id')->orderBy('name');
     }
 
-    public function room()
+    public function room() : BelongsTo
     {
         return $this->belongsTo(Building::class, 'room_id');
     }
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

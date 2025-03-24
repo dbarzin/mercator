@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Lan
  */
@@ -35,18 +39,13 @@ class Lan extends Model
         'deleted_at',
     ];
 
-    public function lansMen()
+    public function lansMen() : BelongsToMany
     {
         return $this->belongsToMany(Man::class)->orderBy('name');
     }
 
-    public function lansWans()
+    public function lansWans() : BelongsToMany
     {
         return $this->belongsToMany(Wan::class)->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

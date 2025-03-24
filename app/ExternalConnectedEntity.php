@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\ExternalConnectedEntity
  */
@@ -43,18 +47,14 @@ class ExternalConnectedEntity extends Model
         'dest_desc',
     ];
 
-    public function entity()
+    public function entity() : BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_id');
     }
 
-    public function network()
+    public function network() : BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

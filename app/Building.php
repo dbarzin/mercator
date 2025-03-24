@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Building
  */
@@ -39,63 +43,54 @@ class Building extends Model
         'deleted_at',
     ];
 
-    public function roomBays()
+    public function roomBays() : HasMany
     {
         return $this->hasMany(Bay::class, 'room_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalServers()
+    public function buildingPhysicalServers() : HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalSwitch()
+    public function buildingPhysicalSwitch() : HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingWorkstations()
+    public function buildingWorkstations() : HasMany
     {
         return $this->hasMany(Workstation::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingStorageDevices()
+    public function buildingStorageDevices() : HasMany
     {
         return $this->hasMany(StorageDevice::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPeripherals()
+    public function buildingPeripherals() : HasMany
     {
         return $this->hasMany(Peripheral::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhones()
+    public function buildingPhones() : HasMany
     {
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function wifiTerminals()
+    public function wifiTerminals() : HasMany
     {
         return $this->hasMany(WifiTerminal::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalSwitches()
+    public function buildingPhysicalSwitches() : HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function site()
+    public function site() : BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

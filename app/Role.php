@@ -6,6 +6,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Role
  */
@@ -28,30 +32,19 @@ class Role extends Model
         'deleted_at',
     ];
 
-    /**
-     * Permet de récupérer un role avec son nom
-     *
-     * @param string $title
-     *
-     * @return Role|null
-     */
     public static function getRoleByTitle(string $title)
     {
         return Role::whereTitle($title)->first();
     }
 
-    public function users()
+    public function users() : BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function permissions()
+    public function permissions() : BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
     }
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

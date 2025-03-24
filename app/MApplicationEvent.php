@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class MApplicationEvent extends Model
 {
     use HasFactory;
@@ -24,12 +28,12 @@ class MApplicationEvent extends Model
         'updated_at',
     ];
 
-    public function application()
+    public function application() : BelongsToMany
     {
         return $this->belongsTo(MApplication::class, 'm_application_id');
     }
 
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }

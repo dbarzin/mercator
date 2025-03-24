@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\PhysicalRouter
  */
@@ -40,33 +44,28 @@ class PhysicalRouter extends Model
         'deleted_at',
     ];
 
-    public function site()
+    public function site() : BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building()
+    public function building() : BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function bay()
+    public function bay() : BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
-    public function routers()
+    public function routers() : BelongsToMany
     {
         return $this->belongsToMany(Router::class)->orderBy('name');
     }
 
-    public function vlans()
+    public function vlans() : BelongsToMany
     {
         return $this->belongsToMany(Vlan::class)->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

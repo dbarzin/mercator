@@ -17,6 +17,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -59,7 +61,7 @@ class ImportController extends Controller
                 }
                 try {
                     $result = $method->invoke($item);
-                    if ($result instanceof BelongsToMany) {
+                    if ($result instanceof BelongsToMany || $result instanceof HasMany) {
                         $relationName = $method->getName();
                         $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
                     }
@@ -202,7 +204,6 @@ class ImportController extends Controller
 
     private function resolveModelClass($modelName)
     {
-        // $modelClass = 'App\\' . Str::studly(Str::singular($modelName));
         $modelClass = 'App\\' . $modelName;
         if (! class_exists($modelClass)) {
             abort(404, "Modèle [{$modelName}] introuvable.");
@@ -212,7 +213,7 @@ class ImportController extends Controller
 
     private static function permission($modelName, $action)
     {
-        return ($modelName === 'MApplication' ? 'application' :  Str::snake($modelName, '_')) . '_'. $action;
+        return Str::snake($modelName, '_') . '_'. $action;
     }
 }
 

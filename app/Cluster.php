@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\Cluster
  */
@@ -38,18 +42,13 @@ class Cluster extends Model
         'deleted_at',
     ];
 
-    public function logicalServers()
+    public function logicalServers() : HasMany
     {
         return $this->hasMany(LogicalServer::class, 'cluster_id')->orderBy('name');
     }
 
-    public function physicalServers()
+    public function physicalServers() : HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'cluster_id')->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

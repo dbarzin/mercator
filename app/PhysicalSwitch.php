@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\PhysicalSwitch
  */
@@ -40,33 +44,24 @@ class PhysicalSwitch extends Model
         'deleted_at',
     ];
 
-    public function site()
+    public function site() : BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building()
+    public function building() : BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
 
-    public function bay()
+    public function bay() : BelongsTo
     {
         return $this->belongsTo(Bay::class, 'bay_id');
     }
 
-    public function networkSwitches()
+    public function networkSwitches() : BelongsToMany
     {
         return $this->belongsToMany(NetworkSwitch::class)->orderBy('name');
     }
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
 }

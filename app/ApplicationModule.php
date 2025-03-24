@@ -7,6 +7,10 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * App\ApplicationModule
  */
@@ -35,23 +39,18 @@ class ApplicationModule extends Model
         'deleted_at',
     ];
 
-    public function moduleSourceFluxes()
+    public function moduleSourceFluxes() : HasMany
     {
         return $this->hasMany(Flux::class, 'module_source_id', 'id')->orderBy('name');
     }
 
-    public function moduleDestFluxes()
+    public function moduleDestFluxes() : HasMany
     {
         return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy('name');
     }
 
-    public function applicationServices()
+    public function applicationServices() : BelongsToMany
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }
