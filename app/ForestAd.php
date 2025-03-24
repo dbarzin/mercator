@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ForestAd
@@ -40,14 +37,13 @@ class ForestAd extends Model
         'deleted_at',
     ];
 
-    public function zone_admin() : BelongsTo
+    public function zone_admin(): BelongsTo
     {
         return $this->belongsTo(ZoneAdmin::class, 'zone_admin_id');
     }
 
-    public function domaines() : BelongsToMany
+    public function domaines(): BelongsToMany
     {
         return $this->belongsToMany(DomaineAd::class)->orderBy('name');
     }
-
 }

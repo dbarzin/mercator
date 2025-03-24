@@ -4,11 +4,8 @@ namespace App;
 
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Certificate extends Model
 {
@@ -40,12 +37,12 @@ class Certificate extends Model
         'deleted_at',
     ];
 
-    public function logical_servers() : BelongsToMany
+    public function logical_servers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    public function applications() : BelongsToMany
+    public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }

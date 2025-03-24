@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Lan
@@ -39,12 +35,12 @@ class Lan extends Model
         'deleted_at',
     ];
 
-    public function lansMen() : BelongsToMany
+    public function lansMen(): BelongsToMany
     {
         return $this->belongsToMany(Man::class)->orderBy('name');
     }
 
-    public function lansWans() : BelongsToMany
+    public function lansWans(): BelongsToMany
     {
         return $this->belongsToMany(Wan::class)->orderBy('name');
     }

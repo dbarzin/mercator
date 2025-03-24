@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ZoneAdmin extends Model
 {
@@ -36,14 +32,13 @@ class ZoneAdmin extends Model
         'deleted_at',
     ];
 
-    public function zoneAdminAnnuaires() : HasMany
+    public function zoneAdminAnnuaires(): HasMany
     {
         return $this->hasMany(Annuaire::class, 'zone_admin_id', 'id')->orderBy('name');
     }
 
-    public function zoneAdminForestAds() : HasMany
+    public function zoneAdminForestAds(): HasMany
     {
         return $this->hasMany(ForestAd::class, 'zone_admin_id', 'id')->orderBy('name');
     }
-
 }

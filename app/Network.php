@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Network
@@ -50,14 +46,13 @@ class Network extends Model
         'deleted_at',
     ];
 
-    public function externalConnectedEntities() : HasMany
+    public function externalConnectedEntities(): HasMany
     {
         return $this->hasMany(ExternalConnectedEntity::class, 'network_id', 'id')->orderBy('name');
     }
 
-    public function subnetworks() : HasMany
+    public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'network_id', 'id')->orderBy('name');
     }
-
 }

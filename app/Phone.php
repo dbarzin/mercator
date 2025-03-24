@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Phone
@@ -43,14 +39,13 @@ class Phone extends Model
         'deleted_at',
     ];
 
-    public function site() : BelongsTo
+    public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building() : BelongsTo
+    public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
     }
-
 }

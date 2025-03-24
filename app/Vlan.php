@@ -3,15 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Vlan
@@ -42,14 +37,13 @@ class Vlan extends Model
         'deleted_at',
     ];
 
-    public function vlanPhysicalRouters() : BelongsToMany
+    public function vlanPhysicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }
 
-    public function subnetworks() : HasMany
+    public function subnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'vlan_id', 'id')->orderBy('name');
     }
-
 }

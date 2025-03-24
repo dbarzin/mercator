@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Actor
@@ -43,24 +39,23 @@ class DataProcessing extends Model
         'controls',
     ];
 
-    public function processes() : BelongsToMany
+    public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    public function applications() : BelongsToMany
+    public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function informations() : BelongsToMany
+    public function informations(): BelongsToMany
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    public function documents() : BelongsToMany
+    public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class);
     }
-
 }

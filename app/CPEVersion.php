@@ -3,9 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -28,7 +25,7 @@ class CPEVersion extends Model
         'name',
     ];
 
-    public function product() : BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(CPEProduct::class, 'cpe_product_id');
     }

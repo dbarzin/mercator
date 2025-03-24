@@ -3,12 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ApplicationBlock
@@ -40,9 +37,8 @@ class ApplicationBlock extends Model
         'deleted_at',
     ];
 
-    public function applications() : HasMany
+    public function applications(): HasMany
     {
         return $this->hasMany(MApplication::class, 'application_block_id', 'id')->orderBy('name');
     }
-
 }

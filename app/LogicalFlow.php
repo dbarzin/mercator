@@ -5,11 +5,8 @@ namespace App;
 use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\LogicalFlow
@@ -58,7 +55,7 @@ class LogicalFlow extends Model
         return $this->contains($this->dest_ip_range, $ip);
     }
 
-    public function router() : BelongsTo
+    public function router(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_id');
     }

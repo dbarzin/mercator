@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Subnetwork
@@ -50,27 +47,27 @@ class Subnetwork extends Model
         'deleted_at',
     ];
 
-    public function connectedSubnetsSubnetworks() : HasMany
+    public function connectedSubnetsSubnetworks(): HasMany
     {
         return $this->hasMany(Subnetwork::class, 'connected_subnets_id', 'id')->orderBy('name');
     }
 
-    public function network() : BelongsTo
+    public function network(): BelongsTo
     {
         return $this->belongsTo(Network::class, 'network_id');
     }
 
-    public function connected_subnets() : BelongsTo
+    public function connected_subnets(): BelongsTo
     {
         return $this->belongsTo(Subnetwork::class, 'connected_subnets_id');
     }
 
-    public function gateway() : BelongsTo
+    public function gateway(): BelongsTo
     {
         return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 
-    public function vlan() : BelongsTo
+    public function vlan(): BelongsTo
     {
         return $this->belongsTo(Vlan::class, 'vlan_id');
     }

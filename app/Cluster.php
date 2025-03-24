@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Cluster
@@ -42,12 +38,12 @@ class Cluster extends Model
         'deleted_at',
     ];
 
-    public function logicalServers() : HasMany
+    public function logicalServers(): HasMany
     {
         return $this->hasMany(LogicalServer::class, 'cluster_id')->orderBy('name');
     }
 
-    public function physicalServers() : HasMany
+    public function physicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'cluster_id')->orderBy('name');
     }

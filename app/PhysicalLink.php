@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PhysicalLink extends Model
 {
@@ -38,126 +34,125 @@ class PhysicalLink extends Model
 
     // Sources
 
-    public function peripheralSrc() : BelongsTo
+    public function peripheralSrc(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_src_id');
     }
 
-    public function phoneSrc() : BelongsTo
+    public function phoneSrc(): BelongsTo
     {
         return $this->belongsTo(Phone::class, 'phone_src_id');
     }
 
-    public function physicalRouterSrc() : BelongsTo
+    public function physicalRouterSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalRouter::class, 'physical_router_src_id');
     }
 
-    public function physicalSecurityDeviceSrc() : BelongsTo
+    public function physicalSecurityDeviceSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_src_id');
     }
 
-    public function physicalServerSrc() : BelongsTo
+    public function physicalServerSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_src_id');
     }
 
-    public function physicalSwitchSrc() : BelongsTo
+    public function physicalSwitchSrc(): BelongsTo
     {
         return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_src_id');
     }
 
-    public function storageDeviceSrc() : BelongsTo
+    public function storageDeviceSrc(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_src_id');
     }
 
-    public function wifiTerminalSrc() : BelongsTo
+    public function wifiTerminalSrc(): BelongsTo
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_src_id');
     }
 
-    public function workstationSrc() : BelongsTo
+    public function workstationSrc(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_src_id');
     }
 
-    public function routerSrc() : BelongsTo
+    public function routerSrc(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_src_id');
     }
 
-    public function networkSwitchSrc() : BelongsTo
+    public function networkSwitchSrc(): BelongsTo
     {
         return $this->belongsTo(NetworkSwitch::class, 'network_switch_src_id');
     }
 
-    public function logicalServerSrc() : BelongsTo
+    public function logicalServerSrc(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_src_id');
     }
 
     // Destinations
 
-    public function peripheralDest() : BelongsTo
+    public function peripheralDest(): BelongsTo
     {
         return $this->belongsTo(Peripheral::class, 'peripheral_dest_id');
     }
 
-    public function phoneDest() : BelongsTo
+    public function phoneDest(): BelongsTo
     {
         return $this->belongsTo(Phone::class, 'phone_dest_id');
     }
 
-    public function physicalRouterDest() : BelongsTo
+    public function physicalRouterDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalRouter::class, 'physical_router_dest_id');
     }
 
-    public function physicalSecurityDeviceDest() : BelongsTo
+    public function physicalSecurityDeviceDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
     }
 
-    public function physicalServerDest() : BelongsTo
+    public function physicalServerDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
     }
 
-    public function physicalSwitchDest() : BelongsTo
+    public function physicalSwitchDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalSwitch::class, 'physical_switch_dest_id');
     }
 
-    public function storageDeviceDest() : BelongsTo
+    public function storageDeviceDest(): BelongsTo
     {
         return $this->belongsTo(StorageDevice::class, 'storage_device_dest_id');
     }
 
-    public function wifiTerminalDest() : BelongsTo
+    public function wifiTerminalDest(): BelongsTo
     {
         return $this->belongsTo(WifiTerminal::class, 'wifi_terminal_dest_id');
     }
 
-    public function workstationDest() : BelongsTo
+    public function workstationDest(): BelongsTo
     {
         return $this->belongsTo(Workstation::class, 'workstation_dest_id');
     }
 
-    public function routerDest() : BelongsTo
+    public function routerDest(): BelongsTo
     {
         return $this->belongsTo(Router::class, 'router_dest_id');
     }
 
-    public function networkSwitchDest() : BelongsTo
+    public function networkSwitchDest(): BelongsTo
     {
         return $this->belongsTo(NetworkSwitch::class, 'network_switch_dest_id');
     }
 
-    public function logicalServerDest() : BelongsTo
+    public function logicalServerDest(): BelongsTo
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');
     }
-
 }

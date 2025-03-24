@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Building
@@ -43,54 +40,53 @@ class Building extends Model
         'deleted_at',
     ];
 
-    public function roomBays() : HasMany
+    public function roomBays(): HasMany
     {
         return $this->hasMany(Bay::class, 'room_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalServers() : HasMany
+    public function buildingPhysicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalSwitch() : HasMany
+    public function buildingPhysicalSwitch(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingWorkstations() : HasMany
+    public function buildingWorkstations(): HasMany
     {
         return $this->hasMany(Workstation::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingStorageDevices() : HasMany
+    public function buildingStorageDevices(): HasMany
     {
         return $this->hasMany(StorageDevice::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPeripherals() : HasMany
+    public function buildingPeripherals(): HasMany
     {
         return $this->hasMany(Peripheral::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhones() : HasMany
+    public function buildingPhones(): HasMany
     {
         return $this->hasMany(Phone::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function wifiTerminals() : HasMany
+    public function wifiTerminals(): HasMany
     {
         return $this->hasMany(WifiTerminal::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function buildingPhysicalSwitches() : HasMany
+    public function buildingPhysicalSwitches(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
     }
 
-    public function site() : BelongsTo
+    public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
-
 }

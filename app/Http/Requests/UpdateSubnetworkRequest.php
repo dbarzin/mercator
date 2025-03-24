@@ -5,8 +5,8 @@ namespace App\Http\Requests;
 use App\Rules\Cidr;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 class UpdateSubnetworkRequest extends FormRequest
 {

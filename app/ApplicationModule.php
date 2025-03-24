@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\ApplicationModule
@@ -39,17 +36,17 @@ class ApplicationModule extends Model
         'deleted_at',
     ];
 
-    public function moduleSourceFluxes() : HasMany
+    public function moduleSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'module_source_id', 'id')->orderBy('name');
     }
 
-    public function moduleDestFluxes() : HasMany
+    public function moduleDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'module_dest_id', 'id')->orderBy('name');
     }
 
-    public function applicationServices() : BelongsToMany
+    public function applicationServices(): BelongsToMany
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }

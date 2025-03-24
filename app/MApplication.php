@@ -4,11 +4,10 @@ namespace App;
 
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MApplication extends Model
 {
@@ -72,57 +71,57 @@ class MApplication extends Model
             ->exists();
     }
 
-    public function applicationSourceFluxes() : HasMany
+    public function applicationSourceFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'application_source_id', 'id')->orderBy('name');
     }
 
-    public function applicationDestFluxes() : HasMany
+    public function applicationDestFluxes(): HasMany
     {
         return $this->hasMany(Flux::class, 'application_dest_id', 'id')->orderBy('name');
     }
 
-    public function entities() : BelongsToMany
+    public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
-    public function entity_resp() : BelongsTo
+    public function entity_resp(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_resp_id');
     }
 
-    public function processes() : BelongsToMany
+    public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    public function activities() : BelongsToMany
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
-    public function services() : BelongsToMany
+    public function services(): BelongsToMany
     {
         return $this->belongsToMany(ApplicationService::class)->orderBy('name');
     }
 
-    public function databases() : BelongsToMany
+    public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }
 
-    public function workstations() : BelongsToMany
+    public function workstations(): BelongsToMany
     {
         return $this->belongsToMany(Workstation::class)->orderBy('name');
     }
 
-    public function logicalServers() : BelongsToMany
+    public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    public function application_block() : BelongsTo
+    public function application_block(): BelongsTo
     {
         return $this->belongsTo(ApplicationBlock::class, 'application_block_id');
     }
@@ -132,12 +131,12 @@ class MApplication extends Model
         return $this->belongsToMany(User::class, 'cartographer_m_application');
     }
 
-    public function events() : HasMany
+    public function events(): HasMany
     {
         return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');
     }
 
-    public function securityControls() : BelongsToMany
+    public function securityControls(): BelongsToMany
     {
         return $this->belongsToMany(SecurityControl::class, 'security_control_m_application')->orderBy('name');
     }

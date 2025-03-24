@@ -3,13 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Operation
@@ -40,24 +37,23 @@ class Operation extends Model
         'deleted_at',
     ];
 
-    public function process() : BelongsTo
+    public function process(): BelongsTo
     {
         return $this->belongsTo(Process::class, 'process_id');
     }
 
-    public function activities() : BelongsToMany
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
-    public function actors() : BelongsToMany
+    public function actors(): BelongsToMany
     {
         return $this->belongsToMany(Actor::class)->orderBy('name');
     }
 
-    public function tasks() : BelongsToMany
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class)->orderBy('name');
     }
-
 }

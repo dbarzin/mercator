@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,11 +12,6 @@ use Laravel\Passport\HasApiTokens;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
-
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 
 /**
  * App\User
@@ -113,9 +106,8 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         $this->notify(new ResetPassword($token));
     }
-    public function m_applications() : BelongsToMany
+    public function m_applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
     }
-
 }

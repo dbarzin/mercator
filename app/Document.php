@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Document extends Model
 {
@@ -29,14 +25,13 @@ class Document extends Model
     protected $fillable = [
     ];
 
-    public function activities() : BelongsToMany
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class);
     }
 
-    public function entities() : BelongsToMany
+    public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class);
     }
-
 }

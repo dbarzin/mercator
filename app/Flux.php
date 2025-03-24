@@ -3,13 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Flux
@@ -84,42 +80,42 @@ class Flux extends Model
         return null;
     }
 
-    public function application_source() : BelongsTo
+    public function application_source(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_source_id');
     }
 
-    public function service_source() : BelongsTo
+    public function service_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_source_id');
     }
 
-    public function module_source() : BelongsTo
+    public function module_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_source_id');
     }
 
-    public function database_source() : BelongsTo
+    public function database_source(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
-    public function application_dest() : BelongsTo
+    public function application_dest(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_dest_id');
     }
 
-    public function service_dest() : BelongsTo
+    public function service_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_dest_id');
     }
 
-    public function module_dest() : BelongsTo
+    public function module_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_dest_id');
     }
 
-    public function database_dest() : BelongsTo
+    public function database_dest(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_dest_id');
     }
