@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -39,28 +39,23 @@ class DataProcessing extends Model
         'controls',
     ];
 
-    public function processes()
+    public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }
 
-    public function applications()
+    public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function informations()
+    public function informations(): BelongsToMany
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    public function documents()
+    public function documents(): BelongsToMany
     {
         return $this->belongsToMany(Document::class);
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

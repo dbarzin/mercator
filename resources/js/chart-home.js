@@ -176,10 +176,10 @@ var treeMapConfig = {
         font: {
           weight: "bold",
         },
-          formatter: function (value, context) {
-            return value._data.label;
-          },
+        formatter: function (value, context) {
+          return value._data.num>1 ? value._data.label : "";
         },
+      },
       spacing: 0.5,
       borderWidth: 1.5,
       fontColor: "white",
@@ -217,8 +217,19 @@ var treeMapConfig = {
     plugins: {
         title: { display: true },
         legend: { display: false },
-        tooltip: { enabled: false },
-    },
+        tooltip: {
+          enabled: true,
+            callbacks: {
+              title: function () {
+                return null;
+              },
+    label: function(context) {
+      const item = context.raw._data;
+      return `${item.label}: ${context.raw.v}`;
+    }
+            },
+          }
+        },
     maintainAspectRatio: false,
     title: { display: false},
     animation: { duration: 600 },

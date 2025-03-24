@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -14,11 +16,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Symfony\Component\HttpFoundation\Response;
-use Throwable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use ReflectionClass;
 use ReflectionMethod;
+use Symfony\Component\HttpFoundation\Response;
 
 class ImportController extends Controller
 {
@@ -47,7 +47,7 @@ class ImportController extends Controller
             // Traite les belongsToMany : transforme en liste d'IDs
             foreach ((new ReflectionClass($item))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
                 // On évite les méthodes héritées de Model ou autres (ex: getKey, save, etc.)
-                if ($method->class !== get_class($item)) {
+                if ($method->class !== $item::class) {
                     continue;
                 }
                 if ($method->getNumberOfParameters() !== 0) {
@@ -59,7 +59,7 @@ class ImportController extends Controller
                 }
                 try {
                     $result = $method->invoke($item);
-                    if ($result instanceof BelongsToMany) {
+                    if ($result instanceof BelongsToMany || $result instanceof HasMany) {
                         $relationName = $method->getName();
                         $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
                     }
@@ -81,7 +81,6 @@ class ImportController extends Controller
         return Excel::download(new GenericExport($data, $header), $modelName . '-'. Carbon::today()->format('Ymd') . '.xlsx');
     }
 
-
     public function import(Request $request)
     {
         $request->validate([
@@ -93,13 +92,13 @@ class ImportController extends Controller
         $modelClass = $this->resolveModelClass($modelName);
 
         // Get store validation rules
-        $storeRequestClass = "\\App\\Http\\Requests\\Store" . $modelName . "Request";
-        $storeRequestInstance = new $storeRequestClass;
+        $storeRequestClass = '\\App\\Http\\Requests\\Store' . $modelName . 'Request';
+        $storeRequestInstance = new $storeRequestClass();
         $storeRules = $storeRequestInstance->rules();
 
         // Get update validation rules
-        $updateRequestClass = "\\App\\Http\\Requests\\Update" . $modelName . "Request";
-        $updateRequestInstance = new $updateRequestClass;
+        $updateRequestClass = '\\App\\Http\\Requests\\Update' . $modelName . 'Request';
+        $updateRequestInstance = new $updateRequestClass();
 
         abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -123,10 +122,12 @@ class ImportController extends Controller
 
                     // Identify relations and remove them from attributes
                     foreach ($attributes as $key => $value) {
-                        if (! method_exists($modelClass, $key)) continue;
+                        if (! method_exists($modelClass, $key)) {
+                            continue;
+                        }
 
                         try {
-                            $relationInstance = (new $modelClass)->{$key}();
+                            $relationInstance = (new $modelClass())->{$key}();
                             if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
                                 // $values must be a list of integer
                                 $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
@@ -151,7 +152,7 @@ class ImportController extends Controller
                         }
                         $record = $modelClass::create($attributes->toArray());
                         foreach ($relations as $rel => $ids) {
-                            if ($rowData->has($rel) && !empty($ids)) {
+                            if ($rowData->has($rel) && ! empty($ids)) {
                                 $record->{$rel}()->sync($ids);
                             }
                         }
@@ -173,8 +174,7 @@ class ImportController extends Controller
                                 }
                             }
                             $updateCount++;
-                        }
-                        else {
+                        } else {
                             throw new \Exception("record {$id} not found");
                         }
                     }
@@ -202,7 +202,6 @@ class ImportController extends Controller
 
     private function resolveModelClass($modelName)
     {
-        // $modelClass = 'App\\' . Str::studly(Str::singular($modelName));
         $modelClass = 'App\\' . $modelName;
         if (! class_exists($modelClass)) {
             abort(404, "Modèle [{$modelName}] introuvable.");
@@ -212,7 +211,7 @@ class ImportController extends Controller
 
     private static function permission($modelName, $action)
     {
-        return ($modelName === 'MApplication' ? 'application' :  Str::snake($modelName, '_')) . '_'. $action;
+        return Str::snake($modelName, '_') . '_'. $action;
     }
 }
 

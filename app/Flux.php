@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -80,48 +80,43 @@ class Flux extends Model
         return null;
     }
 
-    public function application_source()
+    public function application_source(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_source_id');
     }
 
-    public function service_source()
+    public function service_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_source_id');
     }
 
-    public function module_source()
+    public function module_source(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_source_id');
     }
 
-    public function database_source()
+    public function database_source(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_source_id');
     }
 
-    public function application_dest()
+    public function application_dest(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'application_dest_id');
     }
 
-    public function service_dest()
+    public function service_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationService::class, 'service_dest_id');
     }
 
-    public function module_dest()
+    public function module_dest(): BelongsTo
     {
         return $this->belongsTo(ApplicationModule::class, 'module_dest_id');
     }
 
-    public function database_dest()
+    public function database_dest(): BelongsTo
     {
         return $this->belongsTo(Database::class, 'database_dest_id');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

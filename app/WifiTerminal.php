@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -39,23 +39,13 @@ class WifiTerminal extends Model
         'deleted_at',
     ];
 
-    public function site()
+    public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
 
-    public function building()
+    public function building(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'building_id');
-    }
-
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

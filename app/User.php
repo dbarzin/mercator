@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -97,32 +95,6 @@ class User extends Authenticatable implements LdapAuthenticatable
         return false;
     }
 
-    /**
-     * Permet d'ajouter un role à l'utilisateur courant
-     *
-     * @param Role $role
-     *
-     * @return void
-     */
-    public function addRole(Role $role): void
-    {
-        if ($this->hasRole($role)) {
-            return;
-        }
-
-        $this->roles()->save($role);
-    }
-
-    public function getEmailVerifiedAtAttribute($value)
-    {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-    }
-
-    public function setEmailVerifiedAtAttribute($value)
-    {
-        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
     public function setPasswordAttribute($input)
     {
         if ($input) {
@@ -134,13 +106,8 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         $this->notify(new ResetPassword($token));
     }
-    public function m_applications()
+    public function m_applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class, 'cartographer_m_application');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -46,48 +48,43 @@ class Process extends Model
         'deleted_at',
     ];
 
-    public function information()
+    public function information(): BelongsToMany
     {
         return $this->belongsToMany(Information::class)->orderBy('name');
     }
 
-    public function applications()
+    public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function activities()
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(Activity::class)->orderBy('name');
     }
 
-    public function entities()
+    public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
-    public function operations()
+    public function operations(): HasMany
     {
         return $this->hasMany(Operation::class, 'process_id', 'id')->orderBy('name');
     }
 
-    public function dataProcesses()
+    public function dataProcesses(): BelongsToMany
     {
         return $this->belongsToMany(DataProcessing::class, 'data_processing_process')->orderBy('name');
     }
 
-    public function macroProcess()
+    public function macroProcess(): BelongsTo
     {
         return $this->belongsTo(MacroProcessus::class, 'macroprocess_id');
     }
 
-    public function securityControls()
+    public function securityControls(): BelongsToMany
     {
         return $this->belongsToMany(SecurityControl::class, 'security_control_process')->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

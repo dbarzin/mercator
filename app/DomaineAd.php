@@ -3,8 +3,9 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -39,18 +40,13 @@ class DomaineAd extends Model
         'deleted_at',
     ];
 
-    public function domainesForestAds()
+    public function domainesForestAds(): BelongsToMany
     {
         return $this->belongsToMany(ForestAd::class)->orderBy('name');
     }
 
-    public function logicalServers()
+    public function logicalServers(): HasMany
     {
         return $this->hasMany(LogicalServer::class, 'domain_id');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }

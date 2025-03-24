@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\CPEVendor
@@ -24,7 +25,7 @@ class CPEVendor extends Model
         'name',
     ];
 
-    public function products()
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(CPEProduct::class)->orderBy('name');
     }

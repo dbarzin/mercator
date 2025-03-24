@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -44,13 +44,8 @@ class MacroProcessus extends Model
         'deleted_at',
     ];
 
-    public function processes()
+    public function processes(): HasMany
     {
         return $this->hasMany(Process::class, 'macroprocess_id', 'id')->orderBy('name');
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }
