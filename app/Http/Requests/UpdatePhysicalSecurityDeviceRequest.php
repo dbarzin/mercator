@@ -6,6 +6,7 @@ use App\Rules\IPList;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdatePhysicalSecurityDeviceRequest extends FormRequest
 {
@@ -23,7 +24,9 @@ class UpdatePhysicalSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:physical_security_devices,name,'.request()->route('physical_security_device')->id.',id,deleted_at,NULL',
+                Rule::unique('physical_security_devices')
+                    ->ignore($this->route('physical_security_device')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'address_ip' => [
                 'nullable',

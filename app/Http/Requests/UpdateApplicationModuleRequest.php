@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateApplicationModuleRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateApplicationModuleRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                // 'unique:application_modules,name,' . request()->route('application_module')->id,
-                'unique:application_modules,name,'.request()->route('application_module')->id.',id,deleted_at,NULL',
+                Rule::unique('application_modules')
+                    ->ignore($this->route('application_module')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateRoleRequest extends FormRequest
 {
@@ -19,7 +20,12 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'title' => [
+                'min:3',
+                'max:32',
                 'required',
+                Rule::unique('roles')
+                    ->ignore($this->route('role')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'permissions.*' => [
                 'integer',

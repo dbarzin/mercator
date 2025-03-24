@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateStorageDeviceRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateStorageDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:storage_devices,name,' . request()->route('storage_device')->id,
-                'unique:storage_devices,name,'.request()->route('storage_device')->id.',id,deleted_at,NULL',
+                Rule::unique('storage_devices')
+                    ->ignore($this->route('storage_device')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

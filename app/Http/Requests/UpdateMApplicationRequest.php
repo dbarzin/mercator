@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateMApplicationRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateMApplicationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:m_applications,name,'.request()->route('application')->id.',id,deleted_at,NULL',
+                Rule::unique('m_applications')
+                    ->ignore($this->route('application')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
             'entities.*' => [

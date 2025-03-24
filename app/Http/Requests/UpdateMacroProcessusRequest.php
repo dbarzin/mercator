@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateMacroProcessusRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateMacroProcessusRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:macro_processuses,name,' . request()->route('macro_processus')->id,
-                'unique:macro_processuses,name,'.request()->route('macro_processus')->id.',id,deleted_at,NULL',
+                Rule::unique('macro_processuses')
+                    ->ignore($this->route('macro_processus')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'security_need' => [
                 'nullable',

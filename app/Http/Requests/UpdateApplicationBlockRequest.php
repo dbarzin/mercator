@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateApplicationBlockRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateApplicationBlockRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:application_blocks,name,'.request()->route('application_block')->id.',id,deleted_at,NULL',
+                Rule::unique('application_blocks')
+                    ->ignore($this->route('application_block')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

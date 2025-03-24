@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateLanRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateLanRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:lans,name,' . request()->route('lan')->id,
-                'unique:lans,name,'.request()->route('lan')->id.',id,deleted_at,NULL',
+                Rule::unique('lans')
+                    ->ignore($this->route('lan')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

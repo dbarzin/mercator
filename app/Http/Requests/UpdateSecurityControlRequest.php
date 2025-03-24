@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateSecurityControlRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateSecurityControlRequest extends FormRequest
                 'min:3',
                 'max:255',
                 'required',
-                'unique:security_controls,name,'.request()->route('security_control')->id.',id,deleted_at,NULL',
+                Rule::unique('security_controls')
+                    ->ignore($this->route('security_control')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

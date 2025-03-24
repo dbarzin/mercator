@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateNetworkRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateNetworkRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:networks,name,'.request()->route('network')->id.',id,deleted_at,NULL',
+                Rule::unique('networks')
+                    ->ignore($this->route('network')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'security_need_c' => [
                 'nullable',

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateDataProcessingRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateDataProcessingRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:data_processing,name,'.request()->route('data_processing')->id.',id,deleted_at,NULL',
+                Rule::unique('data_processing')
+                    ->ignore($this->route('data_processing')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'processes.*' => [
                 'integer',

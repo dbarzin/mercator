@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateSecurityDeviceRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateSecurityDeviceRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:security_devices,name,' . request()->route('security_device')->id,
-                'unique:security_devices,name,'.request()->route('security_device')->id.',id,deleted_at,NULL',
+                Rule::unique('security_devices')
+                    ->ignore($this->route('security_device')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

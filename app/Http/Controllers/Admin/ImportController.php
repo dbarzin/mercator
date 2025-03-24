@@ -88,6 +88,17 @@ public function import(Request $request)
     $modelName = $request->get('model');
     $modelClass = $this->resolveModelClass($modelName);
 
+    // Get store validation rules
+    $storeRequestClass = "\\App\\Http\\Requests\\Store" . $modelName . "Request";
+    $storeRequestInstance = new $storeRequestClass;
+    $storeRules = $storeRequestInstance->rules();
+
+    // Get update validation rules
+    $updateRequestClass = "\\App\\Http\\Requests\\Update" . $modelName . "Request";
+    $updateRequestInstance = new $updateRequestClass;
+    // $updateRules = $updateRequestInstance->rules();
+
+
     abort_if(Gate::denies($this->permission($modelName, 'edit')), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
     $deleteCount = 0;
@@ -129,7 +140,7 @@ public function import(Request $request)
                         $deleteCount++;
                     }
                 } elseif (! $id) {
-                    $validator = Validator::make($attributes->toArray(), $modelClass::$excelValidation ?? []);
+                    $validator = Validator::make($attributes->toArray(), $storeRules);
                     if ($validator->fails()) {
                         throw new \Exception(implode(', ', $validator->errors()->all()));
                     }
@@ -143,6 +154,12 @@ public function import(Request $request)
                 } else {
                     $record = $modelClass::find($id);
                     if ($record) {
+                        $updateRequestInstance->id = $id;
+                        $updateRules = $updateRequestInstance->rules();
+                        $validator = Validator::make($attributes->toArray(), $updateRules);
+                        if ($validator->fails()) {
+                            throw new \Exception(implode(', ', $validator->errors()->all()));
+                        }
                         $record->update($attributes->toArray());
                         foreach ($relations as $rel => $ids) {
                             if ($rowData->has($rel)) {

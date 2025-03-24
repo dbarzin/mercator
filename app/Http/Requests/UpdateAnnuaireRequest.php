@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateAnnuaireRequest extends FormRequest
 {
@@ -22,8 +23,9 @@ class UpdateAnnuaireRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                //'unique:annuaires,name,' . request()->route('annuaire')->id,
-                'unique:annuaires,name,'.request()->route('annuaire')->id.',id,deleted_at,NULL',
+                Rule::unique('annuaires')
+                    ->ignore($this->route('annuaire')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

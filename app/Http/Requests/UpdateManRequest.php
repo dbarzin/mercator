@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateManRequest extends FormRequest
 {
@@ -23,7 +23,9 @@ class UpdateManRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                Rule::unique('mans')->whereNull('deleted_at')->ignore(request()->route('man')->id),
+                Rule::unique('mans')
+                    ->ignore($this->route('man')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'lans.*' => [
                 'integer',

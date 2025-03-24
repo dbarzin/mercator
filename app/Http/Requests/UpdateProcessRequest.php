@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateProcessRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateProcessRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                'unique:processes,name,'.request()->route('process')->id.',id,deleted_at,NULL',
+                Rule::unique('processes')
+                    ->ignore($this->route('process')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'activities.*' => [
                 'integer',

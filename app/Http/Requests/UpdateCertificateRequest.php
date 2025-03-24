@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateCertificateRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateCertificateRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:certificates,name,'.request()->route('certificate')->id.',id,deleted_at,NULL',
+                Rule::unique('certificates')
+                    ->ignore($this->route('certificate')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'start_validity' => [
                 'date',

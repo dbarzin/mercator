@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateTaskRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:tasks,name,'.request()->route('task')->id.',id,deleted_at,NULL',
+                Rule::unique('tasks')
+                    ->ignore($this->route('task')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

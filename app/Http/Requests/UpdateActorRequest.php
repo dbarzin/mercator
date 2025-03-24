@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateActorRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateActorRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:actors,name,'.request()->route('actor')->id.',id,deleted_at,NULL',
+                Rule::unique('actors')
+                    ->ignore($this->route('actor')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
         ];
     }

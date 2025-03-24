@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class UpdateContainerRequest extends FormRequest
 {
@@ -22,7 +23,9 @@ class UpdateContainerRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                'unique:containers,name,'.request()->route('container')->id.',id,deleted_at,NULL',
+                Rule::unique('containers')
+                    ->ignore($this->route('container')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
             'iconFile' => ['nullable','file','mimes:png','max:65535'],
         ];
