@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Router
@@ -39,7 +40,7 @@ class Router extends Model
         'deleted_at',
     ];
 
-    public function physicalRouters()
+    public function physicalRouters() : BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }

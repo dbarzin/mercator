@@ -7,6 +7,8 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 /**
  * App\Site
  */
@@ -36,48 +38,38 @@ class Site extends Model
         'deleted_at',
     ];
 
-    public function buildings()
+    public function buildings(): HasMany
     {
         return $this->hasMany(Building::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function physicalServers()
+    public function physicalServers(): HasMany
     {
         return $this->hasMany(PhysicalServer::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function workstations()
+    public function workstations(): HasMany
     {
         return $this->hasMany(Workstation::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function storageDevices()
+    public function storageDevices(): HasMany
     {
         return $this->hasMany(StorageDevice::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function peripherals()
+    public function peripherals(): HasMany
     {
         return $this->hasMany(Peripheral::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function phones()
+    public function phones(): HasMany
     {
         return $this->hasMany(Phone::class, 'site_id', 'id')->orderBy('name');
     }
 
-    public function physicalSwitches()
+    public function physicalSwitches(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'site_id', 'id')->orderBy('name');
-    }
-
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
     }
 }
