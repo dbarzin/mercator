@@ -169,6 +169,8 @@ function createBarChart(ctx, config) {
 
 //===========================================================================
 
+let animationDone = false;
+
 var treeMapConfig = {
   type: "treemap",
   data: {
@@ -189,6 +191,8 @@ var treeMapConfig = {
         },
         formatter: function (value, context) {
           const node = context.chart.getDatasetMeta(context.datasetIndex).data[context.dataIndex];
+          if (Number.isNaN(node.widht) || Number.isNaN(node.height))
+              return null;
           if ((node.width < 30) || (node.height < 10))
             return null;
           return value._data.label;
@@ -249,9 +253,12 @@ var treeMapConfig = {
     animation: {
         duration: 600,
           onComplete: function() {
-            this.update();
-          }
-    },
+              if (!animationDone) {
+                animationDone = true;
+                this.update();
+                }
+            }
+        },
 
     onClick: function (event, active) {
       var chart = this;
