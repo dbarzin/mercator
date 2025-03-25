@@ -65,7 +65,12 @@ const barChartConfig = {
   options: {
     responsive: true,
     maintainAspectRatio: false,
-    animation: { duration: 600 },
+    animation: {
+        duration: 600 ,
+          onComplete: function() {
+            this.update();
+          }
+    },
 
     // 📌 Gestion du curseur au survol
     onHover: (event, elements) => {
@@ -92,8 +97,14 @@ const barChartConfig = {
         font: {
           weight: "bold",
         },
-        formatter: function (value, context) {
-          return value > 1 ? context.dataset.label : "";
+
+        formatter: function (value, context)
+        {
+          if (value <= 0) return null;
+          const node = context.chart.getDatasetMeta(context.datasetIndex).data[context.dataIndex];
+          if (node.height < 12)
+              return null;
+          return context.dataset.label;
         },
       },
       legend: {
@@ -177,7 +188,10 @@ var treeMapConfig = {
           weight: "bold",
         },
         formatter: function (value, context) {
-          return value._data.num>1 ? value._data.label : "";
+          const node = context.chart.getDatasetMeta(context.datasetIndex).data[context.dataIndex];
+          if ((node.width < 30) || (node.height < 10))
+            return null;
+          return value._data.label;
         },
       },
       spacing: 0.5,
@@ -223,16 +237,21 @@ var treeMapConfig = {
               title: function () {
                 return null;
               },
-    label: function(context) {
-      const item = context.raw._data;
-      return `${item.label}: ${context.raw.v}`;
-    }
+            label: function(context) {
+              const item = context.raw._data;
+              return `${item.label}: ${context.raw.v}`;
+            }
             },
           }
         },
     maintainAspectRatio: false,
     title: { display: false},
-    animation: { duration: 600 },
+    animation: {
+        duration: 600,
+          onComplete: function() {
+            this.update();
+          }
+    },
 
     onClick: function (event, active) {
       var chart = this;
