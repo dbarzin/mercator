@@ -72,7 +72,7 @@ const barChartConfig = {
           }
     },
 
-    // 📌 Gestion du curseur au survol
+    // Gestion du curseur au survol
     onHover: (event, elements) => {
       const chartDiv = document.getElementById("bar_chart_div");
       chartDiv.style.cursor = elements.length ? "pointer" : "default";
