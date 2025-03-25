@@ -17,16 +17,18 @@ class LoginTest extends DuskTestCase
      */
     public function testLogin()
     {
-        $user = User::create([
-            'email' => 'admin@admin.com'
+        $user = User::factory()->create([
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password')
         ]);
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit('/login')
                     ->type('email', $user->email)
                     ->type('password', 'password')
-                    ->press("Login")
+                    ->click('@login-button')
                     ->waitForLocation('/admin')
                     ->assertSee('Mercator');
-        });    }
+        });
+    }
 }

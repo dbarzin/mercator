@@ -16,7 +16,7 @@ table = $('{{ $id }}').DataTable({
             // Dernière colonne allignée à droite
             {
                 targets: -1,
-                className: 'dt-body-right'
+                // className: 'dt-body-right'
             }
         ],
         layout:
