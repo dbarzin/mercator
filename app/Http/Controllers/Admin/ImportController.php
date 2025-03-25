@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -59,7 +58,7 @@ class ImportController extends Controller
                 }
                 try {
                     $result = $method->invoke($item);
-                    if ($result instanceof BelongsToMany || $result instanceof HasMany) {
+                    if ($result instanceof BelongsToMany) {
                         $relationName = $method->getName();
                         $row[$relationName] = $item->$relationName()->pluck('id')->implode(', ');
                     }
@@ -128,8 +127,7 @@ class ImportController extends Controller
 
                         try {
                             $relationInstance = (new $modelClass())->{$key}();
-                            if ($relationInstance instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
-                                // $values must be a list of integer
+                            if ($relationInstance instanceof BelongsToMany) {
                                 $relations[$key] = array_filter(array_map('trim', explode(',', $value)));
                                 $attributes->forget($key);
                             }
