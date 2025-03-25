@@ -112,9 +112,11 @@ return new class extends Migration {
         Schema::table("security_controls", function (Blueprint $table) {
             $table->dropUnique("security_controls_name_unique");
         });
+        try {
         Schema::table("clusters", function (Blueprint $table) {
             $table->dropUnique("cluster_name_unique");
         });
+        } catch(err) { }
         Schema::table("physical_servers", function (Blueprint $table) {
             $table->dropUnique("physical_servers_name_unique");
         });
@@ -136,9 +138,11 @@ return new class extends Migration {
         Schema::table("sites", function (Blueprint $table) {
             $table->dropUnique("sites_name_unique");
         });
+        try {
         Schema::table("entities", function (Blueprint $table) {
             $table->dropUnique("entities_name_unique");
         });
+        } catch(err) { }
     }
 
     public function down(): void
