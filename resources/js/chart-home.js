@@ -59,6 +59,8 @@ const customColors = [
          "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7",
          "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5" ];
 
+let animationBarDone = false;
+
 const barChartConfig = {
   type: "bar",
   data: window.chartData.barChart,
@@ -68,7 +70,10 @@ const barChartConfig = {
     animation: {
         duration: 600 ,
           onComplete: function() {
-            this.update();
+              if (!animationBarDone) {
+                  animationBarDone=true;
+                  this.update();
+            }
           }
     },
 
@@ -169,7 +174,7 @@ function createBarChart(ctx, config) {
 
 //===========================================================================
 
-let animationDone = false;
+let animationTreeDone = false;
 
 var treeMapConfig = {
   type: "treemap",
@@ -253,8 +258,8 @@ var treeMapConfig = {
     animation: {
         duration: 600,
           onComplete: function() {
-              if (!animationDone) {
-                animationDone = true;
+              if (!animationTreeDone) {
+                animationTreeDone = true;
                 this.update();
                 }
             }
