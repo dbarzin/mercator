@@ -76,7 +76,6 @@ class ReportingTest extends DuskTestCase
         retry($times = 5,  function () use ($admin) {
             $this->browse(function (Browser $browser) use ($admin) {
                 $browser->loginAs($admin);
-
                 $browser->visit(route('admin.report.cartography'));
                 $browser->assertDontSee('ErrorException');
             });

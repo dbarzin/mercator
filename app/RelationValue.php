@@ -4,12 +4,15 @@ namespace App;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\RelationValue
  */
 class RelationValue extends Model
 {
+    use HasFactory;
+    
     public $table = 'relation_values';
 
     public static $searchable = [

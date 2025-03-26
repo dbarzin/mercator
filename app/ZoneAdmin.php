@@ -6,10 +6,11 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ZoneAdmin extends Model
 {
-    use SoftDeletes, Auditable;
+    use HasFactory, SoftDeletes, Auditable;
 
     public $table = 'zone_admins';
 

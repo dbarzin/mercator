@@ -26,6 +26,8 @@ class LoginTest extends DuskTestCase
             $browser->visit('/login')
                     ->type('email', $user->email)
                     ->type('password', 'password')
+                    ->scrollIntoView('@login-button')
+                    ->pause(500)
                     ->click('@login-button')
                     ->waitForLocation('/admin')
                     ->assertSee('Mercator');

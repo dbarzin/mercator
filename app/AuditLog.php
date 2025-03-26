@@ -5,12 +5,15 @@ namespace App;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\AuditLog
  */
 class AuditLog extends Model
 {
+    use HasFactory;
+    
     public $table = 'audit_logs';
 
     protected $fillable = [

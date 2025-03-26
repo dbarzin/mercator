@@ -6,13 +6,14 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\MacroProcessus
  */
 class MacroProcessus extends Model
 {
-    use SoftDeletes, Auditable;
+    use HasFactory, SoftDeletes, Auditable;
 
     public $table = 'macro_processuses';
 

@@ -6,10 +6,11 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Document extends Model
 {
-    use SoftDeletes, Auditable;
+    use HasFactory, SoftDeletes, Auditable;
 
     public $table = 'documents';
 
@@ -33,5 +34,12 @@ class Document extends Model
     public function entities(): BelongsToMany
     {
         return $this->belongsToMany(Entity::class);
+    }
+
+    public function humanSize() {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        $bytes = $this->size;
+        for ($i = 0; $bytes > 1024; $i++) $bytes /= 1024;
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 }

@@ -28,7 +28,7 @@ function bytesToHuman($bytes) {
 		        </div>
 		        <div class="row">
 		            <div class="cell-3">
-		            {{ trans('cruds.configuration.documents.total_size') }} : {{ bytesToHuman($sum) }} 
+		            {{ trans('cruds.configuration.documents.total_size') }} : {{ bytesToHuman($sum) }}
 		            </div>
 		        </div>
 		        <div class="row">
