@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img: '/images/entity.png',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: {{ old('icon_id') === -1 ? "true" : "false" }},
+                selected: {{ old('icon_id') === null ? "true" : "false" }},
             },
             @foreach($icons as $icon)
             {
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img: '{{ route('admin.documents.show', $icon) }}',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: {{ old('icon_id') === -1 ? "true" : "false" }},
+                selected: {{ old('icon_id') === $icon ? "true" : "false" }},
             },
             @endforeach
         ];
