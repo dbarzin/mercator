@@ -86,7 +86,7 @@
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
+                <select class="form-control select2 {{ $errors->has('physical_servers') ? 'is-invalid' : '' }}" name="physical_servers[]" id="physical_servers" multiple>
                     @foreach($physical_servers as $id => $physical_servers)
                         <option value="{{ $id }}" {{ in_array($id, old('physical_servers', [])) ? 'selected' : '' }}>{{ $physical_servers }}</option>
                     @endforeach
