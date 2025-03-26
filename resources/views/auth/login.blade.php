@@ -88,7 +88,7 @@
 
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" class="btn btn-primary px-4" id="login">
+                            <button type="submit" class="btn btn-primary px-4" id="login" dusk="login-button">
                                 {{ trans('global.login') }}
                             </button>
                         </div>

@@ -12,6 +12,7 @@ use Laravel\Passport\HasApiTokens;
 use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 use LdapRecord\Laravel\Auth\HasLdapUser;
 use LdapRecord\Laravel\Auth\LdapAuthenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\User
@@ -23,6 +24,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     use HasLdapUser;
     use Notifiable;
     use SoftDeletes;
+    use HasFactory;
 
     public $table = 'users';
 

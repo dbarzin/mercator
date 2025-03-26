@@ -4,13 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Permission
  */
 class Permission extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     public $table = 'permissions';
 

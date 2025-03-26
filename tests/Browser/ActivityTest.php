@@ -1,68 +1,70 @@
 <?php
+
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\User;
+use App\Activity;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+use Throwable;
 
 class ActivityTest extends DuskTestCase
 {
-    public function testIndex()
+    protected function withAdminBrowser(callable $callback)
     {
-
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
-            $this->browse(function (Browser $browser) use ($admin) {
+        $admin = User::find(1);
+        retry(5, function () use ($admin, $callback) {
+            $this->browse(function (Browser $browser) use ($admin, $callback) {
                 $browser->loginAs($admin);
-                $browser->visit(route('admin.activities.index'));
-                $browser->waitForText("Mercator");
-                $browser->assertRouteIs('admin.activities.index');
+                $callback($browser);
             });
-        });
+        }, 100);
     }
 
-    public function testView()
+    public function test_can_visit_activity_index()
     {
-        $admin = \App\User::find(1);
-        $data = \App\Activity::first();
-        if ($data!=null) 
-        retry($times = 5,  function () use ($admin,$data) {
-            $this->browse(function (Browser $browser) use ($admin,$data) {
-                $browser->loginAs($admin);
-                $browser->visit("/admin/activities/" . $data->id);
-                $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/activities/" . $data->id);
-                $browser->assertSee($data->name);
-            });
+        $this->withAdminBrowser(function (Browser $browser) {
+            $browser->visit(route('admin.activities.index'))
+                    ->waitForText("Mercator")
+                    ->assertRouteIs('admin.activities.index');
         });
     }
 
-    public function testEdit()
+    public function test_can_view_activity()
     {
-        $admin = \App\User::find(1);
-        $data = \App\Activity::first();
-        if ($data!=null) 
-        retry($times = 5,  function () use ($admin,$data) {
-            $this->browse(function (Browser $browser) use ($admin,$data) {
-                $browser->loginAs($admin);
-                $browser->visit("/admin/activities/" . $data->id . "/edit");
-                $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/activities/" . $data->id . "/edit");
-            });
+        $activity = Activity::first();
+        if (!$activity) {
+            $this->markTestSkipped('Aucune activité disponible pour le test de visualisation.');
+        }
+
+        $this->withAdminBrowser(function (Browser $browser) use ($activity) {
+            $browser->visit("/admin/activities/{$activity->id}")
+                    ->waitForText("Mercator")
+                    ->assertPathIs("/admin/activities/{$activity->id}")
+                    ->assertSee($activity->name);
         });
     }
 
-    public function testCreate()
+    public function test_can_edit_activity()
     {
-        $admin = \App\User::find(1);
-        retry($times = 5,  function () use ($admin) {
-            $this->browse(function (Browser $browser) use ($admin) {
-                $browser->loginAs($admin);
-                $browser->visit("/admin/activities/create");                
-                $browser->waitForText("Mercator");
-                $browser->assertPathIs("/admin/activities/create");
-            });        
+        $activity = Activity::first();
+        if (!$activity) {
+            $this->markTestSkipped('Aucune activité disponible pour le test d’édition.');
+        }
+
+        $this->withAdminBrowser(function (Browser $browser) use ($activity) {
+            $browser->visit("/admin/activities/{$activity->id}/edit")
+                    ->waitForText("Mercator")
+                    ->assertPathIs("/admin/activities/{$activity->id}/edit");
         });
     }
 
+    public function test_can_open_create_activity_page()
+    {
+        $this->withAdminBrowser(function (Browser $browser) {
+            $browser->visit("/admin/activities/create")
+                    ->waitForText("Mercator")
+                    ->assertPathIs("/admin/activities/create");
+        });
+    }
 }

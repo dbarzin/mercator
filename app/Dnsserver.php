@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Dnsserver
@@ -13,7 +14,7 @@ use \DateTimeInterface;
  */
 class Dnsserver extends Model
 {
-    use SoftDeletes, Auditable;
+    use HasFactory, SoftDeletes, Auditable;
 
     public $table = 'dnsservers';
 

@@ -19,15 +19,6 @@ class EcoSystemViewFiltersTest extends DuskTestCase
                 $browser->assertSee('Mercator');
                 $browser->assertSee('Toutes');
                 $browser->assertSelected('perimeter', 'All');
-                /*
-                $digraph = $browser->element('#dot-input');
-                $this->assertEquals(1, substr_count($digraph,'digraph'),"toto".$digraph);
-                echo $digraph;
-                $browser->with('#dot-input', function ($elt) use ($digraph){
-                    $elt->assertSee('digraph',$digraph);
-                });
-                */
-
 
                 $browser->select('perimeter', 'Internes');
                 $browser->assertRouteIs('admin.report.view.ecosystem');

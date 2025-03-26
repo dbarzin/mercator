@@ -196,6 +196,7 @@
             request()->is('admin/network-switches*')||
             request()->is('admin/security-devices*')||
             request()->is('admin/dnsservers*')||
+            request()->is('admin/dhcp-servers*')||
             request()->is('admin/clusters*')||
             request()->is('admin/logical-servers*')||
             request()->is('admin/containers*')||

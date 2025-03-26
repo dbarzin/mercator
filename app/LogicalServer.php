@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class LogicalServer extends Model
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use HasFactory, SoftDeletes, Auditable;
 
     public $table = 'logical_servers';
 
