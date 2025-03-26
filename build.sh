@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Update version.txt
+echo $(date +%Y.%m.%d) > version.txt
+
 # Lire la version depuis version.txt
 VERSION=$(cat version.txt | tr -d ' \n')
 echo "[✔] Using version: $VERSION"
@@ -40,4 +43,3 @@ docker build \
   -t $DOCKER_IMAGE:$DOCKER_LATEST_TAG .
 
 echo "[✔] Docker image built: $DOCKER_IMAGE:$DOCKER_TAG and :latest"
-
