@@ -10,15 +10,19 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.activity.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $activity->name) }}" maxlength=64 required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.activity.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $activity->name) }}" maxlength=64 required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.activity.fields.name_helper') }}</span>
+                </div>
             </div>
 
             <div class="form-group">
