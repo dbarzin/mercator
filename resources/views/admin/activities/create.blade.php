@@ -55,8 +55,7 @@
 
                 </div>
 
-                <dic class="col-6">
-
+                <div class="col-6">
                     <div class="form-group">
                         <label for="operations">{{ trans('cruds.activity.fields.operations') }}</label>
                         <div style="padding-bottom: 4px">
@@ -75,8 +74,31 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.activity.fields.operations_helper') }}</span>
                     </div>
-                </dic>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="applications">{{ trans('cruds.activity.fields.applications') }}</label>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                            @foreach($applications as $id => $name)
+                                <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('applications'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('applications') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.applications_helper') }}</span>
+                    </div>
+
+
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="form-group">

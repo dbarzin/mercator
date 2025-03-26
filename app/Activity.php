@@ -31,7 +31,6 @@ class Activity extends Model
     protected $fillable = [
         'name',
         'description',
-
         'responsible',
         'purpose',
         'categories',
@@ -39,7 +38,6 @@ class Activity extends Model
         'transfert',
         'retention',
         'controls',
-
         'created_at',
         'updated_at',
         'deleted_at',
@@ -54,4 +52,10 @@ class Activity extends Model
     {
         return $this->belongsToMany(Operation::class)->orderBy('name');
     }
+
+    public function applications(): BelongsToMany
+    {
+        return $this->belongsToMany(MApplication::class)->orderBy('name');
+    }
+
 }

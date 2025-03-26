@@ -39,18 +39,28 @@
                         <th width="10%">
                             {{ trans('cruds.process.fields.name') }}
                         </th>
-                        <td colspan="2">
+                        <td colspan="1">
                             {{ $process->name }}
+                        </td>
+                        <th width="10%">
+                            {{ trans('cruds.process.fields.macroprocessus') }}
+                        </th>
+                        <td colspan="2">
+                            @if($process->macroProcess!=null)
+                                <a href="{{ route('admin.macro-processuses.show', $process->macroProcess->id) }}">
+                                    {{ $process->macroProcess->name }}
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.process.fields.description') }}
                         </th>
-                        <td>
+                        <td colspan="3">
                             {!! $process->description !!}
                         </td>
-                        <td width="10%">
+                        <td colspan=2>
                             @if ($process->icon_id === null)
                             <img src='/images/process.png' width='120' height='120'>
                             @else
@@ -62,62 +72,15 @@
                         <th>
                             {{ trans('cruds.process.fields.in_out') }}
                         </th>
-                        <td colspan="2">
+                        <td colspan="5">
                             {!! $process->in_out !!}
-                        </td>
-                    </tr>
-                    @if (auth()->user()->granularity>=3)
-                    <tr>
-                        <th>
-                            {{ trans('cruds.process.fields.activities') }}
-                        </th>
-                        <td colspan="2">
-                            @foreach($process->activities as $activity)
-                                <a href="{{ route('admin.activities.show', $activity->id) }}">
-                                {{ $activity->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    @endif
-                    <tr>
-                        <th>
-                            {{ trans('cruds.process.fields.entities') }}
-                        </th>
-                        <td colspan="2">
-                            @foreach($process->entities as $entity)
-                                <a href="{{ route('admin.entities.show', $entity->id) }}">
-                                {{ $entity->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.process.fields.informations') }}
-                        </th>
-                        <td colspan="2">
-                            @foreach($process->information as $info)
-                                <a href="{{ route('admin.information.show', $info->id) }}">
-                                {{ $info->name }}
-                                </a>
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                            @endforeach
                         </td>
                     </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.process.fields.security_need') }}
                         </th>
-                        <td colspan="2">
+                        <td>
                         {{ trans('global.confidentiality') }} :
                             @if ($process->security_need_c==0){{ trans('global.none') }}@endif
                             @if ($process->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
@@ -155,27 +118,77 @@
                             @if ($process->security_need_auth==4)<span class="highRisk">{{ trans('global.very_strong') }}</span>@endif
                         @endif
                         </td>
-                    </tr>
-                    <tr>
                         <th>
                             {{ trans('cruds.process.fields.owner') }}
                         </th>
-                        <td colspan="2">
+                        <td colspan="3">
                             {{ $process->owner }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.process.fields.activities') }}
+                        </th>
+                        <td colspan="5">
+                            @foreach($process->activities as $activity)
+                                <a href="{{ route('admin.activities.show', $activity->id) }}">
+                                {{ $activity->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.process.fields.entities') }}
+                        </th>
+                        <td colspan="5">
+                            @foreach($process->entities as $entity)
+                                <a href="{{ route('admin.entities.show', $entity->id) }}">
+                                {{ $entity->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.process.fields.macroprocessus') }}
+                            {{ trans('cruds.process.fields.informations') }}
                         </th>
-                        <td colspan="2">
-                            @if($process->macroProcess!=null)
-                                <a href="{{ route('admin.macro-processuses.show', $process->macroProcess->id) }}">
-                                    {{ $process->macroProcess->name }}
+                        <td colspan="5">
+                            @foreach($process->information as $info)
+                                <a href="{{ route('admin.information.show', $info->id) }}">
+                                {{ $info->name }}
                                 </a>
-                            @endif
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
                         </td>
                     </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.process.fields.applications') }}
+                        </th>
+                        <td colspan="5">
+                            @foreach($process->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                {{ $application->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>

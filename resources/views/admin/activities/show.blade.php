@@ -77,6 +77,25 @@
                             @endforeach
                         </td>
                     </tr>
+
+                    <tr>
+                        <th>
+                            {{ trans('cruds.activity.fields.applications') }}
+                        </th>
+                        <td colspan="5">
+                            @foreach($activity->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                {{ $application->name }}
+                                </a>
+                                @if (!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+
+
+
                 </tbody>
             </table>
         </div>

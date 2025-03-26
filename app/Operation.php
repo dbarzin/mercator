@@ -57,4 +57,5 @@ class Operation extends Model
     {
         return $this->belongsToMany(Task::class)->orderBy('name');
     }
+
 }

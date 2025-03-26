@@ -77,6 +77,26 @@
                         <span class="help-block">{{ trans('cruds.activity.fields.operations_helper') }}</span>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="applications">{{ trans('cruds.process.fields.applications') }}</label>
+                        <div style="padding-bottom: 4px">
+                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications[]" multiple>
+                            @foreach($applications as $id => $application)
+                                <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $activity->applications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('applications'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('applications') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.process.fields.applications_helper') }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
