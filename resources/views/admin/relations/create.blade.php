@@ -164,14 +164,14 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="install_date">{{ trans('cruds.relation.fields.start_date') }}</label>
-                        <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date') }}">
+                        <input class="form-control date" type="date" name="start_date" id="start_date" value="{{ old('start_date') }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.start_date_helper') }}</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="install_date">{{ trans('cruds.relation.fields.end_date') }}</label>
-                        <input class="form-control date" type="text" name="end_date" id="start_date" value="{{ old('end_date') }}">
+                        <input class="form-control date" type="date" name="end_date" id="start_date" value="{{ old('end_date') }}">
                         <span class="help-block">{{ trans('cruds.relation.fields.end_date_helper') }}</span>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                     <tr>
                         <td>
                             <div class="col">
-                            <input type="text" class="form-control date" id="inputDateField"/>
+                            <input type="date" class="form-control date" id="inputDateField"/>
                             </div>
                         </td>
                         <td>
@@ -279,49 +279,11 @@
 </form>
 @endsection
 
-
 @section('scripts')
-<script src="/js/dropzone.js"></script>
-
 <script>
-Dropzone.autoDiscover = false;
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: []
-      }
-    );
-  }
-
-  $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-    })
-
-    $('.risk').select2({
-        templateSelection: function(data, container) {
-            if (data.id==4)
-                 return '\<span class="highRisk"\>'+data.text+'</span>';
-            else if (data.id==3)
-                 return '\<span class="mediumRisk"\>'+data.text+'</span>';
-            else if (data.id==2)
-                 return '\<span class="lowRisk"\>'+data.text+'</span>';
-            else if (data.id==1)
-                 return '\<span class="veryLowRisk"\>'+data.text+'</span>';
-            else
-                 return data.text;
-        },
-        escapeMarkup: function(m) {
-          return m;
-      }
-    });
 
 //=============================================================================
+document.addEventListener("DOMContentLoaded", function () {
 
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
