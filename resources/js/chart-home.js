@@ -91,6 +91,8 @@ const barChartConfig = {
             return null;
           },
           label: function (tooltipItem) {
+            if (!animationBarDone)
+                return;
             const dataset = tooltipItem.dataset;
             return `${dataset.label}: ${dataset.value}`;
           },
@@ -247,6 +249,8 @@ var treeMapConfig = {
                 return null;
               },
             label: function(context) {
+              if (!animationTreeDone)
+                  return;
               const item = context.raw._data;
               return `${item.label}: ${context.raw.v}`;
             }
