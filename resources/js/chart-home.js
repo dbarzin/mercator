@@ -107,7 +107,9 @@ const barChartConfig = {
 
         formatter: function (value, context)
         {
-          if (value <= 0) return null;
+          if (!animationBarDone)
+              return '';
+          if (value <= 0) return '';
           const node = context.chart.getDatasetMeta(context.datasetIndex).data[context.dataIndex];
           if (node.height < 12)
               return null;
