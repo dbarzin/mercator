@@ -15,7 +15,7 @@ return [
 
 <p><b>Contribuer à Mercator</b></p>
 
-<p>Mercator étant un projet open source, vos contributions sont les bienvenues ! Vous pouvez :</p>
+<p>Mercator étant un projet open source, vous pouvez :</p>
 <ul>
     <li>Signaler des bugs ou proposer des améliorations via notre dépôt <a href='https://www.github.com/dbarzin/mercator'>GitHub</a>.</li>
     <li>Participer aux <a href='https://github.com/dbarzin/mercator/discussions'>discussions</a> et à l’évolution du projet.</li>
