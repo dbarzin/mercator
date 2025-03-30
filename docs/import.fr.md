@@ -1,6 +1,6 @@
 ## Interface Import / Export de Données
 
-Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des fichiers Excel.
+Cette interface permet d’**importer** et d’**exporter** des données de la cartographie du système d'information via des feuilles de calcul.
 
 ### Accès à la page
 
@@ -28,11 +28,11 @@ Les colonnes `created_at`, `updated_at`, `deleted_at` sont automatiquement **exc
 
 ### Import de données
 
-Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Excel structuré.
+Permet de mettre à jour ou d’ajouter des données à partir d’une feuille de calcul ou d'un fichier CSV.
 
 #### Étapes
 
-1. Choisir le **fichier Excel** à importer.
+1. Choisir le **fichier** à importer.
 2. Cliquer sur **Importer**.
 
 #### Format attendu du fichier
@@ -52,7 +52,7 @@ Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Ex
 Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.
 
 
-#### Exemple d’en-tête Excel attendu
+#### Exemple d’en-tête attendu
 
 ```plaintext
 id, name, description, type, reference

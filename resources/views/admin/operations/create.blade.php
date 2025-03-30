@@ -32,19 +32,19 @@
 
             <div class="row">
                 <div class="col-md-6">
-                        <label for="process_id">{{ trans('cruds.operation.fields.process') }}</label>
-                        <select class="form-control select2 {{ $errors->has('process_id') ? 'is-invalid' : '' }}" name="process_id" id="process_id">
-                            <option></option>
-                            @foreach($processes as $id => $name)
-                                <option value="{{ $id }}" {{ old('process_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('process_id'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('process_id') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.operation.fields.process_helper') }}</span>
+                    <label for="process_id">{{ trans('cruds.operation.fields.process') }}</label>
+                    <select class="form-control select2 {{ $errors->has('process_id') ? 'is-invalid' : '' }}" name="process_id" id="process_id">
+                        <option></option>
+                        @foreach($processes as $id => $name)
+                            <option value="{{ $id }}" {{ old('process_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('process_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('process_id') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.operation.fields.process_helper') }}</span>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -112,6 +112,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="form-group">

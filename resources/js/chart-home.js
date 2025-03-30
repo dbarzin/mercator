@@ -91,6 +91,8 @@ const barChartConfig = {
             return null;
           },
           label: function (tooltipItem) {
+            if (!animationBarDone)
+                return;
             const dataset = tooltipItem.dataset;
             return `${dataset.label}: ${dataset.value}`;
           },
@@ -105,7 +107,9 @@ const barChartConfig = {
 
         formatter: function (value, context)
         {
-          if (value <= 0) return null;
+          if (!animationBarDone)
+              return '';
+          if (value <= 0) return '';
           const node = context.chart.getDatasetMeta(context.datasetIndex).data[context.dataIndex];
           if (node.height < 12)
               return null;
@@ -247,6 +251,8 @@ var treeMapConfig = {
                 return null;
               },
             label: function(context) {
+              if (!animationTreeDone)
+                  return;
               const item = context.raw._data;
               return `${item.label}: ${context.raw.v}`;
             }

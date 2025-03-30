@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
+use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
@@ -29,8 +30,9 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.activities.create', compact('operations', 'processes'));
+        return view('admin.activities.create', compact('operations', 'processes', 'applications'));
     }
 
     public function store(StoreActivityRequest $request)
@@ -38,6 +40,7 @@ class ActivityController extends Controller
         $activity = Activity::create($request->all());
         $activity->operations()->sync($request->input('operations', []));
         $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.activities.index');
     }
@@ -48,12 +51,13 @@ class ActivityController extends Controller
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
+        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $activity->load('operations', 'activitiesProcesses');
+        $activity->load('operations', 'activitiesProcesses', 'applications');
 
         return view(
             'admin.activities.edit',
-            compact('operations', 'activity', 'processes')
+            compact('operations', 'activity', 'processes', 'applications')
         );
     }
 
@@ -62,6 +66,7 @@ class ActivityController extends Controller
         $activity->update($request->all());
         $activity->operations()->sync($request->input('operations', []));
         $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.activities.index');
     }

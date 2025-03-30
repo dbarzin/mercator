@@ -14,12 +14,11 @@ class DemoEntitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('entities')->delete();
-        
+
         \DB::table('entities')->insert(array (
-            0 => 
             array (
                 'id' => 1,
                 'name' => 'MegaNet System',
@@ -30,35 +29,35 @@ class DemoEntitiesTableSeeder extends Seeder
                 'updated_at' => '2022-05-20 17:30:00',
                 'deleted_at' => NULL,
                 'is_external' => true,
-                'entity_type' => NULL,
+                'entity_type' => 'Producer',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
-                'name' => 'Entité1',
+                'name' => 'Micro$oft',
                 'security_level' => '<p>Néant</p>',
                 'contact_point' => '<ul><li>Commercial</li><li>Service Delivery</li><li>Helpdesk</li></ul>',
-                'description' => '<p>Entité de tests1</p>',
+                'description' => '<p>System provider</p>',
                 'created_at' => '2020-05-21 04:31:17',
                 'updated_at' => '2021-05-23 14:59:11',
                 'deleted_at' => NULL,
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
-                'name' => 'CHdN',
+                'name' => 'ABCS',
                 'security_level' => '3',
-                'contact_point' => 'RSSI du CHdN',
-                'description' => '<p>Centre Hospitalier du Nord</p>',
+                'contact_point' => 'RSSI du ABCD',
+                'description' => '<p>Centre Hospitalier du ABCS</p>',
                 'created_at' => '2020-05-21 04:43:41',
                 'updated_at' => '2021-05-13 10:20:32',
-                'deleted_at' => '2021-05-13 10:20:32',
+                'deleted_at' => NULL,
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Entité3',
@@ -71,10 +70,10 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
-                'name' => 'entité6',
+                'name' => 'World company',
                 'security_level' => '<p>Néant</p>',
                 'contact_point' => '<p>support_informatque@entite6.fr</p>',
                 'description' => '<p>Description de l\'entité six</p>',
@@ -82,9 +81,9 @@ class DemoEntitiesTableSeeder extends Seeder
                 'updated_at' => '2021-05-23 15:03:15',
                 'deleted_at' => NULL,
                 'is_external' => false,
-                'entity_type' => NULL,
+                'entity_type' => 'Producer',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'name' => 'Entité4',
@@ -97,23 +96,23 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
-                'name' => 'Entité5',
-                'security_level' => '<p>Néant</p>',
-                'contact_point' => '<p>Servicdesk@entite5.fr</p>',
-                'description' => '<p>Description de l\'entité 5</p>',
+                'name' => 'Acme corp.',
+                'security_level' => '<p>None sorry...</p>',
+                'contact_point' => '<p>Do not call me, I will call you back.</p>',
+                'description' => '<p>Looney tunes academy</p>',
                 'created_at' => '2020-05-21 05:38:41',
                 'updated_at' => '2021-05-23 15:02:16',
                 'deleted_at' => NULL,
-                'is_external' => false,
-                'entity_type' => NULL,
+                'is_external' => true,
+                'entity_type' => 'Producer',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
-                'name' => 'Entité2',
+                'name' => 'Microserf',
                 'security_level' => '<p>ISO 27001</p>',
                 'contact_point' => '<p>Point de contact de l\'entité 2</p>',
                 'description' => '<p>Description de l\'entité 2</p>',
@@ -123,7 +122,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'NetworkSys',
@@ -136,11 +135,11 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => true,
                 'entity_type' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'Agence eSanté',
-                'security_level' => '<p>Néant</p>',
+                'security_level' => '<p>ISO 27001</p>',
                 'contact_point' => '<p>helpdesk@esante.lu</p>',
                 'description' => '<p>Agence Nationale des information partagées dans le domaine de la santé</p><ul><li>a</li><li>b</li><li>c</li></ul><p>+-------+<br>+ TOTO +<br>+-------+</p><p>&lt;&lt;&lt;&lt;&lt;&lt; &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</p>',
                 'created_at' => '2020-05-21 08:25:26',
@@ -149,7 +148,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'Test',
@@ -162,7 +161,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'Pierre et fils',
@@ -175,7 +174,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => true,
                 'entity_type' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'Nestor',
@@ -188,7 +187,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => '0001',
@@ -201,33 +200,33 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
-                'name' => '002',
+                'name' => 'test',
                 'security_level' => NULL,
                 'contact_point' => NULL,
-                'description' => '<p>sdqsfsd</p>',
+                'description' => '<p>Test</p>',
                 'created_at' => '2021-06-15 17:16:41',
                 'updated_at' => '2021-06-15 17:17:08',
                 'deleted_at' => '2021-06-15 17:17:08',
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
-                'name' => '003',
+                'name' => 'test',
                 'security_level' => NULL,
                 'contact_point' => NULL,
-                'description' => '<p>dsqdsq</p>',
+                'description' => '<p>test</p>',
                 'created_at' => '2021-06-15 17:16:51',
                 'updated_at' => '2021-06-15 17:17:08',
                 'deleted_at' => '2021-06-15 17:17:08',
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'name' => '004',
@@ -240,7 +239,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'name' => 'Acme corp.',
@@ -249,11 +248,11 @@ class DemoEntitiesTableSeeder extends Seeder
                 'description' => '<p>Looney tunes academy</p>',
                 'created_at' => '2021-09-07 20:07:16',
                 'updated_at' => '2022-05-20 17:30:00',
-                'deleted_at' => NULL,
+                'deleted_at' => '2022-05-20 17:30:00',
                 'is_external' => true,
-                'entity_type' => NULL,
+                'entity_type' => 'producer',
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'name' => 'HAL',
@@ -266,7 +265,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'name' => 'ATest1',
@@ -279,7 +278,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'is_external' => false,
                 'entity_type' => NULL,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'name' => 'ATest2',
@@ -293,7 +292,7 @@ class DemoEntitiesTableSeeder extends Seeder
                 'entity_type' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }
