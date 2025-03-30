@@ -14,12 +14,12 @@ class DemoMApplicationsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('m_applications')->delete();
-        
+
         \DB::table('m_applications')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Application 1',
@@ -49,7 +49,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Application 2',
@@ -63,7 +63,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'created_at' => '2020-06-14 11:31:16',
                 'updated_at' => '2022-02-06 16:52:36',
                 'deleted_at' => NULL,
-                'entity_resp_id' => 18,
+                'entity_resp_id' => 10,
                 'application_block_id' => 1,
                 'documentation' => 'None',
                 'security_need_i' => 2,
@@ -79,7 +79,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'Application 3',
@@ -93,7 +93,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'created_at' => '2020-06-17 19:33:41',
                 'updated_at' => '2021-05-15 10:06:53',
                 'deleted_at' => NULL,
-                'entity_resp_id' => 12,
+                'entity_resp_id' => 11,
                 'application_block_id' => 2,
                 'documentation' => 'Aucune',
                 'security_need_i' => 2,
@@ -109,7 +109,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Application 4',
@@ -139,7 +139,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'CUST AP01',
@@ -169,21 +169,21 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
-                'name' => 'totototo',
-                'description' => NULL,
+                'name' => 'Tech application',
+                'description' => '<p>Description of tech application</p>',
                 'security_need_c' => 0,
                 'responsible' => NULL,
                 'type' => NULL,
-                'technology' => 'totottoo',
+                'technology' => 'Big Tech',
                 'external' => NULL,
-                'users' => NULL,
+                'users' => '10 users',
                 'created_at' => '2020-08-22 06:59:26',
                 'updated_at' => '2020-08-22 06:59:43',
-                'deleted_at' => '2020-08-22 06:59:43',
-                'entity_resp_id' => NULL,
+                'deleted_at' => NULL,
+                'entity_resp_id' => 3,
                 'application_block_id' => NULL,
                 'documentation' => NULL,
                 'security_need_i' => NULL,
@@ -199,7 +199,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'name' => 'Windows Word',
@@ -229,7 +229,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'name' => 'Application 99',
@@ -243,7 +243,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'created_at' => '2020-08-23 12:08:02',
                 'updated_at' => '2020-08-26 16:56:13',
                 'deleted_at' => '2020-08-26 16:56:13',
-                'entity_resp_id' => NULL,
+                'entity_resp_id' => 1,
                 'application_block_id' => NULL,
                 'documentation' => NULL,
                 'security_need_i' => NULL,
@@ -259,7 +259,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'name' => 'Test33',
@@ -289,7 +289,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'name' => 'Test33R',
@@ -319,7 +319,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'name' => 'SuperApp',
@@ -333,7 +333,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'created_at' => '2021-04-12 16:54:57',
                 'updated_at' => '2021-04-12 19:10:44',
                 'deleted_at' => '2021-04-12 19:10:44',
-                'entity_resp_id' => NULL,
+                'entity_resp_id' => 2,
                 'application_block_id' => NULL,
                 'documentation' => NULL,
                 'security_need_i' => NULL,
@@ -349,7 +349,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'name' => 'SuperApp',
@@ -379,7 +379,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'name' => 'test application',
@@ -393,7 +393,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'created_at' => '2021-05-07 10:23:59',
                 'updated_at' => '2021-05-07 10:24:03',
                 'deleted_at' => '2021-05-07 10:24:03',
-                'entity_resp_id' => NULL,
+                'entity_resp_id' => 1,
                 'application_block_id' => NULL,
                 'documentation' => NULL,
                 'security_need_i' => NULL,
@@ -409,7 +409,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'name' => 'Windows Calc',
@@ -439,7 +439,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'name' => 'Compta',
@@ -469,7 +469,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'name' => 'Queue Manager',
@@ -499,7 +499,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'name' => 'test',
@@ -529,12 +529,12 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'vendor' => NULL,
                 'product' => NULL,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'name' => 'Application 42',
                 'description' => '<p>The Ultimate Question of Life, the Universe and Everything</p>',
-                'security_need_c' => -1,
+                'security_need_c' => 1,
                 'responsible' => 'Nestor',
                 'type' => NULL,
                 'technology' => NULL,
@@ -546,8 +546,8 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'entity_resp_id' => NULL,
                 'application_block_id' => NULL,
                 'documentation' => NULL,
-                'security_need_i' => -1,
-                'security_need_a' => -1,
+                'security_need_i' => 1,
+                'security_need_a' => 1,
                 'security_need_t' => 0,
                 'version' => NULL,
                 'functional_referent' => NULL,
@@ -560,7 +560,7 @@ class DemoMApplicationsTableSeeder extends Seeder
                 'product' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }

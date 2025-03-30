@@ -18,14 +18,6 @@ class DatabaseSeeder extends Seeder
         ]);
         // Test data seeder
         if (env("USE_DEMO_DATA", false)) {
-            // Do not seed these tables
-            // $this->call(DemoMigrationsTableSeeder::class);
-            // $this->call(DemoOauthAuthCodesTableSeeder::class);
-            // $this->call(DemoOauthAccessTokensTableSeeder::class);
-            // $this->call(DemoOauthRefreshTokensTableSeeder::class);
-            // $this->call(DemoOauthClientsTableSeeder::class);
-            // $this->call(DemoOauthPersonalAccessClientsTableSeeder::class);
-            // $this->call(DemoPasswordResetsTableSeeder::class);
             $this->call(DemoApplicationBlocksTableSeeder::class);
             $this->call(DemoOperationsTableSeeder::class);
             $this->call(DemoActorsTableSeeder::class);
@@ -113,6 +105,7 @@ class DatabaseSeeder extends Seeder
             $this->call(DemoDataProcessingInformationTableSeeder::class);
             $this->call(DemoDataProcessingMApplicationTableSeeder::class);
             $this->call(DemoDataProcessingProcessTableSeeder::class);
+            $this->call(DemoClustersTableSeeder::class);
         }
     }
 }

@@ -11,7 +11,6 @@ use App\Http\Requests\UpdateOperationRequest;
 use App\Operation;
 use App\Process;
 use App\Task;
-use App\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,11 +33,10 @@ class OperationController extends Controller
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
             'admin.operations.create',
-            compact('processes', 'actors', 'tasks', 'activities', 'applications')
+            compact('processes', 'actors', 'tasks', 'activities')
         );
     }
 
@@ -60,7 +58,6 @@ class OperationController extends Controller
         $actors = Actor::all()->sortBy('name')->pluck('name', 'id');
         $tasks = Task::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
-        $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
         $operation->load('actors', 'tasks', 'activities');
 
@@ -68,7 +65,7 @@ class OperationController extends Controller
             'admin.operations.edit',
             compact(
                 'processes', 'actors', 'tasks',
-                'operation', 'activities', 'applications')
+                'operation', 'activities')
         );
     }
 
@@ -86,7 +83,7 @@ class OperationController extends Controller
     {
         abort_if(Gate::denies('operation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operation->load('actors', 'tasks', 'activities', 'applications');
+        $operation->load('actors', 'tasks', 'activities');
 
         return view('admin.operations.show', compact('operation'));
     }
