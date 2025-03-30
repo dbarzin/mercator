@@ -615,9 +615,9 @@ return [
             'service_source_helper' => '',
             'source' => 'Source',
         ],
-        'title' => 'Flux logiques',
+        'title' => 'Flux applicatifs',
         'title_short' => 'Flux',
-        'title_singular' => 'Flux logique',
+        'title_singular' => 'Flux applicatifs',
     ],
     'forestAd' => [
         'description' => 'Regroupement organisé de domaines Active Directory/LDAP.',

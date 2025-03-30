@@ -609,8 +609,9 @@ return [
             'service_source_helper' => '',
             'source' => 'Source',
         ],
-        'title' => 'Flows',
-        'title_singular' => 'Flow',
+        'title' => 'Application Flows',
+        'title_short' => 'Flow',
+        'title_singular' => 'Application Flow',
     ],
     'forestAd' => [
         'description' => 'Organized grouping of Active Directory / LDAP domains.',
