@@ -19,7 +19,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
-                @if (auth()->user()->granularity>=2)
                 <div class="col-3">
                     <div class="form-group">
                         <label class="recommended" for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
@@ -36,7 +35,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.application_block_helper') }}</span>
                     </div>
                 </div>
-                @endif
                 <div class="col-3">
                     <div class="form-group">
                         <label for="attributes">{{ trans('cruds.application.fields.attributes') }}</label>
@@ -102,7 +100,6 @@
                     <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                 </div>
             </div>
-            @if (auth()->user()->granularity>=2)
             <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
@@ -119,7 +116,6 @@
                     <span class="help-block">{{ trans('cruds.application.fields.entity_resp_helper') }}</span>
                 </div>
             </div>
-            @endif
             <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="entities">{{ trans('cruds.application.fields.entities') }}</label>
@@ -177,7 +173,6 @@
                 </div>
             </div>
 
-            @if (auth()->user()->granularity>=2)
             <div class="col-4">
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
@@ -197,7 +192,6 @@
                     <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
                 </div>
             </div>
-            @endif
         </div>
         <div class="row">
             <div class="col-4">
@@ -320,7 +314,6 @@
                 </div>
             </div>
             <div class="col-6">
-                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label class="recommended" for="documentation">{{ trans('cruds.application.fields.documentation') }}</label>
                     <input class="form-control {{ $errors->has('documentation') ? 'is-invalid' : '' }}" type="text" name="documentation" id="documentation" value="{{ old('documentation', $application->documentation) }}">
@@ -331,7 +324,6 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.documentation_helper') }}</span>
                 </div>
-                @endif
             </div>
         </div>
         <div class="row">
@@ -356,7 +348,6 @@
                 </div>
             </div>
             <div class="col-sm">
-                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label for="services">{{ trans('cruds.application.fields.services') }}</label>
                     <div style="padding-bottom: 4px">
@@ -375,7 +366,6 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
                 </div>
-                @endif
             </div>
         </div>
     </div>
