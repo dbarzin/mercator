@@ -223,11 +223,11 @@
                                 <tr>
                                     <th>{{ trans('cruds.forestAd.title') }}</th>
                                     <td>
-                                        @foreach($domain->domainesForestAds as $forestAd)
+                                        @foreach($domain->forestAds as $forestAd)
                                             <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                             {{ $forestAd->name }}
                                             </a>
-                                        @if ($loop->last!=$forestAd)
+                                        @if (!$loop->last)
                                         ,
                                         @endif
                                         @endforeach
@@ -240,7 +240,7 @@
                                             <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                                             {{ $logicalServer->name }}
                                             </a>
-                                            @if ($loop->last!=$logicalServer)
+                                            @if (!$loop->last)
                                             ,
                                             @endif
                                         @endforeach

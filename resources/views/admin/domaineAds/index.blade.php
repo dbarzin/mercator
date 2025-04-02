@@ -57,7 +57,7 @@
                                 </a>
                             </td>
                             <td>
-                                @foreach($domaineAd->domainesForestAds as $forestAd)
+                                @foreach($domaineAd->forestAds as $forestAd)
                                     <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                     {{ $forestAd->name }}
                                     </a>

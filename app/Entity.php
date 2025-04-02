@@ -48,7 +48,7 @@ class Entity extends Model
         return $this->hasMany(Database::class, 'entity_resp_id', 'id')->orderBy('name');
     }
 
-    public function applications(): HasMany
+    public function respApplications(): HasMany
     {
         return $this->hasMany(MApplication::class, 'entity_resp_id', 'id')->orderBy('name');
     }
@@ -63,12 +63,12 @@ class Entity extends Model
         return $this->hasMany(Relation::class, 'destination_id', 'id')->orderBy('name');
     }
 
-    public function entitiesMApplications(): BelongsToMany
+    public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
-    public function entitiesProcesses(): BelongsToMany
+    public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }

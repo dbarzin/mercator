@@ -75,13 +75,13 @@
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>
-                <select class="form-control select2 {{ $errors->has('domainesForestAds') ? 'is-invalid' : '' }}" name="domainesForestAds[]" id="domainesForestAds" multiple>
-                    @foreach($domainesForestAds as $id => $domainesForestAd)
-                        <option value="{{ $id }}" {{ (in_array($id, old('domainesForestAds', []))) ? 'selected' : '' }}>{{ $domainesForestAd }}</option>
+                <select class="form-control select2 {{ $errors->has('forestAds') ? 'is-invalid' : '' }}" name="forestAds[]" id="forestAds" multiple>
+                    @foreach($forestAds as $id => $forestAd)
+                        <option value="{{ $id }}" {{ (in_array($id, old('forestAds', []))) ? 'selected' : '' }}>{{ $forestAd }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('domainesForestAds'))
-                    <span class="text-danger">{{ $errors->first('domainesForestAds') }}</span>
+                @if($errors->has('forestAds'))
+                    <span class="text-danger">{{ $errors->first('forestAds') }}</span>
                 @endif
             </div>
 

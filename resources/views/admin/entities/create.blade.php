@@ -128,14 +128,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="applications">{{ trans('cruds.entity.fields.applications_resp') }}</label>
-                    <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    <select class="form-control select2 {{ $errors->has('respApplications') ? 'is-invalid' : '' }}" name="respApplications[]" id="respApplications" multiple>
                         @foreach($applications as $id => $name)
-                            <option value="{{ $id }}" {{ in_array($id, old('applications', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                            <option value="{{ $id }}" {{ in_array($id, old('respApplications', [])) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('applications'))
+                    @if($errors->has('respApplications'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('applications') }}
+                            {{ $errors->first('respApplications') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.entity.fields.applications_resp_helper') }}</span>

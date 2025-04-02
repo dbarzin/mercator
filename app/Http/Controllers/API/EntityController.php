@@ -27,7 +27,8 @@ class EntityController extends Controller
         abort_if(Gate::denies('entity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entity = Entity::create($request->all());
-        $entity->entitiesProcesses()->sync($request->input('processes', []));
+        if ($request['processes']!==null)
+            $entity->processes()->sync($request->input('processes', []));
 
         return response()->json($entity, 201);
     }
@@ -44,7 +45,8 @@ class EntityController extends Controller
         abort_if(Gate::denies('entity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entity->update($request->all());
-        $entity->entitiesProcesses()->sync($request->input('processes', []));
+        if ($request['processes']!=null)
+            $entity->processes()->sync($request->input('processes', []));
 
         return response()->json();
     }

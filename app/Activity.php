@@ -43,7 +43,7 @@ class Activity extends Model
         'deleted_at',
     ];
 
-    public function activitiesProcesses(): BelongsToMany
+    public function processes(): BelongsToMany
     {
         return $this->belongsToMany(Process::class)->orderBy('name');
     }

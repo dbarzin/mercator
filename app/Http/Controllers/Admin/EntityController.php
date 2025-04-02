@@ -21,7 +21,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entities = Entity::with('entitiesProcesses', 'applications', 'databases')
+        $entities = Entity::with('processes', 'applications', 'databases')
             ->orderBy('name')->get();
 
         return view('admin.entities.index', compact('entities'));
@@ -75,24 +75,14 @@ class EntityController extends Controller
         $entity->save();
 
         // Save relations
-        $entity->entitiesProcesses()->sync($request->input('processes', []));
+        $entity->processes()->sync($request->input('processes', []));
 
         // update applications table
-        DB::table('m_applications')
-            ->where('entity_resp_id', $entity->id)
-            ->update(['entity_resp_id' => null]);
-
-        DB::table('m_applications')
-            ->whereIn('id', $request->input('applications', []))
+        MApplication::whereIn('id', $request->input('respApplications', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table
-        DB::table('databases')
-            ->where('entity_resp_id', $entity->id)
-            ->update(['entity_resp_id' => null]);
-
-        DB::table('databases')
-            ->whereIn('id', $request->input('databases', []))
+        Database::whereIn('id', $request->input('databases', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         return redirect()->route('admin.entities.index');
@@ -107,7 +97,7 @@ class EntityController extends Controller
         $entityTypes = Entity::select('entity_type')
             ->where('entity_type', '<>', null)->distinct()
             ->orderBy('entity_type')->pluck('entity_type');
-        $entity->load('entitiesProcesses', 'applications', 'databases');
+        $entity->load('processes', 'applications', 'databases');
         $entities = Entity::orderBy('name')->pluck('name', 'id');
         $icons = Entity::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
@@ -149,24 +139,20 @@ class EntityController extends Controller
         $entity->update($request->all());
 
         // Save relations
-        $entity->entitiesProcesses()->sync($request->input('processes', []));
+        $entity->processes()->sync($request->input('processes', []));
 
         // update applications table
-        DB::table('m_applications')
-            ->where('entity_resp_id', $entity->id)
+        MApplication::where('entity_resp_id', $entity->id)
             ->update(['entity_resp_id' => null]);
 
-        DB::table('m_applications')
-            ->whereIn('id', $request->input('applications', []))
+        MApplication::whereIn('id', $request->input('respApplications', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         // update databases table
-        DB::table('databases')
-            ->where('entity_resp_id', $entity->id)
+        Database::where('entity_resp_id', $entity->id)
             ->update(['entity_resp_id' => null]);
 
-        DB::table('databases')
-            ->whereIn('id', $request->input('databases', []))
+        Database::whereIn('id', $request->input('databases', []))
             ->update(['entity_resp_id' => $entity->id]);
 
         return redirect()->route('admin.entities.index');
@@ -176,7 +162,7 @@ class EntityController extends Controller
     {
         abort_if(Gate::denies('entity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entity->load('databases', 'applications', 'sourceRelations', 'destinationRelations', 'entitiesMApplications', 'entitiesProcesses');
+        $entity->load('databases', 'applications', 'sourceRelations', 'destinationRelations', 'respApplications', 'processes');
 
         return view('admin.entities.show', compact('entity'));
     }

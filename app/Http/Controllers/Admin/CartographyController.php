@@ -223,11 +223,10 @@ class CartographyController extends Controller
                 }
                 // Processus soutenus
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
-                foreach ($entity->entitiesProcesses as $process) {
+                foreach ($entity->processes as $process) {
                     $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
-                    if ($entity->entitiesProcesses->last() !== $process) {
+                    if (!$loop->last)
                         $textRun->addText(', ');
-                    }
                 }
                 $section->addTextBreak(1);
             }
@@ -1272,9 +1271,9 @@ class CartographyController extends Controller
 
                     // FOREST
                     $textRun = $this->addTextRunRow($table, trans('cruds.domaineAd.fields.forestAds'));
-                    foreach ($domain->domainesForestAds as $forest) {
+                    foreach ($domain->forestAds as $forest) {
                         $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($domain->domainesForestAds->last() !== $forest) {
+                        if ($domain->forestAds->last() !== $forest) {
                             $textRun->addText(', ');
                         }
                     }

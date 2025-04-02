@@ -152,7 +152,7 @@
                             <tr>
                                 <td><b>{{ trans('cruds.entity.fields.processes') }}</b></td>
                                 <td>
-                                    @foreach ($entity->entitiesProcesses as $process)
+                                    @foreach ($entity->processes as $process)
                                         <a href="/admin/report/information_system#PROCESS{{ $process->id }}">{{ $process->name }}</a>
                                         @if (!$loop->last)
                                         ,
@@ -163,14 +163,14 @@
                             <tr>
                                 <td><b>{{ trans('cruds.entity.fields.exploits') }}</b></td>
                                 <td>
-                                    @foreach($entity->applications as $application)
+                                    @foreach($entity->respApplications as $application)
                                         <a href="/admin/report/applications#APPLICATION{{$application->id}}">{{$application->name}}</a>
                                         @if (!$loop->last)
                                         ,
                                         @endif
                                     @endforeach
                                     @if (
-                                        ($entity->applications->count()>0)&&
+                                        ($entity->respApplications->count()>0)&&
                                         ($entity->databases->count()>0)
                                         )
                                         ,<br>
