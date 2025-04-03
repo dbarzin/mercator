@@ -5,7 +5,7 @@
 ![Contributors](https://img.shields.io/github/contributors/dbarzin/mercator.svg?style=flat-square)
 ![Stars](https://img.shields.io/github/stars/dbarzin/mercator?style=flat-square)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mercator)](https://artifacthub.io/packages/search?repo=mercator)
-[![OW2 Project](https://img.shields.io/badge/OW2-Mercator-blue)](https://www.ow2.org/view/Mercator/)
+[![OW2 Project](https://img.shields.io/badge/OW2-Mercator-blue)](https://projects.ow2.org/view/mercator/)
 
 **Mercator** est une application web open-source conçue pour faciliter la gestion de la cartographie des systèmes d'information, comme décrit dans le [Guide de Cartographie du Système d'Information](https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation) de l'[ANSSI](https://cyber.gouv.fr/). Que vous soyez une entité essentielle ou partie intégrante d'un cadre de gouvernance IT plus large, Mercator est un outil vital pour améliorer la visibilité, maintenir le contrôle et assurer la résilience de vos systèmes d'information.
 
