@@ -95,7 +95,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.responsible_helper') }}</span>
                     </div>
                 </div>
-                @if (auth()->user()->granularity>=2)
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
@@ -128,7 +127,6 @@
                         <span class="help-block">{{ trans('cruds.application.fields.entities_helper') }}</span>
                     </div>
                 </div>
-                @endif
             </div>
         <div class="row">
             <div class="col-md-4">
@@ -169,7 +167,6 @@
                     <span class="help-block">{{ trans('cruds.application.fields.editor_helper') }}</span>
                 </div>
             </div>
-            @if (auth()->user()->granularity>=2)
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="recommended" for="users">{{ trans('cruds.application.fields.users') }}</label>
@@ -189,7 +186,6 @@
                     <span class="help-block">{{ trans('cruds.application.fields.users_helper') }}</span>
                 </div>
             </div>
-            @endif
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -291,7 +287,6 @@
             </div>
             <!-- no events -->
         </div>
-        @if (auth()->user()->granularity>=2)
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -306,10 +301,8 @@
                 </div>
             </div>
           </div>
-        @endif
         <div class="row">
             <div class="col-sm">
-                @if (auth()->user()->granularity>=2)
                 <div class="form-group">
                     <label for="services">{{ trans('cruds.application.fields.services') }}</label>
                     <div style="padding-bottom: 4px">
@@ -328,9 +321,6 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.application.fields.services_helper') }}</span>
                 </div>
-                @endif
-
-
             </div>
             <div class="col-sm">
                 <div class="form-group">
@@ -506,12 +496,10 @@
             <div class="col-md-4">
                     <div class="form-group">
                         <label class="recommended" for="vendor">{{ trans('cruds.application.fields.vendor') }}</label>
-                        <div class="form-group">
                             <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                                 <option>{{ old('vendor', '') }}</option>
                             </select>
                             <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
-                        </div>
                     </div>
                 </div>
 

@@ -49,7 +49,7 @@
                                 ($entity->contact_point==null)||
                                 ($entity->security_level==null)||
                                 ($entity->contact_point==null)||
-                                ($entity->entitiesProcesses->count()==0)
+                                ($entity->processes->count()==0)
                                 )
                                 class="table-warning"
                             @endif

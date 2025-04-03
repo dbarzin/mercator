@@ -30,19 +30,19 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domainesForestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
+        $forestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
             'admin.domaineAds.create',
-            compact('domainesForestAds', 'logicalServers')
+            compact('forestAds', 'logicalServers')
         );
     }
 
     public function store(StoreDomaineAdRequest $request)
     {
         $domainAd = DomaineAd::create($request->all());
-        $domainAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
+        $domainAd->forestAds()->sync($request->input('forestAds', []));
 
         LogicalServer::whereIn('id', $request->input('logicalServers', []))
             ->update(['domain_id' => $domainAd->id]);
@@ -54,20 +54,20 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domainesForestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
+        $forestAds = ForestAd::all()->sortBy('name')->pluck('name', 'id');
         $logicalServers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $domaineAd->load('domainesForestAds');
+        $domaineAd->load('forestAds');
 
         return view(
             'admin.domaineAds.edit',
-            compact('domaineAd', 'domainesForestAds', 'logicalServers')
+            compact('domaineAd', 'forestAds', 'logicalServers')
         );
     }
 
     public function update(UpdateDomaineAdRequest $request, DomaineAd $domaineAd)
     {
         $domaineAd->update($request->all());
-        $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
+        $domaineAd->forestAds()->sync($request->input('forestAds', []));
 
         LogicalServer::where('domain_id', $domaineAd->id)
             ->update(['domain_id' => null]);
@@ -82,7 +82,7 @@ class DomaineAdController extends Controller
     {
         abort_if(Gate::denies('domaine_ad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $domaineAd->load('domainesForestAds');
+        $domaineAd->load('forestAds');
 
         return view('admin.domaineAds.show', compact('domaineAd'));
     }

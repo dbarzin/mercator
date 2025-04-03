@@ -68,7 +68,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($activity->activitiesProcesses as $process)
+                                @foreach($activity->processes as $process)
                                     <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
                                     @if (!$loop->last)
                                     ,

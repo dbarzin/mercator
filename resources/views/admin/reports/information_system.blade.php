@@ -284,7 +284,7 @@
                                     <b>{{ trans('cruds.activity.fields.processes') }}</b>
                                 </td>
                                 <td>
-                                    @foreach($activity->activitiesProcesses as $process)
+                                    @foreach($activity->processes as $process)
                                         <a href="#PROCESS{{ $process->id }}">{{ $process->name }}</a>
                                         @if (!$loop->last)
                                         ,

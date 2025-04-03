@@ -127,13 +127,13 @@
                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                     </div>
-                    <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                    <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="respApplications[]" id="respApplications" multiple>
                         @foreach($applications as $id => $application)
-                            <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $entity->applications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>
+                            <option value="{{ $id }}" {{ (in_array($id, old('respApplications', [])) || $entity->respApplications->contains($id)) ? 'selected' : '' }}>{{ $application }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('applications'))
-                        <span class="text-danger">{{ $errors->first('applications') }}</span>
+                    @if($errors->has('respApplications'))
+                        <span class="text-danger">{{ $errors->first('respApplications') }}</span>
                     @endif
                     <span class="help-block">{{ trans('cruds.entity.fields.applications_resp_helper') }}</span>
                 </div>
@@ -168,7 +168,7 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('processes') ? 'is-invalid' : '' }}" name="processes[]" id="processes" multiple>
                         @foreach($processes as $id => $identificateur)
-                            <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $entity->entitiesProcesses->contains($id)) ? 'selected' : '' }}>{{ $identificateur }}</option>
+                            <option value="{{ $id }}" {{ (in_array($id, old('processes', [])) || $entity->processes->contains($id)) ? 'selected' : '' }}>{{ $identificateur }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('processes'))

@@ -28,7 +28,7 @@ class ActivityController extends Controller
 
         $activity = Activity::create($request->all());
         $activity->operations()->sync($request->input('operations', []));
-        $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->processes()->sync($request->input('processes', []));
 
         return response()->json($activity, 201);
     }
@@ -46,7 +46,7 @@ class ActivityController extends Controller
 
         $activity->update($request->all());
         $activity->operations()->sync($request->input('operations', []));
-        $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->processes()->sync($request->input('processes', []));
 
         return response()->json();
     }

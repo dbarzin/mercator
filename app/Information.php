@@ -48,7 +48,7 @@ class Information extends Model
         'deleted_at',
     ];
 
-    public function informationsDatabases(): BelongsToMany
+    public function databases(): BelongsToMany
     {
         return $this->belongsToMany(Database::class)->orderBy('name');
     }

@@ -41,7 +41,7 @@ class DomaineAd extends Model
         'deleted_at',
     ];
 
-    public function domainesForestAds(): BelongsToMany
+    public function forestAds(): BelongsToMany
     {
         return $this->belongsToMany(ForestAd::class)->orderBy('name');
     }

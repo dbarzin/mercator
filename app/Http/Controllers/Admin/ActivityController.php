@@ -19,7 +19,7 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::with('operations', 'activitiesProcesses')->orderBy('name')->get();
+        $activities = Activity::with('operations', 'processes')->orderBy('name')->get();
 
         return view('admin.activities.index', compact('activities'));
     }
@@ -39,7 +39,7 @@ class ActivityController extends Controller
     {
         $activity = Activity::create($request->all());
         $activity->operations()->sync($request->input('operations', []));
-        $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->processes()->sync($request->input('processes', []));
         $activity->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.activities.index');
@@ -53,7 +53,7 @@ class ActivityController extends Controller
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $activity->load('operations', 'activitiesProcesses', 'applications');
+        $activity->load('operations', 'processes', 'applications');
 
         return view(
             'admin.activities.edit',
@@ -65,7 +65,7 @@ class ActivityController extends Controller
     {
         $activity->update($request->all());
         $activity->operations()->sync($request->input('operations', []));
-        $activity->activitiesProcesses()->sync($request->input('processes', []));
+        $activity->processes()->sync($request->input('processes', []));
         $activity->applications()->sync($request->input('applications', []));
 
         return redirect()->route('admin.activities.index');
@@ -75,7 +75,7 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activity->load('operations', 'activitiesProcesses');
+        $activity->load('operations', 'processes');
 
         return view('admin.activities.show', compact('activity'));
     }

@@ -88,7 +88,7 @@ class InformationController extends Controller
     {
         abort_if(Gate::denies('information_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $information->load('processes', 'informationsDatabases');
+        $information->load('processes');
 
         return view('admin.information.show', compact('information'));
     }

@@ -27,10 +27,10 @@ class DomaineAdController extends Controller
         abort_if(Gate::denies('domaine_ad_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $domaineAd = DomaineAd::create($request->all());
-        if (request['domainesForestAds'] !== null) {
-            $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
-        }
-        // $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
+        if (request['forestAds'] !== null)
+            $domaineAd->forestAds()->sync($request->input('forestAds', []));
+        if (request['logicalServers'] !== null)
+            $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
 
         return response()->json($domaineAd, 201);
     }
@@ -47,10 +47,10 @@ class DomaineAdController extends Controller
         abort_if(Gate::denies('domaine_ad_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $domaineAd->update($request->all());
-        if (request['domainesForestAds'] !== null) {
-            $domaineAd->domainesForestAds()->sync($request->input('domainesForestAds', []));
-        }
-        // $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
+        if (request['forestAds'] !== null)
+            $domaineAd->forestAds()->sync($request->input('forestAds', []));
+        if (request['logicalServers'] !== null)
+            $domaineAd->logicalServers()->sync($request->input('logicalServers', []));
 
         return response()->json();
     }

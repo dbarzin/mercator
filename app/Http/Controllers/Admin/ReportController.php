@@ -326,7 +326,7 @@ class ReportController extends Controller
             // TODO : improve me
             $activities = Activity::All()->sortBy('name')
                 ->filter(function ($item) use ($processes) {
-                    foreach ($item->activitiesProcesses as $p) {
+                    foreach ($item->processes as $p) {
                         foreach ($processes as $process) {
                             if ($p->id === $process->id) {
                                 return true;
