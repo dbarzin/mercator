@@ -112,4 +112,4 @@ Mercator is open-source software distributed under the [GPL License](https://www
 
 Mercator is an open source project supported by [OW2](https://www.ow2.org/view/Mercator/), an organization that promotes reliable, industrial, and interoperable open source software.
 
-[![OW2 Project](https://img.shields.io/badge/OW2-Mercator-blue)](https://www.ow2.org/view/Mercator/)
+[![OW2 Project](https://img.shields.io/badge/OW2-Mercator-blue)](https://projects.ow2.org/view/mercator/)
