@@ -523,7 +523,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="name">{{ trans('cruds.application.fields.vendor') }}</label>
-                        <select id="vendor-selector" class="form-control select2-free" name="vendor">
+                        <select id="vendor-selector" class="form-control vendor-selector" name="vendor">
                             <option>{{ old('vendor', $application->vendor) }}</option>
                         </select>
                         <span class="help-block">{{ trans('cruds.application.fields.vendor_helper') }}</span>
@@ -532,7 +532,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="name">{{ trans('cruds.application.fields.product') }}</label>
-                    <select id="product-selector" class="form-control select2-free" name="product">
+                    <select id="product-selector" class="form-control product-selector" name="product">
                         <option>{{ old('name', $application->product) }}</option>
                     </select>
                     @if($errors->has('product'))
@@ -546,7 +546,7 @@
             <div class="col-3">
                 <div class="form-group">
                     <label for="version">{{ trans('cruds.application.fields.version') }}</label>
-                    <select id="version-selector" class="form-control select2-free" name="version">
+                    <select id="version-selector" class="form-control version-selector" name="version">
                         <option>{{ old('version', $application->version) }}</option>
                     </select>
                     @if($errors->has('version'))
@@ -739,6 +739,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                 }
             });
+
+
+
     // ------------------------------------------------
     // CPE
     // ------------------------------------------------
