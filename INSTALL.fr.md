@@ -126,7 +126,7 @@ gzip -d official-cpe-dictionary_v2.3.xml.gz
 Importer dans Merator :
 
 ```sh
-php artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
+php -d memory_limit=1024M artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
 ```
 
 ## Démarrage
