@@ -128,7 +128,7 @@ gzip -d official-cpe-dictionary_v2.3.xml.gz
 Import it into Mercator:
 
 ```sh
-php -d memory_limit=1024M artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
+php artisan mercator:cpe-import ./official-cpe-dictionary_v2.3.xml
 ```
 
 ## Start

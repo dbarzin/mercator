@@ -10,46 +10,40 @@ use Illuminate\Support\Facades\DB;
 
 class CPEImport extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'mercator:cpe-import {cpe-dictionary-file}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Import CPE dictionary file';
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
+    protected array $vendors = [];
+    protected array $products = [];
+    protected array $versions = [];
+
     public function handle()
     {
         $this->info('CPEImport - Start.');
-
         $start = microtime(true);
 
-        // $file = "storage/official-cpe-dictionary_v2.3.xml";
         $file = $this->argument('cpe-dictionary-file');
-        if ($file === null) {
-            $this->error('dictionary file must be specified');
-            return;
-        }
-        if (! file_exists($file)) {
-            $this->error('dictionary file not found');
+        if (!file_exists($file)) {
+            $this->error("File not found: $file");
             return;
         }
 
-        // Delete all previous data
+        // Clean DB
         DB::table('cpe_versions')->delete();
         DB::table('cpe_products')->delete();
         DB::table('cpe_vendors')->delete();
+
+        // Précharger les éléments existants
+        $this->vendors = [];
+        $this->products = [];
+        $this->versions = [];
+
+        // Init lecteur XML
+        $reader = new \XMLReader();
+        if (! $reader->open($file)) {
+            $this->error('Could not open XML file');
+            return;
+        }
 
         // count items
         $items = substr_count(file_get_contents($file), '<cpe-23:cpe23-item');
@@ -58,78 +52,69 @@ class CPEImport extends Command
         // progress bar
         $this->output->progressStart($items);
 
-        // Start parsing
-        $this->xml_parser = xml_parser_create();
-        xml_set_object($this->xml_parser, $this);
+        $counter = 0;
 
-        xml_set_element_handler($this->xml_parser, 'startElement', 'endElement');
-        $fp = fopen($file, 'r');
-        if (! $fp) {
-            $this->error('could not open XML input');
-            return;
-        }
+        while ($reader->read()) {
+            if ($reader->nodeType == \XMLReader::ELEMENT && $reader->localName === 'cpe23-item') {
+                $name = $reader->getAttribute('name');
+                if ($name === null) continue;
 
-        while ($data = fread($fp, 4096)) {
-            if (! xml_parse($this->xml_parser, $data, feof($fp))) {
-                $this->error("XML error: {xml_error_string(xml_get_error_code({$xml_parser}))} at line {xml_get_current_line_number({$xml_parser})}");
-                return;
+                $this->processItem($name);
+
+                $counter++;
             }
         }
-        xml_parser_free($this->xml_parser);
+
+        $reader->close();
 
         // Prograss done
         $this->output->progressFinish();
 
-        // Log time
-        $end = microtime(true);
-        $time = number_format($end - $start, 2);
-        $this->info('CPEImport - elapsed time: ', $time, ' seconds');
-
-        // Done
-        $this->info('CPEImport - DONE.');
+        $time = number_format(microtime(true) - $start, 2);
+        $this->info("CPEImport - DONE in {$time} seconds. Total items: {$counter}");
     }
 
-    public function startElement($parser, $name, $attribs)
+    protected function processItem(string $name)
     {
-        if ($name === 'CPE-23:CPE23-ITEM') {
-            $this->output->progressAdvance();
+        $this->output->progressAdvance();
 
-            $value = explode(':', $attribs['NAME']);
-            // $this->info($value[2] . " " . $value[3] . ' ' . $value[4] . ' ' . $value[5]);
+        $value = explode(':', $name);
+        if (count($value) < 6) return;
 
-            // check vendor exixts
-            $vendor = DB::table('cpe_vendors')
-                ->where('part', '=', $value[2])
-                ->where('name', '=', $value[3])
-                ->get()->first();
-            // add vendor
-            if ($vendor === null) {
-                $vendor = CPEVendor::create(['part' => $value[2], 'name' => $value[3]]);
-            }
+        [$unused, $cpeVersion, $part, $vendorName, $productName, $versionName] = $value;
 
-            // check product exists
-            $product = DB::table('cpe_products')
-                ->where('cpe_vendor_id', '=', $vendor->id)
-                ->where('name', '=', $value[4])
-                ->get()->first();
-            // add product
-            if ($product === null) {
-                $product = CPEProduct::create(['cpe_vendor_id' => $vendor->id, 'name' => $value[4]]);
-            }
+        $vendorKey = "$part:$vendorName";
+        $productKey = null;
+        $versionKey = null;
 
-            // check version exists
-            $version = DB::table('cpe_versions')
-                ->where('cpe_product_id', '=', $product->id)
-                ->where('name', '=', $value[5])
-                ->get()->first();
-            // Add version
-            if ($version === null) {
-                CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $value[5]]);
-            }
+        // VENDOR
+        if (!isset($this->vendors[$vendorKey])) {
+            $vendor = CPEVendor::withoutEvents(function () use ($part, $vendorName) {
+                return CPEVendor::create(['part' => $part, 'name' => $vendorName]);
+            });
+            $this->vendors[$vendorKey] = $vendor;
+        } else {
+            $vendor = $this->vendors[$vendorKey];
         }
-    }
 
-    public function endElement($parser, $name)
-    {
+        // PRODUCT
+        $productKey = "{$vendor->id}:{$productName}";
+        if (!isset($this->products[$productKey])) {
+            $product = CPEProduct::withoutEvents(function () use ($vendor, $productName) {
+                return CPEProduct::create(['cpe_vendor_id' => $vendor->id, 'name' => $productName]);
+            });
+            $this->products[$productKey] = $product;
+        } else {
+            $product = $this->products[$productKey];
+        }
+
+        // VERSION
+        $versionKey = "{$product->id}:{$versionName}";
+        if (!isset($this->versions[$versionKey])) {
+            CPEVersion::withoutEvents(function () use ($product, $versionName) {
+                CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $versionName]);
+            });
+            $this->versions[$versionKey] = true;
+        }
     }
 }
