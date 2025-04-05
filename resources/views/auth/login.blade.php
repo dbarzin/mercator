@@ -38,12 +38,6 @@
 
                 <p class="text-muted">{{ (env('APP_NAME') === null) || (env('APP_NAME') === "Laravel") ? "Mercator" : env('APP_NAME') }} :: Login</p>
 
-                @if(session('message'))
-                    <div class="alert alert-info" role="alert">
-                        {{ session('message') }}
-                    </div>
-                @endif
-
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 

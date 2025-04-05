@@ -309,6 +309,21 @@ table .navbar-brand-full {
     color: orange;
 }
 
+.form-group .recommended1::after {
+    content: " *";
+    color: orange;
+}
+
+.form-group .recommended2::after {
+    content: " **";
+    color: orange;
+}
+
+.form-group .recommended3::after {
+    content: " ***";
+    color: orange;
+}
+
 .form-check.is-invalid ~ .invalid-feedback {
     display: block;
 }

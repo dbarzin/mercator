@@ -17,8 +17,7 @@ class UpdateUserRequest extends FormRequest
     }
 
     public function rules()
-    {
-        return [
+    { return [
             'name' => [
                 'required',
                 Rule::unique('users')
@@ -40,7 +39,6 @@ class UpdateUserRequest extends FormRequest
             ],
             'granularity' => [
                 'required',
-                'nullable',
                 'integer',
                 'min:1',
                 'max:3',
