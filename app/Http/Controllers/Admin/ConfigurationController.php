@@ -82,8 +82,6 @@ class ConfigurationController extends Controller
 
                 try {
                     // Server settings
-                    $mail->isSMTP();                               // Use SMTP
-                    // Server settings
                     $mail->isSMTP();                                     // Use SMTP
                     $mail->Host = env('MAIL_HOST');               // Set the SMTP server
                     $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
@@ -192,8 +190,6 @@ class ConfigurationController extends Controller
                 // Create a new PHPMailer instance
                 $mail = new PHPMailer(true);
                 try {
-                    // Server settings
-                    $mail->isSMTP();                               // Use SMTP
                     // Server settings
                     $mail->isSMTP();                                     // Use SMTP
                     $mail->Host = env('MAIL_HOST');               // Set the SMTP server

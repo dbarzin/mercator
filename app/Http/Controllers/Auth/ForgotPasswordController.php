@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+
 class ForgotPasswordController extends Controller
 {
     /**
@@ -68,30 +71,56 @@ class ForgotPasswordController extends Controller
             ->where('email', $request->email)
             ->delete();
 
-        // Save token in reset_passord table
+        // Send Mail
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();                                     // Use SMTP
+            $mail->Host = env('MAIL_HOST');               // Set the SMTP server
+            $mail->SMTPAuth = env('MAIL_AUTH');               // Enable SMTP authentication
+            $mail->Username = env('MAIL_USERNAME');           // SMTP username
+            $mail->Password = env('MAIL_PASSWORD');           // SMTP password
+            $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false);  // Enable TLS encryption, `ssl` also accepted
+            $mail->SMTPAutoTLS = env('MAIL_SMTP_AUTO_TLS');      // Enable auto TLS
+            $mail->Port = env('MAIL_PORT');               // TCP port to connect to
+
+            // Recipients
+            $mail->setFrom(config('mercator-config.cve.mail-from'));
+            $mail->addAddress($request->email);
+
+            // Content
+            $mail->isHTML(true);                            // Set email format to HTML
+            $mail->Subject = 'Mercator - Reset password';
+            $mail->Body =
+                '<html><body>' .
+                '<h1>Forget Password Email</h1>' .
+                'You can reset your password from the link:' .
+                "<a href='" . route('reset.password.get', $token) . "'>Reset Password</a>" .
+                '</body></html>';
+
+            // Optional: Add DKIM signing
+            $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+            $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
+            $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+            $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+            $mail->DKIM_identity = $mail->From;
+
+            // Send email
+            $mail->send();
+
+            Log::info("Message has been sent to {$request->email}");
+        } catch (Exception $e) {
+            Log::error("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            return back()->withErrors(array("mail" => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"));
+        }
+
+        // Save token in reset_password table
         DB::table('password_resets')->insert([
             'email' => $request->email,
             'token' => $token,
             'created_at' => Carbon::now(),
         ]);
-
-        // Send Mail
-        /*
-          Mail::send('email.forgetPassword', ['token' => $token], function($message) use($request){
-              $message->to($request->email);
-              $message->subject('Reset Password');
-          });
-        */
-        $this->sendMail(
-            config('mercator-config.cve.mail-from'),
-            $request->email,
-            'Forget Password',
-            '<html><body>' .
-            '<h1>Forget Password Email</h1>' .
-            'You can reset your password from the link:' .
-            "<a href='" . route('reset.password.get', $token) . "'>Reset Password</a>" .
-            '</body></html>'
-        );
 
         return back()->with('message', 'We have e-mailed your password reset link!');
     }
@@ -145,20 +174,4 @@ class ForgotPasswordController extends Controller
         return redirect('/login')->with('message', 'Your password has been changed!');
     }
 
-    private function sendMail($mail_from, $mail_to, $subject, $message)
-    {
-        // set mail header
-        $headers = [
-            'MIME-Version: 1.0',
-            'Content-type: text/html;charset=iso-8859-1',
-            'From: '. $mail_from,
-        ];
-
-        // Send mail
-        if (mail($mail_to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $message, implode("\r\n", $headers), ' -f'. $mail_from)) {
-            Log::warning('Reset password mail sent to '. $mail_to);
-        } else {
-            Log::warning('Reset password mail sending fail.');
-        }
-    }
 }
