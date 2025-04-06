@@ -38,7 +38,8 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 | Objet | Niveau | Exigences |
 |---    |:-:     |---              |
 | **Écosystème** | | |
-| Entité | 1 | doit avoir une description, un niveau de sécurité, un point de contact et supporter au moins un processus |
+| Entité | 1 | doit avoir une description, un point de contact et supporter au moins un processus |
+| Entité | 2 | doit avoir un niveau de sécurité |
 | Relation | 1 | doit avoir un type et une description |
 | Relation | 2 | doit avoir une importance |
 | **Système d'Information** | | |
@@ -46,7 +47,7 @@ le pourcentage de conformité du niveau n peut être inférieur, égal ou suppé
 | Macro-Processus | 3 | doit avoir un propriétaire |
 | Processus | 1 | doit avoir une description, des éléments d'entrée/sortie, un propriétaire  |
 | Processus | 2 | doit avoir un niveau de sécurité et faire partie d'un macro-processus |
-| Activité | 2 | doit avoir une desription |
+| Activité | 2 | doit avoir une description |
 | Opération | 1 | doit avoir une description |
 | Opération | 2 | doit avoir un acteur |
 | Opération | 3 | doit avoir une tâche |

@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group">
-                        <label class="recommended" for="description">{{ trans('cruds.entity.fields.description') }}</label>
+                        <label class="recommended1" for="description">{{ trans('cruds.entity.fields.description') }}</label>
                         <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description') !!}</textarea>
                         @if($errors->has('description'))
                             <div class="invalid-feedback">
@@ -103,7 +103,7 @@
             </div>
 
         <div class="form-group">
-            <label class="recommended" for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
+            <label class="recommended1" for="contact_point">{{ trans('cruds.entity.fields.contact_point') }}</label>
             <textarea class="form-control ckeditor {{ $errors->has('contact_point') ? 'is-invalid' : '' }}" name="contact_point" id="contact_point">{!! old('contact_point') !!}</textarea>
             @if($errors->has('contact_point'))
                 <div class="invalid-feedback">
@@ -113,7 +113,7 @@
             <span class="help-block">{{ trans('cruds.entity.fields.contact_point_helper') }}</span>
         </div>
         <div class="form-group">
-            <label class="recommended" for="seurity_level">{{ trans('cruds.entity.fields.security_level') }}</label>
+            <label class="recommended2" for="seurity_level">{{ trans('cruds.entity.fields.security_level') }}</label>
             <textarea class="form-control ckeditor {{ $errors->has('security_level') ? 'is-invalid' : '' }}" name="security_level" id="security_level">{!! old('security_level') !!}</textarea>
             @if($errors->has('security_level'))
                 <div class="invalid-feedback">

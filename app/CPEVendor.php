@@ -2,9 +2,9 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\CPEVendor
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CPEVendor extends Model
 {
     use HasFactory;
-    
+
     public $table = 'cpe_vendors';
 
     public $timestamps = false;

@@ -17,7 +17,8 @@ class UpdateUserRequest extends FormRequest
     }
 
     public function rules()
-    { return [
+    {
+        return [
             'name' => [
                 'required',
                 Rule::unique('users')
