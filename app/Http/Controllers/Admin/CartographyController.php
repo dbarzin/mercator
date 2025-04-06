@@ -225,8 +225,9 @@ class CartographyController extends Controller
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
                 foreach ($entity->processes as $process) {
                     $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
-                    if (!$loop->last)
+                    if (! $loop->last) {
                         $textRun->addText(', ');
+                    }
                 }
                 $section->addTextBreak(1);
             }

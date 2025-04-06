@@ -23,8 +23,8 @@ class CPEImport extends Command
         $start = microtime(true);
 
         $file = $this->argument('cpe-dictionary-file');
-        if (!file_exists($file)) {
-            $this->error("File not found: $file");
+        if (! file_exists($file)) {
+            $this->error("File not found: {$file}");
             return;
         }
 
@@ -55,9 +55,11 @@ class CPEImport extends Command
         $counter = 0;
 
         while ($reader->read()) {
-            if ($reader->nodeType == \XMLReader::ELEMENT && $reader->localName === 'cpe23-item') {
+            if ($reader->nodeType === \XMLReader::ELEMENT && $reader->localName === 'cpe23-item') {
                 $name = $reader->getAttribute('name');
-                if ($name === null) continue;
+                if ($name === null) {
+                    continue;
+                }
 
                 $this->processItem($name);
 
@@ -79,16 +81,18 @@ class CPEImport extends Command
         $this->output->progressAdvance();
 
         $value = explode(':', $name);
-        if (count($value) < 6) return;
+        if (count($value) < 6) {
+            return;
+        }
 
         [$unused, $cpeVersion, $part, $vendorName, $productName, $versionName] = $value;
 
-        $vendorKey = "$part:$vendorName";
+        $vendorKey = "{$part}:{$vendorName}";
         $productKey = null;
         $versionKey = null;
 
         // VENDOR
-        if (!isset($this->vendors[$vendorKey])) {
+        if (! isset($this->vendors[$vendorKey])) {
             $vendor = CPEVendor::withoutEvents(function () use ($part, $vendorName) {
                 return CPEVendor::create(['part' => $part, 'name' => $vendorName]);
             });
@@ -99,7 +103,7 @@ class CPEImport extends Command
 
         // PRODUCT
         $productKey = "{$vendor->id}:{$productName}";
-        if (!isset($this->products[$productKey])) {
+        if (! isset($this->products[$productKey])) {
             $product = CPEProduct::withoutEvents(function () use ($vendor, $productName) {
                 return CPEProduct::create(['cpe_vendor_id' => $vendor->id, 'name' => $productName]);
             });
@@ -110,7 +114,7 @@ class CPEImport extends Command
 
         // VERSION
         $versionKey = "{$product->id}:{$versionName}";
-        if (!isset($this->versions[$versionKey])) {
+        if (! isset($this->versions[$versionKey])) {
             CPEVersion::withoutEvents(function () use ($product, $versionName) {
                 CPEVersion::create(['cpe_product_id' => $product->id, 'name' => $versionName]);
             });

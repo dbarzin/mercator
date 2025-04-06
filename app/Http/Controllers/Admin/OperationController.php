@@ -64,8 +64,12 @@ class OperationController extends Controller
         return view(
             'admin.operations.edit',
             compact(
-                'processes', 'actors', 'tasks',
-                'operation', 'activities')
+                'processes',
+                'actors',
+                'tasks',
+                'operation',
+                'activities'
+            )
         );
     }
 

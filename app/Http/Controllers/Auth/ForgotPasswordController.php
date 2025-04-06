@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -112,7 +111,7 @@ class ForgotPasswordController extends Controller
             Log::info("Message has been sent to {$request->email}");
         } catch (Exception $e) {
             Log::error("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
-            return back()->withErrors(array("mail" => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"));
+            return back()->withErrors(['mail' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"]);
         }
 
         // Save token in reset_password table
@@ -173,5 +172,4 @@ class ForgotPasswordController extends Controller
         // Redirect
         return redirect('/login')->with('message', 'Your password has been changed!');
     }
-
 }

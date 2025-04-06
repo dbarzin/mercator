@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
-use App\MApplication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyActivityRequest;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
+use App\MApplication;
 use App\Operation;
 use App\Process;
 use Gate;
