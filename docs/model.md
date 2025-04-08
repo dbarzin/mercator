@@ -408,7 +408,7 @@ Table *fluxes* :
 
 The administration view lists the administration of resources, directories and privilege levels of information system users.
 
-[<img src=“/mercator/images/administration.png” width=“400”>](/mercator/images/administration.png)
+[<img src="/mercator/images/administration.png" width="400">](/mercator/images/administration.png)
 
 Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).
 
@@ -468,7 +468,7 @@ Table *forest_ads* :
 
 The logical infrastructure view corresponds to the logical distribution of the network.
 
-[<img src=“/mercator/images/logical.png” width=“400”>](/mercator/images/logical.png)
+[<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
 
 It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.
 
@@ -503,22 +503,22 @@ table *subnetworks* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du réseau |
-| description          | longtext     | Description du réseau |
-| address              | varchar(255) | Range d'adresse du sous-réseau |
-| default_gateway      | varchar(255) | Adresse de la passerelle par défaut |
-| ip_allocation_type   | varchar(255) | Type d'allocation des adresses |
-| responsible_exp      | varchar(255) | Responsable de l'exploitation |
-| zone                 | varchar(255) | Nom de la zone firewall associée |
-| dmz                  | varchar(255) | |
-| wifi                 | varchar(255) | |
-| connected_subnets_id | int unsigned | |
-| gateway_id           | int unsigned | Lien vars la passerelle |
-| vlan_id              | int unsigned | Lien vers le VLAN associé |
-| network_id           | int unsigned | Lien vers le réseau associé |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the subnet |
+| description          | longtext     | Description of the subnet |
+| address              | varchar(255) | Addresses range |
+| default_gateway      | varchar(255) | Default gateway |
+| ip_allocation_type   | varchar(255) | Type of IP address allocation |
+| responsible_exp      | varchar(255) | Operations manager |
+| zone                 | varchar(255) | Name of the firewall zone |
+| dmz                  | varchar(255) | DMZ (Yes/No) |
+| wifi                 | varchar(255) | Wireless |
+| connected_subnets_id | int unsigned | Network to which this subnet belongs |
+| gateway_id           | int unsigned | Gateway |
+| vlan_id              | int unsigned | Associated VLAN |
+| network_id           | int unsigned | Associated network |
+| created_at           | timestamp    | Creation date |
+| updated_at           | timestamp    | Udate date |
+| deleted_at           | timestamp    | Elimination date |
 
 #### External input gateways
 
@@ -698,9 +698,9 @@ Table *certificates* :
 | deleted_at           | timestamp    | Date de suppression |
 
 * Note:
-    * status = 0: “Good”
-    * status = 1: “Revoked
-    * status = 2 : “Unknown
+    * status = 0: "Good"
+    * status = 1: "Revoked
+    * status = 2 : "Unknown
 
 #### VLAN
 
@@ -722,7 +722,7 @@ Table *vlans* :
 
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-[<img src=“/mercator/images/physical.png” width=“700”>](/mercator/images/physical.png)
+[<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
 
 This view corresponds to the geographical distribution of network equipment within the various sites.
 
