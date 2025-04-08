@@ -17,9 +17,9 @@ Table *data_processing* :
 | Field | Type | Description |
 |:------------|:-------------|:---------------------|
 | id | int unsigned | auto_increment |
-| name | varchar(255) | Treatment name |
-| description | longtext | Description of treatment |
-| responsible | longtext | Responsable du traitement |
+| name | varchar(255) | Processing name |
+| description | longtext | Processing description |
+| responsible | longtext | Responsible person for processing |
 | purpose | longtext | Purposes of processing |
 | categories | longtext | Categories of recipients |
 | recipients | longtext | Data recipients |
@@ -109,9 +109,9 @@ Table *relations* :
 | security_need_c | int          | Confidentiality level need |
 | security_need_i | int          | Integrity level need  |
 | security_need_a | int          | Available level need |
-| security_need_t | int          | Tracability level need  |
+| security_need_t | int          | Traceability level need  |
 | created_at    | timestamp | Date of creation |
-| updated_at    | timestamp | Date updated |
+| updated_at    | timestamp | Date of update |
 | deleted_at    | timestamp | Date of deletion |
 
 ### Business view of the information system
@@ -139,8 +139,8 @@ Table *macro_processuses* :
 | security_need_a | int | Availability |
 | security_need_t | int | Traceability |
 | owner | varchar(255) | Owner |
-| created_at | timestamp | Date de création |
-| updated_at | timestamp | Date de mise à jour |
+| created_at | timestamp | Date of creation |
+| updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
 
@@ -180,7 +180,7 @@ Table *activities* :
 | name | varchar(255) | activity name |
 | description | longtext | Activity description |
 | created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
+| updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
 #### Operations
@@ -210,8 +210,8 @@ Table *tasks* :
 | id | int unsigned | auto_increment |
 | name | varchar(255) | Task name |
 | description | longtext | Task description |
-| created_at | timestamp | creation date |
-| updated_at | timestamp | Date updated |
+| created_at | timestamp | Date of creation |
+| updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
 #### Actors
@@ -227,8 +227,8 @@ Table *actors* :
 | nature | varchar(255) | Nature of actor |
 | type | varchar(255) | Type of actor |
 | contact | varchar(255) | Actor contact |
-| created_at | timestamp | Date created |
-| updated_at | timestamp | Date updated |
+| created_at | timestamp | Date of creation |
+| updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
 #### Information
@@ -252,8 +252,8 @@ Table *information* :
 | sensitivity | varchar(255) | Sensitivity of information |
 | constraints | longtext | Legal and regulatory constraints |
 | created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
-| deleted_at | timestamp | Date de suppression |
+| updated_at | timestamp | Date of update |
+| deleted_at | timestamp | Date of deletion |
 
 ### Application view
 
@@ -278,7 +278,7 @@ Table *application_blocks* :
 | description | longtext | Description of application block |
 | responsible | varchar(255) | Responsible for application block |
 | created_at | timestamp | Date of creation |
-| updated_at | timestamp | Date de mise à jour |
+| updated_at | timestamp | Date of update |
 | deleted_at | timestamp | Date of deletion |
 
 #### Application
@@ -295,85 +295,85 @@ Table *m_applications* :
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id                  | int unsigned | auto_increment |
-| name                | varchar(255) | Nom de l'application |
-| version             | varchar(255) | Version de l'application |        
-| description         | longtext     | Description de l'application |
-| security_need_c     | int          | Confidentialité |
-| security_need_i     | int          | Intégrité |
-| security_need_a     | int          | Disponibilité |
-| security_need_t     | int          | Traçabilité |
-| type            | varchar(255) | Type d'application |
-| technology      | varchar(255) | Technologie |
-| external        | varchar(255) | Externe |
-| users           | varchar(255) | Nombre d'utilisateurs et type |
-| documentation   | varchar(255) | Lien vers la documentation |
-| entity_resp_id  | int unsigned | Entité responsable de l'exploitation  |
-| responsible         | varchar(255) | Responsable de l'application |
-| application_block_id | int unsigned | Lien vers la bloc applicatif |
-| install_date    | datetime    | Date d'installation de l'application |
-| update_date     | datetime    | Date de mise à jour de l'application |
-| created_at      | timestamp    | Date de création |
-| updated_at      | timestamp    | Date de mise à jour |
-| deleted_at      | timestamp    | Date de suppression |
+| name                | varchar(255) | Name of the application |
+| version             | varchar(255) | Version of the application |        
+| description         | longtext     | Description |
+| security_need_c     | int          | Confidentiality |
+| security_need_i     | int          | Integrity |
+| security_need_a     | int          | Availability |
+| security_need_t     | int          | Traceability |
+| type            | varchar(255) | Type of application |
+| technology      | varchar(255) | Technology |
+| external        | varchar(255) | External |
+| users           | varchar(255) | Number of users and type |
+| documentation   | varchar(255) | Link to documentation |
+| entity_resp_id  | int unsigned | Entity responsible |
+| responsible         | varchar(255) | Person/team responsible |
+| application_block_id | int unsigned | Group of application |
+| install_date    | datetime    | Date of installation |
+| update_date     | datetime    | Date of upgrade |
+| created_at      | timestamp    | Date of creation |
+| updated_at      | timestamp    | Date of update |
+| deleted_at      | timestamp    | Date of deletion |
 
 
-#### Service applicatif
+#### Application services
 
-Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.
+An application service is a specific service provided to a user to perform specific tasks related to their role in the organisation.
 
-Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).
+Eg. an application service could be a Cloud service or platform.
 
 Table *application_services* :
 
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
-| name            | varchar(255) | Nom du service applicatif |
-| description     | longtext     | Description du service applicatif |
-| exposition      | varchar(255) | Exposition du service applicatif |
-| created_at      | timestamp    | Date de création |
-| updated_at      | timestamp    | Date de mise à jour |
-| deleted_at      | timestamp    | Date de suppression |
+| name            | varchar(255) | Name of the application service |
+| description     | longtext     | Description of the application service |
+| exposition      | varchar(255) | Exposure of the application service |
+| created_at      | timestamp    | Date of creation |
+| updated_at      | timestamp    | Date of update |
+| deleted_at      | timestamp    | Date of deletion |
 
 
-#### Module applicatif
+#### Application module
 
-Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.
+An application module is a component of an application characterized by functional coherence and technological homogeneity.
 
 Table *application_modules* :
 
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
-| name            | varchar(255) | Nom du service applicatif |
-| description     | longtext     | Description du module applicatif |
-| created_at      | timestamp    | Date de création |
-| updated_at      | timestamp    | Date de mise à jour |
-| deleted_at      | timestamp    | Date de suppression |
+| name            | varchar(255) | Name of the application module |
+| description     | longtext     | Description of the application module |
+| created_at      | timestamp    | Date of creation |
+| updated_at      | timestamp    | Date of update |
+| deleted_at      | timestamp    | Date of deletion |
 
 
-#### Base de données
+#### Database
 
-Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.
+A collection of databases managed within the organisation.
 
 Table *databases* :
 
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
-| name            | varchar(255) | Nom du service applicatif |
-| description     | longtext     | Description du module applicatif |
-| responsible     | varchar(255) | Responsable de l'application |
-| type            | varchar(255) | Responsable de l'application |
-| security_need_c | int          | Confidentialité |
-| security_need_i | int          | Intégrité |
-| security_need_a | int          | Disponibilité |
-| security_need_t | int          | Traçabilité |
-| external        | varchar(255) | Externe |
+| name            | varchar(255) | Name of the database |
+| description     | longtext     | Description of the database |
+| responsible     | varchar(255) | Responsible entity |
+| type            | varchar(255) | Responsible person/team |
+| security_need_c | int          | Confidentiality |
+| security_need_i | int          | Integrity |
+| security_need_a | int          | Availability |
+| security_need_t | int          | Traceability |
+| external        | varchar(255) | External |
 | entity_resp_id  | int unsigned | Entité responsable  |
-| created_at      | timestamp    | Date de création |
-| updated_at      | timestamp    | Date de mise à jour |
-| deleted_at      | timestamp    | Date de suppression |
+| created_at      | timestamp    | Date of creation |
+| updated_at      | timestamp    | Date of update |
+| deleted_at      | timestamp    | Date of deletion |
 
 #### Flow
 
@@ -388,21 +388,21 @@ Table *fluxes* :
 | Champ                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Nom du flux |
-| description           | longtext     | Description du flux |
-| application_source_id | int unsigned | Lien vers l'application source |
-| service_source_id     | int unsigned | Lien vers le service source |
-| module_source_id      | int unsigned | Lien vers le module source |
-| database_source_id    | int unsigned | Lien vars la base de données source |
-| application_dest_id   | int unsigned | Lien vers l'application destinataire  |
-| service_dest_id       | int unsigned | Lien vers le service destinataire |
-| module_dest_id        | int unsigned | Lien vers le module destinataire |
-| database_dest_id      | int unsigned | Lien vers la basede données destinataire |
-| crypted               | tinyint(1)   | Le flux est chiffré (1=oui, O=non) |
-| bidirectional         | tinyint(1)   | Le flux est bidirectionnel (1=oui, O=non)|
-| created_at            | timestamp    | Date de création |
-| updated_at            | timestamp    | Date de mise à jour |
-| deleted_at            | timestamp    | Date de suppression |
+| name                  | varchar(255) | Name of the flow |
+| description           | longtext     | Description of the flow |
+| application_source_id | int unsigned | Link to source application |
+| service_source_id     | int unsigned | Link to source service |
+| module_source_id      | int unsigned | Link to source module |
+| database_source_id    | int unsigned | Link to source database |
+| application_dest_id   | int unsigned | Link to destination application  |
+| service_dest_id       | int unsigned | Link to destination service |
+| module_dest_id        | int unsigned | Link to destination module |
+| database_dest_id      | int unsigned | Link to destination database |
+| crypted               | tinyint(1)   | The flow is encrypted (1=yes, O=no) |
+| bidirectional         | tinyint(1)   | The flow is bydirectional (1=yes, O=no)|
+| created_at            | timestamp    | Date of creation |
+| updated_at            | timestamp    | Date of update |
+| deleted_at            | timestamp    | Date of deletion |
 
 ### Administration
 
@@ -423,11 +423,11 @@ Table *zone_admins* :
 | Champ                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Nom de la zone |
-| description           | longtext     | Description de la zone |
-| created_at            | timestamp    | Date de création |
-| updated_at            | timestamp    | Date de mise à jour |
-| deleted_at            | timestamp    | Date de suppression |
+| name                  | varchar(255) | Name of the area |
+| description           | longtext     | Description area |
+| created_at            | timestamp    | Date of creation |
+| updated_at            | timestamp    | Date of update |
+| deleted_at            | timestamp    | Date of deletion |
 
 #### Administration directory service
 
@@ -440,13 +440,13 @@ Table *annuaires*;
 | Champ                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Nom de l'annuaire |
-| description           | longtext     | Description de l'annuaire |
-| solution              | varchar(255) | Solution technique |
-| zone_admin_id         | int unsigned | Référence vers la zone d'administration |
-| created_at            | timestamp    | Date de création |
-| updated_at            | timestamp    | Date de mise à jour |
-| deleted_at            | timestamp    | Date de suppression |
+| name                  | varchar(255) | Name of the directory |
+| description           | longtext     | Description  of the directory |
+| solution              | varchar(255) | Techinical solution |
+| zone_admin_id         | int unsigned | Reference to administration area|
+| created_at            | timestamp    | Date of creation |
+| updated_at            | timestamp    | Date of update |
+| deleted_at            | timestamp    | Date of deletion |
 
 #### Active Directory forest / LDAP tree structure
 
@@ -457,12 +457,12 @@ Table *forest_ads* :
 | Champ                 | Type         | Description      |
 |:----------------------|:-------------|:-----------------|
 | id                    | int unsigned | auto_increment |
-| name                  | varchar(255) | Nom de la forêt Active Directory ou de l'arborescence LDAP |
-| description           | longtext     | Description de la forêt Active Directory ou de l'arborescence LDAP |
-| zone_admin_id         | int unsigned | Référence vers la zone d'administration |
-| created_at            | timestamp    | Date de création |
-| updated_at            | timestamp    | Date de mise à jour |
-| deleted_at            | timestamp    | Date de suppression |
+| name                  | varchar(255) | Name of Active Directory or LDAP forests |
+| description           | longtext     | Description of Active Directory or LDAP forests |
+| zone_admin_id         | int unsigned | Reference to Administration zone |
+| created_at            | timestamp    | Date of creation |
+| updated_at            | timestamp    | Date of update |
+| deleted_at            | timestamp    | Date of deletion |
 
 ### Logical infrastructure
 
@@ -481,18 +481,18 @@ Table *networks* :
 | Champ           | Type         | Description      |
 |:----------------|:-------------|:-----------------|
 | id              | int unsigned | auto_increment |
-| name            | varchar(255) | Nom du réseau |
-| description     | longtext     | Description du réseau |
-| protocol_type   | varchar(255) | Protocoles utilisés |
-| responsible     | varchar(255) | Responsable de l'exploitation |
-| responsible_sec | varchar(255) | Responsable de la sécurité |
-| security_need_c | int          | Confidentialité |
-| security_need_i | int          | Intégrité |
-| security_need_a | int          | Disponibilité |
-| security_need_t | int          | Traçabilité |
-| created_at      | timestamp    | Date de création |
-| updated_at      | timestamp    | Date de mise à jour |
-| deleted_at      | timestamp    | Date de suppression |
+| name            | varchar(255) | Name of network |
+| description     | longtext     | Description of network |
+| protocol_type   | varchar(255) | Used protocols |
+| responsible     | varchar(255) | Operation manager |
+| responsible_sec | varchar(255) | Security manager |
+| security_need_c | int          | Confidentiality |
+| security_need_i | int          | Integrity |
+| security_need_a | int          | Availability |
+| security_need_t | int          | Traceability |
+| created_at      | timestamp    | Date of creation |
+| updated_at      | timestamp    | Date of update |
+| deleted_at      | timestamp    | Date of deletion |
 
 #### Subnetworks
 
@@ -516,9 +516,9 @@ table *subnetworks* :
 | gateway_id           | int unsigned | Gateway |
 | vlan_id              | int unsigned | Associated VLAN |
 | network_id           | int unsigned | Associated network |
-| created_at           | timestamp    | Creation date |
-| updated_at           | timestamp    | Udate date |
-| deleted_at           | timestamp    | Elimination date |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### External input gateways
 
@@ -529,13 +529,13 @@ Table *gateways* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de la passerelle |
-| description          | longtext     | Description de la passerelle |
-| ip                   | varchar(255) | Adress IP de la passerelle |
-| authentification     | varchar(255) | Mode d'authentification |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the gateway |
+| description          | longtext     | Description of the gateway |
+| ip                   | varchar(255) | IP address of the gateway |
+| authentification     | varchar(255) | Authentication modes |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### Connected external entities
@@ -547,13 +547,13 @@ Table *external_connected_entities* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'entité |
-| description          | longtext     | Description de l'entié |
-| responsible_sec      | varchar(255) | Responsable de la sécurité de l'entité |
-| contacts             | varchar(255) | Contactes de l'entité|
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of entity/company |
+| description          | longtext     | Description of the entity/company |
+| responsible_sec      | varchar(255) | Security manager of the entity/company |
+| contacts             | varchar(255) | Contacts within the entity/company|
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### Network switches
@@ -565,12 +565,12 @@ Table *network_switches* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du commutateur |
-| description          | longtext     | Description du commutateur |
-| ip                   | varchar(255) | Adresse IP du commutateur |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the switch |
+| description          | longtext     | Description of the switch |
+| ip                   | varchar(255) | IP address of the switch |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Logical routers
 
@@ -581,12 +581,12 @@ Table *routers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du routeur |
-| description          | longtext     | Description du routeur |
-| rules                | longtext     | Règles de filtrage |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the router |
+| description          | longtext     | Description of the router |
+| rules                | longtext     | Filtering rules |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Security equipment
 
@@ -599,11 +599,11 @@ Table *security_devices* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'équipement |
-| description          | longtext     | Description de l'équipement |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the device |
+| description          | longtext     | Description of the device |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### DHCP servers
 
@@ -614,11 +614,11 @@ Table *dhcp_servers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| description          | longtext     | Description du serveur |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the DHCP server |
+| description          | longtext     | Description of the DHCP server |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### DNS servers
 
@@ -629,11 +629,11 @@ Table *dnsservers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| description          | longtext     | Description du serveur |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the DNS server |
+| description          | longtext     | Description of the DNS server |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Clusters
 
@@ -644,10 +644,10 @@ Table *clusters* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| type                 | varchar(255) | Type de cluster |
-| description          | longtext     | Description du cluster |
-| address_ip           | varchar(255) | Adresses IP du cluster |
+| name                 | varchar(255) | Name of the cluster |
+| type                 | varchar(255) | Type of cluster |
+| description          | longtext     | Description of the cluster |
+| address_ip           | varchar(255) | IP address of the cluster |
 
 
 #### Logical servers
@@ -660,21 +660,21 @@ Table *logical_servers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| description          | longtext     | Description du serveur |
-| net_services         | varchar(255) | Services réseau actifs |
-| configuration        | longtext     | Configuration du serveur |
-| operating_system     | varchar(255) | Système d'exploitation |
-| address_ip           | varchar(255) | Adresses IP du serveur |
-| cpu                  | varchar(255) | Nombre de CPU |
-| memory               | varchar(255) | Quantité de mémémoire |
+| name                 | varchar(255) | Name of the logical server |
+| description          | longtext     | Description of the logical server |
+| net_services         | varchar(255) | Active network services |
+| configuration        | longtext     | Server configuration |
+| operating_system     | varchar(255) | Operative system |
+| address_ip           | varchar(255) | IP address |
+| cpu                  | varchar(255) | Number of CPU |
+| memory               | varchar(255) | Quantity of RAM |
 | environment          | varchar(255) | Environnement (prod, dev, test, ...) |
-| disk                 | int          | Espace disque alloué |
-| install_date         | datetime     | Date d'installation du serveur |
-| update_date          | datetime     | Date de mise à jour du serveur |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| disk                 | int          | Storage allocated |
+| install_date         | datetime     | Date of server installation |
+| update_date          | datetime     | Date of server upgrade |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Certificates
 
@@ -687,15 +687,15 @@ Table *certificates* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du certificat |
-| description          | longtext     | Description du certificat |
-| type                 | varchar(255) | Type de certificat (SSL, HTTPS ...) |
-| start_validity       | date         | Date de début de validité |
-| end_validity         | date         | Date de fin de validité |
-| status               | int          | Etat du certificat (RFC 6960) |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the certificate |
+| description          | longtext     | Description of the certificate |
+| type                 | varchar(255) | Type of certificate (SSL, HTTPS ...) |
+| start_validity       | date         | Date start of validity |
+| end_validity         | date         | Date end of validity |
+| status               | int          | State of certificate (RFC 6960) |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 * Note:
     * status = 0: "Good"
@@ -711,11 +711,11 @@ Table *vlans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du VLAN |
-| description          | longtext     | Description du VLAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of VLAN |
+| description          | longtext     | Description of VLAN |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 ### Physical infrastructure
@@ -735,11 +735,11 @@ Table *sites* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du site |
-| description          | longtext     | Description du site |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the site |
+| description          | longtext     | Description of the site |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Buildings / Rooms
 
@@ -750,14 +750,14 @@ Table *buildings* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du site |
-| description          | longtext     | Description du site |
-| site_id              | int unsigned | Référence vers le site |
-| camera               | tinyint(1)   | Le building / salle est protégé par une caméra |
-| badge                | tinyint(1)   | Le building / salle nécessite un accès par badge |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of building |
+| description          | longtext     | Description of the building |
+| site_id              | int unsigned | Reference to the site |
+| camera               | tinyint(1)   | The building / room is surveilled by a camera |
+| badge                | tinyint(1)   | The building / requires a badge for access |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Racks
 
@@ -768,12 +768,12 @@ Table *bays* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de la baie |
-| description          | longtext     | Description de la baie |
-| room_id              | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the rack |
+| description          | longtext     | Description of the rack |
+| room_id              | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical servers
 
@@ -784,17 +784,17 @@ Table *physical_servers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| description          | longtext     | Description du serveur |
-| type                 | varchar(255) | Type / modèle du serveur |
-| responsible          | varchar(255) | Responsable du serveur |
-| configuration        | longtext     | Configuration du serveur |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| bay_id               | int unsigned | Référence vers la baie |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical server |
+| description          | longtext     | Description of physical server |
+| type                 | varchar(255) | Type / model of server |
+| responsible          | varchar(255) | Person/Team responsible for the server |
+| configuration        | longtext     | Configuration of the server |
+| site_id              | int unsigned | Reference to the site |
+| building_id          | int unsigned | Reference to the building / room |
+| bay_id               | int unsigned | Reference to the rack |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Workstations
 
@@ -805,14 +805,14 @@ Table *workstations* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du poste de travail |
-| description          | longtext     | Description du poste de travail |
-| type                 | varchar(255) | Type / modèle du poste de travail |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of workstation |
+| description          | longtext     | Description of workstation |
+| type                 | varchar(255) | Type / model of workstation |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### Storage infrastructures
@@ -824,13 +824,13 @@ Table *storage_devices* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'infrastructure de stockage |
-| description          | longtext     | Description de l'infrastructure de stockage |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of storage infrastructure |
+| description          | longtext     | Description of the storage infrastructure |
+| site_id              | int unsigned | Reference to the site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Peripherals
 
@@ -841,15 +841,15 @@ Table *peripherals* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du périphérique |
-| description          | longtext     | Description du périphérique |
-| type                 | varchar(255) | Type / modèle du périphériques |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| bay_id               | int unsigned | Référence vers la baie |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of peripheral |
+| description          | longtext     | Description of peripheral |
+| type                 | varchar(255) | Type / model of peripheral |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| bay_id               | int unsigned | Reference to rack |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Phones
 
@@ -858,14 +858,14 @@ Fixed and mobile phones belonging to the organization.
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du téléphone |
-| description          | longtext     | Description du téléphone |
-| type                 | varchar(255) | Type / modèle du téléphone |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of telephone |
+| description          | longtext     | Description of telephone |
+| type                 | varchar(255) | Type / model of telephone |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical switches
 
@@ -876,14 +876,14 @@ Table *physical_switches* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du commutateur physique |
-| description          | longtext     | Description du commutateur physique |
-| type                 | varchar(255) | Type / modèle du commutateur physique |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical switch |
+| description          | longtext     | Description of physical switch |
+| type                 | varchar(255) | Type / model of physical switch |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical routers
 
@@ -894,14 +894,14 @@ Table *physical_routers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du routeur physique |
-| description          | longtext     | Description du routeur physique |
-| type                 | varchar(255) | Type / modèle du routeur physique |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical router |
+| description          | longtext     | Description of physical router |
+| type                 | varchar(255) | Type / model of physical router |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### WiFi terminals
 
@@ -912,14 +912,14 @@ Table *wifi_terminals* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de la borne wifi |
-| description          | longtext     | Description de la bornes wifi |
-| type                 | varchar(255) | Type / modèle de la bornes wifi |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of WiFi hotspot |
+| description          | longtext     | Description of WiFi hotspot |
+| type                 | varchar(255) | Type / model of WiFi hotspot |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical security equipment
 
@@ -932,14 +932,14 @@ Table *physical_security_devices* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'équipement de sécurité |
-| description          | longtext     | Description de l'équipement de sécurité |
-| type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of security equipment |
+| description          | longtext     | Description of security equipment  |
+| type                 | varchar(255) | Type / model of security equipment  |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### WAN
 
@@ -950,10 +950,10 @@ Table *wans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du WAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of WAN |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### MAN
@@ -965,10 +965,10 @@ Table *mans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du MAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of MAN |
+| created_at           | timestamp    | Date of creation|
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### LAN
 
@@ -979,8 +979,8 @@ Table *lans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du LAN |
-| description          | longtext     | Description du LAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of LAN |
+| description          | longtext     | Description of LAN |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
