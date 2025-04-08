@@ -1363,7 +1363,7 @@ return [
             "vlan_helper" => "Associated VLAN (default: VLAN_1)",
             "wifi" => "Wireless",
             "wifi_helper" => "Access to the Wifi network (yes / no)",
-            "zone" => "Zoned",
+            "zone" => "Zone",
             "zone_helper" => "Firewall zone (ZFB)"
         ],
         'title' => 'Subnets',
