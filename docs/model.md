@@ -2,15 +2,15 @@
 
 [<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
 
-### RGPD view
+### GDPR view
 
-The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.
+The GDPR view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.
 
-This view is used to fulfill the obligations set out in article 30 of the RGPD.
+This view is used to fulfill the obligations set out in article 30 of the GDPR.
 
 #### Register
 
-The register of processing activities contains the information required by article 30.1 of the RGPD.
+The register of processing activities contains the information required by article 30.1 of the GDPR.
 
 Table *data_processing* :
 
@@ -503,22 +503,22 @@ table *subnetworks* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du réseau |
-| description          | longtext     | Description du réseau |
-| address              | varchar(255) | Range d'adresse du sous-réseau |
-| default_gateway      | varchar(255) | Adresse de la passerelle par défaut |
-| ip_allocation_type   | varchar(255) | Type d'allocation des adresses |
-| responsible_exp      | varchar(255) | Responsable de l'exploitation |
-| zone                 | varchar(255) | Nom de la zone firewall associée |
-| dmz                  | varchar(255) | |
-| wifi                 | varchar(255) | |
-| connected_subnets_id | int unsigned | |
-| gateway_id           | int unsigned | Lien vars la passerelle |
-| vlan_id              | int unsigned | Lien vers le VLAN associé |
-| network_id           | int unsigned | Lien vers le réseau associé |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of the subnet |
+| description          | longtext     | Description of the subnet |
+| address              | varchar(255) | Addresses range |
+| default_gateway      | varchar(255) | Default gateway |
+| ip_allocation_type   | varchar(255) | Type of IP address allocation |
+| responsible_exp      | varchar(255) | Operations manager |
+| zone                 | varchar(255) | Name of the firewall zone |
+| dmz                  | varchar(255) | DMZ (Yes/No) |
+| wifi                 | varchar(255) | Wireless |
+| connected_subnets_id | int unsigned | Network to which this subnet belongs |
+| gateway_id           | int unsigned | Gateway |
+| vlan_id              | int unsigned | Associated VLAN |
+| network_id           | int unsigned | Associated network |
+| created_at           | timestamp    | Creation date |
+| updated_at           | timestamp    | Udate date |
+| deleted_at           | timestamp    | Elimination date |
 
 #### External input gateways
 
