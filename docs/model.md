@@ -408,7 +408,7 @@ Table *fluxes* :
 
 The administration view lists the administration of resources, directories and privilege levels of information system users.
 
-[<img src="/mercator/images/administration.png” width="400”>](/mercator/images/administration.png)
+[<img src="/mercator/images/administration.png" width="400">](/mercator/images/administration.png)
 
 Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).
 
@@ -468,7 +468,7 @@ Table *forest_ads* :
 
 The logical infrastructure view corresponds to the logical distribution of the network.
 
-[<img src="/mercator/images/logical.png” width="400”>](/mercator/images/logical.png)
+[<img src="/mercator/images/logical.png" width="400">](/mercator/images/logical.png)
 
 It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.
 
@@ -698,7 +698,7 @@ Table *certificates* :
 | deleted_at           | timestamp    | Date de suppression |
 
 * Note:
-    * status = 0: "Good”
+    * status = 0: "Good"
     * status = 1: "Revoked
     * status = 2 : "Unknown
 
@@ -722,7 +722,7 @@ Table *vlans* :
 
 The physical infrastructure view describes the physical equipment that makes up or is used by the information system.
 
-[<img src="/mercator/images/physical.png” width="700”>](/mercator/images/physical.png)
+[<img src="/mercator/images/physical.png" width="700">](/mercator/images/physical.png)
 
 This view corresponds to the geographical distribution of network equipment within the various sites.
 
