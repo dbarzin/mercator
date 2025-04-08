@@ -53,7 +53,7 @@ class LanController extends Controller
     {
         abort_if(Gate::denies('lan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $lan->load('lansMen', 'lansWans');
+        $lan->load('mans', 'wans');
 
         return view('admin.lans.show', compact('lan'));
     }

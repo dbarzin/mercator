@@ -63,7 +63,7 @@
                                     ($application->security_need_i==null)||
                                     ($application->security_need_a==null)||
                                     ($application->security_need_t==null)||
-                                    ($application->application_block==null)
+                                    ($application->applicationBlock==null)
                                     )
                                 )
                                 /*
@@ -95,16 +95,16 @@
                                 {{ $application->responsible ?? '' }}
                             </td>
                             <td>
-                                @if ($application->entity_resp!=null)
-                                <a href="{{ route('admin.entities.show', $application->entity_resp->id) }}">
-                                {{ $application->entity_resp->name ?? '' }}
+                                @if ($application->entityResp!=null)
+                                <a href="{{ route('admin.entities.show', $application->entityResp->id) }}">
+                                {{ $application->entityResp->name ?? '' }}
                                 </a>
                                 @endif
                             </td>
                             <td>
-                                @if ($application->application_block!=null)
-                                <a href="{{ route('admin.application-blocks.show', $application->application_block->id) }}">
-                                {{ $application->application_block->name ?? '' }}
+                                @if ($application->applicationBlock!=null)
+                                <a href="{{ route('admin.application-blocks.show', $application->applicationBlock->id) }}">
+                                {{ $application->applicationBlock->name ?? '' }}
                                 </a>
                                 @endif
                             </td>

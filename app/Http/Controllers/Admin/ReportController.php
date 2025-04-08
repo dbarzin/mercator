@@ -2356,7 +2356,7 @@ class ReportController extends Controller
                 }
                 $sheet->setCellValue("D{$row}", $l);
 
-                $l = $application->entity_resp()->get();
+                $l = $application->entityResp()->get();
                 if ($l->count() > 0) {
                     $sheet->setCellValue("E{$row}", $l[0]->name);
                 }

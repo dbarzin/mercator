@@ -328,7 +328,7 @@
                             <tr>
                                 <th>{{ trans("cruds.physicalServer.fields.logical_servers") }}</th>
                                 <td>
-                                    @foreach($pserver->serversLogicalServers as $logicalServer)
+                                    @foreach($pserver->logicalServers as $logicalServer)
                                         <a href="/admin/report/logical_infrastructure#LOGICAL_SERVER{{ $logicalServer->id }}">{{ $logicalServer->name }}</a>
                                         @if (!$loop->last)
                                         ,

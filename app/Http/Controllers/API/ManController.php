@@ -27,8 +27,6 @@ class ManController extends Controller
         abort_if(Gate::denies('man_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $man = Man::create($request->all());
-        // syncs
-        // $man->roles()->sync($request->input('roles', []));
 
         return response()->json($man, 201);
     }
@@ -45,8 +43,6 @@ class ManController extends Controller
         abort_if(Gate::denies('man_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $man->update($request->all());
-        // syncs
-        // $man->roles()->sync($request->input('roles', []));
 
         return response()->json();
     }
