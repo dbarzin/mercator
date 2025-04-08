@@ -1143,10 +1143,10 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
                 foreach ($zones as $zone) {
                     $graph .= ' Z'. $zone->id . '[label="'. $zone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/zoneadmin.png'). '"]';
-                    foreach ($zone->zoneAdminAnnuaires as $annuaire) {
+                    foreach ($zone->annuaires as $annuaire) {
                         $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
                     }
-                    foreach ($zone->zoneAdminForestAds as $forest) {
+                    foreach ($zone->forestAds as $forest) {
                         $graph .= ' Z' . $zone->id . '->F' . $forest->id;
                     }
                 }
@@ -1183,18 +1183,18 @@ class CartographyController extends Controller
 
                     // Annuaires
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.annuaires'));
-                    foreach ($zone->zoneAdminAnnuaires as $annuaire) {
+                    foreach ($zone->annuaires as $annuaire) {
                         $textRun->addLink('ANNUAIRE'.$annuaire->id, $annuaire->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($zone->zoneAdminAnnuaires->last() !== $annuaire) {
+                        if ($zone->annuaires->last() !== $annuaire) {
                             $textRun->addText(', ');
                         }
                     }
 
                     // Forets
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.forests'));
-                    foreach ($zone->zoneAdminForestAds as $forest) {
+                    foreach ($zone->forestAds as $forest) {
                         $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($zone->zoneAdminForestAds->last() !== $forest) {
+                        if ($zone->forestAds->last() !== $forest) {
                             $textRun->addText(', ');
                         }
                     }

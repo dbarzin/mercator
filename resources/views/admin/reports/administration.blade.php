@@ -45,7 +45,7 @@
                                 <tr>
                                     <th>{{ trans('cruds.zoneAdmin.fields.annuaires') }}</th>
                                     <td>
-                                        @foreach($zone->zoneAdminAnnuaires as $annuaire)
+                                        @foreach($zone->annuaires as $annuaire)
                                             <a href="#ANNUAIRE{{$annuaire->id}}">{{ $annuaire->name }}</a>
                                             @if (!$loop->last)
                                             ,
@@ -56,7 +56,7 @@
                                 <tr>
                                     <th>{{ trans('cruds.zoneAdmin.fields.forests') }}</th>
                                     <td>
-                                        @foreach($zone->zoneAdminForestAds as $forest)
+                                        @foreach($zone->forestAds as $forest)
                                             <a href="#FOREST{{$forest->id}}">{{ $forest->name }}</a>
                                             @if (!$loop->last)
                                             ,
@@ -352,10 +352,10 @@ let dotSrc=`
 digraph  {
     @foreach($zones as $zone)
         Z{{ $zone->id }} [label="{{ $zone->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/zoneadmin.png" href="#ZONE{{$zone->id}}"]
-        @foreach($zone->zoneAdminAnnuaires as $annuaire)
+        @foreach($zone->annuaires as $annuaire)
             Z{{ $zone->id }} -> A{{$annuaire->id}}
         @endforeach
-        @foreach($zone->zoneAdminForestAds as $forest)
+        @foreach($zone->forestAds as $forest)
             Z{{ $zone->id }} -> F{{$forest->id}}
         @endforeach
     @endforEach

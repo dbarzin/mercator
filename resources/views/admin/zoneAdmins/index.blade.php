@@ -54,11 +54,11 @@
                                 {!! $zoneAdmin->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($zoneAdmin->zoneAdminAnnuaires as $annuaire)
+                                @foreach($zoneAdmin->annuaires as $annuaire)
                                 <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
                                     {{ $annuaire->name }}
                                 </a>
-                                @if ($zoneAdmin->zoneAdminAnnuaires->last()!=$annuaire)
+                                @if ($zoneAdmin->annuaires->last()!=$annuaire)
                                     ,
                                 @endif
                                 @endforeach
