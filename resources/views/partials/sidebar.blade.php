@@ -216,7 +216,7 @@
             @endcan
             @can('gateway_access')
             <a href="{{ route('admin.gateways.index') }}" class="ps-4 {{ request()->is('admin/gateways*') ? 'active' : '' }}">
-                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.gateway.title') }}</span>
+                <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.gateway.title_short') }}</span>
             </a>
             @endcan
             @can('external_connected_entity_access')
