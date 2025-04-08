@@ -1449,7 +1449,7 @@
 </table>
 <h3 id="administration">Administration</h3>
 <p>The administration view lists the administration of resources, directories and privilege levels of information system users.</p>
-<p><a href="/mercator/images/administration.png"><img src=“/mercator/images/administration.png” width=“400”></a></p>
+<p><a href="/mercator/images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).</p>
 <h4 id="administration-area">Administration area</h4>
 <p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).</p>
@@ -1602,7 +1602,7 @@
 </table>
 <h3 id="logical-infrastructure">Logical infrastructure</h3>
 <p>The logical infrastructure view corresponds to the logical distribution of the network.</p>
-<p><a href="/mercator/images/logical.png"><img src=“/mercator/images/logical.png” width=“400”></a></p>
+<p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
 <p>It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.</p>
 <h4 id="networks">Networks</h4>
 <p>Networks are a set of logically interconnected devices that exchange information.</p>
@@ -1703,82 +1703,82 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du réseau</td>
+<td style="text-align: left;">Name of the subnet</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du réseau</td>
+<td style="text-align: left;">Description of the subnet</td>
 </tr>
 <tr>
 <td style="text-align: left;">address</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Range d'adresse du sous-réseau</td>
+<td style="text-align: left;">Addresses range</td>
 </tr>
 <tr>
 <td style="text-align: left;">default_gateway</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse de la passerelle par défaut</td>
+<td style="text-align: left;">Default gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">ip_allocation_type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type d'allocation des adresses</td>
+<td style="text-align: left;">Type of IP address allocation</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible_exp</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'exploitation</td>
+<td style="text-align: left;">Operations manager</td>
 </tr>
 <tr>
 <td style="text-align: left;">zone</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la zone firewall associée</td>
+<td style="text-align: left;">Name of the firewall zone</td>
 </tr>
 <tr>
 <td style="text-align: left;">dmz</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">DMZ (Yes/No)</td>
 </tr>
 <tr>
 <td style="text-align: left;">wifi</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Wireless</td>
 </tr>
 <tr>
 <td style="text-align: left;">connected_subnets_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Network to which this subnet belongs</td>
 </tr>
 <tr>
 <td style="text-align: left;">gateway_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vars la passerelle</td>
+<td style="text-align: left;">Gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">vlan_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le VLAN associé</td>
+<td style="text-align: left;">Associated VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">network_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le réseau associé</td>
+<td style="text-align: left;">Associated network</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Creation date</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Udate date</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Elimination date</td>
 </tr>
 </tbody>
 </table>
@@ -2321,9 +2321,9 @@
 </table>
 <ul>
 <li>Note:<ul>
-<li>status = 0: “Good”</li>
-<li>status = 1: “Revoked</li>
-<li>status = 2 : “Unknown</li>
+<li>status = 0: "Good"</li>
+<li>status = 1: "Revoked</li>
+<li>status = 2 : "Unknown</li>
 </ul>
 </li>
 </ul>
@@ -2373,7 +2373,7 @@
 </table>
 <h3 id="physical-infrastructure">Physical infrastructure</h3>
 <p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
-<p><a href="/mercator/images/physical.png"><img src=“/mercator/images/physical.png” width=“700”></a></p>
+<p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>
 <p>This view corresponds to the geographical distribution of network equipment within the various sites.</p>
 <h4 id="sites">Sites</h4>
 <p>Sites are geographical locations that bring together a group of people and/or resources.</p>
