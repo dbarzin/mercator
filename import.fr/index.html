@@ -90,9 +90,9 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#comportement-a-limport">Comportement à l’import</a>
     </li>
-        </ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-den-tete-attendu">Exemple d’en-tête attendu</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exemple-den-tete-excel-attendu">Exemple d’en-tête Excel attendu</a>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -133,7 +133,7 @@
 <li class="i18n-link i18n-link-found i18n-link-en"><a href="../import/">English</a></li>
 </ul>
 <h2 id="interface-import-export-de-donnees">Interface Import / Export de Données</h2>
-<p>Cette interface permet d’<strong>importer</strong> et d’<strong>exporter</strong> des données de la cartographie du système d'information via des fichiers Excel.</p>
+<p>Cette interface permet d’<strong>importer</strong> et d’<strong>exporter</strong> des données de la cartographie du système d'information via des feuilles de calcul.</p>
 <h3 id="acces-a-la-page">Accès à la page</h3>
 <p>La page d'import / export des données est accessible via le menu "Configration" -&gt; "Import".</p>
 <p><a href="/mercator/images/import.fr.png"><img src="/mercator/images/import.fr.png" width="700"></a></p>
@@ -150,10 +150,10 @@
 <p>Le fichier contient : une <strong>première ligne</strong> d'en-têtes (colonnes) et les données de l'objet.</p>
 <p>Les colonnes <code>created_at</code>, <code>updated_at</code>, <code>deleted_at</code> sont automatiquement <strong>exclues</strong></p>
 <h3 id="import-de-donnees">Import de données</h3>
-<p>Permet de mettre à jour ou d’ajouter des données à partir d’un fichier Excel structuré.</p>
+<p>Permet de mettre à jour ou d’ajouter des données à partir d’une feuille de calcul ou d'un fichier CSV.</p>
 <h4 id="etapes_1">Étapes</h4>
 <ol>
-<li>Choisir le <strong>fichier Excel</strong> à importer.</li>
+<li>Choisir le <strong>fichier</strong> à importer.</li>
 <li>Cliquer sur <strong>Importer</strong>.</li>
 </ol>
 <h4 id="format-attendu-du-fichier">Format attendu du fichier</h4>
@@ -186,7 +186,7 @@
 </tbody>
 </table>
 <p>Si une erreur est détectée dans le fichier, aucune modification n’est appliquée.</p>
-<h3 id="exemple-den-tete-excel-attendu">Exemple d’en-tête Excel attendu</h3>
+<h4 id="exemple-den-tete-attendu">Exemple d’en-tête attendu</h4>
 <pre><code class="language-plaintext">id, name, description, type, reference
 </code></pre>
               
