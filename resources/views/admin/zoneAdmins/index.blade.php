@@ -64,11 +64,11 @@
                                 @endforeach
                             </td>
                             <td>
-                                @foreach($zoneAdmin->zoneAdminforestAds as $forestAd)
+                                @foreach($zoneAdmin->forestAds as $forestAd)
                                 <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                                     {{ $forestAd->name ?? '' }}
                                 </a>
-                                @if ($zoneAdmin->zoneAdminforestAds->last()!=$forestAd)
+                                @if ($zoneAdmin->forestAds->last()!=$forestAd)
                                     ,
                                 @endif
                                 @endforeach
