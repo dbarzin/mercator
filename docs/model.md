@@ -2,15 +2,15 @@
 
 [<img src="/mercator/images/model.png" width="700">](/mercator/images/model.png)
 
-### RGPD view
+### GDPR view
 
-The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.
+The GDPR view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.
 
-This view is used to fulfill the obligations set out in article 30 of the RGPD.
+This view is used to fulfill the obligations set out in article 30 of the GDPR.
 
 #### Register
 
-The register of processing activities contains the information required by article 30.1 of the RGPD.
+The register of processing activities contains the information required by article 30.1 of the GDPR.
 
 Table *data_processing* :
 
