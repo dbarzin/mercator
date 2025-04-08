@@ -1348,7 +1348,7 @@ return [
             "description_helper" => "",
             "dmz" => "DMZ",
             "dmz_helper" => "Demilitarized Zone (Yes / No)",
-            "gateway" => "Bridge",
+            "gateway" => "Gateway",
             "gateway_helper" => "",
             "ip_allocation_type" => "Type of IP address allocation",
             "ip_allocation_type_helper" => "",
