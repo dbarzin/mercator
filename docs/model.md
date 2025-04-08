@@ -784,17 +784,17 @@ Table *physical_servers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du serveur |
-| description          | longtext     | Description du serveur |
-| type                 | varchar(255) | Type / modèle du serveur |
-| responsible          | varchar(255) | Responsable du serveur |
-| configuration        | longtext     | Configuration du serveur |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| bay_id               | int unsigned | Référence vers la baie |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical server |
+| description          | longtext     | Description of physical server |
+| type                 | varchar(255) | Type / model of server |
+| responsible          | varchar(255) | Person/Team responsible for the server |
+| configuration        | longtext     | Configuration of the server |
+| site_id              | int unsigned | Reference to the site |
+| building_id          | int unsigned | Reference to the building / room |
+| bay_id               | int unsigned | Reference to the rack |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Workstations
 
@@ -805,14 +805,14 @@ Table *workstations* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du poste de travail |
-| description          | longtext     | Description du poste de travail |
-| type                 | varchar(255) | Type / modèle du poste de travail |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of workstation |
+| description          | longtext     | Description of workstation |
+| type                 | varchar(255) | Type / model of workstation |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### Storage infrastructures
@@ -824,13 +824,13 @@ Table *storage_devices* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'infrastructure de stockage |
-| description          | longtext     | Description de l'infrastructure de stockage |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of storage infrastructure |
+| description          | longtext     | Description of the storage infrastructure |
+| site_id              | int unsigned | Reference to the site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Peripherals
 
@@ -841,15 +841,15 @@ Table *peripherals* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du périphérique |
-| description          | longtext     | Description du périphérique |
-| type                 | varchar(255) | Type / modèle du périphériques |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| bay_id               | int unsigned | Référence vers la baie |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of peripheral |
+| description          | longtext     | Description of peripheral |
+| type                 | varchar(255) | Type / model of peripheral |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| bay_id               | int unsigned | Reference to rack |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Phones
 
@@ -858,14 +858,14 @@ Fixed and mobile phones belonging to the organization.
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du téléphone |
-| description          | longtext     | Description du téléphone |
-| type                 | varchar(255) | Type / modèle du téléphone |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of telephone |
+| description          | longtext     | Description of telephone |
+| type                 | varchar(255) | Type / model of telephone |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical switches
 
@@ -876,14 +876,14 @@ Table *physical_switches* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du commutateur physique |
-| description          | longtext     | Description du commutateur physique |
-| type                 | varchar(255) | Type / modèle du commutateur physique |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical switch |
+| description          | longtext     | Description of physical switch |
+| type                 | varchar(255) | Type / model of physical switch |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical routers
 
@@ -894,14 +894,14 @@ Table *physical_routers* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du routeur physique |
-| description          | longtext     | Description du routeur physique |
-| type                 | varchar(255) | Type / modèle du routeur physique |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of physical router |
+| description          | longtext     | Description of physical router |
+| type                 | varchar(255) | Type / model of physical router |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### WiFi terminals
 
@@ -912,14 +912,14 @@ Table *wifi_terminals* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de la borne wifi |
-| description          | longtext     | Description de la bornes wifi |
-| type                 | varchar(255) | Type / modèle de la bornes wifi |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of WiFi hotspot |
+| description          | longtext     | Description of WiFi hotspot |
+| type                 | varchar(255) | Type / model of WiFi hotspot |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### Physical security equipment
 
@@ -932,14 +932,14 @@ Table *physical_security_devices* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom de l'équipement de sécurité |
-| description          | longtext     | Description de l'équipement de sécurité |
-| type                 | varchar(255) | Type / modèle de l'équipement de sécurité |
-| site_id              | int unsigned | Référence vers le site |
-| building_id          | int unsigned | Référence vers le building / salle |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of security equipment |
+| description          | longtext     | Description of security equipment  |
+| type                 | varchar(255) | Type / model of security equipment  |
+| site_id              | int unsigned | Reference to site |
+| building_id          | int unsigned | Reference to building / room |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### WAN
 
@@ -950,10 +950,10 @@ Table *wans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du WAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of WAN |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 
 #### MAN
@@ -965,10 +965,10 @@ Table *mans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du MAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of MAN |
+| created_at           | timestamp    | Date of creation|
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
 
 #### LAN
 
@@ -979,8 +979,8 @@ Table *lans* :
 | Champ                | Type         | Description      |
 |:---------------------|:-------------|:-----------------|
 | id                   | int unsigned | auto_increment |
-| name                 | varchar(255) | Nom du LAN |
-| description          | longtext     | Description du LAN |
-| created_at           | timestamp    | Date de création |
-| updated_at           | timestamp    | Date de mise à jour |
-| deleted_at           | timestamp    | Date de suppression |
+| name                 | varchar(255) | Name of LAN |
+| description          | longtext     | Description of LAN |
+| created_at           | timestamp    | Date of creation |
+| updated_at           | timestamp    | Date of update |
+| deleted_at           | timestamp    | Date of deletion |
