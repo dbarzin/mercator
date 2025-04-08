@@ -22,7 +22,7 @@ The application flow view describes the information flows between different appl
 
 The administration view lists the perimeters and privilege levels of users and administrators.
 
-### Loggical view
+### Logical view
 
 The logical infrastructure view illustrates the logical partitioning of networks, notably through the definition of IP address ranges, VLANs and filtering and routing functions;
 
