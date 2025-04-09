@@ -17,15 +17,8 @@
                 </select>
             </div>
         </div>
-        <canvas id="ipv4Heatmap" width="800" height="800" style="background: white; border: 1px solid #ccc;"></canvas>
-        <div class="mt-3">
-          <label>Densité :</label>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 0.8rem;">0</span>
-            <div style="flex: 1; height: 20px; background: linear-gradient(to right, rgba(0,123,255,0.1), rgba(0,123,255,1)); border: 1px solid #ccc;"></div>
-            <span style="font-size: 0.8rem;">5+</span>
-          </div>
-        </div>
+        <canvas id="ipv4Heatmap" width="800" height="600" style="background: white; border: 1px solid #ccc;"></canvas>
+        <div id="legend" class="mt-3"></div>
     </div>
 </div>
 @endsection
@@ -36,6 +29,26 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+  // --- IP de test dans 10.0.0.0/16 ---
+  const ipList = [
+    '10.0.0.1', '10.0.0.2',
+    '10.1.1.1',
+    '10.2.0.1', '10.2.0.2', '10.2.0.3',
+    '10.10.10.10', '10.10.10.11', '10.10.10.12', '10.10.10.13',
+    '10.20.20.1', '10.20.21.1',
+    '10.20.30.1', '10.20.61.1',
+    '10.10.90.1', '10.21.81.1',
+    '10.40.20.1', '10.23.21.1',
+    '10.48.20.1', '10.123.21.1',
+    '10.49.20.1', '10.123.21.1',
+    '10.49.120.1', '10.123.21.1',
+    '10.249.20.1', '10.23.28.1',
+    '10.149.20.1', '10.223.26.1',
+    '10.100.100.100'
+  ];
+
+
   const canvas = document.getElementById('ipv4Heatmap');
   const ctx = canvas.getContext('2d');
 
@@ -69,15 +82,42 @@ document.addEventListener('DOMContentLoaded', function () {
     return (parts[1] << 8) + parts[2]; // 10.X.Y.Z
   }
 
-  // --- IP de test dans 10.0.0.0/16 ---
-  const ipList = [
-    '10.0.0.1', '10.0.0.2',
-    '10.1.1.1',
-    '10.2.0.1', '10.2.0.2', '10.2.0.3',
-    '10.10.10.10', '10.10.10.11', '10.10.10.12', '10.10.10.13',
-    '10.20.20.1', '10.20.21.1',
-    '10.100.100.100'
-  ];
+
+// Regrouper les IPs par bloc /24
+const blocks = {}; // index → { v, ipList }
+
+ipList.forEach(ip => {
+  const parts = ip.split('.').map(Number);
+  const index = (parts[1] << 8) + parts[2]; // pour Hilbert
+  const key = `${parts[1]}.${parts[2]}`;   // bloc /24
+
+  if (!blocks[index]) {
+    blocks[index] = { v: 0, ipList: [], key };
+  }
+
+  blocks[index].v += 1;
+  blocks[index].ipList.push(ip);
+});
+
+// --- Calcul du chemin de la courbe de Hilbert ---
+const orderHeatmap = 8;
+const orderCurve = 5;
+const scale = Math.pow(2, orderHeatmap - orderCurve);
+
+const fullHilbertPath = [];
+for (let i = 0; i < Math.pow(2, orderCurve * 2); i++) {
+  const { x, y } = hilbertIndexToXY(i, orderCurve);
+  fullHilbertPath.push({
+    x: x * scale + scale / 2,
+    y: y * scale + scale / 2
+  });
+}
+
+// Position des points
+const points = Object.entries(blocks).map(([idx, { v, ipList, key }]) => {
+  const { x, y } = hilbertIndexToXY(parseInt(idx), orderHeatmap);
+  return { x, y, v, ipList, block: `10.${key}.0/24` };
+});
 
   // Regrouper les occurrences
   const counts = {};
@@ -86,25 +126,27 @@ document.addEventListener('DOMContentLoaded', function () {
     counts[idx] = (counts[idx] || 0) + 1;
   });
 
-  const order = 8;
-  const points = Object.entries(counts).map(([idx, v]) => {
-    const { x, y } = hilbertIndexToXY(parseInt(idx), order);
-    return { x, y, v: v };
-  });
 
-backgroundColor(ctx) {
-  const value = ctx.raw?.v ?? 0;
-  const alpha = Math.min(1, value / 5); // ← adapte ici
-  return `rgba(0, 123, 255, ${alpha})`;
-}
+// Chartjs
   const chart = new Chart(ctx, {
     type: 'matrix',
     data: {
-      datasets: [{
+      datasets: [
+        {
+          label: 'Courbe de Hilbert',
+          data: [],
+          type: 'line',
+          borderColor: 'rgba(0,0,0,0.2)',
+          borderWidth: 1,
+          pointRadius: 0,
+          tension: 0, // pour garder les angles bruts
+          order: 0
+        },
+        {
         label: 'IPv4 Hilbert Heatmap',
         data: points,
-        width: () => 3,
-        height: () => 3,
+        width: () => 10,
+        height: () => 10,
         backgroundColor(ctx) {
           const value = ctx.raw?.v ?? 0;
           const alpha = Math.min(1, value / 5);
@@ -115,41 +157,104 @@ backgroundColor(ctx) {
     },
     options: {
       responsive: false,
-      animation: {
-        duration: 800,
-        easing: 'easeOutQuart'
-      },
+      animation: false,
       plugins: {
         legend: { display: false },
         tooltip: {
           callbacks: {
             title: () => '',
+
             label(ctx) {
-              const { x, y, v } = ctx.raw;
-              return `Bloc (${x}, ${y}) : ${v} IP`;
+              const { block, v, ipList } = ctx.raw;
+              const shownIps = ipList.length > 5 ? ipList.slice(0, 5).join(', ') + ', …' : ipList.join(', ');
+
+              return [
+                `Bloc : ${block}`,
+                `Nombre d'adresses : ${v}`,
+                `IPs : ${shownIps}`
+              ];
             }
           }
-        }
+        },
       },
       layout: { padding: 0 },
 
-      scales: {
-        x: {
-          type: 'linear',
-          min: 0,
-          max: 256,
-          display: false
-        },
-        y: {
-          type: 'linear',
-          min: 0,
-          max: 256,
-          reverse: true,
-          display: false
-        }
-      }
+
+
+scales: {
+  x: {
+    type: 'linear',
+    min: 0,
+    max: 256,
+    display: true,
+    grid: {
+      display: true,
+      color: 'rgba(0, 0, 0, 0.1)',
+      lineWidth: 0.5,
+      drawTicks: false,
+    },
+    ticks: {
+      stepSize: 32, // lignes tous les 32 blocs (optionnel)
+      display: true,
+      callback: val => val % 64 === 0 ? val : '',
+    }
+  },
+  y: {
+    type: 'linear',
+    min: 0,
+    max: 256,
+    reverse: true,
+    display: true,
+    grid: {
+      display: true,
+      color: 'rgba(0, 0, 0, 0.1)',
+      lineWidth: 0.5,
+      drawTicks: false,
+    },
+    ticks: {
+      stepSize: 32,
+      display: true,
+      callback: val => val % 64 === 0 ? val : '',
+    }
+  }
+}
+
+
+
     }
   });
+
+
+// Affichage de la courbe
+let step = 0;
+const hilbertDataset = chart.data.datasets[0];
+
+const interval = setInterval(() => {
+  if (step >= fullHilbertPath.length) {
+    clearInterval(interval);
+    return;
+  }
+
+  hilbertDataset.data.push(fullHilbertPath[step]);
+  chart.update('none'); // update sans animation interne
+  step++;
+}, 1); // ← vitesse (en ms par point). Essaie 1–5ms selon ton goût
+
+
+// Créer la légende dynamiquement
+const legendDiv = document.getElementById('legend');
+const maxV = Math.max(...points.map(p => p.v));
+    legendDiv.innerHTML = `
+      <label>Densité :</label>
+      <div style="display: flex; align-items: center; gap: 8px; width:600px">
+        <span style="font-size: 0.8rem;">0</span>
+        <div style="flex: 1; height: 20px; background: linear-gradient(to right, rgba(0,123,255,0.1), rgba(0,123,255,1)); border: 1px solid #ccc;"></div>
+        <span style="font-size: 0.8rem;">${maxV}</span>
+      </div>
+    `;
+
+
 });
+
 </script>
 @endsection
