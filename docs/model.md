@@ -303,6 +303,7 @@ Table *m_applications* :
 | security_need_a     | int          | Availability |
 | security_need_t     | int          | Traceability |
 | type            | varchar(255) | Type of application |
+| attributes      | varchar(255) | Attributes of the application |
 | technology      | varchar(255) | Technology |
 | external        | varchar(255) | External |
 | users           | varchar(255) | Number of users and type |
