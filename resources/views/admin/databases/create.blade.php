@@ -228,7 +228,7 @@
         <div class="card-body">
 
             <div class="form-group">
-                <table cellspacing="5" cellpadding="5" border="0" width='50%'>
+                <table cellspacing="5" cellpadding="5" border="0">
                     <tr>
                         <td width='20%'>
                             <label class="recommended" for="security_need">{{ trans('cruds.database.fields.security_need') }}</label>

@@ -14,7 +14,6 @@
                     </div>
                 @endif
 
-                @if (auth()->user()->granularity>=2)
                 <div class="col-sm-5">
                     <form action="/admin/report/information_system">
                         <table class="table table-bordered table-striped">
@@ -43,7 +42,6 @@
                         </table>
                     </form>
                 </div>
-                @endif
                 <div class="graphviz" id="graph"></div>
             </div>
         </div>
@@ -166,7 +164,6 @@
                                     <td><b>{{ trans('cruds.process.fields.in_out') }}</b></td>
                                     <td>{!! $process->in_out !!}</td>
                                 </tr>
-                                @if (auth()->user()->granularity>=3)
                                 <tr>
                                     <td><b>{{ trans('cruds.process.fields.activities') }}</b></td>
                                     <td>
@@ -178,7 +175,6 @@
                                         @endforeach
                                     </td>
                                 </tr>
-                                @endif
                                 <tr>
                                     <td><b>{{ trans('cruds.process.fields.entities') }}</b></td>
                                     <td>
@@ -346,7 +342,6 @@
                                     @endif
                                 </td>
                             </tr>
-                            @if (auth()->user()->granularity>=3)
                             <tr>
                                 <td>
                                     <b>{{ trans('cruds.operation.fields.activities') }}</b>
@@ -362,7 +357,6 @@
                                     @endforeach
                                 </td>
                             </tr>
-                            @endif
                             <tr>
                                 <td>
                                     <b>{{ trans('cruds.operation.fields.tasks') }}</b>
@@ -584,33 +578,24 @@
 <script>
 let dotSrc=`
 digraph  {
-    @if (auth()->user()->granularity>=2)
     @foreach($macroProcessuses as $macroProcess)
         MP{{ $macroProcess->id }} [label="{{ $macroProcess->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/macroprocess.png"  href="#MACROPROCESS{{ $macroProcess->id }}"]
     @endforeach
-    @endif
     @foreach($processes as $process)
         P{{ $process->id }} [label="{{ $process->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/process.png"  href="#PROCESS{{ $process->id }}"]
-        @if(auth()->user()->granularity==3)
             @foreach($process->activities as $activity)
                 P{{$process->id}} -> A{{$activity->id}}
             @endforeach
-        @endif
         @foreach($process->information as $information)
             P{{ $process->id }} -> I{{ $information->id }}
         @endforeach
-        @if (auth()->user()->granularity>=2)
             @if ($process->macroprocess_id!=null)
                 MP{{ $process->macroprocess_id }} -> P{{$process->id}}
             @endif
-        @endif
-        @if (auth()->user()->granularity<=2)
             @foreach($process->operations as $operation)
                 P{{ $process->id }} -> O{{ $operation->id }}
             @endforeach
-        @endif
     @endforeach
-    @if (auth()->user()->granularity>=3)
     @foreach($activities as $activity)
         A{{ $activity->id }} [label="{{ $activity->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/activity.png"  href="#ACTIVITY{{ $activity->id }}"]
         @foreach($activity->operations as $operation)
@@ -620,30 +605,21 @@ digraph  {
             A{{ $activity->id }} -> P{{ $operation->process->id }}
         @endif
     @endforeach
-    @endif
     @foreach($operations as $operation)
         O{{ $operation->id }} [label="{{ $operation->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/operation.png"  href="#OPERATION{{ $operation->id }}"]
-        @if (auth()->user()->granularity==3)
         @foreach($operation->tasks as $task)
             O{{ $operation->id }} -> T{{ $task->id }}
         @endforeach
-        @endif
-        @if (auth()->user()->granularity>=2)
         @foreach($operation->actors as $actor)
             O{{ $operation->id }} -> ACT{{ $actor->id }}
         @endforeach
-        @endif
     @endforeach
-    @if (auth()->user()->granularity==3)
     @foreach($tasks as $task)
         T{{ $task->id }} [label="{{ $task->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/task.png"  href="#TASK{{ $task->id }}"]
     @endforeach
-    @endif
-    @if (auth()->user()->granularity>=2)
     @foreach($actors as $actor)
         ACT{{ $actor->id }} [label="{{ $actor->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/actor.png"  href="#ACTOR{{ $actor->id }}"]
     @endforeach
-    @endif
     @foreach($informations as $information)
         I{{ $information->id }} [label="{{ $information->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/information.png"  href="#INFORMATION{{ $information->id }}"]
     @endforeach

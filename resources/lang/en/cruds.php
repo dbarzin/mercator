@@ -1152,7 +1152,7 @@ return [
             'destination_helper' => 'Recipient of the relationship',
             'importance' => 'Importance',
             'importance_helper' => '',
-            'importance_level' => ['critical' => 'Critical', 'high' => 'Strong', 'low' => 'Low', 'medium' => 'Way'],
+            'importance_level' => ['critical' => 'Critical', 'high' => 'Strong', 'low' => 'Low', 'medium' => 'Medium'],
             'link' => 'Link',
             'name' => 'Name',
             'name_helper' => 'Name of the relationship',

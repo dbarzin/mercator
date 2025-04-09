@@ -711,7 +711,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="WIFI{{ $wifiTerminal->id }}">
                                 <th colspan="2">
-                                    <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
+                                    <a href="{{ route('admin.wifi-terminals.show', $wifiTerminal->id) }}">{{ $wifiTerminal->name }}</a>
                                 </th>
                             </thead>
                             <tbody>
