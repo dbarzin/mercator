@@ -26,7 +26,7 @@ class MApplicationEvent extends Model
         'updated_at',
     ];
 
-    public function application(): BelongsToMany
+    public function application(): BelongsTo
     {
         return $this->belongsTo(MApplication::class, 'm_application_id');
     }
