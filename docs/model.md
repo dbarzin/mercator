@@ -302,16 +302,26 @@ Table *m_applications* :
 | security_need_i     | int          | Integrity |
 | security_need_a     | int          | Availability |
 | security_need_t     | int          | Traceability |
+| ecurity_need_auth     | int          | Authenticity |
 | type            | varchar(255) | Type of application |
+| attributes      | varchar(255) | Attributes of the application |
 | technology      | varchar(255) | Technology |
 | external        | varchar(255) | External |
 | users           | varchar(255) | Number of users and type |
 | documentation   | varchar(255) | Link to documentation |
 | entity_resp_id  | int unsigned | Entity responsible |
 | responsible         | varchar(255) | Person/team responsible |
+| functional_referent        | varchar(255) | Functional referent |
+| editor         | varchar(255) | Application's editor |
 | application_block_id | int unsigned | Group of application |
 | install_date    | datetime    | Date of installation |
 | update_date     | datetime    | Date of upgrade |
+| next_update     | datetime    | Date of next planned upgrade |
+| rto             | int          | Recovery Time Objective |
+| rpo             | int          | Recovery Point Objective |
+| vendor         | varchar(255) | Application's vendor |
+| product         | varchar(255) | Product name |
+| patching_frequency        | int | Patching frequency |
 | created_at      | timestamp    | Date of creation |
 | updated_at      | timestamp    | Date of update |
 | deleted_at      | timestamp    | Date of deletion |
