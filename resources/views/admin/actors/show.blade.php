@@ -66,6 +66,19 @@
                             {{ $actor->type }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.actor.fields.operations') }}
+                        </th>
+                        <td>
+                        @foreach($actor->operations as $operation)
+                            <a href="{{ route('admin.operations.show', $operation->id) }}">{{ $operation->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
