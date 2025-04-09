@@ -23,9 +23,11 @@ class UpdateRelationRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
+                /* Not unique
                 Rule::unique('relations')
                     ->ignore($this->route('relation')->id ?? $this->id)
                     ->whereNull('deleted_at'),
+                */
             ],
             'importance' => [
                 'nullable',
