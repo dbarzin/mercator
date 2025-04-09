@@ -134,7 +134,7 @@ const maxV = Math.max(...points.map(p => p.v));
 
 legendDiv.innerHTML = `
   <label>Densité :</label>
-  <div style="display: flex; align-items: center; gap: 8px; width:600px">
+  <div style="display: flex; align-items: center; gap: 8px; width:800px">
     <span style="font-size: 0.8rem;">0</span>
     <div style="flex: 1; height: 20px; background: linear-gradient(to right, rgba(0,123,255,0.1), rgba(0,123,255,1)); border: 1px solid #ccc;"></div>
     <span style="font-size: 0.8rem;">${maxV}</span>
@@ -148,7 +148,7 @@ legendDiv.innerHTML = `
       datasets: [
         {
           label: 'Courbe de Hilbert',
-          data: [],
+          data: fullHilbertPath, // [],
           type: 'line',
           borderColor: 'rgba(0,0,0,0.2)',
           borderWidth: 1,
@@ -250,22 +250,22 @@ scales: {
     }
   });
 
+/*
+    // Affichage de la courbe
+    let step = 0;
+    const hilbertDataset = chart.data.datasets[0];
 
-// Affichage de la courbe
-let step = 0;
-const hilbertDataset = chart.data.datasets[0];
+    const interval = setInterval(() => {
+      if (step >= fullHilbertPath.length) {
+        clearInterval(interval);
+        return;
+      }
 
-const interval = setInterval(() => {
-  if (step >= fullHilbertPath.length) {
-    clearInterval(interval);
-    return;
-  }
-
-  hilbertDataset.data.push(fullHilbertPath[step]);
-  chart.update('none'); // update sans animation interne
-  step++;
-}, 1); // ← vitesse (en ms par point). Essaie 1–5ms selon ton goût
-
+      hilbertDataset.data.push(fullHilbertPath[step]);
+      chart.update('none'); // update sans animation interne
+      step++;
+    }, 0.01);
+*/
 
 
 
