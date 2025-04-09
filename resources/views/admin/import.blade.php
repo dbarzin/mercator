@@ -135,7 +135,7 @@ const objectMap = {
         { id: 'Peripheral', label: "{{ trans('cruds.peripheral.title') }}" },
         { id: 'Phone', label: "{{ trans('cruds.phone.title') }}" },
         { id: 'PhysicalRouter', label: "{{ trans('cruds.physicalRouter.title') }}" },
-        { id: 'Switch', label: "{{ trans('cruds.physicalSwitch.title') }}" },
+        { id: 'PhysicalSwitch', label: "{{ trans('cruds.physicalSwitch.title') }}" },
         { id: 'PhysicalSecurityDevice', label: "{{ trans('cruds.physicalSecurityDevice.title') }}" },
         { id: 'WifiTerminal', label: "{{ trans('cruds.wifiTerminal.title') }}" },
         { id: 'PhysicalLink', label: "{{ trans('cruds.physicalLink.title') }}" },
