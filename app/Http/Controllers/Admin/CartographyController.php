@@ -181,7 +181,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1);
             }
 
-            // ===============================xxxxxx
+            // ===============================
             $section->addTitle(trans('cruds.entity.title'), 2);
             $section->addText(trans('cruds.entity.description'));
             $section->addTextBreak(1);
@@ -225,7 +225,7 @@ class CartographyController extends Controller
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
                 foreach ($entity->processes as $process) {
                     $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
-                    if (! $loop->last) {
+                    if ($entity->processes->last() !== $process) {
                         $textRun->addText(', ');
                     }
                 }
