@@ -122,7 +122,7 @@ return [
             'services' => 'Services',
             'services_helper' => 'List of application services delivered by the application',
             'technology' => 'Technology',
-            'technology_helper' => 'Type of technology: loud client, web, etc.',
+            'technology_helper' => 'Type of technology: Cloud client, web, etc.',
             'type' => 'Type of application',
             'type_helper' => 'ex: dev. internal, software, firmware, script, EAI / ESB, etc.',
             'users' => 'Users',
