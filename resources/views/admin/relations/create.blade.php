@@ -156,7 +156,7 @@
         <!---------------------------------------------------------------------------------------------------->
         <div class="card">
             <div class="card-header">
-                Termes du contrat
+                {{ trans('cruds.relation.fields.contract_title') }}
             </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
@@ -208,8 +208,8 @@
             <div class="col-sm-4">
                 <table class="table-narrow" id="dynamicAddRemove">
                     <tr>
-                        <th>Date</th>
-                        <th>Valeur</th>
+                        <th>{{ trans('cruds.relation.fields.date') }}</th>
+                        <th>{{ trans('cruds.relation.fields.value') }}</th>
                         <th></th>
                     </tr>
                     <tr>
