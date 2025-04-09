@@ -312,6 +312,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/network_infrastructure', [Admin\ReportController::class,'networkInfrastructure'])->name('report.view.network-infrastructure');
 
     // Experimental views
+    Route::get('report/heatmap', [Admin\HeatmapController::class,'index'])->name('report.view.heatmap');
+    Route::get('report/heatmap2', [Admin\HeatmapController::class,'index2'])->name('report.view.heatmap2');
+    Route::get('report/heatmap/values', [Admin\HeatmapController::class,'values']);
     Route::get('report/zones', [Admin\ReportController::class,'zones'])->name('report.view.zones');
 
     // Graphs

@@ -19,8 +19,8 @@
                     <div class="form-group" >
                         <label {{ auth()->user()->granularity>=2 ? 'class="recommended"' : ""}} for="application_block_id">{{ trans('cruds.application.fields.application_block') }}</label>
                         <select class="form-control select2 {{ $errors->has('application_block') ? 'is-invalid' : '' }}" name="application_block_id" id="application_block_id">
-                            @foreach($application_blocks as $id => $application_block)
-                            <option value="{{ $id }}" {{ old('application_block_id') == $id ? 'selected' : '' }}>{{ $application_block }}</option>
+                            @foreach($applicationBlocks as $id => $applicationBlock)
+                            <option value="{{ $id }}" {{ old('application_block_id') == $id ? 'selected' : '' }}>{{ $applicationBlock }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('application_block'))
@@ -99,8 +99,8 @@
                     <div class="form-group">
                         <label class="recommended" for="entity_resp_id">{{ trans('cruds.application.fields.entity_resp') }}</label>
                         <select class="form-control select2 {{ $errors->has('entity_resp') ? 'is-invalid' : '' }}" name="entity_resp_id" id="entity_resp_id">
-                            @foreach($entity_resps as $id => $entity_resp)
-                            <option value="{{ $id }}" {{ old('entity_resp_id') == $id ? 'selected' : '' }}>{{ $entity_resp }}</option>
+                            @foreach($entities as $id => $name)
+                            <option value="{{ $id }}" {{ old('entity_resp_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('entity_resp'))

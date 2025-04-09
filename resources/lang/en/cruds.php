@@ -1348,7 +1348,7 @@ return [
             "description_helper" => "",
             "dmz" => "DMZ",
             "dmz_helper" => "Demilitarized Zone (Yes / No)",
-            "gateway" => "Bridge",
+            "gateway" => "Gateway",
             "gateway_helper" => "",
             "ip_allocation_type" => "Type of IP address allocation",
             "ip_allocation_type_helper" => "",
@@ -1363,7 +1363,7 @@ return [
             "vlan_helper" => "Associated VLAN (default: VLAN_1)",
             "wifi" => "Wireless",
             "wifi_helper" => "Access to the Wifi network (yes / no)",
-            "zone" => "Zoned",
+            "zone" => "Zone",
             "zone_helper" => "Firewall zone (ZFB)"
         ],
         'title' => 'Subnets',

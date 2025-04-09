@@ -250,7 +250,7 @@
                     <label for="applications">{{ trans('cruds.physicalServer.fields.logical_servers') }}</label>
                     <select class="form-control select2 {{ $errors->has('logicalServers') ? 'is-invalid' : '' }}" name="logicalServers[]" id="logicalServers" multiple>
                         @foreach($logical_server_list as $id => $name)
-                            <option value="{{ $id }}" {{ (in_array($id, old('logicalServers', [])) || $physicalServer->serversLogicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                            <option value="{{ $id }}" {{ (in_array($id, old('logicalServers', [])) || $physicalServer->logicalServers->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('logicalServers'))

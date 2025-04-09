@@ -181,7 +181,7 @@ class CartographyController extends Controller
                 $section->addTextBreak(1);
             }
 
-            // ===============================xxxxxx
+            // ===============================
             $section->addTitle(trans('cruds.entity.title'), 2);
             $section->addText(trans('cruds.entity.description'));
             $section->addTextBreak(1);
@@ -225,7 +225,7 @@ class CartographyController extends Controller
                 $textRun = $this->addTextRunRow($table, trans('cruds.entity.fields.processes'));
                 foreach ($entity->processes as $process) {
                     $textRun->addLink('PROCESS'.$process->id, $process->name, CartographyController::FANCYLINKSTYLE, null, true);
-                    if (! $loop->last) {
+                    if ($entity->processes->last() !== $process) {
                         $textRun->addText(', ');
                     }
                 }
@@ -1143,10 +1143,10 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
                 foreach ($zones as $zone) {
                     $graph .= ' Z'. $zone->id . '[label="'. $zone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/zoneadmin.png'). '"]';
-                    foreach ($zone->zoneAdminAnnuaires as $annuaire) {
+                    foreach ($zone->annuaires as $annuaire) {
                         $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
                     }
-                    foreach ($zone->zoneAdminForestAds as $forest) {
+                    foreach ($zone->forestAds as $forest) {
                         $graph .= ' Z' . $zone->id . '->F' . $forest->id;
                     }
                 }
@@ -1183,18 +1183,18 @@ class CartographyController extends Controller
 
                     // Annuaires
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.annuaires'));
-                    foreach ($zone->zoneAdminAnnuaires as $annuaire) {
+                    foreach ($zone->annuaires as $annuaire) {
                         $textRun->addLink('ANNUAIRE'.$annuaire->id, $annuaire->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($zone->zoneAdminAnnuaires->last() !== $annuaire) {
+                        if ($zone->annuaires->last() !== $annuaire) {
                             $textRun->addText(', ');
                         }
                     }
 
                     // Forets
                     $textRun = $this->addTextRunRow($table, trans('cruds.zoneAdmin.fields.forests'));
-                    foreach ($zone->zoneAdminForestAds as $forest) {
+                    foreach ($zone->forestAds as $forest) {
                         $textRun->addLink('FOREST'.$forest->id, $forest->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($zone->zoneAdminForestAds->last() !== $forest) {
+                        if ($zone->forestAds->last() !== $forest) {
                             $textRun->addText(', ');
                         }
                     }
@@ -2115,9 +2115,9 @@ class CartographyController extends Controller
 
                     // Serveurs logiques
                     $textRun = $this->addTextRunRow($table, trans('cruds.physicalServer.fields.logical_servers'));
-                    foreach ($server->serversLogicalServers as $logicalServer) {
+                    foreach ($server->logicalServers as $logicalServer) {
                         $textRun->addLink('LOGICAL_SERVER'.$logicalServer->id, $logicalServer->name, CartographyController::FANCYLINKSTYLE, null, true);
-                        if ($server->serversLogicalServers->last() !== $logicalServer) {
+                        if ($server->logicalServers->last() !== $logicalServer) {
                             $textRun->addText(', ');
                         }
                     }

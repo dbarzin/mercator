@@ -34,7 +34,7 @@ class Man extends Model
         'deleted_at',
     ];
 
-    public function mansWans(): BelongsToMany
+    public function Wans(): BelongsToMany
     {
         return $this->belongsToMany(Wan::class)->orderBy('name');
     }

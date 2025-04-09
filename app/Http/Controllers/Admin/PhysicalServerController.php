@@ -85,7 +85,7 @@ class PhysicalServerController extends Controller
 
         $request->merge($physicalServer->only($physicalServer->getFillable()));
         $request->merge(['applications' => $physicalServer->applications()->pluck('id')->unique()->toArray()]);
-        $request->merge(['logicalServers' => $physicalServer->serversLogicalServers()->pluck('id')->unique()->toArray()]);
+        $request->merge(['logicalServers' => $physicalServer->logicalServers()->pluck('id')->unique()->toArray()]);
         $request->flash();
 
         return view(
@@ -108,7 +108,7 @@ class PhysicalServerController extends Controller
     {
         $physicalServer = PhysicalServer::create($request->all());
         $physicalServer->applications()->sync($request->input('applications', []));
-        $physicalServer->serversLogicalServers()->sync($request->input('logicalServers', []));
+        $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -152,7 +152,7 @@ class PhysicalServerController extends Controller
     {
         $physicalServer->update($request->all());
         $physicalServer->applications()->sync($request->input('applications', []));
-        $physicalServer->serversLogicalServers()->sync($request->input('logicalServers', []));
+        $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
 
         return redirect()->route('admin.physical-servers.index');
     }
@@ -161,7 +161,7 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServer->load('site', 'building', 'bay', 'serversLogicalServers');
+        $physicalServer->load('site', 'building', 'bay', 'logicalServers');
 
         return view('admin.physicalServers.show', compact('physicalServer'));
     }

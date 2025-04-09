@@ -62,7 +62,7 @@ class ManController extends Controller
     {
         abort_if(Gate::denies('man_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $man->load('lans', 'mansWans');
+        $man->load('lans', 'wans');
 
         return view('admin.mans.show', compact('man'));
     }

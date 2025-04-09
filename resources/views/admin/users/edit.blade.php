@@ -48,7 +48,7 @@
                 <select class="form-control select2 {{ $errors->has('language') ? 'is-invalid' : '' }}" name="language" id="language">
                     <option value="en" {{ $user->language == 'en' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_en") }}</option>
                     <option value="fr" {{ $user->language == 'fr' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_fr") }}</option>
-                    <option value="de" {{ $user->language == 'de' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_de") }}</option>
+                    <!-- option value="de" {{ $user->language == 'de' ? 'selected' : '' }}>{{ trans("cruds.user.fields.language_de") }}</option -->
                 </select>
                 @if($errors->has('language'))
                     <div class="invalid-feedback">

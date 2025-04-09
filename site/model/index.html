@@ -58,7 +58,7 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Data model</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#rgpd-view">RGPD view</a>
+    <li class="toctree-l2"><a class="reference internal" href="#gdpr-view">GDPR view</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#register">Register</a>
     </li>
@@ -98,11 +98,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#application">Application</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#service-applicatif">Service applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#application-services">Application services</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#module-applicatif">Module applicatif</a>
+    <li class="toctree-l3"><a class="reference internal" href="#application-module">Application module</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#base-de-donnees">Base de données</a>
+    <li class="toctree-l3"><a class="reference internal" href="#database">Database</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a>
     </li>
@@ -186,7 +186,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../reports/">Rapports</a>
+                <li class="toctree-l1"><a class="reference internal" href="../reports/">Reports</a>
                 </li>
               </ul>
               <ul>
@@ -234,11 +234,11 @@
 </ul>
 <h2 id="data-model">Data model</h2>
 <p><a href="/mercator/images/model.png"><img src="/mercator/images/model.png" width="700"></a></p>
-<h3 id="rgpd-view">RGPD view</h3>
-<p>The RGPD view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.</p>
-<p>This view is used to fulfill the obligations set out in article 30 of the RGPD.</p>
+<h3 id="gdpr-view">GDPR view</h3>
+<p>The GDPR view contains all the data required to maintain the data processing register, and provides a link with the processes, applications and information used by the information system.</p>
+<p>This view is used to fulfill the obligations set out in article 30 of the GDPR.</p>
 <h4 id="register">Register</h4>
-<p>The register of processing activities contains the information required by article 30.1 of the RGPD.</p>
+<p>The register of processing activities contains the information required by article 30.1 of the GDPR.</p>
 <p>Table <em>data_processing</em> :</p>
 <table>
 <thead>
@@ -257,17 +257,17 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Treatment name</td>
+<td style="text-align: left;">Processing name</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description of treatment</td>
+<td style="text-align: left;">Processing description</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Responsable du traitement</td>
+<td style="text-align: left;">Responsible person for processing</td>
 </tr>
 <tr>
 <td style="text-align: left;">purpose</td>
@@ -546,7 +546,7 @@
 <tr>
 <td style="text-align: left;">security_need_t</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Tracability level need</td>
+<td style="text-align: left;">Traceability level need</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
@@ -556,7 +556,7 @@
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date updated</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -629,12 +629,12 @@
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -758,7 +758,7 @@
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -841,12 +841,12 @@
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">creation date</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date updated</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -895,12 +895,12 @@
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date created</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date updated</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -989,12 +989,12 @@
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1043,7 +1043,7 @@
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
@@ -1074,108 +1074,108 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'application</td>
+<td style="text-align: left;">Name of the application</td>
 </tr>
 <tr>
 <td style="text-align: left;">version</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Version de l'application</td>
+<td style="text-align: left;">Version of the application</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'application</td>
+<td style="text-align: left;">Description</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Confidentialité</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_i</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Intégrité</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_a</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Disponibilité</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_t</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Traçabilité</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type d'application</td>
+<td style="text-align: left;">Type of application</td>
 </tr>
 <tr>
 <td style="text-align: left;">technology</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Technologie</td>
+<td style="text-align: left;">Technology</td>
 </tr>
 <tr>
 <td style="text-align: left;">external</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Externe</td>
+<td style="text-align: left;">External</td>
 </tr>
 <tr>
 <td style="text-align: left;">users</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nombre d'utilisateurs et type</td>
+<td style="text-align: left;">Number of users and type</td>
 </tr>
 <tr>
 <td style="text-align: left;">documentation</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Lien vers la documentation</td>
+<td style="text-align: left;">Link to documentation</td>
 </tr>
 <tr>
 <td style="text-align: left;">entity_resp_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Entité responsable de l'exploitation</td>
+<td style="text-align: left;">Entity responsible</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
+<td style="text-align: left;">Person/team responsible</td>
 </tr>
 <tr>
 <td style="text-align: left;">application_block_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la bloc applicatif</td>
+<td style="text-align: left;">Group of application</td>
 </tr>
 <tr>
 <td style="text-align: left;">install_date</td>
 <td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date d'installation de l'application</td>
+<td style="text-align: left;">Date of installation</td>
 </tr>
 <tr>
 <td style="text-align: left;">update_date</td>
 <td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date de mise à jour de l'application</td>
+<td style="text-align: left;">Date of upgrade</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
-<h4 id="service-applicatif">Service applicatif</h4>
-<p>Un service applicatif est un élément de découpage de l’application mis à disposition de l’utilisateur final dans le cadre de son travail.</p>
-<p>Un service applicatif peut, par exemple, être un service dans le nuage (Cloud).</p>
+<h4 id="application-services">Application services</h4>
+<p>An application service is a specific service provided to a user to perform specific tasks related to their role in the organisation.</p>
+<p>Eg. an application service could be a Cloud service or platform.</p>
 <p>Table <em>application_services</em> :</p>
 <table>
 <thead>
@@ -1194,37 +1194,37 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du service applicatif</td>
+<td style="text-align: left;">Name of the application service</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du service applicatif</td>
+<td style="text-align: left;">Description of the application service</td>
 </tr>
 <tr>
 <td style="text-align: left;">exposition</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Exposition du service applicatif</td>
+<td style="text-align: left;">Exposure of the application service</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
-<h4 id="module-applicatif">Module applicatif</h4>
-<p>Un module applicatif est un composant d’une application caractérisé par une cohérence fonctionnelle en matière d’informatique et une homogénéité technologique.</p>
+<h4 id="application-module">Application module</h4>
+<p>An application module is a component of an application characterized by functional coherence and technological homogeneity.</p>
 <p>Table <em>application_modules</em> :</p>
 <table>
 <thead>
@@ -1243,32 +1243,32 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du service applicatif</td>
+<td style="text-align: left;">Name of the application module</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du module applicatif</td>
+<td style="text-align: left;">Description of the application module</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
-<h4 id="base-de-donnees">Base de données</h4>
-<p>Une base de données est un ensemble structuré et ordonné d’informations destinées à être exploitées informatiquement.</p>
+<h4 id="database">Database</h4>
+<p>A collection of databases managed within the organisation.</p>
 <p>Table <em>databases</em> :</p>
 <table>
 <thead>
@@ -1287,47 +1287,47 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du service applicatif</td>
+<td style="text-align: left;">Name of the database</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du module applicatif</td>
+<td style="text-align: left;">Description of the database</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
+<td style="text-align: left;">Responsible entity</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'application</td>
+<td style="text-align: left;">Responsible person/team</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Confidentialité</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_i</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Intégrité</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_a</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Disponibilité</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_t</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Traçabilité</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
 <td style="text-align: left;">external</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Externe</td>
+<td style="text-align: left;">External</td>
 </tr>
 <tr>
 <td style="text-align: left;">entity_resp_id</td>
@@ -1337,17 +1337,17 @@
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1373,83 +1373,83 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du flux</td>
+<td style="text-align: left;">Name of the flow</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du flux</td>
+<td style="text-align: left;">Description of the flow</td>
 </tr>
 <tr>
 <td style="text-align: left;">application_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers l'application source</td>
+<td style="text-align: left;">Link to source application</td>
 </tr>
 <tr>
 <td style="text-align: left;">service_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le service source</td>
+<td style="text-align: left;">Link to source service</td>
 </tr>
 <tr>
 <td style="text-align: left;">module_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le module source</td>
+<td style="text-align: left;">Link to source module</td>
 </tr>
 <tr>
 <td style="text-align: left;">database_source_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vars la base de données source</td>
+<td style="text-align: left;">Link to source database</td>
 </tr>
 <tr>
 <td style="text-align: left;">application_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers l'application destinataire</td>
+<td style="text-align: left;">Link to destination application</td>
 </tr>
 <tr>
 <td style="text-align: left;">service_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le service destinataire</td>
+<td style="text-align: left;">Link to destination service</td>
 </tr>
 <tr>
 <td style="text-align: left;">module_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le module destinataire</td>
+<td style="text-align: left;">Link to destination module</td>
 </tr>
 <tr>
 <td style="text-align: left;">database_dest_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers la basede données destinataire</td>
+<td style="text-align: left;">Link to destination database</td>
 </tr>
 <tr>
 <td style="text-align: left;">crypted</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Le flux est chiffré (1=oui, O=non)</td>
+<td style="text-align: left;">The flow is encrypted (1=yes, O=no)</td>
 </tr>
 <tr>
 <td style="text-align: left;">bidirectional</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Le flux est bidirectionnel (1=oui, O=non)</td>
+<td style="text-align: left;">The flow is bydirectional (1=yes, O=no)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
 <h3 id="administration">Administration</h3>
 <p>The administration view lists the administration of resources, directories and privilege levels of information system users.</p>
-<p><a href="/mercator/images/administration.png"><img src=“/mercator/images/administration.png” width=“400”></a></p>
+<p><a href="/mercator/images/administration.png"><img src="/mercator/images/administration.png" width="400"></a></p>
 <p>Having directories and centralized user access rights is strongly recommended for operators of vital importance (OVI).</p>
 <h4 id="administration-area">Administration area</h4>
 <p>An administration zone is a set of resources (people, data, equipment) under the responsibility of one (or more) administrator(s).</p>
@@ -1472,27 +1472,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la zone</td>
+<td style="text-align: left;">Name of the area</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de la zone</td>
+<td style="text-align: left;">Description area</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1517,37 +1517,37 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'annuaire</td>
+<td style="text-align: left;">Name of the directory</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'annuaire</td>
+<td style="text-align: left;">Description  of the directory</td>
 </tr>
 <tr>
 <td style="text-align: left;">solution</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Solution technique</td>
+<td style="text-align: left;">Techinical solution</td>
 </tr>
 <tr>
 <td style="text-align: left;">zone_admin_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers la zone d'administration</td>
+<td style="text-align: left;">Reference to administration area</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1571,38 +1571,38 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la forêt Active Directory ou de l'arborescence LDAP</td>
+<td style="text-align: left;">Name of Active Directory or LDAP forests</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de la forêt Active Directory ou de l'arborescence LDAP</td>
+<td style="text-align: left;">Description of Active Directory or LDAP forests</td>
 </tr>
 <tr>
 <td style="text-align: left;">zone_admin_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers la zone d'administration</td>
+<td style="text-align: left;">Reference to Administration zone</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
 <h3 id="logical-infrastructure">Logical infrastructure</h3>
 <p>The logical infrastructure view corresponds to the logical distribution of the network.</p>
-<p><a href="/mercator/images/logical.png"><img src=“/mercator/images/logical.png” width=“400”></a></p>
+<p><a href="/mercator/images/logical.png"><img src="/mercator/images/logical.png" width="400"></a></p>
 <p>It illustrates the partitioning of networks and the logical links between them. It also lists the network equipment that handles the traffic.</p>
 <h4 id="networks">Networks</h4>
 <p>Networks are a set of logically interconnected devices that exchange information.</p>
@@ -1624,62 +1624,62 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du réseau</td>
+<td style="text-align: left;">Name of network</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du réseau</td>
+<td style="text-align: left;">Description of network</td>
 </tr>
 <tr>
 <td style="text-align: left;">protocol_type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Protocoles utilisés</td>
+<td style="text-align: left;">Used protocols</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'exploitation</td>
+<td style="text-align: left;">Operation manager</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible_sec</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de la sécurité</td>
+<td style="text-align: left;">Security manager</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_c</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Confidentialité</td>
+<td style="text-align: left;">Confidentiality</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_i</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Intégrité</td>
+<td style="text-align: left;">Integrity</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_a</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Disponibilité</td>
+<td style="text-align: left;">Availability</td>
 </tr>
 <tr>
 <td style="text-align: left;">security_need_t</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Traçabilité</td>
+<td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1703,82 +1703,82 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du réseau</td>
+<td style="text-align: left;">Name of the subnet</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du réseau</td>
+<td style="text-align: left;">Description of the subnet</td>
 </tr>
 <tr>
 <td style="text-align: left;">address</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Range d'adresse du sous-réseau</td>
+<td style="text-align: left;">Addresses range</td>
 </tr>
 <tr>
 <td style="text-align: left;">default_gateway</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse de la passerelle par défaut</td>
+<td style="text-align: left;">Default gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">ip_allocation_type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type d'allocation des adresses</td>
+<td style="text-align: left;">Type of IP address allocation</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible_exp</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de l'exploitation</td>
+<td style="text-align: left;">Operations manager</td>
 </tr>
 <tr>
 <td style="text-align: left;">zone</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la zone firewall associée</td>
+<td style="text-align: left;">Name of the firewall zone</td>
 </tr>
 <tr>
 <td style="text-align: left;">dmz</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">DMZ (Yes/No)</td>
 </tr>
 <tr>
 <td style="text-align: left;">wifi</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Wireless</td>
 </tr>
 <tr>
 <td style="text-align: left;">connected_subnets_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Network to which this subnet belongs</td>
 </tr>
 <tr>
 <td style="text-align: left;">gateway_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vars la passerelle</td>
+<td style="text-align: left;">Gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">vlan_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le VLAN associé</td>
+<td style="text-align: left;">Associated VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">network_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Lien vers le réseau associé</td>
+<td style="text-align: left;">Associated network</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1802,37 +1802,37 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la passerelle</td>
+<td style="text-align: left;">Name of the gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de la passerelle</td>
+<td style="text-align: left;">Description of the gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adress IP de la passerelle</td>
+<td style="text-align: left;">IP address of the gateway</td>
 </tr>
 <tr>
 <td style="text-align: left;">authentification</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Mode d'authentification</td>
+<td style="text-align: left;">Authentication modes</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1856,37 +1856,37 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'entité</td>
+<td style="text-align: left;">Name of entity/company</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'entié</td>
+<td style="text-align: left;">Description of the entity/company</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible_sec</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable de la sécurité de l'entité</td>
+<td style="text-align: left;">Security manager of the entity/company</td>
 </tr>
 <tr>
 <td style="text-align: left;">contacts</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Contactes de l'entité</td>
+<td style="text-align: left;">Contacts within the entity/company</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1910,32 +1910,32 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du commutateur</td>
+<td style="text-align: left;">Name of the switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du commutateur</td>
+<td style="text-align: left;">Description of the switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresse IP du commutateur</td>
+<td style="text-align: left;">IP address of the switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -1959,32 +1959,32 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du routeur</td>
+<td style="text-align: left;">Name of the router</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du routeur</td>
+<td style="text-align: left;">Description of the router</td>
 </tr>
 <tr>
 <td style="text-align: left;">rules</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Règles de filtrage</td>
+<td style="text-align: left;">Filtering rules</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2009,27 +2009,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'équipement</td>
+<td style="text-align: left;">Name of the device</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'équipement</td>
+<td style="text-align: left;">Description of the device</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2053,27 +2053,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du serveur</td>
+<td style="text-align: left;">Name of the DHCP server</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du serveur</td>
+<td style="text-align: left;">Description of the DHCP server</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2097,27 +2097,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du serveur</td>
+<td style="text-align: left;">Name of the DNS server</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du serveur</td>
+<td style="text-align: left;">Description of the DNS server</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2141,22 +2141,22 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du serveur</td>
+<td style="text-align: left;">Name of the cluster</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type de cluster</td>
+<td style="text-align: left;">Type of cluster</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du cluster</td>
+<td style="text-align: left;">Description of the cluster</td>
 </tr>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresses IP du cluster</td>
+<td style="text-align: left;">IP address of the cluster</td>
 </tr>
 </tbody>
 </table>
@@ -2180,42 +2180,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du serveur</td>
+<td style="text-align: left;">Name of the logical server</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du serveur</td>
+<td style="text-align: left;">Description of the logical server</td>
 </tr>
 <tr>
 <td style="text-align: left;">net_services</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Services réseau actifs</td>
+<td style="text-align: left;">Active network services</td>
 </tr>
 <tr>
 <td style="text-align: left;">configuration</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Configuration du serveur</td>
+<td style="text-align: left;">Server configuration</td>
 </tr>
 <tr>
 <td style="text-align: left;">operating_system</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Système d'exploitation</td>
+<td style="text-align: left;">Operative system</td>
 </tr>
 <tr>
 <td style="text-align: left;">address_ip</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Adresses IP du serveur</td>
+<td style="text-align: left;">IP address</td>
 </tr>
 <tr>
 <td style="text-align: left;">cpu</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nombre de CPU</td>
+<td style="text-align: left;">Number of CPU</td>
 </tr>
 <tr>
 <td style="text-align: left;">memory</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Quantité de mémémoire</td>
+<td style="text-align: left;">Quantity of RAM</td>
 </tr>
 <tr>
 <td style="text-align: left;">environment</td>
@@ -2225,32 +2225,32 @@
 <tr>
 <td style="text-align: left;">disk</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Espace disque alloué</td>
+<td style="text-align: left;">Storage allocated</td>
 </tr>
 <tr>
 <td style="text-align: left;">install_date</td>
 <td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date d'installation du serveur</td>
+<td style="text-align: left;">Date of server installation</td>
 </tr>
 <tr>
 <td style="text-align: left;">update_date</td>
 <td style="text-align: left;">datetime</td>
-<td style="text-align: left;">Date de mise à jour du serveur</td>
+<td style="text-align: left;">Date of server upgrade</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2275,55 +2275,55 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du certificat</td>
+<td style="text-align: left;">Name of the certificate</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du certificat</td>
+<td style="text-align: left;">Description of the certificate</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type de certificat (SSL, HTTPS ...)</td>
+<td style="text-align: left;">Type of certificate (SSL, HTTPS ...)</td>
 </tr>
 <tr>
 <td style="text-align: left;">start_validity</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">Date de début de validité</td>
+<td style="text-align: left;">Date start of validity</td>
 </tr>
 <tr>
 <td style="text-align: left;">end_validity</td>
 <td style="text-align: left;">date</td>
-<td style="text-align: left;">Date de fin de validité</td>
+<td style="text-align: left;">Date end of validity</td>
 </tr>
 <tr>
 <td style="text-align: left;">status</td>
 <td style="text-align: left;">int</td>
-<td style="text-align: left;">Etat du certificat (RFC 6960)</td>
+<td style="text-align: left;">State of certificate (RFC 6960)</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li>Note:<ul>
-<li>status = 0: “Good”</li>
-<li>status = 1: “Revoked</li>
-<li>status = 2 : “Unknown</li>
+<li>status = 0: "Good"</li>
+<li>status = 1: "Revoked</li>
+<li>status = 2 : "Unknown</li>
 </ul>
 </li>
 </ul>
@@ -2347,33 +2347,33 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du VLAN</td>
+<td style="text-align: left;">Name of VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du VLAN</td>
+<td style="text-align: left;">Description of VLAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
 <h3 id="physical-infrastructure">Physical infrastructure</h3>
 <p>The physical infrastructure view describes the physical equipment that makes up or is used by the information system.</p>
-<p><a href="/mercator/images/physical.png"><img src=“/mercator/images/physical.png” width=“700”></a></p>
+<p><a href="/mercator/images/physical.png"><img src="/mercator/images/physical.png" width="700"></a></p>
 <p>This view corresponds to the geographical distribution of network equipment within the various sites.</p>
 <h4 id="sites">Sites</h4>
 <p>Sites are geographical locations that bring together a group of people and/or resources.</p>
@@ -2395,27 +2395,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du site</td>
+<td style="text-align: left;">Name of the site</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du site</td>
+<td style="text-align: left;">Description of the site</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2439,42 +2439,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du site</td>
+<td style="text-align: left;">Name of building</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du site</td>
+<td style="text-align: left;">Description of the building</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to the site</td>
 </tr>
 <tr>
 <td style="text-align: left;">camera</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Le building / salle est protégé par une caméra</td>
+<td style="text-align: left;">The building / room is surveilled by a camera</td>
 </tr>
 <tr>
 <td style="text-align: left;">badge</td>
 <td style="text-align: left;">tinyint(1)</td>
-<td style="text-align: left;">Le building / salle nécessite un accès par badge</td>
+<td style="text-align: left;">The building / requires a badge for access</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2498,32 +2498,32 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la baie</td>
+<td style="text-align: left;">Name of the rack</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de la baie</td>
+<td style="text-align: left;">Description of the rack</td>
 </tr>
 <tr>
 <td style="text-align: left;">room_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2547,57 +2547,57 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du serveur</td>
+<td style="text-align: left;">Name of physical server</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du serveur</td>
+<td style="text-align: left;">Description of physical server</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du serveur</td>
+<td style="text-align: left;">Type / model of server</td>
 </tr>
 <tr>
 <td style="text-align: left;">responsible</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Responsable du serveur</td>
+<td style="text-align: left;">Person/Team responsible for the server</td>
 </tr>
 <tr>
 <td style="text-align: left;">configuration</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Configuration du serveur</td>
+<td style="text-align: left;">Configuration of the server</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to the site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to the building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">bay_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers la baie</td>
+<td style="text-align: left;">Reference to the rack</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2621,42 +2621,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du poste de travail</td>
+<td style="text-align: left;">Name of workstation</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du poste de travail</td>
+<td style="text-align: left;">Description of workstation</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du poste de travail</td>
+<td style="text-align: left;">Type / model of workstation</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2680,37 +2680,37 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'infrastructure de stockage</td>
+<td style="text-align: left;">Name of storage infrastructure</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'infrastructure de stockage</td>
+<td style="text-align: left;">Description of the storage infrastructure</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to the site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2734,47 +2734,47 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du périphérique</td>
+<td style="text-align: left;">Name of peripheral</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du périphérique</td>
+<td style="text-align: left;">Description of peripheral</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du périphériques</td>
+<td style="text-align: left;">Type / model of peripheral</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">bay_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers la baie</td>
+<td style="text-align: left;">Reference to rack</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2797,42 +2797,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du téléphone</td>
+<td style="text-align: left;">Name of telephone</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du téléphone</td>
+<td style="text-align: left;">Description of telephone</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du téléphone</td>
+<td style="text-align: left;">Type / model of telephone</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2856,42 +2856,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du commutateur physique</td>
+<td style="text-align: left;">Name of physical switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du commutateur physique</td>
+<td style="text-align: left;">Description of physical switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du commutateur physique</td>
+<td style="text-align: left;">Type / model of physical switch</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2915,42 +2915,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du routeur physique</td>
+<td style="text-align: left;">Name of physical router</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du routeur physique</td>
+<td style="text-align: left;">Description of physical router</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle du routeur physique</td>
+<td style="text-align: left;">Type / model of physical router</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -2974,42 +2974,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de la borne wifi</td>
+<td style="text-align: left;">Name of WiFi hotspot</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de la bornes wifi</td>
+<td style="text-align: left;">Description of WiFi hotspot</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle de la bornes wifi</td>
+<td style="text-align: left;">Type / model of WiFi hotspot</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -3034,42 +3034,42 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom de l'équipement de sécurité</td>
+<td style="text-align: left;">Name of security equipment</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description de l'équipement de sécurité</td>
+<td style="text-align: left;">Description of security equipment</td>
 </tr>
 <tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Type / modèle de l'équipement de sécurité</td>
+<td style="text-align: left;">Type / model of security equipment</td>
 </tr>
 <tr>
 <td style="text-align: left;">site_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le site</td>
+<td style="text-align: left;">Reference to site</td>
 </tr>
 <tr>
 <td style="text-align: left;">building_id</td>
 <td style="text-align: left;">int unsigned</td>
-<td style="text-align: left;">Référence vers le building / salle</td>
+<td style="text-align: left;">Reference to building / room</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -3093,22 +3093,22 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du WAN</td>
+<td style="text-align: left;">Name of WAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -3132,22 +3132,22 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du MAN</td>
+<td style="text-align: left;">Name of MAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -3171,27 +3171,27 @@
 <tr>
 <td style="text-align: left;">name</td>
 <td style="text-align: left;">varchar(255)</td>
-<td style="text-align: left;">Nom du LAN</td>
+<td style="text-align: left;">Name of LAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">description</td>
 <td style="text-align: left;">longtext</td>
-<td style="text-align: left;">Description du LAN</td>
+<td style="text-align: left;">Description of LAN</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de création</td>
+<td style="text-align: left;">Date of creation</td>
 </tr>
 <tr>
 <td style="text-align: left;">updated_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de mise à jour</td>
+<td style="text-align: left;">Date of update</td>
 </tr>
 <tr>
 <td style="text-align: left;">deleted_at</td>
 <td style="text-align: left;">timestamp</td>
-<td style="text-align: left;">Date de suppression</td>
+<td style="text-align: left;">Date of deletion</td>
 </tr>
 </tbody>
 </table>
@@ -3200,7 +3200,7 @@
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../usecases/" class="btn btn-neutral float-left" title="Use cases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../reports/" class="btn btn-neutral float-right" title="Rapports">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../reports/" class="btn btn-neutral float-right" title="Reports">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>

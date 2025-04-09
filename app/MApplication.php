@@ -87,7 +87,7 @@ class MApplication extends Model
         return $this->belongsToMany(Entity::class)->orderBy('name');
     }
 
-    public function entity_resp(): BelongsTo
+    public function entityResp(): BelongsTo
     {
         return $this->belongsTo(Entity::class, 'entity_resp_id');
     }
@@ -122,7 +122,7 @@ class MApplication extends Model
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
 
-    public function application_block(): BelongsTo
+    public function applicationBlock(): BelongsTo
     {
         return $this->belongsTo(ApplicationBlock::class, 'application_block_id');
     }

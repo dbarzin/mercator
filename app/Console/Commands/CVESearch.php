@@ -131,12 +131,13 @@ class CVESearch extends Command
                         foreach ($names as $name) {
                             // Log::debug('CVESearch - check <' . $name . '> in <' . $text . '>');
                             if (str_contains($text, $name)) {
-                                // Log::debug('CVESearch - found ' . $name);
+                                Log::debug('CVESearch - found ' . json_encode($cve));
+                                $message .= '<a href="' . $provider . "/vuln/" . $cve->cveMetadata->cveId .'">' . $cve->cveMetadata->cveId .'</a>'. ' - ';
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $text . '<br>';
                                 $cveCount++;
                             }
                         }
-
+                        /*
                         // look for in affected products
                         foreach ($cve->containers->cna->affected as $affected) {
                             $text = strtolower($affected->product);
@@ -145,11 +146,13 @@ class CVESearch extends Command
                                 // Log::debug('CVESearch - check ' . $name);
                                 if (str_contains($text, $name)) {
                                     // Log::debug('CVESearch - found ' . $name);
+                                    $message .= '<a href="' . $provider . "/vuln/" . $cve->document->tracking->id .'">' . $cve->tracking->id .'</a>'. ' - ';
                                     $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $cve->details . '<br>';
                                     $cveCount++;
                                 }
                             }
                         }
+                        */
                     }
 
                     // Log::debug('CVESearch - skip old ' . $cve->cveMetadata->datePublished);

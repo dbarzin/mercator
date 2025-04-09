@@ -38,7 +38,7 @@ class Vlan extends Model
         'deleted_at',
     ];
 
-    public function vlanPhysicalRouters(): BelongsToMany
+    public function physicalRouters(): BelongsToMany
     {
         return $this->belongsToMany(PhysicalRouter::class)->orderBy('name');
     }

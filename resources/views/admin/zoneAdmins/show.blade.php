@@ -53,11 +53,11 @@
                         {{ trans('cruds.zoneAdmin.fields.annuaires') }}
                     </th>
                     <td>
-                        @foreach($zoneAdmin->zoneAdminAnnuaires as $annuaire)
+                        @foreach($zoneAdmin->annuaires as $annuaire)
                         <a href="{{ route('admin.annuaires.show', $annuaire->id) }}">
                             {{ $annuaire->name }}
                         </a>
-                        @if ($zoneAdmin->zoneAdminAnnuaires->last()!=$annuaire)
+                        @if ($zoneAdmin->annuaires->last()!=$annuaire)
                             ,
                         @endif
                         @endforeach
@@ -68,11 +68,11 @@
                         {{ trans('cruds.zoneAdmin.fields.forests') }}
                     </th>
                     <td>
-                        @foreach($zoneAdmin->zoneAdminforestAds as $forestAd)
+                        @foreach($zoneAdmin->forestAds as $forestAd)
                         <a href="{{ route('admin.forest-ads.show', $forestAd->id) }}">
                             {{ $forestAd->name ?? '' }}
                         </a>
-                        @if ($zoneAdmin->zoneAdminforestAds->last()!=$forestAd)
+                        @if ($zoneAdmin->forestAds->last()!=$forestAd)
                             ,
                         @endif
                         @endforeach

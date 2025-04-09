@@ -8,7 +8,8 @@ Changements prévus en 2025 :
 
 - [x] Outil de dessin de la cartographie
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
-- [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
+- [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](
+https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
 - [o] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Générer un annuaire de crise
 - [ ] Identifier les chemins critiques
@@ -21,7 +22,7 @@ Changements prévus en 2025 :
 
 ## Evolutions mineurs
 
-- [ ] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
+- [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
 - [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération

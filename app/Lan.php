@@ -36,12 +36,12 @@ class Lan extends Model
         'deleted_at',
     ];
 
-    public function lansMen(): BelongsToMany
+    public function Mans(): BelongsToMany
     {
         return $this->belongsToMany(Man::class)->orderBy('name');
     }
 
-    public function lansWans(): BelongsToMany
+    public function Wans(): BelongsToMany
     {
         return $this->belongsToMany(Wan::class)->orderBy('name');
     }
