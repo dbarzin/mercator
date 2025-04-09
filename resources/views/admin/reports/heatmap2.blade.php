@@ -28,8 +28,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.3.0/dist/chartjs-chart-matrix.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-
   // --- IP de test dans 10.0.0.0/16 ---
   const ipList = [
     '10.0.0.1', '10.0.0.2',
@@ -47,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
     '10.149.20.1', '10.223.26.1',
     '10.100.100.100'
   ];
+
+document.addEventListener('DOMContentLoaded', function () {
+
 
 
   const canvas = document.getElementById('ipv4Heatmap');
@@ -127,6 +128,19 @@ const points = Object.entries(blocks).map(([idx, { v, ipList, key }]) => {
   });
 
 
+// Créer la légende dynamiquement
+const legendDiv = document.getElementById('legend');
+const maxV = Math.max(...points.map(p => p.v));
+
+legendDiv.innerHTML = `
+  <label>Densité :</label>
+  <div style="display: flex; align-items: center; gap: 8px; width:600px">
+    <span style="font-size: 0.8rem;">0</span>
+    <div style="flex: 1; height: 20px; background: linear-gradient(to right, rgba(0,123,255,0.1), rgba(0,123,255,1)); border: 1px solid #ccc;"></div>
+    <span style="font-size: 0.8rem;">${maxV}</span>
+  </div>
+`;
+
 // Chartjs
   const chart = new Chart(ctx, {
     type: 'matrix',
@@ -143,17 +157,23 @@ const points = Object.entries(blocks).map(([idx, { v, ipList, key }]) => {
           order: 0
         },
         {
-        label: 'IPv4 Hilbert Heatmap',
-        data: points,
-        width: () => 10,
-        height: () => 10,
-        backgroundColor(ctx) {
-          const value = ctx.raw?.v ?? 0;
-          const alpha = Math.min(1, value / 5);
-          return `rgba(0, 123, 255, ${alpha})`;
-        },
-        borderWidth: 0
-      }]
+          label: 'IPv4 Scatter',
+          type: 'scatter',
+          data: points,
+          backgroundColor(ctx) {
+            const value = ctx.raw?.v ?? 0;
+            const alpha = Math.min(1, value / maxV);
+            return `rgba(0, 123, 255, ${alpha})`;
+          },
+          pointRadius(ctx) {
+            const v = ctx.raw?.v ?? 1;
+            return Math.min(20, Math.max(3, v * 2)); // taille dynamique entre 3 et 20
+          },
+          borderWidth: 0,
+          order: 1
+        }
+
+    ]
     },
     options: {
       responsive: false,
@@ -163,10 +183,16 @@ const points = Object.entries(blocks).map(([idx, { v, ipList, key }]) => {
         tooltip: {
           callbacks: {
             title: () => '',
-
             label(ctx) {
               const { block, v, ipList } = ctx.raw;
-              const shownIps = ipList.length > 5 ? ipList.slice(0, 5).join(', ') + ', …' : ipList.join(', ');
+
+              if (!ipList || !block || typeof v !== 'number') {
+                return ''; // ou return [`Index : ${ctx.raw.x}, ${ctx.raw.y}`] // pour une info générique
+              }
+
+              const shownIps = ipList.length > 5
+                ? ipList.slice(0, 5).join(', ') + ', …'
+                : ipList.join(', ');
 
               return [
                 `Bloc : ${block}`,
@@ -241,17 +267,6 @@ const interval = setInterval(() => {
 }, 1); // ← vitesse (en ms par point). Essaie 1–5ms selon ton goût
 
 
-// Créer la légende dynamiquement
-const legendDiv = document.getElementById('legend');
-const maxV = Math.max(...points.map(p => p.v));
-    legendDiv.innerHTML = `
-      <label>Densité :</label>
-      <div style="display: flex; align-items: center; gap: 8px; width:600px">
-        <span style="font-size: 0.8rem;">0</span>
-        <div style="flex: 1; height: 20px; background: linear-gradient(to right, rgba(0,123,255,0.1), rgba(0,123,255,1)); border: 1px solid #ccc;"></div>
-        <span style="font-size: 0.8rem;">${maxV}</span>
-      </div>
-    `;
 
 
 });
