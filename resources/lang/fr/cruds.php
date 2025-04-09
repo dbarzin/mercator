@@ -1178,7 +1178,11 @@ return [
             'comments' => 'Commentaire',
             'comments_helper' => '',
             'documents' => 'Documents',
-            'documents_helper' => 'Documents de référence de la relation',            ],
+            'documents_helper' => 'Documents de référence de la relation',
+            'contract_title' => 'Termes du contrat',
+            'date' => 'Date',
+            'value' => 'Valeur'
+        ],
         'title' => 'Relations',
         'title_singular' => 'Relation',
     ],

@@ -1178,6 +1178,9 @@ return [
             'comments_helper' => '',
             'documents' => 'Documents',
             'documents_helper' => 'Relationship reference documents',
+            'contract_title' => 'Terms of contract',
+            'date' => 'Date',
+            'value' => 'Value'
         ],
         'title' => 'Relationships',
         'title_singular' => 'Relationship',
