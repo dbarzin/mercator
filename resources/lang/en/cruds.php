@@ -128,7 +128,7 @@ return [
             'users' => 'Users',
             'users_helper' => 'Volume of users and profiles',
             "functional_referent" => "Functional referent",
-            "functional_referent_helper" => "",
+            "functional_referent_helper" => "Person/team with knowledge on the application",
             "editor" => "Editor",
             "editor_helper" => "Application's editor",
             "install_date" => "Installation date",
