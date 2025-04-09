@@ -382,7 +382,7 @@ digraph  {
 }`;
 
 document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz()
+d3.select("#graph").graphviz().fit(false)
     .addImage("/images/zoneadmin.png", "64px", "64px")
     .addImage("/images/annuaire.png", "64px", "64px")
     .addImage("/images/ldap.png", "64px", "64px")
