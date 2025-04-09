@@ -33,12 +33,12 @@ class ZoneAdmin extends Model
         'deleted_at',
     ];
 
-    public function zoneAdminAnnuaires(): HasMany
+    public function annuaires(): HasMany
     {
         return $this->hasMany(Annuaire::class, 'zone_admin_id', 'id')->orderBy('name');
     }
 
-    public function zoneAdminForestAds(): HasMany
+    public function forestAds(): HasMany
     {
         return $this->hasMany(ForestAd::class, 'zone_admin_id', 'id')->orderBy('name');
     }

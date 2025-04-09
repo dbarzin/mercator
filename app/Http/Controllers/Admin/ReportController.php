@@ -2356,7 +2356,7 @@ class ReportController extends Controller
                 }
                 $sheet->setCellValue("D{$row}", $l);
 
-                $l = $application->entity_resp()->get();
+                $l = $application->entityResp()->get();
                 if ($l->count() > 0) {
                     $sheet->setCellValue("E{$row}", $l[0]->name);
                 }
@@ -2538,7 +2538,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xslx');
+        $path = storage_path('app/logicalServers-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $writer->save($path);
 
@@ -2738,7 +2738,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xslx');
+        $path = storage_path('app/securityNeeds-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $writer->save($path);
 
@@ -2898,7 +2898,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xslx');
+        $path = storage_path('app/physicalInventory-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $writer->save($path);
 
@@ -3038,7 +3038,7 @@ class ReportController extends Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
 
         // $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.ods');
-        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xslx');
+        $path = storage_path('app/vlans-'. Carbon::today()->format('Ymd') .'.xlsx');
 
         $writer->save($path);
 

@@ -192,7 +192,7 @@
                         {{ trans('cruds.physicalServer.fields.logical_servers') }}
                     </th>
                     <td colspan="3">
-                        @foreach($physicalServer->serversLogicalServers as $logicalServer)
+                        @foreach($physicalServer->logicalServers as $logicalServer)
                         <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                             {!! $logicalServer->name !!}
                         </a>

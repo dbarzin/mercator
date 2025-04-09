@@ -48,8 +48,8 @@ class MApplicationController extends Controller
         abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::with(
-            'application_block:id,name',
-            'entity_resp:id,name',
+            'applicationBlock:id,name',
+            'entityResp:id,name',
             'entities:id,name',
             'processes:id,name'
         )
@@ -63,13 +63,12 @@ class MApplicationController extends Controller
         abort_if(Gate::denies('m_application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // lists
@@ -114,13 +113,12 @@ class MApplicationController extends Controller
             'admin.applications.create',
             compact(
                 'entities',
-                'entity_resps',
                 'processes',
                 'activities',
                 'services',
                 'databases',
                 'logical_servers',
-                'application_blocks',
+                'applicationBlocks',
                 'icons',
                 'type_list',
                 'technology_list',
@@ -196,13 +194,12 @@ class MApplicationController extends Controller
         LaravelGate::authorize('is-cartographer-m-application', $application);
 
         $entities = Entity::all()->sortBy('name')->pluck('name', 'id');
-        $entity_resps = Entity::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $activities = Activity::all()->sortBy('name')->pluck('name', 'id');
         $services = ApplicationService::all()->sortBy('name')->pluck('name', 'id');
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
-        $application_blocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // rto-rpo
@@ -251,7 +248,7 @@ class MApplicationController extends Controller
         $editor_list = MApplication::select('editor')->where('editor', '<>', null)->distinct()->orderBy('editor')->pluck('editor');
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logicalServers', 'application_block', 'cartographers');
+        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'cartographers');
         // Chargement des évènements
         $this->eventService->getLoadAppEvents($application);
 
@@ -259,13 +256,12 @@ class MApplicationController extends Controller
             'admin.applications.edit',
             compact(
                 'entities',
-                'entity_resps',
                 'processes',
                 'activities',
                 'services',
                 'databases',
                 'logical_servers',
-                'application_blocks',
+                'applicationBlocks',
                 'icons',
                 'application',
                 'type_list',
@@ -335,7 +331,7 @@ class MApplicationController extends Controller
     {
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $application->load('entities', 'entity_resp', 'processes', 'services', 'databases', 'logicalServers', 'application_block', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
+        $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
         // Chargement des évènements
         $this->eventService->getLoadAppEvents($application);
 

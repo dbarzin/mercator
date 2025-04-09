@@ -54,7 +54,7 @@
                                 {{ $vlan->vlan_id }}
                             </td>
                             <td>
-                                {{ $vlan->description ?? '' }}
+                                {!! $vlan->description ?? '' !!}
                             </td>
                             <td>
                                 @foreach($vlan->subnetworks as $subnetwork)

@@ -66,7 +66,7 @@ class PhysicalServer extends Model
         return $this->belongsTo(Cluster::class, 'cluster_id');
     }
 
-    public function serversLogicalServers(): BelongsToMany
+    public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }

@@ -139,8 +139,8 @@
                                 <tr>
                                     <th>{{ trans("cruds.application.fields.entity_resp_helper") }}</th>
                                     <td>
-                                        @if (isset($application->entity_resp))
-                                            <a href="/admin/report/ecosystem#ENTITY{{$application->entity_resp->id}}">{{  $application->entity_resp->name }}</a>
+                                        @if (isset($application->entityResp))
+                                            <a href="/admin/report/ecosystem#ENTITY{{$application->entityResp->id}}">{{  $application->entityResp->name }}</a>
                                         @endif
                                     </td>
                                 </tr>

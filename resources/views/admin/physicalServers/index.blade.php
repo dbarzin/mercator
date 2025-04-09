@@ -54,7 +54,7 @@
                             ($physicalServer->site_id==null)||
                             ($physicalServer->building_id==null)||
                             ($physicalServer->responsible==null)
-                            /* ($physicalServer->serversLogicalServers()->count()==0) */
+                            /* ($physicalServer->logicalServers()->count()==0) */
                             )
                                 class="table-warning"
                         @endif

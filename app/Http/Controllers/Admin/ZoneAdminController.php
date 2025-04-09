@@ -53,7 +53,7 @@ class ZoneAdminController extends Controller
     {
         abort_if(Gate::denies('zone_admin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $zoneAdmin->load('zoneAdminAnnuaires', 'zoneAdminForestAds');
+        $zoneAdmin->load('annuaires', 'forestAds');
 
         return view('admin.zoneAdmins.show', compact('zoneAdmin'));
     }
