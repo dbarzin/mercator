@@ -36,6 +36,7 @@
                     <div class="form-group">
                         <label for="database_source_id">{{ trans('cruds.operation.fields.process') }}</label>
                         <select class="form-control select2 {{ $errors->has('process') ? 'is-invalid' : '' }}" name="process_id" id="process_id">
+                            <option></option>
                             @foreach($processes as $id => $name)
                                 <option value="{{ $id }}" {{ ($operation->process ? $operation->process->id : old('process_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
