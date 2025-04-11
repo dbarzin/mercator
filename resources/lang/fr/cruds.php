@@ -237,14 +237,14 @@ return [
             'room_helper' => '',
             'storage_devices' => 'Dispositifs de stockages',
         ],
-        'title' => 'Baies',
-        'title_singular' => 'Baie',
+        'title' => 'Racks',
+        'title_singular' => 'Rack',
     ],
     'building' => [
         'description' => 'Localisation des personnes ou ressources à l’intérieur d’un site.',
         'fields' => [
-            'bays' => 'Baies',
-            'bays_helper' => '',
+            'bays' => 'Racks',
+            'bays_helper' => 'Armoires techniques',
             'description' => 'Description',
             'description_helper' => '',
             'name' => 'Nom',
@@ -929,7 +929,7 @@ return [
         'fields' => [
             'address_ip' => 'Adresse IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
-            'bay' => 'Baie',
+            'bay' => 'Rack',
             'bay_helper' => '',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le périphérique',
@@ -1002,8 +1002,8 @@ return [
     'physicalRouter' => [
         'description' => 'Composant gérant les connexions entre différents réseaux.',
         'fields' => [
-            'bay' => 'Baie',
-            'bay_helper' => 'Baie dans laquelle se trouve le routeur',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans laquelle se trouve le routeur',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le routeur',
             'description' => 'Description',
@@ -1028,8 +1028,8 @@ return [
         'fields' => [
             'address_ip' => 'Adresse IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
-            'bay' => 'Baie',
-            'bay_helper' => 'Baie dans laquelle se trouve le dispositif',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans laquelle se trouve le dispositif',
             'building' => 'Bâtiment  / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le dispositif',
             'description' => 'Description',
@@ -1052,8 +1052,8 @@ return [
             'name_helper' => '',
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
-            'bay' => 'Baie',
-            'bay_helper' => 'Baie dans laquelle se trouve le serveur',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans laquelle se trouve le serveur',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le serveur',
             'cluster' => 'Cluster',
@@ -1096,8 +1096,8 @@ return [
     'physicalSwitch' => [
         'description' => 'Composant gérant les connexions entre les différents serveurs au sein d’un réseau.',
         'fields' => [
-            'bay' => 'Baie',
-            'bay_helper' => '',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans laquelle se trouve le commutateur',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le commutateur',
             'description' => 'Description',
@@ -1322,8 +1322,8 @@ return [
         'fields' => [
             'address_ip' => 'Adresse IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
-            'bay' => 'Baie',
-            'bay_helper' => '',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans laquelle se trouve le dispositif',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve le dispositif',
             'description' => 'Description',
@@ -1450,8 +1450,8 @@ return [
     'wifiTerminal' => [
         'description' => 'Matériel permettant l’accès au réseau sans fil wifi.',
         'fields' => [
-            'bay' => 'Baie',
-            'bay_helper' => '',
+            'bay' => 'Rack',
+            'bay_helper' => 'Armoire technique dans lequel se trouve la borne wifi',
             'building' => 'Bâtiment',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve la borne wifi',
             'description' => 'Description',
