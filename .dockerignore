@@ -3,7 +3,6 @@ docker/data
 *Dockerfile
 *.md
 .dockerignore
-nginx.conf
 supervisord.conf
 *.md
 .github
