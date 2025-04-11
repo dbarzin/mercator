@@ -27,7 +27,7 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer = LogicalServer::create($request->all());
-        if ($request->has('servers')) {
+        if ($request->has('physicalServers')) {
             $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         }
         if ($request->has('applications')) {
@@ -56,7 +56,7 @@ class LogicalServerController extends Controller
         abort_if(Gate::denies('logical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $logicalServer->update($request->all());
-        if ($request->has('servers')) {
+        if ($request->has('physicalServers')) {
             $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         }
         if ($request->has('applications')) {
