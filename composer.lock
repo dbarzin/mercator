@@ -993,16 +993,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.11.0",
+            "version": "v6.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "8f718f4dfc9c5d5f0c994cdfd103921b43592712"
+                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/8f718f4dfc9c5d5f0c994cdfd103921b43592712",
-                "reference": "8f718f4dfc9c5d5f0c994cdfd103921b43592712",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
+                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
                 "shasum": ""
             },
             "require": {
@@ -1050,9 +1050,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.11.0"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.11.1"
             },
-            "time": "2025-01-23T05:11:06+00:00"
+            "time": "2025-04-09T20:32:01+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -8997,16 +8997,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.21.2",
+            "version": "v1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "370772e7d9e9da087678a0edf2b11b6960e40558"
+                "reference": "7ddfaa6523a675fae5c4123ee38fc6bfb8ee4f36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/370772e7d9e9da087678a0edf2b11b6960e40558",
-                "reference": "370772e7d9e9da087678a0edf2b11b6960e40558",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/7ddfaa6523a675fae5c4123ee38fc6bfb8ee4f36",
+                "reference": "7ddfaa6523a675fae5c4123ee38fc6bfb8ee4f36",
                 "shasum": ""
             },
             "require": {
@@ -9017,9 +9017,9 @@
                 "php": "^8.2.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.72.0",
+                "friendsofphp/php-cs-fixer": "^3.75.0",
                 "illuminate/view": "^11.44.2",
-                "larastan/larastan": "^3.2.0",
+                "larastan/larastan": "^3.3.1",
                 "laravel-zero/framework": "^11.36.1",
                 "mockery/mockery": "^1.6.12",
                 "nunomaduro/termwind": "^2.3",
@@ -9059,7 +9059,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2025-03-14T22:31:42+00:00"
+            "time": "2025-04-08T22:11:45+00:00"
         },
         {
             "name": "laravel/sail",
@@ -10297,16 +10297,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.15",
+            "version": "11.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c"
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
                 "shasum": ""
             },
             "require": {
@@ -10378,7 +10378,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.17"
             },
             "funding": [
                 {
@@ -10394,7 +10394,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-23T16:02:11+00:00"
+            "time": "2025-04-08T07:59:11+00:00"
         },
         {
             "name": "psr/cache",
@@ -11899,23 +11899,23 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.16.2",
+            "version": "8.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "8bf0408a9cf30687d87957d364de9a3d5d00d948"
+                "reference": "ace04a4e2e20c9bc26ad14d6c4c737cde6056ec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/8bf0408a9cf30687d87957d364de9a3d5d00d948",
-                "reference": "8bf0408a9cf30687d87957d364de9a3d5d00d948",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/ace04a4e2e20c9bc26ad14d6c4c737cde6056ec0",
+                "reference": "ace04a4e2e20c9bc26ad14d6c4c737cde6056ec0",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.0",
                 "php": "^7.4 || ^8.0",
                 "phpstan/phpdoc-parser": "^2.1.0",
-                "squizlabs/php_codesniffer": "^3.11.3"
+                "squizlabs/php_codesniffer": "^3.12.1"
             },
             "require-dev": {
                 "phing/phing": "3.0.1",
@@ -11924,7 +11924,7 @@
                 "phpstan/phpstan-deprecation-rules": "2.0.1",
                 "phpstan/phpstan-phpunit": "2.0.6",
                 "phpstan/phpstan-strict-rules": "2.0.4",
-                "phpunit/phpunit": "9.6.8|10.5.45|11.4.4|11.5.15|12.0.10"
+                "phpunit/phpunit": "9.6.8|10.5.45|11.4.4|11.5.17|12.1.2"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -11948,7 +11948,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.16.2"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.17.0"
             },
             "funding": [
                 {
@@ -11960,7 +11960,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-27T19:37:58+00:00"
+            "time": "2025-04-10T06:06:16+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
