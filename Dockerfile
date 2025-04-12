@@ -14,8 +14,7 @@ RUN apk add --no-cache \
     mariadb-client mariadb-connector-c-dev \
     openldap-dev libzip-dev \
     libpng libpng-dev \
-    nginx gettext supervisor \
-    nodejs npm
+    nginx gettext supervisor 
 
 # Update font cache
 RUN fc-cache -f
@@ -59,10 +58,6 @@ USER mercator:www
 
 # Install PHP dependencies via Composer
 RUN composer install --no-interaction --prefer-dist
-
-# Install and build frontend
-RUN VERSION=$(cat version.txt) && \
-    npm install && npm run build
 
 # Prepare SQLite database
 RUN mkdir -p sql && touch sql/db.sqlite
