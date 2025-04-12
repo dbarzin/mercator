@@ -35,7 +35,6 @@ docker/.env
 public/hot
 public/storage
 public/vendor/
-public/build/
 resources/views/vendor/
 storage/*.key
 storage/logs

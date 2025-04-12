@@ -1,0 +1,2048 @@
+
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="csrf-token" content="tuh4ZlIp8w7MTt2auFeAnxDs48FX3iXcVQCAh5eB">
+
+
+
+    <title>Mercator</title>
+
+
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/css/coreui.min.css" rel="stylesheet" />
+
+
+
+    <!-- Fontawesome -->
+
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="/css/all.css" rel="stylesheet" />
+
+
+
+    <!-- Datatables -->
+
+    <link href="/css/datatables.min.css" rel="stylesheet" />
+
+
+
+    <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" /-->
+
+    <link href="/css/select2.min.css" rel="stylesheet" />
+
+
+
+    <!-- Dropzone -->
+
+    <!-- https://rawgit.com/enyo/dropzone/master/dist/dropzone.min.css -->
+
+    <link rel="stylesheet" href="/css/dropzone.css">
+
+
+
+    <!-- Datepicker -->
+
+    <!-- https://vitalets.github.io/bootstrap-datepicker/ -->
+
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+
+
+    <!-- custom css -->
+
+    <link href="/css/custom.css" rel="stylesheet" />
+
+
+
+    <!-- DynamicSelect -->
+
+    <link href="/css/DynamicSelect.css" rel="stylesheet" />
+
+
+
+    <style>
+
+    </style>
+
+</head>
+
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed pace-done sidebar-lg-show">
+
+    <header class="app-header navbar">
+
+        <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <a class="navbar-brand" href="/admin">
+
+            <span class="navbar-brand-full">Mercator</span>
+
+            <span class="navbar-brand-minimized"></span>
+
+        </a>
+
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+    <!-------------------------------------------------->
+
+    <ul class="nav nav-pills mr-auto">
+
+      <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+
+          Vues
+
+        </a>
+
+            <ul class="dropdown-menu" style="">
+
+                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/gdpr">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        RGPD
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/ecosystem">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Ecosystème
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/information_system">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Système d&#039;information
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/applications">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Applications
+
+                    </a>
+
+                </li>
+
+                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/application_flows">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Flux applicatifs
+
+                    </a>
+
+                </li>
+
+                                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/administration">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Administration
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/logical_infrastructure">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Infrastructure logique
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/physical_infrastructure">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Infrastructure physique
+
+                    </a>
+
+                </li>
+
+                                                <li>
+
+                    <a class="dropdown-item" href="/admin/report/network_infrastructure">
+
+                        <i class="fa-fw fas fa-cogs nav-icon"></i>
+
+                        Infrastructure réseau
+
+                    </a>
+
+                </li>
+
+                            </ul>
+
+        </li>
+
+
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+
+                Préferences
+
+            </a>
+
+            <div class="dropdown-menu">
+
+                <a class="dropdown-item" href="/profile/preferences">
+
+                    <i class="fa-fw fas fa-gear nav-icon"></i>
+
+                    Options
+
+                </a>
+
+                                <a class="dropdown-item" href="/profile/password">
+
+                   <i class="fa-fw fas fa-lock nav-icon"></i>
+
+                    Mot de passe
+
+                </a>
+
+                            </div>
+
+        </li>
+
+
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+
+                Outils
+
+            </a>
+
+            <div class="dropdown-menu">
+
+                                <a class="dropdown-item" href="/admin/report/explore">
+
+                    <i class="fa-fw fas fa-globe"></i>
+
+                    Exploration
+
+                </a>
+
+                <a class="dropdown-item" href="/admin/doc/report">
+
+                    <i class="fa-fw fas fa-file"></i>
+
+                    Rapports
+
+                </a>
+
+            </div>
+
+        </li>
+
+
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+
+                &nbsp Aide
+
+            </a>
+
+            <ul class="dropdown-menu">
+
+              <li>
+
+                  <a class="dropdown-item" href="/admin/doc/schema">
+
+                        <i class="fa-fw fas fa-map nav-icon"></i>
+
+                        Modèle de données
+
+                  </a>
+
+              </li>
+
+              <li>
+
+                  <a class="dropdown-item" href="/admin/doc/guide">
+
+                        <i class="fa-fw fas fa-book nav-icon"></i>
+
+                        Guide
+
+                  </a>
+
+              </li>
+
+              <li>
+
+              <a class="dropdown-item" href="/admin/doc/about">
+
+                        <i class="fa-fw fas fa-info nav-icon"></i>
+
+                        A propos
+
+                  </a>
+
+              </li>
+
+          </ul>
+
+        </li>
+
+    </ul>
+
+
+
+    </header>
+
+
+
+    <div class="app-body">
+
+        <div class="sidebar">
+
+    <nav class="sidebar-nav">
+
+
+
+        <ul class="nav">
+
+            <li>
+
+                <form id="search-form" action="/admin/global-search" method="GET">
+
+                <div class="input-group">
+
+                  <div class="custom-file">
+
+                        <input name="search" type="text" class="form-control" style="padding: 0px 10px;" placeholder="Search..." id="search-field" tabindex="-1" value="">
+
+                  </div>
+
+                  <div class="input-group-prepend">
+
+                     <button class="btn btn-outline-secondary" type="submit" id="search-button">
+
+                         <i class="fa-fw fas fa-align-justify fa-search">
+
+                         </i>
+
+                     </button>
+
+                  </div>
+
+                </div>
+
+            </form>
+
+            </li>
+
+            <li class="nav-item">
+
+               <a href='/admin' class="nav-link">
+
+                    <i class="nav-icon fas fa-fw fa-tachometer-alt">
+
+
+
+                    </i>
+
+                    Tableau de bord
+
+                </a>
+
+            </li>
+
+
+
+                            <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue du RGPD
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href='/admin/data-processings' class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Registre
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href='/admin/security-controls' class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Mesures de sécurité
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+
+
+                            <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue de l&#039;écosystème
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href='/admin/entities' class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Entités
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href='/admin/relations' class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Relations
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    open">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue métier du système d’information
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/macro-processuses" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Macro-Processus
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/processes" class="nav-link active">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Processus
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/operations" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Opérations
+
+                                </a>
+
+                            </li>
+
+
+
+
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/actors" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Acteurs
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/information" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Informations
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue des applications
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/application-blocks" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Blocs applicatif
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/applications" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Applications
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/application-services" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Services applicatifs
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/application-modules" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Modules applicatif
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/databases" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Bases de données
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/fluxes" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Flux logiques
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue de l&#039;administration
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/zone-admins" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Zones d&#039;administration
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/annuaires" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Services d&#039;annuaire d&#039;administration
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/forest-ads" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Forêts Active Directory / LDAP
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/domaine-ads" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Domaines Active Directory / LDAP
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/admin-users" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Administrateurs
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue des infrastructures logiques
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/networks" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Réseaux
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/subnetworks" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Sous-réseaux
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/gateways" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Passerelles d’entrées depuis l’extérieur
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/external-connected-entities" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Entités extérieures connectées
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/routers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Routeurs
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/network-switches" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Commutateurs réseau
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/security-devices" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Equipements de sécurité
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/dhcp-servers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Serveurs DHCP
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/dnsservers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Serveurs DNS
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/clusters" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Clusters
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/logical-servers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Serveurs logiques
+
+                               </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/logical-flows" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Flux logiques
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/vlans" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    VLAN
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/certificates" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Certificats
+
+                                </a>
+
+                            </li>
+
+                                                                    </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+                        <i class="fa-fw fas fa-folder nav-icon">
+
+
+
+                        </i>
+
+                        Vue de l&#039;infrastructure physique
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/sites" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Sites
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/buildings" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Bâtiments / Salles
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/bays" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Baies
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/physical-servers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Serveurs physiques
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/workstations" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Postes de travail
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/storage-devices" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Infrastructures de stockage
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/peripherals" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Périphériques
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/phones" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Téléphones
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/physical-switches" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Commutateurs physiques
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/physical-routers" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Routeurs physiques
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/wifi-terminals" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Bornes Wifi
+
+                                </a>
+
+                            </li>
+
+                                                                                                    <li class="nav-item">
+
+                                <a href="/admin/physical-security-devices" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Équipements de sécurité physique
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/links" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    Liens physiques
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/wans" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    WAN - Wide Area Network
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/mans" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    MAN - Middle Area Network
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/lans" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-align-justify nav-icon">
+
+
+
+                                    </i>
+
+                                    LAN - Local Area Network
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                                        <li class="nav-item nav-dropdown
+
+                    ">
+
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+
+
+
+                        <i class="fa-fw fas fa-gear nav-icon">
+
+
+
+                        </i>
+
+                        Configuration
+
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/users" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-user nav-icon">
+
+
+
+                                    </i>
+
+                                    Utilisateurs
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/roles" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-group nav-icon">
+
+
+
+                                    </i>
+
+                                    Rôles
+
+                                </a>
+
+                            </li>
+
+                                                                            <li class="nav-item">
+
+                                <a href="/admin/config/parameters" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-wrench nav-icon">
+
+
+
+                                    </i>
+
+                                    Paramètres
+
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a href="/admin/config/cert" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-lock nav-icon">
+
+
+
+                                    </i>
+
+                                    Certificats
+
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a href="/admin/config/cve" class="nav-link" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-bug nav-icon">
+
+
+
+                                    </i>
+
+                                    CVE
+
+                                </a>
+
+                            </li>
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/config/documents" class="nav-link" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-file-text nav-icon">
+
+
+
+                                    </i>
+
+                                    Documents
+
+                                </a>
+
+                            </li>
+
+                                                    <li class="nav-item">
+
+                                <a href="/admin/audit-logs" class="nav-link ">
+
+                                    <i class="fa-fw fas fa-files-o nav-icon">
+
+
+
+                                    </i>
+
+                                    Audits Logs
+
+                                </a>
+
+                            </li>
+
+                                            </ul>
+
+                </li>
+
+                        <li class="nav-item">
+
+                <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+
+                    <i class="nav-icon fas fa-fw fa-sign-out-alt">
+
+
+
+                    </i>
+
+                    Déconnexion
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+
+    <button class="sidebar-minimizer brand-minimizer" type="button">
+
+        <script>
+
+        'toto'
+
+        </script>
+
+        Version 2024.12.1</button>
+
+</div>
+
+        <main class="main">
+
+
+
+            <div style="padding-top: 20px" class="container-fluid">
+
+                                                    <div style="margin-bottom: 10px;" class="row">
+
+        <div class="col-lg-12">
+
+            <a class="btn btn-success" href="/admin/processes/create">
+
+                Ajouter Processus
+
+            </a>
+
+        </div>
+
+    </div>
+
+<div class="card">
+
+    <div class="card-header">
+
+        Processus Liste
+
+    </div>
+
+
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table id="dataTable" class="table table-bordered table-striped table-hover datatable">
+
+                <thead>
+
+                    <tr>
+
+                        <th width="10">
+
+
+
+                        </th>
+
+                        <th>
+
+                            Nom
+
+                        </th>
+
+                        <th>
+
+                            Description
+
+                        </th>
+
+                        <th>
+
+                            Opérations
+
+                        </th>
+
+                        <th>
+
+                            Informations
+
+                        </th>
+
+                        <th>
+
+                            Macro-processus
+
+                        </th>
+
+                        <th>
+
+                            Responsable
+
+                        </th>
+
+                        <th>
+
+                            &nbsp;
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                                            <tr data-entry-id="4"
+
+
+
+                            >
+
+                            <td>
+
+
+
+                            </td>
+
+                            <td>
+
+                                <a href="/admin/processes/4">
+
+                                PM1
+
+                                </a>
+
+                            </td>
+
+                            <td>
+
+                                <p>PM1 -"Revoir et déployer la stratégie".</p><p>Aligner les activités, les compétences et les ressources sur ces orientations stratégiques définies dans le Projet d’Etablissement (PE) .</p><p>&nbsp;</p>
+
+                            </td>
+
+                            <td>
+
+
+
+                            </td>
+
+                            <td>
+
+
+
+                            </td>
+
+                            <td>
+
+                                <a href="/admin/information/6">Données standard</a>
+
+                            </td>
+
+                            <td>
+
+                                                                <a href="/admin/macro-processuses/2">
+
+                                Processus de management
+
+                                </a>
+
+                                                            </td>
+
+
+                            <td nowrap>
+
+                                                                    <a class="btn btn-xs btn-primary" href="/admin/processes/4">
+
+                                        Afficher
+
+                                    </a>
+
+
+
+                                                                    <a class="btn btn-xs btn-info" href="/admin/processes/4/edit">
+
+                                        Modifier
+
+                                    </a>
+
+
+
+                                                                    <form action="/admin/processes/4" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');" style="display: inline-block;">
+
+                                        <input type="hidden" name="_method" value="DELETE">
+
+                                        <input type="hidden" name="_token" value="tuh4ZlIp8w7MTt2auFeAnxDs48FX3iXcVQCAh5eB">
+
+                                        <input type="submit" class="btn btn-xs btn-danger" value="Supprimer">
+
+                                    </form>
+
+
+
+                            </td>
+
+
+
+                        </tr>
+
+
+                                    </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+        </main>
+
+        <form id="logoutform" action="/logout" method="POST" style="display: none;">
+
+            <input type="hidden" name="_token" value="tuh4ZlIp8w7MTt2auFeAnxDs48FX3iXcVQCAh5eB" autocomplete="off">
+
+        </form>
+
+    </div>
+
+
+
+    <!-- SweetAlert -->
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
+    <script src="/js/sweetalert2.all.min.js"></script>
+
+
+
+    <!-- JQuery -->
+
+    <script src="/js/jquery.min.js"></script>
+
+
+
+    <!-- Bootstrap -->
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- CoreUI - needed for sidebars -->
+
+    <script src="/js/coreui.min.js"></script>
+
+
+
+    <!-- Datatables -->
+
+    <script src="/js/datatables.min.js"></script>
+
+
+
+    <script src="/js/ckeditor.js"></script>
+
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script-->
+
+    <script src="/js/moment.min.js"></script>
+
+    <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script-->
+
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script-->
+
+    <script src="/js/select2.full.min.js"></script>
+
+
+
+    <script src="/js/main.js"></script>
+
+
+
+    <script>
+
+let table = new DataTable('#dataTable',{
+
+        keys: true,
+
+        stateSave: true,
+
+        responsive: true,
+
+        colReorder: true,
+
+                               autoWidth: true,
+
+
+
+        columnDefs: [
+
+            {
+
+                orderable: false,
+
+                render: DataTable.render.select(),
+
+                targets: 0
+
+            }
+
+        ],
+
+
+
+        layout:
+
+        {
+
+                               paging: true,
+
+            keys: {
+
+                columns: ':not(:first-child)',
+
+            },
+
+        },
+
+
+
+        select: {
+
+            style: 'os',
+
+            selector: 'td:first-child',
+
+            headerCheckbox: 'select-page',
+
+            items: 'row'
+
+        },
+
+
+
+        order: [[1, 'asc']],
+
+        pageLength: 100,
+
+
+
+        buttons: [
+
+            {
+
+              extend: 'colvis',
+
+              columns: ':not(:first-child):not(:last-child)'
+
+            },
+
+            {
+
+              extend: 'copy',
+
+              className: 'btn-default',
+
+              exportOptions: {
+
+                columns: ':not(:first-child):not(:last-child)'
+
+              }
+
+          },
+
+            {
+
+              extend: 'csv',
+
+              title: "Mercator - Processus - 20241213",
+
+              className: 'btn-default',
+
+              exportOptions: {
+
+                columns: ':not(:first-child):not(:last-child)'
+
+              }
+
+          },
+
+            {
+
+              extend: 'excel',
+
+              title: "Mercator - Processus - 20241213",
+
+              className: 'btn-default',
+
+              exportOptions: {
+
+                  columns: ':not(:first-child):not(:last-child)'
+
+              }
+
+          },
+
+            {
+
+              extend: 'pdf',
+
+              test: 'PDF',
+
+              title: "Mercator - Processus - 20241213",
+
+              className: 'btn-default',
+
+              exportOptions: {
+
+                columns: ':not(:first-child):not(:last-child)'
+
+              }
+
+          },
+
+            {
+
+              extend: 'print',
+
+              title: "Mercator - Processus - 20241213",
+
+              className: 'btn-default',
+
+              exportOptions: {
+
+                columns: ':not(:first-child):not(:last-child)'
+
+              }
+
+          },
+
+                    {
+
+                text: "Delete selected items",
+
+                className: 'btn-danger',
+
+                action:
+
+                    function (e, dt, node, config) {
+
+                      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+
+                          return $(entry).data('entry-id')
+
+                      });
+
+
+
+                      if (ids.length === 0) {
+
+                        alert("No Row Selected")
+
+                      }
+
+
+
+                      else if (confirm("Êtes-vous sûr ?")) {
+
+                        $.ajax({
+
+                          method: 'POST',
+
+                          headers: {'x-csrf-token': _token},
+
+                          url: "/admin/processes-destroy",
+
+                          data: { ids: ids, _method: 'DELETE' }})
+
+                          .done(function ()
+
+                              { location.reload() })
+
+                        }
+
+                    }
+
+                }
+
+                        ],
+
+        }
+
+    );
+
+
+
+    table
+
+        .buttons(0, null)
+
+        .container()
+
+        .prependTo(table.table().container());
+
+;
+
+</script>
+
+
+
+</body>
+
+</html>
