@@ -17,9 +17,9 @@ Install PHP and some PHP libraries
 
     sudo apt install php-zip php-curl php-mbstring php-xml php-ldap php-soap php-xdebug php-mysql php-gd libapache2-mod-php
 
-Install Apache2, GIT, Graphviz, NPM et Composer
+Install Apache2, GIT, Graphviz and Composer
 
-    sudo apt install apache2 git graphviz composer npm
+    sudo apt install apache2 git graphviz composer
 
 ## Project
 
@@ -39,14 +39,6 @@ Install packages with composer :
 
     cd /var/www/mercator
     composer install
-
-## Node Package Management
-
-Install packages with npm :
-
-    cd /var/www/mercator
-    npm install
-    npm run build
 
 ## MySQL
 
@@ -352,11 +344,9 @@ Migrate the database
 
     php artisan migrate
 
-Update the libraries
+Install PHP libraries
 
     composer install
-    npm install
-    npm run build
 
 Empty caches
 

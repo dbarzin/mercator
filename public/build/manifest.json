@@ -1,0 +1,121 @@
+{
+  "_ModelXmlSerializer-DV57O7Vk.js": {
+    "file": "assets/ModelXmlSerializer-DV57O7Vk.js",
+    "name": "ModelXmlSerializer"
+  },
+  "_chart-DSVfdqgm.js": {
+    "file": "assets/chart-DSVfdqgm.js",
+    "name": "chart"
+  },
+  "_chartjs-plugin-datalabels.esm-oxwyG89a.js": {
+    "file": "assets/chartjs-plugin-datalabels.esm-oxwyG89a.js",
+    "name": "chartjs-plugin-datalabels.esm",
+    "imports": [
+      "_chart-DSVfdqgm.js"
+    ]
+  },
+  "_gauge-controller-DRgqKV_U.js": {
+    "file": "assets/gauge-controller-DRgqKV_U.js",
+    "name": "gauge-controller",
+    "imports": [
+      "_chart-DSVfdqgm.js"
+    ]
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
+    "file": "assets/bootstrap-icons-BOrJxbIo.woff",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
+  },
+  "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
+    "file": "assets/bootstrap-icons-BtvjY1KL.woff2",
+    "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-uXbPvWeL.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/mapping.css": {
+    "file": "assets/mapping-B03IrhoI.css",
+    "src": "resources/css/mapping.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-rN2H_emx.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-C-VBPqlW.css"
+    ]
+  },
+  "resources/js/chart-home.js": {
+    "file": "assets/chart-home-DhlOY4EG.js",
+    "name": "chart-home",
+    "src": "resources/js/chart-home.js",
+    "isEntry": true,
+    "imports": [
+      "_chart-DSVfdqgm.js",
+      "_chartjs-plugin-datalabels.esm-oxwyG89a.js",
+      "_gauge-controller-DRgqKV_U.js"
+    ]
+  },
+  "resources/js/chart-maturity.js": {
+    "file": "assets/chart-maturity-BsbDn3y9.js",
+    "name": "chart-maturity",
+    "src": "resources/js/chart-maturity.js",
+    "isEntry": true,
+    "imports": [
+      "_chart-DSVfdqgm.js",
+      "_gauge-controller-DRgqKV_U.js"
+    ]
+  },
+  "resources/js/chart-patching.js": {
+    "file": "assets/chart-patching-B6Lsfk37.js",
+    "name": "chart-patching",
+    "src": "resources/js/chart-patching.js",
+    "isEntry": true,
+    "imports": [
+      "_chart-DSVfdqgm.js",
+      "_chartjs-plugin-datalabels.esm-oxwyG89a.js"
+    ]
+  },
+  "resources/js/chart-relation.js": {
+    "file": "assets/chart-relation-BofFvcCf.js",
+    "name": "chart-relation",
+    "src": "resources/js/chart-relation.js",
+    "isEntry": true,
+    "imports": [
+      "_chart-DSVfdqgm.js"
+    ]
+  },
+  "resources/js/d3-viz.js": {
+    "file": "assets/d3-viz-BbGt6Wt5.js",
+    "name": "d3-viz",
+    "src": "resources/js/d3-viz.js",
+    "isEntry": true
+  },
+  "resources/js/map.edit.ts": {
+    "file": "assets/map.edit-DXPKRYSW.js",
+    "name": "map.edit",
+    "src": "resources/js/map.edit.ts",
+    "isEntry": true,
+    "imports": [
+      "_ModelXmlSerializer-DV57O7Vk.js"
+    ]
+  },
+  "resources/js/map.show.ts": {
+    "file": "assets/map.show-D5sVEbaG.js",
+    "name": "map.show",
+    "src": "resources/js/map.show.ts",
+    "isEntry": true,
+    "imports": [
+      "_ModelXmlSerializer-DV57O7Vk.js"
+    ]
+  },
+  "resources/js/vis-network.js": {
+    "file": "assets/vis-network-BbmrYw5F.js",
+    "name": "vis-network",
+    "src": "resources/js/vis-network.js",
+    "isEntry": true
+  }
+}

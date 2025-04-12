@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Hilbert IPv4 Address Map</title>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.0/d3.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/ip.js"></script>
+<script src="//unpkg.com/hilbert-chart"></script>
+
+  <!--script src='//cdnjs.cloudflare.com/ajax/libs/d3/4.2.0/d3.min.js'></script>
+  <script src='//unpkg.com/ip.js'></script>
+  <script src='//unpkg.com/hilbert-chart'></script-->
+
+  <style>
+    body {
+      margin: 0;
+      text-align: center;
+    }
+    #ipv4-chart { display: inline-block; }
+
+    .info-note {
+      font-size: 11px;
+      font-family: Sans-serif;
+      opacity: 0.5;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style>
+
+</head>
+<body>
+  <div id='ipv4-chart'></div>
+  <div class='info-note'>(use mouse-wheel/drag to zoom/pan)</div>
+
+  <script>
+    // Get the IPv4 data
+    d3.csv('./ipv4-address-space.csv', data => {
+
+      data.forEach(row => {
+        row.prefix = row.Prefix;
+        row.name = row.Designation;
+      });
+
+      const hilbertChart = HilbertChart()
+        .hilbertOrder(32 / 2)
+        .data(parseIpData(data))
+        .rangePadding(0.03)
+        .valFormatter(ipFormatter)
+        .rangeTooltipContent(d => `<b>${d.name}</b>: ${prefixFormatter(d)}`)
+        (document.getElementById('ipv4-chart'));
+
+      // Fetch my IP
+      d3.json('//stat.ripe.net/data/whats-my-ip/data.json', data => {
+        const ip = data.data.ip;
+        const iconWidth = Math.min(30, Math.min(window.innerWidth, window.innerHeight) * 0.03);
+        hilbertChart.addMarker(
+          new Ip.Addr(ip).toNum(),
+          './target.svg',
+          iconWidth,
+          iconWidth,
+          () => `You are here: ${ip}`
+        );
+      });
+    });
+
+    //
+
+    function parseIpData(ipData) {
+      const prefixes = [];
+
+    ipData.map(row => {
+      const pref = new Ip.Prefix(row.prefix);
+      return {
+        start: pref.firstIp().toNum(),
+        length: pref.countIps(),
+        name: getName(row.name),
+        infos: [row]
+      };
+    }).forEach(prefix => {
+        let last;
+
+        if (prefixes.length
+            && (last = prefixes[prefixes.length - 1])
+            && last.name === prefix.name
+            && (last.start + last.length === prefix.start)) {
+
+          last.length += prefix.length;
+          last.infos.push(prefix.infos[0]);
+        } else {
+          prefixes.push(prefix);
+        }
+      });
+
+      return prefixes;
+
+      //
+
+    function getName(designation) {
+      if (typeof designation !== 'string') {
+        return 'Unknown';
+      }
+
+      if (designation.indexOf('Administered by') > -1) {
+        return 'Various Registries';
+      }
+
+      return designation;
+    }
+
+    }
+
+    function ipFormatter(d) {
+      return new Ip.Addr(d).toString();
+    }
+
+    function prefixFormatter(d) {
+      const ipRange = new Ip.Range(d.start, d.start + d.length - 1),
+          prefixes = ipRange.toPrefixes();
+
+      return (prefixes.length===1 ? prefixes[0] : ipRange).toString();
+    }
+  </script>
+</body>
+</html>
