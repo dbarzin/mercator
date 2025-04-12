@@ -15,7 +15,7 @@ Update linux distribution
 
 Install Httpd, GIT, Graphviz, Vim and PHP
 
-    sudo dnf install vim httpd git graphviz php npm
+    sudo dnf install vim httpd git graphviz php
 
 Check that the php 8.2 module is available
 
@@ -61,14 +61,6 @@ Clone the project from Github
 Install packages with composer
 
     composer install
-
-## Node Package Management
-
-Install packages with npm :
-
-    cd /var/www/mercator
-    npm install
-    npm run build
 
 ## MySQL
 
@@ -347,8 +339,6 @@ add this line to the crontab
  Update libraries
 
       sudo -u apache composer install
-      sudo -u apache npm install
-      sudo -u apache npm run build
 
  Clear caches
 
