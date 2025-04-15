@@ -515,11 +515,12 @@ table .navbar-brand-full {
     text-align: center;
     display: inline-block;
     min-height: 550px;
+    width: 100%;
 }
 
 .graphviz svg {
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 600px;
     max-width: none;
 }
 

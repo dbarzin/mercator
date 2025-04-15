@@ -146,7 +146,7 @@ Mapping objects can refer to other objects. For example, we can link a process t
 }
 ```
 
-The names of all extra fields are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaine_ads', 'application_services', 'certificates', 'peripherals', 'physical_servers', 'physical_routers', 'network_switches', 'routers', 'physicalSwitches', 'physicalRouters']
+The names of all extra fields are: ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'networkSwitches', 'physicalSwitches', 'physicalRouters']
 
 ### PHP
 

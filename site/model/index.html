@@ -1107,9 +1107,19 @@
 <td style="text-align: left;">Traceability</td>
 </tr>
 <tr>
+<td style="text-align: left;">ecurity_need_auth</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Authenticity</td>
+</tr>
+<tr>
 <td style="text-align: left;">type</td>
 <td style="text-align: left;">varchar(255)</td>
 <td style="text-align: left;">Type of application</td>
+</tr>
+<tr>
+<td style="text-align: left;">attributes</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Attributes of the application</td>
 </tr>
 <tr>
 <td style="text-align: left;">technology</td>
@@ -1142,6 +1152,16 @@
 <td style="text-align: left;">Person/team responsible</td>
 </tr>
 <tr>
+<td style="text-align: left;">functional_referent</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Functional referent</td>
+</tr>
+<tr>
+<td style="text-align: left;">editor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Application's editor</td>
+</tr>
+<tr>
 <td style="text-align: left;">application_block_id</td>
 <td style="text-align: left;">int unsigned</td>
 <td style="text-align: left;">Group of application</td>
@@ -1155,6 +1175,36 @@
 <td style="text-align: left;">update_date</td>
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">Date of upgrade</td>
+</tr>
+<tr>
+<td style="text-align: left;">next_update</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">Date of next planned upgrade</td>
+</tr>
+<tr>
+<td style="text-align: left;">rto</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Recovery Time Objective</td>
+</tr>
+<tr>
+<td style="text-align: left;">rpo</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Recovery Point Objective</td>
+</tr>
+<tr>
+<td style="text-align: left;">vendor</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Application's vendor</td>
+</tr>
+<tr>
+<td style="text-align: left;">product</td>
+<td style="text-align: left;">varchar(255)</td>
+<td style="text-align: left;">Product name</td>
+</tr>
+<tr>
+<td style="text-align: left;">patching_frequency</td>
+<td style="text-align: left;">int</td>
+<td style="text-align: left;">Patching frequency</td>
 </tr>
 <tr>
 <td style="text-align: left;">created_at</td>
