@@ -145,7 +145,7 @@ Les objets de la cartographie peuvent faire référence à d'autres objets. Par 
 }
 ```
 
-Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaine_ads', 'application_services', 'certificates', 'peripherals', 'physical_servers', 'physical_routers', 'network_switches', 'routers', 'physicalSwitches', 'physicalRouters'].
+Les noms de tous les champs supplémentaires sont : ['actors', 'tasks', 'activities', 'entities', 'applications', 'informations', 'processes', 'databases', 'logical_servers', 'modules', 'domainesForestAds', 'servers', 'vlans', 'lans', 'mans', 'wans', 'operations', 'domaineAds', 'applicationServices', 'certificates', 'peripherals', 'physicalServers', 'physicalRouters', 'networkSwitches', 'routers', 'physicalSwitches' ].
 
 ### Exemples
 
