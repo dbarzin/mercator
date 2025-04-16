@@ -97,6 +97,22 @@ class User extends Authenticatable implements LdapAuthenticatable
         return false;
     }
 
+    /**
+     * Permet d'ajouter un role à l'utilisateur courant
+     *
+     * @param Role $role
+     *
+     * @return void
+     */
+    public function addRole(Role $role): void
+    {
+        if ($this->hasRole($role)) {
+            return;
+        }
+
+        $this->roles()->save($role);
+    }
+
     public function setPasswordAttribute($input)
     {
         if ($input) {
