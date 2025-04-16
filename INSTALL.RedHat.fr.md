@@ -307,57 +307,112 @@ Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichie
 
     APP_ENV=production
 
-### Variante PHP-FPM
 
-Installer le paquet php-fpm :
+### Variante PHP-FPM (systèmes Red Hat)
+
+Cette configuration permet d’utiliser PHP-FPM avec Apache via un socket UNIX, offrant de meilleures performances et une compatibilité accrue avec le module `mpm_event`.
+
+#### 1. Installer PHP-FPM
 
 ```bash
 sudo dnf install php-fpm
 ```
 
-Le fichier de configuration du virtual host devient alors
+Activer et démarrer le service PHP-FPM :
 
-```xml
+```bash
+sudo systemctl enable --now php-fpm
+```
+
+> N'oubliez pas d'installer également les modules PHP nécessaires à votre application (`php-mbstring`, `php-mysqlnd`, `php-xml`, etc.).
+
+---
+
+#### 2. Exemple de configuration Apache
+
+##### VirtualHost HTTP
+
+```apache
 <VirtualHost *:80>
     ServerName mercator.local
     ServerAdmin admin@example.com
+
     DocumentRoot /var/www/mercator/public
+
     <Directory /var/www/mercator>
         AllowOverride All
+        Require all granted
     </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
+
+    <FilesMatch "\.php$">
         SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
     </FilesMatch>
+
     ErrorLog /var/log/httpd/mercator_error.log
     CustomLog /var/log/httpd/mercator_access.log combined
 </VirtualHost>
 ```
 
-Et pour du HTTPS
+##### VirtualHost HTTPS
 
-```xml
+```apache
 <VirtualHost *:443>
-    ServerName carto.XXXXXXXX
-    ServerAdmin
+    ServerName carto.exemple.com
+    ServerAdmin admin@example.com
+
     DocumentRoot /var/www/mercator/public
+
     SSLEngine on
     SSLProtocol all -SSLv2 -SSLv3
-    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
-    SSLCertificateFile /etc/httpd/certs/certs/carto.XXXXX.crt
-    SSLCertificateKeyFile /etc/httpd/certs/private/private.key
-    SSLCertificateChainFile /etc/httpd/certs/certs/XXXXXCA.crt
+    SSLCipherSuite HIGH:!aNULL:!MD5
+
+    SSLCertificateFile /etc/httpd/certs/carto.exemple.com.crt
+    SSLCertificateKeyFile /etc/httpd/certs/private.key
+    SSLCertificateChainFile /etc/httpd/certs/CA.crt
+
     <Directory /var/www/mercator/public>
         AllowOverride All
+        Require all granted
     </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
+
+    <FilesMatch "\.php$">
         SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
     </FilesMatch>
+
     ErrorLog /var/log/httpd/mercator_error.log
     CustomLog /var/log/httpd/mercator_access.log combined
 </VirtualHost>
 ```
+
+> **Remarques :**
+> - Adaptez les chemins vers les certificats SSL selon votre environnement.
+> - Vérifiez le chemin du socket PHP-FPM : il peut être `/run/php-fpm/www.sock` selon votre version/configuration.
+
+---
+
+### Astuce : gérer les permissions avec SELinux
+
+Sur les systèmes avec SELinux activé (cas par défaut sur RHEL et dérivés), vous pourriez rencontrer des erreurs de type *"Permission denied"* lors de l'utilisation du socket UNIX.
+
+Voici comment autoriser Apache à accéder au socket PHP-FPM :
+
+```bash
+sudo setsebool -P httpd_can_network_connect on
+sudo chcon -u system_u -t httpd_sys_rw_content_t /run/php/php-fpm.sock
+```
+
+Et si vous hébergez Mercator dans un répertoire personnalisé :
+
+```bash
+sudo semanage fcontext -a -t httpd_sys_content_t "/var/www/mercator(/.*)?"
+sudo restorecon -Rv /var/www/mercator
+```
+
+> Pour utiliser `semanage`, installez le paquet suivant si besoin :  
+> ```bash
+> sudo dnf install policycoreutils-python-utils
+> ```
+
 
 ## Problèmes
 

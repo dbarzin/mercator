@@ -316,71 +316,96 @@ Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichie
 
     APP_ENV=production
 
-### Variante PHP-FPM
 
-Installer le paquet php-fpm :
+### Variante PHP-FPM avec Apache
+
+Cette méthode permet de faire tourner Mercator avec PHP-FPM (FastCGI Process Manager) et le module `mpm_event` d’Apache, pour de meilleures performances que l’utilisation classique avec `mod_php`.
+
+#### 1. Installer PHP-FPM
 
 ```bash
 sudo apt install php-fpm
 ```
 
-Désactiver les modules PHP et MPM prefork d'Apache
+#### 2. Configurer Apache
+
+Désactiver les modules incompatibles (notamment `mod_php` et `mpm_prefork`) :
 
 ```bash
-sudo a2dismod mpm_prefork phpx.y
+sudo a2dismod mpm_prefork phpX.Y
 ```
 
-Activer les modules FastCGI et MPM event d'Apache
+> Remplace `phpX.Y` par la version installée (ex. `php8.2`).
+
+Activer les modules nécessaires pour le fonctionnement avec PHP-FPM :
 
 ```bash
 sudo a2enmod proxy_fcgi mpm_event
 ```
 
-Configurer le fichier `/etc/apache2/mods-enabled/mpm_event.conf` selon la documentation <https://httpd.apache.org/docs/current/fr/mod/event.html>.
+#### 3. Vérifier ou ajuster la configuration du module `mpm_event`
 
-Le fichier de configuration du virtual host devient alors
+Édite le fichier `/etc/apache2/mods-enabled/mpm_event.conf` pour ajuster les paramètres selon la charge de ton serveur. Consulte la documentation officielle pour les détails :  
+<https://httpd.apache.org/docs/current/fr/mod/event.html>
 
-```xml
+#### 4. Exemple de VirtualHost HTTP
+
+```apache
 <VirtualHost *:80>
     ServerName mercator.local
     ServerAdmin admin@example.com
+
     DocumentRoot /var/www/mercator/public
+
     <Directory /var/www/mercator>
         AllowOverride All
+        Require all granted
     </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
+
+    <FilesMatch "\.php$">
         SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
     </FilesMatch>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
 
-Et pour du HTTPS
-
-```xml
-<VirtualHost *:443>
-    ServerName carto.XXXXXXXX
-    ServerAdmin
-    DocumentRoot /var/www/mercator/public
-    SSLEngine on
-    SSLProtocol all -SSLv2 -SSLv3
-    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
-    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
-    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
-    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
-    <Directory /var/www/mercator/public>
-        AllowOverride All
-    </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
-        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
-    </FilesMatch>
     ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
     CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
 </VirtualHost>
 ```
+
+#### 5. Exemple de VirtualHost HTTPS
+
+```apache
+<VirtualHost *:443>
+    ServerName carto.example.com
+    ServerAdmin admin@example.com
+
+    DocumentRoot /var/www/mercator/public
+
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:!aNULL:!MD5
+
+    SSLCertificateFile /etc/apache2/certs/carto.example.com.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private.key
+    SSLCertificateChainFile /etc/apache2/certs/CA.crt
+
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <FilesMatch "\.php$">
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+
+    ErrorLog ${APACHE_LOG_DIR}/mercator_ssl_error.log
+    CustomLog ${APACHE_LOG_DIR}/mercator_ssl_access.log combined
+</VirtualHost>
+```
+
+> **Remarques :**
+> - Adapte les chemins des certificats SSL à ton environnement.
+> - Vérifie que le socket PHP-FPM correspond bien au chemin `/run/php/php-fpm.sock` (à adapter selon ta version de PHP, ex. `/run/php/php8.2-fpm.sock`).
+
 
 ## Problèmes
 

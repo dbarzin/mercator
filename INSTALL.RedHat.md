@@ -305,57 +305,87 @@ add this line to the crontab
 
       APP_ENV=production
 
-### PHP-FPM variation
 
-Install php-fpm :
+### PHP-FPM Variant
+
+This setup configures Apache to use PHP-FPM via a UNIX socket, improving performance and compatibility with `mpm_event`.
+
+#### 1. Install PHP-FPM
 
 ```bash
 sudo dnf install php-fpm
 ```
 
-Configuration file is now
+Ensure that `php-fpm` is enabled and started:
 
-```xml
+```bash
+sudo systemctl enable --now php-fpm
+```
+
+> You may need to install additional PHP modules depending on your application needs (e.g. `php-mbstring`, `php-mysqlnd`, `php-xml`, etc.).
+
+---
+
+#### 2. Apache VirtualHost Configuration
+
+##### Example: HTTP VirtualHost
+
+```apache
 <VirtualHost *:80>
     ServerName mercator.local
     ServerAdmin admin@example.com
+
     DocumentRoot /var/www/mercator/public
+
     <Directory /var/www/mercator>
         AllowOverride All
+        Require all granted
     </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
+
+    <FilesMatch "\.php$">
         SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
     </FilesMatch>
+
     ErrorLog /var/log/httpd/mercator_error.log
     CustomLog /var/log/httpd/mercator_access.log combined
 </VirtualHost>
 ```
 
-With HTTPS
+##### Example: HTTPS VirtualHost
 
-```xml
+```apache
 <VirtualHost *:443>
-    ServerName carto.XXXXXXXX
-    ServerAdmin
+    ServerName carto.example.com
+    ServerAdmin admin@example.com
+
     DocumentRoot /var/www/mercator/public
+
     SSLEngine on
     SSLProtocol all -SSLv2 -SSLv3
-    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
-    SSLCertificateFile /etc/httpd/certs/certs/carto.XXXXX.crt
-    SSLCertificateKeyFile /etc/httpd/certs/private/private.key
-    SSLCertificateChainFile /etc/httpd/certs/certs/XXXXXCA.crt
+    SSLCipherSuite HIGH:!aNULL:!MD5
+
+    SSLCertificateFile /etc/httpd/certs/carto.example.com.crt
+    SSLCertificateKeyFile /etc/httpd/certs/private.key
+    SSLCertificateChainFile /etc/httpd/certs/CA.crt
+
     <Directory /var/www/mercator/public>
         AllowOverride All
+        Require all granted
     </Directory>
-    <FilesMatch "\.(cgi|shtml|phtml|php)$">
-        SSLOptions +StdEnvVars
+
+    <FilesMatch "\.php$">
         SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
     </FilesMatch>
+
     ErrorLog /var/log/httpd/mercator_error.log
     CustomLog /var/log/httpd/mercator_access.log combined
 </VirtualHost>
 ```
+
+> **Notes:**
+> - Adjust paths and file names to match your certificate setup.
+> - Verify the PHP-FPM socket path; on some systems it may be `/run/php-fpm/www.sock`.
+
 
  ## Problems
 
