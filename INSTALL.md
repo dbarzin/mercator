@@ -317,6 +317,72 @@ To force HTTPS redirection you have to set this parameter in .env
 
     APP_ENV=production
 
+### Variante PHP-FPM
+
+Install php-fpm :
+
+```bash
+sudo apt install php-fpm
+```
+
+Disable Apache PHP and MPM prefork modules
+
+```bash
+sudo a2dismod mpm_prefork phpx.y
+```
+
+Activate Apache FastCGI and MPM event modules
+
+```bash
+sudo a2enmod proxy_fcgi mpm_event
+```
+
+Configure MPM event module with the file `/etc/apache2/mods-enabled/mpm_event.conf` according to the documentation <https://httpd.apache.org/docs/current/mod/event.html>
+
+Configuration file is now
+
+```xml
+<VirtualHost *:80>
+    ServerName mercator.local
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/mercator/public
+    <Directory /var/www/mercator>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+With HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+</VirtualHost>
+```
+
 ## Problems
 
 ### Restore the administrator password

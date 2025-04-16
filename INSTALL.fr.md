@@ -316,6 +316,72 @@ Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichie
 
     APP_ENV=production
 
+### Variante PHP-FPM
+
+Installer le paquet php-fpm :
+
+```bash
+sudo apt install php-fpm
+```
+
+Désactiver les modules PHP et MPM prefork d'Apache
+
+```bash
+sudo a2dismod mpm_prefork phpx.y
+```
+
+Activer les modules FastCGI et MPM event d'Apache
+
+```bash
+sudo a2enmod proxy_fcgi mpm_event
+```
+
+Configurer le fichier `/etc/apache2/mods-enabled/mpm_event.conf` selon la documentation <https://httpd.apache.org/docs/current/fr/mod/event.html>.
+
+Le fichier de configuration du virtual host devient alors
+
+```xml
+<VirtualHost *:80>
+    ServerName mercator.local
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/mercator/public
+    <Directory /var/www/mercator>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Et pour du HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/apache2/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/apache2/certs/private/private.key
+    SSLCertificateChainFile /etc/apache2/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog ${APACHE_LOG_DIR}/mercator_error.log
+    CustomLog ${APACHE_LOG_DIR}/mercator_access.log combined
+</VirtualHost>
+```
+
 ## Problèmes
 
 ### Restaurer le mot de passe administrateur

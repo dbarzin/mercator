@@ -307,6 +307,58 @@ Pour forcer le redirection en HTTPS, il faut mettre ce paramètre dans le fichie
 
     APP_ENV=production
 
+### Variante PHP-FPM
+
+Installer le paquet php-fpm :
+
+```bash
+sudo dnf install php-fpm
+```
+
+Le fichier de configuration du virtual host devient alors
+
+```xml
+<VirtualHost *:80>
+    ServerName mercator.local
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/mercator/public
+    <Directory /var/www/mercator>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog /var/log/httpd/mercator_error.log
+    CustomLog /var/log/httpd/mercator_access.log combined
+</VirtualHost>
+```
+
+Et pour du HTTPS
+
+```xml
+<VirtualHost *:443>
+    ServerName carto.XXXXXXXX
+    ServerAdmin
+    DocumentRoot /var/www/mercator/public
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+    SSLCertificateFile /etc/httpd/certs/certs/carto.XXXXX.crt
+    SSLCertificateKeyFile /etc/httpd/certs/private/private.key
+    SSLCertificateChainFile /etc/httpd/certs/certs/XXXXXCA.crt
+    <Directory /var/www/mercator/public>
+        AllowOverride All
+    </Directory>
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+        SetHandler "proxy:unix:/run/php/php-fpm.sock|fcgi://localhost/"
+    </FilesMatch>
+    ErrorLog /var/log/httpd/mercator_error.log
+    CustomLog /var/log/httpd/mercator_access.log combined
+</VirtualHost>
+```
+
 ## Problèmes
 
 ### Restaurer le mot de passe administrateur
