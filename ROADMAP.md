@@ -2,31 +2,33 @@
 
 Ce document reprend les changements de l'application Mercator.
 
-Changements prévus en 2025 :
+Changements prévus en 2025 et plus :
 
 ## Evolutions majeures
 
 - [x] Outil de dessin de la cartographie
-- [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
-- [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](
-https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
-- [o] Ajouter des champs personnalisés aux objets de la cartographie
-- [ ] Générer un annuaire de crise
-- [ ] Identifier les chemins critiques
-- [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
+- [x] Import de données sur base de fichier Excel ou CSV
 - [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Générer les cartographes dans la gestion des utilisateurs
-- [ ] Intégration des données de la cartographie dans syslog
-- [o] Revoir le modèle des pages web avec Intertia.js (https://laracasts.com/series/build-modern-laravel-apps-using-inertia-js)
+- [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
+- [ ] Ajouter des champs personnalisés aux objets de la cartographie
+- [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle de document pour les rapports
+- [ ] Identifier les chemins critiques
+- [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
+- [ ] Mettre en place une formation et un guide utilisateur
 
 ## Evolutions mineurs
 
 - [x] Packaging des librairies JavaScript avec [Laravel Vite](https://laravel-vite.com/).
 - [ ] Améliorer la documentation, notamment les niveaux de maturité pour chaque objet.
-- [ ] Améliorer la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
+- [ ] Améliorer (et revue) la documentation de l'API (https://nordicapis.com/5-examples-of-excellent-api-documentation/)
 - [ ] Ajouter un lien entre une opération et une entité afin d'identifier l'identité qui réalise cette opération
 - [ ] Restaurer les objets supprimés sur base des logs (ex: Flight::withTrashed()->where('id', 777)->restore(); )
+- [ ] Intégration des données de la cartographie dans syslog
+- [ ] Ajouter une vue de l'adressage réseau [Hilbert Map of IPv4 address space](
+https://bl.ocks.org/vasturiano/8aceecba58f115c81853879a691fd94f), [Measuring the use of IPv4 space with Heatmaps](https://www.caida.org/archive/arin-heatmaps/) identifier le nombre de périphériques par sous-réseau.
+
 
 ## Petites évolutions
 
