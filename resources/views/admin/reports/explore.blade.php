@@ -105,7 +105,7 @@
     // TODO : optimize me
     let _nodes = new Map();
     @foreach($nodes as $node)
-        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: {!! json_encode($node["label"]) !!}, {{ array_key_exists('title',$node) ? ('title: ' . json_encode($node["title"]) . ',') : "" }} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
+        _nodes.set( "{{ $node["id"] }}" ,{ id: "{{ $node["id"]}}", vue: "{{ $node["vue"]}}", label: {!! json_encode($node["label"]) !!}, {!! array_key_exists('title',$node) ? ('title: ' . json_encode($node["title"]) . ',') : "" !!} image: "{{ $node["image"] }}",  type: "{{ $node["type"] }}", edges: [ <?php
         foreach($edges as $edge) {
             if ($edge["from"]==$node["id"])
                 echo '{attachedNodeId:"' . $edge["to"] . ($edge["name"]!==null ? '",name:"' . $edge["name"] : ""). '",edgeType:"' . $edge["type"] .'", edgeDirection: "TO", bidirectional:'. ($edge["bidirectional"]?"true":"false") . '},';
