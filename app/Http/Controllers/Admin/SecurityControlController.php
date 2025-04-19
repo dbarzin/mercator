@@ -86,13 +86,13 @@ class SecurityControlController extends Controller
     public function associate(Request $request)
     {
         abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $controls = [];
         foreach ($request->request as $key => $value) {
             if (str_starts_with($key, 'CTRL_')) {
                 array_push($controls, substr($key, 5));
             }
         }
+
 
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {

@@ -72,14 +72,13 @@
 
 @section('scripts')
 <script>
-
-$(document.body).on("change","#source",function(){
-    $(':checkbox').prop('checked', false); 
-    $.getJSON('/admin/security-controls-list?id='+$(this).prop('value'), function(data) {
-        data['controls'].forEach((x, i) => $("[name='"+x+"']").prop("checked", true));
+document.addEventListener("DOMContentLoaded", function () {
+    $(document.body).on("change","#source",function(){
+        $(':checkbox').prop('checked', false);
+        $.getJSON('/admin/security-controls-list?id='+$(this).prop('value'), function(data) {
+            data['controls'].forEach((x, i) => $("[name='"+x+"']").prop("checked", true));
+        });
     });
 });
-
 </script>
-
 @endsection
