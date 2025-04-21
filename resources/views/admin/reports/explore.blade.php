@@ -84,7 +84,7 @@
                 </tr>
             </table>
             </div>
-            <div id="mynetwork"></div>
+                <div id="mynetwork" style="height:700px;"></div>
           </div>
     </div>
 </div>
