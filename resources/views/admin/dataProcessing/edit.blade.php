@@ -180,30 +180,10 @@
 @endsection
 
 @section('scripts')
-<script src="/js/dropzone.js"></script>
-
 <script>
-Dropzone.autoDiscover = false;
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    var allEditors = document.querySelectorAll('.ckeditor');
-    for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-        allEditors[i], {
-            extraPlugins: []
-            }
-        );
-    }
-
-    $(".select2-free").select2({
-        placeholder: "{{ trans('global.pleaseSelect') }}",
-        allowClear: true,
-        tags: true
-        }
-    );
-
-var image_uploader = new Dropzone("#dropzoneFileUpload", {
+var image_uploader = new window.Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
         params: { },
