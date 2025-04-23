@@ -42,7 +42,9 @@
                         </table>
                     </form>
                 </div>
-                <div class="graphviz" id="graph"></div>
+                <div id="graph-container">
+                    <div class="graphviz" id="graph"></div>
+                </div>
             </div>
         </div>
         @can('macro_processus_access')

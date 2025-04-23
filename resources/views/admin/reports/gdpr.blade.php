@@ -44,7 +44,9 @@
                     </form>
                 </div>
                 @endif
-                <div class="graphviz" id="graph"></div>
+                <div id="graph-container">
+                    <div class="graphviz" id="graph"></div>
+                </div>
             </div>
         </div>
         <br>

@@ -47,7 +47,9 @@
                     </div>
                     </form>
                 </div>
-                <div id="graph" class="graphviz"></div>
+                <div id="graph-container">
+                    <div id="graph" class="graphviz"></div>
+                </div>
             </div>
         </div>
 
@@ -1511,6 +1513,7 @@ digraph  {
     @endforeach
     @endcan
 }`;
+
 
 document.addEventListener('DOMContentLoaded', () => {
 d3.select("#graph").graphviz()

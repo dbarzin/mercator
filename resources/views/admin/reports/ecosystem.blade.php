@@ -53,10 +53,12 @@
 		    </table>
 		</form>
 	    </div>
-                <div class="graphviz" id="graph"></div>
-            </div>
+        <div id="graph-container">
+            <div class="graphviz" id="graph"></div>
         </div>
-        <br>
+        </div>
+    </div>
+    <br>
 
         @can('entity_show')
         @if($entities->count()>0)
