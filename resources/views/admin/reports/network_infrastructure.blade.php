@@ -43,7 +43,9 @@
                     </table>
                 </form>
             </div>
-            <div id="graph" class="graphviz"></div>
+            <div id="graph-container">
+                <div id="graph" class="graphviz"></div>
+            </div>
         </div>
     </div>
 

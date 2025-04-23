@@ -13,7 +13,9 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="graphviz" id="graph"></div>
+                <div id="graph-container">
+                    <div class="graphviz" id="graph"></div>
+                </div>
             </div>
         </div>
 
@@ -382,7 +384,7 @@ digraph  {
 }`;
 
 document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz().fit(false)
+d3.select("#graph").graphviz()
     .addImage("/images/zoneadmin.png", "64px", "64px")
     .addImage("/images/annuaire.png", "64px", "64px")
     .addImage("/images/ldap.png", "64px", "64px")
