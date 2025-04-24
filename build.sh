@@ -30,6 +30,10 @@ fi
 export APP_VERSION=$VERSION
 npm install
 npm run build
+
+git add public/build/assets/*
+git commit -a -m "npm build"
+
 echo "[✔] Frontend built with APP_VERSION=$VERSION"
 
 ### --- 4. Construire l'image Docker ---
