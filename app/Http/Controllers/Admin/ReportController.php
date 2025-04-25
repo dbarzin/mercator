@@ -2304,7 +2304,7 @@ class ReportController extends Controller
     public function logicalServers()
     {
         $logicalServers = LogicalServer::All()->sortBy('name');
-        $logicalServers->load('applications', 'applications.application_block');
+        $logicalServers->load('applications', 'applications.applicationBlock');
 
         $header = [
             trans('cruds.logicalServer.title_singular'),
@@ -2907,7 +2907,7 @@ class ReportController extends Controller
 
     public function vlans()
     {
-        $vlans = Vlan::orderBy('Name')->get();
+        $vlans = Vlan::orderBy('vlans.name')->get();
         $vlans->load('subnetworks');
 
         $lservers = LogicalServer::orderBy('Name')->get();
