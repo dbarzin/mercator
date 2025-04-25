@@ -2910,10 +2910,10 @@ class ReportController extends Controller
         $vlans = Vlan::orderBy('vlans.name')->get();
         $vlans->load('subnetworks');
 
-        $lservers = LogicalServer::orderBy('Name')->get();
-        $pservers = PhysicalServer::orderBy('Name')->get();
-        $switches = PhysicalSwitch::orderBy('Name')->get();
-        $workstations = Workstation::orderBy('Name')->get();
+        $lservers = LogicalServer::orderBy('name')->get();
+        $pservers = PhysicalServer::orderBy('name')->get();
+        $switches = PhysicalSwitch::orderBy('name')->get();
+        $workstations = Workstation::orderBy('name')->get();
 
         $header = [
             'Name',
