@@ -1,7 +1,8 @@
 FROM php:8.3-fpm-alpine3.19
 
-# Version de l'application
 COPY version.txt ./version.txt
+
+# Injecter la variable d’environnement
 ARG VERSION
 ENV APP_VERSION=${VERSION}
 
@@ -13,7 +14,7 @@ RUN apk add --no-cache \
     mariadb-client mariadb-connector-c-dev \
     openldap-dev libzip-dev \
     libpng libpng-dev \
-    nginx gettext supervisor
+    nginx gettext supervisor 
 
 # Update font cache
 RUN fc-cache -f
@@ -29,49 +30,40 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 # Create application user and group
 RUN addgroup -g 1000 -S www && \
-    adduser -u 1000 -S mercator -G www
+    adduser -u 1000 -S mercator -G www && \
+    mkdir -p /var/www/mercator && \
+    chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
+    chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 
 # Set working directory
 WORKDIR /var/www/mercator
 
-# Pré-copie uniquement composer.json et composer.lock
-COPY --chown=mercator:www composer.json composer.lock ./
+# Copy application source
+COPY . .
 
-# Installer les dépendances PHP sans exécuter les scripts (artisan discover sera fait plus tard)
-RUN composer install --no-interaction --prefer-dist --no-scripts
+# Copy configuration files
+COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/supervisord.conf /etc/supervisord.conf
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-# Puis copier tout le code de l'application
-COPY --chown=mercator:www . .
-
-# Ensuite exécuter les scripts artisan
-RUN php artisan package:discover --ansi
-
-# Copier les fichiers de configuration nginx et supervisor
-COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
-COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-
-# Copier environnement si besoin
-RUN cp .env.sqlite .env && \
-    chown mercator:www .env
-
-# Préparer base SQLite
-RUN mkdir -p sql && \
-    touch sql/db.sqlite && \
-    chown mercator:www sql sql/db.sqlite
-
-RUN chown mercator:www /var/www/mercator && \
-    chmod g+w /var/www/mercator
-
-# Fix permissions
-RUN chmod g=u /var/lib/nginx /var/log/nginx && \
+# Set permissions and ownership
+RUN chown -R mercator:www /var/www/mercator && \
+    chmod -R g=u /var/www/mercator && \
     chmod +x /usr/local/bin/entrypoint.sh && \
     chmod g=u /etc/passwd && \
-    chgrp www /etc/passwd && \
-    chmod g+w /var/www/mercator
+    chgrp www /etc/passwd
 
 # Switch to application user
 USER mercator:www
+
+# Install PHP dependencies via Composer
+RUN composer install --no-interaction --prefer-dist
+
+# Prepare SQLite database
+RUN mkdir -p sql && touch sql/db.sqlite
+
+# Copy environment file
+RUN cp .env.sqlite .env
 
 # Expose HTTP port
 EXPOSE 8000
