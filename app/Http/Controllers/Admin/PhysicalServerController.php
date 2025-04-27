@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Bay;
 use App\Building;
 use App\Cluster;
+use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalServerRequest;
 use App\Http\Requests\StorePhysicalServerRequest;
@@ -37,6 +38,7 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+        $icons = PhysicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // List
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
@@ -52,6 +54,7 @@ class PhysicalServerController extends Controller
                 'buildings',
                 'bays',
                 'clusters',
+                'icons',
                 'application_list',
                 'operating_system_list',
                 'responsible_list',
@@ -69,6 +72,7 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+        $icons = PhysicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // List
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
@@ -94,6 +98,7 @@ class PhysicalServerController extends Controller
                 'sites',
                 'buildings',
                 'bays',
+                'icons',
                 'clusters',
                 'application_list',
                 'operating_system_list',
@@ -107,6 +112,34 @@ class PhysicalServerController extends Controller
     public function store(StorePhysicalServerRequest $request)
     {
         $physicalServer = PhysicalServer::create($request->all());
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $physicalServer->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $physicalServer->icon_id = intval($request->iconSelect);
+        } else {
+            $physicalServer->icon_id = null;
+        }
+
+        // Save LogicalServer
+        $physicalServer->save();
+
+        // Seave Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
 
@@ -121,6 +154,7 @@ class PhysicalServerController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
+        $icons = PhysicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // List
         $operating_system_list = PhysicalServer::select('operating_system')->where('operating_system', '<>', null)->distinct()->orderBy('operating_system')->pluck('operating_system');
@@ -138,6 +172,7 @@ class PhysicalServerController extends Controller
                 'buildings',
                 'bays',
                 'clusters',
+                'icons',
                 'application_list',
                 'logical_server_list',
                 'responsible_list',
@@ -150,7 +185,33 @@ class PhysicalServerController extends Controller
 
     public function update(UpdatePhysicalServerRequest $request, PhysicalServer $physicalServer)
     {
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $physicalServer->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $physicalServer->icon_id = intval($request->iconSelect);
+        } else {
+            $physicalServer->icon_id = null;
+        }
+
+        // Other fields
         $physicalServer->update($request->all());
+
+        // Relations
         $physicalServer->applications()->sync($request->input('applications', []));
         $physicalServer->logicalServers()->sync($request->input('logicalServers', []));
 

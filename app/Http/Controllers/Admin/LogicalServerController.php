@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Cluster;
 use App\Database;
 use App\DomaineAd;
+use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalServerRequest;
 use App\Http\Requests\StoreLogicalServerRequest;
@@ -171,6 +172,7 @@ class LogicalServerController extends Controller
         $applications = MApplication::with('cartographers')->get();
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         // Filtre sur les cartographes si nécessaire
         $applications = $this->cartographerService->filterOnCartographers($applications);
@@ -188,6 +190,7 @@ class LogicalServerController extends Controller
             compact(
                 'domains',
                 'clusters',
+                'icons',
                 'physicalServers',
                 'applications',
                 'databases',
@@ -207,6 +210,33 @@ class LogicalServerController extends Controller
 
         $logicalServer = LogicalServer::create($request->all());
 
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $logicalServer->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $logicalServer->icon_id = intval($request->iconSelect);
+        } else {
+            $logicalServer->icon_id = null;
+        }
+
+        // Save LogicalServer
+        $logicalServer->save();
+
+        // Relations
         $logicalServer->physicalServers()->sync($request->input('physicalServers', []));
         $logicalServer->applications()->sync($request->input('applications', []));
         $logicalServer->databases()->sync($request->input('databases', []));
@@ -222,6 +252,7 @@ class LogicalServerController extends Controller
         $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $clusters = Cluster::all()->sortBy('name')->pluck('name', 'id');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
+        $icons = LogicalServer::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
 
         $applications = MApplication::with('cartographers')->get();
         // Filtre sur les cartographes si nécessaire
@@ -238,6 +269,7 @@ class LogicalServerController extends Controller
             'admin.logicalServers.edit',
             compact(
                 'domains',
+                'icons',
                 'clusters',
                 'physicalServers',
                 'applications',
@@ -255,6 +287,29 @@ class LogicalServerController extends Controller
     {
         $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $request['active'] = $request->has('active');
+
+        // Save icon
+        if (($request->files !== null) && $request->file('iconFile') !== null) {
+            $file = $request->file('iconFile');
+            // Create a new document
+            $document = new Document();
+            $document->filename = $file->getClientOriginalName();
+            $document->mimetype = $file->getClientMimeType();
+            $document->size = $file->getSize();
+            $document->hash = hash_file('sha256', $file->path());
+
+            // Save the document
+            $document->save();
+
+            // Move the file to storage
+            $file->move(storage_path('docs'), $document->id);
+
+            $logicalServer->icon_id = $document->id;
+        } elseif (preg_match('/^\d+$/', $request->iconSelect)) {
+            $logicalServer->icon_id = intval($request->iconSelect);
+        } else {
+            $logicalServer->icon_id = null;
+        }
 
         $logicalServer->update($request->all());
 

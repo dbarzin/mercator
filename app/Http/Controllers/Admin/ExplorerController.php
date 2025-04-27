@@ -62,9 +62,15 @@ class ExplorerController extends Controller
             }
         }
         // Physical Server
-        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'bay_id', 'cluster_id')->whereNull('deleted_at')->get();
+        $physicalServers = DB::table('physical_servers')->select('id', 'name', 'icon_id', 'bay_id', 'cluster_id')->whereNull('deleted_at')->get();
         foreach ($physicalServers as $physicalServer) {
-            $this->addNode($nodes, 6, $this->formatId('PSERVER_', $physicalServer->id), $physicalServer->name, '/images/server.png', 'physical-servers');
+            $this->addNode(
+                $nodes,
+                6,
+                $this->formatId('PSERVER_', $physicalServer->id),
+                $physicalServer->name,
+                $physicalServer->icon_id === null ? '/images/server.png' : "/admin/documents/{$physicalServer->icon_id}",
+                'physical-servers');
             if ($physicalServer->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
             }
@@ -485,9 +491,15 @@ class ExplorerController extends Controller
         }
 
         // Logical Servers
-        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'address_ip', 'cluster_id', 'domain_id')->get();
+        $logicalServers = DB::table('logical_servers')->select('id', 'name', 'icon_id', 'address_ip', 'cluster_id', 'domain_id')->get();
         foreach ($logicalServers as $logicalServer) {
-            $this->addNode($nodes, 5, $this->formatId('LSERVER_', $logicalServer->id), $logicalServer->name, '/images/lserver.png', 'logical-servers');
+            $this->addNode(
+                $nodes,
+                5,
+                $this->formatId('LSERVER_', $logicalServer->id),
+                $logicalServer->name,
+                $logicalServer->icon_id === null ? '/images/lserver.png' : "/admin/documents/{$logicalServer->icon_id}",
+                'logical-servers');
             if ($logicalServer->cluster_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('LSERVER_', $logicalServer->id), $this->formatId('CLUSTER_', $logicalServer->cluster_id));
             }

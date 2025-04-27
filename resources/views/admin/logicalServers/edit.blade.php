@@ -70,7 +70,7 @@
       </div>
       <!----------------------------------------------------------------------->
       <div class="row">
-        <div class="col-sm">
+        <div class="col-9">
             <div class="form-group">
                 <label class="recommended" for="description">{{ trans('cruds.logicalServer.fields.description') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $logicalServer->description) !!}</textarea>
@@ -80,6 +80,15 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.logicalServer.fields.description_helper') }}</span>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label for="iconSelect">{{ trans('global.icon_select') }}</label>
+                    <select id="iconSelect" name="iconSelect" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <input type="file" id="iconFile" name="iconFile" accept="image/png" />
                 </div>
             </div>
         </div>
@@ -381,4 +390,83 @@
         </button>
     </div>
 </form>
+@endsection
+
+
+@section('scripts')
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ---------------------------------------------------------------------
+    // Initialize imageSelect
+	imagesData =
+		[
+            {
+                value: '-1',
+                img: '/images/lserver.png',
+                imgWidth: '120px',
+                imgHeight: '120px',
+                selected: {{ $logicalServer->icon_id === null ? "true" : "false"}},
+            },
+            @foreach($icons as  $icon)
+            {
+                value: '{{ $icon }}',
+                img: '{{ route('admin.documents.show', $icon) }}',
+                imgWidth: '120px',
+                imgHeight: '120px',
+                selected: {{ $logicalServer->icon_id === $icon ? "true" : "false" }},
+            },
+            @endforeach
+        ];
+
+    // Initialize the Dynamic Selects
+    dynamicSelect = new DynamicSelect('#iconSelect', {
+        columns: 2,
+        height: '140px',
+        width: '160px',
+        dropdownWidth: '300px',
+        placeholder: 'Select an icon',
+        data: imagesData,
+    });
+
+    // Handle file upload and verification
+    $('#iconFile').on('change', function(e) {
+        const file = e.target.files[0];
+
+        if (file && file.type === 'image/png') {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = function() {
+                // Check size
+                if (img.size > 65535) {
+                    alert('Image size must be < 65kb');
+                    return;
+                    }
+                if ((img.width > 255) || (img.height > 255)) {
+                    alert('Could not be more than 256x256 pixels.');
+                    return;
+                }
+
+                // Encode the image in base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // Add the image to the select2 options
+					imagesData.push(
+		                {
+		                    value: file.name,
+		                    img: event.target.result,
+		                    imgHeight: '100px',
+		                });
+					// refresh
+                    dynamicSelect.refresh(imagesData, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        } else {
+            alert('Select a PNG image.');
+        }
+    });
+});
+</script>
 @endsection

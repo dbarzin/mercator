@@ -1,3 +1,4 @@
+/*M!999999\- enable the sandbox mode */ 
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -6,7 +7,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 DROP TABLE IF EXISTS `activities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activities` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE `activities` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activity_document` (
   `activity_id` int(10) unsigned NOT NULL,
   `document_id` int(10) unsigned NOT NULL,
@@ -31,7 +32,7 @@ CREATE TABLE `activity_document` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activity_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   `activity_id` int(10) unsigned NOT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE `activity_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_operation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activity_operation` (
   `activity_id` int(10) unsigned NOT NULL,
   `operation_id` int(10) unsigned NOT NULL,
@@ -55,7 +56,7 @@ CREATE TABLE `activity_operation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `activity_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `activity_process` (
   `process_id` int(10) unsigned NOT NULL,
   `activity_id` int(10) unsigned NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE `activity_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actor_operation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `actor_operation` (
   `operation_id` int(10) unsigned NOT NULL,
   `actor_id` int(10) unsigned NOT NULL,
@@ -79,7 +80,7 @@ CREATE TABLE `actor_operation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `actors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `actors` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -94,7 +95,7 @@ CREATE TABLE `actors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `admin_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) NOT NULL,
@@ -119,7 +120,7 @@ CREATE TABLE `admin_users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `annuaires`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `annuaires` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -137,7 +138,7 @@ CREATE TABLE `annuaires` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_blocks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `application_blocks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -151,7 +152,7 @@ CREATE TABLE `application_blocks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_module_application_service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `application_module_application_service` (
   `application_service_id` int(10) unsigned NOT NULL,
   `application_module_id` int(10) unsigned NOT NULL,
@@ -163,7 +164,7 @@ CREATE TABLE `application_module_application_service` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `application_modules` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -176,7 +177,7 @@ CREATE TABLE `application_modules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_service_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `application_service_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   `application_service_id` int(10) unsigned NOT NULL,
@@ -188,7 +189,7 @@ CREATE TABLE `application_service_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `application_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `application_services` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` longtext DEFAULT NULL,
@@ -202,7 +203,7 @@ CREATE TABLE `application_services` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `audit_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `audit_logs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(255) NOT NULL,
@@ -218,7 +219,7 @@ CREATE TABLE `audit_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `bay_wifi_terminal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bay_wifi_terminal` (
   `wifi_terminal_id` int(10) unsigned NOT NULL,
   `bay_id` int(10) unsigned NOT NULL,
@@ -230,7 +231,7 @@ CREATE TABLE `bay_wifi_terminal` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `bays`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bays` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -246,7 +247,7 @@ CREATE TABLE `bays` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `buildings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `buildings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -263,7 +264,7 @@ CREATE TABLE `buildings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cartographer_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cartographer_m_application` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
@@ -280,7 +281,7 @@ CREATE TABLE `cartographer_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `certificate_logical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certificate_logical_server` (
   `certificate_id` int(10) unsigned NOT NULL,
   `logical_server_id` int(10) unsigned NOT NULL,
@@ -292,7 +293,7 @@ CREATE TABLE `certificate_logical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `certificate_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certificate_m_application` (
   `certificate_id` int(10) unsigned NOT NULL,
   `m_application_id` int(10) unsigned NOT NULL,
@@ -304,7 +305,7 @@ CREATE TABLE `certificate_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `certificates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certificates` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -322,7 +323,7 @@ CREATE TABLE `certificates` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `clusters`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clusters` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -337,7 +338,7 @@ CREATE TABLE `clusters` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `container_logical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `container_logical_server` (
   `container_id` int(10) unsigned NOT NULL,
   `logical_server_id` int(10) unsigned NOT NULL,
@@ -349,7 +350,7 @@ CREATE TABLE `container_logical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `container_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `container_m_application` (
   `container_id` int(10) unsigned NOT NULL,
   `m_application_id` int(10) unsigned NOT NULL,
@@ -361,7 +362,7 @@ CREATE TABLE `container_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `containers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `containers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -379,7 +380,7 @@ CREATE TABLE `containers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpe_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cpe_products` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cpe_vendor_id` int(10) unsigned NOT NULL,
@@ -392,7 +393,7 @@ CREATE TABLE `cpe_products` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpe_vendors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cpe_vendors` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `part` char(1) NOT NULL,
@@ -403,7 +404,7 @@ CREATE TABLE `cpe_vendors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpe_versions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cpe_versions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cpe_product_id` int(10) unsigned NOT NULL,
@@ -416,7 +417,7 @@ CREATE TABLE `cpe_versions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `data_processing` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -436,7 +437,7 @@ CREATE TABLE `data_processing` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `data_processing_document` (
   `data_processing_id` int(10) unsigned NOT NULL,
   `document_id` int(10) unsigned NOT NULL,
@@ -448,7 +449,7 @@ CREATE TABLE `data_processing_document` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `data_processing_information` (
   `data_processing_id` int(10) unsigned NOT NULL,
   `information_id` int(10) unsigned NOT NULL,
@@ -460,7 +461,7 @@ CREATE TABLE `data_processing_information` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `data_processing_m_application` (
   `data_processing_id` int(10) unsigned NOT NULL,
   `m_application_id` int(10) unsigned NOT NULL,
@@ -472,7 +473,7 @@ CREATE TABLE `data_processing_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `data_processing_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `data_processing_process` (
   `data_processing_id` int(10) unsigned NOT NULL,
   `process_id` int(10) unsigned NOT NULL,
@@ -484,7 +485,7 @@ CREATE TABLE `data_processing_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_entity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `database_entity` (
   `database_id` int(10) unsigned NOT NULL,
   `entity_id` int(10) unsigned NOT NULL,
@@ -496,7 +497,7 @@ CREATE TABLE `database_entity` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `database_information` (
   `database_id` int(10) unsigned NOT NULL,
   `information_id` int(10) unsigned NOT NULL,
@@ -508,7 +509,7 @@ CREATE TABLE `database_information` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_logical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `database_logical_server` (
   `database_id` int(10) unsigned NOT NULL,
   `logical_server_id` int(10) unsigned NOT NULL,
@@ -518,7 +519,7 @@ CREATE TABLE `database_logical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `database_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `database_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   `database_id` int(10) unsigned NOT NULL,
@@ -530,7 +531,7 @@ CREATE TABLE `database_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `databases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `databases` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -554,7 +555,7 @@ CREATE TABLE `databases` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dhcp_servers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dhcp_servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -568,7 +569,7 @@ CREATE TABLE `dhcp_servers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dnsservers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dnsservers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -582,7 +583,7 @@ CREATE TABLE `dnsservers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `document_logical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `document_logical_server` (
   `logical_server_id` int(10) unsigned NOT NULL,
   `document_id` int(10) unsigned NOT NULL,
@@ -594,7 +595,7 @@ CREATE TABLE `document_logical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `document_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `document_relation` (
   `relation_id` int(10) unsigned NOT NULL,
   `document_id` int(10) unsigned NOT NULL,
@@ -606,7 +607,7 @@ CREATE TABLE `document_relation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `documents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `filename` varchar(255) NOT NULL,
@@ -621,7 +622,7 @@ CREATE TABLE `documents` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `domaine_ad_forest_ad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `domaine_ad_forest_ad` (
   `forest_ad_id` int(10) unsigned NOT NULL,
   `domaine_ad_id` int(10) unsigned NOT NULL,
@@ -633,7 +634,7 @@ CREATE TABLE `domaine_ad_forest_ad` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `domaine_ads`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `domaine_ads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -650,7 +651,7 @@ CREATE TABLE `domaine_ads` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entities` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -658,7 +659,7 @@ CREATE TABLE `entities` (
   `security_level` longtext DEFAULT NULL,
   `contact_point` longtext DEFAULT NULL,
   `description` longtext DEFAULT NULL,
-  `is_external` tinyint(1) NOT NULL DEFAULT 0,
+  `is_external` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -677,7 +678,7 @@ CREATE TABLE `entities` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entity_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_document` (
   `entity_id` int(10) unsigned NOT NULL,
   `document_id` int(10) unsigned NOT NULL,
@@ -689,7 +690,7 @@ CREATE TABLE `entity_document` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entity_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   `entity_id` int(10) unsigned NOT NULL,
@@ -701,7 +702,7 @@ CREATE TABLE `entity_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `entity_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_process` (
   `process_id` int(10) unsigned NOT NULL,
   `entity_id` int(10) unsigned NOT NULL,
@@ -713,7 +714,7 @@ CREATE TABLE `entity_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `external_connected_entities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `external_connected_entities` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -738,7 +739,7 @@ CREATE TABLE `external_connected_entities` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fluxes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fluxes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -778,7 +779,7 @@ CREATE TABLE `fluxes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `forest_ads`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `forest_ads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -794,7 +795,7 @@ CREATE TABLE `forest_ads` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `gateways`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gateways` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -809,7 +810,7 @@ CREATE TABLE `gateways` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `graphs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `graphs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -824,7 +825,7 @@ CREATE TABLE `graphs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `information` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -848,7 +849,7 @@ CREATE TABLE `information` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `information_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `information_process` (
   `information_id` int(10) unsigned NOT NULL,
   `process_id` int(10) unsigned NOT NULL,
@@ -860,7 +861,7 @@ CREATE TABLE `information_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lan_man`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lan_man` (
   `man_id` int(10) unsigned NOT NULL,
   `lan_id` int(10) unsigned NOT NULL,
@@ -872,7 +873,7 @@ CREATE TABLE `lan_man` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lan_wan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lan_wan` (
   `wan_id` int(10) unsigned NOT NULL,
   `lan_id` int(10) unsigned NOT NULL,
@@ -884,7 +885,7 @@ CREATE TABLE `lan_wan` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -897,7 +898,7 @@ CREATE TABLE `lans` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_flows`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `logical_flows` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -923,7 +924,7 @@ CREATE TABLE `logical_flows` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_server_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `logical_server_m_application` (
   `m_application_id` int(10) unsigned NOT NULL,
   `logical_server_id` int(10) unsigned NOT NULL,
@@ -935,7 +936,7 @@ CREATE TABLE `logical_server_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_server_physical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `logical_server_physical_server` (
   `logical_server_id` int(10) unsigned NOT NULL,
   `physical_server_id` int(10) unsigned NOT NULL,
@@ -947,10 +948,11 @@ CREATE TABLE `logical_server_physical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `logical_servers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `logical_servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `description` longtext DEFAULT NULL,
@@ -977,13 +979,15 @@ CREATE TABLE `logical_servers` (
   KEY `cluster_id_fk_5435359` (`cluster_id`),
   KEY `domain_id_fk_493844` (`domain_id`),
   KEY `logical_servers_active` (`active`),
+  KEY `document_id_fk_51303394` (`icon_id`),
   CONSTRAINT `cluster_id_fk_5435359` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `document_id_fk_51303394` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `domain_id_fk_493844` FOREIGN KEY (`domain_id`) REFERENCES `domaine_ads` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_application_events` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
@@ -1000,7 +1004,7 @@ CREATE TABLE `m_application_events` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_peripheral`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_application_peripheral` (
   `m_application_id` int(10) unsigned NOT NULL,
   `peripheral_id` int(10) unsigned NOT NULL,
@@ -1012,7 +1016,7 @@ CREATE TABLE `m_application_peripheral` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_physical_server`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_application_physical_server` (
   `m_application_id` int(10) unsigned NOT NULL,
   `physical_server_id` int(10) unsigned NOT NULL,
@@ -1024,7 +1028,7 @@ CREATE TABLE `m_application_physical_server` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_application_process` (
   `m_application_id` int(10) unsigned NOT NULL,
   `process_id` int(10) unsigned NOT NULL,
@@ -1036,7 +1040,7 @@ CREATE TABLE `m_application_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_application_workstation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_application_workstation` (
   `m_application_id` int(10) unsigned NOT NULL,
   `workstation_id` int(10) unsigned NOT NULL,
@@ -1048,7 +1052,7 @@ CREATE TABLE `m_application_workstation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `m_applications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `m_applications` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1093,7 +1097,7 @@ CREATE TABLE `m_applications` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `macro_processuses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `macro_processuses` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1113,7 +1117,7 @@ CREATE TABLE `macro_processuses` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `man_wan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `man_wan` (
   `wan_id` int(10) unsigned NOT NULL,
   `man_id` int(10) unsigned NOT NULL,
@@ -1125,7 +1129,7 @@ CREATE TABLE `man_wan` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `mans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1137,7 +1141,7 @@ CREATE TABLE `mans` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `media`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `media` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `model_type` varchar(255) NOT NULL,
@@ -1160,7 +1164,7 @@ CREATE TABLE `media` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) NOT NULL,
@@ -1170,7 +1174,7 @@ CREATE TABLE `migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `network_switch_physical_switch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `network_switch_physical_switch` (
   `network_switch_id` int(10) unsigned NOT NULL,
   `physical_switch_id` int(10) unsigned NOT NULL,
@@ -1182,7 +1186,7 @@ CREATE TABLE `network_switch_physical_switch` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `network_switches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `network_switches` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1196,7 +1200,7 @@ CREATE TABLE `network_switches` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `networks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `networks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1217,7 +1221,7 @@ CREATE TABLE `networks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_access_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_access_tokens` (
   `id` varchar(100) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -1234,7 +1238,7 @@ CREATE TABLE `oauth_access_tokens` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_auth_codes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -1248,7 +1252,7 @@ CREATE TABLE `oauth_auth_codes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -1267,7 +1271,7 @@ CREATE TABLE `oauth_clients` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_personal_access_clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_personal_access_clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` bigint(20) unsigned NOT NULL,
@@ -1278,7 +1282,7 @@ CREATE TABLE `oauth_personal_access_clients` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oauth_refresh_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_refresh_tokens` (
   `id` varchar(100) NOT NULL,
   `access_token_id` varchar(100) NOT NULL,
@@ -1290,7 +1294,7 @@ CREATE TABLE `oauth_refresh_tokens` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `operation_task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `operation_task` (
   `operation_id` int(10) unsigned NOT NULL,
   `task_id` int(10) unsigned NOT NULL,
@@ -1302,7 +1306,7 @@ CREATE TABLE `operation_task` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `operations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `operations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1318,7 +1322,7 @@ CREATE TABLE `operations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_resets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -1328,7 +1332,7 @@ CREATE TABLE `password_resets` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `peripherals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `peripherals` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1363,7 +1367,7 @@ CREATE TABLE `peripherals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `permission_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `permission_role` (
   `role_id` int(10) unsigned NOT NULL,
   `permission_id` int(10) unsigned NOT NULL,
@@ -1375,7 +1379,7 @@ CREATE TABLE `permission_role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
@@ -1387,7 +1391,7 @@ CREATE TABLE `permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `phones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `phones` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1414,7 +1418,7 @@ CREATE TABLE `phones` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_links`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_links` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `src_port` varchar(255) DEFAULT NULL,
@@ -1499,7 +1503,7 @@ CREATE TABLE `physical_links` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_router_router`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_router_router` (
   `router_id` int(10) unsigned NOT NULL,
   `physical_router_id` int(10) unsigned NOT NULL,
@@ -1511,7 +1515,7 @@ CREATE TABLE `physical_router_router` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_router_vlan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_router_vlan` (
   `physical_router_id` int(10) unsigned NOT NULL,
   `vlan_id` int(10) unsigned NOT NULL,
@@ -1523,7 +1527,7 @@ CREATE TABLE `physical_router_vlan` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_routers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_routers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` longtext DEFAULT NULL,
@@ -1549,7 +1553,7 @@ CREATE TABLE `physical_routers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_security_devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_security_devices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1573,10 +1577,11 @@ CREATE TABLE `physical_security_devices` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_servers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_servers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `icon_id` int(10) unsigned DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `vendor` varchar(255) DEFAULT NULL,
   `product` varchar(255) DEFAULT NULL,
@@ -1609,16 +1614,18 @@ CREATE TABLE `physical_servers` (
   KEY `bay_fk_1485324` (`bay_id`),
   KEY `physical_switch_fk_8732342` (`physical_switch_id`),
   KEY `cluster_id_fk_5438543` (`cluster_id`),
+  KEY `document_id_fk_5328384` (`icon_id`),
   CONSTRAINT `bay_fk_1485324` FOREIGN KEY (`bay_id`) REFERENCES `bays` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `building_fk_1485323` FOREIGN KEY (`building_id`) REFERENCES `buildings` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `cluster_id_fk_5438543` FOREIGN KEY (`cluster_id`) REFERENCES `clusters` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `document_id_fk_5328384` FOREIGN KEY (`icon_id`) REFERENCES `documents` (`id`),
   CONSTRAINT `physical_switch_fk_8732342` FOREIGN KEY (`physical_switch_id`) REFERENCES `physical_switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `site_fk_1485322` FOREIGN KEY (`site_id`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `physical_switches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `physical_switches` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1644,7 +1651,7 @@ CREATE TABLE `physical_switches` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `processes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `processes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1670,7 +1677,7 @@ CREATE TABLE `processes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `relation_values`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `relation_values` (
   `relation_id` int(10) unsigned NOT NULL,
   `date_price` date DEFAULT NULL,
@@ -1683,7 +1690,7 @@ CREATE TABLE `relation_values` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `relations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `relations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `importance` int(11) DEFAULT NULL,
@@ -1717,7 +1724,7 @@ CREATE TABLE `relations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `role_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_user` (
   `user_id` int(10) unsigned NOT NULL,
   `role_id` int(10) unsigned NOT NULL,
@@ -1729,7 +1736,7 @@ CREATE TABLE `role_user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
@@ -1741,7 +1748,7 @@ CREATE TABLE `roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `routers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `routers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1757,7 +1764,7 @@ CREATE TABLE `routers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_control_m_application`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_control_m_application` (
   `security_control_id` int(10) unsigned NOT NULL,
   `m_application_id` int(10) unsigned NOT NULL,
@@ -1769,7 +1776,7 @@ CREATE TABLE `security_control_m_application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_control_process`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_control_process` (
   `security_control_id` int(10) unsigned NOT NULL,
   `process_id` int(10) unsigned NOT NULL,
@@ -1781,7 +1788,7 @@ CREATE TABLE `security_control_process` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_controls`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_controls` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1794,7 +1801,7 @@ CREATE TABLE `security_controls` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `security_devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `security_devices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1810,7 +1817,7 @@ CREATE TABLE `security_devices` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `sites`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sites` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1826,7 +1833,7 @@ CREATE TABLE `sites` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `storage_devices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `storage_devices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1853,7 +1860,7 @@ CREATE TABLE `storage_devices` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `subnetworks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subnetworks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` longtext DEFAULT NULL,
@@ -1885,7 +1892,7 @@ CREATE TABLE `subnetworks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tasks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tasks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1898,7 +1905,7 @@ CREATE TABLE `tasks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -1917,7 +1924,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `vlans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vlans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1931,7 +1938,7 @@ CREATE TABLE `vlans` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wans`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wans` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -1943,7 +1950,7 @@ CREATE TABLE `wans` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wifi_terminals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wifi_terminals` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1967,7 +1974,7 @@ CREATE TABLE `wifi_terminals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `workstations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `workstations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -2001,7 +2008,7 @@ CREATE TABLE `workstations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `zone_admins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `zone_admins` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -2019,6 +2026,7 @@ CREATE TABLE `zone_admins` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+/*M!999999\- enable the sandbox mode */ 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2016_06_01_000001_create_oauth_auth_codes_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2016_06_01_000002_create_oauth_access_tokens_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2016_06_01_000003_create_oauth_refresh_tokens_table',1);
@@ -2219,3 +2227,5 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (197,'2025_01_17_13
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (198,'2025_02_18_073549_application_assignation',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (199,'2025_03_17_094654_datetime_to_date',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (200,'2025_03_24_132409_remove_unique_name_deleted_at_indexes',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (201,'2025_03_26_133906_external_nullable',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (204,'2025_04_27_084635_add_icon_to_servers',3);
