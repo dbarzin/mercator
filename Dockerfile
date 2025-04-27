@@ -13,7 +13,7 @@ RUN apk add --no-cache \
     mariadb-client mariadb-connector-c-dev \
     openldap-dev libzip-dev \
     libpng libpng-dev \
-    nginx gettext supervisor 
+    nginx gettext supervisor
 
 # Update font cache
 RUN fc-cache -f
@@ -34,14 +34,17 @@ RUN addgroup -g 1000 -S www && \
 # Set working directory
 WORKDIR /var/www/mercator
 
-# Pré-copie uniquement composer.json et composer.lock pour maximiser le cache
+# Pré-copie uniquement composer.json et composer.lock
 COPY --chown=mercator:www composer.json composer.lock ./
 
-# Installer les dépendances PHP (bénéficie du cache Docker si composer.json n'a pas changé)
-RUN composer install --no-interaction --prefer-dist
+# Installer les dépendances PHP sans exécuter les scripts (artisan discover sera fait plus tard)
+RUN composer install --no-interaction --prefer-dist --no-scripts
 
 # Puis copier tout le code de l'application
 COPY --chown=mercator:www . .
+
+# Ensuite exécuter les scripts artisan
+RUN php artisan package:discover --ansi
 
 # Copier les fichiers de configuration nginx et supervisor
 COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
@@ -69,4 +72,3 @@ EXPOSE 8000
 # Entrypoint and default command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-
