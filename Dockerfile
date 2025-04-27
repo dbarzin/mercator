@@ -55,7 +55,9 @@ COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN cp .env.sqlite .env
 
 # Préparer base SQLite
-RUN mkdir -p sql && touch sql/db.sqlite
+RUN mkdir -p sql &&
+    touch sql/db.sqlite &&
+    chown mercator:www sql/db.sqlite
 
 RUN chown mercator:www /var/www/mercator && \
     chmod g+w /var/www/mercator
