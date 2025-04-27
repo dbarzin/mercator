@@ -9,15 +9,41 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" maxlength=32 value="{{ old('name', $dataProcessing->name) }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+
+            <div class="row">
+                <div class="col-8">
+
+                    <div class="form-group">
+                        <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" maxlength=32 value="{{ old('name', $dataProcessing->name) }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.dataProcessing.fields.name_helper') }}</span>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.dataProcessing.fields.name_helper') }}</span>
+                </div>
+                <div class="col-4">
+
+                    <div class="form-group">
+                        <label for="name">{{ trans('cruds.dataProcessing.fields.legal_basis') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('legal_basis') ? 'is-invalid' : '' }}" name="legal_basis" id="legal_basis">
+                            @if (!$legal_basis_list->contains(old('legal_basis')))
+                                <option> {{ old('legal_basis') }}</option>'
+                            @endif
+                            @foreach($legal_basis_list as $legal_basis)
+                                <option {{ (old('legal_basis') ? old('legal_basis') : $dataProcessing->legal_basis) == $legal_basis ? 'selected' : '' }}>{{$legal_basis}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('legal_basis'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('legal_basis') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.dataProcessing.fields.legal_basis_helper') }}</span>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">

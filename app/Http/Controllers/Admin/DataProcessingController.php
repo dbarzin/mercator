@@ -32,11 +32,13 @@ class DataProcessingController extends Controller
         $informations = Information::orderBy('name')->get()->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
 
+        $legal_basis_list = DataProcessing::select('legal_basis')->where('legal_basis', '<>', null)->distinct()->orderBy('legal_basis')->pluck('legal_basis');
+
         session()->put('documents', []);
 
         return view(
             'admin.dataProcessing.create',
-            compact('applications', 'informations', 'processes')
+            compact('applications', 'informations', 'processes', 'legal_basis_list')
         );
     }
 
@@ -62,6 +64,8 @@ class DataProcessingController extends Controller
         $informations = Information::select(['id', 'name'])->orderBy('name')->get();
         $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
 
+        $legal_basis_list = DataProcessing::select('legal_basis')->where('legal_basis', '<>', null)->distinct()->orderBy('legal_basis')->pluck('legal_basis');
+
         $dataProcessing->load('applications', 'informations', 'processes', 'documents');
 
         $documents = [];
@@ -72,7 +76,7 @@ class DataProcessingController extends Controller
 
         return view(
             'admin.dataProcessing.edit',
-            compact('dataProcessing', 'applications', 'informations', 'processes')
+            compact('dataProcessing', 'applications', 'informations', 'processes', 'legal_basis_list')
         );
     }
 

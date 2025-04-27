@@ -430,6 +430,8 @@ return [
         'fields' => [
             'name' => 'Name',
             'name_helper' => '',
+            'legal_basis' => 'Legal basis',
+            'legal_basis_helper' => '',
             'description' => 'Description',
             'description_helper' => '',
             'responsible' => 'Data controller',

@@ -1906,6 +1906,11 @@ class ReportController extends Controller
         foreach ($register as $dataProcessing) {
             // schema
             $section->addTitle($dataProcessing->name, 1);
+
+            $section->addTitle(trans('cruds.dataProcessing.fields.legal_basis'), 2);
+            $this->addText($section, $dataProcessing->legal_basis);
+
+            $section->addTitle(trans('cruds.dataProcessing.fields.description'), 2);
             $this->addText($section, $dataProcessing->description);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.responsible'), 2);
@@ -1994,6 +1999,7 @@ class ReportController extends Controller
 
         $header = [
             trans('cruds.dataProcessing.fields.name'),
+            trans('cruds.dataProcessing.fields.legal_basis'),
             trans('cruds.dataProcessing.fields.description'),
             trans('cruds.dataProcessing.fields.responsible'),
             trans('cruds.dataProcessing.fields.purpose'),
@@ -2019,7 +2025,7 @@ class ReportController extends Controller
 
         // column size
         $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setWidth(350, 'pt');
+        $sheet->getColumnDimension('B')->setWidth(150, 'pt');
         $sheet->getColumnDimension('C')->setWidth(350, 'pt');
         $sheet->getColumnDimension('D')->setWidth(350, 'pt');
         $sheet->getColumnDimension('E')->setWidth(350, 'pt');
@@ -2027,11 +2033,12 @@ class ReportController extends Controller
         $sheet->getColumnDimension('G')->setWidth(350, 'pt');
         $sheet->getColumnDimension('H')->setWidth(350, 'pt');
         $sheet->getColumnDimension('I')->setWidth(350, 'pt');
-        $sheet->getColumnDimension('J')->setAutoSize(true);
-
+        $sheet->getColumnDimension('J')->setWidth(350, 'pt');
         $sheet->getColumnDimension('K')->setAutoSize(true);
+
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
+        $sheet->getColumnDimension('N')->setAutoSize(true);
 
         // converter
         $html = new \PhpOffice\PhpSpreadsheet\Helper\Html();
@@ -2040,13 +2047,15 @@ class ReportController extends Controller
         $row = 2;
         foreach ($register as $dataProcessing) {
             $sheet->setCellValue("A{$row}", $dataProcessing->name);
-            $sheet->setCellValue("B{$row}", $html->toRichTextObject($dataProcessing->description));
-            $sheet->setCellValue("C{$row}", $html->toRichTextObject($dataProcessing->responsible));
-            $sheet->setCellValue("D{$row}", $html->toRichTextObject($dataProcessing->purpose));
-            $sheet->setCellValue("E{$row}", $html->toRichTextObject($dataProcessing->categories));
-            $sheet->setCellValue("F{$row}", $html->toRichTextObject($dataProcessing->recipients));
-            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->transfert));
-            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->retention));
+            $sheet->setCellValue("B{$row}", $html->toRichTextObject($dataProcessing->legal_basis));
+            $sheet->setCellValue("C{$row}", $html->toRichTextObject($dataProcessing->description));
+
+            $sheet->setCellValue("D{$row}", $html->toRichTextObject($dataProcessing->responsible));
+            $sheet->setCellValue("E{$row}", $html->toRichTextObject($dataProcessing->purpose));
+            $sheet->setCellValue("F{$row}", $html->toRichTextObject($dataProcessing->categories));
+            $sheet->setCellValue("G{$row}", $html->toRichTextObject($dataProcessing->recipients));
+            $sheet->setCellValue("H{$row}", $html->toRichTextObject($dataProcessing->transfert));
+            $sheet->setCellValue("I{$row}", $html->toRichTextObject($dataProcessing->retention));
 
             // processes
             $txt = '';
@@ -2056,7 +2065,7 @@ class ReportController extends Controller
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("I{$row}", $txt);
+            $sheet->setCellValue("J{$row}", $txt);
 
             // Applications
             $txt = '';
@@ -2066,7 +2075,7 @@ class ReportController extends Controller
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("J{$row}", $txt);
+            $sheet->setCellValue("K{$row}", $txt);
 
             // Informations
             $txt = '';
@@ -2076,7 +2085,7 @@ class ReportController extends Controller
                     $txt .= ', ';
                 }
             }
-            $sheet->setCellValue("K{$row}", $txt);
+            $sheet->setCellValue("L{$row}", $txt);
 
             // TODO : improve me using union
             // https://laravel.com/docs/10.x/queries#unions
@@ -2095,7 +2104,7 @@ class ReportController extends Controller
             $allControls->unique();
             $txt = implode(', ', $allControls->toArray());
 
-            $sheet->setCellValue("L{$row}", $txt);
+            $sheet->setCellValue("M{$row}", $txt);
 
             $row++;
         }

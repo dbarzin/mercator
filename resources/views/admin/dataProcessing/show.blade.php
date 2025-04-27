@@ -40,12 +40,18 @@
                     <td>
                         {{ $dataProcessing->name }}
                     </td>
+                    <th width="10%">
+                        {{ trans('cruds.dataProcessing.fields.legal_basis') }}
+                    </th>
+                    <td>
+                        {{ $dataProcessing->legal_basis }}
+                    </td>
                 </tr>
                 <tr>
                     <th>
                         {{ trans('cruds.dataProcessing.fields.description') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->description !!}
                     </td>
                 </tr>
@@ -53,7 +59,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.responsible') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->responsible !!}
                     </td>
                 </tr>
@@ -62,7 +68,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.purpose') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->purpose !!}
                     </td>
                 </tr>
@@ -71,7 +77,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.categories') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->categories !!}
                     </td>
                 </tr>
@@ -80,7 +86,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.recipients') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->recipients !!}
                     </td>
                 </tr>
@@ -90,7 +96,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.transfert') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->transfert !!}
                     </td>
                 </tr>
@@ -99,7 +105,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.retention') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         {!! $dataProcessing->retention !!}
                     </td>
                 </tr>
@@ -108,7 +114,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.processes') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         @foreach($dataProcessing->processes as $process)
                             <a href="{{ route('admin.processes.show', $process->id) }}">{{ $process->name }}</a>
                             @if (!$loop->last)
@@ -122,7 +128,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.applications') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         @foreach($dataProcessing->applications as $application)
                             <a href="{{ route('admin.applications.show', $application->id) }}">{{ $application->name }}</a>
                             @if (!$loop->last)
@@ -136,7 +142,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.information') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         @foreach($dataProcessing->informations as $information)
                             <a href="{{ route('admin.information.show', $information->id) }}">{{ $information->name }}</a>
                             @if (!$loop->last)
@@ -150,7 +156,7 @@
                     <th>
                         {{ trans('cruds.dataProcessing.fields.documents') }}
                     </th>
-                    <td>
+                    <td colspan='3'>
                         @foreach($dataProcessing->documents as $document)
                             <a href="{{ route('admin.documents.show', $document->id) }}">{{ $document->filename }}</a>
                             @if (!$loop->last)

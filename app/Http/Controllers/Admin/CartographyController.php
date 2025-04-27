@@ -3,26 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 // RGPD
-use App\Activity;
+
 // ecosystem
 use App\Actor;
 use App\Annuaire;
 // information system
-use App\ApplicationBlock;
-use App\ApplicationModule;
-use App\ApplicationService;
-use App\Bay;
+use App\Activity;
+use App\Entity;
 use App\Building;
 use App\Certificate;
 // Applications
+use App\ApplicationBlock;
+use App\MApplication;
+use App\ApplicationModule;
+use App\ApplicationService;
 use App\Cluster;
 use App\Container;
 use App\Database;
 use App\DhcpServer;
 use App\Dnsserver;
-use App\DomaineAd;
 // Administration
-use App\Entity;
+use App\DomaineAd;
 use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
@@ -34,12 +35,12 @@ use App\Lan;
 use App\LogicalServer;
 use App\MacroProcessus;
 use App\Man;
-use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
 use App\Operation;
 use App\Peripheral;
 // Physique
+use App\Bay;
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
