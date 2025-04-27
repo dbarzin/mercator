@@ -51,6 +51,12 @@ COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
 COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+# Copier environnement si besoin
+RUN cp .env.sqlite .env
+
+# Préparer base SQLite
+RUN mkdir -p sql && touch sql/db.sqlite
+
 # Fix permissions
 RUN chmod -R g=u /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
     chmod +x /usr/local/bin/entrypoint.sh && \
@@ -59,12 +65,6 @@ RUN chmod -R g=u /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
 
 # Switch to application user
 USER mercator:www
-
-# Préparer base SQLite
-RUN mkdir -p sql && touch sql/db.sqlite
-
-# Copier environnement si besoin
-RUN cp .env.sqlite .env
 
 # Expose HTTP port
 EXPOSE 8000
