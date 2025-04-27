@@ -57,6 +57,9 @@ RUN cp .env.sqlite .env
 # Préparer base SQLite
 RUN mkdir -p sql && touch sql/db.sqlite
 
+# Create log folder
+RUN mkdir -p /var/log && chmod g+w /var/log
+
 # Fix permissions
 RUN chmod g=u /var/lib/nginx /var/log/nginx && \
     chmod +x /usr/local/bin/entrypoint.sh && \
