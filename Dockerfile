@@ -57,9 +57,8 @@ RUN cp .env.sqlite .env
 # Préparer base SQLite
 RUN mkdir -p sql && touch sql/db.sqlite
 
-RUN mkdir -p /var/www/mercator/logs && \
-    chown mercator:www /var/www/mercator/logs && \
-    chmod g+w /var/www/mercator/logs
+RUN chown mercator:www /var/www/mercator && \
+    chmod g+w /var/www/mercator
 
 # Fix permissions
 RUN chmod g=u /var/lib/nginx /var/log/nginx && \
