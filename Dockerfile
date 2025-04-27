@@ -30,25 +30,21 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 
 # Create application user and group
 RUN addgroup -g 1000 -S www && \
-    adduser -u 1000 -S mercator -G www && \
-    mkdir -p /var/www/mercator && \
-    chown -R mercator:www /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
-    chmod -R g=u /var/www/ /var/lib/nginx /var/log/nginx /etc/nginx/http.d
+    adduser -u 1000 -S mercator -G www
 
 # Set working directory
 WORKDIR /var/www/mercator
 
-# Copy application source
-COPY . .
+# Copy application source (avec changement propriétaire directement)
+COPY --chown=mercator:www . .
 
 # Copy configuration files
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/supervisord.conf /etc/supervisord.conf
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
+COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-# Set permissions and ownership
-RUN chown -R mercator:www /var/www/mercator && \
-    chmod -R g=u /var/www/mercator && \
+# Fix permissions
+RUN chmod -R g=u /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
     chmod +x /usr/local/bin/entrypoint.sh && \
     chmod g=u /etc/passwd && \
     chgrp www /etc/passwd
