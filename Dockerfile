@@ -58,10 +58,11 @@ RUN cp .env.sqlite .env
 RUN mkdir -p sql && touch sql/db.sqlite
 
 # Fix permissions
-RUN chmod -R g=u /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
+RUN chmod g=u /var/lib/nginx /var/log/nginx && \
     chmod +x /usr/local/bin/entrypoint.sh && \
     chmod g=u /etc/passwd && \
-    chgrp www /etc/passwd
+    chgrp www /etc/passwd && \
+    chmod g+w /var/www/mercator
 
 # Switch to application user
 USER mercator:www
