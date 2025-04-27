@@ -14,12 +14,10 @@ class DemoApplicationBlocksTableSeeder extends Seeder
      */
     public function run()
     {
-        
-
         \DB::table('application_blocks')->delete();
-        
+
         \DB::table('application_blocks')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Bloc applicatif 1',
@@ -29,7 +27,7 @@ class DemoApplicationBlocksTableSeeder extends Seeder
                 'updated_at' => '2020-06-13 06:09:01',
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Bloc applicatif 2',
@@ -39,7 +37,7 @@ class DemoApplicationBlocksTableSeeder extends Seeder
                 'updated_at' => '2020-06-17 18:13:33',
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'Bloc applicatif 3',
@@ -50,7 +48,7 @@ class DemoApplicationBlocksTableSeeder extends Seeder
                 'deleted_at' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }
