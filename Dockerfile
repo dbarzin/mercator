@@ -1,8 +1,7 @@
 FROM php:8.3-fpm-alpine3.19
 
+# Version de l'application
 COPY version.txt ./version.txt
-
-# Injecter la variable d’environnement
 ARG VERSION
 ENV APP_VERSION=${VERSION}
 
@@ -35,10 +34,16 @@ RUN addgroup -g 1000 -S www && \
 # Set working directory
 WORKDIR /var/www/mercator
 
-# Copy application source (avec changement propriétaire directement)
+# Pré-copie uniquement composer.json et composer.lock pour maximiser le cache
+COPY --chown=mercator:www composer.json composer.lock ./
+
+# Installer les dépendances PHP (bénéficie du cache Docker si composer.json n'a pas changé)
+RUN composer install --no-interaction --prefer-dist
+
+# Puis copier tout le code de l'application
 COPY --chown=mercator:www . .
 
-# Copy configuration files
+# Copier les fichiers de configuration nginx et supervisor
 COPY --chown=mercator:www docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
 COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -52,13 +57,10 @@ RUN chmod -R g=u /var/www /var/lib/nginx /var/log/nginx /etc/nginx/http.d && \
 # Switch to application user
 USER mercator:www
 
-# Install PHP dependencies via Composer
-RUN composer install --no-interaction --prefer-dist
-
-# Prepare SQLite database
+# Préparer base SQLite
 RUN mkdir -p sql && touch sql/db.sqlite
 
-# Copy environment file
+# Copier environnement si besoin
 RUN cp .env.sqlite .env
 
 # Expose HTTP port
@@ -67,3 +69,4 @@ EXPOSE 8000
 # Entrypoint and default command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+
