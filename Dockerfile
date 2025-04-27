@@ -52,7 +52,7 @@ COPY --chown=mercator:www docker/supervisord.conf /etc/supervisord.conf
 COPY --chown=mercator:www docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Copier environnement si besoin
-RUN cp .env.sqlite .env \
+RUN cp .env.sqlite .env && \
     chown mercator:www .env
 
 # Préparer base SQLite
