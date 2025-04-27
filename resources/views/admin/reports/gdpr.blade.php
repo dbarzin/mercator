@@ -70,7 +70,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td width="20%"><b>{{ trans('cruds.macroProcessus.fields.description') }}</b></td>
+                                <th width="20%">{{ trans('cruds.dataProcessing.fields.legal_basis') }}</th>
+                                <td>{{ $dataProcessing->legal_basis }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('cruds.dataProcessing.fields.description') }}</th>
                                 <td>{!! $dataProcessing->description !!}</td>
                             </tr>
                             <tr>

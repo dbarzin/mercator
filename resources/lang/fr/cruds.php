@@ -430,6 +430,8 @@ return [
         'fields' => [
             'name' => 'Nom',
             'name_helper' => '',
+            'legal_basis' => 'Base légale',
+            'legal_basis_helper' => '',
             'description' => 'Description',
             'description_helper' => '',
             'responsible' => 'Responsable du traitement',

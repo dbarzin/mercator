@@ -20,6 +20,7 @@ class DataProcessing extends Model
     public static $searchable = [
         'name',
         'description',
+        'legal_basis'
     ];
 
     protected $dates = [
@@ -30,6 +31,7 @@ class DataProcessing extends Model
 
     protected $fillable = [
         'name',
+        'legal_basis',
         'description',
         'responsible',
         'purpose',
