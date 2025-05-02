@@ -29,4 +29,5 @@ jobs:
           charts_dir: _helm_chart
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
           
