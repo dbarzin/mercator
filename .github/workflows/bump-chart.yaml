@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - master
-      - ci
 
 jobs:
   bump-chart:
@@ -17,23 +16,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set Chart Version
         uses: mikefarah/yq@master
-        cmd: CHART_VERSION=$(cat version.txt) yq -i '.version = strenv(CHART_VERSION)'  _helm_chart/chart/Chart.yaml
-
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        with:
+          cmd: CHART_VERSION=$(cat version.txt) yq -i '.version = strenv(CHART_VERSION)'  _helm_chart/chart/Chart.yaml
 
       - name: Commit Chart Version
-        run: |
-          git add _helm_chart/chart/Chart.yaml
-          git commit -m "Update chart version to $CHART_VERSION"
-          git push
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: 'chore: bump chart version to $CHART_VERSION'
+          add: '_helm_chart/chart/Chart.yaml'
