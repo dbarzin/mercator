@@ -1,0 +1,33 @@
+name: Bump Charts version
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  bump-chart:
+    name: Bump Charts version
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set Chart Version
+        uses: mikefarah/yq@master
+        with:
+          cmd: CHART_VERSION=$(cat version.txt) yq -i '.version = strenv(CHART_VERSION)'  _helm_chart/chart/Chart.yaml
+
+      - name: Commit Chart Version
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: 'chore: bump chart version to $CHART_VERSION'
+          add: '_helm_chart/chart/Chart.yaml'
