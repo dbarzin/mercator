@@ -3,9 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - main
-      - ci
-
+      - master
 jobs:
   release:
     name: Release Helm Charts
@@ -31,5 +29,4 @@ jobs:
           charts_dir: _helm_chart
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CR_SKIP_EXISTING: true
           
