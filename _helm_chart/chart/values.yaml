@@ -126,10 +126,12 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 5
 readinessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 5
 
 autoscaling:
   enabled: false
@@ -158,6 +160,7 @@ tolerations: []
 affinity: {}
 
 secret:
+  managed: true
   postgres:
     postgresPassword: "2ù_-qeeYT21!8zA2~"
     password: "1ù_-qeeRH21!8zA1~"

@@ -21,7 +21,7 @@ RUN fc-cache -f
 
 # Install PHP extensions
 RUN docker-php-ext-install \
-    pdo pdo_mysql pdo_pgsql pdo_sqlite \
+    pdo pdo_mysql pdo_pgsql pdo_sqlite intl \
     zip ldap gd
 
 # Install composer
@@ -66,7 +66,7 @@ RUN mkdir -p sql && touch sql/db.sqlite
 RUN cp .env.sqlite .env
 
 # Expose HTTP port
-EXPOSE 8000
+EXPOSE 8080
 
 # Entrypoint and default command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
