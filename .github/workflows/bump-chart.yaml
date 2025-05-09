@@ -20,14 +20,14 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Set Chart Version
+      - name: Set Chart appVersion
         uses: mikefarah/yq@master
         with:
-          cmd: CHART_VERSION=$(cat version.txt) yq -i '.version = strenv(CHART_VERSION)'  _helm_chart/chart/Chart.yaml
+          cmd: CHART_APPVERSION=$(cat version.txt) yq -i '.appVersion = strenv(CHART_APPVERSION)'  _helm_chart/chart/Chart.yaml
 
-      - name: Commit Chart Version
+      - name: Commit Chart appVersion
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: 'chore: bump chart version to $CHART_VERSION'
+          message: 'chore: bump chart version to $CHART_APPVERSION'
           add: '_helm_chart/chart/Chart.yaml'
