@@ -8,10 +8,10 @@ namespace App\Http\Controllers\Admin;
 use App\Actor;
 use App\Annuaire;
 // information system
+use App\Process;
 use App\Activity;
 use App\Entity;
-use App\Building;
-use App\Certificate;
+use App\Operation;
 // Applications
 use App\ApplicationBlock;
 use App\MApplication;
@@ -21,48 +21,48 @@ use App\Cluster;
 use App\Container;
 use App\Database;
 use App\DhcpServer;
-use App\Dnsserver;
+use App\Certificate;
 // Administration
 use App\DomaineAd;
-use App\ExternalConnectedEntity;
 use App\Flux;
 use App\ForestAd;
 // Logique
 use App\Gateway;
-use App\Http\Controllers\Controller;
+use App\ExternalConnectedEntity;
 use App\Information;
-use App\Lan;
 use App\LogicalServer;
 use App\MacroProcessus;
-use App\Man;
 use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
-use App\Peripheral;
+use App\Dnsserver;
+use App\Vlan;
 // Physique
+use App\Site;
+use App\Building;
 use App\Bay;
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
 use App\Relation;
 use App\Router;
 use App\SecurityDevice;
-use App\Site;
+use App\Peripheral;
 use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
-use App\Vlan;
-use App\Wan;
 use App\WifiTerminal;
 use App\Workstation;
+use App\Wan;
+use App\Man;
+use App\Lan;
 // PhpOffice
 use App\ZoneAdmin;
 use Auth;
 use Carbon\Carbon;
 // Laravel
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Element\Section;
@@ -169,7 +169,7 @@ class CartographyController extends Controller
                 $graph .= 'edge [fontname = "FreeSans"];';
 
                 foreach ($entities as $entity) {
-                    $graph .= 'E'. $entity->id . '[label="'. $entity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/entity.png').'"]';
+                    $graph .= 'E'. $entity->id . $this->dotImage('/images/entity.png', $entity->name);
                 }
                 foreach ($relations as $relation) {
                     $graph .= 'E'.$relation->source_id .' -> E'. $relation->destination_id .'[label="'. $relation->name .'"]';
@@ -284,7 +284,7 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
                 if ($granularity >= 2) {
                     foreach ($macroProcessuses as $macroProcess) {
-                        $graph .= ' MP' . $macroProcess->id . ' [label="'. $macroProcess->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/macroprocess.png').'"]';
+                        $graph .= ' MP' . $macroProcess->id . $this->dotImage('/images/macroprocess.png', $macroProcess->name );
                         foreach ($macroProcess->processes as $process) {
                             $graph .= ' MP' . $macroProcess->id .'->P' . $process->id;
                         }
@@ -292,7 +292,7 @@ class CartographyController extends Controller
                 }
 
                 foreach ($processes as $process) {
-                    $graph .= ' P'.$process->id . ' [label="' . $process->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/process.png').'"]';
+                    $graph .= ' P'.$process->id . $this->dotImage('/images/process.png', $process->name);
                     if ($granularity === 3) {
                         foreach ($process->activities as $activity) {
                             $graph .= ' P'.$process->id . '->A'. $activity->id;
@@ -304,14 +304,14 @@ class CartographyController extends Controller
                 }
                 if ($granularity === 3) {
                     foreach ($activities as $activity) {
-                        $graph .= ' A' . $activity->id .' [label="'. $activity->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/activity.png').'"]';
+                        $graph .= ' A' . $activity->id . $this->dotImage('/images/activity.png', $activity->name);
                         foreach ($activity->operations as $operation) {
                             $graph .= ' A'. $activity->id .'->O'.$operation->id;
                         }
                     }
                 }
                 foreach ($operations as $operation) {
-                    $graph .= ' O'. $operation->id .' [label="'. $operation->name .'" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/operation.png').'"]';
+                    $graph .= ' O'. $operation->id . $this->dotImage('/images/operation.png', $operation->name);
                     if ($granularity === 3) {
                         foreach ($operation->tasks as $task) {
                             $graph .= ' O' . $operation->id . '->T'. $task->id;
@@ -325,16 +325,16 @@ class CartographyController extends Controller
                 }
                 if ($granularity === 3) {
                     foreach ($tasks as $task) {
-                        $graph .= ' T'. $task->id . ' [label="'. $task->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/task.png').'"]';
+                        $graph .= ' T'. $task->id . $this->dotImage('/images/task.png', $task->name);
                     }
                 }
                 if ($granularity >= 2) {
                     foreach ($actors as $actor) {
-                        $graph .= ' ACT'. $actor->id . ' [label="'. $actor->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/actor.png').'"]';
+                        $graph .= ' ACT'. $actor->id . $this->dotImage('/images/actor.png', $actor->name);
                     }
                 }
                 foreach ($informations as $information) {
-                    $graph .= ' I'. $information->id . ' [label="' . $information->name . '" shape=none labelloc=b width=1 height=1.8 image="'.public_path('/images/information.png').'"]';
+                    $graph .= ' I'. $information->id . $this->dotImage('/images/information.png', $information->name);
                 }
                 $graph .= '}';
 
@@ -654,11 +654,11 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
 
                 foreach ($applicationBlocks as $ab) {
-                    $graph .= ' AB' . $ab->id . ' [label="'.$ab->name.'" shape=none labelloc=b  width=1 height=1.8 image="' . public_path('/images/applicationblock.png').'" ]';
+                    $graph .= ' AB' . $ab->id . $this->dotImage('/images/applicationblock.png', $ab->name);
                 }
 
                 foreach ($applications as $application) {
-                    $graph .= ' A' . $application->id . '[label="' . $application->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/application.png') . '"]';
+                    $graph .= ' A' . $application->id . $this->dotImage('/images/application.png', $application->name);
                     foreach ($application->services as $service) {
                         $graph .= ' A' . $application->id .'->AS' . $service->id;
                     }
@@ -670,18 +670,18 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($applicationServices as $service) {
-                    $graph .= ' AS' . $service->id . '[label="' . $service->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationservice.png') . '"]';
+                    $graph .= ' AS' . $service->id . $this->dotImage('/images/applicationservice.png', $service->name);
                     foreach ($service->modules as $module) {
                         $graph .= ' AS' . $service->id . '->M' . $module->id;
                     }
                 }
 
                 foreach ($applicationModules as $module) {
-                    $graph .= ' M' . $module->id . '[label="' . $module->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/applicationmodule.png') .'"]';
+                    $graph .= ' M' . $module->id . $this->dotImage('/images/applicationmodule.png', $module->name);
                 }
 
                 foreach ($databases as $database) {
-                    $graph .= ' DB' . $database->id . '[label="'. $database->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/database.png') . '"]';
+                    $graph .= ' DB' . $database->id . $this->dotImage('/images/database.png', $database->name);
                 }
 
                 $graph .= '}';
@@ -1143,7 +1143,7 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($zones as $zone) {
-                    $graph .= ' Z'. $zone->id . '[label="'. $zone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/zoneadmin.png'). '"]';
+                    $graph .= ' Z'. $zone->id . $this->dotImage('/images/zoneadmin.png', $zone->name);
                     foreach ($zone->annuaires as $annuaire) {
                         $graph .= ' Z'. $zone->id . '->A' . $annuaire->id;
                     }
@@ -1152,16 +1152,16 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($annuaires as $annuaire) {
-                    $graph .= ' A'. $annuaire->id . '[label="' .$annuaire->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/annuaire.png') .'"]';
+                    $graph .= ' A'. $annuaire->id . $this->dotImage('/images/annuaire.png', $annuaire->name);
                 }
                 foreach ($forests as $forest) {
-                    $graph .= ' F' . $forest->id . '[label="' . $forest->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/ldap.png') .'"]';
+                    $graph .= ' F' . $forest->id . $this->dotImage('/images/ldap.png', $forest->name);
                     foreach ($forest->domaines as $domain) {
                         $graph .= ' F' . $forest->id . '->D' . $domain->id;
                     }
                 }
                 foreach ($domains as $domain) {
-                    $graph .= ' D' . $domain->id . '[label="' . $domain->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/domain.png') . '"]';
+                    $graph .= ' D' . $domain->id . $this->dotImage('/images/domain.png', $domain->name);
                 }
                 $graph .= '}';
 
@@ -1313,13 +1313,13 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($networks as $network) {
-                    $graph .= ' NET' . $network->id . '[label="' . $network->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/cloud.png') . '"]';
+                    $graph .= ' NET' . $network->id . $this->dotImage('/images/cloud.png', $network->name);
                 }
                 foreach ($gateways as $gateway) {
-                    $graph .= ' GATEWAY' . $gateway->id . '[label="' . $gateway->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/gateway.png') . '"]';
+                    $graph .= ' GATEWAY' . $gateway->id . $this->dotImage('/images/gateway.png', $gateway->name);
                 }
                 foreach ($subnetworks as $subnetwork) {
-                    $graph .= ' SUBNET' . $subnetwork->id . '[label="' . $subnetwork->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/network.png') . '"]';
+                    $graph .= ' SUBNET' . $subnetwork->id . $this->dotImage('/images/network.png', $subnetwork->name);
                     if ($subnetwork->vlan_id !== null) {
                         $graph .= ' SUBNET' . $subnetwork->id . '->VLAN' . $subnetwork->vlan_id;
                     }
@@ -1332,14 +1332,14 @@ class CartographyController extends Controller
                 }
 
                 foreach ($externalConnectedEntities as $entity) {
-                    $graph .= ' E' . $entity->id . '[label="' . $entity->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/entity.png') . '"]';
+                    $graph .= ' E' . $entity->id . $this->dotImage('/images/entity.png', $entity->name);
                     if ($entity->network !== null) {
                         $graph .= ' NET' . $entity->network->id . '->E' . $entity->id;
                     }
                 }
 
                 foreach ($logicalServers as $logicalServer) {
-                    $graph .= ' LOGICAL_SERVER' . $logicalServer->id .'[label="' . $logicalServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    $graph .= ' LOGICAL_SERVER' . $logicalServer->id . $this->dotImage('/images/server.png', $logicalServer->name);
                     if ($logicalServer->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             foreach (explode(',', $logicalServer->address_ip) as $address) {
@@ -1352,7 +1352,7 @@ class CartographyController extends Controller
                 }
 
                 foreach ($dhcpServers as $dhcpServer) {
-                    $graph .= ' DHCP_SERVER' . $dhcpServer->id .'[label="' . $dhcpServer->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    $graph .= ' DHCP_SERVER' . $dhcpServer->id . $this->dotImage('/images/server.png', $dhcpServer->name);
                     if ($dhcpServer->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             if ($subnetwork->contains($dhcpServer->address_ip)) {
@@ -1363,7 +1363,7 @@ class CartographyController extends Controller
                 }
 
                 foreach ($dnsservers as $dnsserver) {
-                    $graph .= ' DNS_SERVER' . $dnsserver->id .'[label="' . $dnsserver->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    $graph .= ' DNS_SERVER' . $dnsserver->id . $this->dotImage('/images/server.png', $dnsserver->name);
                     if ($dnsserver->address_ip !== null) {
                         foreach ($subnetworks as $subnetwork) {
                             if ($subnetwork->contains($dnsserver->address_ip)) {
@@ -1375,7 +1375,7 @@ class CartographyController extends Controller
 
                 foreach ($certificates as $certificate) {
                     if ($certificate->logical_servers->count() > 0) {
-                        $graph .= ' CERT' . $certificate->id . '[label="' . $certificate->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/certificate.png') .'"]';
+                        $graph .= ' CERT' . $certificate->id . $this->dotImage('/images/certificate.png', $certificate->name);
                     }
                     foreach ($certificate->logical_servers as $logical_server) {
                         $graph .= ' LOGICAL_SERVER' . $logical_server->id . '->CERT'. $certificate->id;
@@ -1383,7 +1383,7 @@ class CartographyController extends Controller
                 }
 
                 foreach ($routers as $router) {
-                    $graph .= ' R'. $router->id . ' [label="'. $router->name . '" shape=none labelloc=b width=1 height=1.8 image="'. public_path('/images/router.png') . '"]';
+                    $graph .= ' R'. $router->id . $this->dotImage('/images/router.png', $router->name);
                     foreach ($subnetworks as $subnetwork) {
                         if (($router->ip_addresses !== null) && ($subnetwork->address !== null)) {
                             foreach (explode(',', $router->ip_addresses) as $address) {
@@ -1396,7 +1396,7 @@ class CartographyController extends Controller
                 }
 
                 foreach ($vlans as $vlan) {
-                    $graph .= ' VLAN' . $vlan->id . '[label="' . $vlan->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/vlan.png') . '"]';
+                    $graph .= ' VLAN' . $vlan->id . $this->dotImage('/images/vlan.png', $vlan->name);
                 }
 
                 $graph .= '}';
@@ -1860,20 +1860,20 @@ class CartographyController extends Controller
             if ($request->has('graph')) {
                 $graph = 'digraph  {';
                 foreach ($sites as $site) {
-                    $graph .= ' S' . $site->id . '[label="'. $site->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/site.png') .'"]';
+                    $graph .= ' S' . $site->id . $this->dotImage('/images/site.png', $site->name);
                 }
                 foreach ($buildings as $building) {
-                    $graph .= ' B'. $building->id . '[label="' . $building->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/building.png') . '"]';
+                    $graph .= ' B'. $building->id . $this->dotImage('/images/building.png', $building->name);
                     $graph .= ' S'. $building->site_id . '->B' . $building->id;
                     foreach ($building->roomBays as $bay) {
                         $graph .= ' B'. $building->id . '->BAY' . $bay->id;
                     }
                 }
                 foreach ($bays as $bay) {
-                    $graph .= ' BAY' . $bay->id . '[label="' . $bay->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/bay.png') . '"]';
+                    $graph .= ' BAY' . $bay->id . $this->dotImage('/images/bay.png', $bay->name);
                 }
                 foreach ($physicalServers as $pServer) {
-                    $graph .= ' PSERVER' . $pServer->id . '[label="' . $pServer->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/server.png') . '"]';
+                    $graph .= ' PSERVER' . $pServer->id . $this->dotImage('/images/server.png', $pServer->name);
                     if ($pServer->bay !== null) {
                         $graph .= ' BAY' . $pServer->bay->id . '->PSERVER' . $pServer->id;
                     } elseif ($pServer->building !== null) {
@@ -1883,7 +1883,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($workstations as $workstation) {
-                    $graph .= ' W' . $workstation->id . '[label="' .$workstation->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/workstation.png') .'"]';
+                    $graph .= ' W' . $workstation->id . $this->dotImage('/images/workstation.png', $workstation->name);
                     if ($workstation->building !== null) {
                         $graph .= ' B' . $workstation->building->id . '->W' . $workstation->id;
                     } elseif ($workstation->site !== null) {
@@ -1891,7 +1891,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($storageDevices as $storageDevice) {
-                    $graph .= ' SD' . $storageDevice->id .'[label="' . $storageDevice->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/storage.png') . '"]';
+                    $graph .= ' SD' . $storageDevice->id .$this->dotImage('/images/storage.png', $storageDevice->name);
                     if ($storageDevice->bay !== null) {
                         $graph .= ' BAY' . $storageDevice->bay->id . '->SD' . $storageDevice->id;
                     } elseif ($storageDevice->building !== null) {
@@ -1901,7 +1901,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($peripherals as $peripheral) {
-                    $graph .= ' PER' . $peripheral->id . '[label="' . $peripheral->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/peripheral.png') .'"]';
+                    $graph .= ' PER' . $peripheral->id . $this->dotImage('/images/peripheral.png', $peripheral->name);
                     if ($peripheral->bay !== null) {
                         $graph .= ' BAY' . $peripheral->bay->id .'->PER' . $peripheral->id;
                     } elseif ($peripheral->building !== null) {
@@ -1911,7 +1911,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($phones as $phone) {
-                    $graph .= ' PHONE' . $phone->id . '[label="' . $phone->name .'" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/phone.png') .'"]';
+                    $graph .= ' PHONE' . $phone->id . $this->dotImage('/images/phone.png', $phone->name);
                     if ($phone->building !== null) {
                         $graph .= ' B' . $phone->building->id .'->PHONE' . $phone->id;
                     } elseif ($phone->site !== null) {
@@ -1919,7 +1919,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($physicalSwitches as $switch) {
-                    $graph .= ' SWITCH' . $switch->id . '[label="' . $switch->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/switch.png') .'"]';
+                    $graph .= ' SWITCH' . $switch->id . $this->dotImage('/images/switch.png', $switch->name);
                     if ($switch->bay !== null) {
                         $graph .= ' BAY' . $switch->bay->id . '->SWITCH' . $switch->id;
                     } elseif ($switch->building !== null) {
@@ -1929,7 +1929,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($physicalRouters as $router) {
-                    $graph .= ' ROUTER' . $router->id . '[label="' . $router->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/router.png') . '"]';
+                    $graph .= ' ROUTER' . $router->id . $this->dotImage('/images/router.png', $router->name);
                     if ($router->bay !== null) {
                         $graph .= ' BAY' . $router->bay->id . '->ROUTER' . $router->id;
                     } elseif ($router->building !== null) {
@@ -1939,7 +1939,7 @@ class CartographyController extends Controller
                     }
                 }
                 foreach ($wifiTerminals as $wifiTerminal) {
-                    $graph .= ' WIFI' . $wifiTerminal->id . '[label="' . $wifiTerminal->name . '" shape=none labelloc=b width=1 height=1.8 image="' . public_path('/images/wifi.png') . '"]';
+                    $graph .= ' WIFI' . $wifiTerminal->id . $this->dotImage('/images/wifi.png', $wifiTerminal->name);
                     if ($wifiTerminal->building !== null) {
                         $graph .= ' B' . $wifiTerminal->building->id . '->WIFI' . $wifiTerminal->id;
                     } elseif ($wifiTerminal->site !== null) {
@@ -2517,28 +2517,90 @@ class CartographyController extends Controller
         return $cell->addTextRun(CartographyController::FANCYRIGHTTABLECELLSTYLE);
     }
 
+    /*
+    // Return a base64 image from the path
+    private function imageToBase64($path) {
+        if (!file_exists($path)) {
+            throw new Exception("Fichier introuvable : $path");
+        }
+
+        $imageData = file_get_contents($path);
+        $mimeType = mime_content_type($path);
+        $base64 = base64_encode($imageData);
+
+        return "data:$mimeType;base64,$base64";
+    }
+
+    // Embed images in SVG
+    private function embedImagesInSvg($svgPath) {
+        if (!file_exists($svgPath)) {
+            throw new Exception("Fichier SVG introuvable : $svgPath");
+        }
+
+        $svg = file_get_contents($svgPath);
+
+        // Cherche les balises <image ... xlink:href="..." .../>
+        $svg = preg_replace_callback(
+            '/(<image[^>]+xlink:href=")([^"]+)(")/i',
+            function ($matches) use ($svgPath) {
+                $prefix = $matches[1];
+                $imagePath = $matches[2];
+                $suffix = $matches[3];
+
+                if (!$imagePath || !file_exists($imagePath)) {
+                    echo "⚠️ Image non trouvée : $imagePath\n";
+                    return $matches[0]; // laisser inchangé
+                }
+
+                try {
+                    $dataUri = $this->imageToBase64($imagePath);
+                    return $prefix . $dataUri . $suffix;
+                } catch (Exception $e) {
+                    echo "Erreur : " . $e->getMessage() . "\n";
+                    return $matches[0];
+                }
+            },
+            $svg
+        );
+
+        // Sauvegarde le fichier modifié
+        file_put_contents($svgPath, $svg);
+    }
+    */
+    // Genetate the dot image
+    private function dotImage(string $imagePath, string $name) {
+        return'[shape=none label=<'.
+              '<TABLE border="0" cellborder="0" cellspacing="0">'.
+              '<TR><TD><IMG SRC="' . public_path($imagePath) . '"/></TD></TR>'.
+              '<TR><TD>' . $name . '</TD></TR>'.
+              '</TABLE> >]';
+          }
+
     // Generate the image of the graph from a dot notation using GraphViz
     private function generateGraphImage(string $graph)
     {
         // Save it to a file
-        $dot_path = tempnam('/tmp', 'dot');
-        $dot_file = fopen($dot_path, 'w');
-        fwrite($dot_file, $graph);
-        fclose($dot_file);
+        $dotPath = tempnam('/tmp', 'dot');
+        $dotFile = fopen($dotPath, 'w');
+        fwrite($dotFile, $graph);
+        fclose($dotFile);
 
         // create image file
-        $png_path = tempnam('/tmp', 'png');
+        $imagePath = tempnam('/tmp', 'png');
 
         // Call DOT : dot -Tpng ./test.dot -otest.png
 
         // add "unset SERVER_NAME;" due to Apache2
         // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
-        shell_exec('unset SERVER_NAME; /usr/bin/dot -Tpng '.$dot_path.' -o'.$png_path);
+        shell_exec('unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 '.$dotPath.' -o'.$imagePath);
 
         // delete graph file
-        unlink($dot_path);
+        unlink($dotPath);
+
+        // Test for SVG (not supported)
+        // $this->embedImagesInSvg($imagePath);
 
         // return file path (do not forget to delete after...)
-        return $png_path;
+        return $imagePath;
     }
 }
