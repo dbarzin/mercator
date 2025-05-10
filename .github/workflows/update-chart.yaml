@@ -1,15 +1,15 @@
-name: Bump Charts version
+name: Update Chart appVersion
 
 on:
-  pull_request:
+  push:
     branches:
       - master
     paths:
-      - '_helm_chart/chart/**'
+      - 'version.txt'
 
 jobs:
-  bump-chart:
-    name: Bump Charts version
+  update-chart:
+    name: Update Chart appVersion
     # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
     # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
     permissions:
@@ -22,14 +22,22 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
+      - name: Read version
+        id: version
+        run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT 
+
       - name: Set Chart appVersion
         uses: mikefarah/yq@master
+        env:
+          CHART_APPVERSION: ${{ steps.version.outputs.version }}
         with:
-          cmd: CHART_APPVERSION=$(cat version.txt) yq -i '.appVersion = strenv(CHART_APPVERSION)'  _helm_chart/chart/Chart.yaml
+          cmd: yq -i '.appVersion = strenv(CHART_APPVERSION)'  _helm_chart/chart/Chart.yaml
 
       - name: Commit Chart appVersion
         uses: EndBug/add-and-commit@v9
+        env:
+          CHART_APPVERSION: ${{ steps.version.outputs.version }}
         with:
           default_author: github_actions
-          message: 'chore: bump chart version to $CHART_APPVERSION'
+          message: "chore: bump chart appVersion to ${{ env.CHART_APPVERSION }}"
           add: '_helm_chart/chart/Chart.yaml'
