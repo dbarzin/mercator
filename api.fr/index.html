@@ -100,6 +100,14 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#bash">bash</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#powershell">Powershell</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -496,6 +504,43 @@ UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/${OBJECT}/${OBJECT_ID}&quot; \
 
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
 
+</code></pre>
+<h3 id="powershell">Powershell</h3>
+<p>Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs logiques.</p>
+<h4 id="etape-1-authentification-et-obtention-du-jeton-dacces">Étape 1 — Authentification et obtention du jeton d’accès</h4>
+<pre><code class="language-powershell"># Définir l’URL d’authentification et les identifiants
+$loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
+$loginBody = @{
+    email = &quot;admin@admin.com&quot;
+    password = &quot;password&quot;
+}
+
+# Envoyer la requête d’authentification
+try {
+    $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType &quot;application/x-www-form-urlencoded&quot;
+    $token = $loginResponse.access_token
+    Write-Host &quot;Jeton d’accès récupéré avec succès.&quot;
+} catch {
+    Write-Error &quot;Échec de l’authentification : $_&quot;
+    return
+}
+</code></pre>
+<h4 id="etape-2-utilisation-du-jeton-pour-interroger-les-serveurs-logiques">Étape 2 — Utilisation du jeton pour interroger les serveurs logiques</h4>
+<pre><code class="language-powershell"># Définir l’endpoint et les en-têtes d’autorisation
+$endPoint = &quot;logical-servers&quot;
+$apiUri = &quot;https://127.0.0.1:8000/api/$endPoint&quot;
+$headers = @{
+    'Authorization' = &quot;Bearer $token&quot;
+    'Accept'        = 'application/json'
+}
+
+# Envoyer la requête GET
+try {
+    $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $servers | Format-Table id, name, operating_system, description
+} catch {
+    Write-Error &quot;Échec de la requête : $_&quot;
+}
 </code></pre>
               
             </div>

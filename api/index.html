@@ -100,6 +100,14 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#bash">Bash</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#powershell">PowerShell</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -506,6 +514,43 @@ UPDATED_OBJECT=$(curl -s -X GET &quot;${API_URL}/logical-servers/${OBJECT_ID}&qu
   -H &quot;Accept: application/json&quot;)
 
 echo &quot;Objet mis à jour: ${UPDATED_OBJECT}&quot;
+</code></pre>
+<h3 id="powershell">PowerShell</h3>
+<p>The following <strong>PowerShell</strong> script demonstrates how to authenticate with the API and retrieve the list of logical servers.</p>
+<h4 id="step-1-authenticate-and-obtain-an-access-token">Step 1 — Authenticate and obtain an access token</h4>
+<pre><code class="language-powershell"># Define the login endpoint and credentials
+$loginUri = &quot;http://127.0.0.1:8000/api/login&quot;
+$loginBody = @{
+    email = &quot;admin@admin.com&quot;
+    password = &quot;password&quot;
+}
+
+# Send the authentication request
+try {
+    $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType &quot;application/x-www-form-urlencoded&quot;
+    $token = $loginResponse.access_token
+    Write-Host &quot;Access token successfully retrieved.&quot;
+} catch {
+    Write-Error &quot;Authentication failed: $_&quot;
+    return
+}
+</code></pre>
+<h4 id="step-2-use-the-token-to-query-logical-servers">Step 2 — Use the token to query logical servers</h4>
+<pre><code class="language-powershell"># Define the endpoint and authorization headers
+$endPoint = &quot;logical-servers&quot;
+$apiUri = &quot;http://127.0.0.1:8000/api/$endPoint&quot;
+$headers = @{
+    'Authorization' = &quot;Bearer $token&quot;
+    'Accept'        = 'application/json'
+}
+
+# Send the GET request
+try {
+    $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $servers | Format-Table id, name, operating_system, description
+} catch {
+    Write-Error &quot;Request failed: $_&quot;
+}
 </code></pre>
               
             </div>
