@@ -385,3 +385,48 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/logical-servers/${OBJECT_ID}" \
 
 echo "Objet mis à jour: ${UPDATED_OBJECT}"
 ```
+
+### PowerShell
+
+The following **PowerShell** script demonstrates how to authenticate with the API and retrieve the list of logical servers.
+
+#### Step 1 — Authenticate and obtain an access token
+
+```powershell
+# Define the login endpoint and credentials
+$loginUri = "http://127.0.0.1:8000/api/login"
+$loginBody = @{
+    email = "admin@admin.com"
+    password = "password"
+}
+
+# Send the authentication request
+try {
+    $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType "application/x-www-form-urlencoded"
+    $token = $loginResponse.access_token
+    Write-Host "Access token successfully retrieved."
+} catch {
+    Write-Error "Authentication failed: $_"
+    return
+}
+```
+
+#### Step 2 — Use the token to query logical servers
+
+```powershell
+# Define the endpoint and authorization headers
+$endPoint = "logical-servers"
+$apiUri = "http://127.0.0.1:8000/api/$endPoint"
+$headers = @{
+    'Authorization' = "Bearer $token"
+    'Accept'        = 'application/json'
+}
+
+# Send the GET request
+try {
+    $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $servers | Format-Table id, name, operating_system, description
+} catch {
+    Write-Error "Request failed: $_"
+}
+```

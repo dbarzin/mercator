@@ -370,3 +370,48 @@ UPDATED_OBJECT=$(curl -s -X GET "${API_URL}/${OBJECT}/${OBJECT_ID}" \
 echo "Objet mis à jour: ${UPDATED_OBJECT}"
 
 ```
+
+### Powershell
+
+Le script PowerShell ci-dessous montre comment s’authentifier auprès de l’API et récupérer la liste des serveurs logiques.
+
+#### Étape 1 — Authentification et obtention du jeton d’accès
+
+```powershell
+# Définir l’URL d’authentification et les identifiants
+$loginUri = "http://127.0.0.1:8000/api/login"
+$loginBody = @{
+    email = "admin@admin.com"
+    password = "password"
+}
+
+# Envoyer la requête d’authentification
+try {
+    $loginResponse = Invoke-RestMethod -Uri $loginUri -Method Post -Body $loginBody -ContentType "application/x-www-form-urlencoded"
+    $token = $loginResponse.access_token
+    Write-Host "Jeton d’accès récupéré avec succès."
+} catch {
+    Write-Error "Échec de l’authentification : $_"
+    return
+}
+```
+
+#### Étape 2 — Utilisation du jeton pour interroger les serveurs logiques
+
+```powershell
+# Définir l’endpoint et les en-têtes d’autorisation
+$endPoint = "logical-servers"
+$apiUri = "https://127.0.0.1:8000/api/$endPoint"
+$headers = @{
+    'Authorization' = "Bearer $token"
+    'Accept'        = 'application/json'
+}
+
+# Envoyer la requête GET
+try {
+    $servers = Invoke-RestMethod -Uri $apiUri -Method Get -Headers $headers
+    $servers | Format-Table id, name, operating_system, description
+} catch {
+    Write-Error "Échec de la requête : $_"
+}
+```
