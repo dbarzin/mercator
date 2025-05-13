@@ -23,7 +23,7 @@ class StoreAdminUserRequest extends FormRequest
                 'min:3',
                 'max:32',
                 'required',
-                Rule::unique('admin_user')->whereNull('deleted_at'),
+                Rule::unique('admin_users')->whereNull('deleted_at'),
             ],
         ];
     }
