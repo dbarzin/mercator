@@ -11,6 +11,7 @@ Changements prévus en 2025 et plus :
 - [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
+- [ ] Dessin de processus avec BPMN 2.0 (https://github.com/process-analytics)
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle de document pour les rapports
