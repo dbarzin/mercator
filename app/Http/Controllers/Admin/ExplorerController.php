@@ -372,7 +372,7 @@ class ExplorerController extends Controller
         // Gateways
         $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
         foreach ($gateways as $gateway) {
-            $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $subnetwork->ip);
+        $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
         }
 
         // Subnetworks
