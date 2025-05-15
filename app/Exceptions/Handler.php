@@ -37,6 +37,15 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        try {
+            Log::error($exception->getMessage(), [
+                'exception' => get_class($exception),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+            ]);
+        } catch (\Throwable $loggingError) {
+            error_log('Error trying to log an exception : ' . $loggingError->getMessage());
+        }
         parent::report($exception);
     }
 
