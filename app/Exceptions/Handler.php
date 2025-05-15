@@ -38,7 +38,7 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
         try {
-            Log::error($exception->getMessage(), [
+            \Log::error($exception->getMessage(), [
                 'exception' => get_class($exception),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
