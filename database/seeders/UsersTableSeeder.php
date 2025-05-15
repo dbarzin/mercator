@@ -13,7 +13,8 @@ class UsersTableSeeder extends Seeder
 
         $users = [
             [
-                'id'             => 1,
+                // No ID for PostgrSQL
+                // 'id'             => 1,
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
                 'password'       => '$2y$10$6KNtUi7G9Hsnt74LijQBtuQen1RbLzO71NpHsrSxrHmIUgDRhICQm',
