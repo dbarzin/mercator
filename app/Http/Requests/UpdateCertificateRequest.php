@@ -34,7 +34,8 @@ class UpdateCertificateRequest extends FormRequest
             'end_validity' => [
                 'date',
                 'nullable',
-                'after:start_validity',
+                // TODO : fixme
+                // 'after:start_validity',
             ],
         ];
     }
