@@ -74,6 +74,7 @@ environment: "development"
 key: ""
 reverse_proxy: "http://localhost"
 use_demo_data: 1
+seed_database: 1
 
 ldap:
   enabled: false
