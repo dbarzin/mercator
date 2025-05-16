@@ -74,7 +74,8 @@ class UpdateMApplicationRequest extends FormRequest
             'update_date' => [
                 'date',
                 'nullable',
-                'after:install_date',
+            // TODO : fixme
+            // 'after:install_date',
             ],
         ];
     }
