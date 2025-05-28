@@ -16,9 +16,9 @@ class PhysicalLinkController extends Controller
     {
         abort_if(Gate::denies('physical_link_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physical_links = PhysicalLink::all();
+        $physicalLink    = PhysicalLink::all();
 
-        return response()->json($physical_links);
+        return response()->json($physicalLink);
     }
 
     public function store(StorePhysicalLinkRequest $request)
@@ -30,18 +30,18 @@ class PhysicalLinkController extends Controller
         return response()->json($physical_link, 201);
     }
 
-    public function show(PhysicalLink $physical_link)
+    public function show(PhysicalLink $physicalLink)
     {
         abort_if(Gate::denies('physical_link_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PhysicalLinkResource($physical_link);
+        return new PhysicalLinkResource($physicalLink);
     }
 
-    public function update(StorePhysicalLinkRequest $request, PhysicalLink $physical_link)
+    public function update(StorePhysicalLinkRequest $request, PhysicalLink $physicalLink)
     {
         abort_if(Gate::denies('physical_link_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physical_link->update($request->all());
+        $physicalLink->update($request->all());
 
         return response()->json();
     }

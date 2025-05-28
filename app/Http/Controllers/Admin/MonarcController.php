@@ -26,6 +26,11 @@ class MonarcController extends Controller
         $sites = Site::select('id', 'name')->orderBy('name')->get();
         $buildings = Building::select('id', 'name')->orderBy('name')->get();
 
+        // Get all objects
+        // https://objects.monarc.lu/api/v2/object
+        // curl -X POST "https://objects.monarc.lu/api/v2/object/" -H  "accept: application/json" -H  "X-API-KEY: <your-token>" -H  "Content-Type: application/json" -d $object
+        $this->getNames();
+
         return view(
             'monarc',
             compact(
@@ -37,5 +42,71 @@ class MonarcController extends Controller
                 'buildings'
             )
         );
+    }
+
+    private function getNames() {
+
+        $url = "https://objects.monarc.lu/api/v2/object/";
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT => 10,
+            // CURLOPT_SSL_VERIFYPEER => false, // ❗️TEMPORAIRE uniquement pour debug
+            // CURLOPT_SSL_VERIFYHOST => false, // ❗️TEMPORAIRE uniquement pour debug
+            CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 10.0; Win64; x64)", // contourne parfois les blocages
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+            ],
+            // CURLOPT_HEADER => true,
+            // CURLOPT_VERBOSE => true,
+        ]);
+
+        $response = curl_exec($ch);
+        // $info = curl_getinfo($ch);
+        $error = curl_error($ch);
+        // $httpCode = $info['http_code'];
+
+        if ($error) {
+            \Log::error("Erreur cURL : $error");
+        }
+
+        curl_close($ch);
+
+        // Vérification des erreurs
+        if ($response === false) {
+            echo "Erreur cURL : " . curl_error($ch);
+            curl_close($ch);
+            return;
+        }
+
+        // Fermeture de cURL
+        curl_close($ch);
+
+        // Décodage de la réponse JSON
+        $data = json_decode($response, true);
+        dd($response);
+
+        // Vérification de la structure de la réponse
+        if (!is_array($data)) {
+            echo "Réponse invalide ou non JSON.";
+            return null;
+        }
+
+        // Parcours des objets pour extraire les "name"
+        foreach ($data as $bloc) {
+            if (isset($bloc['data']) && is_array($bloc['data'])) {
+                foreach ($bloc['data'] as $objet) {
+                    if (isset($objet['name'])) {
+                        // echo $objet['name'] . PHP_EOL;
+                        $names->push($objet['name']);
+                    }
+                }
+            }
+        }
+        dd($names);
+        return $names;
     }
 }
