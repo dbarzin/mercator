@@ -91,7 +91,7 @@ __Vue de l'infrastructure physique__
 - /api/wans
 - /api/mans
 - /api/lans
-- /api/links
+- /api/physical-links
 - /api/fluxes
 
 ### Actions gérées par le contrôleur de ressources
