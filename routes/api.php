@@ -73,7 +73,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('mans', API\ManController::class);
     Route::resource('lans', API\LanController::class);
     Route::resource('vlans', API\VlanController::class);
-    Route::resource('links', API\PhysicalLinkController::class);
+    Route::resource('physical-links', API\PhysicalLinkController::class);
 
     Route::resource('users', API\UserController::class);
     Route::resource('permission', API\PermissionController::class);

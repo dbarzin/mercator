@@ -21,7 +21,7 @@ class StorePhysicalSwitchRequest extends FormRequest
         return [
             'name' => [
                 'min:2',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('physical_switches')->whereNull('deleted_at'),
             ],

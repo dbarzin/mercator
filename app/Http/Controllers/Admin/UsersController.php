@@ -73,7 +73,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        return back();
+        return redirect()->route('admin.users.index');
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

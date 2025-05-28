@@ -21,7 +21,7 @@ class UpdatePhysicalSwitchRequest extends FormRequest
         return [
             'name' => [
                 'min:2',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('physical_switches')
                     ->ignore($this->route('physical_switch')->id ?? $this->id)
