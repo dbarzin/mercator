@@ -56,7 +56,7 @@ class MonarcController extends Controller
             CURLOPT_TIMEOUT => 10,
             // CURLOPT_SSL_VERIFYPEER => false, // ❗️TEMPORAIRE uniquement pour debug
             // CURLOPT_SSL_VERIFYHOST => false, // ❗️TEMPORAIRE uniquement pour debug
-            CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 10.0; Win64; x64)", // contourne parfois les blocages
+            CURLOPT_USERAGENT => "Mercator", // contourne parfois les blocages
             CURLOPT_HTTPHEADER => [
                 'Accept: application/json',
             ],

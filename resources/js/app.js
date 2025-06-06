@@ -91,7 +91,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // skip already initialised select2
         // used by CPE search
         if (this.id!='')
-            $(this).select2();
+            $(this).select2({
+                placeholder: '...',
+                allowClear: true
+            });
     });
 
   $(".select2-free").select2({
