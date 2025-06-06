@@ -336,7 +336,6 @@
                 <div class="form-group">
                     <label class="recommended" for="domain">{{ trans('cruds.logicalServer.fields.domain') }}</label>
                     <select class="form-control select2 {{ $errors->has('domains') ? 'is-invalid' : '' }}" name="domain_id" id="domain_id">
-                        <option></option>
                         @foreach($domains as $id => $name)
                             <option value="{{ $id }}" {{ $id==old('domain_id', $logicalServer->domain_id) ? 'selected' : '' }}>{{ $name }}</option>
                         @endforeach
