@@ -23,6 +23,9 @@ Auth::routes([
     'verify' => false, // Désactiver la vérification par e-mail
 ]);
 
+// Add get logout route
+Route::get('/logout', fn () => redirect('/'));
+
 // Forget password
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
 Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
