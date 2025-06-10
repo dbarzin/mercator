@@ -12,6 +12,7 @@ Changements prévus en 2025 et plus :
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Dessin de processus avec BPMN 2.0 (https://github.com/process-analytics)
+- [ ] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle de document pour les rapports
