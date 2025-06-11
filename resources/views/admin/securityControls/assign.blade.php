@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
+<form method="POST" action="{{ route('admin.security-controls-associate') }}" enctype="multipart/form-data">
+    @method('PUT')
+    @csrf
 
-<div class="card">
-    <div class="card-header">
-        Assigner des mesures de sécurité
-    </div>
+    <div class="card">
+        <div class="card-header">
+            Assigner des mesures de sécurité
+        </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route('admin.security-controls-associate') }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
@@ -56,18 +56,17 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            &nbsp;
-                <button class="btn btn-secondary" type="button"  onclick="window.location.href='/admin/security-controls'">
-                    {{ trans('global.back_to_list') }}
-                </button>
-            </div>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button id="btn-cancel" class="btn btn-secondary" type="button"  onclick="window.location.href='/admin/security-controls'">
+            {{ trans('global.back_to_list') }}
+        </button>
+        <button id="btn-save" class="btn btn-danger" type="submit">
+            {{ trans('global.save') }}
+        </button>
+    </div>
+</form>
 @endsection
 
 @section('scripts')

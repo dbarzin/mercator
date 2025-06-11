@@ -82,7 +82,7 @@
         </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-danger" type="submit" name="action" value="save">
+        <button id="btn-save" class="btn btn-danger" type="submit" name="action" value="save">
             {{ trans('global.save') }}
         </button>
         <button class="btn btn-success" type="submit" name="action" value="test">

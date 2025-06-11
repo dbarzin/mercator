@@ -3,7 +3,7 @@
 @can('logical_server_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.logical-servers.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.logical-servers.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.logicalServer.title_singular') }}
             </a>
         </div>

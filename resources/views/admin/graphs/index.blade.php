@@ -3,7 +3,7 @@
 @can('graph_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.graphs.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.graphs.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.graph.title_singular') }}
             </a>
         </div>

@@ -62,21 +62,40 @@ document.addEventListener("DOMContentLoaded", function () {
     window._token = $('meta[name="csrf-token"]').attr('content')
 
     moment.updateLocale('en', {
-    week: {dow: 1} // Monday is the first day of the week
+        week: {dow: 1} // Monday is the first day of the week
     })
 
     // Initialiser DataTables sur les éléments ayant la classe .datatable
     $(".datatable").DataTable();
 
-  // CKEditor
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
+    // Shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'n') {
+          e.preventDefault();
+          document.getElementById('btn-new').click();
+        }
+        if (e.ctrlKey && e.key === 's') {
+          e.preventDefault();
+          document.getElementById('btn-save').click();
+        }
+        if (e.ctrlKey && e.key === 'd') {
+          e.preventDefault();
+          document.getElementById('btn-duplicate').click();
+        }
+        if (e.key === 'Escape') {
+          document.getElementById('btn-cancel').click();
+        }
+    });
+
+    // CKEditor
+    var allEditors = document.querySelectorAll('.ckeditor');
+    for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
         allEditors[i], {
             removePlugins: ['Table', 'TableToolbar', 'EasyImage','ImageUpload','MediaEmbed'],
-	        toolbar: {
+            toolbar: {
                   items: [ 'undo', 'redo', '|','bold', 'italic', '|', 'link', '|', 'numberedList', 'bulletedList' ],
-		          shouldNotGroupWhenFull: true
+    	          shouldNotGroupWhenFull: true
               }
         }
     )
@@ -84,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector('.ckeditor').style.visibility = 'visible';
     })
     .catch(error => console.error(error));;
-  }
+    }
 
   // Select2
     $('.select2').each(function() {

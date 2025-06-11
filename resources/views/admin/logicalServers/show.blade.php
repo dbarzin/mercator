@@ -278,12 +278,9 @@
         {{ trans('global.updated_at') }} {{ $logicalServer->updated_at ? $logicalServer->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
-    <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.logical-servers.index') }}">
+<div class="form-group">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-servers.index') }}">
         {{ trans('global.back_to_list') }}
-        </a>
-    </div>
-    </div>
+    </a>
 </div>
-
 @endsection

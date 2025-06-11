@@ -3,7 +3,7 @@
 @can('task_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.tasks.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.tasks.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
             </a>
         </div>

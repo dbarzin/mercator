@@ -10,7 +10,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.gateway.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
@@ -71,10 +71,10 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.gateways.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.gateways.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

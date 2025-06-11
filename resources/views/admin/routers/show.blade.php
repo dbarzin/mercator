@@ -82,14 +82,10 @@
         {{ trans('global.created_at') }} {{ $router->created_at ? $router->created_at->format(trans('global.timestamp')) : '' }} |
         {{ trans('global.updated_at') }} {{ $router->updated_at ? $router->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
-
 </div>
 <div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.routers.index') }}">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.routers.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 </div>
-
-
-
 @endsection

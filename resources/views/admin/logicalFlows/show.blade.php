@@ -132,7 +132,7 @@
     </div>
 </div>
 
-<a class="btn btn-default" href="{{ route('admin.logical-flows.index') }}">
+<a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-flows.index') }}">
     {{ trans('global.back_to_list') }}
 </a>
 

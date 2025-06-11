@@ -70,7 +70,7 @@
     </div>
 </div>
 <div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.gateways.index') }}">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.gateways.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 </div>

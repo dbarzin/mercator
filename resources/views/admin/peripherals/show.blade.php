@@ -227,7 +227,7 @@
         {{ trans('global.updated_at') }} {{ $peripheral->updated_at ? $peripheral->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
-<a class="btn btn-default" href="{{ route('admin.peripherals.index') }}">
+<a id="btn-cancel" class="btn btn-default" href="{{ route('admin.peripherals.index') }}">
     {{ trans('global.back_to_list') }}
 </a>
 <br><br>

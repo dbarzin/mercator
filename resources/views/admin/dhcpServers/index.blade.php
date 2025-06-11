@@ -3,7 +3,7 @@
 @can('dhcp_server_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.dhcp-servers.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.dhcp-servers.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.dhcpServer.title_singular') }}
             </a>
         </div>
@@ -43,7 +43,7 @@
 
                             </td>
                             <td>
-                                <a href="{{ route('admin.dhcp-servers.show', $dhcpServer->id) }}">                                
+                                <a href="{{ route('admin.dhcp-servers.show', $dhcpServer->id) }}">
                                 {{ $dhcpServer->name ?? '' }}
                             </td>
                             <td>

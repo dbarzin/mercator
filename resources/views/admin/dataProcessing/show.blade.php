@@ -174,10 +174,9 @@
         {{ trans('global.updated_at') }} {{ $dataProcessing->updated_at ? $dataProcessing->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
-    <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.data-processings.index') }}">
-            {{ trans('global.back_to_list') }}
-        </a>
-    </div>
-
+<div class="form-group">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.data-processings.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+</div>
 @endsection

@@ -3,7 +3,7 @@
 @can('gateway_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.gateways.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.gateways.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.gateway.title_singular') }}
             </a>
         </div>
