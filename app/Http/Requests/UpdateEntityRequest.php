@@ -21,7 +21,7 @@ class UpdateEntityRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('entities')
                     ->ignore($this->route('entity')->id ?? $this->id)
