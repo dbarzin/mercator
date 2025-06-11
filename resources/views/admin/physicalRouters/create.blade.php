@@ -7,15 +7,12 @@
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.physicalRouter.title_singular') }}
         </div>
-
         <div class="card-body">
-
             <div class="row">
                 <div class="col-md-6">
-
                     <div class="form-group">
                         <label for="name">{{ trans('cruds.physicalRouter.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required autofocus/>
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}

@@ -3,7 +3,7 @@
 @can('certificate_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.certificates.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.certificates.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.certificate.title_singular') }}
             </a>
         </div>

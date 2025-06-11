@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="form-group">
-    <a class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
 
@@ -10,7 +10,7 @@
     </a>
 
     @can('admin_user_edit')
-        <a class="btn btn-info" href="{{ route('admin.admin-users.edit', $adminUser->id) }}">
+        <a id="btn-cancel" class="btn btn-info" href="{{ route('admin.admin-users.edit', $adminUser->id) }}">
             {{ trans('global.edit') }}
         </a>
     @endcan
@@ -103,7 +103,7 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
     </div>

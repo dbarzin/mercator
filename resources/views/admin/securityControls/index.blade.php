@@ -3,11 +3,11 @@
 @can('security_controls_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.security-controls.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.security-controls.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.securityControl.title_singular') }}
             </a>
         &nbsp;
-            <a class="btn btn-success" href="{{ route('admin.security-controls.assign') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.security-controls.assign') }}">
                 Assigner des Mesures de sécurité
             </a>
         </div>

@@ -6,13 +6,12 @@
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
         </div>
-
         <div class="card-body">
             <div class="form-check">
                 <div class="row">
                     <div class="col-md-4">
                         <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
-                        <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title') }}" required>
+                        <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title') }}" required autofocus/>
                         @if($errors->has('title'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('title') }}
@@ -1699,10 +1698,10 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.roles.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.roles.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

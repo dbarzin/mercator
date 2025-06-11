@@ -7,13 +7,12 @@
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.process.title_singular') }}
         </div>
-
         <div class="card-body">
             <div class="row">
                 <div class="col-md-7">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.process.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" maxlength=64 required>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" maxlength=64 required autofocus/>
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
@@ -281,10 +280,10 @@
     </div>
 
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.processes.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.processes.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

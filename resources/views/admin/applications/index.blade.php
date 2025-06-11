@@ -3,7 +3,7 @@
 @can('m_application_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.applications.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.applications.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.application.title_singular') }}
             </a>
         </div>

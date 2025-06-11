@@ -134,9 +134,9 @@
         {{ trans('global.updated_at') }} {{ $workstation->updated_at ? $workstation->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
-<div class="form-group">
+<div id="btn-cancel" class="form-group">
     <a class="btn btn-default" href="{{ route('admin.workstations.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
-
+</div>
 @endsection

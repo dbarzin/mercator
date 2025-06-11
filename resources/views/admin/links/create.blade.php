@@ -12,7 +12,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.physicalLink.fields.src') }}</label>
-                        <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id">
+                        <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id" autofocus>
                                 <option></option>
                             @foreach($devices as $id => $name)
                                 <option value="{{ $id }}" {{ old('src_id') == $id ? 'selected' : '' }}>{{ $name }}</option>
@@ -71,10 +71,10 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.links.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.links.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

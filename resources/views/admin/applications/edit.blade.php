@@ -15,7 +15,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.application.fields.name') }}</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $application->name) }}" required maxlength="32">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $application->name) }}" required maxlength="32" autofocus/>
                         <span class="help-block">{{ trans('cruds.application.fields.name_helper') }}</span>
                     </div>
                 </div>
@@ -650,10 +650,10 @@
     </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.applications.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.applications.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

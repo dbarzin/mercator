@@ -3,7 +3,7 @@
 @can('data_processing_register_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.data-processings.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.data-processings.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.dataProcessing.title_singular') }}
             </a>
         </div>

@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
-                        <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ old('user_id', '') }}" required>
+                        <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ old('user_id', '') }}" required autofocus/>
                         @if($errors->has('userId'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('userId') }}
@@ -132,10 +132,10 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
+        <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.admin-users.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button class="btn btn-danger" type="submit">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

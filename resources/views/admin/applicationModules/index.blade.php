@@ -3,7 +3,7 @@
 @can('application_module_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.application-modules.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.application-modules.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.applicationModule.title_singular') }}
             </a>
         </div>

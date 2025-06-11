@@ -3,7 +3,7 @@
 @can('admin_user_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.admin-users.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.admin-users.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.adminUser.title_singular') }}
             </a>
         </div>

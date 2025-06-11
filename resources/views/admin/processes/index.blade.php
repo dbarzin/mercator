@@ -3,7 +3,7 @@
 @can('process_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.processes.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.processes.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.process.title_singular') }}
             </a>
         </div>

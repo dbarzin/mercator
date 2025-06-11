@@ -3,7 +3,7 @@
 @can('network_switch_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.network-switches.create') }}">
+            <a id="btn-new" class="btn btn-success" href="{{ route('admin.network-switches.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.networkSwitch.title_singular') }}
             </a>
         </div>
