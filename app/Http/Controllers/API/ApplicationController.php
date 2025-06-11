@@ -9,14 +9,44 @@ use App\Http\Resources\Admin\ApplicationResource;
 use App\MApplication;
 use Gate;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ApplicationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        abort_if(Gate::denies('m_application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $applications = MApplication::all();
+        $applications = QueryBuilder::for(\App\MApplication::query(), $request)
+            ->allowedFilters([
+                'name',
+                'application_block_id',
+                'description',
+                'vendor',
+                'product',
+                'version',
+                'entity_resp_id',
+                'functional_referent',
+                'editor',
+                'technology',
+                'documentation',
+                'type',
+                'users',
+                'responsible',
+                'security_need_c',
+                'security_need_i',
+                'security_need_a',
+                'security_need_t',
+                'security_need_auth',
+                'rto',
+                'rpo',
+                'external',
+                'attributes',
+                'patching_frequency',
+                'install_date',
+                'update_date',
+                'next_update',
+            ])
+            ->get();
 
         return response()->json($applications);
     }
