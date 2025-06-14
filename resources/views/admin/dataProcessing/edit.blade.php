@@ -15,7 +15,7 @@
 
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.dataProcessing.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" maxlength=32 value="{{ old('name', $dataProcessing->name) }}" required autofocus/>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" maxlength=64 value="{{ old('name', $dataProcessing->name) }}" required autofocus/>
                         @if($errors->has('name'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
