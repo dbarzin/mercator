@@ -887,7 +887,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="STOR{{ $storageDevice->id }}">
                                 <th colspan="2">
-                                    <a href="/admin/storageDevices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
+                                    <a href="/admin/storage-devices/{{ $storageDevice->id }}">{{ $storageDevice->name }}</a>
                                 </th>
                             </thead>
                             <tbody>
@@ -952,7 +952,7 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead id="WIFI{{ $wifiTerminal->id }}">
                                 <th colspan="2">
-                                    <a href="/admin/wifiTerminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
+                                    <a href="/admin/wifi-terminals/{{ $wifiTerminal->id }}">{{ $wifiTerminal->name }}</a>
                                 </th>
                             </thead>
                             <tbody>

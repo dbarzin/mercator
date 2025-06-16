@@ -421,6 +421,7 @@ DROP TABLE IF EXISTS `data_processing`;
 CREATE TABLE `data_processing` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `legal_basis` varchar(255) DEFAULT NULL,
   `description` longtext DEFAULT NULL,
   `responsible` longtext DEFAULT NULL,
   `purpose` longtext DEFAULT NULL,
@@ -2229,3 +2230,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (199,'2025_03_17_09
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (200,'2025_03_24_132409_remove_unique_name_deleted_at_indexes',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (201,'2025_03_26_133906_external_nullable',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (204,'2025_04_27_084635_add_icon_to_servers',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (205,'2025_04_27_123200_add_legal_basis',4);
