@@ -74,25 +74,6 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
-                        <label class="recommended" for="applications">{{ trans('cruds.container.fields.applications') }}</label>
-                        <select class="form-control select2 {{ $errors->has('containers') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
-                            @foreach($applications as $id => $applications)
-                                <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $container->applications->contains($id)) ? 'selected' : '' }}>{{ $applications }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('applications'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('applications') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.container.fields.applications_helper') }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm">
-                    <div class="form-group">
                         <label class="recommended" for="logical_servers">{{ trans('cruds.container.fields.logical_servers') }}</label>
                         <select class="form-control select2 {{ $errors->has('logical_servers') ? 'is-invalid' : '' }}" name="logical_servers[]" id="logical_servers" multiple>
                             @foreach($logical_servers as $id => $logical_server)
@@ -109,6 +90,40 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="recommended" for="applications">{{ trans('cruds.container.fields.applications') }}</label>
+                        <select class="form-control select2 {{ $errors->has('applications') ? 'is-invalid' : '' }}" name="applications[]" id="applications" multiple>
+                            @foreach($applications as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('applications', [])) || $container->applications->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('applications'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('applications') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.container.fields.applications_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="recommended" for="databases">{{ trans('cruds.container.fields.databases') }}</label>
+                        <select class="form-control select2 {{ $errors->has('databases') ? 'is-invalid' : '' }}" name="databases[]" id="databases" multiple>
+                            @foreach($databases as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('databases', [])) || $container->databases->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('databases'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('databases') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.container.fields.databases_helper') }}</span>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

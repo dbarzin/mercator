@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
 use App\LogicalServer;
+use App\Database;
 use App\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +33,10 @@ class ContainerController extends Controller
         $icons = Container::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
         $type_list = Container::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
+        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.containers.create', compact('icons', 'type_list', 'logical_servers', 'applications'));
+        return view('admin.containers.create', compact('icons', 'type_list', 'logical_servers', 'applications', 'databases'));
     }
 
     public function store(StoreContainerRequest $request)
@@ -42,6 +44,7 @@ class ContainerController extends Controller
         $container = Container::create($request->all());
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
+        $container->databases()->sync($request->input('databases', []));
 
         // Save icon
         if (($request->files !== null) && $request->file('iconFile') !== null) {
@@ -78,10 +81,11 @@ class ContainerController extends Controller
         $type_list = Container::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
+        $databases = Database::all()->sortBy('name')->pluck('name', 'id');
 
         return view(
             'admin.containers.edit',
-            compact('container', 'icons', 'type_list', 'logical_servers', 'applications')
+            compact('container', 'icons', 'type_list', 'logical_servers', 'applications', 'databases')
         );
     }
 
@@ -113,6 +117,7 @@ class ContainerController extends Controller
         $container->update($request->all());
         $container->applications()->sync($request->input('applications', []));
         $container->logicalServers()->sync($request->input('logical_servers', []));
+        $container->databases()->sync($request->input('databases', []));
 
         return redirect()->route('admin.containers.index');
     }
@@ -121,7 +126,7 @@ class ContainerController extends Controller
     {
         abort_if(Gate::denies('container_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $container->load('applications', 'logicalServers');
+        $container->load('applications', 'logicalServers', 'databases');
 
         return view('admin.containers.show', compact('container'));
     }

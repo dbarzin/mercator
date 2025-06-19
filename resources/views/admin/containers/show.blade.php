@@ -62,26 +62,23 @@
                             @endif
                         </td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.logical_infrastructure.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
                     <tr>
-                        <th>
-                            {{ trans('cruds.container.fields.applications') }}
-                        </th>
-                        <td colspan="3">
-                            @foreach($container->applications as $application)
-                                <a href="{{ route('admin.applications.show', $application->id) }}">
-                                {{ $application->name ?? '' }}
-                                </a>
-                                @if ($container->applications->last()!=$application)
-                                ,
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
+                        <th width='10%'>
                             {{ trans('cruds.container.fields.logical_servers') }}
                         </th>
-                        <td colspan="3">
+                        <td>
                             @foreach($container->logicalServers as $server)
                                 <a href="{{ route('admin.logical-servers.show', $server->id) }}">
                                 {{ $server->name ?? '' }}
@@ -95,6 +92,44 @@
                 </tbody>
             </table>
         </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-header">
+        {{ trans("cruds.menu.application.title_short") }}
+    </div>
+    <!---------------------------------------------------------------------------------------------------->
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                    <tr>
+                        <th width="10%">
+                            {{ trans('cruds.container.fields.applications') }}
+                        </th>
+                        <td width="40%">
+                            @foreach($container->applications as $application)
+                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                {{ $application->name ?? '' }}
+                                </a>
+                                @if ($container->applications->last()!=$application)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                        <th width="10%">
+                            {{ trans('cruds.container.fields.databases') }}
+                        </th>
+                        <td width="40%">
+                            @foreach($container->databases as $database)
+                                <a href="{{ route('admin.databases.show', $database->id) }}">
+                                {{ $database->name ?? '' }}
+                                </a>
+                                @if ($container->databases->last()!=$database)
+                                ,
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
     </div>
     <div class="card-footer">
         {{ trans('global.created_at') }} {{ $container->created_at ? $container->created_at->format(trans('global.timestamp')) : '' }} |

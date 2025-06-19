@@ -43,6 +43,11 @@ class Container extends Model
         return $this->belongsToMany(MApplication::class)->orderBy('name');
     }
 
+    public function databases(): BelongsToMany
+    {
+        return $this->belongsToMany(Database::class)->orderBy('name');
+    }
+
     public function logicalServers(): BelongsToMany
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');

@@ -388,6 +388,8 @@ return [
             'name_helper' => 'Container name',
             'applications' => 'Applications',
             'applications_helper' => 'Application in container',
+            'databases' => 'Databases',
+            'databases_helper' => 'Databases in container',
             'logical_servers' => 'Logical servers',
             'logical_servers_helper' => 'Logical servers on which the container is deployed',
         ],

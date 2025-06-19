@@ -31,7 +31,13 @@
                             {{ trans('cruds.container.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.container.fields.logical_servers') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.container.fields.applications') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.container.fields.databases') }}
                         </th>
                         <th width="10%">
                             &nbsp;
@@ -65,9 +71,29 @@
                                 {{ $container->type ?? '' }}
                             </td>
                             <td>
+                              @foreach($container->logicalServers as $logicalServer)
+                                <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
+                                  {{ $logicalServer->name }}
+                                </a>
+                                  @if(!$loop->last)
+                                  ,
+                                  @endif
+                              @endforeach
+                            </td>
+                            <td>
                               @foreach($container->applications as $application)
                                 <a href="{{ route('admin.applications.show', $application->id) }}">
                                   {{ $application->name }}
+                                </a>
+                                  @if(!$loop->last)
+                                  ,
+                                  @endif
+                              @endforeach
+                            </td>
+                            <td>
+                              @foreach($container->databases as $database)
+                                <a href="{{ route('admin.databases.show', $database->id) }}">
+                                  {{ $database->name }}
                                 </a>
                                   @if(!$loop->last)
                                   ,
