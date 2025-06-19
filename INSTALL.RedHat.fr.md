@@ -130,7 +130,7 @@ Vider la cache
 
 Pour importer la base de données de test (facultatif)
 
-	sudo mysql mercator < mercator_data.sql
+	sudo mysql mercator < data/mercator_data_fr.sql
 
 ## Importer la base de données des CPE
 
