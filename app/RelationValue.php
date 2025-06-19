@@ -13,6 +13,11 @@ class RelationValue extends Model
 {
     use HasFactory;
 
+    // For PostgreSQL
+    protected $primaryKey = null;
+    public $incrementing = false;
+    public $timestamps = false;
+
     public $table = 'relation_values';
 
     public static $searchable = [

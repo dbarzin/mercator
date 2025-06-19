@@ -148,7 +148,7 @@
                     <th>
                         {{ trans('cruds.database.fields.security_need') }}
                     </th>
-                    <td colspan=5>
+                    <td colspan="5">
                     {{ trans('global.confidentiality') }} :
                         @if ($database->security_need_c==0){{ trans('global.none') }}@endif
                         @if ($database->security_need_c==1)<span class="veryLowRisk">{{ trans('global.low') }}</span>@endif
