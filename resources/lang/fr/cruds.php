@@ -422,7 +422,9 @@ return [
             'type' => 'Type de technologie',
             'type_helper' => 'ex: mySQL, Oracle, SQL Server',
             'logical_servers' => 'Serveurs logiques',
-            'logical_servers_helper' =>  'Liste des serveurs logiques qui hébergent la base de données'
+            'logical_servers_helper' =>  'Liste des serveurs logiques qui hébergent la base de données',
+            'containers' => 'Conteneurs',
+            'containers_helper' =>  'Liste des conteneurs qui hébergent la base de données',
         ],
         'title' => 'Bases de données',
         'title_singular' => 'Base de données',

@@ -112,7 +112,7 @@
                     <th>
                         {{ trans('cruds.database.fields.logical_servers') }}
                     </th>
-                    <td colspan=3>
+                    <td colspan="3">
                         @foreach($database->logicalServers as $logicalServer)
                             <a href="{{ route('admin.logical-servers.show', $logicalServer->id) }}">
                                 {{ $logicalServer->name }}
@@ -127,6 +127,21 @@
                     </th>
                     <td>
                         {{ $database->external }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.database.fields.containers') }}
+                    </th>
+                    <td colspan="5">
+                        @foreach($database->containers as $container)
+                            <a href="{{ route('admin.containers.show', $container->id) }}">
+                                {{ $container->name }}
+                            </a>
+                            @if (!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
                     </td>
                 </tr>
                 <tr>
