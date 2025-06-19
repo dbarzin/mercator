@@ -663,12 +663,12 @@
                                     </tr>
                                     <tr>
                                         <th>
-                                            {{ trans('cruds.container.fields.logical_servers') }}
+                                            {{ trans('cruds.container.fields.applications') }}
                                         </th>
                                         <td>
-                                            @foreach($container->logicalServers as $server)
-                                                <a href="{{ route('admin.logical-servers.show', $server->id) }}">
-                                                    {{ $server->name }}
+                                            @foreach($container->applications as $application)
+                                                <a href="{{ route('admin.applications.show', $application->id) }}">
+                                                    {{ $application->name }}
                                                 </a>
                                                 @if(!$loop->last)
                                                 <br>
@@ -678,12 +678,27 @@
                                     </tr>
                                     <tr>
                                         <th>
-                                            {{ trans('cruds.container.fields.applications') }}
+                                            {{ trans('cruds.container.fields.databases') }}
                                         </th>
                                         <td>
-                                            @foreach($container->applications as $application)
-                                                <a href="{{ route('admin.applications.show', $application->id) }}">
-                                                    {{ $application->name }}
+                                            @foreach($container->databases as $database)
+                                                <a href="{{ route('admin.databases.show', $database->id) }}">
+                                                    {{ $database->name }}
+                                                </a>
+                                                @if(!$loop->last)
+                                                <br>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{ trans('cruds.container.fields.logical_servers') }}
+                                        </th>
+                                        <td>
+                                            @foreach($container->logicalServers as $server)
+                                                <a href="{{ route('admin.logical-servers.show', $server->id) }}">
+                                                    {{ $server->name }}
                                                 </a>
                                                 @if(!$loop->last)
                                                 <br>

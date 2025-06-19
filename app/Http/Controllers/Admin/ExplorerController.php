@@ -490,6 +490,12 @@ class ExplorerController extends Controller
             $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('APP_', $join->m_application_id));
         }
 
+        // Container - Databases
+        $joins = DB::table('container_database')->select('container_id', 'database_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('CONT_', $join->container_id), $this->formatId('DATABASE_', $join->database_id));
+        }
+
         // Logical Servers
         $logicalServers = DB::table('logical_servers')->select('id', 'name', 'icon_id', 'address_ip', 'cluster_id', 'domain_id')->get();
         foreach ($logicalServers as $logicalServer) {

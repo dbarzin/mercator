@@ -83,4 +83,10 @@ class Database extends Model
     {
         return $this->belongsToMany(LogicalServer::class)->orderBy('name');
     }
+
+    public function containers(): BelongsToMany
+    {
+        return $this->belongsToMany(Container::class)->orderBy('name');
+    }
+
 }

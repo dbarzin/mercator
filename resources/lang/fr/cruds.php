@@ -388,6 +388,8 @@ return [
             'name_helper' => 'Nom du conteneur',
             'applications' => 'Applications',
             'applications_helper' => 'Application se trouvant dans le conteneur',
+            'databases' => 'Bases de données',
+            'databases_helper' => 'Bases de données se trouvant sur le conteneur',
             'logical_servers' => 'Serveurs logiques',
             'logical_servers_helper' => 'Serveurs logiques sur lesquel le conteneur est déployé',
         ],
