@@ -64,7 +64,7 @@ jobs:
 
       - name: Insert test data
         run: |
-          mysql mercator --host 127.0.0.1 --port 3306 -uroot < mercator_data.sql
+          mysql mercator --host 127.0.0.1 --port 3306 -uroot < data/mercator_data_en.sql
 
 # SKIP Test on GitHub
 #
