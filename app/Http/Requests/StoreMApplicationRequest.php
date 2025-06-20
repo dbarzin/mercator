@@ -34,8 +34,6 @@ class StoreMApplicationRequest extends FormRequest
             'security_need' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
             ],
             'processes.*' => [
                 'integer',
