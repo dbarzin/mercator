@@ -32,8 +32,23 @@ class DataProcessingController extends Controller
         $informations = Information::orderBy('name')->get()->pluck('name', 'id');
         $applications = MApplication::orderBy('name')->get()->pluck('name', 'id');
 
-        $legal_basis_list = DataProcessing::select('legal_basis')->where('legal_basis', '<>', null)->distinct()->orderBy('legal_basis')->pluck('legal_basis');
+        // Get Legal Basis
+        $legal_basis_list = DataProcessing::select('legal_basis')
+            ->whereNotNull('legal_basis')
+            ->distinct()
+            ->orderBy('legal_basis')
+            ->pluck('legal_basis');
+        $res = [];
+        foreach ($legal_basis_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        $legal_basis_list = array_unique($res);
 
+        // Clear documents from session
         session()->put('documents', []);
 
         return view(
@@ -44,6 +59,8 @@ class DataProcessingController extends Controller
 
     public function store(StoreDataProcessingRequest $request)
     {
+        $request->merge(['legal_basis' => implode(', ', $request->legal_bases !== null ? $request->legal_bases : [])]);
+
         $dataProcessing = DataProcessing::create($request->all());
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->informations()->sync($request->input('informations', []));
@@ -64,10 +81,26 @@ class DataProcessingController extends Controller
         $informations = Information::select(['id', 'name'])->orderBy('name')->get();
         $applications = MApplication::select(['id', 'name'])->orderBy('name')->get();
 
-        $legal_basis_list = DataProcessing::select('legal_basis')->where('legal_basis', '<>', null)->distinct()->orderBy('legal_basis')->pluck('legal_basis');
+        // Get Legal Basis
+        $legal_basis_list = DataProcessing::select('legal_basis')
+            ->whereNotNull('legal_basis')
+            ->distinct()
+            ->orderBy('legal_basis')
+            ->pluck('legal_basis');
+        $res = [];
+        foreach ($legal_basis_list as $i) {
+            foreach (explode(',', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        $legal_basis_list = array_unique($res);
 
+        // Load linked tables
         $dataProcessing->load('applications', 'informations', 'processes', 'documents');
 
+        // Get Documents
         $documents = [];
         foreach ($dataProcessing->documents as $doc) {
             array_push($documents, $doc->id);
@@ -82,6 +115,8 @@ class DataProcessingController extends Controller
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
     {
+        $dataProcessing->legal_basis = implode(', ', $request->legal_bases !== null ? $request->legal_bases : []);
+
         $dataProcessing->update($request->all());
         $dataProcessing->processes()->sync($request->input('processes', []));
         $dataProcessing->applications()->sync($request->input('applications', []));

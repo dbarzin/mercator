@@ -24,12 +24,10 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="referent">{{ trans('cruds.dataProcessing.fields.legal_basis') }}</label>
-                        <select class="form-control select2-free {{ $errors->has('legal_basis') ? 'is-invalid' : '' }}" name="legal_basis" id="legal_basis">
-                            @if (!$legal_basis_list->contains(old('legal_basis')))
-                                <option> {{ old('legal_basis') }}</option>'
-                            @endif
-                            @foreach($legal_basis_list as $t)
-                                <option {{ old('legal_basis') == $t ? 'selected' : '' }}>{{$t}}</option>
+                        <select class="form-control select2-free {{ $errors->has('legal_basis') ? 'is-invalid' : '' }}" multiple name="legal_bases[]" id="legal_bases">
+                            <option></option>
+                            @foreach($legal_basis_list as $lb)
+                                <option {{ str_contains(old('legal_bases') ,$lb) ? 'selected' : '' }}>{{$lb}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('legal_basis'))

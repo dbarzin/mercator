@@ -1304,14 +1304,14 @@ class ReportController extends Controller
                 $site = $request->session()->get('site');
             }
 
-            if ($request->building === null) {
-                $request->session()->put('building', null);
-                $building = null;
-            } elseif ($request->building !== null) {
-                $building = intval($request->building);
-                $request->session()->put('building', $building);
+            if ($request->buildings === null) {
+                $request->session()->put('buildings', null);
+                $buildings = null;
+            } elseif ($request->buildings !== null) {
+                $buildings = $request->buildings;
+                $request->session()->put('buildings', $buildings);
             } else {
-                $building = $request->session()->get('building');
+                $buildings = $request->session()->get('buildings');
             }
         }
 
@@ -1322,14 +1322,14 @@ class ReportController extends Controller
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
-
-            if ($building === null) {
-                $buildings = Building::All()->sortBy('name')->where('site_id', '=', $site);
+            if ($buildings === null || (sizeof($buildings)==0)) {
+                $buildings = Building::All()
+                    ->sortBy('name')
+                    ->where('site_id', '=', $site);
             } else {
-                $buildings = Building::All()->sortBy('name')->where('id', '=', $building);
+                $buildings = Building::All()->sortBy('name')->whereIn('id', $buildings);
             }
 
-            // TODO: improve me
             $bays = Bay::All()->sortBy('name')
                 ->filter(function ($item) use ($buildings) {
                     foreach ($buildings as $building) {

@@ -787,6 +787,8 @@ function getFilter(){
 
 // Check edge already present
 function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
+    if ((src==null || dest == null))
+        return false;
     let found = false;
     const edges = graph.getEdges(src);
     edges.forEach(edge => {
@@ -834,9 +836,9 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                 let targetNode = _nodes.get(edge.attachedNodeId);
                 // Node deleted ?
                 if (targetNode != null) {
-                    // Check node already present
+                    // Check node already present and not in the newEdges
                     const vertex = model.getCell(edge.attachedNodeId);
-                    if (vertex==null) {
+                    if ((vertex==null) && !newEdges.some(e => e.attachedNodeId == edge.attachedNodeId)) {
                         // apply filter on nodes
                         if (
                             ((filter.length == 0) || filter.includes(targetNode.vue))
@@ -847,7 +849,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
                         ) {
                             // add it to the new nodes
                             newEdges.push(edge);
-                            // console.log(edge.attachedNodeId);
+                            // console.log("add: "+edge.attachedNodeId);
                             }
                     }
                     else {

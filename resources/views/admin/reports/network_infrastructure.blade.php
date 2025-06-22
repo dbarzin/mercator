@@ -21,8 +21,8 @@
                         <tr>
                             <td>
                                 {{ trans("cruds.site.title_singular") }} :
-                                <select name="site" onchange="this.form.building.value='';this.form.submit()">
-                                    <option value="">-- All sites --</option>
+                                <select name="site" id="site" class="form-control select2">
+                                    <option></option>
                                     @foreach($all_sites as $id => $name)
                                         <option value="{{$id}}" {{ Session::get('site')==$id ? "selected" : "" }}>{{ $name }}</option>
                                     @endforeach
@@ -30,11 +30,10 @@
                             </td>
                             <td>
                                 {{ trans("cruds.building.title_singular") }} :
-                                <select name="building" onchange="this.form.submit()">
-                                    <option value="">-- All buildings --</option>
+                                <select name="buildings[]" id="buildings" class="form-control select2" multiple>
                                     @if ($all_buildings!=null)
                                         @foreach($all_buildings as $id => $name)
-                                            <option value="{{$id}}" {{ Session::get('building')==$id ? "selected" : "" }}>{{ $name }}</option>
+                                            <option value="{{$id}}" {{ (Session::get('buildings')!=null) && in_array($id, Session::get('buildings')) ? "selected" : "" }}>{{ $name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -1073,36 +1072,46 @@ digraph  {
         @endif
     @endforeach
 
-
 }`;
 
-document.addEventListener('DOMContentLoaded', () => {
-d3.select("#graph").graphviz()
-    .addImage("/images/site.png", "64px", "64px")
-    .addImage("/images/building.png", "64px", "64px")
-    .addImage("/images/bay.png", "64px", "64px")
-    .addImage("/images/server.png", "64px", "64px")
-    .addImage("/images/workstation.png", "64px", "64px")
-    @foreach($workstations as $workstation)
-       @if ($workstation->icon_id!==null)
-       .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
-       @endif
-    @endforeach
-    .addImage("/images/storage.png", "64px", "64px")
-    .addImage("/images/peripheral.png", "64px", "64px")
-    @foreach($peripherals as $peripheral)
-       @if ($peripheral->icon_id!==null)
-       .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
-       @endif
-    @endforeach
-    .addImage("/images/phone.png", "64px", "64px")
-    .addImage("/images/switch.png", "64px", "64px")
-    .addImage("/images/router.png", "64px", "64px")
-    .addImage("/images/wifi.png", "64px", "64px")
-    .addImage("/images/security.png", "64px", "64px")
-    .engine('dot')
-    .renderDot(dotSrc);
-});
+document.addEventListener("DOMContentLoaded", function () {
+    $('#site').on('change', function () {
+        if (this.form.building)
+            this.form.building.value = '';
+        this.form.submit();
+    });
+
+    $('#buildings').on('change', function () {
+        this.form.submit();
+    });
+
+    d3.select("#graph").graphviz()
+        .addImage("/images/site.png", "64px", "64px")
+        .addImage("/images/building.png", "64px", "64px")
+        .addImage("/images/bay.png", "64px", "64px")
+        .addImage("/images/server.png", "64px", "64px")
+        .addImage("/images/workstation.png", "64px", "64px")
+        @foreach($workstations as $workstation)
+           @if ($workstation->icon_id!==null)
+           .addImage("{{ route('admin.documents.show', $workstation->icon_id) }}", "64px", "64px")
+           @endif
+        @endforeach
+        .addImage("/images/storage.png", "64px", "64px")
+        .addImage("/images/peripheral.png", "64px", "64px")
+        @foreach($peripherals as $peripheral)
+           @if ($peripheral->icon_id!==null)
+           .addImage("{{ route('admin.documents.show', $peripheral->icon_id) }}", "64px", "64px")
+           @endif
+        @endforeach
+        .addImage("/images/phone.png", "64px", "64px")
+        .addImage("/images/switch.png", "64px", "64px")
+        .addImage("/images/router.png", "64px", "64px")
+        .addImage("/images/wifi.png", "64px", "64px")
+        .addImage("/images/security.png", "64px", "64px")
+        .engine('dot')
+        .renderDot(dotSrc);
+
+    });
 </script>
 @parent
 @endsection

@@ -94,7 +94,11 @@ class MApplicationController extends Controller
         $attributes_list = array_unique($res);
 
         // Get Reponsibles
-        $responsible_list = MApplication::select('responsible')->where('responsible', '<>', null)->distinct()->orderBy('responsible')->pluck('responsible');
+        $responsible_list = MApplication::select('responsible')
+            ->whereNotNull('responsible')
+            ->distinct()
+            ->orderBy('responsible')
+            ->pluck('responsible');
         $res = [];
         foreach ($responsible_list as $i) {
             foreach (explode(',', $i) as $j) {

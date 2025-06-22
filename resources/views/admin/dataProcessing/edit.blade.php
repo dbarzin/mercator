@@ -28,12 +28,9 @@
 
                     <div class="form-group">
                         <label for="name">{{ trans('cruds.dataProcessing.fields.legal_basis') }}</label>
-                        <select class="form-control select2-free {{ $errors->has('legal_basis') ? 'is-invalid' : '' }}" name="legal_basis" id="legal_basis">
-                            @if (!$legal_basis_list->contains(old('legal_basis')))
-                                <option> {{ old('legal_basis') }}</option>'
-                            @endif
-                            @foreach($legal_basis_list as $legal_basis)
-                                <option {{ (old('legal_basis') ? old('legal_basis') : $dataProcessing->legal_basis) == $legal_basis ? 'selected' : '' }}>{{$legal_basis}}</option>
+                        <select class="form-control select2-free {{ $errors->has('responsible') ? 'is-invalid' : '' }}" name="legal_bases[]" id="legal_bases" multiple>
+                            @foreach($legal_basis_list as $lb)
+                            <option {{ str_contains($dataProcessing->legal_basis ,$lb) ? 'selected' : '' }}>{{$lb}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('legal_basis'))
