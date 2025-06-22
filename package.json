@@ -12,7 +12,7 @@
     "cartographie",
     "urbanisation"
   ],
-  "version": "2025.06.20",
+  "version": "2025.06.22",
   "license": "GPL-3.0",
   "author": "Didier Barzin",
   "repository": "https://www.github.com/dbarzin/mercator",
