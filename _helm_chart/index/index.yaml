@@ -22,6 +22,6 @@ entries:
     name: mercator
     type: application
     urls:
-    - https://dbarzin.github.io/mercator/_helm_chart/index/mercator-0.1.0.tgz
+    - https://github.com/dbarzin/mercator/tree/master/_helm_chart/index/mercator-0.1.0.tgz
     version: 0.1.0
 generated: "2024-11-03T13:05:14.9835859+01:00"

@@ -22,6 +22,6 @@ helm package ../chart
 Use the following command to create or update index.yaml. Ensure that you specify the correct URL for your repository:
 
 ```bash
-helm repo index . --url https://dbarzin.github.io/mercator/_helm_chart/index
+helm repo index . --url https://github.com/dbarzin/mercator/tree/master/_helm_chart/index
 ```
 This command will generate or update the index.yaml file in the current directory to include the new chart version metadata.
