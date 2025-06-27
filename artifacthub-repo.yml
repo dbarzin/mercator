@@ -9,7 +9,7 @@
 # when the hash of the last commit in the branch you set up changes. This does
 # NOT apply to ownership claim operations, which are processed immediately.
 #
-repositoryID: https://artifacthub.io/packages/helm/mercator/mercator
-owners: 
+
+owners:
   - name: dbarzin
     email: dbarzin@gmail.com
