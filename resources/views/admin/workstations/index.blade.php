@@ -29,6 +29,15 @@
                             {{ trans('cruds.workstation.fields.type') }}
                         </th>
                         <th>
+                            {{ trans('cruds.workstation.fields.status') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.workstation.fields.serial_number') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.workstation.fields.user') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.workstation.fields.site') }}
                         </th>
                         <th>
@@ -52,6 +61,19 @@
                             </td>
                             <td>
                                 {!! $workstation->type ?? '' !!}
+                            </td>
+                            <td>
+                                {!! $workstation->status ?? '' !!}
+                            </td>
+                            <td>
+                                {!! $workstation->serial_number ?? '' !!}
+                            </td>
+                            <td>
+                                @if ($workstation->user!==null)
+                                    <a href="{{ route('admin.admin-users.show', $workstation->user->id) }}">
+                                        {{ $workstation->user->user_id ?? '' }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @if ($workstation->site!=null)
