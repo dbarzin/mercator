@@ -134,9 +134,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `admin_users` WRITE;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
-INSERT INTO `admin_users` (`id`, `user_id`, `firstname`, `lastname`, `type`, `icon_id`, `description`, `local`, `privileged`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'M01','Marcel','Dupont','Système',NULL,'<p>Administrateur Système</p>',0,0,1,'2025-06-12 11:29:56','2025-06-12 11:30:37',NULL),
-(2,'P02','Paul','Martin','Système',NULL,'<p>Administrateur système</p>',0,0,1,'2025-06-12 11:30:31','2025-06-12 11:30:31',NULL),
-(3,'G03','Gus','Schmidt','Réseau',NULL,'<p>Administrateur réseau</p>',0,0,1,'2025-06-12 11:31:08','2025-06-12 11:31:08',NULL);
+INSERT INTO `admin_users` (`id`, `user_id`, `firstname`, `lastname`, `type`, `attributes`, `icon_id`, `description`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'M01','Marcel','Dupont','Système','',NULL,'<p>Administrateur Système</p>',1,'2025-06-12 11:29:56','2025-06-12 11:30:37',NULL),
+(2,'P02','Paul','Martin','Système','',NULL,'<p>Administrateur système</p>',1,'2025-06-12 11:30:31','2025-06-12 11:30:31',NULL),
+(3,'G03','Gus','Schmidt','Réseau','Local',NULL,'<p>Administrateur réseau</p>',1,'2025-06-12 11:31:08','2025-07-01 05:23:07',NULL),
+(4,'UD34','Ursula','Dender','Réseau','Local Priv',NULL,NULL,1,'2025-07-01 05:34:19','2025-07-01 05:36:33',NULL);
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,6 +292,15 @@ LOCK TABLES `clusters` WRITE;
 /*!40000 ALTER TABLE `clusters` DISABLE KEYS */;
 INSERT INTO `clusters` (`id`, `name`, `type`, `description`, `address_ip`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'CLUSTER01','XZWare','<p>Cluster principal.</p>','10.10.8.2','2025-06-12 11:51:05','2025-06-12 11:51:05',NULL);
 /*!40000 ALTER TABLE `clusters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `container_database`
+--
+
+LOCK TABLES `container_database` WRITE;
+/*!40000 ALTER TABLE `container_database` DISABLE KEYS */;
+/*!40000 ALTER TABLE `container_database` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1592,19 +1602,19 @@ UNLOCK TABLES;
 
 LOCK TABLES `workstations` WRITE;
 /*!40000 ALTER TABLE `workstations` DISABLE KEYS */;
-INSERT INTO `workstations` (`id`, `name`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `icon_id`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`) VALUES (1,'PC034','<p>PC acceuil</p>',NULL,NULL,NULL,'2025-06-14 05:35:44','2025-06-14 08:59:15',NULL,1,1,NULL,'Black',NULL,'Windows','10.10.2.35','i5','4',120),
-(2,'PC035','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:36:26','2025-06-14 08:59:42',NULL,1,3,NULL,'Black',NULL,'Windows','10.10.2.36','i5','4',120),
-(3,'PC037','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:37:02','2025-06-14 09:00:03',NULL,1,4,NULL,'Black',NULL,'Windows','10.10.2.37','i5','4',120),
-(4,'PC038','<p>PC Urgences</p>',NULL,NULL,NULL,'2025-06-14 05:37:37','2025-06-14 09:00:16',NULL,1,5,NULL,'Black',NULL,'Windows','10.10.2.38','i5','4',120),
-(5,'PC040','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:38:30','2025-06-14 09:00:33',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.5','i5','4',120),
-(6,'PC041','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:39:24','2025-06-14 09:00:57',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.6','i5','4',120),
-(7,'PC043','<p>PC Pharmacie</p>',NULL,NULL,NULL,'2025-06-14 05:40:04','2025-06-14 09:04:09',NULL,1,7,NULL,'Black',NULL,'Windows','10.10.8.7','i5','4',120),
-(8,'PC044','<p>PC RX</p>',NULL,NULL,NULL,'2025-06-14 05:40:43','2025-06-14 09:01:37',NULL,1,8,NULL,'Black',NULL,'Windows','10.10.2.40','i5','4',120),
-(9,'PC045','<p>PC Mediacal</p>',NULL,NULL,NULL,'2025-06-14 05:41:48','2025-06-14 09:02:06',NULL,1,9,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120),
-(10,'PC046','<p>PC Medical</p>',NULL,NULL,NULL,'2025-06-14 05:42:30','2025-06-14 09:01:55',NULL,1,10,NULL,'Black',NULL,'Windows','10.10.2.41','i5','4',120),
-(11,'PC047','<p>PC Admin</p>',NULL,NULL,NULL,'2025-06-14 05:43:16','2025-06-14 09:02:17',NULL,1,11,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120),
-(12,'PC050','<p>PC Dir</p>',NULL,NULL,NULL,'2025-06-14 05:44:20','2025-06-14 09:11:48',NULL,1,14,NULL,'Banana',NULL,'Windows','10.10.2.45','M4','8',120),
-(13,'PC049','<p>PC Technical</p>',NULL,NULL,NULL,'2025-06-14 05:45:51','2025-06-14 09:11:19',NULL,1,13,NULL,'Black',NULL,'Windows','10.10.5.12','i5','4',120);
+INSERT INTO `workstations` (`id`, `entity_id`, `name`, `description`, `vendor`, `product`, `version`, `created_at`, `updated_at`, `deleted_at`, `site_id`, `building_id`, `physical_switch_id`, `type`, `icon_id`, `operating_system`, `address_ip`, `cpu`, `memory`, `disk`, `user_id`, `other_user`, `status`, `manufacturer`, `model`, `serial_number`, `last_inventory_date`, `warranty_end_date`, `domain_id`, `warranty`, `warranty_start_date`, `warranty_period`, `agent_version`, `update_source`, `network_id`, `network_port_type`, `mac_address`, `purchase_date`, `fin_value`) VALUES (1,NULL,'PC034','<p>PC acceuil</p>',NULL,NULL,NULL,'2025-06-14 05:35:44','2025-06-14 08:59:15',NULL,1,1,NULL,'Black',NULL,'Windows','10.10.2.35','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,'PC035','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:36:26','2025-06-14 08:59:42',NULL,1,3,NULL,'Black',NULL,'Windows','10.10.2.36','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,'PC037','<p>PC Consultation</p>',NULL,NULL,NULL,'2025-06-14 05:37:02','2025-06-14 09:00:03',NULL,1,4,NULL,'Black',NULL,'Windows','10.10.2.37','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,'PC038','<p>PC Urgences</p>',NULL,NULL,NULL,'2025-06-14 05:37:37','2025-06-14 09:00:16',NULL,1,5,NULL,'Black',NULL,'Windows','10.10.2.38','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,'PC040','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:38:30','2025-06-14 09:00:33',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.5','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,'PC041','<p>PC Labo</p>',NULL,NULL,NULL,'2025-06-14 05:39:24','2025-06-14 09:00:57',NULL,1,6,NULL,'Black',NULL,'Windows','10.10.8.6','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,'PC043','<p>PC Pharmacie</p>',NULL,NULL,NULL,'2025-06-14 05:40:04','2025-06-14 09:04:09',NULL,1,7,NULL,'Black',NULL,'Windows','10.10.8.7','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,'PC044','<p>PC RX</p>',NULL,NULL,NULL,'2025-06-14 05:40:43','2025-06-14 09:01:37',NULL,1,8,NULL,'Black',NULL,'Windows','10.10.2.40','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,'PC045','<p>PC Mediacal</p>',NULL,NULL,NULL,'2025-06-14 05:41:48','2025-06-14 09:02:06',NULL,1,9,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,'PC046','<p>PC Medical</p>',NULL,NULL,NULL,'2025-06-14 05:42:30','2025-06-14 09:01:55',NULL,1,10,NULL,'Black',NULL,'Windows','10.10.2.41','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,'PC047','<p>PC Admin</p>',NULL,NULL,NULL,'2025-06-14 05:43:16','2025-06-14 09:02:17',NULL,1,11,NULL,'Black',NULL,'Windows','10.10.2.43','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,'PC050','<p>PC Dir</p>',NULL,NULL,NULL,'2025-06-14 05:44:20','2025-06-14 09:11:48',NULL,1,14,NULL,'Banana',NULL,'Windows','10.10.2.45','M4','8',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,'PC049','<p>PC Technical</p>',NULL,NULL,NULL,'2025-06-14 05:45:51','2025-06-14 09:11:19',NULL,1,13,NULL,'Black',NULL,'Windows','10.10.5.12','i5','4',120,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `workstations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1626,4 +1636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-18 14:11:18
+-- Dump completed on 2025-07-01  7:37:34
