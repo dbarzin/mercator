@@ -40,7 +40,7 @@ return [
         'title_singular' => "Vue de l'administration",
     ],
     'adminUser' => [
-        'description' => 'Utilisateurs disposant de droits d\'administration.',
+        'description' => "Utilisateurs connecté au système d'information.",
         'fields' => [
             'user_id' => 'User ID',
             'user_id_helper' => '',
@@ -48,19 +48,17 @@ return [
             'firstname_helper' => '',
             'lastname' => 'Nom',
             'lastname_helper' => '',
-            'type' => 'Type',
-            'type_helper' => 'Type d\'administrateur',
+            'type' => "Type d'utilisateur",
+            'type_helper' => "ex: support, direction, compta, external, domain-admin...",
+            'attributes' => 'Attributs',
+            'attributes_helper' => "ex: Local, Admin, Privilégié...",
             'description' => 'Description',
             'description_helper' => '',
             'domain' => 'Domaine',
-            'domain_helper' => 'Domaine dans lequel l\'administrateur est défini',
-            'local' => 'Local',
-            'local_helper' => '',
-            'privileged' => 'Privilégié',
-            'privileged_helper' => '',
+            'domain_helper' => "Domaine dans lequel l'utilisateur est défini",
         ],
-        'title' => 'Administrateurs',
-        'title_singular' => 'Administrateurs',
+        'title' => 'Utilisateurs',
+        'title_singular' => 'Utilisateurs',
     ],
     'annuaire' => [
         'description' => 'Applicatif regroupant les données sur les utilisateurs ou équipements informatiques de l’entreprise et permettant leur administration.',
@@ -1479,27 +1477,72 @@ return [
         'description' => 'Machine physique permettant à un utilisateur d’accéder au système d’information.',
         'fields' => [
             'name' => 'Nom',
-            'name_helper' => '',
-            'description' => 'Description',
-            'description_helper' => '',
+            'name_helper' => 'Nom du poste de travail',
             'type' => 'Type',
             'type_helper' => 'Type de poste de travail',
+            'status' => 'Status',
+            'status_helper' => 'Etat du poste de travail (ex : Reçu, Assigné, Réparation, Stock...)',
+
+            'description' => 'Description',
+            'description_helper' => '',
+
+            // Ownership
+            'entity' => 'Entité',
+            'entity_helper' => 'Entité utilisatrice du poste de travail',
+            'domain' => 'Domaine',
+            'domain_helper' => "Domaine d'identification de l'utilisateur",
+            'user' => 'Utilisateur',
+            'user_helper' => 'Utilisateur du domaine',
+            'other_user' => 'Autre utilisateur',
+            'other_user_helper' => "Utilisateur non identifié dans le domaine",
+
+            // Frabricant / Model
+            'manufacturer' => 'Fabricant',
+            'manufacturer_helper' => 'Fabricant du poste de travail',
+            'model' => 'Modèle',
+            'model_helper' => 'Modèle du poste de travail',
+            'serial_number' => 'Numéro de série',
+            'serial_number_helper' => 'Numéro de série du poste de travail',
             'cpu' => 'CPU',
             'cpu_helper' => 'Modèle de CPU',
             'disk' => 'Disque',
             'disk_helper' => 'Espace disque (GB)',
             'memory' => 'Mémoire',
             'memory_helper' => 'Quantité de mémoire allouée (GB)',
-            'operating_system' => 'Système d\'exploitation',
+            'operating_system' => "Système d'exploitation",
             'operating_system_helper' => "Nom et version de l'OS",
             'applications' => 'Applications',
             'applications_helper' => 'Applications installées',
+
+            // Réseau
+            'network' => "Réseau",
+            'network_helper' => "Réseau dans lequel se trouve le poste de travail",
             'address_ip' => 'Adresse(s) IP',
             'address_ip_helper' => 'Filtre : (IPv4|IPv6),...',
+            'mac_address' => "Adresse MAC",
+            'mac_address_helper' => 'Filtre : XX-XX-XX-XX-XX-XX',
+            'network_port_type' => "Type de port réseau",
+            'network_port_type_helper' => "ex: RJ45, USB, SFP..",
+
+            /* Warranty
+            'warranty' => "Garantie",
+            'purchase_date' => "Date d'achat",
+            'fin_value' => "Value fiancière",
+            'warranty_start_date' => "Date de début",
+            'warranty_end_date' => "Date de fin",
+            'warranty_period' => "Période de garantie",
+            */
+            // Localisation
             'site' => 'Site',
             'site_helper' => 'Site sur lequel se trouve le poste de travail',
             'building' => 'Bâtiment / Salle',
             'building_helper' => 'Bâtiment / Salle dans lequel se trouve la station de travail',
+
+            // Inventory
+            'last_inventory_date' => "Date de dernière inventaire",
+            'update_source' => "Source de la mise à jour",
+            'agent_version' => "Version de l'agent"
+
        ],
         'title' => 'Postes de travail',
         'title_singular' => 'Poste de travail',

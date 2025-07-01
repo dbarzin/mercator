@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: mercator
@@ -134,9 +134,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `admin_users` WRITE;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
-INSERT INTO `admin_users` (`id`, `user_id`, `firstname`, `lastname`, `type`, `icon_id`, `description`, `local`, `privileged`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES (1,'M01','Marcel','Dupont','System',NULL,'<p> System administrator </p>',0,0,1,'2025-06-12 11:29:56','2025-06-12 11:30:37',NULL),
-(2,'P02','Paul','Martin','System',NULL,'<p> System administrator </p>',0,0,1,'2025-06-12 11:30:31','2025-06-12 11:30:31',NULL),
-(3,'G03','Gus','Schmidt','Network',NULL,'<p> Network administrator </p>',0,0,1,'2025-06-12 11:31:08','2025-06-12 11:31:08',NULL);
+INSERT INTO `admin_users` (`id`, `user_id`, `firstname`, `lastname`, `type`, `attributes`, `icon_id`, `description`, `domain_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1,'M01','Marcel','Dupont','System','',NULL,'<p>Administrateur Système</p>',1,'2025-06-12 11:29:56','2025-06-12 11:30:37',NULL),
+(2,'P02','Paul','Martin','System','',NULL,'<p>Administrateur système</p>',1,'2025-06-12 11:30:31','2025-06-12 11:30:31',NULL),
+(3,'G03','Gus','Schmidt','Network','Local',NULL,'<p>Administrateur réseau</p>',1,'2025-06-12 11:31:08','2025-07-01 05:23:07',NULL),
+(4,'UD34','Ursula','Dender','Network','Local Priv',NULL,NULL,1,'2025-07-01 05:34:19','2025-07-01 05:36:33',NULL);
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 UNLOCK TABLES;
 

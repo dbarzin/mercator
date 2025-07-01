@@ -21,7 +21,7 @@ class UpdateMacroProcessusRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('macro_processuses')
                     ->ignore($this->route('macro_processus')->id ?? $this->id)

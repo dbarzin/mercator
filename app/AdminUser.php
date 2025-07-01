@@ -33,13 +33,12 @@ class AdminUser extends Model
 
     protected $fillable = [
         'user_id',
+        'type',
+        'attributes',
         'firstname',
         'lastname',
-        'type',
-        'description',
         'domain_id',
-        'local',
-        'privileged',
+        'description',
         'created_at',
         'updated_at',
         'deleted_at',

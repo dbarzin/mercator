@@ -56,10 +56,19 @@
                     </tr>
                     <tr>
                         <th>
-                            <dt>{{ trans('cruds.adminUser.fields.description') }}</dt>
+                            {{ trans('cruds.adminUser.fields.type') }}
                         </th>
-                        <td colspan="3">
-                            {!! $adminUser->description !!}
+                        <td>
+                            {{ $adminUser->type }}
+                        </td>
+                        <th>
+                            {{ trans('cruds.adminUser.fields.attributes') }}
+                        </th>
+                        <td>
+                            @php
+                            foreach(explode(" ",$adminUser->attributes) as $a)
+                                echo "<div class='badge badge-info'>$a</div> ";
+                            @endphp
                         </td>
                     </tr>
                     <tr>
@@ -73,25 +82,13 @@
                                 </a>
                             @endif
                         </td>
-                        <th>
-                            {{ trans('cruds.adminUser.fields.type') }}
-                        </th>
-                        <td>
-                            {{ $adminUser->type }}
-                        </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.adminUser.fields.local') }}
+                            <dt>{{ trans('cruds.adminUser.fields.description') }}</dt>
                         </th>
-                        <td>
-                            {{ $adminUser->local }}
-                        </td>
-                        <th>
-                            {{ trans('cruds.adminUser.fields.privileged') }}
-                        </th>
-                        <td>
-                            {{ $adminUser->privileged }}
+                        <td colspan="3">
+                            {!! $adminUser->description !!}
                         </td>
                     </tr>
                 </tbody>

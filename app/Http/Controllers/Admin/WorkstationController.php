@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Building;
+use App\Entity;
+use App\DomaineAd;
+use App\AdminUser;
 use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
@@ -14,6 +17,7 @@ use App\Workstation;
 use Gate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class WorkstationController extends Controller
 {
@@ -30,8 +34,12 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Select icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -43,6 +51,24 @@ class WorkstationController extends Controller
             ->distinct()
             ->orderBy('type')
             ->pluck('type');
+        $status_list = Workstation::select('status')
+            ->where('status', '<>', null)
+            ->distinct()
+            ->orderBy('status')
+            ->pluck('status');
+
+        // Configuration
+        $manufacturer_list = Workstation::select('manufacturer')
+            ->where('manufacturer', '<>', null)
+            ->distinct()
+            ->orderBy('manufacturer')
+            ->pluck('manufacturer');
+        $model_list = Workstation::select('model')
+            ->where('model', '<>', null)
+            ->distinct()
+            ->orderBy('model')
+            ->pluck('model');
+
         $operating_system_list = Workstation::select('operating_system')
             ->where('operating_system', '<>', null)
             ->distinct()
@@ -54,6 +80,12 @@ class WorkstationController extends Controller
             ->orderBy('cpu')
             ->pluck('cpu');
 
+        $network_port_type_list = Workstation::select('network_port_type')
+            ->where('network_port_type', '<>', null)
+            ->distinct()
+            ->orderBy('network_port_type')
+            ->pluck('network_port_type');
+
         return view(
             'admin.workstations.create',
             compact(
@@ -61,9 +93,17 @@ class WorkstationController extends Controller
                 'buildings',
                 'icons',
                 'type_list',
+                'status_list',
+                'manufacturer_list',
+                'model_list',
                 'operating_system_list',
                 'cpu_list',
-                'application_list'
+                'application_list',
+                'entities',
+                'domains',
+                'users',
+                'networks',
+                'network_port_type_list'
             )
         );
     }
@@ -72,8 +112,12 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -85,6 +129,24 @@ class WorkstationController extends Controller
             ->distinct()
             ->orderBy('type')
             ->pluck('type');
+        $status_list = Workstation::select('status')
+            ->where('status', '<>', null)
+            ->distinct()
+            ->orderBy('status')
+            ->pluck('status');
+
+        // Configuration
+        $manufacturer_list = Workstation::select('manufacturer')
+            ->where('manufacturer', '<>', null)
+            ->distinct()
+            ->orderBy('manufacturer')
+            ->pluck('manufacturer');
+        $model_list = Workstation::select('model')
+            ->where('model', '<>', null)
+            ->distinct()
+            ->orderBy('model')
+            ->pluck('model');
+
         $operating_system_list = Workstation::select('operating_system')
             ->where('operating_system', '<>', null)
             ->distinct()
@@ -95,6 +157,12 @@ class WorkstationController extends Controller
             ->distinct()
             ->orderBy('cpu')
             ->pluck('cpu');
+
+        $network_port_type_list = Workstation::select('network_port_type')
+            ->where('network_port_type', '<>', null)
+            ->distinct()
+            ->orderBy('network_port_type')
+            ->pluck('network_port_type');
 
         // Get Workstation
         $workstation = Workstation::find($request->id);
@@ -112,9 +180,17 @@ class WorkstationController extends Controller
                 'buildings',
                 'icons',
                 'type_list',
+                'status_list',
+                'manufacturer_list',
+                'model_list',
                 'operating_system_list',
                 'cpu_list',
-                'application_list'
+                'application_list',
+                'entities',
+                'domains',
+                'users',
+                'networks',
+                'network_port_type_list'
             )
         );
     }
@@ -157,9 +233,17 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = Site::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+
+        $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
         $application_list = MApplication::orderBy('name')->pluck('name', 'id');
 
@@ -168,6 +252,24 @@ class WorkstationController extends Controller
             ->distinct()
             ->orderBy('type')
             ->pluck('type');
+        $status_list = Workstation::select('status')
+            ->where('status', '<>', null)
+            ->distinct()
+            ->orderBy('status')
+            ->pluck('status');
+
+        // Configuration
+        $manufacturer_list = Workstation::select('manufacturer')
+            ->where('manufacturer', '<>', null)
+            ->distinct()
+            ->orderBy('manufacturer')
+            ->pluck('manufacturer');
+        $model_list = Workstation::select('model')
+            ->where('model', '<>', null)
+            ->distinct()
+            ->orderBy('model')
+            ->pluck('model');
+
         $operating_system_list = Workstation::select('operating_system')
             ->where('operating_system', '<>', null)
             ->distinct()
@@ -179,19 +281,33 @@ class WorkstationController extends Controller
             ->orderBy('cpu')
             ->pluck('cpu');
 
+        $network_port_type_list = Workstation::select('network_port_type')
+            ->where('network_port_type', '<>', null)
+            ->distinct()
+            ->orderBy('network_port_type')
+            ->pluck('network_port_type');
+
         $workstation->load('site', 'building');
 
         return view(
             'admin.workstations.edit',
             compact(
+                'workstation',
                 'sites',
                 'buildings',
                 'icons',
-                'workstation',
                 'type_list',
+                'status_list',
+                'manufacturer_list',
+                'model_list',
                 'operating_system_list',
                 'cpu_list',
-                'application_list'
+                'application_list',
+                'entities',
+                'domains',
+                'users',
+                'networks',
+                'network_port_type_list'
             )
         );
     }
