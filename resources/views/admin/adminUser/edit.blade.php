@@ -10,7 +10,8 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4">
+
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="required" for="userId">{{ trans('cruds.adminUser.fields.user_id') }}</label>
                         <input class="form-control {{ $errors->has('userId') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ old('user_id', $adminUser->user_id) }}" required autofocus/>
@@ -22,10 +23,11 @@
                         <span class="help-block">{{ trans('cruds.adminUser.fields.user_id_helper') }}</span>
                     </div>
                 </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="contact">{{ trans('cruds.adminUser.fields.firstname') }}</label>
                         <input class="form-control {{ $errors->has('firstname') ? 'is-invalid' : '' }}" type="text" name="firstname" id="firstname" value="{{ old('firstname', $adminUser->firstname) }}">
@@ -38,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="contact">{{ trans('cruds.adminUser.fields.lastname') }}</label>
                         <input class="form-control {{ $errors->has('lastname') ? 'is-invalid' : '' }}" type="text" name="lastname" id="lastname" value="{{ old('lastname', $adminUser->lastname) }}">
@@ -53,40 +55,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                <div class="form-group">
-                    <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
-                    <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $adminUser->description) !!}</textarea>
-                    @if($errors->has('description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
-                    </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.adminUser.fields.description_helper') }}</span>
-                </div>
-            </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="domain">{{ trans('cruds.adminUser.fields.domain') }}</label>
-                        <select class="form-control select2 {{ $errors->has('domain_id') ? 'is-invalid' : '' }}" name="domain_id" id="domain">
-                            <option></option>
-                            @foreach($domains as $id => $name)
-                            <option value="{{ $id }}" {{ old('domain_id', $adminUser->domain_id) == $id ? 'selected' : '' }}>{{ $name }}</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('domain_id'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('domain_id') }}
-                        </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.adminUser.fields.domain_helper') }}</span>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="type">{{ trans('cruds.adminUser.fields.type') }}</label>
                         <select class="form-control select2-free {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
@@ -103,31 +72,63 @@
                         <span class="help-block">{{ trans('cruds.adminUser.fields.type_helper') }}</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <div>
-                            <input type="checkbox" {{ old('local', $adminUser->local) ? 'checked' : '' }} id="local" name="local">
-                            <label for="name">{{ trans('cruds.adminUser.fields.local') }}</label>
-                        </div>
-                        <span class="help-block">{{ trans('cruds.adminUser.fields.local_helper') }}</span>
+                        <label for="attributes">{{ trans('cruds.adminUser.fields.attributes') }}</label>
+                        <select class="form-control select2-free {{ $errors->has('patching_group') ? 'is-invalid' : '' }}" name="attributes[]" id="attributes" multiple>
+                            @foreach($attributes_list as $a)
+                                <option {{ ( (old('attributes')!=null) && in_array($a,old('attributes'))) || in_array($a, explode(' ',$adminUser->attributes)) ? 'selected' : '' }}>{{$a}}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('attributes'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('attributes') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.adminUser.fields.attributes_helper') }}</span>
                     </div>
                 </div>
             </div>
 
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="form-group">
-                        <div>
-                            <input type="checkbox" {{ old('privileged', $adminUser->privileged) ? 'checked' : '' }} id="privileged" name="privileged">
-                            <label for="name">{{ trans('cruds.adminUser.fields.privileged') }}</label>
+                        <label for="domain">{{ trans('cruds.adminUser.fields.domain') }}</label>
+                        <select class="form-control select2 {{ $errors->has('domain_id') ? 'is-invalid' : '' }}" name="domain_id" id="domain">
+                            <option></option>
+                            @foreach($domains as $id => $name)
+                            <option value="{{ $id }}" {{ old('domain_id', $adminUser->domain_id) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('domain_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('domain_id') }}
                         </div>
-                        <span class="help-block">{{ trans('cruds.adminUser.fields.privileged_helper') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.adminUser.fields.domain_helper') }}</span>
                     </div>
                 </div>
             </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="recommended" for="description">{{ trans('cruds.application.fields.description') }}</label>
+                        <textarea class="form-control ckeditor {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{!! old('description', $adminUser->description) !!}</textarea>
+                        @if($errors->has('description'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('description') }}
+                        </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.adminUser.fields.description_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
     <div class="form-group">

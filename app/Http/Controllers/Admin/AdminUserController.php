@@ -29,13 +29,28 @@ class AdminUserController extends Controller
         $type_list = AdminUser::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.adminUser.create', compact('domains', 'type_list'));
+        // Get Attributes
+        $attributes_list = AdminUser::select('attributes')
+            ->whereNotNull('attributes')
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        $attributes_list = array_unique($res);
+
+        return view('admin.adminUser.create', compact('domains', 'type_list', 'attributes_list'));
     }
 
     public function store(StoreAdminUserRequest $request)
     {
-        $request['local'] = $request->has('local');
-        $request['privileged'] = $request->has('privileged');
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $adminUser = AdminUser::create($request->all());
 
         return redirect()->route('admin.admin-users.index');
@@ -48,16 +63,31 @@ class AdminUserController extends Controller
         $type_list = AdminUser::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
         $domains = DomaineAd::all()->sortBy('name')->pluck('name', 'id');
 
+        // Get Attributes
+        $attributes_list = AdminUser::select('attributes')
+            ->whereNotNull('attributes')
+            ->distinct()
+            ->pluck('attributes');
+        $res = [];
+        foreach ($attributes_list as $i) {
+            foreach (explode(' ', $i) as $j) {
+                if (strlen(trim($j)) > 0) {
+                    $res[] = trim($j);
+                }
+            }
+        }
+        sort($res);
+        $attributes_list = array_unique($res);
+
         return view(
             'admin.adminUser.edit',
-            compact('type_list', 'domains', 'adminUser'),
+            compact('type_list', 'domains', 'adminUser', 'attributes_list'),
         );
     }
 
     public function update(UpdateAdminUserRequest $request, AdminUser $adminUser)
     {
-        $request['local'] = $request->has('local');
-        $request['privileged'] = $request->has('privileged');
+        $request['attributes'] = implode(' ', $request->get('attributes') !== null ? $request->get('attributes') : []);
         $adminUser->update($request->all());
 
         return redirect()->route('admin.admin-users.index');

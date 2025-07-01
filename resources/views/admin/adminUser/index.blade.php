@@ -38,7 +38,7 @@
                             {{ trans('cruds.adminUser.fields.type') }}
                         </th>
                         <th>
-                            {{ trans('cruds.adminUser.fields.description') }}
+                            {{ trans('cruds.adminUser.fields.attributes') }}
                         </th>
                         <th>
                             &nbsp;
@@ -70,7 +70,10 @@
                                 {{ $user->type ?? '' }}
                             </td>
                             <td>
-                                {!! $user->description !!}
+                                @php
+                                foreach(explode(" ",$user->attributes) as $a)
+                                    echo "<div class='badge badge-info'>$a</div> ";
+                                @endphp
                             </td>
                             <td nowrap>
                                 @can('admin_user_show')
