@@ -85,7 +85,6 @@
                     <td>
                         {{ $application->responsible }}
                     </td>
-                @if (auth()->user()->granularity>=2)
                     <th width="10%">
                         {{ trans('cruds.application.fields.entity_resp') }}
                     </th>
@@ -96,7 +95,6 @@
                         </a>
                         @endif
                     </td>
-                @endif
                 <th width="10%">
                     {{ trans('cruds.application.fields.entities') }}
                 </th>
@@ -122,14 +120,12 @@
                 <td width="15%">
                     {{ $application->editor }}
                 </td>
-                @if (auth()->user()->granularity>=2)
                 <th width="10%">
                     <dt>{{ trans('cruds.application.fields.users') }}</dt>
                 </th>
                 <td width="15%">
                     {{ $application->users }}
                 </td>
-                @endif
             </tr>
             <tr>
                 <th>
@@ -194,7 +190,6 @@
                         </button>
                     </td>
                 </tr>
-                @if (auth()->user()->granularity>=2)
                 <tr>
                     <th>
                         <dt>{{ trans('cruds.application.fields.documentation') }}</dt>
@@ -207,7 +202,6 @@
                         @endif
                     </td>
                 </tr>
-                @endif
                 <tr>
                     <th>
                         <dt>{{ trans('cruds.application.fields.databases') }}</dt>
@@ -220,7 +214,6 @@
                             @endif
                         @endforeach
                     </td>
-                    @if (auth()->user()->granularity>=2)
                     <th>
                         <dt>{{ trans('cruds.application.fields.services') }}</dt>
                     </th>
@@ -232,7 +225,6 @@
                             @endif
                         @endforeach
                     </td>
-                @endif
             </tbody>
         </table>
     </div>
