@@ -31,7 +31,7 @@ jobs:
           charts_dir: _helm_chart
           skip_existing: true
           mark_as_latest: false
-          config: .github/workflows/chart-release-config.yaml
+          config: _helm_chart/chart-release-config.yaml
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           
