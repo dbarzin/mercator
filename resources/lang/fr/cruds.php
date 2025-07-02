@@ -1199,6 +1199,7 @@ return [
             'administration' => 'Administration',
             'applications' => 'Applications',
             'ecosystem' => 'Écosystème',
+            'gdpr' => 'RGPD',
             'granularity' => 'Granularité',
             'granularity_helper' => 'Niveau de granularité du rapport',
             'information_system' => "Système d'information",

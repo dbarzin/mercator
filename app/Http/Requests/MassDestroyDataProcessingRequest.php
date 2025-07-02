@@ -10,7 +10,7 @@ class MassDestroyDataProcessingRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('data_processing_register_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

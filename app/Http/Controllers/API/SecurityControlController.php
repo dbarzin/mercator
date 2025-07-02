@@ -15,7 +15,7 @@ class SecurityControlController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('security_controls_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $securityControls = SecurityControl::all();
 
         return response()->json($securityControls);
@@ -23,7 +23,7 @@ class SecurityControlController extends Controller
 
     public function store(StoreSecurityControlRequest $request)
     {
-        abort_if(Gate::denies('security_controls_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityControl = SecurityControl::create($request->all());
 
@@ -32,14 +32,14 @@ class SecurityControlController extends Controller
 
     public function show(SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new SecurityControlResource($securityControl);
     }
 
     public function update(UpdateSecurityControlRequest $request, SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityControl->update($request->all());
 
@@ -48,7 +48,7 @@ class SecurityControlController extends Controller
 
     public function destroy(SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityControl->delete();
 
@@ -57,7 +57,7 @@ class SecurityControlController extends Controller
 
     public function massDestroy(MassDestroySecurityControlRequest $request)
     {
-        abort_if(Gate::denies('security_controls_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         SecurityControl::whereIn('id', request('ids'))->delete();
 

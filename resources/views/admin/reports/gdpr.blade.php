@@ -51,7 +51,7 @@
         </div>
         <br>
 
-        @can('data_processing_register_access')
+        @can('data_processing_access')
 
         <div class="card">
             <div class="card-header">

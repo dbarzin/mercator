@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('security_controls_create')
+@can('security_control_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a id="btn-new" class="btn btn-success" href="{{ route('admin.security-controls.create') }}">
@@ -51,19 +51,19 @@
                                 {!! $control->description ?? '' !!}
                             </td>
                             <td nowrap>
-                                @can('security_controls_show')
+                                @can('security_control_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.security-controls.show', $control->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('security_controls_edit')
+                                @can('security_control_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.security-controls.edit', $control->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('security_controls_delete')
+                                @can('security_control_delete')
                                     <form action="{{ route('admin.security-controls.destroy', $control->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -88,7 +88,7 @@
     'id' => '#dataTable',
     'title' => trans("cruds.securityControl.title_singular"),
     'URL' => route('admin.security-controls.massDestroy'),
-    'canDelete' => auth()->user()->can('data_processing_register_delete') ? true : false
+    'canDelete' => auth()->user()->can('security_control_delete') ? true : false
 ));
 </script>
 @endsection

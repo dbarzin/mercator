@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('data_processing_register_create')
+@can('data_processing_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a id="btn-new" class="btn btn-success" href="{{ route('admin.data-processings.create') }}">
@@ -93,19 +93,19 @@
                                 @endforeach
                             </td>
                             <td nowrap>
-                                @can('data_processing_register_show')
+                                @can('data_processing_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.data-processings.show', $processing->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('data_processing_register_edit')
+                                @can('data_processing_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.data-processings.edit', $processing->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('data_processing_register_delete')
+                                @can('data_processing_delete')
                                     <form action="{{ route('admin.data-processings.destroy', $processing->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -131,7 +131,7 @@
     'id' => '#dataTable',
     'title' => trans("cruds.dataProcessing.title_singular"),
     'URL' => route('admin.data-processings.massDestroy'),
-    'canDelete' => auth()->user()->can('data_processing_register_delete') ? true : false
+    'canDelete' => auth()->user()->can('data_processing_delete') ? true : false
 ));
 </script>
 @endsection

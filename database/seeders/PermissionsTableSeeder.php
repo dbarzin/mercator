@@ -16,7 +16,7 @@ class PermissionsTableSeeder extends Seeder
     {
 
         \DB::table('permissions')->delete();
-        
+
         \DB::table('permissions')->insert(array (
             0 =>
             array (
@@ -1896,70 +1896,70 @@ class PermissionsTableSeeder extends Seeder
             ),
             268 =>
             array (
-                'title' => 'security_controls_create',
+                'title' => 'security_control_create',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             269 =>
             array (
-                'title' => 'security_controls_edit',
+                'title' => 'security_control_edit',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             270 =>
             array (
-                'title' => 'security_controls_show',
+                'title' => 'security_control_show',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             271 =>
             array (
-                'title' => 'security_controls_delete',
+                'title' => 'security_control_delete',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             272 =>
             array (
-                'title' => 'security_controls_access',
+                'title' => 'security_control_access',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             273 =>
             array (
-                'title' => 'data_processing_register_create',
+                'title' => 'data_processing_create',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             274 =>
             array (
-                'title' => 'data_processing_register_edit',
+                'title' => 'data_processing_edit',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             275 =>
             array (
-                'title' => 'data_processing_register_show',
+                'title' => 'data_processing_show',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             276 =>
             array (
-                'title' => 'data_processing_register_delete',
+                'title' => 'data_processing_delete',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
             277 =>
             array (
-                'title' => 'data_processing_register_access',
+                'title' => 'data_processing_access',
                 'created_at' => NULL,
                 'updated_at' => NULL,
                 'deleted_at' => NULL,

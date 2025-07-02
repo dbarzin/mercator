@@ -5,13 +5,13 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    @can('security_controls_edit')
+    @can('security_control_edit')
         <a class="btn btn-info" href="{{ route('admin.security-controls.edit', $securityControl->id) }}">
             {{ trans('global.edit') }}
         </a>
     @endcan
 
-    @can('security_controls_delete')
+    @can('security_control_delete')
         <form action="{{ route('admin.security-controls.destroy', $securityControl->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">

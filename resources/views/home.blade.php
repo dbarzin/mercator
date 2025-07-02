@@ -77,7 +77,7 @@ barChart: {
       "{!! trans('cruds.menu.physical_infrastructure.title_short') !!}",
       ],
   datasets: [
-  @can('data_processing_register_access')
+  @can('data_processing_access')
   {
     label: "{!! trans('cruds.dataProcessing.title') !!}",
     data: [ {!! $data_processing !!}, 0, 0, 0, 0, 0, 0],
@@ -85,7 +85,7 @@ barChart: {
     url: "/admin/data-processings"
   },
   @endcan
-  @can('security_controls_access')
+  @can('security_control_access')
   {
     label: "{!! trans('cruds.securityControl.title_short') !!}",
     data: [{!! $security_controls !!}, 0, 0, 0, 0, 0, 0],
