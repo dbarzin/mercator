@@ -1,3 +1,5 @@
+{{- $defaultSecretName := printf "%s-%s" (include "chart.fullname" .) "postgresql" -}}
+{{- $postgresSecretName := .Values.secret.managed | ternary $defaultSecretName .Values.postgresql.auth.existingSecret -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,7 +45,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: 8080-tcp
+            - name: http
               containerPort: 8080
               protocol: TCP
           livenessProbe:
@@ -78,7 +80,7 @@ spec:
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.postgresql.auth.existingSecret | quote }}
+                name: {{ $postgresSecretName }}
                 key: password
           - name: BROADCAST_DRIVER
             value: "log"
