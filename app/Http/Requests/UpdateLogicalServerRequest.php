@@ -22,7 +22,7 @@ class UpdateLogicalServerRequest extends FormRequest
         return [
             'name' => [
                 'min:3',
-                'max:32',
+                'max:64',
                 'required',
                 Rule::unique('logical_servers')
                     ->ignore($this->route('logical_server')->id ?? $this->id)

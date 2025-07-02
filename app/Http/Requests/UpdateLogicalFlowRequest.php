@@ -21,7 +21,7 @@ class UpdateLogicalFlowRequest extends FormRequest
         return [
             'name' => [
                 'min:0',
-                'max:32',
+                'max:64',
             ],
             'source_ip_range' => [
                 new Cidr(),
