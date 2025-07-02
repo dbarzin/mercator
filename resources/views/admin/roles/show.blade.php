@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="form-group">
-                    @php($permission = $permissions_sorted['data_processing_register'])
+                    @php($permission = $permissions_sorted['data_processing])
                     <label>{{ trans('cruds.dataProcessing.title') }}</label>
                     <div class="form-switch">
                         <input class="form-check-input" type="checkbox" disabled name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][4][0] }}" {{ in_array($permission['actions'][4][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][4][0]) ? 'checked' : '' }}>
@@ -74,7 +74,7 @@
 
             <div class="col-md-2">
                 <div class="form-group">
-                    @php($permission = $permissions_sorted['security_controls'])
+                    @php($permission = $permissions_sorted['security_control'])
                     <label>{{ trans('cruds.securityControl.title') }}</label>
                     <div class="form-switch">
                         <input class="form-check-input" type="checkbox" disabled name="permissions[]" data-check="{{ $permission['name'] }}" id="perm_{{ $permission['actions'][4][0] }}" value="{{ $permission['actions'][4][0] }}" {{ in_array($permission['actions'][4][0], old('permissions', [])) || $role->permissions->contains($permission['actions'][4][0]) ? 'checked' : '' }}>

@@ -1196,6 +1196,7 @@ return [
             'administration' => 'Administration',
             'applications' => 'Applications',
             'ecosystem' => 'Ecosystem',
+            'gdpr' => 'GDPR',
             'granularity' => 'Granularity',
             'granularity_helper' => 'Report granularity level',
             'network_infrastructure' => 'Network infrastructure',

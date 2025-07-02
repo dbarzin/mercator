@@ -25,6 +25,7 @@
                             <label for="filters" class="form-label">{{ trans("cruds.configuration.import.filter") }}</label>
                             <select class="form-select select2" id="filters" name="filter">
                                 <option></option>
+                                <option value="0" {{ old('filter')=='0' ? "selected" : "" }}>{{ trans("cruds.report.cartography.gdpr") }}</option>
                                 <option value="1" {{ old('filter')=='1' ? "selected" : "" }}>{{ trans("cruds.report.cartography.ecosystem") }}</option>
                                 <option value="2" {{ old('filter')=='2' ? "selected" : "" }}>{{ trans("cruds.report.cartography.information_system") }}</option>
                                 <option value="3" {{ old('filter')=='3' ? "selected" : "" }}>{{ trans("cruds.report.cartography.applications") }}</option>
@@ -80,6 +81,10 @@
 @parent
 <script>
 const objectMap = {
+    0: [ // RGPD
+        { id: 'DataProcessing', label: "{{ trans('cruds.dataProcessing.title') }}" },
+        { id: 'SecurityControl', label: "{{ trans('cruds.securityControl.title') }}" },
+    ],
     1: [ // Écosystème
         { id: 'Relation', label: "{{ trans('cruds.relation.title') }}" },
         { id: 'Entity', label: "{{ trans('cruds.entity.title') }}" },

@@ -18,7 +18,7 @@ class SecurityControlController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('security_controls_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $controls = SecurityControl::All()->sortBy('name');
 
@@ -27,7 +27,7 @@ class SecurityControlController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('security_controls_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.securityControls.create');
     }
@@ -41,7 +41,7 @@ class SecurityControlController extends Controller
 
     public function edit(SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.securityControls.edit', compact('securityControl'));
     }
@@ -55,14 +55,14 @@ class SecurityControlController extends Controller
 
     public function show(SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.securityControls.show', compact('securityControl'));
     }
 
     public function assign(Request $request)
     {
-        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $applications = MApplication::All()->sortBy('name')->pluck('name', 'id');
         $processes = Process::All()->sortBy('name')->pluck('name', 'id');
@@ -85,7 +85,7 @@ class SecurityControlController extends Controller
 
     public function associate(Request $request)
     {
-        abort_if(Gate::denies('security_controls_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $controls = [];
         foreach ($request->request as $key => $value) {
             if (str_starts_with($key, 'CTRL_')) {
@@ -110,7 +110,7 @@ class SecurityControlController extends Controller
 
     public function list(Request $request)
     {
-        abort_if(Gate::denies('security_controls_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         //http://127.0.0.1:8000/admin/security-controls-list?id=APP_2
 
@@ -136,7 +136,7 @@ class SecurityControlController extends Controller
 
     public function destroy(SecurityControl $securityControl)
     {
-        abort_if(Gate::denies('security_controls_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('security_control_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $securityControl->delete();
 

@@ -15,7 +15,7 @@ class DataProcessingController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('data_processing_register_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessings = DataProcessing::all();
 
@@ -24,7 +24,7 @@ class DataProcessingController extends Controller
 
     public function store(StoreDataProcessingRequest $request)
     {
-        abort_if(Gate::denies('data_processing_register_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessing = DataProcessing::create($request->all());
         $dataProcessing->processes()->sync($request->input('processes', []));
@@ -36,14 +36,14 @@ class DataProcessingController extends Controller
 
     public function show(DataProcessing $dataProcessing)
     {
-        abort_if(Gate::denies('data_processing_register_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new DataProcessingResource($dataProcessing);
     }
 
     public function update(UpdateDataProcessingRequest $request, DataProcessing $dataProcessing)
     {
-        abort_if(Gate::denies('data_processing_register_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessing->update($request->all());
         $dataProcessing->processes()->sync($request->input('processes', []));
@@ -55,7 +55,7 @@ class DataProcessingController extends Controller
 
     public function destroy(DataProcessing $dataProcessing)
     {
-        abort_if(Gate::denies('data_processing_register_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $dataProcessing->delete();
 
@@ -64,7 +64,7 @@ class DataProcessingController extends Controller
 
     public function massDestroy(MassDestroyDataProcessingRequest $request)
     {
-        abort_if(Gate::denies('data_processing_register_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('data_processing_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         DataProcessing::whereIn('id', request('ids'))->delete();
 

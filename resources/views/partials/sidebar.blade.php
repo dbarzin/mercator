@@ -15,12 +15,12 @@
                 request()->is('admin/data-processing*')||
                 request()->is('admin/security*')
             ) ? 'show' : '' }}">
-            @can('data_processing_register_access')
+            @can('data_processing_access')
             <a href="{{ route('admin.data-processings.index') }}" class="ps-4 {{ request()->is('admin/data-processings*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.dataProcessing.title') }}</span>
             </a>
             @endcan
-            @can('security_controls_access')
+            @can('security_control_access')
             <a href="{{ route('admin.security-controls.index') }}" class="ps-4 {{ request()->is('admin/security*') ? 'active' : '' }}">
                 <i class="bi bi-list-columns"></i><span class="menu-text">{{ trans('cruds.securityControl.title') }}</span>
             </a>
