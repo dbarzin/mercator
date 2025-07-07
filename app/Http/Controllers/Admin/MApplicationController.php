@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Activity;
+use App\AdminUser;
 use App\ApplicationBlock;
 use App\ApplicationService;
 use App\Database;
@@ -70,6 +71,7 @@ class MApplicationController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id','id');
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -124,6 +126,7 @@ class MApplicationController extends Controller
                 'logical_servers',
                 'applicationBlocks',
                 'icons',
+                'users',
                 'type_list',
                 'technology_list',
                 'users_list',
@@ -183,6 +186,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);
@@ -205,6 +209,7 @@ class MApplicationController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
+        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id','id');
 
         // rto-rpo
         $application->rto_days = intdiv($application->rto, 60 * 24);
@@ -267,6 +272,7 @@ class MApplicationController extends Controller
                 'logical_servers',
                 'applicationBlocks',
                 'icons',
+                'users',
                 'application',
                 'type_list',
                 'technology_list',
@@ -324,6 +330,7 @@ class MApplicationController extends Controller
         $application->databases()->sync($request->input('databases', []));
         $application->cartographers()->sync($request->input('cartographers', []));
         $application->logicalServers()->sync($request->input('logical_servers', []));
+        $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
         $this->cartographerService->attributeCartographerRole($application);

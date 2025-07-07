@@ -81,6 +81,8 @@ return [
         'fields' => [
             'application_block' => 'Bloc applicatif',
             'application_block_helper' => 'Bloc applicatif dont fait partie cette application',
+            "administrators" => "Administrateurs",
+            "administrators_helper" => "Administrateurs de l'application",
             "cartographers" => "Cartographe(s)",
             "cartographers_helper" => "Cartographe(s) de l'application",
             'databases' => 'Bases de données',

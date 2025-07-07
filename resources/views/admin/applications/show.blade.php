@@ -131,9 +131,19 @@
                 <th>
                     <dt>{{ trans('cruds.application.fields.cartographers') }}</dt>
                 </th>
-                <td colspan="2">
+                <td>
                      @foreach($application->cartographers as $cartographer)
-                     {{ $cartographer->name }} @if(!$loop->last)-@endif
+                     {{ $cartographer->name }}
+                     @if(!$loop->last), @endif
+                     @endforeach
+                </td>
+                <th>
+                    <dt>{{ trans('cruds.application.fields.administrators') }}</dt>
+                </th>
+                <td>
+                     @foreach($application->administrators as $administrator)
+                     <a href="{{ route('admin.admin-users.show', $administrator->id) }}"">{{ $administrator->user_id }}</a>
+                     @if(!$loop->last), @endif
                      @endforeach
                 </td>
             </tbody>

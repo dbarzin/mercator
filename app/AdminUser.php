@@ -48,4 +48,9 @@ class AdminUser extends Model
     {
         return $this->belongsTo(DomaineAd::class, 'domain_id');
     }
+
+    public function applications()
+    {
+        return $this->belongsToMany(MApplication::class, 'admin_user_m_application', 'admin_user_id', 'm_application_id');
+    }
 }

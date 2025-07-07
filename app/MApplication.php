@@ -132,6 +132,11 @@ class MApplication extends Model
         return $this->belongsToMany(User::class, 'cartographer_m_application');
     }
 
+    public function administrators()
+    {
+        return $this->belongsToMany(AdminUser::class, 'admin_user_m_application', 'm_application_id', 'admin_user_id');
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');

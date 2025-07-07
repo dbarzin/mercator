@@ -206,6 +206,22 @@
                     <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="logical_servers">{{ trans('cruds.application.fields.administrators') }}</label>
+                    <select class="form-control select2 {{ $errors->has('administrators') ? 'is-invalid' : '' }}" name="administrators[]" id="administrators" multiple>
+                        @foreach($users as $id => $name)
+                            <option value="{{ $id }}" {{ in_array($id, old('administrators', [])) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('administrators'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('administrators') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.administrators_helper') }}</span>
+                </div>
+            </div>
         </div>
     </div>
     <!------------------------------------------------------------------------------------------------------------->
