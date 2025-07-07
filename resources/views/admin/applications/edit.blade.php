@@ -198,25 +198,41 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                 <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
-                 <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
-                     @foreach($cartographers_list as $id => $cartographer)
-                         @if(null !== old('cartographers'))
-                             <option value="{{ $id }}" {{ in_array($id, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
-                         @else
-                             <option value="{{ $id }}" {{ $application->cartographers->contains($id) && !$errors->any() ? 'selected' : '' }}>{{ $cartographer }}</option>
-                         @endif
-                     @endforeach
-                </select>
-                @if($errors->has('cartographers'))
-                <div class="invalid-feedback">
-                    {{ $errors->first('cartographer') }}
+                     <label for="cartographers">{{ trans('cruds.application.fields.cartographers') }}</label>
+                     <select class="form-control select2-free {{ $errors->has('cartographers') ? 'is-invalid' : '' }}" name="cartographers[]" id="cartographers" multiple>
+                         @foreach($cartographers_list as $id => $cartographer)
+                             @if(null !== old('cartographers'))
+                                 <option value="{{ $id }}" {{ in_array($id, old('cartographers', [])) ? 'selected' : '' }}>{{ $cartographer }}</option>
+                             @else
+                                 <option value="{{ $id }}" {{ $application->cartographers->contains($id) && !$errors->any() ? 'selected' : '' }}>{{ $cartographer }}</option>
+                             @endif
+                         @endforeach
+                    </select>
+                    @if($errors->has('cartographers'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('cartographer') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
                 </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.application.fields.cartographers_helper') }}</span>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="logical_servers">{{ trans('cruds.application.fields.administrators') }}</label>
+                    <select class="form-control select2 {{ $errors->has('administrators') ? 'is-invalid' : '' }}" name="administrators[]" id="administrators" multiple>
+                        @foreach($users as $id => $name)
+                        <option value="{{ $id }}" {{ (in_array($id, old('administrators', [])) || $application->administrators->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('logical_servers'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('logical_servers') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
+                </div>
             </div>
         </div>
-    </div>
     </div>
     <!------------------------------------------------------------------------------------------------------------->
     <div class="card-header">
