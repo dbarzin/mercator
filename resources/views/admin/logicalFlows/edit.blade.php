@@ -114,8 +114,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.logicalFlow.fields.source_ip_range') }}</label>
-                        <input class="form-control {{ $errors->has('protocol') ? 'is-invalid' : '' }}" type="text" name="source_ip_range" id="source_ip_range" value="{{ old('source_ip_range', $logicalFlow->source_ip_range) }}" required>
+                        <label for="name">{{ trans('cruds.logicalFlow.fields.source_ip_range') }}</label>
+                        <input class="form-control {{ $errors->has('source_ip_range') ? 'is-invalid' : '' }}" type="text" name="source_ip_range" id="source_ip_range" value="{{ old('source_ip_range', $logicalFlow->source_ip_range) }}"/>
                         @if($errors->has('source_ip_range'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('source_ip_range') }}
@@ -140,8 +140,8 @@
 
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.logicalFlow.fields.dest_ip_range') }}</label>
-                        <input class="form-control {{ $errors->has('source_ip_range') ? 'is-invalid' : '' }}" type="text" name="dest_ip_range" id="dest_ip_range" value="{{ old('dest_ip_range', $logicalFlow->dest_ip_range) }}" required>
+                        <label for="name">{{ trans('cruds.logicalFlow.fields.dest_ip_range') }}</label>
+                        <input class="form-control {{ $errors->has('dest_ip_range') ? 'is-invalid' : '' }}" type="text" name="dest_ip_range" id="dest_ip_range" value="{{ old('dest_ip_range', $logicalFlow->dest_ip_range) }}"/>
                         @if($errors->has('dest_ip_range'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('dest_ip_range') }}
@@ -163,10 +163,45 @@
                         <span class="help-block">{{ trans('cruds.logicalFlow.fields.dest_port_helper') }}</span>
                     </div>
                 </div>
-
-
             </div>
-
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select class="form-control select2 {{ $errors->has('src_id') ? 'is-invalid' : '' }}" name="src_id" id="src_id">
+                                <option></option>
+                            @foreach($devices as $id => $name)
+                                <option value="{{ $id }}" {{ ($logicalFlow->sourceId() ? $logicalFlow->sourceId() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('src_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('src_id') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.physicalLink.fields.src_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select class="form-control select2 {{ $errors->has('dest_id') ? 'is-invalid' : '' }}" name="dest_id" id="dest_id">
+                                <option></option>
+                            @foreach($devices as $id => $name)
+                                <option value="{{ $id }}" {{ ($logicalFlow->destinationId() ? $logicalFlow->destinationId() : old('src_id')) == $id ? 'selected' : '' }}>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('dest_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('dest_id') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.physicalLink.fields.dest_helper') }}</span>
+                    </div>
+                </div>
+            </div>
             <!------------------------------------------------------------------------------------------------------>
             <div class="row">
                 <div class="col-sm-4">
@@ -205,4 +240,47 @@
         </button>
     </div>
 </form>
+@endsection
+
+@section('scripts')
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    //----------------------------------------------------
+    // Variable de blocage
+    let lock = false;
+
+    // Effaces les champs src en fct de la sélection
+    $('#source_ip_range').on('input', function() {
+        if (lock) return;
+        lock = true;
+        $('#src_id').val(null).trigger('change');
+        lock = false;
+    });
+
+    $('#src_id').on('change', function() {
+        if (lock) return;
+        lock = true;
+      $('#source_ip_range').val('');
+        lock = false;
+    });
+
+    // Effaces les champs src en fct de la sélection
+    $('#dest_ip_range').on('input', function() {
+        if (lock) return;
+        lock = true;
+        $('#dest_id').val(null).trigger('change');
+        lock = false;
+    });
+
+    $('#dest_id').on('change', function() {
+        if (lock) return;
+        lock = true;
+        $('#dest_ip_range').val('');
+        lock = false;
+    });
+    //----------------------------------------------------
+
+});
+</script>
 @endsection

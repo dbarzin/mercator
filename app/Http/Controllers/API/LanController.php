@@ -27,10 +27,12 @@ class LanController extends Controller
         abort_if(Gate::denies('lan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $lan = Lan::create($request->all());
-        if ($request->has('mans'))
+        if ($request->has('mans')) {
             $lan->Mans()->sync($request->input('mans', []));
-        if ($request->has('wans'))
+        }
+        if ($request->has('wans')) {
             $lan->Wans()->sync($request->input('wans', []));
+        }
 
         return response()->json($lan, 201);
     }
@@ -47,10 +49,12 @@ class LanController extends Controller
         abort_if(Gate::denies('lan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $lan->update($request->all());
-        if ($request->has('mans'))
+        if ($request->has('mans')) {
             $lan->Mans()->sync($request->input('mans', []));
-        if ($request->has('wans'))
+        }
+        if ($request->has('wans')) {
             $lan->Wans()->sync($request->input('wans', []));
+        }
 
         return response()->json();
     }

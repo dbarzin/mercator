@@ -25,9 +25,21 @@ class UpdateLogicalFlowRequest extends FormRequest
             ],
             'source_ip_range' => [
                 new Cidr(),
+                'nullable',
+                'required_without:src_id',
+            ],
+            'src_id' => [
+                'nullable',
+                'required_without:source_ip_range',
             ],
             'dest_ip_range' => [
                 new Cidr(),
+                'nullable',
+                'required_without:dest_id',
+            ],
+            'dest_id' => [
+                'nullable',
+                'required_without:dest_ip_range',
             ],
         ];
     }

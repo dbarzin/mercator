@@ -2,7 +2,6 @@
 
 namespace App;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,9 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 class RelationValue extends Model
 {
     use HasFactory;
-
-    // For PostgreSQL
-    protected $primaryKey = null;
     public $incrementing = false;
     public $timestamps = false;
 
@@ -22,6 +18,9 @@ class RelationValue extends Model
 
     public static $searchable = [
     ];
+
+    // For PostgreSQL
+    protected $primaryKey = null;
 
     protected $dates = [
         'date_price',
@@ -44,5 +43,4 @@ class RelationValue extends Model
     {
         return $this->belongsTo(Relation::class, 'relation_id');
     }
-
 }

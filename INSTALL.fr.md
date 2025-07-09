@@ -100,7 +100,7 @@ Pour importer la base de données de test (facultatif)
 
     sudo mysql mercator < data/mercator_data_fr.sql
 
-## Importer/mette à jour la base de données des CPE (optionel)
+## Importer/mettre à jour la base de données des CPE (optionel)
 
 Télécharger la base depuis NIST.gov
 

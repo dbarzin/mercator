@@ -6,16 +6,15 @@ namespace App\Http\Controllers\Admin;
 use App\Activity;
 // ecosystem
 use App\Actor;
-use App\Relation;
+use App\AdminUser;
 // information system
-use App\Task;
-use App\Process;
-use App\Operation;
-// Application
-use App\MApplication;
+use App\Annuaire;
 use App\ApplicationBlock;
 use App\ApplicationModule;
+// Application
 use App\ApplicationService;
+use App\Bay;
+use App\Building;
 use App\Certificate;
 use App\Cluster;
 use App\Container;
@@ -25,41 +24,42 @@ use App\DhcpServer;
 use App\Dnsserver;
 use App\DomaineAd;
 use App\Entity;
-// Administration
-use App\ZoneAdmin;
-use App\Annuaire;
-use App\ForestAd;
-use App\AdminUser;
-// Logique
 use App\ExternalConnectedEntity;
+// Administration
+use App\Flux;
+use App\ForestAd;
+use App\Gateway;
+use App\Http\Controllers\Controller;
+// Logique
 use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
+use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
+use App\Operation;
 use App\Peripheral;
 use App\Phone;
-use App\Flux;
-use App\Vlan;
-// Physique
 use App\PhysicalLink;
+// Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
+use App\Process;
+use App\Relation;
 use App\Router;
-use App\Gateway;
 use App\SecurityDevice;
 use App\Site;
-use App\Building;
-use App\Bay;
 use App\StorageDevice;
 use App\Subnetwork;
+use App\Task;
+use App\Vlan;
 use App\WifiTerminal;
 use App\Workstation;
-use Carbon\Carbon;
+use App\ZoneAdmin;
 // Laravel
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -1323,7 +1323,7 @@ class ReportController extends Controller
 
             $all_buildings = Building::All()->sortBy('name')
                 ->where('site_id', '=', $site)->pluck('name', 'id');
-            if ($buildings === null || (sizeof($buildings)==0)) {
+            if ($buildings === null || (sizeof($buildings) === 0)) {
                 $buildings = Building::All()
                     ->sortBy('name')
                     ->where('site_id', '=', $site);

@@ -5,64 +5,64 @@ namespace App\Http\Controllers\Admin;
 // RGPD
 
 // ecosystem
-use App\Actor;
-use App\Annuaire;
-// information system
-use App\Process;
 use App\Activity;
-use App\Entity;
-use App\Operation;
-// Applications
+use App\Actor;
+// information system
+use App\Annuaire;
 use App\ApplicationBlock;
-use App\MApplication;
 use App\ApplicationModule;
 use App\ApplicationService;
+// Applications
+use App\Bay;
+use App\Building;
+use App\Certificate;
 use App\Cluster;
 use App\Container;
 use App\Database;
 use App\DhcpServer;
-use App\Certificate;
-// Administration
+use App\Dnsserver;
 use App\DomaineAd;
-use App\Flux;
-use App\ForestAd;
-// Logique
-use App\Gateway;
+// Administration
+use App\Entity;
 use App\ExternalConnectedEntity;
+use App\Flux;
+// Logique
+use App\ForestAd;
+use App\Gateway;
+use App\Http\Controllers\Controller;
 use App\Information;
+use App\Lan;
 use App\LogicalServer;
 use App\MacroProcessus;
+use App\Man;
+use App\MApplication;
+// Physique
 use App\Network;
 use App\NetworkSwitch;
-use App\Dnsserver;
-use App\Vlan;
-// Physique
-use App\Site;
-use App\Building;
-use App\Bay;
+use App\Operation;
+use App\Peripheral;
 use App\Phone;
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
+use App\Process;
 use App\Relation;
 use App\Router;
 use App\SecurityDevice;
-use App\Peripheral;
+use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
 use App\Task;
-use App\WifiTerminal;
-use App\Workstation;
+use App\Vlan;
 use App\Wan;
-use App\Man;
-use App\Lan;
+use App\WifiTerminal;
 // PhpOffice
+use App\Workstation;
 use App\ZoneAdmin;
 use Auth;
-use Carbon\Carbon;
 // Laravel
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpWord\Element\Section;
@@ -284,7 +284,7 @@ class CartographyController extends Controller
                 $graph = 'digraph  {';
                 if ($granularity >= 2) {
                     foreach ($macroProcessuses as $macroProcess) {
-                        $graph .= ' MP' . $macroProcess->id . $this->dotImage('/images/macroprocess.png', $macroProcess->name );
+                        $graph .= ' MP' . $macroProcess->id . $this->dotImage('/images/macroprocess.png', $macroProcess->name);
                         foreach ($macroProcess->processes as $process) {
                             $graph .= ' MP' . $macroProcess->id .'->P' . $process->id;
                         }
@@ -2568,13 +2568,14 @@ class CartographyController extends Controller
     }
     */
     // Genetate the dot image
-    private function dotImage(string $imagePath, string $name) {
-        return'[shape=none label=<'.
+    private function dotImage(string $imagePath, string $name)
+    {
+        return '[shape=none label=<'.
               '<TABLE border="0" cellborder="0" cellspacing="0">'.
               '<TR><TD><IMG SRC="' . public_path($imagePath) . '"/></TD></TR>'.
               '<TR><TD>' . $name . '</TD></TR>'.
               '</TABLE> >]';
-          }
+    }
 
     // Generate the image of the graph from a dot notation using GraphViz
     private function generateGraphImage(string $graph)

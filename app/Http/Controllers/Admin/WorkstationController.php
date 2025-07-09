@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Building;
-use App\Entity;
-use App\DomaineAd;
-use App\AdminUser;
 use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWorkstationRequest;
 use App\Http\Requests\StoreWorkstationRequest;
 use App\Http\Requests\UpdateWorkstationRequest;
 use App\MApplication;
-use App\Site;
 use App\Workstation;
 use Gate;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
 
 class WorkstationController extends Controller
 {
@@ -34,12 +29,12 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table('admin_users')->select('id', 'user_id')->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table('networks')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Select icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -112,12 +107,12 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table('admin_users')->select('id', 'user_id')->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table('networks')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
@@ -233,12 +228,12 @@ class WorkstationController extends Controller
     {
         abort_if(Gate::denies('workstation_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $sites = DB::table("sites")->select("id","name")->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $buildings = DB::table("buildings")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $entities = DB::table("entities")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $domains = DB::table("domaine_ads")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $users = DB::table("admin_users")->select("id","user_id")->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $networks = DB::table("networks")->select("id","name")->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sites = DB::table('sites')->select('id', 'name')->orderBy('name')->get()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = DB::table('buildings')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $entities = DB::table('entities')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $domains = DB::table('domaine_ads')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = DB::table('admin_users')->select('id', 'user_id')->orderBy('user_id')->pluck('user_id', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $networks = DB::table('networks')->select('id', 'name')->orderBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // Get icons
         $icons = Workstation::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');

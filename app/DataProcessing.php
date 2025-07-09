@@ -20,7 +20,7 @@ class DataProcessing extends Model
     public static $searchable = [
         'name',
         'description',
-        'legal_basis'
+        'legal_basis',
     ];
 
     protected $dates = [

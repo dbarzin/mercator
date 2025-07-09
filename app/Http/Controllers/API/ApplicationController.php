@@ -8,8 +8,8 @@ use App\Http\Requests\UpdateMApplicationRequest;
 use App\Http\Resources\Admin\ApplicationResource;
 use App\MApplication;
 use Gate;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ApplicationController extends Controller
