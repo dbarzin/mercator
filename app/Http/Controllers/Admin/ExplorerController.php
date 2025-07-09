@@ -533,51 +533,64 @@ class ExplorerController extends Controller
         // Logical Flows
         $flows = LogicalFlow::All();
         foreach ($flows as $flow) {
+            // \Log::Debug('flow: '.$flow->name);
             // Get sources
             $sources = [];
-            foreach ($logicalServers as $server) {
-                foreach (explode(',', $server->address_ip) as $ip) {
-                    if ($flow->isSource($ip)) {
-                        array_push($sources, $server->id);
+            if ($flow->source_ip_range!==null) {
+                foreach ($logicalServers as $server) {
+                    foreach (explode(',', $server->address_ip) as $ip) {
+                        if ($flow->isSource($ip)) {
+                            array_push($sources, $this->formatId('LSERVER_', $server->id));
+                        }
                     }
                 }
+                foreach ($workstations as $workstation) {
+                    if ($flow->isSource($workstation->address_ip)) {
+                        array_push($sources, $this->formatId('WORK_', $workstation->id));
+                    }
+                }
+                foreach ($peripherals as $peripheral) {
+                    if ($flow->isSource($peripheral->address_ip)) {
+                        array_push($sources, $this->formatId('PERIF_', $peripheral->id));
+                    }
+                }
+                // TODO: other objects
             }
+            elseif ($flow->sourceId()!==null) {
+                array_push($sources, $flow->sourceId());
+            }
+
             // Get destinations
             $destinations = [];
-            foreach ($logicalServers as $server) {
-                foreach (explode(',', $server->address_ip) as $ip) {
-                    if ($flow->isDestination($ip)) {
-                        array_push($destinations, $server->id);
+            if ($flow->dest_ip_range!==null) {
+                foreach ($logicalServers as $server) {
+                    foreach (explode(',', $server->address_ip) as $ip) {
+                        if ($flow->isDestination($ip)) {
+                            array_push($destinations, $this->formatId('LSERVER_', $server->id));
+                        }
                     }
                 }
+                foreach ($workstations as $workstation) {
+                    if ($flow->isDestination($workstation->address_ip)) {
+                        array_push($destinations, $this->formatId('WORK_', $workstation->id));
+                    }
+                }
+                foreach ($peripherals as $peripheral) {
+                    if ($flow->isDestination($peripheral->address_ip)) {
+                        array_push($sources, $this->formatId('PERIF_', $peripheral->id));
+                    }
+                }
+                // TODO: other objects
+            }
+            elseif ($flow->destinationId()!==null) {
+                array_push($destinations, $flow->destinationId());
             }
 
             // Add source <-> destination flows
             foreach ($sources as $source) {
-                /* UNUSED Code
-                // if flow must be explored
-                if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
-                    // Add source node to request
-                    if ($request->get('node') === null) {
-                        $request['node'] = $this->formatId('LSERVER_', $source);
-                    } else {
-                        $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $source);
-                    }
-                }
-                */
                 foreach ($destinations as $destination) {
-                    $this->addFluxEdge($edges, $flow->name, false, $this->formatId('LSERVER_', $source), $this->formatId('LSERVER_', $destination));
-                    /* UNUSED Code
-                    // if flow must be explored
-                    if (($request->get('flow') !== null) && ($flow->id === (int) $request->get('flow'))) {
-                        // Add destination node to request
-                        if ($request->get('node') === null) {
-                            $request['node'] = $this->formatId('LSERVER_', $destination);
-                        } else {
-                            $request['node'] = $request->get('node').','.$this->formatId('LSERVER_', $destination);
-                        }
-                    }
-                    */
+                    // \Log::Debug($source . ' -> ' . $destination);
+                    $this->addFluxEdge($edges, $flow->name, false, $source, $destination);
                 }
             }
         }

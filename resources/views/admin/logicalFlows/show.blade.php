@@ -97,13 +97,77 @@
                         {{ $logicalFlow->protocol }}
                     </td>
                     <td>
-                        {{ $logicalFlow->source_ip_range }}
+                        @if ($logicalFlow->source_ip_range!==null)
+                            {{ $logicalFlow->source_ip_range }}
+                        @elseif ($logicalFlow->logical_server_source_id!==null)
+                            {{ $logicalFlow->logicalServerSource->address_ip }}
+                            (<a href="{{ route('admin.logical-servers.show',$logicalFlow->logicalServerSource->id) }}">
+                                {{ $logicalFlow->logicalServerSource->name }}
+                            </a>)
+                        @elseif ($logicalFlow->peripheral_source_id!==null)
+                            {{ $logicalFlow->peripheralSource->address_ip }}
+                            (<a href="{{ route('admin.peripherals.show',$logicalFlow->peripheralSource->id) }}">
+                            {{ $logicalFlow->peripheralSource->name }}
+                            </a>)
+                        @elseif ($logicalFlow->physical_server_source_id!==null)
+                            {{ $logicalFlow->physicalServerSource->address_ip }}
+                            (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerSource->id) }}">
+                            {{ $logicalFlow->physicalServerSource->name }}
+                            </a>)
+                        @elseif ($logicalFlow->storage_device_source_id!==null)
+                            {{ $logicalFlow->storageDeviceSource->address_ip }}
+                            (<a href="{{ route('admin.storage-devices.show',$logicalFlow->storageDeviceSource->id) }}">
+                            {{ $logicalFlow->storageDeviceSource->name }}
+                            </a>)
+                        @elseif ($logicalFlow->workstation_source_id!==null)
+                            {{ $logicalFlow->workstationSource->address_ip }}
+                            (<a href="{{ route('admin.workstations.show',$logicalFlow->workstationSource->id) }}">
+                            {{ $logicalFlow->workstationSource->name }}
+                            </a>)
+                        @elseif ($logicalFlow->physical_security_device_source_id!==null)
+                            {{ $logicalFlow->physicalSecurityDeviceSource->address_ip }}
+                            (<a href="{{ route('admin.physical-security-devices.show',$logicalFlow->physicalSecurityDeviceSource->id) }}">
+                            {{ $logicalFlow->physicalSecurityDeviceSource->name }}
+                            </a>)
+                        @endif
                     </td>
                     <td>
                         {{ $logicalFlow->source_port ?? "ANY "}}
                     </td>
                     <td>
-                        {{ $logicalFlow->dest_ip_range }}
+                        @if ($logicalFlow->dest_ip_range!==null)
+                            {{ $logicalFlow->dest_ip_range }}
+                        @elseif ($logicalFlow->logical_server_dest_id!==null)
+                            {{ $logicalFlow->logicalServerDest->address_ip }}
+                            (<a href="{{ route('admin.logical-servers.show',$logicalFlow->logicalServerDest->id) }}">
+                            {{ $logicalFlow->logicalServerDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->peripheral_dest_id!==null)
+                            {{ $logicalFlow->logicalServerDest->address_ip }}
+                            (<a href="{{ route('admin.peripherals.show',$logicalFlow->peripheralDest->id) }}">
+                            {{ $logicalFlow->peripheralDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->physical_server_dest_id!==null)
+                            {{ $logicalFlow->physicalServerDest->address_ip }}
+                            (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerDest->id) }}">
+                            {{ $logicalFlow->physicalServerDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->storage_device_dest_id!==null)
+                            {{ $logicalFlow->storageDeviceDest->address_ip }}
+                            (<a href="{{ route('admin.storage-devices.show',$logicalFlow->storageDeviceDest->id) }}">
+                            {{ $logicalFlow->storageDeviceDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->workstation_dest_id!==null)
+                            {{ $logicalFlow->workstationDest->address_ip }}
+                            (<a href="{{ route('admin.workstations.show',$logicalFlow->workstationDest->id) }}">
+                            {{ $logicalFlow->workstationDest->name }}
+                            </a>)
+                        @elseif ($logicalFlow->physical_security_device_dest_id!==null)
+                            {{ $logicalFlow->physicalSecurityDeviceDest->address_ip }}
+                            (<a href="{{ route('admin.physical-security-devices.show',$logicalFlow->physicalSecurityDeviceDest->id) }}">
+                            {{ $logicalFlow->physicalSecurityDeviceDest->name }}
+                            </a>)
+                        @endif
                     </td>
                     <td>
                         {{ $logicalFlow->dest_port ?? "ANY" }}
@@ -131,9 +195,9 @@
         {{ trans('global.updated_at') }} {{ $logicalFlow->updated_at ? $logicalFlow->updated_at->format(trans('global.timestamp')) : '' }}
     </div>
 </div>
-
-<a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-flows.index') }}">
-    {{ trans('global.back_to_list') }}
-</a>
-
+<div class="form-group">
+    <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.logical-flows.index') }}">
+        {{ trans('global.back_to_list') }}
+    </a>
+</div>
 @endsection

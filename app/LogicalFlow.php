@@ -44,7 +44,93 @@ class LogicalFlow extends Model
         'users',
         'interface',
         'schedule',
+        // Sources
+        'logical_server_source_id',
+        'peripheral_source_id',
+        'physical_server_source_id',
+        'storage_device_source_id',
+        'workstation_source_id',
+        'physical_security_device_source_id',
+        // Destinations
+        'logical_server_dest_id',
+        'peripheral_dest_id',
+        'physical_server_dest_id',
+        'storage_device_dest_id',
+        'workstation_dest_id',
+        'physical_security_device_dest_id',
     ];
+
+    /***************************************************************/
+    /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
+    /***************************************************************/
+
+    public function logicalServerSource(): BelongsTo
+    {
+        return $this->belongsTo(LogicalServer::class, 'logical_server_source_id');
+    }
+
+    public function peripheralSource(): BelongsTo
+    {
+        return $this->belongsTo(Peripheral::class, 'peripheral_source_id');
+    }
+
+    public function pysicalServerSource(): BelongsTo
+    {
+        return $this->belongsTo(PhysicalServer::class, 'physical_server_source_id');
+    }
+
+    public function storageDeviceSource(): BelongsTo
+    {
+        return $this->belongsTo(StorageDevice::class, 'storage_device_source_id');
+    }
+
+    public function workstationSource(): BelongsTo
+    {
+        return $this->belongsTo(Workstation::class, 'workstation_source_id');
+    }
+
+    public function physicalSecurityDeviceSource(): BelongsTo
+    {
+        return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_source_id');
+    }
+
+    /******************************************************************/
+    /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
+    /******************************************************************/
+
+    public function logicalServerDest(): BelongsTo
+    {
+        return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');
+    }
+
+    public function peripheralDest(): BelongsTo
+    {
+        return $this->belongsTo(Peripheral::class, 'peripheral_dest_id');
+    }
+
+    public function pysicalServerDest(): BelongsTo
+    {
+        return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
+    }
+
+    public function storageDeviceDest(): BelongsTo
+    {
+        return $this->belongsTo(StorageDevice::class, 'storage_device_dest_id');
+    }
+
+    public function workstationDest(): BelongsTo
+    {
+        return $this->belongsTo(Workstation::class, 'workstation_dest_id');
+    }
+
+    public function physicalSecurityDeviceDest(): BelongsTo
+    {
+        return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
+    }
+
+    /***********************************************************************/
+    /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ IP ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ /
+    /***********************************************************************/
 
     public function isSource(string $ip): bool
     {
@@ -60,6 +146,56 @@ class LogicalFlow extends Model
     {
         return $this->belongsTo(Router::class, 'router_id');
     }
+
+    /***********************************************************************/
+
+    public function sourceId(): ?string
+    {
+        if ($this->logical_server_source_id !== null) {
+            return 'LSERVER_' . $this->logical_server_source_id;
+        }
+        if ($this->peripheral_source_id !== null) {
+            return 'PERIF_' . $this->peripheral_source_id;
+        }
+        if ($this->physical_server_source_id !== null) {
+            return 'PSERVER_' . $this->physical_server_source_id;
+        }
+        if ($this->storage_device_source_id !== null) {
+            return 'STORAGE_' . $this->storage_device_source_id;
+        }
+        if ($this->workstation_source_id !== null) {
+            return 'WORK_' . $this->workstation_source_id;
+        }
+        if ($this->physical_security_device_source_id !== null) {
+            return 'PSD_' . $this->physical_security_device_source_id;
+        }
+        return null;
+    }
+
+    public function destinationId(): ?string
+    {
+        if ($this->logical_server_dest_id !== null) {
+            return 'LSERVER_' . $this->logical_server_dest_id;
+        }
+        if ($this->peripheral_dest_id !== null) {
+            return 'PERIF_' . $this->peripheral_dest_id;
+        }
+        if ($this->physical_server_dest_id !== null) {
+            return 'PSERVER_' . $this->physical_server_dest_id;
+        }
+        if ($this->storage_device_dest_id !== null) {
+            return 'STORAGE_' . $this->storage_device_dest_id;
+        }
+        if ($this->workstation_dest_id !== null) {
+            return 'WORK_' . $this->workstation_dest_id;
+        }
+        if ($this->physical_security_device_dest_id !== null) {
+            return 'PSD_' . $this->physical_security_device_dest_id;
+        }
+        return null;
+    }
+
+    /***********************************************************************/
 
     /**
      * Does the given IP match the CIDR prefix
