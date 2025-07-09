@@ -31,7 +31,7 @@ class UpdatePhysicalLinkRequest extends FormRequest
                 'nullable',
                 'integer',
             ],
-            'physical_security_device_src_id'  => [
+            'physical_security_device_src_id' => [
                 'nullable',
                 'integer',
             ],

@@ -6,20 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLogicalFlowRequest;
 use App\Http\Requests\StoreLogicalFlowRequest;
 use App\Http\Requests\UpdateLogicalFlowRequest;
-
 // Models
 use App\LogicalFlow;
-use App\Router;
 use App\LogicalServer;
 use App\Peripheral;
+use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
+use App\Router;
 use App\StorageDevice;
 use App\Workstation;
-use App\PhysicalSecurityDevice;
-
 // Framework
-use Illuminate\Support\Collection;
 use Gate;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogicalFlowController extends Controller

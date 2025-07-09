@@ -44,9 +44,9 @@ class MonarcController extends Controller
         );
     }
 
-    private function getNames() {
-
-        $url = "https://objects.monarc.lu/api/v2/object/";
+    private function getNames()
+    {
+        $url = 'https://objects.monarc.lu/api/v2/object/';
 
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -56,7 +56,7 @@ class MonarcController extends Controller
             CURLOPT_TIMEOUT => 10,
             // CURLOPT_SSL_VERIFYPEER => false, // ❗️TEMPORAIRE uniquement pour debug
             // CURLOPT_SSL_VERIFYHOST => false, // ❗️TEMPORAIRE uniquement pour debug
-            CURLOPT_USERAGENT => "Mercator", // contourne parfois les blocages
+            CURLOPT_USERAGENT => 'Mercator', // contourne parfois les blocages
             CURLOPT_HTTPHEADER => [
                 'Accept: application/json',
             ],
@@ -70,14 +70,14 @@ class MonarcController extends Controller
         // $httpCode = $info['http_code'];
 
         if ($error) {
-            \Log::error("Erreur cURL : $error");
+            \Log::error("Erreur cURL : {$error}");
         }
 
         curl_close($ch);
 
         // Vérification des erreurs
         if ($response === false) {
-            echo "Erreur cURL : " . curl_error($ch);
+            echo 'Erreur cURL : ' . curl_error($ch);
             curl_close($ch);
             return;
         }
@@ -90,8 +90,8 @@ class MonarcController extends Controller
         dd($response);
 
         // Vérification de la structure de la réponse
-        if (!is_array($data)) {
-            echo "Réponse invalide ou non JSON.";
+        if (! is_array($data)) {
+            echo 'Réponse invalide ou non JSON.';
             return null;
         }
 

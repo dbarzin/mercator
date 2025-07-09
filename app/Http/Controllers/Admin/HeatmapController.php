@@ -3,12 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyLanRequest;
-use App\Http\Requests\StoreLanRequest;
-use App\Http\Requests\UpdateLanRequest;
-use App\Lan;
-use Gate;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -37,7 +31,7 @@ class HeatmapController extends Controller
 
         foreach ($ipList as $ips) {
             foreach (explode(',', $ips) as $ip) {
-                if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     continue;
                 }
 
@@ -56,19 +50,23 @@ class HeatmapController extends Controller
                     $plage = '192';
                 }
 
-                if ($plage === null) continue;
-                if ($rangeFilter && $plage !== $rangeFilter) continue;
+                if ($plage === null) {
+                    continue;
+                }
+                if ($rangeFilter && $plage !== $rangeFilter) {
+                    continue;
+                }
 
                 $y = $octet2;
                 $x = $octet3;
-                $key = "$plage-$x-$y";
+                $key = "{$plage}-{$x}-{$y}";
 
-                if (!isset($heatmap[$key])) {
+                if (! isset($heatmap[$key])) {
                     $heatmap[$key] = [
                         'x' => $x,
                         'y' => $y,
                         'v' => 0,
-                        'range' => $plage
+                        'range' => $plage,
                     ];
                 }
 
@@ -78,5 +76,4 @@ class HeatmapController extends Controller
 
         return array_values($heatmap);
     }
-
 }

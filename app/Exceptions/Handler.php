@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
     {
         try {
             \Log::error($exception->getMessage(), [
-                'exception' => get_class($exception),
+                'exception' => $exception::class,
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
             ]);

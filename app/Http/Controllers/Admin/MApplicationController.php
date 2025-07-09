@@ -71,7 +71,7 @@ class MApplicationController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
-        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id','id');
+        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // lists
         $type_list = MApplication::select('type')->where('type', '<>', null)->distinct()->orderBy('type')->pluck('type');
@@ -209,7 +209,7 @@ class MApplicationController extends Controller
         $logical_servers = LogicalServer::all()->sortBy('name')->pluck('name', 'id');
         $applicationBlocks = ApplicationBlock::all()->sortBy('name')->pluck('name', 'id');
         $icons = Mapplication::select('icon_id')->whereNotNull('icon_id')->orderBy('icon_id')->distinct()->pluck('icon_id');
-        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id','id');
+        $users = AdminUser::all()->sortBy('user_id')->pluck('user_id', 'id');
 
         // rto-rpo
         $application->rto_days = intdiv($application->rto, 60 * 24);

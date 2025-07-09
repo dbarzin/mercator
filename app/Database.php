@@ -88,5 +88,4 @@ class Database extends Model
     {
         return $this->belongsToMany(Container::class)->orderBy('name');
     }
-
 }

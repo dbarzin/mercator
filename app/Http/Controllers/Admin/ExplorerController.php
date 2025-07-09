@@ -70,7 +70,8 @@ class ExplorerController extends Controller
                 $this->formatId('PSERVER_', $physicalServer->id),
                 $physicalServer->name,
                 $physicalServer->icon_id === null ? '/images/server.png' : "/admin/documents/{$physicalServer->icon_id}",
-                'physical-servers');
+                'physical-servers'
+            );
             if ($physicalServer->bay_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('PSERVER_', $physicalServer->id), $this->formatId('BAY_', $physicalServer->bay_id));
             }
@@ -372,7 +373,7 @@ class ExplorerController extends Controller
         // Gateways
         $gateways = DB::table('gateways')->select('id', 'name', 'ip')->whereNull('deleted_at')->get();
         foreach ($gateways as $gateway) {
-        $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
+            $this->addNode($nodes, 5, $this->formatId('GW_', $gateway->id), $gateway->name, '/images/gateway.png', 'gateways', $gateway->ip);
         }
 
         // Subnetworks
@@ -505,7 +506,8 @@ class ExplorerController extends Controller
                 $this->formatId('LSERVER_', $logicalServer->id),
                 $logicalServer->name,
                 $logicalServer->icon_id === null ? '/images/lserver.png' : "/admin/documents/{$logicalServer->icon_id}",
-                'logical-servers');
+                'logical-servers'
+            );
             if ($logicalServer->cluster_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('LSERVER_', $logicalServer->id), $this->formatId('CLUSTER_', $logicalServer->cluster_id));
             }
@@ -536,7 +538,7 @@ class ExplorerController extends Controller
             // \Log::Debug('flow: '.$flow->name);
             // Get sources
             $sources = [];
-            if ($flow->source_ip_range!==null) {
+            if ($flow->source_ip_range !== null) {
                 foreach ($logicalServers as $server) {
                     foreach (explode(',', $server->address_ip) as $ip) {
                         if ($flow->isSource($ip)) {
@@ -555,14 +557,13 @@ class ExplorerController extends Controller
                     }
                 }
                 // TODO: other objects
-            }
-            elseif ($flow->sourceId()!==null) {
+            } elseif ($flow->sourceId() !== null) {
                 array_push($sources, $flow->sourceId());
             }
 
             // Get destinations
             $destinations = [];
-            if ($flow->dest_ip_range!==null) {
+            if ($flow->dest_ip_range !== null) {
                 foreach ($logicalServers as $server) {
                     foreach (explode(',', $server->address_ip) as $ip) {
                         if ($flow->isDestination($ip)) {
@@ -581,8 +582,7 @@ class ExplorerController extends Controller
                     }
                 }
                 // TODO: other objects
-            }
-            elseif ($flow->destinationId()!==null) {
+            } elseif ($flow->destinationId() !== null) {
                 array_push($destinations, $flow->destinationId());
             }
 

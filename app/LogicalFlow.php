@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Traits\Auditable;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -60,9 +59,7 @@ class LogicalFlow extends Model
         'physical_security_device_dest_id',
     ];
 
-    /***************************************************************/
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
-    /***************************************************************/
 
     public function logicalServerSource(): BelongsTo
     {
@@ -94,9 +91,7 @@ class LogicalFlow extends Model
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_source_id');
     }
 
-    /******************************************************************/
     /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
-    /******************************************************************/
 
     public function logicalServerDest(): BelongsTo
     {
@@ -128,9 +123,8 @@ class LogicalFlow extends Model
         return $this->belongsTo(PhysicalSecurityDevice::class, 'physical_security_device_dest_id');
     }
 
-    /***********************************************************************/
     /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ IP ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ /
-    /***********************************************************************/
+    /**/
 
     public function isSource(string $ip): bool
     {
@@ -146,8 +140,6 @@ class LogicalFlow extends Model
     {
         return $this->belongsTo(Router::class, 'router_id');
     }
-
-    /***********************************************************************/
 
     public function sourceId(): ?string
     {
@@ -194,8 +186,6 @@ class LogicalFlow extends Model
         }
         return null;
     }
-
-    /***********************************************************************/
 
     /**
      * Does the given IP match the CIDR prefix

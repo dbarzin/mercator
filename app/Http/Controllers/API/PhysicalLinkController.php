@@ -16,7 +16,7 @@ class PhysicalLinkController extends Controller
     {
         abort_if(Gate::denies('physical_link_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalLink    = PhysicalLink::all();
+        $physicalLink = PhysicalLink::all();
 
         return response()->json($physicalLink);
     }

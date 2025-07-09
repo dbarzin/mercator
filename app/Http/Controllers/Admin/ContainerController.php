@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Container;
+use App\Database;
 use App\Document;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyContainerRequest;
 use App\Http\Requests\StoreContainerRequest;
 use App\Http\Requests\UpdateContainerRequest;
 use App\LogicalServer;
-use App\Database;
 use App\MApplication;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;

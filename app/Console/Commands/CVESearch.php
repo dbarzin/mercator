@@ -132,7 +132,7 @@ class CVESearch extends Command
                             // Log::debug('CVESearch - check <' . $name . '> in <' . $text . '>');
                             if (str_contains($text, $name)) {
                                 Log::debug('CVESearch - found ' . json_encode($cve));
-                                $message .= '<a href="' . $provider . "/vuln/" . $cve->cveMetadata->cveId .'">' . $cve->cveMetadata->cveId .'</a>'. ' - ';
+                                $message .= '<a href="' . $provider . '/vuln/' . $cve->cveMetadata->cveId .'">' . $cve->cveMetadata->cveId .'</a>'. ' - ';
                                 $message .= '<b>' . $name . ' </b> : <b>' . $cve->cveMetadata->cveId . ' </b> - ' . $text . '<br>';
                                 $cveCount++;
                             }

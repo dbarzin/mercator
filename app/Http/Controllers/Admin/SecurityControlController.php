@@ -93,7 +93,6 @@ class SecurityControlController extends Controller
             }
         }
 
-
         $source = $request->get('source');
         if (str_starts_with($source, 'APP_')) {
             $app = MApplication::where('id', substr($source, 4))->get()->first();
