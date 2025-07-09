@@ -57,12 +57,12 @@
                     <tr>
                         <td colspan="3">
                     <a href="#" onclick="network.deleteSelected()" class="command">
-                        <i class="fas fa-minus-circle"></i>
+                        <i class="bi bi-dash-circle"></i>
                         {{ trans("cruds.report.explorer.delete") }}
                     </a>
                     &nbsp;
                     <a href="#" onclick="nodes.clear(); edges.clear(); network.redraw();" class="command">
-                        <i class="fas fa-repeat"></i>
+                        <i class="bi bi-arrow-repeat"></i>
                         {{ trans("cruds.report.explorer.reload") }}
                     </a>
                     <input type="checkbox" id="physicsCheckbox" class="command" checked>
