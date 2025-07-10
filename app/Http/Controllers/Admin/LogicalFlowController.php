@@ -26,7 +26,24 @@ class LogicalFlowController extends Controller
     {
         abort_if(Gate::denies('logical_flow_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $logicalFlows = LogicalFlow::orderBy('name')->get();
+        $logicalFlows = LogicalFlow::
+            with(
+                'router',
+                'logicalServerSource',
+                'peripheralSource',
+                'physicalServerSource',
+                'storageDeviceSource',
+                'workstationSource',
+                'physicalSecurityDeviceSource',
+                'logicalServerDest',
+                'peripheralDest',
+                'physicalServerDest',
+                'storageDeviceDest',
+                'workstationDest',
+                'physicalSecurityDeviceDest'
+                )
+            ->orderby('name')
+            ->get();
 
         return view('admin.logicalFlows.index', compact('logicalFlows'));
     }
