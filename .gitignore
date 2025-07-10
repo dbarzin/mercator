@@ -44,3 +44,5 @@ vendor/
 *.xlsx
 tests/Browser/console/*.log
 docker-compose/PV/mercator/db.sqlite
+_helm_chart/chart/charts
+_helm_chart/chart/Chart.lock
