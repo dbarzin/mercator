@@ -71,7 +71,7 @@ class LogicalFlow extends Model
         return $this->belongsTo(Peripheral::class, 'peripheral_source_id');
     }
 
-    public function pysicalServerSource(): BelongsTo
+    public function physicalServerSource(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_source_id');
     }
@@ -103,7 +103,7 @@ class LogicalFlow extends Model
         return $this->belongsTo(Peripheral::class, 'peripheral_dest_id');
     }
 
-    public function pysicalServerDest(): BelongsTo
+    public function physicalServerDest(): BelongsTo
     {
         return $this->belongsTo(PhysicalServer::class, 'physical_server_dest_id');
     }

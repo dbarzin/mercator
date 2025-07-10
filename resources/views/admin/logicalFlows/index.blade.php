@@ -102,7 +102,7 @@
                                     </a>)
                                 @elseif ($logicalFlow->physical_server_source_id!==null)
                                     {{ $logicalFlow->physicalServerSource->address_ip }}
-                                    (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerSource->id) }}">
+                                    (<a href="{{ route('admin.physical-servers.show',$logicalFlow->physicalServerSource->id) }}">
                                     {{ $logicalFlow->physicalServerSource->name }}
                                     </a>)
                                 @elseif ($logicalFlow->storage_device_source_id!==null)
@@ -140,7 +140,7 @@
                                     </a>)
                                 @elseif ($logicalFlow->physical_server_dest_id!==null)
                                     {{ $logicalFlow->physicalServerDest->address_ip }}
-                                    (<a href="{{ route('admin.physical-server.show',$logicalFlow->physicalServerDest->id) }}">
+                                    (<a href="{{ route('admin.physical-servers.show',$logicalFlow->physicalServerDest->id) }}">
                                     {{ $logicalFlow->physicalServerDest->name }}
                                     </a>)
                                 @elseif ($logicalFlow->storage_device_dest_id!==null)
