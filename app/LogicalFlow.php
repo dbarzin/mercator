@@ -125,9 +125,12 @@ class LogicalFlow extends Model
 
     /* '*~-.,¸¸.-~·*'¨¯'*~-.,¸¸.-~·*'¨¯ IP ¯¨'*·~-.¸¸,.-~*''*~-.,¸¸.-~·*'¨¯ */
 
-    public function isSource(string $ip): bool
+    public function isSource(?string $ip): bool
     {
-        return $this->contains($this->source_ip_range, $ip);
+        return
+            ($this->source_ip_range!==null) &&
+            ($ip!==null) &&
+            $this->contains($this->source_ip_range, $ip);
     }
 
     public function isDestination(string $ip): bool
