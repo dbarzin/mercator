@@ -133,9 +133,12 @@ class LogicalFlow extends Model
             $this->contains($this->source_ip_range, $ip);
     }
 
-    public function isDestination(string $ip): bool
+    public function isDestination(?string $ip): bool
     {
-        return $this->contains($this->dest_ip_range, $ip);
+        return
+            ($this->dest_ip_range!==null) &&
+            ($ip!==null) &&
+            $this->contains($this->dest_ip_range, $ip);
     }
 
     public function router(): BelongsTo
