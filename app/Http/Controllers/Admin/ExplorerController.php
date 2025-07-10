@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+// Models
 use App\LogicalFlow;
 use App\Router;
 use App\Subnetwork;
+use App\PhysicalLink;
+// Framework
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -250,64 +253,17 @@ class ExplorerController extends Controller
         }
 
         // PhysicalLink
-        $links = DB::table('physical_links')->whereNull('deleted_at')->get();
+        $links = PhysicalLink::All();
         foreach ($links as $link) {
-            if ($link->peripheral_src_id !== null) {
-                $src_id = 'PERIF_' . $link->peripheral_src_id;
-            } elseif ($link->phone_src_id !== null) {
-                $src_id = 'PHONE_' . $link->phone_src_id;
-            } elseif ($link->physical_router_src_id !== null) {
-                $src_id = 'PROUTER_' . $link->physical_router_src_id;
-            } elseif ($link->physical_security_device_src_id !== null) {
-                $src_id = 'SECURITY_' . $link->physical_security_device_src_id;
-            } elseif ($link->physical_server_src_id !== null) {
-                $src_id = 'PSERVER_' . $link->physical_server_src_id;
-            } elseif ($link->physical_switch_src_id !== null) {
-                $src_id = 'SWITCH_' . $link->physical_switch_src_id;
-            } elseif ($link->storage_device_src_id !== null) {
-                $src_id = 'STORAGE_' . $link->storage_device_src_id;
-            } elseif ($link->wifi_terminal_src_id !== null) {
-                $src_id = 'WIFI_' . $link->wifi_terminal_src_id;
-            } elseif ($link->workstation_src_id !== null) {
-                $src_id = 'WORK_' . $link->workstation_src_id;
-            } elseif ($link->logical_server_src_id !== null) {
-                $src_id = 'LSERVER_' . $link->logical_server_src_id;
-            } elseif ($link->network_switch_src_id !== null) {
-                $src_id = 'LSWITCH_' . $link->network_switch_src_id;
-            } elseif ($link->router_src_id !== null) {
-                $src_id = 'ROUTER_' . $link->router_src_id;
-            } else {
+            // Get Source
+            $src_id = $link->sourceId();
+            if ($src_id===null)
                 continue;
-            }
-
-            if ($link->peripheral_dest_id !== null) {
-                $dest_id = 'PERIF_' . $link->peripheral_dest_id;
-            } elseif ($link->phone_dest_id !== null) {
-                $dest_id = 'PHONE_' . $link->phone_dest_id;
-            } elseif ($link->physical_router_dest_id !== null) {
-                $dest_id = 'PROUTER_' . $link->physical_router_dest_id;
-            } elseif ($link->physical_security_device_dest_id !== null) {
-                $dest_id = 'SECURITY_' . $link->physical_security_device_dest_id;
-            } elseif ($link->physical_server_dest_id !== null) {
-                $dest_id = 'PSERVER_' . $link->physical_server_dest_id;
-            } elseif ($link->physical_switch_dest_id !== null) {
-                $dest_id = 'SWITCH_' . $link->physical_switch_dest_id;
-            } elseif ($link->storage_device_dest_id !== null) {
-                $dest_id = 'STORAGE_' . $link->storage_device_dest_id;
-            } elseif ($link->wifi_terminal_dest_id !== null) {
-                $dest_id = 'WIFI_' . $link->wifi_terminal_dest_id;
-            } elseif ($link->workstation_dest_id !== null) {
-                $dest_id = 'WORK_' . $link->workstation_dest_id;
-            } elseif ($link->logical_server_dest_id !== null) {
-                $dest_id = 'LSERVER_' . $link->logical_server_dest_id;
-            } elseif ($link->network_switch_dest_id !== null) {
-                $dest_id = 'LSWITCH_' . $link->network_switch_dest_id;
-            } elseif ($link->router_dest_id !== null) {
-                $dest_id = 'ROUTER_' . $link->router_dest_id;
-            } else {
+            // Get Destination
+            $dest_id = $link->destinationId();
+            if ($dest_id===null)
                 continue;
-            }
-
+            // Add link
             $this->addPhysicalLinkEdge($edges, $src_id, $dest_id);
         }
 

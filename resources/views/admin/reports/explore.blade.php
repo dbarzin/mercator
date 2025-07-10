@@ -137,30 +137,30 @@
             var target_node = _nodes.get(edge.attachedNodeId);
             // check node exists
             if (target_node !== undefined) {
-                    if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id, edge.name).length==0)) {
-                        // console.log("add edge: ", new_node.id, " -> ", target_node.id);
-                        if (edge.edgeType === 'FLUX') {
-                            // console.log('edge.label=', edge.name)
-                            if (edge.edgeDirection === 'TO') {
-                                if (edge.bidirectional)
-                                    edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
-                                else
-                                    edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
-                            } else if (edge.edgeDirection === 'FROM') {
-                                if (edge.bidirectional)
-                                    edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
-                                else
-                                    edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
-                            }
-                        } else if(edge.edgeType === 'CABLE') {
-                            edges.add({ from: params.nodes[0], to: edge.attachedNodeId, color:'blue', width: 5 });
-                        } else if (edge.edgeType === 'LINK') {
-                            // do not add links if "network infrastructure" is selected
-                            if (!$('#filters').val().includes("7"))
-                                edges.add({ from: new_node.id, to: target_node.id });
+                if ((nodes.get(target_node.id)!=null)&&(exists(new_node.id, target_node.id, edge.name).length==0)) {
+                    // console.log("add edge: ", new_node.id, " -> ", target_node.id);
+                    if (edge.edgeType === 'FLUX') {
+                        // console.log('edge.label=', edge.name)
+                        if (edge.edgeDirection === 'TO') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}, to: {enabled: true, type: 'arrow'}} });
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {to: {enabled: true, type: 'arrow'}} });
+                        } else if (edge.edgeDirection === 'FROM') {
+                            if (edge.bidirectional)
+                                edges.add({ label: edge.name, from: target_node.id, to: new_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'},to: {enabled: true, type: 'arrow'}} })
+                            else
+                                edges.add({ label: edge.name, from: new_node.id, to: target_node.id, length:200, arrows: {from: {enabled: true, type: 'arrow'}} })
                         }
+                    } else if(edge.edgeType === 'CABLE') {
+                        edges.add({ from: new_node.id, to: edge.attachedNodeId, color:'blue', width: 5 });
+                    } else if (edge.edgeType === 'LINK') {
+                        // do not add links if "network infrastructure" is selected
+                        if (!$('#filters').val().includes("7"))
+                            edges.add({ from: new_node.id, to: target_node.id });
                     }
                 }
+            }
 
         }
         // redraw
