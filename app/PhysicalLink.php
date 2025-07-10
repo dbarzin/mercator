@@ -33,7 +33,7 @@ class PhysicalLink extends Model
         'deleted_at',
     ];
 
-    // Sources
+    /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅  Sources  ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
     public function peripheralSrc(): BelongsTo
     {
@@ -95,7 +95,7 @@ class PhysicalLink extends Model
         return $this->belongsTo(LogicalServer::class, 'logical_server_src_id');
     }
 
-    // Destinations
+    /* ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ Destinations ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅ */
 
     public function peripheralDest(): BelongsTo
     {
@@ -156,4 +156,66 @@ class PhysicalLink extends Model
     {
         return $this->belongsTo(LogicalServer::class, 'logical_server_dest_id');
     }
+
+    // -------------------------------------------------------------------
+
+    public function sourceId() : ?string {
+        if ($this->peripheral_src_id !== null) {
+            return 'PERIF_' . $this->peripheral_src_id;
+        } elseif ($this->phone_src_id !== null) {
+            return 'PHONE_' . $this->phone_src_id;
+        } elseif ($this->physical_router_src_id !== null) {
+            return 'PROUTER_' . $this->physical_router_src_id;
+        } elseif ($this->physical_security_device_src_id !== null) {
+            return 'SECURITY_' . $this->physical_security_device_src_id;
+        } elseif ($this->physical_server_src_id !== null) {
+            return 'PSERVER_' . $this->physical_server_src_id;
+        } elseif ($this->physical_switch_src_id !== null) {
+            return 'SWITCH_' . $this->physical_switch_src_id;
+        } elseif ($this->storage_device_src_id !== null) {
+            return 'STORAGE_' . $this->storage_device_src_id;
+        } elseif ($this->wifi_terminal_src_id !== null) {
+            return 'WIFI_' . $this->wifi_terminal_src_id;
+        } elseif ($this->workstation_src_id !== null) {
+            return 'WORK_' . $this->workstation_src_id;
+        } elseif ($this->logical_server_src_id !== null) {
+            return 'LSERVER_' . $this->logical_server_src_id;
+        } elseif ($this->network_switch_src_id !== null) {
+            return 'LSWITCH_' . $this->network_switch_src_id;
+        } elseif ($this->router_src_id !== null) {
+            return 'ROUTER_' . $this->router_src_id;
+        } else
+            return null;
+    }
+
+    public function destinationId(): ?string {
+        // dd($this, $this->workstation_dest_id, $this->workstation_dest_id!==null);
+        if ($this->peripheral_dest_id !== null) {
+            return 'PERIF_' . $this->peripheral_dest_id;
+        } elseif ($this->phone_dest_id !== null) {
+            return 'PHONE_' . $this->phone_dest_id;
+        } elseif ($this->physical_router_dest_id !== null) {
+            return 'PROUTER_' . $this->physical_router_dest_id;
+        } elseif ($this->physical_security_device_dest_id !== null) {
+            return 'SECURITY_' . $this->physical_security_device_dest_id;
+        } elseif ($this->physical_server_dest_id !== null) {
+            return 'PSERVER_' . $this->physical_server_dest_id;
+        } elseif ($this->physical_switch_dest_id !== null) {
+            return 'SWITCH_' . $this->physical_switch_dest_id;
+        } elseif ($this->storage_device_dest_id !== null) {
+            return 'STORAGE_' . $this->storage_device_dest_id;
+        } elseif ($this->wifi_terminal_dest_id !== null) {
+            return 'WIFI_' . $this->wifi_terminal_dest_id;
+        } elseif ($this->workstation_dest_id !== null) {
+            return 'WORK_' . $this->workstation_dest_id;
+        } elseif ($this->logical_server_dest_id !== null) {
+            return 'LSERVER_' . $this->logical_server_dest_id;
+        } elseif ($this->network_switch_dest_id !== null) {
+            return 'LSWITCH_' . $this->network_switch_dest_id;
+        } elseif ($this->router_dest_id !== null) {
+            return 'ROUTER_' . $this->router_dest_id;
+        } else
+            return null;
+    }
+
 }

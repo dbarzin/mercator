@@ -4,6 +4,11 @@
     <a class="btn btn-default" href="{{ route('admin.links.index') }}">
         {{ trans('global.back_to_list') }}
     </a>
+
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node={{$link->sourceId()}},{{$link->destinationId()}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('physical_link_edit')
         <a class="btn btn-info" href="{{ route('admin.links.edit', $link->id) }}">
             {{ trans('global.edit') }}
