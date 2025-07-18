@@ -27,13 +27,21 @@ class ActivityController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_create'),
+            Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.activities.create', compact('operations', 'processes', 'applications'));
+        $types = ActivityImpact::select('impact_type')
+            ->whereNotNull('impact_type')
+            ->distinct()
+            ->orderBy('impact_type')
+            ->pluck('impact_type');
+
+        return view('admin.activities.create',
+            compact('operations', 'processes', 'applications', 'types'));
     }
 
     public function store(StoreActivityRequest $request)
@@ -42,6 +50,20 @@ class ActivityController extends Controller
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
         $activity->applications()->sync($request->input('applications', []));
+
+        // Save impact_type - gravity
+        $impact_types = $request['impact_types'];
+        $severities = $request['severities'];
+
+        if ($impact_types !== null) {
+            for ($i = 0; $i < count($impact_types); $i++) {
+                $activityImpact = new ActivityImpact();
+                $activityImpact->activity_id = $activity->id;
+                $activityImpact->impact_type = $impact_types[$i];
+                $activityImpact->severity = $severities[$i];
+                $activityImpact->save();
+            }
+        }
 
         return redirect()->route('admin.activities.index');
     }
@@ -54,7 +76,11 @@ class ActivityController extends Controller
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
         $applications = MApplication::all()->sortBy('name')->pluck('name', 'id');
 
-        $types = ActivityImpact::select('impact_type')->whereNotNull('impact_type')->distinct()->orderBy('impact_type')->pluck('impact_type');
+        $types = ActivityImpact::select('impact_type')
+            ->whereNotNull('impact_type')
+            ->distinct()
+            ->orderBy('impact_type')
+            ->pluck('impact_type');
 
         $activity->load('operations', 'processes', 'applications', 'impacts');
 
@@ -66,7 +92,6 @@ class ActivityController extends Controller
 
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
-        //dd($request->all());
         $activity->update($request->all());
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
@@ -77,8 +102,8 @@ class ActivityController extends Controller
 
         // Save impact_type - gravity
         $impact_types = $request['impact_types'];
-
         $severities = $request['severities'];
+
         if ($impact_types !== null) {
             for ($i = 0; $i < count($impact_types); $i++) {
                 $activityImpact = new ActivityImpact();

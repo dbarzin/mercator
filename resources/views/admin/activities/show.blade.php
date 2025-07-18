@@ -109,13 +109,13 @@
                         {{ trans('cruds.activity.fields.recovery_time_objective') }}
                     </th>
                     <td width="20%">
-                        {{ $activity->recovery_time_objective }}
+                        {{ substr($activity->recovery_time_objective,0,5) }}
                     </td>
                     <th width="10%">
                         {{ trans('cruds.activity.fields.recovery_point_objective') }}
                     </th>
                     <td>
-                        {{ $activity->recovery_point_objective }}
+                        {{ substr($activity->recovery_point_objective,0,5) }}
                     </td>
                 </tr>
                 <tr>
@@ -123,15 +123,15 @@
                         {{ trans('cruds.activity.fields.maximum_tolerable_downtime') }}
                     </th>
                     <td width="20%">
-                        {{ $activity->maximum_tolerable_downtime }}
+                        {{ substr($activity->maximum_tolerable_downtime,0,5) }}
                     </td>
                     <th width="10%">
                         {{ trans('cruds.activity.fields.maximum_tolerable_data_loss') }}
                     </th>
                     <td>
-                        {{ $activity->maximum_tolerable_data_loss }}
+                        {{ substr($activity->maximum_tolerable_data_loss,0,5) }}
                     </td>
-                </td>
+                </tr>
             </tbody>
         </table>
         <b>{{  trans('cruds.activity.impacts') }}</b>

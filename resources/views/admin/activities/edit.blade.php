@@ -104,15 +104,17 @@
                 </div>
             </div>
         </div>
+        <!---------------------------------------------------------------------------------------------------->
         <div class="card-header">
             {{ trans('cruds.activity.bia') }}
         </div>
+        <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
             <div class='row'>
                 <div class="col-3">
                     <div class="form-group">
                         <label for="recovery_time_objective">{{ trans('cruds.activity.fields.recovery_time_objective') }}</label>
-                        <input class="form-control {{ $errors->has('recovery_time_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_time_objective" id="recovery_time_objective" value="{{ old('name', $activity->recovery_time_objective) }}" placeholder="HH:MM" maxlength=5/>
+                        <input class="form-control {{ $errors->has('recovery_time_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_time_objective" id="recovery_time_objective" value="{{ old('recovery_time_objective', substr($activity->recovery_time_objective, 0, 5)) }}" placeholder="HH:MM" maxlength=5 />
                         @if($errors->has('recovery_time_objective'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('recovery_time_objective') }}
@@ -124,7 +126,7 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="recovery_point_objective">{{ trans('cruds.activity.fields.recovery_point_objective') }}</label>
-                        <input class="form-control {{ $errors->has('recovery_point_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_point_objective" id="recovery_point_objective" value="{{ old('name', $activity->recovery_point_objective) }}" placeholder="HH:MM" maxlength=5/>
+                        <input class="form-control {{ $errors->has('recovery_point_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_point_objective" id="recovery_point_objective" value="{{ old('recovery_point_objective', substr($activity->recovery_point_objective, 0, 5)) }}"  placeholder="HH:MM:SS" maxlength=8/>
                         @if($errors->has('recovery_point_objective'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('recovery_point_objective') }}
@@ -138,7 +140,7 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="maximum_tolerable_downtime">{{ trans('cruds.activity.fields.maximum_tolerable_downtime') }}</label>
-                        <input class="form-control {{ $errors->has('maximum_tolerable_downtime') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_downtime" id="maximum_tolerable_downtime" value="{{ old('name', $activity->maximum_tolerable_downtime) }}" placeholder="HH:MM" maxlength=5/>
+                        <input class="form-control {{ $errors->has('maximum_tolerable_downtime') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_downtime" id="maximum_tolerable_downtime" value="{{ old('maximum_tolerable_downtime', substr($activity->maximum_tolerable_downtime,0,5)) }}" placeholder="HH:MM:SS" maxlength=8/>
                         @if($errors->has('maximum_tolerable_downtime'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('maximum_tolerable_downtime') }}
@@ -150,7 +152,7 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="name">{{ trans('cruds.activity.fields.maximum_tolerable_data_loss') }}</label>
-                        <input class="form-control {{ $errors->has('maximum_tolerable_data_loss') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_data_loss" id="maximum_tolerable_data_loss" value="{{ old('name', $activity->maximum_tolerable_data_loss) }}" placeholder="HH:MM" maxlength=5/>
+                        <input class="form-control {{ $errors->has('maximum_tolerable_data_loss') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_data_loss" id="maximum_tolerable_data_loss" value="{{ old('maximum_tolerable_data_loss', substr($activity->maximum_tolerable_data_loss,0,5)) }}" placeholder="HH:MM:SS" maxlength=8/>
                         @if($errors->has('maximum_tolerable_data_loss'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('maximum_tolerable_data_loss') }}
@@ -197,7 +199,7 @@
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                    </td>
+                    </tr>
                     <tr>
                         <th colspan="2">
                             Liste des impactes
@@ -245,42 +247,38 @@
 
 @section('scripts')
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
-
-       //-----------------------------------------
-        $("#dynamic-ar").click(function () {
-            console.log($("#inputValueField").val());
-            if (($("#inputTypeField").val()!='')&&($("#inputValueField").val()!=-1)) {
-                input = $("#dynamicAddRemove")
-                    .append(
-                        '<tr>' +
-                        '<td><div class="col"><input type="impact_type" name="impact_types[]" value="' + $("#inputTypeField").val() + '" class="form-control" /></div></td>'+
-                        '<td>'+
-                        '<select class="form-control select2 risk" name="severities[]">'+
-                        '    <option value="-1"></option>'+
-                        '    <option value="0" '+ ($("#inputValueField").val()=='0' ? 'selected' :'') +'>{{ trans('global.none') }}</option>'+
-                        '    <option value="1" '+ ($("#inputValueField").val()=='1' ? 'selected' :'') +'>{{ trans('global.low') }}</option>'+
-                        '    <option value="2" '+ ($("#inputValueField").val()=='2' ? 'selected' :'') +'>{{ trans('global.medium') }}</option>'+
-                        '    <option value="3" '+ ($("#inputValueField").val()=='3' ? 'selected' :'') +'>{{ trans('global.strong') }}</option>'+
-                        '    <option value="4" '+ ($("#inputValueField").val()=='4' ? 'selected' :'') +'>{{ trans('global.very_strong') }}</option>'+
-                        '</select>'+
-                        '</td>'+
-                        '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>'+
-                        '</tr>');
+    $("#dynamic-ar").click(function () {
+        console.log($("#inputValueField").val());
+        if (($("#inputTypeField").val()!='')&&($("#inputValueField").val()!=-1)) {
+            input = $("#dynamicAddRemove")
+                .append(
+                    '<tr>' +
+                    '<td><div class="col"><input type="impact_type" name="impact_types[]" value="' + $("#inputTypeField").val() + '" class="form-control" /></div></td>'+
+                    '<td>'+
+                    '<select class="form-control select2 risk" name="severities[]">'+
+                    '    <option value="-1"></option>'+
+                    '    <option value="0" '+ ($("#inputValueField").val()=='0' ? 'selected' :'') +'>{{ trans('global.none') }}</option>'+
+                    '    <option value="1" '+ ($("#inputValueField").val()=='1' ? 'selected' :'') +'>{{ trans('global.low') }}</option>'+
+                    '    <option value="2" '+ ($("#inputValueField").val()=='2' ? 'selected' :'') +'>{{ trans('global.medium') }}</option>'+
+                    '    <option value="3" '+ ($("#inputValueField").val()=='3' ? 'selected' :'') +'>{{ trans('global.strong') }}</option>'+
+                    '    <option value="4" '+ ($("#inputValueField").val()=='4' ? 'selected' :'') +'>{{ trans('global.very_strong') }}</option>'+
+                    '</select>'+
+                    '</td>'+
+                    '<td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td>'+
+                    '</tr>');
 
 
 
-                $('#inputTypeField').val(null).trigger('change');
-                $('#inputValueField').val(null).trigger('change');
-            }
-        });
-
-        $(document).on('click', '.remove-input-field', function () {
-            $(this).parents('tr').remove();
-        });
-
+            $('#inputTypeField').val(null).trigger('change');
+            $('#inputValueField').val(null).trigger('change');
+        }
     });
-</script>
 
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+
+});
+</script>
 @endsection

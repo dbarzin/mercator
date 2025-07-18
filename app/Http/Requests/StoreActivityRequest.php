@@ -31,6 +31,53 @@ class StoreActivityRequest extends FormRequest
             'operations' => [
                 'array',
             ],
+
+            'recovery_time_objective' => ['nullable', 'regex:/^\d{1,3}:[0-5]\d$/'],
+            'maximum_tolerable_downtime' => [
+                'nullable',
+                'regex:/^\d{1,3}:[0-5]\d$/',
+                function ($attribute, $value, $fail) {
+                    $rto = $this->input('recovery_time_objective');
+                    $mtd = $value;
+
+                    if ($rto && $mtd) {
+                        $rtoParts = explode(':', $rto);
+                        $mtdParts = explode(':', $mtd);
+                        // Convertit HH:MM en minutes
+                        [$h1, $m1] = explode(':', $rto);
+                        [$h2, $m2] = explode(':', $mtd);
+                        $rtoMinutes = (int)$h1 * 60 + (int)$m1;
+                        $mtdMinutes = (int)$h2 * 60 + (int)$m2;
+
+                        if ($rtoMinutes >= $mtdMinutes) {
+                            $fail('recovery_time_objective >= maximum_tolerable_downtime');
+                        }
+                    }
+                }
+            ],
+
+            'recovery_point_objective' => ['nullable', 'regex:/^\d{1,3}:[0-5]\d$/'],
+            'maximum_tolerable_data_loss' => [
+                'nullable',
+                'regex:/^\d{1,3}:[0-5]\d$/',
+                function ($attribute, $value, $fail) {
+                    $rpo = $this->input('recovery_point_objective');
+                    $mtdl = $value;
+
+                    if ($rpo && $mtdl) {
+                        // Convertit HH:MM en minutes
+                        [$h1, $m1] = explode(':', $rpo);
+                        [$h2, $m2] = explode(':', $mtdl);
+                        $rpoMinutes = (int)$h1 * 60 + (int)$m1;
+                        $mtdlMinutes = (int)$h2 * 60 + (int)$m2;
+
+                        if ($rpoMinutes >= $mtdlMinutes) {
+                            $fail('recovery_point_objective >= maximum_tolerable_data_loss');
+                        }
+                    }
+                }
+            ],
+
         ];
     }
 }
