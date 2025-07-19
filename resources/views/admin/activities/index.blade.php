@@ -1,14 +1,27 @@
 @extends('layouts.admin')
 @section('content')
-@can('activity_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.activities.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.activity.title_singular') }}
-            </a>
-        </div>
+<div style="margin-bottom: 10px;" class="row">
+    @can('activity_create')
+    <div class="col-lg-6">
+        <a id="btn-new" class="btn btn-success" href="{{ route('admin.activities.create') }}">
+            {{ trans('global.add') }} {{ trans('cruds.activity.title_singular') }}
+        </a>
     </div>
-@endcan
+    @endcan
+    @can('activity_show')
+    <div class="col-lg-6 text-end">
+        <a id="btn-export" class="btn btn-primary" href="{{ route('admin.report.view.rto') }}">
+            <i class="bi bi-download"></i>
+            {{ trans('cruds.activity.bia') }}
+        </a>
+
+        <a id="btn-export" class="btn btn-primary" href="{{ route('admin.report.view.impacts') }}">
+            <i class="bi bi-download"></i>
+            {{ trans('cruds.activity.impacts') }}
+        </a>
+    </div>
+    @endcan
+</div>
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.activity.title_singular') }} {{ trans('global.list') }}

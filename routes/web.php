@@ -313,6 +313,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('report/logical_infrastructure', [Admin\ReportController::class,'logicalInfrastructure'])->name('report.view.logical-infrastructure');
     Route::get('report/physical_infrastructure', [Admin\ReportController::class,'physicalInfrastructure'])->name('report.view.physical-infrastructure');
     Route::get('report/network_infrastructure', [Admin\ReportController::class,'networkInfrastructure'])->name('report.view.network-infrastructure');
+    Route::get('report/impacts', [Admin\ReportController::class,'impacts'])->name('report.view.impacts');
+    Route::get('report/rto', [Admin\ReportController::class,'rto'])->name('report.view.rto');
 
     // Experimental views
     Route::get('report/heatmap', [Admin\HeatmapController::class,'index'])->name('report.view.heatmap');

@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 // GDPR
-use App\Activity;
 // ecosystem
-use App\Actor;
-use App\AdminUser;
+use App\Entity;
+use App\Relation;
 // information system
-use App\Annuaire;
-use App\ApplicationBlock;
-use App\ApplicationModule;
+use App\Activity;
+use App\ActivityImpact;
+use App\Actor;
+use App\Process;
+use App\Task;
+use App\Operation;
 // Application
+use App\ApplicationBlock;
+use App\MApplication;
 use App\ApplicationService;
-use App\Bay;
-use App\Building;
+use App\ApplicationModule;
 use App\Certificate;
 use App\Cluster;
 use App\Container;
@@ -22,44 +25,42 @@ use App\Database;
 use App\DataProcessing;
 use App\DhcpServer;
 use App\Dnsserver;
-use App\DomaineAd;
-use App\Entity;
 use App\ExternalConnectedEntity;
 // Administration
+use App\Annuaire;
 use App\Flux;
 use App\ForestAd;
-use App\Gateway;
-use App\Http\Controllers\Controller;
+use App\DomaineAd;
+use App\AdminUser;
+use App\ZoneAdmin;
 // Logique
 use App\Information;
 use App\LogicalServer;
 use App\MacroProcessus;
-use App\MApplication;
 use App\Network;
 use App\NetworkSwitch;
-use App\Operation;
-use App\Peripheral;
-use App\Phone;
-use App\PhysicalLink;
+use App\Gateway;
+use App\Vlan;
 // Physique
 use App\PhysicalRouter;
 use App\PhysicalSecurityDevice;
 use App\PhysicalServer;
 use App\PhysicalSwitch;
-use App\Process;
-use App\Relation;
+use App\Building;
+use App\Site;
+use App\Bay;
 use App\Router;
 use App\SecurityDevice;
-use App\Site;
 use App\StorageDevice;
 use App\Subnetwork;
-use App\Task;
-use App\Vlan;
+use App\PhysicalLink;
 use App\WifiTerminal;
 use App\Workstation;
-use App\ZoneAdmin;
+use App\Peripheral;
+use App\Phone;
 // Laravel
 use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -67,6 +68,10 @@ use Illuminate\Support\Facades\Log;
 // see : https://phpspreadsheet.readthedocs.io/en/latest/topics/recipes/
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpWord\Element\Section;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class ReportController extends Controller
 {
@@ -3563,5 +3568,134 @@ class ReportController extends Controller
             return chr(ord('A') + $i);
         }
         return 'A' . chr(ord('A') + $i - 26);
+    }
+
+    public function impacts()
+    {
+        // 1. Récupérer toutes les activités et impacts
+        $activities = Activity::with('impacts')->get();
+
+        // 2. Extraire tous les types d'impact existants
+        $impactTypes = ActivityImpact::select('impact_type')->distinct()->pluck('impact_type')->sort()->values()->toArray();
+
+        // Style de l'en-tête
+        $boldFont = ['font' => ['bold' => true]];
+        $centered = ['alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]];
+
+        // 3. Créer une nouvelle feuille Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // 4. Écrire l'en-tête (ligne 1)
+        $sheet->setCellValue('A1', 'Activité');
+        $sheet->getStyle('A1')->applyFromArray($boldFont);
+        foreach ($impactTypes as $index => $type) {
+            $cell = chr(66 + $index) . '1';
+            $sheet->setCellValue($cell, ucfirst($type));
+            $sheet->getStyle($cell)->applyFromArray($boldFont);
+            $sheet->getStyle($cell)->applyFromArray($centered);
+        }
+
+        // 5. Remplir les lignes
+        foreach ($activities as $rowIndex => $activity) {
+            $row = $rowIndex + 2;
+            $sheet->setCellValue('A' . $row, $activity->name);
+
+            foreach ($impactTypes as $colIndex => $type) {
+                $severity = $activity->impacts
+                    ->firstWhere('impact_type', $type)
+                    ->severity ?? null;
+
+                if ($severity !== null) {
+                    $col = chr(66 + $colIndex);
+                    $cell = $col . $row;
+                    $sheet->setCellValue($cell, $severity);
+                    $this->addSecurityNeedColor($sheet, $cell, (int)$severity);
+                    $sheet->getStyle($cell)->applyFromArray($centered);
+                }
+            }
+        }
+
+        // 6. Générer le fichier Excel en téléchargement
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'impacts-' .Carbon::today()->format('Ymd') .'.xlsx';
+
+        // 7. Envoyer en réponse HTTP
+        return response()->streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
+    }
+
+    public function rto()
+    {
+        $rows = [];
+
+        // Charger les applications avec leurs activités
+        $applications = MApplication::with('activities')->get();
+
+        foreach ($applications as $app) {
+            foreach ($app->activities as $activity) {
+                $rows[] = [
+                    'application' => $app->name,
+                    'activity' => $activity->name,
+                    'rto' => isset($activity->recovery_time_objective) ? substr($activity->recovery_time_objective, 0, 5) : '',
+                    'mtd' => substr($activity->maximum_tolerable_downtime, 0, 5),
+                ];
+            }
+        }
+
+        // Tri par RTO si dispo, sinon par MTD app
+        usort($rows, function ($a, $b) {
+            $aTime = $a['rto'] ?: $a['mtd'];
+            $bTime = $b['rto'] ?: $b['mtd'];
+
+            return strcmp($aTime, $bTime);
+        });
+
+        // Création Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $headers = [
+            'Application',
+            'Activité',
+            'RTO',
+            'MTD',
+        ];
+
+        // Écrire l'en-tête
+        foreach ($headers as $colIndex => $title) {
+            $cell = chr(65 + $colIndex) . '1';
+            $sheet->setCellValue($cell, $title);
+            $sheet->getStyle($cell)->getFont()->setBold(true);
+            $sheet->getStyle($cell)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        }
+
+        // Écrire les lignes
+        $rowNum = 2;
+        foreach ($rows as $data) {
+            $sheet->setCellValue("A{$rowNum}", $data['application']);
+            $sheet->setCellValue("B{$rowNum}", $data['activity']);
+            $sheet->setCellValue("C{$rowNum}", $data['rto']);
+            $sheet->setCellValue("D{$rowNum}", $data['mtd']);
+
+            foreach (range('A', 'E') as $col) {
+                $sheet->getStyle("{$col}{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            }
+
+            $rowNum++;
+        }
+
+        // Export
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'applications_by_activity.xlsx';
+
+        return response()->streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 }

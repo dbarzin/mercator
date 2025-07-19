@@ -43,8 +43,8 @@ class UpdateActivityRequest extends FormRequest
                         $mtdParts = explode(':', $mtd);
 
                         if (count($rtoParts) === 2 && count($mtdParts) === 2) {
-                            [$h1, $m1] = rtoParts;
-                            [$h2, $m2] = mtdParts;
+                            [$h1, $m1] = $rtoParts;
+                            [$h2, $m2] = $mtdParts;
                             $rtoMinutes = (int) $h1 * 60 + (int) $m1;
                             $mtdMinutes = (int) $h2 * 60 + (int) $m2;
 
@@ -69,8 +69,8 @@ class UpdateActivityRequest extends FormRequest
                         $mtdlParts = explode(':', $mtdl);
 
                         if (count($rpoParts) === 2 && count($mtdlParts) === 2) {
-                            [$h1, $m1] = rpoParts;
-                            [$h2, $m2] = mtdlParts;
+                            [$h1, $m1] = $rpoParts;
+                            [$h2, $m2] = $mtdlParts;
                             $rpoMinutes = (int) $h1 * 60 + (int) $m1;
                             $mtdlMinutes = (int) $h2 * 60 + (int) $m2;
 
