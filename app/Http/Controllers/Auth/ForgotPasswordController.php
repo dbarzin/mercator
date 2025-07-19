@@ -85,7 +85,8 @@ class ForgotPasswordController extends Controller
             $mail->Port = env('MAIL_PORT');               // TCP port to connect to
 
             // Recipients
-            $mail->setFrom(config('mercator-config.cve.mail-from'));
+            // $mail->setFrom(config('mercator-config.cve.mail-from'));
+            $mail->setFrom(env('MAIL_FROM_ADDRESS'));
             $mail->addAddress($request->email);
 
             // Content
