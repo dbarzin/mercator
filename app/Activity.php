@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -38,6 +39,10 @@ class Activity extends Model
         'transfert',
         'retention',
         'controls',
+        'recovery_time_objective',
+        'maximum_tolerable_downtime',
+        'recovery_point_objective',
+        'maximum_tolerable_data_loss',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,5 +61,10 @@ class Activity extends Model
     public function applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class)->orderBy('name');
+    }
+
+    public function impacts(): HasMany
+    {
+        return $this->hasMany(ActivityImpact::class)->orderBy('impact_type');
     }
 }

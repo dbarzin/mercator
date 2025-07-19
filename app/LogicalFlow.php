@@ -127,17 +127,15 @@ class LogicalFlow extends Model
 
     public function isSource(?string $ip): bool
     {
-        return
-            ($this->source_ip_range!==null) &&
-            ($ip!==null) &&
+        return ($this->source_ip_range !== null) &&
+            ($ip !== null) &&
             $this->contains($this->source_ip_range, $ip);
     }
 
     public function isDestination(?string $ip): bool
     {
-        return
-            ($this->dest_ip_range!==null) &&
-            ($ip!==null) &&
+        return ($this->dest_ip_range !== null) &&
+            ($ip !== null) &&
             $this->contains($this->dest_ip_range, $ip);
     }
 
