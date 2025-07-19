@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 // Models
-use App\LogicalFlow;
-use App\Router;
-use App\Subnetwork;
-use App\PhysicalLink;
-// Framework
 use App\Http\Controllers\Controller;
+use App\LogicalFlow;
+use App\PhysicalLink;
+use App\Router;
+// Framework
+use App\Subnetwork;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -257,12 +257,14 @@ class ExplorerController extends Controller
         foreach ($links as $link) {
             // Get Source
             $src_id = $link->sourceId();
-            if ($src_id===null)
+            if ($src_id === null) {
                 continue;
+            }
             // Get Destination
             $dest_id = $link->destinationId();
-            if ($dest_id===null)
+            if ($dest_id === null) {
                 continue;
+            }
             // Add link
             $this->addPhysicalLinkEdge($edges, $src_id, $dest_id);
         }

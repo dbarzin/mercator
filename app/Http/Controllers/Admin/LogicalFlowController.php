@@ -41,9 +41,9 @@ class LogicalFlowController extends Controller
                 'storageDeviceDest',
                 'workstationDest',
                 'physicalSecurityDeviceDest'
-                )
-            ->orderby('name')
-            ->get();
+            )
+                ->orderby('name')
+                ->get();
 
         return view('admin.logicalFlows.index', compact('logicalFlows'));
     }

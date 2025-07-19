@@ -27,8 +27,11 @@ class ActivityController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('activity_create'),
-            Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(
+            Gate::denies('activity_create'),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden'
+        );
 
         $operations = Operation::all()->sortBy('name')->pluck('name', 'id');
         $processes = Process::all()->sortBy('name')->pluck('name', 'id');
@@ -40,8 +43,10 @@ class ActivityController extends Controller
             ->orderBy('impact_type')
             ->pluck('impact_type');
 
-        return view('admin.activities.create',
-            compact('operations', 'processes', 'applications', 'types'));
+        return view(
+            'admin.activities.create',
+            compact('operations', 'processes', 'applications', 'types')
+        );
     }
 
     public function store(StoreActivityRequest $request)

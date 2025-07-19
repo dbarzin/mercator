@@ -23,14 +23,12 @@ class StoreActivityRequest extends FormRequest
                 'min:3',
                 'max:64',
                 'required',
-                Rule::unique('activities')->whereNull('deleted_at'),
+                Rule::unique('activities')
+                    ->ignore($this->route('activity')->id ?? $this->id)
+                    ->whereNull('deleted_at'),
             ],
-            'operations.*' => [
-                'integer',
-            ],
-            'operations' => [
-                'array',
-            ],
+            'operations.*' => [ 'integer' ],
+            'operations' => [ 'array' ],
 
             'recovery_time_objective' => ['nullable', 'regex:/^\d{1,3}:[0-5]\d$/'],
             'maximum_tolerable_downtime' => [
@@ -43,17 +41,19 @@ class StoreActivityRequest extends FormRequest
                     if ($rto && $mtd) {
                         $rtoParts = explode(':', $rto);
                         $mtdParts = explode(':', $mtd);
-                        // Convertit HH:MM en minutes
-                        [$h1, $m1] = explode(':', $rto);
-                        [$h2, $m2] = explode(':', $mtd);
-                        $rtoMinutes = (int)$h1 * 60 + (int)$m1;
-                        $mtdMinutes = (int)$h2 * 60 + (int)$m2;
 
-                        if ($rtoMinutes >= $mtdMinutes) {
-                            $fail('recovery_time_objective >= maximum_tolerable_downtime');
+                        if (count($rtoParts) === 2 && count($mtdParts) === 2) {
+                            [$h1, $m1] = rtoParts;
+                            [$h2, $m2] = mtdParts;
+                            $rtoMinutes = (int) $h1 * 60 + (int) $m1;
+                            $mtdMinutes = (int) $h2 * 60 + (int) $m2;
+
+                            if ($rtoMinutes >= $mtdMinutes) {
+                                $fail('recovery_time_objective >= maximum_tolerable_downtime');
+                            }
                         }
                     }
-                }
+                },
             ],
 
             'recovery_point_objective' => ['nullable', 'regex:/^\d{1,3}:[0-5]\d$/'],
@@ -65,17 +65,21 @@ class StoreActivityRequest extends FormRequest
                     $mtdl = $value;
 
                     if ($rpo && $mtdl) {
-                        // Convertit HH:MM en minutes
-                        [$h1, $m1] = explode(':', $rpo);
-                        [$h2, $m2] = explode(':', $mtdl);
-                        $rpoMinutes = (int)$h1 * 60 + (int)$m1;
-                        $mtdlMinutes = (int)$h2 * 60 + (int)$m2;
+                        $rpoParts = explode(':', $rpo);
+                        $mtdlParts = explode(':', $mtdl);
 
-                        if ($rpoMinutes >= $mtdlMinutes) {
-                            $fail('recovery_point_objective >= maximum_tolerable_data_loss');
+                        if (count($rpoParts) === 2 && count($mtdlParts) === 2) {
+                            [$h1, $m1] = rpoParts;
+                            [$h2, $m2] = mtdlParts;
+                            $rpoMinutes = (int) $h1 * 60 + (int) $m1;
+                            $mtdlMinutes = (int) $h2 * 60 + (int) $m2;
+
+                            if ($rpoMinutes >= $mtdlMinutes) {
+                                $fail('recovery_point_objective >= maximum_tolerable_data_loss');
+                            }
                         }
                     }
-                }
+                },
             ],
 
         ];
