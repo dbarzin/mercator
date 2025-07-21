@@ -30,7 +30,7 @@ return [
         ],
         'title' => 'Activités',
         'title_singular' => 'Activité',
-        'bia' => 'Analyse d’Impact sur l’Activité (BIA)',
+        'continuity_needs' => 'Besoins de continuité',
         'impacts' => 'Liste des impacts',
     ],
     'actor' => [

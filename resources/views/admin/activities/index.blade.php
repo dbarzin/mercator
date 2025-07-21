@@ -12,7 +12,7 @@
     <div class="col-lg-6 text-end">
         <a id="btn-export" class="btn btn-primary" href="{{ route('admin.report.view.rto') }}">
             <i class="bi bi-download"></i>
-            {{ trans('cruds.activity.bia') }}
+            {{ trans('cruds.activity.continuity_needs') }}
         </a>
 
         <a id="btn-export" class="btn btn-primary" href="{{ route('admin.report.view.impacts') }}">
