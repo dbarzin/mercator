@@ -32,7 +32,7 @@ return [
         ],
         'title' => 'Activities',
         'title_singular' => 'Activity',
-        'bia' => 'Business Impact Analysis (BIA)',
+        'continuity_needs' => 'Continuity needs',
         'impacts' => 'List of impacts',
     ],
     'actor' => [
