@@ -147,16 +147,20 @@
         <br>
         <div class="card">
             <div class="card-header">
-                BIA
+                {{ trans('cruds.report.lists.bia') }}
             </div>
             <div class="card-body">
                 <ul>
                     <li>
-                        <a href="{{ route('admin.report.view.rto') }}" target="_new">{{ trans('cruds.activity.continuity_needs') }}</a>
+                        <a href="{{ route('admin.report.view.rto') }}" target="_new">{{ trans('cruds.report.lists.continuity_needs') }}</a>
+                        <br>
+                        {{ trans('cruds.report.lists.continuity_needs_helper') }}
                         <br><br>
                     </li>
                     <li>
-                        <a href="{{ route('admin.report.view.impacts') }}" target="_new">{{ trans('cruds.activity.impacts') }}</a>
+                        <a href="{{ route('admin.report.view.impacts') }}" target="_new">{{ trans('cruds.report.lists.impacts') }}</a>
+                        <br>
+                        {{ trans('cruds.report.lists.impacts_helper') }}
                     </li>
             </div>
         </div>
