@@ -72,6 +72,7 @@
             </div>
         </div>
         <br>
+
         <div class="row">
 
         <div class="col-lg-6">
@@ -140,10 +141,27 @@
                         <br><br>
                     </li>
                   </ul>
-                </div>
-              </div>
-
-          </div>
+            </div>
+        </div>
+        @can('activity_show')
+        <br>
+        <div class="card">
+            <div class="card-header">
+                BIA
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a href="{{ route('admin.report.view.rto') }}" target="_new">{{ trans('cruds.activity.continuity_needs') }}</a>
+                        <br><br>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.report.view.impacts') }}" target="_new">{{ trans('cruds.activity.impacts') }}</a>
+                    </li>
+            </div>
+        </div>
+        @endcan
+        </div>
 
         <div class="col-lg-6">
 
