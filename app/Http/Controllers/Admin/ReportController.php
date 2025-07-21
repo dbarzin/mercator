@@ -3640,16 +3640,18 @@ class ReportController extends Controller
                 $rows[] = [
                     'application' => $app->name,
                     'activity' => $activity->name,
-                    'rto' => isset($activity->recovery_time_objective) ? substr($activity->recovery_time_objective, 0, 5) : '',
-                    'mtd' => substr($activity->maximum_tolerable_downtime, 0, 5),
+                    'recovery_time_objective' => substr($activity->recovery_time_objective, 0, 5),
+                    'maximum_tolerable_downtime' => substr($activity->maximum_tolerable_downtime, 0, 5),
+                    'recovery_point_objective' => substr($activity->recovery_point_objective, 0, 5),
+                    'maximum_tolerable_data_loss' => substr($activity->maximum_tolerable_data_loss, 0, 5),
                 ];
             }
         }
 
         // Tri par RTO si dispo, sinon par MTD app
         usort($rows, function ($a, $b) {
-            $aTime = $a['rto'] ?: $a['mtd'];
-            $bTime = $b['rto'] ?: $b['mtd'];
+            $aTime = $a['recovery_time_objective'] ?: $a['maximum_tolerable_downtime'];
+            $bTime = $b['recovery_time_objective'] ?: $b['maximum_tolerable_downtime'];
 
             return strcmp($aTime, $bTime);
         });
@@ -3663,6 +3665,8 @@ class ReportController extends Controller
             'Activité',
             'RTO',
             'MTD',
+            'RPO',
+            'MTDL',
         ];
 
         // Écrire l'en-tête
@@ -3678,10 +3682,12 @@ class ReportController extends Controller
         foreach ($rows as $data) {
             $sheet->setCellValue("A{$rowNum}", $data['application']);
             $sheet->setCellValue("B{$rowNum}", $data['activity']);
-            $sheet->setCellValue("C{$rowNum}", $data['rto']);
-            $sheet->setCellValue("D{$rowNum}", $data['mtd']);
+            $sheet->setCellValue("C{$rowNum}", $data['recovery_time_objective']);
+            $sheet->setCellValue("D{$rowNum}", $data['maximum_tolerable_downtime']);
+            $sheet->setCellValue("E{$rowNum}", $data['recovery_point_objective']);
+            $sheet->setCellValue("F{$rowNum}", $data['maximum_tolerable_data_loss']);
 
-            foreach (range('A', 'E') as $col) {
+            foreach (range('A', 'F') as $col) {
                 $sheet->getStyle("{$col}{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             }
 
