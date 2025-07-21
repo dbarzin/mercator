@@ -72,6 +72,7 @@
             </div>
         </div>
         <br>
+
         <div class="row">
 
         <div class="col-lg-6">
@@ -140,10 +141,31 @@
                         <br><br>
                     </li>
                   </ul>
-                </div>
-              </div>
-
-          </div>
+            </div>
+        </div>
+        @can('activity_show')
+        <br>
+        <div class="card">
+            <div class="card-header">
+                {{ trans('cruds.report.lists.bia') }}
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        <a href="{{ route('admin.report.view.rto') }}" target="_new">{{ trans('cruds.report.lists.continuity_needs') }}</a>
+                        <br>
+                        {{ trans('cruds.report.lists.continuity_needs_helper') }}
+                        <br><br>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.report.view.impacts') }}" target="_new">{{ trans('cruds.report.lists.impacts') }}</a>
+                        <br>
+                        {{ trans('cruds.report.lists.impacts_helper') }}
+                    </li>
+            </div>
+        </div>
+        @endcan
+        </div>
 
         <div class="col-lg-6">
 

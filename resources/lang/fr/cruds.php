@@ -1258,7 +1258,13 @@ return [
             'register_list' => 'Liste des traitements',
             'register_list_helper' =>  'Liste des traitements, applications, bases de données et informations liées.',
             'vlans' => 'Liste des VLANS',
-            'vlans_helper' =>  "Liste des VLANs, sous-réseaux et équipements qui s'y trouvent"
+            'vlans_helper' =>  "Liste des VLANs, sous-réseaux et équipements qui s'y trouvent",
+
+            'bia' => "Bilan d'Impact sur l'Activité (BIA)",
+            'continuity_needs' => "Besoins de sécurité",
+            'continuity_needs_helper' => 'Liste des activités et applications avec leurs beoins de sécurité en termes de RTO et RPO',
+            'impacts' => "Impacts sur la continuité d'activité",
+            'impacts_helper' => "Mesure des conséquences d’une interruption de service",
         ],
         'explorer' => [
             'title' => 'Exploration de la cartographie',
