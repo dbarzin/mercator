@@ -106,7 +106,7 @@ class LogicalFlowController extends Controller
         } elseif (str_starts_with($request->src_id, 'STORAGE_')) {
             $link->storage_device_source_id = intval(substr($request->src_id, 4));
         } elseif (str_starts_with($request->src_id, 'WORK_')) {
-            $link->workstation_source_id = intval(substr($request->src_id, 4));
+            $link->workstation_source_id = intval(substr($request->src_id, 5));
         } elseif (str_starts_with($request->src_id, 'SECURITY_')) {
             $link->physical_security_device_source_id = intval(substr($request->src_id, 9));
         }
@@ -120,7 +120,7 @@ class LogicalFlowController extends Controller
         } elseif (str_starts_with($request->dest_id, 'STORAGE_')) {
             $link->storage_device_dest_id = intval(substr($request->dest_id, 8));
         } elseif (str_starts_with($request->dest_id, 'WORK_')) {
-            $link->workstation_dest_id = intval(substr($request->dest_id, 4));
+            $link->workstation_dest_id = intval(substr($request->dest_id, 5));
         } elseif (str_starts_with($request->dest_id, 'SECURITY_')) {
             $link->physical_security_device_dest_id = intval(substr($request->dest_id, 9));
         }
