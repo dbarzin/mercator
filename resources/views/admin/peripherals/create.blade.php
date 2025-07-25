@@ -309,7 +309,6 @@
 @endsection
 
 @section('scripts')
-<script src="/js/DynamicSelect.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     // ------------------------------------------------
@@ -478,7 +477,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img: '/images/peripheral.png',
                 imgWidth: '120px',
                 imgHeight: '120px',
-                selected: {{ old('icon_id') === -1 ? "true" : "false" }},
+                selected: {{ old('icon_id') === null ? "true" : "false" }},
             },
             @foreach($icons as $icon)
             {
