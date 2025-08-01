@@ -7,7 +7,14 @@
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/mercator)](https://artifacthub.io/packages/search?repo=mercator)
 [![OW2 Project](https://img.shields.io/badge/OW2-Mercator-blue)](https://projects.ow2.org/view/mercator/)
 
-**Mercator** est une application web open-source conçue pour faciliter la gestion de la cartographie des systèmes d'information, comme décrit dans le [Guide de Cartographie du Système d'Information](https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation) de l'[ANSSI](https://cyber.gouv.fr/). Que vous soyez une entité essentielle ou partie intégrante d'un cadre de gouvernance IT plus large, Mercator est un outil vital pour améliorer la visibilité, maintenir le contrôle et assurer la résilience de vos systèmes d'information.
+### Introduction
+
+Dans un paysage numérique de plus en plus complexe et réglementé, les organisations doivent disposer d’une vision claire et actualisée de leur système d'information pour en assurer le pilotage, la conformité et la résilience. **Mercator** est une application web open source puissante, conçue pour répondre à cet objectif en permettant une cartographie structurée et dynamique des systèmes d'information, conformément aux principes énoncés dans le [guide de cartographie du système d'information de l'ANSSI](https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation).
+
+Que vous soyez une entité essentielle ou impliqué dans une démarche plus large de gouvernance IT, Mercator propose une solution évolutive et pragmatique pour visualiser les dépendances, identifier les actifs critiques et appuyer la gestion des risques. Son interface intuitive, son modèle extensible et sa communauté active en font un outil de référence pour construire une compréhension partagée de votre environnement numérique.
+
+Reconnu pour sa qualité et sa pertinence opérationnelle, Mercator s’impose aujourd’hui comme le meilleur outil open source de cartographie et de gouvernance du système d'information.
+
 
 📚 [Explorer la Documentation](https://dbarzin.github.io/mercator/) | 🔍 [Voir les Sources de l'Application](https://github.com/dbarzin/mercator/tree/master/app)
 
