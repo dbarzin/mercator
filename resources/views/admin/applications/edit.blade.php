@@ -684,54 +684,75 @@ document.addEventListener("DOMContentLoaded", function () {
          * Contruction de la liste des évènements
          * @returns {string}
          */
-        function generateEventsList() {
-            let ret = '<ul>';
-            @json($application->events).forEach (function(event) {
-                ret += '<li data-id="'+event.id+'" style="text-align: left; margin-bottom: 20px; position: relative">';
-                ret += '<a class="delete_event" style="cursor: pointer; position: absolute;right: 0;top: 5px;" href="#">';
-                ret += '<i data-toggle="wy-nav-top" class="bi bi-trash-fill"></i></a>'+event.message+'</br>';
-                ret += '<span style="font-size: 12px;">Date : '+ moment(event.created_at).format('DD-MM-YYYY')
-                ret += ' | Utilisateur : '+event.user.name+'</span>';
-            });
-            ret += '</ul>';
-            return ret;
+       async function fetchAndRenderEvents(applicationId) {
+            try {
+                const response = await fetch(`/admin/application-events?id=${applicationId}`);
+                if (!response.ok) throw new Error('Erreur API');
+                const events = await response.json();
+
+                let ret = '<ul>';
+                events.forEach(function(event) {
+                    ret += `
+                        <li data-id="${event.id}" style="text-align: left; margin-bottom: 20px; position: relative">
+                            <a class="delete_event" style="cursor: pointer; position: absolute; right: 0; top: 5px;" href="#">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                            ${event.message}<br>
+                            <span style="font-size: 12px;">Date : ${moment(event.created_at).format('DD-MM-YYYY')} | Utilisateur : ${event.user.name}</span>
+                        </li>
+                    `;
+                });
+                ret += '</ul>';
+                return ret;
+
+            } catch (error) {
+                console.error('Erreur lors de la récupération des événements :', error);
+                return '<p>Erreur lors du chargement des événements.</p>';
+            }
         }
 
-        // Fire the popup
-            $('.events_list_button').click(function(e) {
-                e.preventDefault()
+        $(document).ready(function () {
+            $('.events_list_button').click(async function (e) {
+                e.preventDefault();
+
+                const htmlContent = await fetchAndRenderEvents({{ $application->id }});
+
                 Swal.fire({
                     title: 'Évènements',
-                    // icon: 'info',
-                    html: generateEventsList(),
-                    didOpen(popup) {
-                        $('.delete_event').on('click', function(e) {
-                            e.preventDefault();
-                            let event_id = $(this).parent().data('id');
-                            var that = $(this);
-                            if (event_id) {
-                                $.ajax({
-                                    url: '/admin/application-events/' + event_id,
-                                    type: "DELETE",
-                                    data: {
-                                        m_application_id: {{ $application->id }},
-                                        _token: "{{ csrf_token() }}"
-                                    },
-                                    success: (data) => {
-                                        that.parent().remove();
-                                        // Mise à jour des évènements pour la popup
-                                        swalHtml = data.events;
-                                        Swal.fire('Evènement supprimé !', '', 'success');
-                                    },
-                                    error: () => {
+                    html: htmlContent,
+                    didOpen: () => {
+                        // Lier les gestionnaires de suppression après affichage
+                        document.querySelectorAll('.delete_event').forEach(link => {
+                            link.addEventListener('click', function (ev) {
+                                ev.preventDefault();
+
+                                const li = this.closest('li');
+                                const eventId = li.getAttribute('data-id');
+
+                                if (eventId) {
+                                    fetch(`/admin/application-events/${eventId}`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                        },
+                                        body: JSON.stringify({ m_application_id: {{ $application->id }} })
+                                    }).then(resp => {
+                                        if (!resp.ok) throw new Error();
+                                        return resp.json();
+                                    }).then(data => {
+                                        li.remove();
+                                        Swal.fire('Évènement supprimé !', '', 'success');
+                                    }).catch(() => {
                                         Swal.fire('Une erreur est survenue', '', 'error');
-                                    }
-                                })
-                            }
+                                    });
+                                }
+                            });
                         });
                     }
-                })
-            })
+                });
+            });
+        });
 
         // Send AJAX for adding an event
             $('#addEventBtn').on('click', function(e) {
