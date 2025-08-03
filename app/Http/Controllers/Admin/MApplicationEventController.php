@@ -28,8 +28,16 @@ class MApplicationEventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $id = $request->query('id');
+
+        $events = MApplicationEvent::with('user')
+            ->where('m_application_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($events);
     }
 
     /**

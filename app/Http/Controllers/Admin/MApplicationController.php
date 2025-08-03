@@ -17,7 +17,6 @@ use App\LogicalServer;
 use App\MApplication;
 use App\Process;
 use App\Services\CartographerService;
-use App\Services\EventService;
 use App\User;
 // CoreUI Gates
 use Gate;
@@ -31,18 +30,6 @@ class MApplicationController extends Controller
      * Services
      */
     protected CartographerService $cartographerService;
-    protected EventService $eventService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(CartographerService $cartographerService, EventService $eventService)
-    {
-        $this->cartographerService = $cartographerService;
-        $this->eventService = $eventService;
-    }
 
     public function index()
     {
@@ -258,8 +245,6 @@ class MApplicationController extends Controller
         $cartographers_list = User::all()->sortBy('name')->pluck('name', 'id');
 
         $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'cartographers');
-        // Chargement des évènements
-        $this->eventService->getLoadAppEvents($application);
 
         return view(
             'admin.applications.edit',
@@ -343,8 +328,6 @@ class MApplicationController extends Controller
         abort_if(Gate::denies('m_application_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $application->load('entities', 'entityResp', 'processes', 'services', 'databases', 'logicalServers', 'applicationBlock', 'applicationSourceFluxes', 'applicationDestFluxes', 'cartographers');
-        // Chargement des évènements
-        $this->eventService->getLoadAppEvents($application);
 
         return view('admin.applications.show', compact('application'));
     }

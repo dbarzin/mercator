@@ -139,7 +139,7 @@ class MApplication extends Model
 
     public function events(): HasMany
     {
-        return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id');
+        return $this->hasMany(MApplicationEvent::class, 'm_application_id', 'id')->with('user');
     }
 
     public function securityControls(): BelongsToMany
