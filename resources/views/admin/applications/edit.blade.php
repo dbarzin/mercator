@@ -711,46 +711,44 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        $(document).ready(function () {
-            $('.events_list_button').click(async function (e) {
-                e.preventDefault();
+        $('.events_list_button').click(async function (e) {
+            e.preventDefault();
 
-                const htmlContent = await fetchAndRenderEvents({{ $application->id }});
+            const htmlContent = await fetchAndRenderEvents({{ $application->id }});
 
-                Swal.fire({
-                    title: 'Évènements',
-                    html: htmlContent,
-                    didOpen: () => {
-                        // Lier les gestionnaires de suppression après affichage
-                        document.querySelectorAll('.delete_event').forEach(link => {
-                            link.addEventListener('click', function (ev) {
-                                ev.preventDefault();
+            Swal.fire({
+                title: 'Évènements',
+                html: htmlContent,
+                didOpen: () => {
+                    document.querySelectorAll('.delete_event').forEach(link => {
+                        link.addEventListener('click', function (ev) {
+                            ev.preventDefault();
 
-                                const li = this.closest('li');
-                                const eventId = li.getAttribute('data-id');
+                            const li = this.closest('li');
+                            const eventId = li.getAttribute('data-id');
 
-                                if (eventId) {
-                                    fetch(`/admin/application-events/${eventId}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                        },
-                                        body: JSON.stringify({ m_application_id: {{ $application->id }} })
-                                    }).then(resp => {
-                                        if (!resp.ok) throw new Error();
-                                        return resp.json();
-                                    }).then(data => {
-                                        li.remove();
-                                        Swal.fire('Évènement supprimé !', '', 'success');
-                                    }).catch(() => {
-                                        Swal.fire('Une erreur est survenue', '', 'error');
-                                    });
-                                }
-                            });
+                            if (eventId) {
+                                fetch(`/admin/application-events/${eventId}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                    },
+                                    body: JSON.stringify({ m_application_id: {{ $application->id }} })
+                                }).then(resp => {
+                                    if (!resp.ok) throw new Error();
+                                    return resp.json();
+                                }).then(data => {
+                                    li.remove();
+                                    Swal.fire('Évènement supprimé !', '', 'success');
+                                }).catch(error => {
+                                    console.error('Erreur suppression événement :', error);
+                                    Swal.fire('Une erreur est survenue', error.message, 'error');
+                                });
+                            }
                         });
-                    }
-                });
+                    });
+                }
             });
         });
 
