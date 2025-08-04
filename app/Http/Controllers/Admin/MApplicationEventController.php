@@ -5,24 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\MApplication;
 use App\MApplicationEvent;
-use App\Services\EventService;
 use App\User;
 use Illuminate\Http\Request;
 
 class MApplicationEventController extends Controller
 {
-    protected EventService $eventService;
-
-    /**
-     * Automatic Injection for Service
-     *
-     * @return void
-     */
-    public function __construct(EventService $eventService)
-    {
-        $this->eventService = $eventService;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -65,8 +52,6 @@ class MApplicationEventController extends Controller
         $event->user()->associate($user);
         $event->message = $request->get('message');
         $event->saveOrFail();
-        // Chargement des évènements
-        $this->eventService->getLoadAppEvents($application);
 
         return response()->json(['events' => $application->events]);
     }
@@ -117,8 +102,6 @@ class MApplicationEventController extends Controller
     {
         $application = MApplication::findOrFail($request->get('m_application_id'));
         MApplicationEvent::findOrFail($id)->delete();
-        // Mis à jour des évènements
-        $this->eventService->getLoadAppEvents($application);
 
         return response()->json(['events' => $application->events]);
     }
