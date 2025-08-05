@@ -176,7 +176,7 @@ class MApplicationController extends Controller
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
-        $this->cartographerService->attributeCartographerRole($application);
+        // $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
@@ -318,7 +318,7 @@ class MApplicationController extends Controller
         $application->administrators()->sync($request->input('administrators', []));
 
         // Attribution du role pour les nouveaux cartographes
-        $this->cartographerService->attributeCartographerRole($application);
+        // $this->cartographerService->attributeCartographerRole($application);
 
         return redirect()->route('admin.applications.index');
     }
