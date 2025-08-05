@@ -16,7 +16,7 @@ use App\Http\Requests\UpdateMApplicationRequest;
 use App\LogicalServer;
 use App\MApplication;
 use App\Process;
-use App\Services\CartographerService;
+// use App\Services\CartographerService;
 use App\User;
 // CoreUI Gates
 use Gate;
@@ -29,7 +29,7 @@ class MApplicationController extends Controller
     /**
      * Services
      */
-    protected CartographerService $cartographerService;
+    // protected CartographerService $cartographerService;
 
     public function index()
     {
