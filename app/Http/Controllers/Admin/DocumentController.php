@@ -35,8 +35,21 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
-        // Get the file
         $file = $request->file('file');
+
+        \Log::debug('DocumentController.store : Upload path: ' . $file->path());
+
+        if (!$file || !$file->isValid()) {
+            \Log::error('DocumentController.strore : Invalid file');
+            return response()->json(['error' => 'Invalid file'], 400);
+        }
+
+        $filePath = $file->path();
+
+        if (!is_file($filePath)) {
+            \Log::error('DocumentController.store : invalid file path');
+            return response()->json(['error' => 'Invalid file path'], 400);
+        }
 
         // Create a new document
         $document = new Document();
