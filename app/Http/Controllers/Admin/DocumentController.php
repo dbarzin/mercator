@@ -37,8 +37,14 @@ class DocumentController extends Controller
     {
         $file = $request->file('file');
 
-        \Log::debug('DocumentController.store : Upload path: ' . $file->path());
-
+        \Log::debug('DocumentController.store : Upload info', [
+            'isValid' => $file->isValid(),
+            'originalName' => $file->getClientOriginalName(),
+            'mimeType' => $file->getClientMimeType(),
+            'path' => $file->path(),
+            'isFile' => is_file($file->path()),
+        ]);
+        
         if (!$file || !$file->isValid()) {
             \Log::error('DocumentController.strore : Invalid file');
             return response()->json(['error' => 'Invalid file'], 400);

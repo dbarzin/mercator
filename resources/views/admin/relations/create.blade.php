@@ -286,45 +286,46 @@ document.addEventListener("DOMContentLoaded", function () {
     var image_uploader = new Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
-        params: { },
-            maxFilesize: 10,
-            // acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            addRemoveLinks: true,
-            timeout: 50000,
-            removedfile: function(file)
-            {
-                console.log("remove file " + file.name + " " + file.id);
-                $.ajax({
-                    headers: {
-                      'X-CSRF-TOKEN': '{{csrf_token()}}'
-                       },
-                    type: 'GET',
-                    url: '{{ url( "/admin/documents/delete" ) }}'+"/"+file.id,
-                    success: function (data){
-                        console.log("File has been successfully removed");
-                    },
-                    error: function(e) {
-                        console.log("File not removed");
-                        console.log(e);
-                    }});
-                    // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
-                    var fileRef;
-                    return (fileRef = file.previewElement) != null ?
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-            success: function(file, response)
-            {
-                file.id=response.id;
-                console.log("success response");
-                console.log(response);
-            },
-            error: function(file, response)
-            {
-                console.log("error response");
-                console.log(response);
-               return false;
-            },
-        });
+        paramName: 'file',
+        maxFilesize: 10,
+        // acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        addRemoveLinks: true,
+        timeout: 50000,
+        removedfile: function(file)
+        {
+            console.log("remove file " + file.name + " " + file.id);
+            $.ajax({
+                headers: {
+                  'X-CSRF-TOKEN': '{{csrf_token()}}'
+                   },
+                type: 'GET',
+                url: '{{ url( "/admin/documents/delete" ) }}'+"/"+file.id,
+                success: function (data){
+                    console.log("File has been successfully removed");
+                },
+                error: function(e) {
+                    console.log("File not removed");
+                    console.log(e);
+                }
+            });
+            // console.log('{{ url( "/documents/delete" ) }}'+"/"+file.id+']');
+            var fileRef;
+            return (fileRef = file.previewElement) != null ?
+            fileRef.parentNode.removeChild(file.previewElement) : void 0;
+        },
+        success: function(file, response)
+        {
+            file.id=response.id;
+            console.log("success response");
+            console.log(response);
+        },
+        error: function(file, response)
+        {
+            console.log("error response");
+            console.log(response);
+           return false;
+        },
+    });
 
         document.onpaste = function(event) {
           const items = (event.clipboardData || event.originalEvent.clipboardData).items;
