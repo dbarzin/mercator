@@ -2541,7 +2541,7 @@ class ReportController extends Controller
             $sheet->setCellValue("K{$row}", $html->toRichTextObject($logicalServer->configuration));
             $sheet->setCellValue("L{$row}", $logicalServer->applications->implode('name', ', '));
             $sheet->setCellValue("M{$row}", $logicalServer->applications->first() !== null ?
-                ($logicalServer->applications->first()->application_block !== null ? $logicalServer->applications->first()->application_block->name : '') : '');
+                ($logicalServer->applications->first()->application_block_id !== null ? $logicalServer->applications->first()->applicationBlock->name : '') : '');
             $sheet->setCellValue("N{$row}", $logicalServer->cluster->name ?? '');
             $sheet->setCellValue("O{$row}", $logicalServer->physicalServers->implode('name', ', '));
 
