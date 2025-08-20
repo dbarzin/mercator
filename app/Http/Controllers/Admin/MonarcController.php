@@ -12,8 +12,17 @@ use App\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Services\{MospService, MonarcExportService};
+
 class MonarcController extends Controller
 {
+    public function __construct(
+        private MospService $mosp,
+        private MonarcExportService $exporter,
+    ) {}
+    
     public function index()
     {
         abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

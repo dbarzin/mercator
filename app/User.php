@@ -124,6 +124,8 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         $this->notify(new ResetPassword($token));
     }
+
+
     public function m_applications(): BelongsToMany
     {
         return $this->belongsToMany(MApplication::class, 'cartographer_m_application');

@@ -24,11 +24,11 @@ class ImportController extends Controller
     public function export(Request $request)
     {
         $request->validate([
-            'model' => 'required',
+            'object' => 'required',
         ]);
 
         // Model name from request
-        $modelName = $request->get('model');
+        $modelName = $request->get('object');
 
         // Check permission
         abort_if(Gate::denies($this->permission($modelName, 'access')), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -84,10 +84,10 @@ class ImportController extends Controller
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
-            'model' => 'required',
+            'object' => 'required',
         ]);
 
-        $modelName = $request->get('model');
+        $modelName = $request->get('object');
         $modelClass = $this->resolveModelClass($modelName);
 
         // Get store validation rules
