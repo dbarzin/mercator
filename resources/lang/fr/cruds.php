@@ -32,6 +32,7 @@ return [
         'title_singular' => 'Activité',
         'continuity_needs' => 'Besoins de continuité',
         'impacts' => 'Liste des impacts',
+        'bia' => "Biland d'impact sur l'activité",
     ],
     'actor' => [
         'description' => 'Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.',

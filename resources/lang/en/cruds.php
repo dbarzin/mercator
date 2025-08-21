@@ -34,6 +34,7 @@ return [
         'title_singular' => 'Activity',
         'continuity_needs' => 'Continuity needs',
         'impacts' => 'List of impacts',
+        'bia' => "Business Impact Assessment",
     ],
     'actor' => [
         'description' => 'Representative of a business role that executes operations, uses applications and makes decisions in processes. This role can be carried by a person, a group of people or an entity.',
