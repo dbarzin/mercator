@@ -21,6 +21,7 @@ class Activity extends Model
     public static $searchable = [
         'name',
         'description',
+        'drp'
     ];
 
     protected $dates = [
@@ -43,6 +44,8 @@ class Activity extends Model
         'maximum_tolerable_downtime',
         'recovery_point_objective',
         'maximum_tolerable_data_loss',
+        'drp',
+        'drp_link',
         'created_at',
         'updated_at',
         'deleted_at',
