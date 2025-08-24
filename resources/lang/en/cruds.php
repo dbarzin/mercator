@@ -17,13 +17,23 @@ return [
             'applications_helper' => 'Applications required for the proper functioning of this activity',
 
             'recovery_time_objective' => "Recovery Time Objective (RTO)",
+            'recovery_time_objective_short' => "RTO",
             'recovery_time_objective_helper' => "Target business recovery time",
-            'maximum_tolerable_downtime' => "Maximum tolerable downtime",
+
+            'maximum_tolerable_downtime' => "Maximum tolerable downtime (MTD)",
+            'maximum_tolerable_downtime_short' => "MTD",
             'maximum_tolerable_downtime_helper' => "Maximum allowable downtime before the consequences become critical or unacceptable",
+
             'recovery_point_objective' => "Recovery Point Objective (RPO)",
+            'recovery_point_objective_short' => "RPO",
             'recovery_point_objective_helper' => "Point in time to which data must be restored after an incident",
-            'maximum_tolerable_data_loss' => "Maximum tolerable data loss duration",
+
+            'maximum_tolerable_data_loss' => "Maximum tolerable data loss duration (MTDL)",
+            'maximum_tolerable_data_loss_short' => "MTDL",
             'maximum_tolerable_data_loss_helper' => "Maximum acceptable data loss before critical consequences",
+
+            'drp' => 'Disaster Recovery Plan',
+            'drp_link' => 'Link to the disaster recovery plan',
 
             'impact_type' => "Impact Type",
             'impact_type_helper' => "e.g., legal, financial, image...",
@@ -35,6 +45,7 @@ return [
         'continuity_needs' => 'Continuity needs',
         'impacts' => 'List of impacts',
         'bia' => "Business Impact Assessment",
+        'drp' => "Disaster Recovery Plan (DRP)",
     ],
     'actor' => [
         'description' => 'Representative of a business role that executes operations, uses applications and makes decisions in processes. This role can be carried by a person, a group of people or an entity.',

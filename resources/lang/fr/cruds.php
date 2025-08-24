@@ -15,24 +15,39 @@ return [
             'applications_helper' => 'Applications nécessaires au bon fonctionnement de cette activité',
 
             'recovery_time_objective' => "Objectif de Temps de Rétablissement (RTO)",
+            'recovery_time_objective_short' => "RTO",
             'recovery_time_objective_helper' => "Temps cible de rétablissement de l'activité",
-            'maximum_tolerable_downtime' => "Durée maximum d'arrêt tolérable",
-            'maximum_tolerable_downtime_helper' => "Durée maximale admissible d’interruption avant que les conséquences deviennent critiques ou inacceptables",
-            'recovery_point_objective' => "	Objectif de Point de Rétablissement (RPO)",
+
+            'maximum_tolerable_downtime' => "Durée Maximum Tolérable de Perturbatio (DMTP)",
+            'maximum_tolerable_downtime_short' => "DMTP",
+            'maximum_tolerable_downtime_helper' => "Durée Maximum Tolérable de Perturbatio avant que les conséquences deviennent critiques ou inacceptables",
+
+            'recovery_point_objective' => "Objectif de Point de Rétablissement (RPO)",
+            'recovery_point_objective_short' => "RPO",
             'recovery_point_objective_helper' => "Point dans le temps jusqu’auquel les données doivent être restaurées après un incident.",
-            'maximum_tolerable_data_loss' => "Duré maximum de perte tolérable",
-            'maximum_tolerable_data_loss_helper' => "Perte maximale de données acceptable avant des conséquences critiques.",
+
+            'maximum_tolerable_data_loss' => "Perte de Données Maximale Admissible (PDMA)",
+            'maximum_tolerable_data_loss_short' => "PDMA",
+            'maximum_tolerable_data_loss_helper' => "Perte de Données Maximale Admissible avant des conséquences critiques.",
+
+            'drp' => 'Description',
+            'drp_helper' => 'Description du plan de reprise d\'activité',
+            'drp_link' => 'Lien',
+            'drp_link_helper' => 'Lien vers le plan de reprise d\'activité',
 
             'impact_type' => "Type d'impact",
             'impact_type_helper' => "ex: juridique, financier, image...",
             'gravity' => 'Gravité',
             'gravity_helper' => "Gravité de l'impact",
+
+            'documentation' => "Documentation",
         ],
         'title' => 'Activités',
         'title_singular' => 'Activité',
         'continuity_needs' => 'Besoins de continuité',
         'impacts' => 'Liste des impacts',
-        'bia' => "Biland d'impact sur l'activité",
+        'bia' => "Biland d'impact sur l'activité (BIA)",
+        'drp' => "Plan de reprise d'activité (PRA)"
     ],
     'actor' => [
         'description' => 'Représentant d’un rôle métier qui exécute des opérations, utilise des applications et prend des décisions dans le cadre des processus. Ce rôle peut être porté par une personne, un groupe de personnes ou une entité.',
