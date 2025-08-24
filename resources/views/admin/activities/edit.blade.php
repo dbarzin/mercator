@@ -38,7 +38,6 @@
 
             <div class='row'>
                 <div class='col-6'>
-
                     <div class="form-group">
                         <label for="operations">{{ trans('cruds.activity.fields.processes') }}</label>
                         <div style="padding-bottom: 4px">
@@ -110,37 +109,27 @@
         </div>
         <!---------------------------------------------------------------------------------------------------->
         <div class="card-body">
+
             <div class='row'>
-                <div class="col-3">
-                    <div class="form-group">
-                        <label for="recovery_time_objective">{{ trans('cruds.activity.fields.recovery_time_objective') }}</label>
-                        <input class="form-control {{ $errors->has('recovery_time_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_time_objective" id="recovery_time_objective" value="{{ old('recovery_time_objective', substr($activity->recovery_time_objective, 0, 5)) }}" placeholder="HH:MM" maxlength=5 />
-                        @if($errors->has('recovery_time_objective'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('recovery_time_objective') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.activity.fields.recovery_time_objective_helper') }}</span>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-group">
-                        <label for="recovery_point_objective">{{ trans('cruds.activity.fields.recovery_point_objective') }}</label>
-                        <input class="form-control {{ $errors->has('recovery_point_objective') ? 'is-invalid' : '' }}" type="text" name="recovery_point_objective" id="recovery_point_objective" value="{{ old('recovery_point_objective', substr($activity->recovery_point_objective, 0, 5)) }}"  placeholder="HH:MM:SS" maxlength=8/>
-                        @if($errors->has('recovery_point_objective'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('recovery_point_objective') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.activity.fields.recovery_point_objective_helper') }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class='row'>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="maximum_tolerable_downtime">{{ trans('cruds.activity.fields.maximum_tolerable_downtime') }}</label>
-                        <input class="form-control {{ $errors->has('maximum_tolerable_downtime') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_downtime" id="maximum_tolerable_downtime" value="{{ old('maximum_tolerable_downtime', substr($activity->maximum_tolerable_downtime,0,5)) }}" placeholder="HH:MM:SS" maxlength=8/>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_downtime_days" name="maximum_tolerable_downtime_days" min="0" max="365" value="{{ old('maximum_tolerable_downtime_days', $activity->maximum_tolerable_downtime_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_downtime_hours" name="maximum_tolerable_downtime_hours" min="0" max="24" value="{{ old('maximum_tolerable_downtime_hours', $activity->maximum_tolerable_downtime_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_downtime_minute" name="maximum_tolerable_downtime_minutes" min="0" max="60" value="{{ old('maximum_tolerable_downtime_minutes', $activity->maximum_tolerable_downtime_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
                         @if($errors->has('maximum_tolerable_downtime'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('maximum_tolerable_downtime') }}
@@ -149,16 +138,88 @@
                         <span class="help-block">{{ trans('cruds.activity.fields.maximum_tolerable_downtime_helper') }}</span>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="name">{{ trans('cruds.activity.fields.maximum_tolerable_data_loss') }}</label>
-                        <input class="form-control {{ $errors->has('maximum_tolerable_data_loss') ? 'is-invalid' : '' }}" type="text" name="maximum_tolerable_data_loss" id="maximum_tolerable_data_loss" value="{{ old('maximum_tolerable_data_loss', substr($activity->maximum_tolerable_data_loss,0,5)) }}" placeholder="HH:MM:SS" maxlength=8/>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_data_loss_days" name="maximum_tolerable_data_loss_days" min="0" max="365" value="{{ old('maximum_tolerable_data_loss_days', $activity->maximum_tolerable_data_loss_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_data_loss_hours" name="maximum_tolerable_data_loss_hours" min="0" max="24" value="{{ old('maximum_tolerable_data_loss_hours', $activity->maximum_tolerable_data_loss_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="maximum_tolerable_data_loss_minutes" name="maximum_tolerable_data_loss_minutes" min="0" max="60" value="{{ old('maximum_tolerable_data_loss_minutes', $activity->maximum_tolerable_data_loss_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
                         @if($errors->has('maximum_tolerable_data_loss'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('maximum_tolerable_data_loss') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.activity.fields.maximum_tolerable_data_loss_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="recovery_time_objective">{{ trans('cruds.activity.fields.recovery_time_objective') }}</label>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="recovery_time_objective_days" name="recovery_time_objective_days" min="0" max="365" value="{{ old('recovery_time_objective_days', $activity->recovery_time_objective_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="recovery_time_objective_hours" name="recovery_time_objective_hours" min="0" max="24" value="{{ old('recovery_time_objective_hours', $activity->recovery_time_objective_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="recovery_time_objective_minutes" name="recovery_time_objective_minutes" min="0" max="60" value="{{ old('recovery_time_objective_minutes', $activity->recovery_time_objective_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
+                        @if($errors->has('recovery_time_objective'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('recovery_time_objective') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.recovery_time_objective_helper') }}</span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="recovery_point_objective">{{ trans('cruds.activity.fields.recovery_point_objective') }}</label>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span class="help-block">{{ trans('global.days') }}</span>
+                                    <input type="number" class="form-control" id="recovery_point_objective_days" name="recovery_point_objective_days" min="0" max="365" value="{{ old('recovery_point_objective_days', $activity->recovery_point_objective_days) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.hours') }}</span>
+                                    <input type="number" class="form-control" id="recovery_point_objective_hours" name="recovery_point_objective_hours" min="0" max="24" value="{{ old('recovery_point_objective_hours', $activity->recovery_point_objective_hours) }}">
+                                </td>
+                                <td>
+                                    <span class="help-block">{{ trans('global.minutes') }}</span>
+                                    <input type="number" class="form-control" id="recovery_point_objective_minutes" name="recovery_point_objective_minutes" min="0" max="60" value="{{ old('recovery_point_objective_minutes', $activity->recovery_point_objective_minutes) }}">
+                                </td>
+                            </tr>
+                        </table>
+                        @if($errors->has('recovery_point_objective'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('recovery_point_objective') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.recovery_point_objective_helper') }}</span>
                     </div>
                 </div>
             </div>
@@ -231,6 +292,41 @@
                         </tr>
                     @endforeach
                 </table>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-header">
+            {{ trans('cruds.activity.drp') }}
+        </div>
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="card-body">
+            <div class='row'>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="recommended" for="drp">{{ trans('cruds.activity.fields.drp') }}</label>
+                        <textarea class="form-control ckeditor {{ $errors->has('drp') ? 'is-invalid' : '' }}" name="drp" id="drp">{!! old('drp', $activity->drp) !!}</textarea>
+                        @if($errors->has('drp'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('drp') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.drp_helper') }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="drp_link">{{ trans('cruds.activity.fields.drp_link') }}</label>
+                        <input class="form-control {{ $errors->has('drp_link') ? 'is-invalid' : '' }}" type="text" name="drp_link" id="drp_link" value="{{ old('drp_link', $activity->drp_link) }}" maxlength=256/>
+                        @if($errors->has('drp_link'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('drp_link') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.activity.fields.drp_link_helper') }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
