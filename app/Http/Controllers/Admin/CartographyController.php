@@ -2582,6 +2582,9 @@ class CartographyController extends Controller
     {
         // Save it to a file
         $dotPath = tempnam('/tmp', 'dot');
+
+        \Log::Debug("generateGraphImage in {$dotPath}");
+
         $dotFile = fopen($dotPath, 'w');
         fwrite($dotFile, $graph);
         fclose($dotFile);
@@ -2590,13 +2593,15 @@ class CartographyController extends Controller
         $imagePath = tempnam('/tmp', 'png');
 
         // Call DOT : dot -Tpng ./test.dot -otest.png
+        \Log::Debug("call /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
 
         // add "unset SERVER_NAME;" due to Apache2
         // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
-        shell_exec('unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 '.$dotPath.' -o'.$imagePath);
+        shell_exec("unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
 
         // delete graph file
-        unlink($dotPath);
+        // TODO : add unlink - removed for debug
+        // unlink($dotPath);
 
         // Test for SVG (not supported)
         // $this->embedImagesInSvg($imagePath);

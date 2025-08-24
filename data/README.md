@@ -8,7 +8,7 @@ along with utility scripts for database backup and translation of data content b
 | File / Pattern        | Description |
 |------------------------|-------------|
 | `backup.sh`            | Dumps the Mercator database to a file named `mercator_data.sql`. |
-| `translateSQL.sh`      | Translates the content of `mercator_data.sql` into English, producing `mercator_data_translated.sql`. |
+| `translateSQL.py`      | Translates the content of `mercator_data.sql` into English, producing `mercator_data_translated.sql`. |
 | `*.sql`                | SQL files with sample/test data for development and demonstrations. |
 
 ## 🛠 Requirements

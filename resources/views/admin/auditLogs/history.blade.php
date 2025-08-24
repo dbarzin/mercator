@@ -58,6 +58,7 @@
                     @endforeach
                 </tr>
                 @foreach($auditLog->properties as $key => $value)
+                @if ($key !== null)
                 <tr>
                         <th>[{{ $key }}]</th>
                         @php $previous = null; @endphp
@@ -78,6 +79,7 @@
                             @php $previous = $value; @endphp
                         @endforeach
                 </tr>
+                @endif
                 @endforeach
                 <tr>
                     <th>

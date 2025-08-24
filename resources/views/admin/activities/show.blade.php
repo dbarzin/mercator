@@ -104,32 +104,126 @@
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <tbody>
-                <tr>
-                    <th width="10%">
-                        {{ trans('cruds.activity.fields.recovery_time_objective') }}
-                    </th>
-                    <td width="20%">
-                        {{ substr($activity->recovery_time_objective,0,5) }}
-                    </td>
-                    <th width="10%">
-                        {{ trans('cruds.activity.fields.recovery_point_objective') }}
-                    </th>
-                    <td>
-                        {{ substr($activity->recovery_point_objective,0,5) }}
-                    </td>
-                </tr>
+
                 <tr>
                     <th width="10%">
                         {{ trans('cruds.activity.fields.maximum_tolerable_downtime') }}
                     </th>
                     <td width="20%">
-                        {{ substr($activity->maximum_tolerable_downtime,0,5) }}
+                        @if (intdiv($activity->maximum_tolerable_downtime,60 * 24) > 0)
+                            {{ intdiv($activity->maximum_tolerable_downtime,60 * 24) }}
+                            @if (intdiv($activity->maximum_tolerable_downtime,60 * 24) > 1)
+                                {{ trans('global.days') }}
+                            @else
+                                {{ trans('global.day') }}
+                            @endif
+                        @endif
+                        @if ((intdiv($activity->maximum_tolerable_downtime,60) % 24) > 0)
+                            {{ intdiv($activity->maximum_tolerable_downtime,60) % 24 }}
+                            @if ((intdiv($activity->maximum_tolerable_downtime,60) % 24) > 1)
+                                {{ trans('global.hours') }}
+                            @else
+                                {{ trans('global.hour') }}
+                            @endif
+                        @endif
+                        @if (($activity->maximum_tolerable_downtime % 60) > 0)
+                            {{ $activity->maximum_tolerable_downtime % 60 }}
+                            @if (($activity->maximum_tolerable_downtime % 60) > 1)
+                                {{ trans('global.minutes') }}
+                            @else
+                                {{ trans('global.minute') }}
+                            @endif
+                        @endif
                     </td>
                     <th width="10%">
                         {{ trans('cruds.activity.fields.maximum_tolerable_data_loss') }}
                     </th>
                     <td>
-                        {{ substr($activity->maximum_tolerable_data_loss,0,5) }}
+                        @if (intdiv($activity->maximum_tolerable_data_loss,60 * 24) > 0)
+                            {{ intdiv($activity->maximum_tolerable_data_loss,60 * 24) }}
+                            @if (intdiv($activity->maximum_tolerable_data_loss,60 * 24) > 1)
+                                {{ trans('global.days') }}
+                            @else
+                                {{ trans('global.day') }}
+                            @endif
+                        @endif
+                        @if ((intdiv($activity->maximum_tolerable_data_loss,60) % 24) > 0)
+                            {{ intdiv($activity->maximum_tolerable_data_loss,60) % 24 }}
+                            @if ((intdiv($activity->maximum_tolerable_data_loss,60) % 24) > 1)
+                                {{ trans('global.hours') }}
+                            @else
+                                {{ trans('global.hour') }}
+                            @endif
+                        @endif
+                        @if (($activity->maximum_tolerable_data_loss % 60) > 0)
+                            {{ $activity->maximum_tolerable_data_loss % 60 }}
+                            @if (($activity->maximum_tolerable_data_loss % 60) > 1)
+                                {{ trans('global.minutes') }}
+                            @else
+                                {{ trans('global.minute') }}
+                            @endif
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.activity.fields.recovery_time_objective') }}
+                    </th>
+                    <td width="20%">
+                        @if (intdiv($activity->recovery_time_objective,60 * 24) > 0)
+                            {{ intdiv($activity->recovery_time_objective,60 * 24) }}
+                            @if (intdiv($activity->recovery_time_objective,60 * 24) > 1)
+                                {{ trans('global.days') }}
+                            @else
+                                {{ trans('global.day') }}
+                            @endif
+                        @endif
+                        @if ((intdiv($activity->recovery_time_objective,60) % 24) > 0)
+                            {{ intdiv($activity->recovery_time_objective,60) % 24 }}
+                            @if ((intdiv($activity->recovery_time_objective,60) % 24) > 1)
+                                {{ trans('global.hours') }}
+                            @else
+                                {{ trans('global.hour') }}
+                            @endif
+                        @endif
+                        @if (($activity->recovery_time_objective % 60) > 0)
+                            {{ $activity->recovery_time_objective % 60 }}
+                            @if (($activity->recovery_time_objective % 60) > 1)
+                                {{ trans('global.minutes') }}
+                            @else
+                                {{ trans('global.minute') }}
+                            @endif
+                        @endif
+                    </td>
+                    <th width="10%">
+                        {{ trans('cruds.activity.fields.recovery_point_objective') }}
+                    </th>
+                    <td>
+                        @if (intdiv($activity->recovery_point_objective,60 * 24) > 0)
+                            {{ intdiv($activity->recovery_point_objective,60 * 24) }}
+                            @if (intdiv($activity->recovery_point_objective,60 * 24) > 1)
+                                {{ trans('global.days') }}
+                            @else
+                                {{ trans('global.day') }}
+                            @endif
+                        @endif
+                        @if ((intdiv($activity->recovery_point_objective,60) % 24) > 0)
+                            {{ intdiv($activity->recovery_point_objective,60) % 24 }}
+                            @if ((intdiv($activity->recovery_point_objective,60) % 24) > 1)
+                                {{ trans('global.hours') }}
+                            @else
+                                {{ trans('global.hour') }}
+                            @endif
+                        @endif
+                        @if (($activity->recovery_point_objective % 60) > 0)
+                            {{ $activity->recovery_point_objective % 60 }}
+                            @if (($activity->recovery_point_objective % 60) > 1)
+                                {{ trans('global.minutes') }}
+                            @else
+                                {{ trans('global.minute') }}
+                            @endif
+                        @endif
                     </td>
                 </tr>
             </tbody>
@@ -152,6 +246,35 @@
             </td>
         </tr>
         @endforeach
+        </table>
+    </div>
+    <div class="card-header">
+        {{ trans('cruds.activity.drp') }}
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.activity.fields.drp') }}
+                    </th>
+                    <td>
+                        {!! $activity->drp !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th width="10%">
+                        {{ trans('cruds.activity.fields.drp_link') }}
+                    </th>
+                    <td>
+                        @if (filter_var($activity->drp_link, FILTER_VALIDATE_URL))
+                            <a href="{{ $activity->drp_link }}">{{ $activity->drp_link }}</a>
+                        @else
+                            {{ $activity->drp_link }}
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
     <div class="card-footer">

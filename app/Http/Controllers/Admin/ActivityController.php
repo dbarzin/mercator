@@ -56,6 +56,13 @@ class ActivityController extends Controller
         $activity->processes()->sync($request->input('processes', []));
         $activity->applications()->sync($request->input('applications', []));
 
+        // Compute RTO - RPO...
+        $activity->recovery_time_objective = $request->recovery_time_objective_days * 60 * 24 + $request->recovery_time_objective_hours * 60 + $request->recovery_time_objective_minutes;
+        $activity->recovery_point_objective = $request->recovery_point_objective_days * 60 * 24 + $request->recovery_point_objective_hours * 60 + $request->recovery_point_objective_minutes;
+        $activity->maximum_tolerable_downtime = $request->maximum_tolerable_downtime_days * 60 * 24 + $request->maximum_tolerable_downtime_hours * 60 + $request->maximum_tolerable_downtime_minutes;
+        $activity->maximum_tolerable_data_loss = $request->maximum_tolerable_data_loss_days * 60 * 24 + $request->maximum_tolerable_data_loss_hours * 60 + $request->maximum_tolerable_data_loss_minutes;
+        $activity->save();
+
         // Save impact_type - gravity
         $impact_types = $request['impact_types'];
         $severities = $request['severities'];
@@ -89,6 +96,24 @@ class ActivityController extends Controller
 
         $activity->load('operations', 'processes', 'applications', 'impacts');
 
+        // rto-rpo...
+        $activity->recovery_time_objective_days = intdiv($activity->recovery_time_objective, 60 * 24);
+        $activity->recovery_time_objective_hours = intdiv($activity->recovery_time_objective, 60) % 24;
+        $activity->recovery_time_objective_minutes = $activity->recovery_time_objective % 60;
+
+        $activity->recovery_point_objective_days = intdiv($activity->recovery_point_objective, 60 * 24);
+        $activity->recovery_point_objective_hours = intdiv($activity->recovery_point_objective, 60) % 24;
+        $activity->recovery_point_objective_minutes = $activity->recovery_point_objective % 60;
+
+        $activity->maximum_tolerable_downtime_days = intdiv($activity->maximum_tolerable_downtime, 60 * 24);
+        $activity->maximum_tolerable_downtime_hours = intdiv($activity->maximum_tolerable_downtime, 60) % 24;
+        $activity->maximum_tolerable_downtime_minutes = $activity->maximum_tolerable_downtime % 60;
+
+        $activity->maximum_tolerable_data_loss_days = intdiv($activity->maximum_tolerable_data_loss, 60 * 24);
+        $activity->maximum_tolerable_data_loss_hours = intdiv($activity->maximum_tolerable_data_loss, 60) % 24;
+        $activity->maximum_tolerable_data_loss_minutes = $activity->maximum_tolerable_data_loss % 60;
+
+
         return view(
             'admin.activities.edit',
             compact('operations', 'activity', 'processes', 'applications', 'types')
@@ -101,6 +126,13 @@ class ActivityController extends Controller
         $activity->operations()->sync($request->input('operations', []));
         $activity->processes()->sync($request->input('processes', []));
         $activity->applications()->sync($request->input('applications', []));
+
+        // Compute RTO - RPO...
+        $activity->recovery_time_objective = $request->recovery_time_objective_days * 60 * 24 + $request->recovery_time_objective_hours * 60 + $request->recovery_time_objective_minutes;
+        $activity->recovery_point_objective = $request->recovery_point_objective_days * 60 * 24 + $request->recovery_point_objective_hours * 60 + $request->recovery_point_objective_minutes;
+        $activity->maximum_tolerable_downtime = $request->maximum_tolerable_downtime_days * 60 * 24 + $request->maximum_tolerable_downtime_hours * 60 + $request->maximum_tolerable_downtime_minutes;
+        $activity->maximum_tolerable_data_loss = $request->maximum_tolerable_data_loss_days * 60 * 24 + $request->maximum_tolerable_data_loss_hours * 60 + $request->maximum_tolerable_data_loss_minutes;
+        $activity->save();
 
         // Delete previous date-values
         ActivityImpact::where('activity_id', $activity->id)->delete();

@@ -18,31 +18,34 @@
                 {{-- Formulaire d'export --}}
                 <form action="{{ route('admin.config.export') }}" method="POST" class="mb-4">
                     @csrf
-                    <input type="hidden" name="model" id="export-model" value="{{ old('model') }}">
+                    <input type="hidden" name="object" id="export-object" value="{{ old('object') }}">
 
                     <div class="row align-items-center">
                         <div class="col-md-3">
-                            <label for="filters" class="form-label">{{ trans("cruds.configuration.import.filter") }}</label>
-                            <select class="form-select select2" id="filters" name="filter">
-                                <option></option>
-                                <option value="0" {{ old('filter')=='0' ? "selected" : "" }}>{{ trans("cruds.report.cartography.gdpr") }}</option>
-                                <option value="1" {{ old('filter')=='1' ? "selected" : "" }}>{{ trans("cruds.report.cartography.ecosystem") }}</option>
-                                <option value="2" {{ old('filter')=='2' ? "selected" : "" }}>{{ trans("cruds.report.cartography.information_system") }}</option>
-                                <option value="3" {{ old('filter')=='3' ? "selected" : "" }}>{{ trans("cruds.report.cartography.applications") }}</option>
-                                <option value="4" {{ old('filter')=='4' ? "selected" : "" }}>{{ trans("cruds.report.cartography.administration") }}</option>
-                                <option value="5" {{ old('filter')=='5' ? "selected" : "" }}>{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
-                                <option value="6" {{ old('filter')=='6' ? "selected" : "" }}>{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
-                            </select>
-                            <div class="help-block">{{ trans("cruds.configuration.import.filter_helper") }}</div>
+                            <div class="form-group">
+                                <label for="filters" class="form-label">{{ trans("cruds.configuration.import.filter") }}</label>
+                                <select class="form-select select2" id="filters" name="filter">
+                                    <option></option>
+                                    <option value="0" {{ old('filter')=='0' ? "selected" : "" }}>{{ trans("cruds.report.cartography.gdpr") }}</option>
+                                    <option value="1" {{ old('filter')=='1' ? "selected" : "" }}>{{ trans("cruds.report.cartography.ecosystem") }}</option>
+                                    <option value="2" {{ old('filter')=='2' ? "selected" : "" }}>{{ trans("cruds.report.cartography.information_system") }}</option>
+                                    <option value="3" {{ old('filter')=='3' ? "selected" : "" }}>{{ trans("cruds.report.cartography.applications") }}</option>
+                                    <option value="4" {{ old('filter')=='4' ? "selected" : "" }}>{{ trans("cruds.report.cartography.administration") }}</option>
+                                    <option value="5" {{ old('filter')=='5' ? "selected" : "" }}>{{ trans("cruds.report.cartography.logical_infrastructure") }}</option>
+                                    <option value="6" {{ old('filter')=='6' ? "selected" : "" }}>{{ trans("cruds.report.cartography.physical_infrastructure") }}</option>
+                                </select>
+                                <div class="help-block">{{ trans("cruds.configuration.import.filter_helper") }}</div>
+                            </div>
                         </div>
 
                         <div class="col-md-3 node-container">
-                        {{ old('node') }}
-                            <label for="node" class="form-label">{{ trans("cruds.report.explorer.object") }}</label>
-                            <select class="form-select select2" id="node">
-                                <option></option>
-                            </select>
-                            <div class="help-block">{{ trans("cruds.configuration.import.choose") }}</div>
+                            <div class="form-group">
+                                <label for="object" class="{{ $errors->has('object') ? 'text-danger fw-bold' : '' }}">{{ trans("cruds.report.explorer.object") }}</label>
+                                <select class="form-select select2" id="node">
+                                    <option></option>
+                                </select>
+                                <div class="help-block">{{ trans("cruds.configuration.import.choose") }}</div>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
@@ -55,7 +58,7 @@
                 {{-- Formulaire d'import --}}
                 <form action="{{ route('admin.config.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="model" id="import-model" value="{{ old('model') }}">
+                    <input type="hidden" name="object" id="import-object" value="{{ old('object') }}" required>
 
                     <div class="row align-items-center">
                         <div class="col-md-6">
@@ -150,9 +153,9 @@ const objectMap = {
     ],
 };
 
-function findFilterForModel(modelId) {
-    for (const [filterId, models] of Object.entries(objectMap)) {
-        if (models.some(m => m.id === modelId)) {
+function findFilterForObject(objectId) {
+    for (const [filterId, objects] of Object.entries(objectMap)) {
+        if (objects.some(m => m.id === objectId)) {
             return filterId;
         }
     }
@@ -164,11 +167,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const $filters = $('#filters');
     const $node = $('#node');
-    const $exportModel = $('#export-model');
-    const $importModel = $('#import-model');
+    const $exportObject = $('#export-object');
+    const $importObject = $('#import-object');
 
-    const selectedModel = @json(old('model'));
-    const selectedFilter = findFilterForModel(selectedModel);
+    $node.find('.select2-selection').addClass('is-invalid');
+
+    const selectedObject = @json(old('object'));
+    const selectedFilter = findFilterForObject(selectedObject);
 
     function updateNodeOptions(objects, selectedValue = null) {
         $node.empty();
@@ -180,18 +185,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         $node.val(selectedValue).trigger('change');
-        $exportModel.val(selectedValue);
-        $importModel.val(selectedValue);
-    }
+        $exportObject.val(selectedValue);
+        $importObject.val(selectedValue);
 
+    }
     $filters.select2();
     $node.select2();
 
     if (selectedFilter) {
         $filters.val(selectedFilter).trigger('change');
-        updateNodeOptions(objectMap[selectedFilter], selectedModel);
+        updateNodeOptions(objectMap[selectedFilter], selectedObject);
     } else {
-        updateNodeOptions(allObjects, selectedModel);
+        updateNodeOptions(allObjects, selectedObject);
     }
 
     $filters.on('change', function () {
@@ -202,9 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $node.on('change', function () {
         const value = $(this).val();
-        $exportModel.val(value);
-        $importModel.val(value);
+        $exportObject.val(value);
+        $importObject.val(value);
     });
+
 });
 </script>
 @endsection
