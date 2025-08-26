@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-<form method="POST" action='{{ route("admin.graphs.update", [$graph->id]) }}' enctype="multipart/form-data" id="grahForm">
+<form method="POST" action='{{ route("admin.graphs.update", [$id]) }}' enctype="multipart/form-data" id="grahForm">
     @method('PUT')
     @csrf
-    <input name='id' type='hidden' value='{{$graph->id}}' id="id"/>
+    <input name='id' type='hidden' value='{{$id}}' id="id"/>
     <input name='content' type='hidden' value='' id="content"/>
 <div class="card">
     <div class="card-header">
@@ -14,7 +14,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label class="required" for="name">{{ trans('cruds.graph.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $graph->name) }}" required maxlength="32">
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $name) }}" required autofocus maxlength="64"/>
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}
@@ -30,7 +30,7 @@
                             <option> {{ old('type') }}</option>
                         @endif
                         @foreach($type_list as $t)
-                            <option {{ (old('type') ? old('type') : $graph->type) == $t ? 'selected' : '' }}>{{$t}}</option>
+                            <option {{ (old('type') ? old('type') : $type) == $t ? 'selected' : '' }}>{{$t}}</option>
                         @endforeach
                     </select>
                     @if($errors->has('type'))
@@ -109,7 +109,7 @@
                             <div id="sidebar" style="
                                 width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
-                                <i id="saveButton" title="Save" class="mapping-icon bi bi-floppy-fill"></i>
+                                <i id="saveButton" title="Save" class="mapping-icon bi bi-floppy-fill {{ $id === '-1' ? 'disabled' : ''}}"></i>
                                 <i id="undoButton" title="Undo" class="mapping-icon bi bi-arrow-counterclockwise"></i>
                                 <i id="redoButton" title="Redo" class="mapping-icon bi bi-arrow-clockwise"></i>
                                 <i id="font-btn" title="Text" class="mapping-icon bi bi-fonts" draggable="true"></i>
@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     //--------------------------------------------------------------
     // Chargement du graphe
-    loadGraph(`{!! $graph->content !!}`);
+    loadGraph(`{!! $content !!}`);
 
     //--------------------------------------------------------------
     // Save graph

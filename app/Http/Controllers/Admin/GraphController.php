@@ -25,11 +25,11 @@ class GraphController extends Controller
         abort_if(Gate::denies('graph_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Generate a graph name
-        $lastId = Graph::max('id') ?? 0;
-        $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
+        // $lastId = Graph::max('id') ?? 0;
+        // $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // create the graph
-        $graph = Graph::create(['name' => $name, 'type' => null, 'content' => '<GraphDataModel></GraphDataModel>']);
+        // $graph = Graph::create(['name' => $name, 'type' => null, 'content' => '<GraphDataModel></GraphDataModel>']);
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -37,7 +37,14 @@ class GraphController extends Controller
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit', compact('graph', 'type_list', 'nodes', 'edges'));
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
+            ->with('id', '-1')
+            ->with('type', '')
+            ->with('name', '')
+            ->with('content', '<GraphDataModel></GraphDataModel>');
     }
 
     public function clone(Request $request)
@@ -51,11 +58,11 @@ class GraphController extends Controller
         abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Clone the graph
-        $lastId = Graph::max('id') ?? 0;
-        $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
+        // $lastId = Graph::max('id') ?? 0;
+        // $name = 'Map#' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         // Create graph
-        $graph = Graph::create(['name' => $name, 'type' => $graph->type, 'content' => $graph->content]);
+        // $graph = Graph::create(['name' => $name, 'type' => $graph->type, 'content' => $graph->content]);
 
         // get nodes and edges from the explorer
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
@@ -63,7 +70,14 @@ class GraphController extends Controller
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit', compact('graph', 'type_list', 'nodes', 'edges'));
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
+            ->with('id', '-1')
+            ->with('name', $graph->name)
+            ->with('type', $graph->type)
+            ->with('content', $graph->content);
     }
 
     public function store(Request $request)
@@ -86,19 +100,20 @@ class GraphController extends Controller
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // return
-        return view('admin.graphs.edit', compact(
-            'graph',
-            'type_list',
-            'nodes',
-            'edges'
-        ));
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
+            ->with('id', $graph->id)
+            ->with('name', $graph->name)
+            ->with('type', $graph->type)
+            ->with('content', $graph->content);
     }
 
     public function save(Request $request)
     {
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Get the graph
         $graph = Graph::find($request->id);
 
         // Control not found
@@ -118,16 +133,20 @@ class GraphController extends Controller
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get the graph
-        $graph = Graph::find($request->id);
+        if ($request->id === '-1') {
+            $graph = Graph::create($request->all());
+        } else {
+            $graph = Graph::find($request->id);
 
-        // Control not found
-        abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
+            // Graph not found
+            abort_if($graph === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
-        // set value
-        $graph->name = $request->name;
-        $graph->type = $request->type;
-        $graph->content = $request->content;
-        $graph->save();
+            // set value
+            $graph->name = $request->name;
+            $graph->type = $request->type;
+            $graph->content = $request->content;
+            $graph->save();
+        }
 
         return redirect()->route('admin.graphs.index');
     }

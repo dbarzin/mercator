@@ -8,20 +8,18 @@ use App\Http\Controllers\Controller;
 use App\Information;
 use App\MApplication;
 use App\Process;
-use App\Site;
-use Gate;
-use Symfony\Component\HttpFoundation\Response;
+use App\Services\MonarcExportService;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Services\{MospService, MonarcExportService};
+use App\Services\MospService;
+use App\Site;
 
 class MonarcController extends Controller
 {
     public function __construct(
         private MospService $mosp,
         private MonarcExportService $exporter,
-    ) {}
+    ) {
+    }
 
     public function index()
     {
@@ -44,7 +42,7 @@ class MonarcController extends Controller
         // $assets       = $this->getSelectableAssets();    // à adapter à ton modèle
         // return view('monarc.create', compact(,'assets'));
 
-dd($referentials);
+        dd($referentials);
 
         return view(
             'monarc',

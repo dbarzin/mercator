@@ -3260,26 +3260,22 @@ class ReportController extends Controller
                 $rows[] = [
                     'application' => $app->name,
                     'activity' => $activity->name,
-                    'maximum_tolerable_downtime' =>
-                        implode(' ', array_filter([
+                    'maximum_tolerable_downtime' => implode(' ', array_filter([
                             ($d = intdiv($activity->maximum_tolerable_downtime, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
                             ($h = intdiv($activity->maximum_tolerable_downtime, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
                             ($m = $activity->maximum_tolerable_downtime % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
                         ])),
-                    'recovery_time_objective' =>
-                        implode(' ', array_filter([
+                    'recovery_time_objective' => implode(' ', array_filter([
                             ($d = intdiv($activity->recovery_time_objective, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
                             ($h = intdiv($activity->recovery_time_objective, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
                             ($m = $activity->recovery_time_objective % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
                         ])),
-                    'maximum_tolerable_data_loss' =>
-                        implode(' ', array_filter([
+                    'maximum_tolerable_data_loss' => implode(' ', array_filter([
                             ($d = intdiv($activity->maximum_tolerable_data_loss, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
                             ($h = intdiv($activity->maximum_tolerable_data_loss, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
                             ($m = $activity->maximum_tolerable_data_loss % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,
                         ])),
-                    'recovery_point_objective' =>
-                        implode(' ', array_filter([
+                    'recovery_point_objective' => implode(' ', array_filter([
                             ($d = intdiv($activity->recovery_point_objective, 1440)) ? $d . ' ' . trans('global.' . ($d > 1 ? 'days' : 'day')) : null,
                             ($h = intdiv($activity->recovery_point_objective, 60) % 24) ? $h . ' ' . trans('global.' . ($h > 1 ? 'hours' : 'hour')) : null,
                             ($m = $activity->recovery_point_objective % 60) ? $m . ' ' . trans('global.' . ($m > 1 ? 'minutes' : 'minute')) : null,

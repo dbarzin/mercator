@@ -171,7 +171,7 @@
                         <b>{{ trans('cruds.logicalServer.fields.disk_used') }}</b>
                     </th>
                     <td width="12%">
-                        {!! $logicalServer->disk !!}
+                        {!! $logicalServer->disk_used !!}
                     </td>
                 </tr>
                 <tr>
