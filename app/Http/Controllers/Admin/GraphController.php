@@ -37,8 +37,10 @@ class GraphController extends Controller
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit',
-            compact('type_list', 'nodes', 'edges'))
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
             ->with('id', '-1')
             ->with('type', '')
             ->with('name', '')
@@ -68,11 +70,13 @@ class GraphController extends Controller
         // Get types
         $type_list = Graph::select('type')->whereNotNull('type')->distinct()->orderBy('type')->pluck('type');
 
-        return view('admin.graphs.edit',
-            compact('type_list', 'nodes', 'edges'))
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
             ->with('id', '-1')
-            ->with('type', '')
-            ->with('name', '')
+            ->with('name', $graph->name)
+            ->with('type', $graph->type)
             ->with('content', $graph->content);
     }
 
@@ -96,11 +100,13 @@ class GraphController extends Controller
         [$nodes, $edges] = app('App\Http\Controllers\Admin\ExplorerController')->getData();
 
         // return
-        return view('admin.graphs.edit',
-            compact('type_list', 'nodes','edges'))
+        return view(
+            'admin.graphs.edit',
+            compact('type_list', 'nodes', 'edges')
+        )
             ->with('id', $graph->id)
-            ->with('type', $graph->type)
             ->with('name', $graph->name)
+            ->with('type', $graph->type)
             ->with('content', $graph->content);
     }
 
@@ -127,11 +133,9 @@ class GraphController extends Controller
         abort_if(Gate::denies('graph_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // Get the graph
-        if ($request->id=='-1') {
+        if ($request->id === '-1') {
             $graph = Graph::create($request->all());
-            }
-        else
-        {
+        } else {
             $graph = Graph::find($request->id);
 
             // Graph not found

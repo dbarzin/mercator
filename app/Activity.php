@@ -21,7 +21,7 @@ class Activity extends Model
     public static $searchable = [
         'name',
         'description',
-        'drp'
+        'drp',
     ];
 
     protected $dates = [

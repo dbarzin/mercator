@@ -44,15 +44,15 @@ class DocumentController extends Controller
             'path' => $file->path(),
             'isFile' => is_file($file->path()),
         ]);
-        
-        if (!$file || !$file->isValid()) {
+
+        if (! $file || ! $file->isValid()) {
             \Log::error('DocumentController.strore : Invalid file');
             return response()->json(['error' => 'Invalid file'], 400);
         }
 
         $filePath = $file->path();
 
-        if (!is_file($filePath)) {
+        if (! is_file($filePath)) {
             \Log::error('DocumentController.store : invalid file path');
             return response()->json(['error' => 'Invalid file path'], 400);
         }

@@ -14,7 +14,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label class="required" for="name">{{ trans('cruds.graph.fields.name') }}</label>
-                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $name) }}" required maxlength="32">
+                    <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $name) }}" required autofocus maxlength="64"/>
                     @if($errors->has('name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('name') }}

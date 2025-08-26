@@ -113,7 +113,6 @@ class ActivityController extends Controller
         $activity->maximum_tolerable_data_loss_hours = intdiv($activity->maximum_tolerable_data_loss, 60) % 24;
         $activity->maximum_tolerable_data_loss_minutes = $activity->maximum_tolerable_data_loss % 60;
 
-
         return view(
             'admin.activities.edit',
             compact('operations', 'activity', 'processes', 'applications', 'types')

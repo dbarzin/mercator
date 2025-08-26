@@ -1,10 +1,10 @@
 <?php
 // app/Services/MospService.php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 class MospService
 {
@@ -12,14 +12,14 @@ class MospService
         private string $base = '',
         private int $ttl = 3600
     ) {
-        $this->base = config('monarc.mosp_base','https://objects.monarc.lu/api/v2/object');
-        $this->ttl  = (int) config('monarc.cache_ttl', 3600);
+        $this->base = config('monarc.mosp_base', 'https://objects.monarc.lu/api/v2/object');
+        $this->ttl = (int) config('monarc.cache_ttl', 3600);
     }
 
     /** Retourne l’index MOSP (liste des référentiels) */
     public function getIndex(): array
     {
-        return Cache::remember("mosp:index", $this->ttl, function () {
+        return Cache::remember('mosp:index', $this->ttl, function () {
             $resp = Http::timeout(30)->get($this->base /* .'/index.json'*/);
             $resp->throw();
             return $resp->json();
@@ -42,7 +42,7 @@ class MospService
     /** Détail d’un référentiel (incluant threats, vulnerabilities, recommendations) */
     public function getReferential(string $slug): array
     {
-        $key = "mosp:ref:$slug";
+        $key = "mosp:ref:{$slug}";
         return Cache::remember($key, $this->ttl, function () use ($slug) {
             $resp = Http::timeout(30)->get($this->base."/referentials/{$slug}.json");
             $resp->throw();
