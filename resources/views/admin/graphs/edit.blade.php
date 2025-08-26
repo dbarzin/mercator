@@ -109,7 +109,7 @@
                             <div id="sidebar" style="
                                 width: 50px; background: #ffffff; border-right: 1px solid #ddd; padding: 10px;">
 
-                                <i id="saveButton" title="Save" class="mapping-icon bi bi-floppy-fill disabled"></i>
+                                <i id="saveButton" title="Save" class="mapping-icon bi bi-floppy-fill {{ $id === '-1' ? 'disabled' : ''}}"></i>
                                 <i id="undoButton" title="Undo" class="mapping-icon bi bi-arrow-counterclockwise"></i>
                                 <i id="redoButton" title="Redo" class="mapping-icon bi bi-arrow-clockwise"></i>
                                 <i id="font-btn" title="Text" class="mapping-icon bi bi-fonts" draggable="true"></i>
