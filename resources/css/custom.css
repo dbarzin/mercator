@@ -546,5 +546,13 @@ table .navbar-brand-full {
   display: inline-block;
 }
 
+/* for disabled save icon on graph/edit */
+
+.mapping-icon.disabled {
+  color: #6c757d;     /* couleur gris Bootstrap */
+  opacity: 0.5;       /* effet visuel désactivé */
+  pointer-events: none; /* désactive les clics */
+  cursor: not-allowed;  /* change le curseur */
+}
 
 /***************************************************************************/
