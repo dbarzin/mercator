@@ -1,12 +1,13 @@
 import {
     Graph,
+    // BaseGraph,
     CellEditorHandler,
     UndoManager,
     SelectionCellsHandler,
     SelectionHandler,
     RubberBandHandler,
     GraphDataModel,
-    mxEvent,
+    // mxEvent,
     PanningHandler,
     InternalEvent,
     ModelXmlSerializer,
@@ -14,6 +15,9 @@ import {
     VertexHandlerConfig,
     styleUtils,
     eventUtils,
+    EdgeStyle,
+    // ManhattanConnectorConfig,
+    Codec
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -57,6 +61,7 @@ const plugins: GraphPluginConstructor[] = [
 const container = document.getElementById('graph-container');
 const div = document.createElement('div');
 const graph = new Graph(container, new GraphDataModel(), plugins);
+//const graph = new BaseGraph(container, new GraphDataModel(), plugins);
 const model = graph.getDataModel();
 
 //-----------------------------------------------------------------------
@@ -71,9 +76,12 @@ style.entryPerimeter = false;
 //style.entryX = 0;
 // After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
 style.edgeStyle = 'manhattanEdgeStyle';
+// style.edgeStyle = EdgeStyle.MANHATTAN; // clé typée
+// Exemple: ajuster la config Manhattan (step, directions, etc.)
+// ManhattanConnectorConfig.step = 20;
 
-// reset expanded image
-graph.options.expandedImage=null;
+// Désactiver les icônes de folding
+(graph as any).getFoldingImage = () => null;
 
 // Changes vertex selection colors and size
 VertexHandlerConfig.selectionColor = '#00a8ff';
@@ -82,22 +90,13 @@ VertexHandlerConfig.selectionStrokeWidth = 2;
 //-----------------------------------------------------------------------
 // Initialiser l'UndoManager
 
-// Crée un UndoManager
+// wiring UndoManager
 const undoManager = new UndoManager();
-
-// Fonction pour enregistrer les modifications dans l'UndoManager
-function registerUndoManager(graph: Graph, undoManager: UndoManager) {
-  const listener = (sender: any, evt: any) => {
-    const edit = evt.getProperty('edit') as UndoableEdit;
-    undoManager.undoableEditHappened(edit);
-  };
-
-  model.addListener(InternalEvent.UNDO, listener);
-  graph.getView().addListener(InternalEvent.UNDO, listener);
-}
-
-// Enregistre les modifications pour Undo/Redo
-registerUndoManager(graph, undoManager);
+const listener = (_sender, evt) => {
+  undoManager.undoableEditHappened(evt.getProperty('edit'));
+};
+model.addListener(InternalEvent.UNDO, listener);
+graph.getView().addListener(InternalEvent.UNDO, listener);
 
 // Boutons pour Undo/Redo
 const undoButton = document.getElementById('undoButton') as HTMLButtonElement;
@@ -342,6 +341,8 @@ container.style.backgroundSize = '10px 10px'; // Taille des cellules de la grill
 
 // Permettre le déplacement de la grille
 graph.setPanning(true); // Active le panning global
+graph.allowAutoPanning = true;
+graph.useScrollbarsForPanning = true; // si le conteneur scrolle
 
 //-------------------------------------------------------------------------
 // LOAD / SAVE
@@ -954,7 +955,9 @@ updateButton.addEventListener('click', () => {
                 else {
                     // update cell
                     cell.value = node.label;
-                    cell.style.image = node.image;
+                    // cell.style.image = node.image;
+                    styleUtils.setCellStyles(graph.getModel(), [cell], { shape: 'image', image: node.image });
+
                 }
             }
         });
