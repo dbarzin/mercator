@@ -38,7 +38,7 @@ class DocumentController extends Controller
     {
         $file = $request->file('file');
 
-        if (! $file)  {
+        if (! $file) {
             \Log::error('DocumentController.store : File not received');
             return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
         }
@@ -52,9 +52,9 @@ class DocumentController extends Controller
         ]);
 
         if (! $file->isValid()) {
-             \Log::error('DocumentController.store : Invalid file');
-             return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
-         }
+            \Log::error('DocumentController.store : Invalid file');
+            return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
+        }
 
         // Create a new document
         $document = new Document();

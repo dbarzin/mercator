@@ -2599,7 +2599,6 @@ class CartographyController extends Controller
             // add "unset SERVER_NAME;" due to Apache2
             // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
             shell_exec("unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
-
         } finally {
             @unlink($dotPath);
         }

@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 // Models
-use App\SecurityDevice;
-use App\Site;
-use App\Building;
 use App\Bay;
-
-// Framework
+use App\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
+// Framework
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use App\PhysicalSecurityDevice;
+use App\SecurityDevice;
+use App\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -83,7 +82,7 @@ class PhysicalSecurityDeviceController extends Controller
         $physicalSecurityDevice->update($request->all());
 
         // Relations
-        $physicalSecurityDevice ->securityDevices()->sync($request->input('security_devices', []));
+        $physicalSecurityDevice->securityDevices()->sync($request->input('security_devices', []));
 
         return redirect()->route('admin.physical-security-devices.index');
     }

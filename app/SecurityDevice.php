@@ -5,9 +5,8 @@ namespace App;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\SecurityDevice
@@ -41,5 +40,4 @@ class SecurityDevice extends Model
     {
         return $this->belongsToMany(PhysicalSecurityDevice::class)->orderBy('name');
     }
-
 }

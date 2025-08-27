@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 // Models
-use App\SecurityDevice;
-use App\PhysicalSecurityDevice;
-// Framework
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
+// Framework
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
+use App\PhysicalSecurityDevice;
+use App\SecurityDevice;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,7 +49,7 @@ class SecurityDeviceController extends Controller
 
         $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
 
-        return view('admin.securityDevices.edit', compact('securityDevice','physicalSecurityDevices'));
+        return view('admin.securityDevices.edit', compact('securityDevice', 'physicalSecurityDevices'));
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)
