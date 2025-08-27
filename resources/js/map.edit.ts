@@ -17,7 +17,10 @@ import {
     eventUtils,
     EdgeStyle,
     // ManhattanConnectorConfig,
-    Codec
+    // Codec,
+    // Layout
+    FastOrganicLayout,
+    Morphing
 } from '@maxgraph/core';
 
 //-----------------------------------------------------------------------
@@ -236,10 +239,10 @@ graph.container.addEventListener('contextmenu', (event) => {
 
 // Appliquer les changements de style à l'arête sélectionnée
 const edgeApplyButton = document.getElementById('apply-edge-style');
-edgeApplyButton.addEventListener('click', () => {
+edgeApplyButton.addEventListener('click', (e) => {
     // console.log("change style")
     // Do not submit form
-    event.preventDefault();
+    e.preventDefault();
     // edge selected ?
     if (selectedEdge) {
         // console.log(selectedEdge);
@@ -266,8 +269,8 @@ edgeApplyButton.addEventListener('click', () => {
 
 // Appliquer les changements de style au texte sélectionné
 const textApplyButton = document.getElementById('apply-text-style');
-textApplyButton.addEventListener('click', () => {
-    event.preventDefault();
+textApplyButton.addEventListener('click', (e) => {
+    e.preventDefault();
 
     // edge selected ?
     if (selectedEdge) {
@@ -355,7 +358,7 @@ export function loadGraph(xml: string) {
 // Rendez la fonction loadGraph accessible globalement
 (window as any).loadGraph = loadGraph;
 
-async function saveGraphToDatabase(id: integer, name: string, type: string, content: string): Promise<void> {
+async function saveGraphToDatabase(id: number, name: string, type: string, content: string): Promise<void> {
   // console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
   try {
@@ -588,7 +591,7 @@ container.addEventListener('drop', (event) => {
                                 target: targetNode,
                                 style: {
                                 editable: false, //  Ne pas autoriser de changer le label
-                                    stroke: '#FF', // Edge color
+                                    strokeColor: '#ff0000', // Edge color
                                     strokeWidth: 1,
                                     startArrow : 'none', // pas de flèche
                                     endArrow : 'none' // pas de flèche
@@ -787,7 +790,8 @@ function getFilter(){
 }
 
 // Check edge already present
-function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
+// function hasEdge(src : Vertex, dest : Vertex, name: string) : boolean {
+function hasEdge(src: Cell | null, dest: Cell | null, name: string): boolean {
     if ((src==null || dest == null))
         return false;
     let found = false;
@@ -826,7 +830,7 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
         // Batch Update
         graph.batchUpdate(() => {
             // Get the new nodes
-            let newEdges: edge[] = [];
+            let newEdges: Edge[] = [];
             //
             const parent = graph.getDefaultParent();
             const filter = getFilter();
@@ -956,7 +960,7 @@ updateButton.addEventListener('click', () => {
                     // update cell
                     cell.value = node.label;
                     // cell.style.image = node.image;
-                    styleUtils.setCellStyles(graph.getModel(), [cell], { shape: 'image', image: node.image });
+                    styleUtils.setCellStyles(graph.getDataModel(), [cell], { shape: 'image', image: node.image });
 
                 }
             }
@@ -1014,5 +1018,33 @@ function downloadSVG() {
 }
 
 // Ajoutez un bouton pour déclencher l'exportation
-const exportButton = document.getElementById('download-btn');
-exportButton.addEventListener('click', downloadSVG);
+document.getElementById('download-btn')?.addEventListener('click', downloadSVG);
+
+//-------------------------------------------------------------------------
+// Organic layout (force-directed)
+export function layout() {
+  // Repositionne les nœuds avec l'algorithme "Organic"
+  const parent = graph.getDefaultParent();
+
+  // On ne travaille que sur les sommets (pas les arêtes)
+  const cells = graph.getChildVertices(parent);
+  if (!cells || cells.length === 0) return;
+
+  const organic = new FastOrganicLayout(graph);
+  // Réglages possibles :
+  organic.forceConstant = 60;
+  organic.disableEdgeStyle = false;
+
+  graph.getDataModel().beginUpdate();
+  try {
+    // Calcule les nouvelles positions
+    organic.execute(parent, cells);
+  } finally {
+    // Animation fluide des déplacements
+    const morph = new Morphing(graph);
+    morph.addListener(InternalEvent.DONE, () => graph.getDataModel().endUpdate());
+    morph.startAnimation();
+  }
+}
+
+document.getElementById('layout-btn')?.addEventListener('click', layout);
