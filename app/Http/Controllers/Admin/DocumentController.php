@@ -56,8 +56,6 @@ class DocumentController extends Controller
              return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
          }
 
-        $filePath = $file->path();
-
         // Create a new document
         $document = new Document();
         $document->filename = $file->getClientOriginalName();
@@ -72,9 +70,8 @@ class DocumentController extends Controller
         $file->move(storage_path('docs'), $document->id);
 
         // Attach the document to the session
-        $documents = session()->get('documents');
-        array_push($documents, $document->id);
-
+        $documents = session()->get('documents', []);
+        $documents[] = $document->id;
         session()->put('documents', $documents);
 
         // Return success
