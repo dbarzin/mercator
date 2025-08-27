@@ -3318,10 +3318,10 @@ class ReportController extends Controller
         foreach ($rows as $data) {
             $sheet->setCellValue("A{$rowNum}", $data['application']);
             $sheet->setCellValue("B{$rowNum}", $data['activity']);
-            $sheet->setCellValue("D{$rowNum}", $data['maximum_tolerable_downtime']);
-            $sheet->setCellValue("C{$rowNum}", $data['recovery_time_objective']);
-            $sheet->setCellValue("F{$rowNum}", $data['maximum_tolerable_data_loss']);
-            $sheet->setCellValue("E{$rowNum}", $data['recovery_point_objective']);
+            $sheet->setCellValue("C{$rowNum}", $data['maximum_tolerable_downtime']);
+            $sheet->setCellValue("D{$rowNum}", $data['recovery_time_objective']);
+            $sheet->setCellValue("E{$rowNum}", $data['maximum_tolerable_data_loss']);
+            $sheet->setCellValue("F{$rowNum}", $data['recovery_point_objective']);
 
             foreach (range('A', 'F') as $col) {
                 $sheet->getStyle("{$col}{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
