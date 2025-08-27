@@ -89,19 +89,19 @@
                         {{ trans('cruds.logicalServer.fields.operating_system') }}
                     </th>
                     <td width="16%">
-                        {!! $logicalServer->operating_system !!}
+                        {{ $logicalServer->operating_system }}
                     </td>
                     <th width="16%">
                         {{ trans('cruds.logicalServer.fields.install_date') }}
                     </th>
                     <td width="16%">
-                        {!! $logicalServer->install_date !!}
+                        {{ $logicalServer->install_date }}
                     </td>
                     <th width="16%">
                         {{ trans('cruds.logicalServer.fields.update_date') }}
                     </th>
                     <td width="20%">
-                        {!! $logicalServer->update_date !!}
+                        {{ $logicalServer->update_date }}
                     </td>
                 </tr>
                 <tr>
@@ -111,7 +111,7 @@
                     <td>
                         @if ($logicalServer->cluster!=null)
                         <a href="{{ route('admin.clusters.show', $logicalServer->cluster_id) }}">
-                            {!! $logicalServer->cluster->name ?? "" !!}
+                            {{ $logicalServer->cluster->name ?? "" }}
                         </a>
                         @endif
                     </td>
@@ -119,13 +119,13 @@
                         {{ trans('cruds.logicalServer.fields.environment') }}
                     </th>
                     <td>
-                        {!! $logicalServer->environment !!}
+                        {{ $logicalServer->environment }}
                     </td>
                     <th>
                         {{ trans('cruds.logicalServer.fields.address_ip') }}
                     </th>
                     <td>
-                        {!! $logicalServer->address_ip !!}
+                        {{ $logicalServer->address_ip }}
                     </td>
                 </tr>
                 <tr>
@@ -153,25 +153,25 @@
                         {{ trans('cruds.logicalServer.fields.cpu') }}
                     </th>
                     <td width="12%">
-                        {!! $logicalServer->cpu !!}
+                        {{ $logicalServer->cpu }}
                     </td>
                     <th width="12%">
                         <b>{{ trans('cruds.logicalServer.fields.memory') }}</b>
                     </th>
                     <td width="12%">
-                        {!! $logicalServer->memory !!}
+                        {{ $logicalServer->memory }}
                     </td>
                     <th width="12%">
                         <b>{{ trans('cruds.logicalServer.fields.disk') }}</b>
                     </th>
                     <td width="12%">
-                        {!! $logicalServer->disk !!}
+                        {{ $logicalServer->disk }}
                     </td>
                     <th width="12%">
                         <b>{{ trans('cruds.logicalServer.fields.disk_used') }}</b>
                     </th>
                     <td width="12%">
-                        {!! $logicalServer->disk_used !!}
+                        {{ $logicalServer->disk_used }}
                     </td>
                 </tr>
                 <tr>

@@ -143,18 +143,18 @@ class ExplorerController extends Controller
         // Physical security devices
         $securityDevices = DB::table('physical_security_devices')->select('id', 'name', 'address_ip', 'bay_id', 'site_id', 'building_id')->whereNull('deleted_at')->get();
         foreach ($securityDevices as $securityDevice) {
-            $this->addNode($nodes, 6, $this->formatId('SECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'physical-security-devices', $securityDevice->address_ip);
+            $this->addNode($nodes, 6, $this->formatId('PSECURITY_', $securityDevice->id), $securityDevice->name, '/images/securitydevice.png', 'physical-security-devices', $securityDevice->address_ip);
             if ($securityDevice->bay_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
+                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BAY_', $securityDevice->bay_id));
             } elseif ($securityDevice->building_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('BUILDING_', $securityDevice->building_id));
+                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('BUILDING_', $securityDevice->building_id));
             } elseif ($securityDevice->site_id !== null) {
-                $this->addLinkEdge($edges, $this->formatId('SECURITY_', $securityDevice->id), $this->formatId('SITE_', $securityDevice->site_id));
+                $this->addLinkEdge($edges, $this->formatId('PSECURITY_', $securityDevice->id), $this->formatId('SITE_', $securityDevice->site_id));
             }
             foreach ($subnetworks as $subnetwork) {
                 foreach (explode(',', $securityDevice->address_ip) as $address) {
                     if ($subnetwork->contains($address)) {
-                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('SECURITY_', $securityDevice->id));
+                        $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('PSECURITY_', $securityDevice->id));
                         break;
                     }
                 }
@@ -384,6 +384,18 @@ class ExplorerController extends Controller
         $networkSwitches = DB::table('network_switches')->select('id', 'name')->whereNull('deleted_at')->get();
         foreach ($networkSwitches as $networkSwitch) {
             $this->addNode($nodes, 5, $this->formatId('LSWITCH_', $networkSwitch->id), $networkSwitch->name, '/images/switch.png', 'switches');
+        }
+
+        // Logical Security Devices
+        $logical_security_devices = DB::table('security_devices')->select('id', 'name')->whereNull('deleted_at')->get();
+        foreach ($logical_security_devices as $securityDevice) {
+            $this->addNode($nodes, 5, $this->formatId('LSECURITY_', $securityDevice->id), $securityDevice->name, '/images/security.png', 'security-devices');
+        }
+
+        // Logical Security Devices - Physical Security Device
+        $joins = DB::table('physical_security_device_security_device')->select('security_device_id', 'physical_security_device_id')->get();
+        foreach ($joins as $join) {
+            $this->addLinkEdge($edges, $this->formatId('LSECURITY_', $join->security_device_id), $this->formatId('PSECURITY_', $join->physical_security_device_id));
         }
 
         // DHCP Servers

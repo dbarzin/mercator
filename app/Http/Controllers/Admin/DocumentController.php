@@ -13,6 +13,7 @@ class DocumentController extends Controller
     {
         // Find the document
         $document = Document::Find($id);
+        abort_if($document === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Get the path to the file
         $path = storage_path('docs/' . $id);
@@ -37,6 +38,11 @@ class DocumentController extends Controller
     {
         $file = $request->file('file');
 
+        if (! $file) {
+            \Log::error('DocumentController.store : File not received');
+            return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
+        }
+
         \Log::debug('DocumentController.store : Upload info', [
             'isValid' => $file->isValid(),
             'originalName' => $file->getClientOriginalName(),
@@ -45,16 +51,9 @@ class DocumentController extends Controller
             'isFile' => is_file($file->path()),
         ]);
 
-        if (! $file || ! $file->isValid()) {
-            \Log::error('DocumentController.strore : Invalid file');
-            return response()->json(['error' => 'Invalid file'], 400);
-        }
-
-        $filePath = $file->path();
-
-        if (! is_file($filePath)) {
-            \Log::error('DocumentController.store : invalid file path');
-            return response()->json(['error' => 'Invalid file path'], 400);
+        if (! $file->isValid()) {
+            \Log::error('DocumentController.store : Invalid file');
+            return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
         }
 
         // Create a new document
@@ -71,9 +70,8 @@ class DocumentController extends Controller
         $file->move(storage_path('docs'), $document->id);
 
         // Attach the document to the session
-        $documents = session()->get('documents');
-        array_push($documents, $document->id);
-
+        $documents = session()->get('documents', []);
+        $documents[] = $document->id;
         session()->put('documents', $documents);
 
         // Return success

@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .addImage("/images/wifi.png", "64px", "64px")
     .addImage("/images/certificate.png", "64px", "64px")
     .addImage("/images/security.png", "64px", "64px")
+    .addImage("/images/securitydevice.png", "64px", "64px")
     .addImage("/images/lserver.png", "64px", "64px")
 
     .addImage("/images/vlan.png", "64px", "64px")
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
           SWITCH [label="{{ trans('cruds.physicalSwitch.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/switch.png" href="/admin/physical-switches"]
           STORAGE [label="{{ trans('cruds.storageDevice.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/storage.png" href="/admin/storage-devices"]
           ROUTER [label="{{ trans('cruds.physicalRouter.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="/admin/physical-routers"]
-          SECURITY [label="{{ trans('cruds.physicalSecurityDevice.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/security.png" href="/admin/physical-security-devices"]
+          SECURITY [label="{{ trans('cruds.physicalSecurityDevice.title_short') }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/securitydevice.png" href="/admin/physical-security-devices"]
           }
 
           MPROCESS -> PROCESS  [label="  0-n"]

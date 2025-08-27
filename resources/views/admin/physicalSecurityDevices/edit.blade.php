@@ -61,6 +61,28 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-8">
+
+                <div class="form-group">
+                    <label for="security_devices">{{ trans('cruds.physicalSecurityDevice.fields.security_devices') }}</label>
+                    <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}" name="security_devices[]" id="security_devices" multiple>
+                        @foreach($securityDevices as $id => $name)
+                        <option value="{{ $id }}" {{ (in_array($id, old('security_devices', [])) || $physicalSecurityDevice->securityDevices->contains($id)) ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('security_devices'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('security_devices') }}
+                    </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.security_devices_helper') }}</span>
+                </div>
+
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">

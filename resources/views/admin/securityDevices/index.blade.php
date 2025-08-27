@@ -29,6 +29,9 @@
                             {{ trans('cruds.securityDevice.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.securityDevice.fields.physical_security_devices') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -47,6 +50,16 @@
                             <td>
                                 {!! $securityDevice->description ?? '' !!}
                             </td>
+
+                            <td>
+                                @foreach($securityDevice->physicalSecurityDevices as $device)
+                                    <a href="{{ route('admin.physical-security-devices.show', $device->id) }}">{{ $device->name }}</a>
+                                    @if(!$loop->last)
+                                    ,
+                                    @endif
+                                @endforeach
+                            </td>
+                            
                             <td nowrap>
                                 @can('security_device_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.security-devices.show', $securityDevice->id) }}">

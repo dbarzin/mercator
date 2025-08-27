@@ -118,6 +118,7 @@
                                 <i id="ungroup-btn" title="Ungroup" class="mapping-icon bi bi-dash-square-dotted"></i>
                                 <i id="zoom-in-btn" title="Zoom in" class="mapping-icon bi bi-zoom-in"></i>
                                 <i id="zoom-out-btn" title="Zoom out" class="mapping-icon bi bi-zoom-out"></i>
+                                <i id="layout-btn" title="Layout" class="mapping-icon bi bi-magic"></i>
                                 <i id="update-btn" title="Update" class="mapping-icon bi bi-lightning-fill"></i>
                                 <i id="download-btn" title="Export" class="mapping-icon bi bi-download"></i>
 
@@ -185,7 +186,7 @@
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.graphs.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button id="btn-save" class="btn btn-danger" type="submit" id="submitButton">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>

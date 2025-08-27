@@ -2581,27 +2581,27 @@ class CartographyController extends Controller
     private function generateGraphImage(string $graph)
     {
         // Save it to a file
-        $dotPath = tempnam('/tmp', 'dot');
+        $dotPath = tempnam(sys_get_temp_dir(), 'dot');
 
         // \Log::Debug("generateGraphImage in {$dotPath}");
 
-        $dotFile = fopen($dotPath, 'w');
-        fwrite($dotFile, $graph);
-        fclose($dotFile);
+        try {
+            $dotFile = fopen($dotPath, 'w');
+            fwrite($dotFile, $graph);
+            fclose($dotFile);
 
-        // create image file
-        $imagePath = tempnam('/tmp', 'png');
+            // create image file
+            $imagePath = tempnam(sys_get_temp_dir(), 'png');
 
-        // Call DOT : dot -Tpng ./test.dot -otest.png
-        // \Log::Debug("call /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
+            // Call DOT : dot -Tpng ./test.dot -otest.png
+            // \Log::Debug("call /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
 
-        // add "unset SERVER_NAME;" due to Apache2
-        // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
-        shell_exec("unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
-
-        // delete graph file
-        unlink($dotPath);
-
+            // add "unset SERVER_NAME;" due to Apache2
+            // see: https://github.com/glejeune/Ruby-Graphviz/issues/69
+            shell_exec("unset SERVER_NAME; /usr/bin/dot -Tpng -Gdpi=300 {$dotPath} -o{$imagePath}");
+        } finally {
+            @unlink($dotPath);
+        }
         // Test for SVG (not supported)
         // $this->embedImagesInSvg($imagePath);
 

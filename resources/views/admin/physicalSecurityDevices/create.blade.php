@@ -60,16 +60,39 @@
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <div class="card-body">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="address_ip">{{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}</label>
-                <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip') }}">
-                @if($errors->has('address_ip'))
+        <div class="row">
+            <div class="col-md-8">
+
+                <div class="form-group">
+                    <label for="security_devices">{{ trans('cruds.physicalSecurityDevice.fields.security_devices') }}</label>
+                    <select class="form-control select2 {{ $errors->has('security_devices') ? 'is-invalid' : '' }}" name="security_devices[]" id="security_devices" multiple>
+                        @foreach($securityDevices as $id => $name)
+                        <option value="{{ $id }}" {{ in_array($id, old('security_devices', []))  ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('security_devices'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('address_ip') }}
+                        {{ $errors->first('security_devices') }}
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.address_ip_helper') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.security_devices_helper') }}</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="address_ip">{{ trans('cruds.physicalSecurityDevice.fields.address_ip') }}</label>
+                    <input class="form-control {{ $errors->has('address_ip') ? 'is-invalid' : '' }}" type="text" name="address_ip" id="address_ip" value="{{ old('address_ip') }}">
+                    @if($errors->has('address_ip'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('address_ip') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.physicalSecurityDevice.fields.address_ip_helper') }}</span>
+                </div>
             </div>
         </div>
     </div>
