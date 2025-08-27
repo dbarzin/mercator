@@ -38,6 +38,11 @@ class DocumentController extends Controller
     {
         $file = $request->file('file');
 
+        if (! $file)  {
+            \Log::error('DocumentController.store : File not received');
+            return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
+        }
+
         \Log::debug('DocumentController.store : Upload info', [
             'isValid' => $file->isValid(),
             'originalName' => $file->getClientOriginalName(),
@@ -46,17 +51,12 @@ class DocumentController extends Controller
             'isFile' => is_file($file->path()),
         ]);
 
-        if (! $file || ! $file->isValid()) {
-            \Log::error('DocumentController.strore : Invalid file');
-            return response()->json(['error' => 'Invalid file'], 400);
-        }
+        if (! $file->isValid()) {
+             \Log::error('DocumentController.store : Invalid file');
+             return response()->json(['error' => 'Invalid file'], Response::HTTP_BAD_REQUEST);
+         }
 
         $filePath = $file->path();
-
-        if (! is_file($filePath)) {
-            \Log::error('DocumentController.store : invalid file path');
-            return response()->json(['error' => 'Invalid file path'], 400);
-        }
 
         // Create a new document
         $document = new Document();
