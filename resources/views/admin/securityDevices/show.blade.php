@@ -5,6 +5,10 @@
         {{ trans('global.back_to_list') }}
     </a>
 
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=LSECURITY_{{$securityDevice->id}}">
+        {{ trans('global.explore') }}
+    </a>
+
     @can('entity_edit')
         <a class="btn btn-info" href="{{ route('admin.security-devices.edit', $securityDevice->id) }}">
             {{ trans('global.edit') }}
@@ -42,6 +46,19 @@
                     </th>
                     <td>
                         {!! $securityDevice->description !!}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.securityDevice.fields.physical_security_devices') }}
+                    </th>
+                    <td>
+                        @foreach($securityDevice->physicalSecurityDevices as $device)
+                            <a href="{{ route('admin.physical-security-devices.show', $device->id) }}">{{ $device->name }}</a>
+                            @if(!$loop->last)
+                            ,
+                            @endif
+                        @endforeach
                     </td>
                 </tr>
             </tbody>

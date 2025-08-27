@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Bay;
+// Models
+use App\SecurityDevice;
+use App\Site;
 use App\Building;
+use App\Bay;
+
+// Framework
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPhysicalSecurityDeviceRequest;
 use App\Http\Requests\StorePhysicalSecurityDeviceRequest;
 use App\Http\Requests\UpdatePhysicalSecurityDeviceRequest;
 use App\PhysicalSecurityDevice;
-use App\Site;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,18 +36,23 @@ class PhysicalSecurityDeviceController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id');
 
+        $securityDevices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
 
         return view(
             'admin.physicalSecurityDevices.create',
-            compact('sites', 'buildings', 'bays', 'type_list')
+            compact('securityDevices', 'sites', 'buildings', 'bays', 'type_list')
         );
     }
 
     public function store(StorePhysicalSecurityDeviceRequest $request)
     {
-        PhysicalSecurityDevice::create($request->all());
+        $physicalSecurityDevices = PhysicalSecurityDevice::create($request->all());
+
+        // Relations
+        $physicalSecurityDevices->securityDevices()->sync($request->input('security_devices', []));
 
         return redirect()->route('admin.physical-security-devices.index');
     }
@@ -56,6 +65,8 @@ class PhysicalSecurityDeviceController extends Controller
         $buildings = Building::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $bays = Bay::all()->sortBy('name')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $securityDevices = SecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+
         $type_list = PhysicalSecurityDevice::select('type')->where('type', '<>', null)
             ->distinct()->orderBy('type')->pluck('type');
 
@@ -63,13 +74,16 @@ class PhysicalSecurityDeviceController extends Controller
 
         return view(
             'admin.physicalSecurityDevices.edit',
-            compact('sites', 'buildings', 'bays', 'physicalSecurityDevice', 'type_list')
+            compact('securityDevices', 'sites', 'buildings', 'bays', 'physicalSecurityDevice', 'type_list')
         );
     }
 
     public function update(UpdatePhysicalSecurityDeviceRequest $request, PhysicalSecurityDevice $physicalSecurityDevice)
     {
         $physicalSecurityDevice->update($request->all());
+
+        // Relations
+        $physicalSecurityDevice ->securityDevices()->sync($request->input('security_devices', []));
 
         return redirect()->route('admin.physical-security-devices.index');
     }

@@ -5,7 +5,7 @@
         {{ trans('global.back_to_list') }}
     </a>
 
-    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=SECURITY_{{$physicalSecurityDevice->id}}">
+    <a class="btn btn-success" href="{{ route('admin.report.explore') }}?node=PSECURITY_{{$physicalSecurityDevice->id}}">
         {{ trans('global.explore') }}
     </a>
 
@@ -60,6 +60,19 @@
                         </th>
                         <td colspan='5'>
                             {{ $physicalSecurityDevice->address_ip }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.physicalSecurityDevice.fields.security_devices') }}
+                        </th>
+                        <td>
+                            @foreach($physicalSecurityDevice->securityDevices as $device)
+                                <a href="{{ route('admin.security-devices.show', $device->id) }}">{{ $device->name }}</a>
+                                @if(!$loop->last)
+                                ,
+                                @endif
+                            @endforeach
                         </td>
                     </tr>
                     <tr>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+// Models
+use App\SecurityDevice;
+use App\PhysicalSecurityDevice;
+// Framework
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySecurityDeviceRequest;
 use App\Http\Requests\StoreSecurityDeviceRequest;
 use App\Http\Requests\UpdateSecurityDeviceRequest;
-use App\SecurityDevice;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,12 +28,17 @@ class SecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('security_device_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.securityDevices.create');
+        $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.securityDevices.create', compact('physicalSecurityDevices'));
     }
 
     public function store(StoreSecurityDeviceRequest $request)
     {
-        SecurityDevice::create($request->all());
+        $securityDevice = SecurityDevice::create($request->all());
+
+        // Relations
+        $securityDevice->physicalSecurityDevices()->sync($request->input('physicalSecurityDevices', []));
 
         return redirect()->route('admin.security-devices.index');
     }
@@ -39,12 +47,17 @@ class SecurityDeviceController extends Controller
     {
         abort_if(Gate::denies('security_device_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.securityDevices.edit', compact('securityDevice'));
+        $physicalSecurityDevices = PhysicalSecurityDevice::all()->sortBy('name')->pluck('name', 'id');
+
+        return view('admin.securityDevices.edit', compact('securityDevice','physicalSecurityDevices'));
     }
 
     public function update(UpdateSecurityDeviceRequest $request, SecurityDevice $securityDevice)
     {
         $securityDevice->update($request->all());
+
+        // Relations
+        $securityDevice->physicalSecurityDevices()->sync($request->input('physical_security_devices', []));
 
         return redirect()->route('admin.security-devices.index');
     }
