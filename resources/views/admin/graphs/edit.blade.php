@@ -186,7 +186,7 @@
         <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.graphs.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
-        <button id="btn-save" class="btn btn-danger" type="submit" id="submitButton">
+        <button id="btn-save" class="btn btn-danger" type="submit">
             {{ trans('global.save') }}
         </button>
     </div>
