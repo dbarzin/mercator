@@ -13,6 +13,7 @@ class DocumentController extends Controller
     {
         // Find the document
         $document = Document::Find($id);
+        abort_if($document === null, Response::HTTP_NOT_FOUND, '404 Not Found');
 
         // Get the path to the file
         $path = storage_path('docs/' . $id);
