@@ -521,6 +521,7 @@ table .navbar-brand-full {
 }
 */
 
+/*
 #graph-container {
   max-width: calc(100vw - 300px);
   height: 500px;
@@ -530,6 +531,7 @@ table .navbar-brand-full {
   padding: 1rem;
   box-sizing: border-box;
 }
+*/
 
 .graphviz {
   height: 100%;

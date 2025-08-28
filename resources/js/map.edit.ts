@@ -238,8 +238,7 @@ graph.container.addEventListener('contextmenu', (event) => {
 });
 
 // Appliquer les changements de style à l'arête sélectionnée
-const edgeApplyButton = document.getElementById('apply-edge-style');
-edgeApplyButton.addEventListener('click', (e) => {
+document.getElementById('apply-edge-style')?.addEventListener('click', (e) => {
     // console.log("change style")
     // Do not submit form
     e.preventDefault();
@@ -268,8 +267,7 @@ edgeApplyButton.addEventListener('click', (e) => {
 });
 
 // Appliquer les changements de style au texte sélectionné
-const textApplyButton = document.getElementById('apply-text-style');
-textApplyButton.addEventListener('click', (e) => {
+document.getElementById('apply-text-style')?.addEventListener('click', (e) => {
     e.preventDefault();
 
     // edge selected ?
@@ -297,10 +295,10 @@ textApplyButton.addEventListener('click', (e) => {
 });
 
 // Sélectionnez tous les boutons
-const buttons = document.querySelectorAll<HTMLButtonElement>('.button');
+document.querySelectorAll<HTMLButtonElement>('.button')
 
 // Ajoutez un écouteur d'événement à chaque bouton
-buttons.forEach(button => {
+?.forEach(button => {
     button.addEventListener('click', () => {
         toggleSelection(button);
     });
@@ -325,13 +323,7 @@ document.addEventListener('click', (event) => {
 // Configuration de la grille
 graph.setGridEnabled(true); // Active la grille
 graph.setGridSize(10); // Taille des cellules de la grille
-/*
-graph.setGridStyle({
-    color: '#e0e0e0', // Couleur de la grille
-    thickness: 1, // Épaisseur des lignes
-    dashed: false, // Style continu ou pointillé
-});
-*/
+
 // Personnaliser la grille avec CSS
 container.style.backgroundImage = `
   linear-gradient(to right, #e0e0e0 1px, transparent 1px),
@@ -346,6 +338,7 @@ container.style.backgroundSize = '10px 10px'; // Taille des cellules de la grill
 graph.setPanning(true); // Active le panning global
 graph.allowAutoPanning = true;
 graph.useScrollbarsForPanning = true; // si le conteneur scrolle
+
 
 //-------------------------------------------------------------------------
 // LOAD / SAVE
@@ -406,20 +399,25 @@ function saveGraph() {
 }
 
 // Ajouter un bouton pour sauvegarder
-const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
-saveButton.addEventListener('click', saveGraph);
+document.getElementById('saveButton')?.addEventListener('click', saveGraph);
 
 //-------------------------------------------------------------------------
 // Ajout de texte
-const fontIcon = document.getElementById('font-btn');
 
-fontIcon.addEventListener('dragstart', (event) => {
+document.getElementById('font-btn')?.addEventListener('dragstart', (event) => {
     event.dataTransfer.setData('node-type', 'text-node');
 });
 
 container.addEventListener('dragover', (event) => {
     event.preventDefault(); // Nécessaire pour autoriser le drop
 });
+
+graph.autoSizeCells = true; // maxGraph expose ce flag
+
+/*****************************************************************/
+/* NEW CODE  xxx */
+graph.enterStopsCellEditing = true;  // Entrée valide le texte
+graph.autoSizeCells = true;          // Ajuste la taille au texte
 
 container.addEventListener('drop', (event) => {
     event.preventDefault();
@@ -452,8 +450,9 @@ container.addEventListener('drop', (event) => {
                     align: 'left', // Alignement horizontal
                     verticalAlign: 'middle', // Alignement vertical
                 },
+//                editable: 'true'
             });
-            vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
+//            vertex.setAttribute('editable', 'true'); // Marqueur pour indiquer qu'il est éditable
         });
     }
 });
@@ -471,20 +470,46 @@ container.addEventListener('dragover', (event) => {
     event.preventDefault(); // Nécessaire pour autoriser le drop
 });
 
+// utilitaire robuste : clientX/clientY -> coordonnées graphe (scale, translate, pan, scroll)
+function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
+  if (typeof graph.getPointForEvent === 'function') {
+    // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
+    return graph.getPointForEvent(evt as any);
+  }
+
+  // Fallback manuel (au cas où)
+  const view = graph.view ?? graph.getView?.();
+  const pt = styleUtils.convertPoint(
+    graph.container,
+    eventUtils.getClientX(evt),
+    eventUtils.getClientY(evt)
+  );
+  const tr = view.translate ?? { x: 0, y: 0 };
+  const scale = view.scale ?? 1;
+
+  // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
+  const panDx = graph.panDx ?? 0;
+  const panDy = graph.panDy ?? 0;
+
+  return [
+    (pt.x - panDx) / scale - tr.x -20,
+    (pt.y - panDy) / scale - tr.y -20,
+  ];
+}
+
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='square-node') {
         // Gets drop location point for vertex
+        /*
         const pt = styleUtils.convertPoint(
           graph.container,
           eventUtils.getClientX(event),
           eventUtils.getClientY(event)
         );
-        const tr = graph.view.translate;
-        const { scale } = graph.view;
-        const x = pt.x / scale - tr.x;
-        const y = pt.y / scale - tr.y;
+        */
+        const pt = getGraphPointFromEvent(graph, event);
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -492,11 +517,13 @@ container.addEventListener('drop', (event) => {
             // Ajouter le carré
             const parent = graph.getDefaultParent();
 
+            console.log([pt.x,pt.y]);
+
             const vertex = graph.insertVertex({
                 parent,
                 // id: "square", // TODO : générer unique ID
                 value: '', // Pas de texte pour le conteneur
-                position: [x, y], // Position du carré
+                position: [pt.x,pt.y], // Position du carré
                 size: [150, 120], // Taille du carré
                 style: {
                     fillColor: '#fffacd', // Fond jaune pâle
@@ -936,9 +963,8 @@ graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
 
 //-------------------------------------------------------------------------
 // Update
-const updateButton = document.getElementById('update-btn');
 
-updateButton.addEventListener('click', () => {
+document.getElementById('update-btn')?.addEventListener('click', () => {
 
     graph.batchUpdate(() => {
         const allCells = graph.getChildCells();
