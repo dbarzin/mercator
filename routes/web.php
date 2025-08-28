@@ -327,6 +327,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('graph/save', [Admin\GraphController::class,'save']);
     Route::delete('graphs-destroy', [Admin\GraphController::class,'massDestroy'])->name('graphs.massDestroy');
     Route::get('graphs/clone/{id}', [Admin\GraphController::class,'clone'])->name('graphs.clone');
+    // Graphs test
+    Route::get('graph/test1', function () { return view('admin.graphs.test1'); });
+    Route::get('graph/test2', function () { return view('admin.graphs.test2'); });
 
     // Explorer
     Route::get('report/explore', [Admin\ExplorerController::class,'explore'])->name('report.explore');
