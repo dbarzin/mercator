@@ -352,7 +352,7 @@ export function loadGraph(xml: string) {
 (window as any).loadGraph = loadGraph;
 
 async function saveGraphToDatabase(id: number, name: string, type: string, content: string): Promise<void> {
-  // console.log('saveGraphToDatabase:' + id + ' name:' + name);
+  console.log('saveGraphToDatabase:' + id + ' name:' + name);
 
   try {
     const response = await fetch('/admin/graph/save', {
@@ -364,14 +364,14 @@ async function saveGraphToDatabase(id: number, name: string, type: string, conte
       body: JSON.stringify({ id, name, type, content }),
     });
 
-    //console.log('réponse :', response.status);
+    console.log('réponse :', response.status);
     if (response.status != 200) {
       const error = await response.json();
       throw new Error(error.message || 'Erreur lors de la sauvegarde du graphe.');
     }
 
     // const data = await response.json();
-    // console.log('Graphe sauvegardé avec succès');
+    console.log('Graphe sauvegardé avec succès');
   } catch (error) {
     console.error('Erreur lors de la sauvegarde :', error);
     alert('Erreur lors de la sauvegarde du graphe.');
@@ -415,6 +415,34 @@ container.addEventListener('dragover', (event) => {
 graph.autoSizeCells = true; // maxGraph expose ce flag
 
 /*****************************************************************/
+// utilitaire robuste : clientX/clientY -> coordonnées graphe (scale, translate, pan, scroll)
+function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
+  if (typeof graph.getPointForEvent === 'function') {
+    // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
+    return graph.getPointForEvent(evt as any);
+  }
+
+  // Fallback manuel (au cas où)
+  const view = graph.view ?? graph.getView?.();
+  const pt = styleUtils.convertPoint(
+    graph.container,
+    eventUtils.getClientX(evt),
+    eventUtils.getClientY(evt)
+  );
+  const tr = view.translate ?? { x: 0, y: 0 };
+  const scale = view.scale ?? 1;
+
+  // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
+  const panDx = graph.panDx ?? 0;
+  const panDy = graph.panDy ?? 0;
+
+  return [
+    (pt.x - panDx) / scale - tr.x - 20,
+    (pt.y - panDy) / scale - tr.y - 20,
+  ];
+}
+
+/*****************************************************************/
 /* NEW CODE  xxx */
 graph.enterStopsCellEditing = true;  // Entrée valide le texte
 graph.autoSizeCells = true;          // Ajuste la taille au texte
@@ -424,15 +452,7 @@ container.addEventListener('drop', (event) => {
 
     if (event.dataTransfer.getData('node-type')=='text-node') {
         // Gets drop location point for vertex
-        const pt = styleUtils.convertPoint(
-          graph.container,
-          eventUtils.getClientX(event),
-          eventUtils.getClientY(event)
-        );
-        const tr = graph.view.translate;
-        const { scale } = graph.view;
-        const x = pt.x / scale - tr.x;
-        const y = pt.y / scale - tr.y;
+        const pt = getGraphPointFromEvent(graph, event);
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -440,7 +460,7 @@ container.addEventListener('drop', (event) => {
             const vertex = graph.insertVertex({
                 parent,
                 value: 'Text', // Texte à afficher
-                position: [x, y],
+                position: [pt.x, pt.y],
                 size: [150, 30], // Taille du nœud
                 style: {
                     fillColor: 'none', // Pas de fond
@@ -470,45 +490,11 @@ container.addEventListener('dragover', (event) => {
     event.preventDefault(); // Nécessaire pour autoriser le drop
 });
 
-// utilitaire robuste : clientX/clientY -> coordonnées graphe (scale, translate, pan, scroll)
-function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
-  if (typeof graph.getPointForEvent === 'function') {
-    // ✅ maxGraph gère scale, translate, panDx/panDy, scroll
-    return graph.getPointForEvent(evt as any);
-  }
-
-  // Fallback manuel (au cas où)
-  const view = graph.view ?? graph.getView?.();
-  const pt = styleUtils.convertPoint(
-    graph.container,
-    eventUtils.getClientX(evt),
-    eventUtils.getClientY(evt)
-  );
-  const tr = view.translate ?? { x: 0, y: 0 };
-  const scale = view.scale ?? 1;
-
-  // 🔧 intégrer le pan temporaire (sinon décalage quand on a panné)
-  const panDx = graph.panDx ?? 0;
-  const panDy = graph.panDy ?? 0;
-
-  return [
-    (pt.x - panDx) / scale - tr.x -20,
-    (pt.y - panDy) / scale - tr.y -20,
-  ];
-}
-
 container.addEventListener('drop', (event) => {
     event.preventDefault();
 
     if (event.dataTransfer.getData('node-type')=='square-node') {
         // Gets drop location point for vertex
-        /*
-        const pt = styleUtils.convertPoint(
-          graph.container,
-          eventUtils.getClientX(event),
-          eventUtils.getClientY(event)
-        );
-        */
         const pt = getGraphPointFromEvent(graph, event);
 
         // Ajouter un nouveau nœud à l'emplacement du drop

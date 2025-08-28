@@ -69,10 +69,8 @@ function initMaxGraphDemo(container: HTMLElement) {
   ];
 
 const graph = new Graph(container, undefined, [CellEditorHandler, SelectionHandler, PanningHandler, RubberBandHandler]);
-graph.autoSizeCells = true;
 graph.enterStopsCellEditing = true;
-
-  graph.setConnectable(true);
+graph.setConnectable(true);
 
   // Style d’arête par défaut (orthogonal)
   graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
