@@ -445,7 +445,6 @@ function getGraphPointFromEvent(graph: any, evt: MouseEvent | DragEvent) {
 /*****************************************************************/
 /* NEW CODE  xxx */
 graph.enterStopsCellEditing = true;  // Entrée valide le texte
-graph.autoSizeCells = true;          // Ajuste la taille au texte
 
 container.addEventListener('drop', (event) => {
     event.preventDefault();
@@ -547,15 +546,7 @@ container.addEventListener('drop', (event) => {
         &&(nodeIcon.src!=''))
         {
         // Obtenir la position de la souris lors du drop
-        const pt = styleUtils.convertPoint(
-          graph.container,
-          eventUtils.getClientX(event),
-          eventUtils.getClientY(event)
-        );
-        const tr = graph.view.translate;
-        const { scale } = graph.view;
-        const x = pt.x / scale - tr.x;
-        const y = pt.y / scale - tr.y;
+        const pt = getGraphPointFromEvent(graph, event);
 
         // Ajouter un nouveau nœud à l'emplacement du drop
         graph.batchUpdate(() => {
@@ -574,7 +565,7 @@ container.addEventListener('drop', (event) => {
                     parent,
                     id: nodeSelector.value,
                     value: node.label,
-                    position: [x-16, y-16], // Position de l'image
+                    position: [pt.x - 16, pt.y - 16], // center 32x32 icon on cursor
                     size: [32, 32], // Taille du nœud
                     style: {
                         shape: 'image', // Définir le nœud comme une image
