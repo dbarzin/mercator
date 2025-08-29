@@ -862,7 +862,6 @@
                                         {{ $physicalLink->workstationSrc->name }}
                                     </a>
                                     @endif
-                                    </a>
                                 </td>
                                 <td>
                                     {{ $physicalLink->src_port }}
@@ -905,7 +904,6 @@
                                         {{ $physicalLink->workstationDest->name }}
                                     </a>
                                     @endif
-                                    </a>
                                 </td>
                                 <td>
                                     {{ $physicalLink->dest_port }}
@@ -1034,14 +1032,14 @@ digraph  {
             (($link->physical_router_src_id === null) || ($physicalRouters->contains("id",$link->physical_router_src_id))) &&
             (($link->physical_router_dest_id === null) || ($physicalRouters->contains("id",$link->physical_router_dest_id))) &&
 
-            (($link->phone_src_id === null) || ($peripherals->contains("id",$link->phone_src_id))) &&
-            (($link->phone_dest_id === null) || ($peripherals->contains("id",$link->phone_dest_id))) &&
+            (($link->phone_src_id === null) || ($phones->contains("id",$link->phone_src_id))) &&
+            (($link->phone_dest_id === null) || ($phones->contains("id",$link->phone_dest_id))) &&
 
-            (($link->physical_security_device_src_id === null) || (physicalSecurityDevices->contains("id",$link->physical_security_device_src_id))) &&
-            (($link->physical_security_device_dest_id === null) || (physicalSecurityDevices->contains("id",$link->physical_security_device_dest_id))) &&
+            (($link->physical_security_device_src_id === null) || ($physicalSecurityDevices->contains("id",$link->physical_security_device_src_id))) &&
+            (($link->physical_security_device_dest_id === null) || ($physicalSecurityDevices->contains("id",$link->physical_security_device_dest_id))) &&
 
             (($link->physical_server_src_id === null) || ($physicalServers->contains("id",$link->physical_server_src_id))) &&
-            (($link->physical_server_dest_id === null) || ($physicalServers->contains("id",$link->physical_router_dest_id))) &&
+            (($link->physical_server_dest_id === null) || ($physicalServers->contains("id",$link->physical_server_dest_id))) &&
 
             (($link->physical_switch_src_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_src_id))) &&
             (($link->physical_switch_dest_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_dest_id))) &&
