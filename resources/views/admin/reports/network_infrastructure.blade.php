@@ -15,7 +15,7 @@
                     </div>
                 @endif
 
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <form action="/admin/report/network_infrastructure">
                     <table class="table table-bordered table-striped">
                         <tr>
@@ -388,7 +388,7 @@
         @endcan
 
         @can('storage_device_access')
-        @if ((auth()->user()->granularity>=2)&&($storageDevices->count()>0))
+        @if ($storageDevices->count()>0)
         <div class="card">
             <div class="card-header">
                 {{ trans("cruds.storageDevice.title") }}
@@ -680,7 +680,7 @@
         @endcan
 
         @can('wifi_terminal_access')
-        @if ((auth()->user()->granularity>=2)&&($wifiTerminals->count()>0))
+        @if ($wifiTerminals->count()>0)
         <div class="card">
             <div class="card-header">
                 {{ trans("cruds.wifiTerminal.title") }}
@@ -1019,12 +1019,39 @@ digraph  {
     @foreach($physicalLinks as $link)
 
         @if (
-            ($link->logical_server_src_id === null) &&
-            ($link->network_switch_src_id === null) &&
+        // Virtual objects
             ($link->router_src_id === null) &&
-            ($link->logical_server_dest_id === null) &&
-            ($link->network_switch_dest_id === null) &&
             ($link->router_dest_id === null) &&
+            ($link->logical_server_src_id === null) &&
+            ($link->logical_server_dest_id === null) &&
+            ($link->network_switch_src_id === null) &&
+            ($link->network_switch_dest_id === null) &&
+
+        // Physical Objects
+            (($link->peripheral_src_id === null) || ($peripherals->contains("id",$link->peripheral_src_id))) &&
+            (($link->peripheral_dest_id === null) || ($peripherals->contains("id",$link->peripheral_dest_id))) &&
+
+            (($link->physical_router_src_id === null) || ($physicalRouters->contains("id",$link->physical_router_src_id))) &&
+            (($link->physical_router_dest_id === null) || ($physicalRouters->contains("id",$link->physical_router_dest_id))) &&
+
+            (($link->phone_src_id === null) || ($peripherals->contains("id",$link->phone_src_id))) &&
+            (($link->phone_dest_id === null) || ($peripherals->contains("id",$link->phone_dest_id))) &&
+
+            (($link->physical_security_device_src_id === null) || (physicalSecurityDevices->contains("id",$link->physical_security_device_src_id))) &&
+            (($link->physical_security_device_dest_id === null) || (physicalSecurityDevices->contains("id",$link->physical_security_device_dest_id))) &&
+
+            (($link->physical_server_src_id === null) || ($physicalServers->contains("id",$link->physical_server_src_id))) &&
+            (($link->physical_server_dest_id === null) || ($physicalServers->contains("id",$link->physical_router_dest_id))) &&
+
+            (($link->physical_switch_src_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_src_id))) &&
+            (($link->physical_switch_dest_id === null) || ($physicalSwitches->contains("id",$link->physical_switch_dest_id))) &&
+
+            (($link->storage_device_src_id === null) || ($storageDevices->contains("id",$link->storage_device_src_id))) &&
+            (($link->storage_device_dest_id === null) || ($storageDevices->contains("id",$link->storage_device_dest_id))) &&
+
+            (($link->wifi_terminal_src_id === null) || ($wifiTerminals->contains("id",$link->wifi_terminal_src_id))) &&
+            (($link->wifi_terminal_dest_id === null) || ($wifiTerminals->contains("id",$link->wifi_terminal_dest_id))) &&
+
             (($link->workstation_src_id === null) || ($workstations->contains("id",$link->workstation_src_id))) &&
             (($link->workstation_dest_id === null) || ($workstations->contains("id",$link->workstation_dest_id)))
             )
