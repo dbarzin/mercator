@@ -1,6 +1,6 @@
 {
-  "_ModelXmlSerializer-CN6GACzI.js": {
-    "file": "assets/ModelXmlSerializer-CN6GACzI.js",
+  "_ModelXmlSerializer-B1iToIRA.js": {
+    "file": "assets/ModelXmlSerializer-B1iToIRA.js",
     "name": "ModelXmlSerializer"
   },
   "_chart-BctVBgzL.js": {
@@ -95,21 +95,21 @@
     "isEntry": true
   },
   "resources/js/map.edit.ts": {
-    "file": "assets/map.edit-DFEJ0YWg.js",
+    "file": "assets/map.edit-CzfTCUAM.js",
     "name": "map.edit",
     "src": "resources/js/map.edit.ts",
     "isEntry": true,
     "imports": [
-      "_ModelXmlSerializer-CN6GACzI.js"
+      "_ModelXmlSerializer-B1iToIRA.js"
     ]
   },
   "resources/js/map.show.ts": {
-    "file": "assets/map.show-CJO6Y9Nz.js",
+    "file": "assets/map.show-BasVm_sN.js",
     "name": "map.show",
     "src": "resources/js/map.show.ts",
     "isEntry": true,
     "imports": [
-      "_ModelXmlSerializer-CN6GACzI.js"
+      "_ModelXmlSerializer-B1iToIRA.js"
     ]
   },
   "resources/js/vis-network.js": {
