@@ -210,8 +210,6 @@ var image_uploader = new window.Dropzone("#dropzoneFileUpload", {
         url: '/admin/documents/store',
         headers: { 'x-csrf-token': '{{csrf_token()}}' },
         paramName: 'file',
-            maxFilesize: 10,
-            // acceptedFiles: ".jpeg,.jpg,.png,.gif",
             addRemoveLinks: true,
             timeout: 50000,
             removedfile: function(file)
