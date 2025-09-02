@@ -26,7 +26,10 @@
                             Description
                         </th>
                         <th>
-                            Reference
+                            Date Published
+                        </th>
+                        <th>
+                            Date Updated
                         </th>
                     </tr>
                 </thead>
@@ -47,8 +50,11 @@
                                 @endif
                                 {{ $cve->description }}
                             </td>
-                            <td nowrap>
-                                <a href="{{ $cve->url }}">{{ $cve->name }}</a>
+                            <td>
+                                {{ $cve->datePublished }}
+                            </td>
+                            <td>
+                                {{ $cve->dateUpdated }}
                             </td>
                         </tr>
                     @endforeach
