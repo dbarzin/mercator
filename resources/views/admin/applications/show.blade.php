@@ -343,8 +343,8 @@
                     @endif
                 </td>
                 <td>
-                    {{ intdiv($application->rpo,60 * 24) }}
                     @if (intdiv($application->rpo,60 * 24) > 0)
+                        {{ intdiv($application->rpo,60 * 24) }}
                         @if (intdiv($application->rpo,60 * 24) > 1)
                             {{ trans('global.days') }}
                         @else
@@ -398,6 +398,12 @@
                 </th>
                 <td width="22%">
                     {{ $application->version }}
+                </td>
+                <td>
+                    <form action="{{ route('admin.cve.search','cpe:2.3:a:'. $application->vendor.':'. $application->product . ':' . $application->version) }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                        <input type="submit" class="btn btn-info" value="{{ trans('global.search') }}" {{ (($application->vendor==null)||($application->product==null)) ? 'disabled' : '' }} />
+                    </form>
                 </td>
             </tr>
         </tbody>

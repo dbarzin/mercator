@@ -294,6 +294,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('config/cert', [Admin\ConfigurationController::class,'getCertConfig'])->name('config.cert');
     Route::put('config/cert/save', [Admin\ConfigurationController::class,'saveCertConfig'])->name('config.cert.save');
 
+    // CVE
+    Route::put('cve', [Admin\CVEController::class,'show'])->name('cve.show');
+    Route::post('cve/search/{cpe}', [Admin\CVEController::class,'search'])->name('cve.search');
+
     // CVE Configuration page
     Route::get('config/cve', [Admin\ConfigurationController::class,'getCVEConfig'])->name('config.cve');
     Route::put('config/cve/save', [Admin\ConfigurationController::class,'saveCVEConfig'])->name('config.cve.save');
