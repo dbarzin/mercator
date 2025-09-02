@@ -400,7 +400,7 @@
                     {{ $application->version }}
                 </td>
                 <td>
-                    <form action="{{ route('admin.cve.search','cpe:2.3:a:'. $application->vendor.':'. $application->product . ':' . $application->version) }}" method="GET">
+                    <form action="{{ route('admin.cve.search','cpe:2.3:a:'. $application->vendor.':'. $application->product . ':' . $application->version) }}" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                         <input type="submit" class="btn btn-info" value="{{ trans('global.search') }}" {{ (($application->vendor==null)||($application->product==null)) ? 'disabled' : '' }} />
                     </form>
