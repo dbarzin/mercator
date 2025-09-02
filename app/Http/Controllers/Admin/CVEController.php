@@ -40,6 +40,10 @@ class CVEController extends Controller
                 "description" => $cve->containers->cna->descriptions[0]->value ?? '',
                 "url" => $cve->containers->cna->references[0]->url ?? '',
                 "name" => $cve->containers->cna->references[0]->name ?? '',
+                "datePublished" => substr($cve->cveMetadata->datePublished,0,10) ?? '',
+                "dateUpdated" => substr($cve->cveMetadata->dateUpdated,0,10) ?? '',
+                "baseScore" => $cve->containers->cna->metrics[0]->cvssV3_0->baseScore  ?? '',
+                "baseSeverity" => $cve->containers->cna->metrics[0]->cvssV3_0->baseSeverity  ?? $cve->containers->cna->metrics[0]->cvssV3_1->baseSeverity ?? '',
             ];
         }
 
