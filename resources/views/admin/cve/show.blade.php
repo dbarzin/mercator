@@ -68,6 +68,8 @@
                                 <span class="badge-critical">
                                 @elseif($cve->baseSeverity=="MEDIUM")
                                 <span class="badge-medium">
+                                @elseif($cve->baseSeverity=="LOW")
+                                <span class="badge-low">
                                 @else
                                 <span class="label label-default">
                                 @endif
