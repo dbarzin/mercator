@@ -168,7 +168,11 @@
             <div class="col-1">
                 <div class="form-group">
                     <br>
-                    <button type="button" class="btn btn-info" id="guess" alt="Guess vendor and product base on application name">Guess</button>
+                    <button type="button"
+                            class="btn btn-info"
+                            onclick="searchCVE()">
+                        {{ trans('global.search') }}
+                    </button>
                     <span class="help-block"></span>
                 </div>
             </div>
@@ -471,7 +475,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
 });
+
+    function searchCVE(cpe) {
+        vendor = document.getElementById('vendor-selector').value;
+        product = document.getElementById('product-selector').value;
+        version = document.getElementById('version-selector').value;
+        cpe = 'cpe:2.3:a:' + vendor + ':' + product + ':' + version;
+        console.log(cpe);
+
+        // Construit dynamiquement un formulaire POST caché
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{{ route('admin.cve.search', '') }}/" + encodeURIComponent(cpe);
+
+        // CSRF token
+        const token = document.createElement('input');
+        token.type = 'hidden';
+        token.name = '_token';
+        token.value = "{{ csrf_token() }}";
+        form.appendChild(token);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
 
 </script>
 @endsection

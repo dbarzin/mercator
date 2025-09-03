@@ -8,8 +8,10 @@
     </div>
 
 <div class="card">
+
+
     <div class="card-header">
-        CVE List for
+        CVE List
     </div>
 
     <div class="card-body">
@@ -30,6 +32,9 @@
                         </th>
                         <th>
                             Date Updated
+                        </th>
+                        <th>
+                            Score
                         </th>
                     </tr>
                 </thead>
@@ -55,6 +60,22 @@
                             </td>
                             <td>
                                 {{ $cve->dateUpdated }}
+                            </td>
+                            <td nowrap>
+                                @if($cve->baseSeverity=="HIGH")
+                                <span class="badge-high">
+                                @elseif($cve->baseSeverity=="CRITICAL")
+                                <span class="badge-critical">
+                                @elseif($cve->baseSeverity=="MEDIUM")
+                                <span class="badge-medium">
+                                @elseif($cve->baseSeverity=="LOW")
+                                <span class="badge-low">
+                                @else
+                                <span class="label label-default">
+                                @endif
+                                {{ $cve->baseScore }}
+                                {{ $cve->baseSeverity }}
+                                </span>
                             </td>
                         </tr>
                     @endforeach
