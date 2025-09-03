@@ -32,7 +32,6 @@ class CVEController extends Controller
         // JSON
         $json = json_decode($response);
         $cves = [];
-
         foreach($json->cvelistv5 as $cve) {
             $cves [] = (object) [
                 "cveId" => $cve->cveMetadata->cveId,
@@ -42,8 +41,16 @@ class CVEController extends Controller
                 "name" => $cve->containers->cna->references[0]->name ?? '',
                 "datePublished" => substr($cve->cveMetadata->datePublished,0,10) ?? '',
                 "dateUpdated" => substr($cve->cveMetadata->dateUpdated,0,10) ?? '',
-                "baseScore" => $cve->containers->cna->metrics[0]->cvssV3_0->baseScore  ?? '',
-                "baseSeverity" => $cve->containers->cna->metrics[0]->cvssV3_0->baseSeverity  ?? $cve->containers->cna->metrics[0]->cvssV3_1->baseSeverity ?? '',
+                "baseScore" =>
+                    $cve->containers->cna->metrics[0]->cvssV3_0->baseScore  ??
+                    $cve->containers->cna->metrics[0]->cvssV3_1->baseScore  ??
+                    $cve->containers->adp[0]->metrics[0]->cvssV3_1->baseScore ??
+                    '',
+                "baseSeverity" =>
+                    $cve->containers->cna->metrics[0]->cvssV3_0->baseSeverity  ??
+                    $cve->containers->cna->metrics[0]->cvssV3_1->baseSeverity ??
+                    $cve->containers->adp[0]->metrics[0]->cvssV3_1->baseSeverity ??
+                    '',
             ];
         }
 

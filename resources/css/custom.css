@@ -234,6 +234,35 @@ table.dataTable thead th {
     margin-bottom: 5px;
 }
 
+/***************************************************************************/
+/* for CVE score */
+
+.badge-critical {
+    color: grey;
+    background-color: black;
+    padding: 4px 8px; /* espace interne haut/bas et gauche/droite */
+    border-radius: 4px; /* arrondi optionnel */
+    display: inline-block; /* pour bien entourer le texte */
+}
+
+.badge-high {
+    color: black;
+    background-color: red;
+    padding: 4px 8px; /* espace interne haut/bas et gauche/droite */
+    border-radius: 4px; /* arrondi optionnel */
+    display: inline-block; /* pour bien entourer le texte */
+}
+
+.badge-medium {
+    color: black;
+    background-color: orange;
+    padding: 4px 8px; /* espace interne haut/bas et gauche/droite */
+    border-radius: 4px; /* arrondi optionnel */
+    display: inline-block; /* pour bien entourer le texte */
+}
+
+/***************************************************************************/
+
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc {
