@@ -1,21 +1,20 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
-
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CVEController extends Controller
 {
-    public function search(String $cpe)
+    public function search(string $cpe)
     {
         $provider = config('mercator-config.cve.provider');
         if (empty($provider)) {
@@ -29,86 +28,6 @@ class CVEController extends Controller
         }
 
         return view('admin.cve.show', compact('cves'));
-    }
-
-    /**
-     * @return array<int,object>  // liste d'objets CVE normalisés
-     * @throws \RuntimeException  // en cas d'erreur
-     */
-    protected function getCVEs(string $provider, string $cpe): array
-    {
-        // Construit l’URL proprement et encode le CPE en segment d’URL
-        $base = rtrim($provider, '/');
-        $url  = $base . '/api/vulnerability/cpesearch/' . rawurlencode($cpe);
-
-        // Appel HTTP avec timeouts et gestion d’erreurs
-        $resp = Http::timeout(10)
-            ->acceptJson()
-            ->withHeaders(['User-Agent' => 'Mercator/1.0'])
-            ->get($url);
-
-        if ($resp->failed()) {
-            // inclut 4xx/5xx; on expose un message court
-            throw new \RuntimeException("HTTP {$resp->status()} from provider");
-        }
-
-        // JSON valide ?
-        $json = $resp->json();
-        if (!is_array($json) && !is_object($json)) {
-            throw new \RuntimeException('Invalid JSON payload');
-        }
-
-        // Uniformise l’accès: tableau associatif
-        $data = is_array($json) ? $json : (array)$json;
-
-        // La clé peut s’appeler cvelistv5 (souvent) ou cvelist (fallback)
-        $list = $data['cvelistv5'] ?? $data['cvelist'] ?? null;
-        if (!is_array($list)) {
-            // Pas d’erreur “bloquante” → retourne liste vide
-            return [];
-        }
-
-        // Map sécurisé des champs (beaucoup de champs peuvent manquer)
-        $out = [];
-        foreach ($list as $cve) {
-            // On passe par Arr::get pour éviter les notices
-            $cveArr = (array)$cve;
-
-            $cveId         = Arr::get($cveArr, 'cveMetadata.cveId', '');
-            $datePublished = substr((string)Arr::get($cveArr, 'cveMetadata.datePublished', ''), 0, 10);
-            $dateUpdated   = substr((string)Arr::get($cveArr, 'cveMetadata.dateUpdated', ''), 0, 10);
-
-            // CNA container
-            $title        = Arr::get($cveArr, 'containers.cna.title', '');
-            $description  = Arr::get($cveArr, 'containers.cna.descriptions.0.value', '');
-            $refUrl       = Arr::get($cveArr, 'containers.cna.references.0.url', '');
-            $refName      = Arr::get($cveArr, 'containers.cna.references.0.name', '');
-
-            // Scores (essaie CNA V3.0, V3.1, puis ADP)
-            $baseScore = Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_0.baseScore')
-                ?? Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_1.baseScore')
-                ?? Arr::get($cveArr, 'containers.adp.0.metrics.0.cvssV3_1.baseScore')
-                ?? '';
-
-            $baseSeverity = Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_0.baseSeverity')
-                ?? Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_1.baseSeverity')
-                ?? Arr::get($cveArr, 'containers.adp.0.metrics.0.cvssV3_1.baseSeverity')
-                ?? '';
-
-            $out[] = (object)[
-                'cveId'         => $cveId,
-                'title'         => $title ?? '',
-                'description'   => $description ?? '',
-                'url'           => $refUrl ?? '',
-                'name'          => $refName ?? '',
-                'datePublished' => $datePublished ?? '',
-                'dateUpdated'   => $dateUpdated ?? '',
-                'baseScore'     => $baseScore,
-                'baseSeverity'  => $baseSeverity,
-            ];
-        }
-
-        return $out;
     }
 
     public function list()
@@ -251,4 +170,84 @@ class CVEController extends Controller
         return response()->download($path)->deleteFileAfterSend(true);
     }
 
+    /**
+     * @return array<int,object>  // liste d'objets CVE normalisés
+     *
+     * @throws \RuntimeException  // en cas d'erreur
+     */
+    protected function getCVEs(string $provider, string $cpe): array
+    {
+        // Construit l’URL proprement et encode le CPE en segment d’URL
+        $base = rtrim($provider, '/');
+        $url = $base . '/api/vulnerability/cpesearch/' . rawurlencode($cpe);
+
+        // Appel HTTP avec timeouts et gestion d’erreurs
+        $resp = Http::timeout(10)
+            ->acceptJson()
+            ->withHeaders(['User-Agent' => 'Mercator/1.0'])
+            ->get($url);
+
+        if ($resp->failed()) {
+            // inclut 4xx/5xx; on expose un message court
+            throw new \RuntimeException("HTTP {$resp->status()} from provider");
+        }
+
+        // JSON valide ?
+        $json = $resp->json();
+        if (! is_array($json) && ! is_object($json)) {
+            throw new \RuntimeException('Invalid JSON payload');
+        }
+
+        // Uniformise l’accès: tableau associatif
+        $data = is_array($json) ? $json : (array) $json;
+
+        // La clé peut s’appeler cvelistv5 (souvent) ou cvelist (fallback)
+        $list = $data['cvelistv5'] ?? $data['cvelist'] ?? null;
+        if (! is_array($list)) {
+            // Pas d’erreur “bloquante” → retourne liste vide
+            return [];
+        }
+
+        // Map sécurisé des champs (beaucoup de champs peuvent manquer)
+        $out = [];
+        foreach ($list as $cve) {
+            // On passe par Arr::get pour éviter les notices
+            $cveArr = (array) $cve;
+
+            $cveId = Arr::get($cveArr, 'cveMetadata.cveId', '');
+            $datePublished = substr((string) Arr::get($cveArr, 'cveMetadata.datePublished', ''), 0, 10);
+            $dateUpdated = substr((string) Arr::get($cveArr, 'cveMetadata.dateUpdated', ''), 0, 10);
+
+            // CNA container
+            $title = Arr::get($cveArr, 'containers.cna.title', '');
+            $description = Arr::get($cveArr, 'containers.cna.descriptions.0.value', '');
+            $refUrl = Arr::get($cveArr, 'containers.cna.references.0.url', '');
+            $refName = Arr::get($cveArr, 'containers.cna.references.0.name', '');
+
+            // Scores (essaie CNA V3.0, V3.1, puis ADP)
+            $baseScore = Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_0.baseScore')
+                ?? Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_1.baseScore')
+                ?? Arr::get($cveArr, 'containers.adp.0.metrics.0.cvssV3_1.baseScore')
+                ?? '';
+
+            $baseSeverity = Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_0.baseSeverity')
+                ?? Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_1.baseSeverity')
+                ?? Arr::get($cveArr, 'containers.adp.0.metrics.0.cvssV3_1.baseSeverity')
+                ?? '';
+
+            $out[] = (object) [
+                'cveId' => $cveId,
+                'title' => $title ?? '',
+                'description' => $description ?? '',
+                'url' => $refUrl ?? '',
+                'name' => $refName ?? '',
+                'datePublished' => $datePublished ?? '',
+                'dateUpdated' => $dateUpdated ?? '',
+                'baseScore' => $baseScore,
+                'baseSeverity' => $baseSeverity,
+            ];
+        }
+
+        return $out;
+    }
 }
