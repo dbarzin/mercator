@@ -181,10 +181,12 @@ class CVEController extends Controller
         $base = rtrim($provider, '/');
         $url = $base . '/api/vulnerability/cpesearch/' . rawurlencode($cpe);
 
+        $appVersion = trim(file_get_contents(base_path('version.txt')));
+
         // Appel HTTP avec timeouts et gestion d’erreurs
         $resp = Http::timeout(10)
             ->acceptJson()
-            ->withHeaders(['User-Agent' => 'Mercator/1.0'])
+            ->withHeaders(['User-Agent' => "Mercator/{$appVersion}"])
             ->get($url);
 
         if ($resp->failed()) {
