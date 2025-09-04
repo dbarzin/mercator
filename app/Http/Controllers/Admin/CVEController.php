@@ -264,7 +264,8 @@ class CVEController extends Controller
         return $out;
     }
 
-    protected function extractCpeVersion(string $cpe): ?string {
+    protected function extractCpeVersion(string $cpe): ?string
+    {
         $parts = explode(':', $cpe);
 
         if (count($parts) >= 5) {
@@ -275,7 +276,8 @@ class CVEController extends Controller
         return null;
     }
 
-    protected function isVersionGreater(string $v1, string $v2): bool {
+    protected function isVersionGreater(string $v1, string $v2): bool
+    {
         $parts1 = array_map('intval', explode('.', $v1));
         $parts2 = array_map('intval', explode('.', $v2));
 
@@ -286,7 +288,8 @@ class CVEController extends Controller
         for ($i = 0; $i < $length; $i++) {
             if ($parts1[$i] > $parts2[$i]) {
                 return true;
-            } elseif ($parts1[$i] < $parts2[$i]) {
+            }
+            if ($parts1[$i] < $parts2[$i]) {
                 return false;
             }
         }

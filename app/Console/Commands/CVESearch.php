@@ -6,7 +6,6 @@ use App\MApplication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -16,7 +15,7 @@ use Throwable;
 
 class CVESearch extends Command
 {
-    protected $signature   = 'mercator:cve-search {--nowait : Whether the job should not wait before start}';
+    protected $signature = 'mercator:cve-search {--nowait : Whether the job should not wait before start}';
     protected $description = 'Search for CVE';
 
     /** @var string */
@@ -33,12 +32,12 @@ class CVESearch extends Command
         Log::info('CVESearch - Start', ['day' => Carbon::now()->day]);
 
         // Charger & normaliser la config une seule fois
-        $this->provider       = $this->normalizeProvider(config('mercator-config.cve.provider'));
+        $this->provider = $this->normalizeProvider(config('mercator-config.cve.provider'));
         $this->checkFrequency = (int) config('mercator-config.cve.check-frequency', 1);
-        $this->appVersion     = trim(file_get_contents(base_path('version.txt')));
+        $this->appVersion = trim(file_get_contents(base_path('version.txt')));
 
         // Respecter le provider
-        if (!$this->option('nowait')) {
+        if (! $this->option('nowait')) {
             $seconds = random_int(1, 600); // Be nice with CIRCL
             Log::debug('CVESearch - niceness sleep', ['seconds' => $seconds]);
             sleep($seconds);
@@ -52,7 +51,7 @@ class CVESearch extends Command
         }
 
         $nvdUpdate = data_get($dbInfo, 'last_updates.nvd');
-        $dbSize    = data_get($dbInfo, 'db_sizes.total');
+        $dbSize = data_get($dbInfo, 'db_sizes.total');
         Log::info('CVESearch - provider dbInfo', ['nvd_last_update' => $nvdUpdate, 'db_total' => $dbSize]);
 
         // Fenêtre temporelle minimale
@@ -74,7 +73,7 @@ class CVESearch extends Command
 
         // Récupération des derniers CVE
         $cves = $this->fetchJson('/api/last');
-        if (!is_array($cves)) {
+        if (! is_array($cves)) {
             Log::warning('CVESearch - invalid /api/last payload');
             return self::FAILURE;
         }
@@ -82,7 +81,7 @@ class CVESearch extends Command
         Log::info('CVESearch - CVE fetched', ['count' => count($cves), 'provider' => $this->provider]);
 
         // Analyse & filtrage
-        $lines    = [];
+        $lines = [];
         $cveCount = 0;
 
         foreach ($cves as $cve) {
@@ -94,10 +93,14 @@ class CVESearch extends Command
                     $hitName = $this->firstContained($desc, $names);
                     if ($hitName !== null) {
                         $cveId = (string) data_get($cve, 'cveMetadata.cveId', 'CVE-?');
-                        $url   = rtrim($this->provider, '/') . '/vuln/' . $cveId;
+                        $url = rtrim($this->provider, '/') . '/vuln/' . $cveId;
                         $lines[] = sprintf(
                             '<a href="%s">%s</a> - <b>%s</b> : <b>%s</b> - %s',
-                            e($url), e($cveId), e($hitName), e($cveId), e((string) $desc)
+                            e($url),
+                            e($cveId),
+                            e($hitName),
+                            e($cveId),
+                            e((string) $desc)
                         );
                         $cveCount++;
                     }
@@ -108,13 +111,15 @@ class CVESearch extends Command
             if (isset($cve->details, $cve->published)) {
                 $published = substr((string) $cve->published, 0, 10);
                 if ($published >= $minTimestamp) {
-                    $desc   = Str::of((string) $cve->details)->lower()->toString();
+                    $desc = Str::of((string) $cve->details)->lower()->toString();
                     $hitName = $this->firstContained($desc, $names);
                     if ($hitName !== null) {
                         $alias = Arr::first((array) data_get($cve, 'aliases', []), default: 'CVE-?');
                         $lines[] = sprintf(
                             '<b>%s</b> : <b>%s</b> - %s',
-                            e($hitName), e((string) $alias), e((string) $cve->details)
+                            e($hitName),
+                            e((string) $alias),
+                            e((string) $cve->details)
                         );
                         $cveCount++;
                     }
@@ -125,8 +130,8 @@ class CVESearch extends Command
             if (data_get($cve, 'document.category') === 'csaf_security_advisory') {
                 $published = substr((string) data_get($cve, 'document.tracking.current_release_date', ''), 0, 10);
                 if ($published >= $minTimestamp) {
-                    $title   = (string) data_get($cve, 'document.title', '');
-                    $notes0  = (string) data_get($cve, 'document.notes.0.text', '');
+                    $title = (string) data_get($cve, 'document.title', '');
+                    $notes0 = (string) data_get($cve, 'document.notes.0.text', '');
                     $hitName = $this->firstContained(Str::lower($title), $names);
                     if ($hitName !== null) {
                         $lines[] = sprintf('<b>%s</b> : <b>%s</b> - %s', e($hitName), e($title), e($notes0));
@@ -138,7 +143,7 @@ class CVESearch extends Command
 
             if (isset($cve->descriptions, $cve->id) && str_starts_with((string) $cve->id, 'CVE')) {
                 foreach ((array) $cve->descriptions as $d) {
-                    $val     = (string) data_get($d, 'value', '');
+                    $val = (string) data_get($d, 'value', '');
                     $hitName = $this->firstContained(Str::lower($val), $names);
                     if ($hitName !== null) {
                         $lines[] = sprintf('<b>%s</b> : <b>%s</b> - %s', e($hitName), e((string) $cve->id), e($val));
@@ -201,8 +206,8 @@ class CVESearch extends Command
     {
         return Http::baseUrl($this->provider)
             ->withHeaders([
-                'User-Agent'   => "Mercator/{$this->appVersion}",
-                'Accept'       => 'application/json',
+                'User-Agent' => "Mercator/{$this->appVersion}",
+                'Accept' => 'application/json',
                 // Optionnel: préciser ton contact pour faciliter le support côté provider
                 // 'From'      => config('mail.from.address'),
             ])
@@ -221,14 +226,14 @@ class CVESearch extends Command
 
             // Vérifie content-type si utile : $resp->header('Content-Type')
             $json = $resp->json();
-            if (!is_array($json)) {
+            if (! is_array($json)) {
                 Log::warning('CVESearch - Non-array JSON payload', ['path' => $path]);
                 return null;
             }
             return $json;
         } catch (Throwable $e) {
             Log::error('CVESearch - HTTP error', [
-                'path'    => $path,
+                'path' => $path,
                 'message' => $e->getMessage(),
             ]);
             return null;
@@ -258,13 +263,13 @@ class CVESearch extends Command
 
         try {
             $mail->isSMTP();
-            $mail->Host       = env('MAIL_HOST');
-            $mail->SMTPAuth   = filter_var(env('MAIL_AUTH', false), FILTER_VALIDATE_BOOLEAN);
-            $mail->Username   = env('MAIL_USERNAME');
-            $mail->Password   = env('MAIL_PASSWORD');
+            $mail->Host = env('MAIL_HOST');
+            $mail->SMTPAuth = filter_var(env('MAIL_AUTH', false), FILTER_VALIDATE_BOOLEAN);
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
             $mail->SMTPSecure = env('MAIL_SMTP_SECURE', false) ?: false; // 'tls' | 'ssl' | false
-            $mail->SMTPAutoTLS= filter_var(env('MAIL_SMTP_AUTO_TLS', true), FILTER_VALIDATE_BOOLEAN);
-            $mail->Port       = (int) env('MAIL_PORT', 587);
+            $mail->SMTPAutoTLS = filter_var(env('MAIL_SMTP_AUTO_TLS', true), FILTER_VALIDATE_BOOLEAN);
+            $mail->Port = (int) env('MAIL_PORT', 587);
 
             $from = (string) config('mercator-config.cve.mail-from');
             if ($from) {
@@ -278,14 +283,14 @@ class CVESearch extends Command
 
             $mail->isHTML(true);
             $mail->Subject = (string) config('mercator-config.cve.mail-subject', 'Mercator - CVE matches');
-            $mail->Body    = $html;
+            $mail->Body = $html;
 
             // DKIM (optionnel)
-            $mail->DKIM_domain    = env('MAIL_DKIM_DOMAIN');
-            $mail->DKIM_private   = env('MAIL_DKIM_PRIVATE');
-            $mail->DKIM_selector  = env('MAIL_DKIM_SELECTOR');
-            $mail->DKIM_passphrase= env('MAIL_DKIM_PASSPHRASE');
-            $mail->DKIM_identity  = $mail->From;
+            $mail->DKIM_domain = env('MAIL_DKIM_DOMAIN');
+            $mail->DKIM_private = env('MAIL_DKIM_PRIVATE');
+            $mail->DKIM_selector = env('MAIL_DKIM_SELECTOR');
+            $mail->DKIM_passphrase = env('MAIL_DKIM_PASSPHRASE');
+            $mail->DKIM_identity = $mail->From;
 
             $mail->send();
             Log::info('CVESearch - Mail sent');
@@ -303,9 +308,8 @@ class CVESearch extends Command
 
         Log::debug('CVESearch - check-frequency', ['value' => $cf]);
 
-        return
-            ($cf === 1) ||                                      // Daily
-            (($cf === 7) && (Carbon::now()->dayOfWeek === 1)) ||// Weekly (Mon)
+        return ($cf === 1) ||                                      // Daily
+            (($cf === 7) && (Carbon::now()->dayOfWeek === 1)) || // Weekly (Mon)
             (($cf === 30) && (Carbon::now()->day === 1));       // Monthly (1st)
     }
 }
