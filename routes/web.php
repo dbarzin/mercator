@@ -346,6 +346,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('report/cartography', [Admin\CartographyController::class, 'cartography'])->name('report.cartography');
     Route::get('report/entities', [Admin\ReportController::class,'entities'])->name('report.entities');
     Route::get('report/applicationsByBlocks', [Admin\ReportController::class,'applicationsByBlocks'])->name('report.applicationsByBlocks');
+    Route::get('report/directory', [Admin\ReportController::class,'directory'])->name('report.directory');
     Route::get('report/logicalServers', [Admin\ReportController::class,'logicalServers'])->name('report.logicalServers');
     Route::get('report/securityNeeds', [Admin\ReportController::class, 'securityNeeds'])->name('report.securityNeeds');
     Route::get('report/logicalServerConfigs', [Admin\ReportController::class, 'logicalServerConfigs'])->name('report.logicalServerConfigs');

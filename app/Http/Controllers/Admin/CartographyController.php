@@ -95,7 +95,6 @@ class CartographyController extends Controller
         \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
         $phpWord->getSettings()->setHideGrammaticalErrors(true);
         $phpWord->getSettings()->setHideSpellingErrors(true);
-        $section = $phpWord->addSection();
 
         // Numbering Style
         $phpWord->addNumberingStyle(
@@ -128,9 +127,8 @@ class CartographyController extends Controller
             ['numStyle' => 'hNum', 'numLevel' => 2]
         );
 
-        // $phpWord->addParagraphStyle('P-Style', array('spaceAfter'=>0,'lineHeight'=>1.0))
-
         // Title
+        $section = $phpWord->addSection();
         $section->addTitle(trans('cruds.report.cartography.title'), 0);
         $section->addTextBreak(1);
 
@@ -2452,11 +2450,7 @@ class CartographyController extends Controller
         }
 
         // Finename
-        // $filepath = storage_path('app/reports/cartographie-'. Carbon::today()->format('Ymd') .'.odt');
         $filepath = storage_path('app/reports/cartographie-'. Carbon::today()->format('Ymd') .'.docx');
-
-        // Saving the document as ODT file.
-        // $objWriter = new \PhpOffice\PhpWord\Writer\ODText($phpWord);
 
         // Saving the document as Word2007 file.
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');

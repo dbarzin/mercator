@@ -65,6 +65,36 @@ class MApplication extends Model
         'next_update',
     ];
 
+    /*
+    * format $delay in minute to string in formet "a days b hours c ninutes"
+    */
+    static public function formatDelay(int $delay): string
+    {
+        if ($delay === null) {
+            return '';
+        }
+
+        $days = intdiv($delay, 60 * 24);
+        $hours = intdiv($delay, 60) % 24;
+        $minutes = $delay % 60;
+
+        $parts = [];
+
+        if ($days > 0) {
+            $parts[] = $days . ' ' . trans($days > 1 ? 'global.days' : 'global.day');
+        }
+
+        if ($hours > 0) {
+            $parts[] = $hours . ' ' . trans($hours > 1 ? 'global.hours' : 'global.hour');
+        }
+
+        if ($minutes > 0) {
+            $parts[] = $minutes . ' ' . trans($minutes > 1 ? 'global.minutes' : 'global.minute');
+        }
+
+        return implode(' ', $parts);
+    }
+
     public function hasCartographer(User $user)
     {
         return $this->cartographers()

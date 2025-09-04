@@ -1240,6 +1240,8 @@ return [
         'lists' => [
             'applications' => 'Applications by application group',
             'applications_helper' => 'List of applications by application group',
+            'directory' => 'Crisis Directory',
+            'directory_helper' => 'Document centralizing critical applications, their suppliers, and relationships to facilitate management and continuity in crisis situations.',
             'entities' => 'Supported entities and applications',
             'entities_helper' => 'List of information system entities and their supported applications',
             'logical_server_configurations' => 'Configuring logical servers',
