@@ -200,7 +200,7 @@ class ReportController extends Controller
         // Select applications
         $applications = MApplication
             ::join('data_processing_m_application', 'm_application_id', 'm_applications.id')
-                ->wherein('data_processing_id', $dataProcessings->pluck('id')->all())->get();
+            ->wherein('data_processing_id', $dataProcessings->pluck('id')->all())->get();
 
         return view('admin/reports/gdpr')
             ->with('all_macroprocess', $all_macroprocess)
@@ -1906,7 +1906,7 @@ class ReportController extends Controller
         $register = DataProcessing::orderBy('name')->get();
         foreach ($register as $dataProcessing) {
             // schema
-            $section->addTitle($dataProcessing->name, 1);
+            $section->addTitle($this->xmlSafe($dataProcessing->name), 1);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.legal_basis'), 2);
             $this->addText($section, $dataProcessing->legal_basis);
@@ -2325,63 +2325,65 @@ class ReportController extends Controller
                     ->orWhere('m_applications.security_need_t', '>=', 3)
                     ->orWhere('m_applications.security_need_auth', '>=', 3);
             })
-                ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
-                ->leftJoin('relations', function ($join) use ($today) {
-                    $join->on('m_applications.id', '=', 'relations.source_id')
-                        ->where('relations.active', '=', 1)
-                        ->where('relations.start_date', '<=', $today)
-                        ->where('relations.end_date', '>=', $today);
-                })
-                ->select(
-                    'm_applications.id as application_id',
-                    'm_applications.name',
-                    'm_applications.description',
-                    'm_applications.responsible',
-                    'm_applications.security_need_c',
-                    'm_applications.security_need_i',
-                    'm_applications.security_need_a',
-                    'm_applications.security_need_t',
-                    'm_applications.rto',
-                    'm_applications.rpo',
-                    'entities.name as entity_name',
-                    'entities.description as entity_description',
-                    'entities.contact_point as entity_contact_point',
-                    'relations.name as relation_name',
-                    'relations.type as relation_type',
-                    'relations.description as relation_description',
-                    'relations.importance as relation_importance',
-                    'relations.start_date as relation_start_date',
-                    'relations.end_date as relation_end_date'
-                )
-                ->get();
+            ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
+            ->leftJoin('relations', function ($join) use ($today) {
+                $join->on('m_applications.id', '=', 'relations.source_id')
+                    ->where('relations.active', '=', 1)
+                    ->where('relations.start_date', '<=', $today)
+                    ->where('relations.end_date', '>=', $today);
+            })
+            ->select(
+                'm_applications.id as application_id',
+                'm_applications.name',
+                'm_applications.description',
+                'm_applications.responsible',
+                'm_applications.security_need_c',
+                'm_applications.security_need_i',
+                'm_applications.security_need_a',
+                'm_applications.security_need_t',
+                'm_applications.rto',
+                'm_applications.rpo',
+
+                'entities.name as entity_name',
+                'entities.description as entity_description',
+                'entities.contact_point as entity_contact_point',
+
+                'relations.name as relation_name',
+                'relations.type as relation_type',
+                'relations.description as relation_description',
+                'relations.importance as relation_importance',
+                'relations.start_date as relation_start_date',
+                'relations.end_date as relation_end_date'
+            )
+            ->get();
 
         // --- Styles de base
         $phpWord = new PhpWord();
         $phpWord->addTitleStyle(1, ['size' => 20, 'bold' => true]);
         $phpWord->addTitleStyle(2, ['size' => 16, 'bold' => true]);
         $labelStyle = ['bold' => true];
-        $textStyle = [];
+        $textStyle  = [];
 
         $tableKVStyle = [
             'borderColor' => 'cccccc',
-            'borderSize' => 6,
-            'cellMargin' => 80,
-            'width' => 100 * 50, // 100% (fiftieths of a percent)
+            'borderSize'  => 6,
+            'cellMargin'  => 80,
+            'width'       => 100 * 50, // 100% (fiftieths of a percent)
         ];
         $tableKVFirstCol = ['bgColor' => 'f3f3f3', 'valign' => 'center', 'width' => 40 * 50];
         $tableKVSecondCol = ['valign' => 'center', 'width' => 60 * 50];
 
         $tableListStyle = [
             'borderColor' => 'cccccc',
-            'borderSize' => 6,
-            'cellMargin' => 80,
-            'width' => 100 * 50,
+            'borderSize'  => 6,
+            'cellMargin'  => 80,
+            'width'       => 100 * 50,
         ];
         $tableHeaderCell = ['bgColor' => 'eaeaea'];
         $paraTight = ['spaceAfter' => 60];
 
         // Helper pour valeur affichée
-        $fmt = fn ($v) => $v === null || $v === '' ? '—' : $v;
+        $fmt = fn($v) => $v === null || $v === '' ? '—' : $v;
 
         // Helper: ajoute une ligne clé/valeur
         $addKV = function ($table, $title, $value) {
@@ -2453,30 +2455,29 @@ class ReportController extends Controller
                 'breakType' => 'continuous',
                 'pageSizeW' => 11906,
                 'pageSizeH' => 16838,
-                'marginTop' => 1000,
+                'marginTop'    => 1000,
                 'marginBottom' => 1000,
-                'marginLeft' => 1000,
-                'marginRight' => 1000,
+                'marginLeft'   => 1000,
+                'marginRight'  => 1000,
             ]);
 
             // Titre page
-            $section->addTitle($appName, 1);
+            $section->addTitle($this->xmlSafe($appName), 1);
 
             // =========================
             // Section 1: Application
             // =========================
-            $section->addTitle('Application', 2);
+            $section->addTitle("Application", 2);
             $t1 = $section->addTable($tableKVStyle);
             $addKV($t1, 'Description', $fmt($first->description));
             $addKV($t1, 'Processus', $fmt($this->getApplicationProcessesNames($first->application_id)));
 
             $addKV($t1, 'Responsable', $fmt($first->responsible));
             $addKV($t1, 'C-I-A-T', $fmt(
-                $first->security_need_c . ' - ' .
-                    $first->security_need_i . ' - ' .
-                    $first->security_need_a . ' - ' .
-                    $first->security_need_t
-            ));
+                    $first->security_need_c . " - " .
+                    $first->security_need_i . " - " .
+                    $first->security_need_a . " - " .
+                    $first->security_need_t));
             $addKV($t1, 'RTO', $fmt(MApplication::formatDelay($first->rto)));
             $addKV($t1, 'RPO', $fmt(MApplication::formatDelay($first->rpo)));
 
@@ -2485,7 +2486,7 @@ class ReportController extends Controller
             // =========================
             // Section 2: Entité responsable
             // =========================
-            $section->addTitle('Entité responsable', 2);
+            $section->addTitle("Entité responsable", 2);
             $t2 = $section->addTable($tableKVStyle);
             $addKV($t2, 'Nom', $fmt($first->entity_name));
             $addKV($t2, 'Point de contact', $fmt($first->entity_contact_point));
@@ -2496,7 +2497,7 @@ class ReportController extends Controller
             // =========================
             // Section 3: Relations actives à la date du jour
             // =========================
-            $section->addTitle('Relations', 2);
+            $section->addTitle("Relations", 2);
             $t3 = $section->addTable($tableListStyle);
             // En-têtes
             $t3h = $t3->addRow();
@@ -2542,6 +2543,20 @@ class ReportController extends Controller
         return response()->download($filepath)->deleteFileAfterSend(true);
     }
 
+    private static function getApplicationProcessesNames(int $applicationId): string
+    {
+        $names = DB::table('m_application_process')
+            ->join('processes', 'm_application_process.process_id', '=', 'processes.id')
+            ->where('m_application_process.m_application_id', $applicationId)
+            ->pluck('processes.name');
+
+        return $names->implode(', ');
+    }
+
+    // helper de nettoyage sûr pour WordprocessingML
+    private static function xmlSafe(string $str = null): string {
+        return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
+    }
     // *************************************************************
 
     public function logicalServers()
@@ -3444,16 +3459,6 @@ class ReportController extends Controller
         }, $filename, [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ]);
-    }
-
-    private function getApplicationProcessesNames(int $applicationId): string
-    {
-        $names = DB::table('m_application_process')
-            ->join('processes', 'm_application_process.process_id', '=', 'processes.id')
-            ->where('m_application_process.m_application_id', $applicationId)
-            ->pluck('processes.name');
-
-        return $names->implode(', ');
     }
 
     private static function addText(Section $section, ?string $value = null)
