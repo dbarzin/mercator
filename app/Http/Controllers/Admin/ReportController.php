@@ -2321,11 +2321,11 @@ class ReportController extends Controller
 
         $applications =
             MApplication::where(function ($query) {
-                $query->where('m_applications.security_need_c', '>=', 3)
-                    ->orWhere('m_applications.security_need_i', '>=', 3)
-                    ->orWhere('m_applications.security_need_a', '>=', 3)
-                    ->orWhere('m_applications.security_need_t', '>=', 3)
-                    ->orWhere('m_applications.security_need_auth', '>=', 3);
+                $query->where('m_applications.security_need_c', '>=', 4)
+                    ->orWhere('m_applications.security_need_i', '>=', 4)
+                    ->orWhere('m_applications.security_need_a', '>=', 4)
+                    ->orWhere('m_applications.security_need_t', '>=', 4)
+                    ->orWhere('m_applications.security_need_auth', '>=', 4);
             })
             ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
             ->leftJoin('relations', function ($join) use ($today) {
