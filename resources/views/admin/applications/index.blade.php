@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 @can('m_application_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a id="btn-new" class="btn btn-success" href="{{ route('admin.applications.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.application.title_singular') }}
-            </a>
-        </div>
+<div style="margin-bottom: 10px;" class="row">
+    <div class="col-lg-12">
+        <a id="btn-new" class="btn btn-success" href="{{ route('admin.applications.create') }}">
+            {{ trans('global.add') }} {{ trans('cruds.application.title_singular') }}
+        </a>
     </div>
+</div>
 @endcan
 <div class="card">
     <div class="card-header">

@@ -27,7 +27,7 @@ class CVEController extends Controller
             return back()->withErrors('CVE search failed: ' . $e->getMessage());
         }
 
-        return view('admin.cve.show', compact('cves'));
+        return view('admin.cve.show', compact('cpe', 'cves'));
     }
 
     public function list()
@@ -50,6 +50,7 @@ class CVEController extends Controller
             'CPE Name',
             'CPE Version',
             'CVE',
+            'CVE Affected Version',
             'CVE Summary',
             'CVE References',
             'CVE Impact',
@@ -70,15 +71,15 @@ class CVEController extends Controller
         $sheet->getColumnDimension('C')->setAutoSize(true);
         $sheet->getColumnDimension('D')->setAutoSize(true);
         $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setWidth(120); // px
-        $sheet->getColumnDimension('G')->setWidth(120); // px
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setWidth(120);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setWidth(22);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
 
         // Wrap text for Summary & References
-        $sheet->getStyle('F:G')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('F:G')->getAlignment()->setVertical(Alignment::VERTICAL_TOP);
+        $sheet->getStyle('G')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('G')->getAlignment()->setVertical(Alignment::VERTICAL_TOP);
 
         $row = 2;
 
@@ -142,18 +143,19 @@ class CVEController extends Controller
                 $sheet->setCellValue("D{$row}", $version);
 
                 $sheet->setCellValue("E{$row}", $cve->cveId ?? '');
-                $sheet->setCellValue("F{$row}", $cve->description ?? ($cve->title ?? ''));
+                $sheet->setCellValue("F{$row}", $cve->version ?? '');
+                $sheet->setCellValue("G{$row}", $cve->description ?? ($cve->title ?? ''));
 
                 // Références : on concatène nom + URL si dispo
                 $ref = trim(
                     ($cve->name ?? '') .
                     (isset($cve->url) && $cve->url ? " \n" . $cve->url : '')
                 );
-                $sheet->setCellValue("G{$row}", $ref);
+                $sheet->setCellValue("H{$row}", $ref);
 
-                $sheet->setCellValue("H{$row}", $cve->baseSeverity ?? '');
-                $sheet->setCellValue("I{$row}", $cve->baseScore ?? '');
-                $sheet->setCellValue("J{$row}", $cve->datePublished ?? '');
+                $sheet->setCellValue("I{$row}", $cve->baseSeverity ?? '');
+                $sheet->setCellValue("J{$row}", $cve->baseScore ?? '');
+                $sheet->setCellValue("K{$row}", $cve->datePublished ?? '');
 
                 $row++;
             }
@@ -210,6 +212,9 @@ class CVEController extends Controller
             return [];
         }
 
+        // get version
+        $cpeVersion = $this->extractCpeVersion($cpe);
+
         // Map sécurisé des champs (beaucoup de champs peuvent manquer)
         $out = [];
         foreach ($list as $cve) {
@@ -225,6 +230,11 @@ class CVEController extends Controller
             $description = Arr::get($cveArr, 'containers.cna.descriptions.0.value', '');
             $refUrl = Arr::get($cveArr, 'containers.cna.references.0.url', '');
             $refName = Arr::get($cveArr, 'containers.cna.references.0.name', '');
+            $cveVersion = Arr::get($cveArr, 'containers.cna.affected.0.versions.0.version', '');
+
+            // Apply filter
+            //if (($cpeVersion!==null) && !$this->isVersionGreater($cveVersion, $cpeVersion))
+            //    continue;
 
             // Scores (essaie CNA V3.0, V3.1, puis ADP)
             $baseScore = Arr::get($cveArr, 'containers.cna.metrics.0.cvssV3_0.baseScore')
@@ -239,17 +249,47 @@ class CVEController extends Controller
 
             $out[] = (object) [
                 'cveId' => $cveId,
-                'title' => $title ?? '',
-                'description' => $description ?? '',
-                'url' => $refUrl ?? '',
-                'name' => $refName ?? '',
-                'datePublished' => $datePublished ?? '',
-                'dateUpdated' => $dateUpdated ?? '',
+                'title' => $title,
+                'description' => $description,
+                'url' => $refUrl,
+                'version' => $cveVersion,
+                'name' => $refName,
+                'datePublished' => $datePublished,
+                'dateUpdated' => $dateUpdated,
                 'baseScore' => $baseScore,
                 'baseSeverity' => $baseSeverity,
             ];
         }
-
+        //dd($out);
         return $out;
+    }
+
+    protected function extractCpeVersion(string $cpe): ?string {
+        $parts = explode(':', $cpe);
+
+        if (count($parts) >= 5) {
+            $version = $parts[5];
+            return $version !== '*' ? $version : null;
+        }
+
+        return null;
+    }
+
+    protected function isVersionGreater(string $v1, string $v2): bool {
+        $parts1 = array_map('intval', explode('.', $v1));
+        $parts2 = array_map('intval', explode('.', $v2));
+
+        $length = max(count($parts1), count($parts2));
+        $parts1 = array_pad($parts1, $length, 0);
+        $parts2 = array_pad($parts2, $length, 0);
+
+        for ($i = 0; $i < $length; $i++) {
+            if ($parts1[$i] > $parts2[$i]) {
+                return true;
+            } elseif ($parts1[$i] < $parts2[$i]) {
+                return false;
+            }
+        }
+        return false; // égales
     }
 }
