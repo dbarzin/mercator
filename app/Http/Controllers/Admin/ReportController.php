@@ -2329,7 +2329,10 @@ class ReportController extends Controller
             })
             ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
             ->leftJoin('relations', function ($join) use ($today) {
-                $join->on('m_applications.id', '=', 'relations.source_id')
+                $join->on(function ($on) {
+                        $on->on('entities.id', '=', 'relations.source_id')
+                           ->orOn('entities.id', '=', 'relations.destination_id');
+                    })
                     ->where('relations.active', '=', 1)
                     ->where('relations.start_date', '<=', $today)
                     ->where('relations.end_date', '>=', $today);
