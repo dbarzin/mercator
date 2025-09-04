@@ -29,24 +29,17 @@
 
 <div class="card">
     <div class="card-header">
-        Cartographier
+        {{ trans('cruds.graph.title_singular') }} - {{ $graph->name }}
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <b>{{ $graph->name }}</b>
+        <div class="row resizable-div" id="myDiv">
+            <div class="col-lg-12">
+                <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
                 </div>
             </div>
         </div>
-                <div class="row resizable-div" id="myDiv">
-                    <div class="col-lg-12">
-                        <div id="graph-container" style="position: relative; overflow: hidden; width: 100%; height: 600px; cursor: default; touch-action: none;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
 <div class="form-group">
     <a id="btn-cancel" class="btn btn-default" href="{{ route('admin.graphs.index') }}">
         {{ trans('global.back_to_list') }}
