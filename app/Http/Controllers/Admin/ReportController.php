@@ -2328,15 +2328,14 @@ class ReportController extends Controller
                     ->orWhere('m_applications.security_need_auth', '>=', 4);
             })
             ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
+            /*
             ->leftJoin('relations', function ($join) use ($today) {
-                $join->on(function ($on) {
-                        $on->on('entities.id', '=', 'relations.source_id')
-                           ->orOn('entities.id', '=', 'relations.destination_id');
-                    })
+                $join->on('entities.id', '=', 'relations.destination_id')
                     ->where('relations.active', '=', 1)
                     ->where('relations.start_date', '<=', $today)
                     ->where('relations.end_date', '>=', $today);
             })
+            */
             ->select(
                 'm_applications.id as application_id',
                 'm_applications.name',
@@ -2352,13 +2351,14 @@ class ReportController extends Controller
                 'entities.name as entity_name',
                 'entities.description as entity_description',
                 'entities.contact_point as entity_contact_point',
-
+            /*
                 'relations.name as relation_name',
                 'relations.type as relation_type',
                 'relations.description as relation_description',
                 'relations.importance as relation_importance',
                 'relations.start_date as relation_start_date',
                 'relations.end_date as relation_end_date'
+            */
             )
             ->get();
 
@@ -2483,7 +2483,7 @@ class ReportController extends Controller
             $this->addHTMLRow($t2, 'Description', ($first->entity_description));
 
             $section->addTextBreak(1);
-
+/*
             // =========================
             // Section 3: Relations actives à la date du jour
             // =========================
@@ -2503,8 +2503,8 @@ class ReportController extends Controller
                     $hasRelation = true;
                 }
                 $r = $t3->addRow();
-                $r->addCell()->addText(($row->relation_name), [], $paraTight);
-                $r->addCell()->addText(($row->relation_type), [], $paraTight);
+                $r->addCell()->addText(str_replace('&',' ',$row->relation_name), [], $paraTight);
+                $r->addCell()->addText(str_replace('&',' ',$row->relation_type), [], $paraTight);
                 $r->addCell()->addText(($row->relation_importance), [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
                 $r->addCell()->addText((optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
@@ -2516,7 +2516,7 @@ class ReportController extends Controller
                 $c = $r->addCell(null, ['gridSpan' => 5]);
                 $c->addText('Aucune relation active pour cette application à la date du jour.', [], $paraTight);
             }
-
+*/
             // Nouvelle page pour l’application suivante
             $section->addPageBreak();
         }
