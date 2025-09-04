@@ -1250,6 +1250,8 @@ return [
         'lists' => [
             'applications' => 'Applications par groupe applicatif',
             'applications_helper' => 'Liste des applications par groupe applicatif',
+            'directory' => 'Annuaire de crise',
+            'directory_helper' => 'Document centralisant les applications critiques ainsi que leurs fournisseurs et relations afin de faciliter la gestion et la continuité en situation de crise.',
             'entities' => 'Entités et applications supportées',
             'entities_helper' => "Liste des entités du système d'information et de leurs applications supportées",
             'logical_server_configurations' => 'Configuration des serveurs logiques',
