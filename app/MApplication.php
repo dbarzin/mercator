@@ -68,7 +68,7 @@ class MApplication extends Model
     /*
     * format $delay in minute to string in formet "a days b hours c ninutes"
     */
-    static public function formatDelay(int $delay): string
+    public static function formatDelay(int $delay): string
     {
         if ($delay === null) {
             return '';
