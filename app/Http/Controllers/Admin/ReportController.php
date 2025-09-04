@@ -73,6 +73,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Element\Table;
+
 
 class ReportController extends Controller
 {
@@ -2382,20 +2384,6 @@ class ReportController extends Controller
         $tableHeaderCell = ['bgColor' => 'eaeaea'];
         $paraTight = ['spaceAfter' => 60];
 
-        // Helper pour valeur affichée
-        $fmt = fn($v) => $v === null || $v === '' ? '—' : $v;
-
-        // Helper: ajoute une ligne clé/valeur
-        $addKV = function ($table, $title, $value) {
-            $table->addRow();
-            $table->addCell(2000)->addText($title, ['bold' => true, 'color' => '000000'], ['spaceBefore' => 30, 'spaceAfter' => 30 ]);
-            try {
-                \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(5000), str_replace('<br>', '<br/>', $value));
-            } catch (\Exception $e) {
-                Log::error('CartographyController - Invalid HTML ' . $value);
-            }
-        };
-
         // Numbering Style
         $phpWord->addNumberingStyle(
             'hNum',
@@ -2469,17 +2457,16 @@ class ReportController extends Controller
             // =========================
             $section->addTitle("Application", 2);
             $t1 = $section->addTable($tableKVStyle);
-            $addKV($t1, 'Description', $fmt($first->description));
-            $addKV($t1, 'Processus', $fmt($this->getApplicationProcessesNames($first->application_id)));
-
-            $addKV($t1, 'Responsable', $fmt($first->responsible));
-            $addKV($t1, 'C-I-A-T', $fmt(
+            $this->addHTMLRow($t1, 'Description', ($first->description));
+            $this->addHTMLRow($t1, 'Processus', ($this->getApplicationProcessesNames($first->application_id)));
+            $this->addHTMLRow($t1, 'Responsable', $first->responsible);
+            $this->addHTMLRow($t1, 'C-I-A-T', (
                     $first->security_need_c . " - " .
                     $first->security_need_i . " - " .
                     $first->security_need_a . " - " .
                     $first->security_need_t));
-            $addKV($t1, 'RTO', $fmt(MApplication::formatDelay($first->rto)));
-            $addKV($t1, 'RPO', $fmt(MApplication::formatDelay($first->rpo)));
+            $this->addHTMLRow($t1, 'RTO', (MApplication::formatDelay($first->rto)));
+            $this->addHTMLRow($t1, 'RPO', (MApplication::formatDelay($first->rpo)));
 
             $section->addTextBreak(1);
 
@@ -2488,9 +2475,9 @@ class ReportController extends Controller
             // =========================
             $section->addTitle("Entité responsable", 2);
             $t2 = $section->addTable($tableKVStyle);
-            $addKV($t2, 'Nom', $fmt($first->entity_name));
-            $addKV($t2, 'Point de contact', $fmt($first->entity_contact_point));
-            $addKV($t2, 'Description', $fmt($first->entity_description));
+            $this->addHTMLRow($t2, 'Nom', ($first->entity_name));
+            $this->addHTMLRow($t2, 'Point de contact', ($first->entity_contact_point));
+            $this->addHTMLRow($t2, 'Description', ($first->entity_description));
 
             $section->addTextBreak(1);
 
@@ -2513,12 +2500,12 @@ class ReportController extends Controller
                     $hasRelation = true;
                 }
                 $r = $t3->addRow();
-                $r->addCell()->addText($fmt($row->relation_name), [], $paraTight);
-                $r->addCell()->addText($fmt($row->relation_type), [], $paraTight);
-                $r->addCell()->addText($fmt($row->relation_importance), [], $paraTight);
-                $r->addCell()->addText($fmt(optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
-                $r->addCell()->addText($fmt(optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
-                $addKV($t3, 'Description', $fmt($first->relation_description));
+                $r->addCell()->addText(($row->relation_name), [], $paraTight);
+                $r->addCell()->addText(($row->relation_type), [], $paraTight);
+                $r->addCell()->addText(($row->relation_importance), [], $paraTight);
+                $r->addCell()->addText((optional($row->relation_start_date)->format('Y-m-d') ?? $row->relation_start_date), [], $paraTight);
+                $r->addCell()->addText((optional($row->relation_end_date)->format('Y-m-d') ?? $row->relation_end_date), [], $paraTight);
+                $this->addHTMLRow($t3, 'Description', ($first->relation_description));
             }
 
             if (! $hasRelation) {
@@ -2553,10 +2540,21 @@ class ReportController extends Controller
         return $names->implode(', ');
     }
 
-    // helper de nettoyage sûr pour WordprocessingML
-    private static function xmlSafe(string $str = null): string {
+    private static function addHTMLRow(Table $table, string $title, ?string $value = null)
+    {
+        $table->addRow();
+        $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
+        try {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('&','+',str_replace('<br>', '<br/>', $value)));
+        } catch (\Exception $e) {
+            Log::error('CartographyController - Invalid HTML ' . $value);
+        }
+    }
+
+    private static function xmlSafe(string $str) {
         return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
     }
+
     // *************************************************************
 
     public function logicalServers()
