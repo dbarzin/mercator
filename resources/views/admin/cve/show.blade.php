@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-<div class="form-group">
-    <div class="form-group">
+<div style="margin-bottom: 10px;" class="row">
+    <div class="col-lg-12">
         <a class="btn btn-default" onclick="history.back()">
             {{ trans('global.back_to_list') }}
         </a>
     </div>
+</div>
 
 <div class="card">
-
-
     <div class="card-header">
-        CVE List
+
+        CVE List for {{ $cpe }}
     </div>
 
     <div class="card-body">
@@ -23,6 +23,9 @@
                         </th>
                         <th>
                             CVE
+                        </th>
+                        <th>
+                            Affected Version
                         </th>
                         <th>
                             Description
@@ -49,10 +52,9 @@
                                 </a>
                             </td>
                             <td>
-                                @if ($cve->title!==null)
-                                <b>{{ $cve->title }}</b>
-                                <br>
-                                @endif
+                                {{ $cve->version }}
+                            </td>
+                            <td>
                                 {{ $cve->description }}
                             </td>
                             <td>

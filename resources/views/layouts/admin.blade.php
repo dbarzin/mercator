@@ -12,7 +12,7 @@
     @include('partials.navbar')
     <div class="d-flex">
     @include('partials.sidebar')
-        <div id="content-home" class="content flex-grow-1 p-4">
+        <div id="content-home" class="content flex-grow-1 p-3">
             @if(session('message'))
                 <div class="row mb-2">
                     <div class="col-lg-12">
