@@ -1908,7 +1908,7 @@ class ReportController extends Controller
         $register = DataProcessing::orderBy('name')->get();
         foreach ($register as $dataProcessing) {
             // schema
-            $section->addTitle($this->xmlSafe($dataProcessing->name), 1);
+            $section->addTitle($dataProcessing->name, 1);
 
             $section->addTitle(trans('cruds.dataProcessing.fields.legal_basis'), 2);
             $this->addText($section, $dataProcessing->legal_basis);
@@ -2328,14 +2328,15 @@ class ReportController extends Controller
                     ->orWhere('m_applications.security_need_auth', '>=', 3);
             })
             ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
-            /*
             ->leftJoin('relations', function ($join) use ($today) {
-                $join->on('entities.id', '=', 'relations.destination_id')
+               $join->on(function ($on) {
+                        $on->on('entities.id', '=', 'relations.source_id')
+                           ->orOn('entities.id', '=', 'relations.destination_id');
+                    })
                     ->where('relations.active', '=', 1)
                     ->where('relations.start_date', '<=', $today)
                     ->where('relations.end_date', '>=', $today);
             })
-            */
             ->select(
                 'm_applications.id as application_id',
                 'm_applications.name',
@@ -2351,19 +2352,23 @@ class ReportController extends Controller
                 'entities.name as entity_name',
                 'entities.description as entity_description',
                 'entities.contact_point as entity_contact_point',
-            /*
+
                 'relations.name as relation_name',
                 'relations.type as relation_type',
                 'relations.description as relation_description',
                 'relations.importance as relation_importance',
                 'relations.start_date as relation_start_date',
                 'relations.end_date as relation_end_date'
-            */
+
             )
             ->get();
 
         // --- Styles de base
         $phpWord = new PhpWord();
+        \PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true); // !!!!
+        $phpWord->getSettings()->setHideGrammaticalErrors(true);
+        $phpWord->getSettings()->setHideSpellingErrors(true);
+
         $phpWord->addTitleStyle(1, ['size' => 20, 'bold' => true]);
         $phpWord->addTitleStyle(2, ['size' => 16, 'bold' => true]);
         $labelStyle = ['bold' => true];
@@ -2425,7 +2430,7 @@ class ReportController extends Controller
 
         // TOC
         $toc = $section->addTOC(['spaceAfter' => 50, 'size' => 10]);
-        $toc->setMinDepth(1);
+        $toc->setMinDepth(0);
         $toc->setMaxDepth(1);
         $section->addTextBreak(1);
 
@@ -2453,23 +2458,24 @@ class ReportController extends Controller
             ]);
 
             // Titre page
-            $section->addTitle($this->xmlSafe($appName), 1);
+            $section->addTitle($appName, 1);
 
             // =========================
             // Section 1: Application
             // =========================
             $section->addTitle("Application", 2);
+
             $t1 = $section->addTable($tableKVStyle);
-            $this->addHTMLRow($t1, 'Description', ($first->description));
-            $this->addHTMLRow($t1, 'Processus', ($this->getApplicationProcessesNames($first->application_id)));
-            $this->addHTMLRow($t1, 'Responsable', $first->responsible);
-            $this->addHTMLRow($t1, 'C-I-A-T', (
+            $this->addHTMLRow($t1, trans('cruds.application.fields.description'), $first->description);
+            $this->addTextRow($t1, 'Processus', $this->getApplicationProcessesNames($first->application_id));
+            $this->addTextRow($t1, 'Responsable', $first->responsible);
+            $this->addTextRow($t1, 'C-I-A-T', (
                     $first->security_need_c . " - " .
                     $first->security_need_i . " - " .
                     $first->security_need_a . " - " .
                     $first->security_need_t));
-            $this->addHTMLRow($t1, 'RTO', (MApplication::formatDelay($first->rto)));
-            $this->addHTMLRow($t1, 'RPO', (MApplication::formatDelay($first->rpo)));
+            $this->addTextRow($t1, 'RTO', (MApplication::formatDelay($first->rto)));
+            $this->addTextRow($t1, 'RPO', (MApplication::formatDelay($first->rpo)));
 
             $section->addTextBreak(1);
 
@@ -2478,12 +2484,12 @@ class ReportController extends Controller
             // =========================
             $section->addTitle("Entité responsable", 2);
             $t2 = $section->addTable($tableKVStyle);
-            $this->addHTMLRow($t2, 'Nom', ($first->entity_name));
+            $this->addTextRow($t2, 'Nom', ($first->entity_name));
             $this->addHTMLRow($t2, 'Point de contact', ($first->entity_contact_point));
             $this->addHTMLRow($t2, 'Description', ($first->entity_description));
 
             $section->addTextBreak(1);
-/*
+
             // =========================
             // Section 3: Relations actives à la date du jour
             // =========================
@@ -2516,7 +2522,7 @@ class ReportController extends Controller
                 $c = $r->addCell(null, ['gridSpan' => 5]);
                 $c->addText('Aucune relation active pour cette application à la date du jour.', [], $paraTight);
             }
-*/
+
             // Nouvelle page pour l’application suivante
             $section->addPageBreak();
         }
@@ -2543,19 +2549,43 @@ class ReportController extends Controller
         return $names->implode(', ');
     }
 
+    private static function addTable(Section $section, ?string $title = null)
+    {
+        $table = $section->addTable(
+            [
+                'borderSize' => 2,
+                'borderColor' => '006699',
+                'cellMargin' => 80,
+                'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER,
+            ]
+        );
+        $table->addRow();
+        if ($title!==null)
+            $table->addCell(8000, ['gridSpan' => 2])
+                ->addText(
+                    $title,
+                    CartographyController::FANCYTABLETITLESTYLE,
+                    CartographyController::NOSPACE
+                );
+        return $table;
+    }
+
+    private static function addTextRow(Table $table, string $title, ?string $value = null)
+    {
+        $table->addRow();
+        $table->addCell(2000, CartographyController::NOSPACE)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
+        $table->addCell(6000, CartographyController::NOSPACE)->addText($value, CartographyController::FANCYRIGHTTABLECELLSTYLE, CartographyController::NOSPACE);
+    }
+
     private static function addHTMLRow(Table $table, string $title, ?string $value = null)
     {
         $table->addRow();
         $table->addCell(2000)->addText($title, CartographyController::FANCYLEFTTABLECELLSTYLE, CartographyController::NOSPACE);
         try {
-            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('&','+',str_replace('<br>', '<br/>', $value)));
+            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(6000), str_replace('<br>', '<br/>', $value));
         } catch (\Exception $e) {
             Log::error('CartographyController - Invalid HTML ' . $value);
         }
-    }
-
-    private static function xmlSafe(string $str) {
-        return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
     }
 
     // *************************************************************
