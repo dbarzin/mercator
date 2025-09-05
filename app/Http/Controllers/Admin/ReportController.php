@@ -2327,7 +2327,14 @@ class ReportController extends Controller
                     ->orWhere('m_applications.security_need_t', '>=', 3)
                     ->orWhere('m_applications.security_need_auth', '>=', 3);
             })
-            ->leftJoin('entities', 'm_applications.entity_resp_id', '=', 'entities.id')
+            ->whereNull('m_applications.deleted_at')
+            ->leftJoin('entities', function ($join) {
+               $join->on(function ($on) {
+                        $on->on('m_applications.entity_resp_id', '=', 'entities.id');
+                    })
+                    ->whereNull('entities.deleted_at');
+            })
+            ->whereNull('entities.deleted_at')
             ->leftJoin('relations', function ($join) use ($today) {
                $join->on(function ($on) {
                         $on->on('entities.id', '=', 'relations.source_id')
@@ -2335,7 +2342,8 @@ class ReportController extends Controller
                     })
                     ->where('relations.active', '=', 1)
                     ->where('relations.start_date', '<=', $today)
-                    ->where('relations.end_date', '>=', $today);
+                    ->where('relations.end_date', '>=', $today)
+                    ->whereNull('relations.deleted_at');
             })
             ->select(
                 'm_applications.id as application_id',
