@@ -8,13 +8,13 @@ Changements prévus en 2025 et plus :
 
 - [x] Outil de dessin de la cartographie
 - [x] Import de données sur base de fichier Excel ou CSV
-- [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
-- [ ] Générer les cartographes dans la gestion des utilisateurs
-- [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
+- [x] Générer un annuaire de crise
 - [ ] Dessin de processus avec BPMN 2.0 (https://github.com/process-analytics)
+- [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
+- [ ] Générer les cartographes dans la gestion des utilisateurs
+- [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
-- [ ] Générer un annuaire de crise
 - [ ] Utiliser un modèle de document pour les rapports
 - [ ] Identifier les chemins critiques
 - [ ] Utiliser des [Accessor pour les Model](https://laravel.com/docs/9.x/eloquent-mutators#defining-a-mutator)
