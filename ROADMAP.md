@@ -9,7 +9,7 @@ Changements prévus en 2025 et plus :
 - [x] Outil de dessin de la cartographie
 - [x] Import de données sur base de fichier Excel ou CSV
 - [x] Générer un annuaire de crise
-- [ ] Dessin de processus avec BPMN 2.0 (https://github.com/process-analytics)
+- [ ] Dessin de processus avec BPMN v2.0 (https://github.com/process-analytics)
 - [ ] Lien avec Monarc : générer un modèle d'analyse de risques pour Monarc
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Généraliser la notion de cartographe à d'autres objets (cf.: https://laravel.com/docs/10.x/authorization)
