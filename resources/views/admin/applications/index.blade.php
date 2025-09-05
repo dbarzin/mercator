@@ -121,13 +121,13 @@
                                     </a>
                                 @endcan
 
-                                @if(auth()->user()->can('m_application_edit') && auth()->user()->can('is-cartographer-m-application', $application))
+                                @if(auth()->user()->can('m_application_edit'))
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.applications.edit', $application->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endif
 
-                                @if(auth()->user()->can('m_application_delete') && auth()->user()->can('is-cartographer-m-application', $application))
+                                @if(auth()->user()->can('m_application_delete'))
                                     <form action="{{ route('admin.applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
