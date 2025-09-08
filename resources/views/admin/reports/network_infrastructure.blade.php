@@ -971,6 +971,12 @@ digraph  {
                 @endif
             @endforeach
 
+            @foreach($building->buildingPhysicalRouters as $router)
+                @if ($switch->bay_id===null)
+                    ROUTER{{ $router->id }} [label="{{ $router->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/router.png" href="#ROUTER{{$router->id}}"]
+                @endif
+            @endforeach
+
             @foreach($building->buildingPeripherals as $peripheral)
                 @if ($peripheral->bay_id===null)
                     PER{{ $peripheral->id }} [label="{{ $peripheral->name }}" shape=none labelloc="b"  width=1 height=1.1 image="/images/peripheral.png" href="#PERIPHERAL{{$peripheral->id}}"]

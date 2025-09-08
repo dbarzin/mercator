@@ -51,6 +51,11 @@ class Building extends Model
         return $this->hasMany(PhysicalServer::class, 'building_id', 'id')->orderBy('name');
     }
 
+    public function buildingPhysicalRouters(): HasMany
+    {
+        return $this->hasMany(PhysicalRouter::class, 'building_id', 'id')->orderBy('name');
+    }
+
     public function buildingPhysicalSwitch(): HasMany
     {
         return $this->hasMany(PhysicalSwitch::class, 'building_id', 'id')->orderBy('name');
