@@ -229,7 +229,7 @@
                         {{ $errors->first('logical_servers') }}
                     </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.application.fields.logical_servers_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.application.fields.administrators_helper') }}</span>
                 </div>
             </div>
         </div>
