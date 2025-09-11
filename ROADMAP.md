@@ -14,6 +14,7 @@ Changements prévus en 2025 et plus :
 - [ ] Générer les cartographes dans la gestion des utilisateurs
 - [ ] Généraliser la notion de cartographe à tous les objets (cf.: https://laravel.com/docs/10.x/authorization)
 - [ ] Gérer les BIA dans Mercator : https://github.com/dbarzin/mercator/discussions/1375
+- [ ] Purge de la DB : https://github.com/dbarzin/mercator/discussions/1525
 - [ ] Ajouter des champs personnalisés aux objets de la cartographie
 - [ ] Utiliser un modèle de document pour les rapports
 - [ ] Identifier les chemins critiques
