@@ -2336,10 +2336,13 @@ class ReportController extends Controller
             })
             ->whereNull('entities.deleted_at')
             ->leftJoin('relations', function ($join) use ($today) {
+                /*
                $join->on(function ($on) {
                         $on->on('entities.id', '=', 'relations.source_id')
                            ->orOn('entities.id', '=', 'relations.destination_id');
                     })
+                */
+               $join->on('entities.id', '=', 'relations.source_id')
                     ->where('relations.active', '=', 1)
                     ->where('relations.start_date', '<=', $today)
                     ->where('relations.end_date', '>=', $today)
