@@ -30,6 +30,12 @@ class PhysicalServerController extends Controller
         if ($request->has('applications')) {
             $physicalserver->applications()->sync($request->input('applications', []));
         }
+        
+        // Support for logical servers association via API
+        if ($request->has('logicalServers')) {
+            $logicalServerIds = $request->input('logicalServers', []);
+            $physicalserver->logicalServers()->sync($logicalServerIds);
+        }
 
         return response()->json($physicalserver, 201);
     }
@@ -45,10 +51,19 @@ class PhysicalServerController extends Controller
     {
         abort_if(Gate::denies('physical_server_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $physicalServer->update($request->all());
-        $physicalServer->applications()->sync($request->input('applications', []));
-        // syncs
-        // $physicalServer->roles()->sync($request->input('roles', []));
+        // Update all fields except logicalServers (handled separately)
+        $physicalServer->update($request->except('logicalServers'));
+        
+        if ($request->has('applications')) {
+            $physicalServer->applications()->sync($request->input('applications', []));
+        }
+        
+        // Handle logical servers association via API
+        if ($request->has('logicalServers')) {
+            $logicalServerIds = $request->input('logicalServers', []);
+            \Log::info("Physical server {$physicalServer->name} - syncing logical servers: " . json_encode($logicalServerIds));
+            $physicalServer->logicalServers()->sync($logicalServerIds);
+        }
 
         return response()->json();
     }
