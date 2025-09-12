@@ -53,7 +53,10 @@ class PhysicalServerController extends Controller
 
         // Update all fields except logicalServers (handled separately)
         $physicalServer->update($request->except('logicalServers'));
-        $physicalServer->applications()->sync($request->input('applications', []));
+        
+        if ($request->has('applications')) {
+            $physicalServer->applications()->sync($request->input('applications', []));
+        }
         
         // Handle logical servers association via API
         if ($request->has('logicalServers')) {
