@@ -34,7 +34,7 @@ class AuditLog extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public static function subject_url(string $subject_type)
+    public static function subjectURL(string $subject_type)
     {
         return '/admin/' .
             ($subject_type === 'App\\MApplication' ?
