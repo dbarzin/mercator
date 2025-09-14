@@ -127,7 +127,7 @@ class CertificateExpiracy extends Command
                     $mail->DKIM_identity = $mail->From;
 
                     if ($group === null || $group === '1') {
-                        $mail->Subject = subject;
+                        $mail->Subject = $subject;
                         $message = '<html><body>These certificates are about to exipre :<br><br>';
                         foreach ($certificates as $cert) {
                             $message .= $cert->end_validity . ' - ' . $cert->name . ' - ' . $cert->type . '<br>';

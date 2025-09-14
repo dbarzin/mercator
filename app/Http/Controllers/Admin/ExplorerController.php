@@ -346,8 +346,10 @@ class ExplorerController extends Controller
             if ($subnetwork->gateway_id !== null) {
                 $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('GW_', $subnetwork->gateway_id));
             }
+            /*
+             * TODO : fixme
             if ($subnetwork->address_ip !== null) {
-                foreach ($subnetworks as $subnetwork) {
+                foreach ($logicalServers as $logicalServer) {
                     foreach (explode(',', $logicalServer->address_ip) as $address) {
                         if ($subnetwork->contains($address)) {
                             $this->addLinkEdge($edges, $this->formatId('SUBNETWORK_', $subnetwork->id), $this->formatId('LSERVER_', $logicalServer->id));
@@ -356,6 +358,7 @@ class ExplorerController extends Controller
                     }
                 }
             }
+            */
         }
 
         // Logical Routers

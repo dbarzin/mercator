@@ -49,11 +49,11 @@ Changements réalisés en 2024 :
 
 ## Evolutions mineurs
 
-- [x] Amélorer l'exploration des objets (le filtre s'applique sur le double click)
+- [x] Améliorer l'exploration des objets (le filtre s'applique sur le double click)
 - [x] Ajouter des objets logiques : https://github.com/dbarzin/mercator/discussions/733
 - [x] Remplacer le champ libre éditeur par un lien vers la table entités et migrer la base de données
 - [x] Dessiner un nouveau jeu d'icônes compatible GLPv3
-- [x] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange: par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
+- [x] Nature des flux - ajouter un champ permettant d'indiquer de quelle manière s'effectue l'échange : par exemple "saisie manuelle", "transfert de fichier", "partage de fichier", "api", "réplication de base de donnée"
 - [x] Renseigner les ports utilisables lors de la définition d'un équipement (https://github.com/dbarzin/mercator/issues/410)
 - [x] Ajout des clusters
 - [x] Ajout des flux logiques
